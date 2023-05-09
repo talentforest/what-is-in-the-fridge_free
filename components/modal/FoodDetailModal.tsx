@@ -24,7 +24,7 @@ export default function FoodDetailModal({
   const {
     editing,
     setEditing,
-    foodInfo,
+    editedFood,
     editFoodInfo,
     onEditSumbit, //
   } = useChangeFoodInfo({ food });
@@ -43,7 +43,7 @@ export default function FoodDetailModal({
       {editing ? (
         <>
           <Text styletw='mt-2 text-base w-full'>식료품 정보 수정</Text>
-          <FoodForm food={foodInfo} changeFoodInfo={editFoodInfo} />
+          <FoodForm food={editedFood} changeFoodInfo={editFoodInfo} />
           <SubmitBtn
             btnName='식료품 정보 수정 완료'
             onPress={() => onEditSumbit(food.id)}
@@ -55,18 +55,22 @@ export default function FoodDetailModal({
             style={tw`my-2 rounded-2xl border border-slate-500 self-center px-3 bg-white`}
           >
             <Text styletw='text-base text-center text-indigo-700'>
-              {foodInfo.name}
+              {editedFood.name}
             </Text>
           </View>
           <View style={tw`w-full mt-2 mb-6`}>
             <View style={tw`flex-row gap-0.5`}>
-              <InfoBox name='카테고리' info={foodInfo.category} />
-              <InfoBox name='수량' info={foodInfo.quantity} />
-              <InfoBox name='즐겨찾는 식품' favorite info={foodInfo.favorite} />
+              <InfoBox name='카테고리' info={editedFood.category} />
+              <InfoBox name='수량' info={editedFood.quantity} />
+              <InfoBox
+                name='즐겨찾는 식품'
+                favorite
+                info={editedFood.favorite}
+              />
             </View>
             <View style={tw`flex-row gap-0.5 mt-0.5`}>
-              <InfoBox name='구매 날짜' date={foodInfo.purchaseDate} />
-              <InfoBox name='유통기한' date={foodInfo.expirationDate} />
+              <InfoBox name='구매 날짜' date={editedFood.purchaseDate} />
+              <InfoBox name='유통기한' date={editedFood.expirationDate} />
             </View>
           </View>
           <SubmitBtn
@@ -75,7 +79,7 @@ export default function FoodDetailModal({
           />
           <SubmitBtn
             btnName='식료품 삭제'
-            onPress={() => deleteFood(foodInfo.id)}
+            onPress={() => deleteFood(editedFood.id)}
           />
         </>
       )}

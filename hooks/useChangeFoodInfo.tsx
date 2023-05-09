@@ -1,36 +1,32 @@
 import { useState } from 'react';
 import { Food, FoodInfo } from '../constant/foods';
-import { useDispatch, useSelector } from '../redux/hook';
-import { changeFreezer, changeFridge } from '../redux/slice/foodsListSlice';
+import { useDispatch } from '../redux/hook';
+import { editFood } from '../redux/slice/allFoodsSlice';
+import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
 
 export default function useChangeFoodInfo({ food }: { food: Food }) {
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.foodsList);
-  const dispatch = useDispatch();
-  const [foodInfo, setFoodInfo] = useState(food);
+  const [editedFood, setEditedFood] = useState(food);
   const [editing, setEditing] = useState(false);
+  const dispatch = useDispatch();
 
   const editFoodInfo = (newInfo: FoodInfo) => {
-    return setFoodInfo({ ...foodInfo, ...newInfo });
+    return setEditedFood({ ...editedFood, ...newInfo });
   };
 
   const onEditSumbit = (foodId: string) => {
-    const freezer = foodInfo.space.includes('냉동');
-    const foodList = freezer ? freezerFoods : fridgeFoods;
-    const changeFoodList = freezer ? changeFreezer : changeFridge;
-
-    const editedList = foodList.map((food) => {
-      if (food.id === foodId) return foodInfo;
-      return food;
-    });
-
-    dispatch(changeFoodList(editedList));
+    if (editedFood.favorite) {
+      dispatch(addFavorite(editedFood));
+    } else {
+      dispatch(removeFavorite({ name: editedFood.name }));
+    }
+    dispatch(editFood({ foodId, editedFood }));
     setEditing(false);
   };
 
   return {
     editing,
     setEditing,
-    foodInfo,
+    editedFood,
     editFoodInfo,
     onEditSumbit,
   };

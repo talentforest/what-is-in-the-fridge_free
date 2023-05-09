@@ -2,6 +2,7 @@ import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
 import { SafeAreaView } from '../components/native-component';
 import { ScrollView, View, Image } from 'react-native';
+import { useSelector } from '../redux/hook';
 import tw from 'twrnc';
 import BannerSlider from '../components/screen-component/home/BannerSlider';
 import Header from '../components/screen-component/home/Header';
@@ -10,11 +11,10 @@ import Footer from '../components/screen-component/home/Footer';
 import EntranceBox from '../components/screen-component/home/EntranceBox';
 import useImageLoad from '../hooks/useImageLoad';
 import useExpiredFood from '../hooks/useExpiredFoods';
-import useFavoriteFoods from '../hooks/useFavoriteFoods';
 
 const Home = () => {
-  const { allExpiredFoods } = useExpiredFood();
-  const { allFavoriteFoods } = useFavoriteFoods();
+  const { allThreeDaysLeftFoods, allExpiredFoods } = useExpiredFood();
+  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const [fontsLoaded] = useFonts(fonts);
 
   const { isLoaded, assets } = useImageLoad({
@@ -56,13 +56,16 @@ const Home = () => {
         {assets && <BannerSlider assets={assets} />}
         <View style={tw`gap-2`}>
           <EntranceBox title='자주 먹는 식료품' destination='Favorite'>
-            <FoodTagList foods={allFavoriteFoods} />
+            <FoodTagList foods={favoriteFoods} sm />
           </EntranceBox>
           <EntranceBox
             title='유통기한이 임박한 식료품'
             destination='ExpiredFoods'
           >
-            <FoodTagList foods={allExpiredFoods} />
+            <FoodTagList
+              foods={[...allThreeDaysLeftFoods, ...allExpiredFoods]}
+              sm
+            />
           </EntranceBox>
         </View>
         <Footer />

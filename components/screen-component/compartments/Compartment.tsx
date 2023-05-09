@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function Compartment({ space, compartmentName, index }: Props) {
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.foodsList);
+  const { fridgeFoods, freezerFoods } = useSelector((state) => state.allFoods);
   const [selectedFood, setSelectedFood] = useState<Food>(initialFoodInfo);
   const [modalVisible, setModalVisible] = useState(false);
 

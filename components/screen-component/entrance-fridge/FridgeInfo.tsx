@@ -5,7 +5,7 @@ import tw from 'twrnc';
 import useExpiredFood from '../../../hooks/useExpiredFoods';
 
 export default function FridgeInfo() {
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.foodsList);
+  const { fridgeFoods, freezerFoods } = useSelector((state) => state.allFoods);
   const { allExpiredFoods } = useExpiredFood();
 
   return (

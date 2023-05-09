@@ -7,7 +7,7 @@ import {
 } from '../../../navigation/Navigation';
 import { ReactNode } from 'react';
 import tw from 'twrnc';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Feather';
 
 interface Props {
   title: EntranceTitle;
@@ -31,8 +31,10 @@ export default function EntranceBox({ title, destination, children }: Props) {
     >
       <Text styletw='text-sm text-indigo-600'>{title}</Text>
       {children}
-      <View style={tw`flex-row justify-end items-center self-end`}>
-        <Icon name='keyboard-arrow-right' size={24} color='#4f46e5' />
+      <View
+        style={tw`flex-row justify-end items-center self-end absolute top-0 bottom-0 right-2`}
+      >
+        <Icon name='chevron-right' size={25} color='#4a46e5' />
       </View>
     </TouchableOpacity>
   );
