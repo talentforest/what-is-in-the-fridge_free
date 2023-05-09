@@ -10,7 +10,7 @@ export type Category =
   | '밀키트'
   | '양념, 장류, 오일'
   | '아이스크림, 과자, 초콜릿'
-  | '견과류, 쌀'
+  | '견과류, 쌀, 면'
   | '빵, 떡, 잼'
   | '통조림, 햄'
   | '생수, 음료수, 커피';
@@ -22,7 +22,7 @@ export const foodCategories: FoodCategory[] = [
   { id: 4, category: '밀키트' },
   { id: 5, category: '양념, 장류, 오일' },
   { id: 6, category: '아이스크림, 과자, 초콜릿' },
-  { id: 7, category: '견과류, 쌀' },
+  { id: 7, category: '견과류, 쌀, 면' },
   { id: 8, category: '빵, 떡, 잼' },
   { id: 9, category: '통조림, 햄' },
   { id: 10, category: '생수, 음료수, 커피' },

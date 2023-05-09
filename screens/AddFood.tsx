@@ -1,5 +1,7 @@
 import { ScrollView } from 'react-native';
 import { Text } from '../components/native-component';
+import { useNavigation } from '@react-navigation/native';
+import { NavigateProp } from '../navigation/Navigation';
 import FormImageItem from '../components/form/FormImageItem';
 import tw from 'twrnc';
 import useAddFood from '../hooks/useAddFood';
@@ -16,13 +18,20 @@ export type FormLabel =
 
 export default function AddFood({ route }: any) {
   const { newFood, changeFoodInfo, onSubmit } = useAddFood(route.params);
+  const navigation = useNavigation<NavigateProp>();
 
   return (
     <ScrollView style={tw`p-4`}>
       <Text styletw='text-base mb-4'>직접 식료품 정보 입력</Text>
       <FormImageItem value={newFood.image} changeFoodInfo={changeFoodInfo} />
       <FoodForm food={newFood} changeFoodInfo={changeFoodInfo} />
-      <SubmitBtn btnName='식료품 정보 추가하기' onPress={onSubmit} />
+      <SubmitBtn
+        btnName='식료품 정보 추가하기'
+        onPress={() => {
+          onSubmit();
+          navigation.navigate('Compartments', { space: route.params.space });
+        }}
+      />
     </ScrollView>
   );
 }

@@ -1,25 +1,24 @@
-import { useNavigation } from '@react-navigation/native';
-import { useSelector, useDispatch } from '../redux/hook';
-import { changeFreezer, changeFridge } from '../redux/slice/foodsListSlice';
-import { NavigateProp } from '../navigation/Navigation';
+import { useDispatch } from '../redux/hook';
+import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { Food, FoodInfo, initialFoodInfo } from '../constant/foods';
 import { useState } from 'react';
 import { CompartmentNum, Space } from '../constant/fridge';
+import { addFood } from '../redux/slice/allFoodsSlice';
 import UUIDGenerator from 'react-native-uuid';
 
 interface Props {
+  food?: Food;
   space: Space;
   compartmentNum: CompartmentNum;
 }
 
-export default function useAddFood({ space, compartmentNum }: Props) {
+export default function useAddFood({ food, space, compartmentNum }: Props) {
   const myUuid = UUIDGenerator.v4();
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.foodsList);
   const dispatch = useDispatch();
-  const navigation = useNavigation<NavigateProp>();
 
+  const foodInfo = food ? food : initialFoodInfo;
   const [newFood, setNewFood] = useState<Food>({
-    ...initialFoodInfo,
+    ...foodInfo,
     space,
     compartmentNum,
   });
@@ -29,16 +28,12 @@ export default function useAddFood({ space, compartmentNum }: Props) {
   };
 
   const onSubmit = () => {
-    const newFoodInfo = { ...newFood, id: myUuid };
+    const newFoodInfo: Food = { ...newFood, id: myUuid as string };
 
-    if (space.includes('냉장')) {
-      dispatch(changeFridge([...fridgeFoods, newFoodInfo]));
+    if (newFoodInfo.favorite) {
+      dispatch(addFavorite(newFoodInfo));
     }
-    if (space.includes('냉동')) {
-      dispatch(changeFreezer([...freezerFoods, newFoodInfo]));
-    }
-
-    navigation.navigate('Compartments', { space });
+    dispatch(addFood(newFoodInfo));
   };
 
   return {

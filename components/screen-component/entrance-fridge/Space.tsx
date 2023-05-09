@@ -6,7 +6,7 @@ import { useSelector } from '../../../redux/hook';
 import { getLeftDays } from '../../../util';
 import { Space as SpaceType } from '../../../constant/fridge';
 import tw from 'twrnc';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Feather';
 
 interface Props {
   space: SpaceType;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function Space({ space, bottom, door }: Props) {
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.foodsList);
+  const { fridgeFoods, freezerFoods } = useSelector((state) => state.allFoods);
   const navigation = useNavigation<NavigateProp>();
 
   const foodList = space.includes('냉동') ? freezerFoods : fridgeFoods;
@@ -44,7 +44,7 @@ export default function Space({ space, bottom, door }: Props) {
           <Text styletw='text-indigo-700 text-base'>
             {space} {bottom ? '3칸' : '2칸'}
           </Text>
-          <Icon name='keyboard-arrow-right' size={24} color='#4e45ff' />
+          <Icon name='chevron-right' size={22} color='#4e45ff' />
         </View>
         <View
           style={tw`p-3 gap-4 border flex-1 rounded-lg bg-white border-slate-400`}

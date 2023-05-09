@@ -8,7 +8,7 @@ import { FontGmarketSansRegular } from '../constant/fonts';
 import React from 'react';
 import Home from '../screens/Home';
 import Compartments from '../screens/Compartments';
-import Favorite from '../screens/Favorite';
+import Favorite from '../screens/FavoriteFoods';
 import Notification from '../screens/Notification';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ExpiredFoods from '../screens/ExpiredFoods';

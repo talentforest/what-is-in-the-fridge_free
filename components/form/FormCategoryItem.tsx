@@ -4,7 +4,7 @@ import { Text, TouchableOpacity } from '../native-component';
 import { Category } from '../../constant/foodCategories';
 import tw from 'twrnc';
 import FoodCategoryModal from '../modal/FoodCategoryModal';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Feather';
 
 interface Props {
   category: Category;
@@ -25,7 +25,7 @@ export default function FormCategoryItem({ category, changeFoodInfo }: Props) {
         style={tw`flex-row items-center self-end border py-0.5 pl-2 rounded-2xl bg-yellow-300 border-slate-400`}
       >
         <Text styletw='text-xs'>선택하기</Text>
-        <Icon name='keyboard-arrow-right' size={18} color='#4f46e5' />
+        <Icon name='chevron-right' size={18} color='#4f46e5' />
       </TouchableOpacity>
       {modalVisible && (
         <FoodCategoryModal

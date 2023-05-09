@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
-import { useSelector, useDispatch } from '../redux/hook';
-import { changeFreezer, changeFridge } from '../redux/slice/foodsListSlice';
+import { useDispatch } from '../redux/hook';
 import { NavigateProp } from '../navigation/Navigation';
 import { Space } from '../constant/fridge';
+import { removeFood } from '../redux/slice/allFoodsSlice';
 
 interface Props {
   space: Space;
@@ -10,19 +10,11 @@ interface Props {
 }
 
 export default function useDeleteFood({ space, setModalVisible }: Props) {
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.foodsList);
   const dispatch = useDispatch();
   const navigation = useNavigation<NavigateProp>();
 
   const deleteFood = (foodId: string) => {
-    if (space.includes('냉장')) {
-      const filteredFoods = fridgeFoods.filter((food) => food.id !== foodId);
-      dispatch(changeFridge(filteredFoods));
-    }
-    if (space.includes('냉동')) {
-      const filteredFoods = freezerFoods.filter((food) => food.id !== foodId);
-      dispatch(changeFreezer(filteredFoods));
-    }
+    dispatch(removeFood({ id: foodId, space }));
     navigation.navigate('Compartments', { space });
     setModalVisible(false);
   };

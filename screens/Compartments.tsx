@@ -12,9 +12,7 @@ export default function Compartments({ route }: any) {
   const { space } = route.params;
 
   useEffect(() => {
-    navigation.setOptions({
-      title: space,
-    });
+    navigation.setOptions({ title: space });
   }, [navigation]);
 
   const getCompartments = (numOfItems: number) => {
@@ -31,7 +29,7 @@ export default function Compartments({ route }: any) {
   return (
     <View style={tw`px-4 pt-4 pb-8 flex-1`}>
       <View
-        style={tw`border flex-1 justify-between gap-3 p-3 border-slate-500 rounded-lg bg-stone-300`}
+        style={tw`border flex-1 justify-between gap-3 p-3 border-slate-300 rounded-lg bg-stone-200`}
       >
         {compartments.map((compartment, index) => (
           <Compartment

@@ -7,7 +7,9 @@ export default function EntranceFridge() {
   return (
     <View style={tw`flex-1 px-4 pt-2 pb-12`}>
       <FridgeInfo />
-      <View style={tw`flex-1 flex-row gap-1 items-start`}>
+      <View
+        style={tw`flex-1 flex-row gap-1 items-start border border-stone-400 p-2 rounded-lg bg-stone-300`}
+      >
         <View style={tw`flex-1 justify-center items-center rounded-2xl`}>
           <Space space='냉동실 안쪽' />
           <Space space='냉장실 안쪽' bottom />
