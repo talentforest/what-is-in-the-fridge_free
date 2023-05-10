@@ -13,7 +13,7 @@ interface Props {
 
 export default function FoodForm({ changeFoodInfo, food }: Props) {
   return (
-    <View style={tw`w-full mt-2 mb-4`}>
+    <View style={tw`w-full mt-1 mb-4`}>
       <FormNameItem
         changeFoodInfo={changeFoodInfo}
         value={food.name}

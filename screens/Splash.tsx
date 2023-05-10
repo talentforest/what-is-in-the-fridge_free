@@ -37,7 +37,7 @@ export default function Splash({ appIsReady, setAppIsReady }: Props) {
     }
   }, [fontsLoaded, isLoaded]);
 
-  if (!fontsLoaded && !isLoaded) return null;
+  if (!fontsLoaded || !isLoaded) return null;
 
   return (
     <SafeAreaView>
