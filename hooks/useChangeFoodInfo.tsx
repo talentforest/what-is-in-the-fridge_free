@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { Food, FoodInfo } from '../constant/foods';
 import { useDispatch } from '../redux/hook';
 import { editFood } from '../redux/slice/allFoodsSlice';
-import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
+import {
+  addFavorite,
+  editFavorite,
+  removeFavorite,
+} from '../redux/slice/favoriteFoodsSlice';
 
 export default function useChangeFoodInfo({ food }: { food: Food }) {
   const [editedFood, setEditedFood] = useState(food);
@@ -15,6 +19,7 @@ export default function useChangeFoodInfo({ food }: { food: Food }) {
 
   const onEditSumbit = (foodId: string) => {
     if (editedFood.favorite) {
+      dispatch(editFavorite(editedFood));
       dispatch(addFavorite(editedFood));
     } else {
       dispatch(removeFavorite({ name: editedFood.name }));

@@ -7,14 +7,14 @@ export default function useExpiredFoods() {
 
   const threeDaysLeftFridgeFoods = fridgeFoods.filter((food: Food) => {
     return (
-      0 < getLeftDays(food.expirationDate) &&
+      0 <= getLeftDays(food.expirationDate) &&
       getLeftDays(food.expirationDate) < 4
     );
   });
 
   const threeDaysLeftFreezerFoods = freezerFoods.filter((food: Food) => {
     return (
-      0 < getLeftDays(food.expirationDate) &&
+      0 <= getLeftDays(food.expirationDate) &&
       getLeftDays(food.expirationDate) < 4
     );
   });
@@ -34,6 +34,8 @@ export default function useExpiredFoods() {
 
   const allExpiredFoods = [...expiredFridgeFoods, ...expiredFreezerFoods];
 
+  const allLeftAndExpiredFoods = [...allThreeDaysLeftFoods, ...allExpiredFoods];
+
   return {
     threeDaysLeftFridgeFoods,
     threeDaysLeftFreezerFoods,
@@ -41,5 +43,6 @@ export default function useExpiredFoods() {
     expiredFridgeFoods,
     expiredFreezerFoods,
     allExpiredFoods,
+    allLeftAndExpiredFoods,
   };
 }

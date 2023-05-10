@@ -29,7 +29,6 @@ export default function useAddFood({ food, space, compartmentNum }: Props) {
 
   const onSubmit = () => {
     const newFoodInfo: Food = { ...newFood, id: myUuid as string };
-
     if (newFoodInfo.favorite) {
       dispatch(addFavorite(newFoodInfo));
     }

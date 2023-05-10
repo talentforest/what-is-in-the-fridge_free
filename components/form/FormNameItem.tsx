@@ -30,6 +30,8 @@ export default function FormNameItem({
         focusable={true}
         selectTextOnFocus={true}
         showSoftInputOnFocus={true}
+        returnKeyType='next'
+        returnKeyLabel='다음'
       />
     </View>
   );

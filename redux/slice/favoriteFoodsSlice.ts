@@ -11,21 +11,27 @@ const favoriteFoodsSlice = createSlice({
   initialState,
   reducers: {
     addFavorite: (state, action: { payload: Food }) => {
-      state.favoriteFoods = deduplicate(
-        [...state.favoriteFoods, action.payload],
-        'name'
-      );
+      state.favoriteFoods = deduplicate([
+        ...state.favoriteFoods,
+        action.payload,
+      ]);
     },
     removeFavorite: (state, action: { payload: { name: string } }) => {
       state.favoriteFoods = state.favoriteFoods.filter(
         (item) => item.name !== action.payload.name
       );
     },
+    editFavorite: (state, action: { payload: Food }) => {
+      state.favoriteFoods = state.favoriteFoods.map((item) => {
+        return item.id === action.payload.id ? action.payload : item;
+      });
+    },
   },
 });
 
 const { reducer: favoriteFoodsReducer } = favoriteFoodsSlice;
 
-export const { addFavorite, removeFavorite } = favoriteFoodsSlice.actions;
+export const { addFavorite, removeFavorite, editFavorite } =
+  favoriteFoodsSlice.actions;
 
 export default favoriteFoodsReducer;
