@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import tw from 'twrnc';
 import FoodSpaceModal from '../components/modal/FoodSpaceModal';
 import UUIDGenerator from 'react-native-uuid';
+import AddFoodModal from '../components/modal/AddFoodModal';
 
 export default function ShoppingList() {
   const [foodName, setFoodName] = useState('');
@@ -24,8 +25,6 @@ export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
   const dispatch = useDispatch();
   const myUuid = UUIDGenerator.v4();
-
-  console.log(selectFoodToBuy);
 
   return (
     <View style={tw`flex-1 bg-indigo-50 pb-10`}>

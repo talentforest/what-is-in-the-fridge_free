@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import Modal from 'react-native-modal';
 import tw from 'twrnc';
 import Header from './Header';
@@ -21,7 +21,7 @@ export default function RNModal({
     <Modal
       onBackdropPress={() => setModalVisible(false)}
       isVisible={modalVisible}
-      style={tw`justify-end m-0`}
+      style={tw`justify-end m-0 border`}
     >
       <View style={tw`bg-indigo-300 p-4 pb-16 rounded-2xl`}>
         <Header title={title} setModalVisible={setModalVisible} />
