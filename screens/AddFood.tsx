@@ -17,7 +17,11 @@ export type FormLabel =
   | '자주 먹는 식료품';
 
 export default function AddFood({ route }: any) {
-  const { newFood, changeFoodInfo, onSubmit } = useAddFood(route.params);
+  const { compartmentNum, space } = route.params;
+  const { newFood, changeFoodInfo, onSubmitFromForm } = useAddFood({
+    space,
+    compartmentNum,
+  });
   const navigation = useNavigation<NavigateProp>();
 
   return (
@@ -28,7 +32,7 @@ export default function AddFood({ route }: any) {
       <SubmitBtn
         btnName='식료품 정보 추가하기'
         onPress={() => {
-          onSubmit();
+          onSubmitFromForm();
           navigation.navigate('Compartments', { space: route.params.space });
         }}
       />

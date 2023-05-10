@@ -1,51 +1,24 @@
 import { Food } from '../../constant/foods';
-import { getISODate } from '../../util';
-import { Alert, Dimensions, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
-import { Space, SpaceName } from '../../constant/fridge';
-import { useDispatch } from '../../redux/hook';
-import { addFood } from '../../redux/slice/allFoodsSlice';
+import { SpaceName } from '../../constant/fridge';
 import RNModal from './component/Modal';
 import tw from 'twrnc';
-import UUIDGenerator from 'react-native-uuid';
-import useCheckFood from '../../hooks/useCheckFood';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import useAddFood from '../../hooks/useAddFood';
 
 interface Props {
   food: Food;
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
 }
+
 export default function FoodSpaceModal({
   food,
   modalVisible,
   setModalVisible,
 }: Props) {
-  const { checkExistFood } = useCheckFood();
-  const dispatch = useDispatch();
-  const myUuid = UUIDGenerator.v4();
-
-  const onSubmit = (space: Space) => {
-    if (checkExistFood(food)) {
-      return Alert.alert(
-        `${food.name}`,
-        `${food.space} ${food.compartmentNum}에 이미 식료품이 있습니다.`
-      );
-    }
-
-    const favoriteFoodInfo: Food = {
-      ...food,
-      expirationDate: getISODate(new Date()),
-      purchaseDate: getISODate(new Date()),
-      space,
-      compartmentNum: '1번',
-      id: myUuid as string,
-    };
-
-    dispatch(addFood(favoriteFoodInfo));
-    Alert.alert(`${food.name} 추가`, `${space} 1번에 추가되었습니다.`);
-    setModalVisible(false);
-  };
+  const { onSubmitFromSpaceModal } = useAddFood({});
 
   return (
     <RNModal
@@ -60,7 +33,10 @@ export default function FoodSpaceModal({
         {SpaceName.map((space) => (
           <TouchableOpacity
             key={space}
-            onPress={() => onSubmit(space)}
+            onPress={() => {
+              onSubmitFromSpaceModal(space, food);
+              setModalVisible(false);
+            }}
             style={tw`flex-row h-16 w-[${
               (Dimensions.get('window').width - 36) / 2
             }px] rounded-md justify-center items-center bg-indigo-600`}
