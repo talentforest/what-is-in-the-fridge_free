@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Food } from '../../constant/foods';
-import { Space } from '../../constant/fridge';
+import { Space } from '../../constant/fridgeInfo';
 
 export const initialState: { fridgeFoods: Food[]; freezerFoods: Food[] } = {
   fridgeFoods: [
@@ -9,7 +9,6 @@ export const initialState: { fridgeFoods: Food[]; freezerFoods: Food[] } = {
       image: '🍎',
       name: '사과',
       category: '과일',
-      quantity: '3',
       purchaseDate: '2023-12-31',
       expirationDate: '2023-12-20',
       favorite: false,
@@ -23,7 +22,6 @@ export const initialState: { fridgeFoods: Food[]; freezerFoods: Food[] } = {
       image: '🍞',
       name: '식빵',
       category: '빵, 떡, 잼',
-      quantity: '3',
       purchaseDate: '2022-12-20',
       expirationDate: '2022-12-20',
       favorite: false,

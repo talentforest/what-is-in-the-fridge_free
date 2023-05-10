@@ -10,18 +10,22 @@ import {
   addToShoppingList,
   removeFromShoppingList,
 } from '../redux/slice/shoppingList';
+import { Food, initialFoodInfo } from '../constant/foods';
 import Icon from 'react-native-vector-icons/AntDesign';
 import tw from 'twrnc';
 import FoodSpaceModal from '../components/modal/FoodSpaceModal';
 import UUIDGenerator from 'react-native-uuid';
-import { getISODate } from '../util';
 
 export default function ShoppingList() {
-  const myUuid = UUIDGenerator.v4();
+  const [foodName, setFoodName] = useState('');
+  const [selectFoodToBuy, setSelectFoodToBuy] = useState<Food>(initialFoodInfo);
   const [modalVisible, setModalVisible] = useState(false);
-  const [foodNameToBuy, setFoodNameToBuy] = useState('');
+
   const { shoppingList } = useSelector((state) => state.shoppingList);
   const dispatch = useDispatch();
+  const myUuid = UUIDGenerator.v4();
+
+  console.log(selectFoodToBuy);
 
   return (
     <View style={tw`flex-1 bg-indigo-50 pb-10`}>
@@ -42,6 +46,12 @@ export default function ShoppingList() {
                 <Text styletw='text-indigo-600 flex-1'>{food.name}</Text>
                 <TouchableOpacity
                   onPress={() => {
+                    setSelectFoodToBuy({
+                      ...selectFoodToBuy,
+                      id: myUuid as string,
+                      name: food.name,
+                      // image: '🍐',
+                    });
                     setModalVisible(true);
                   }}
                 >
@@ -59,18 +69,7 @@ export default function ShoppingList() {
           </ScrollView>
           {modalVisible && (
             <FoodSpaceModal
-              food={{
-                name: foodNameToBuy,
-                id: myUuid as string,
-                purchaseDate: getISODate(new Date()),
-                expirationDate: getISODate(new Date()),
-                space: '냉동실 문쪽',
-                compartmentNum: '1번',
-                image: '🥢',
-                category: '견과류, 콩류',
-                quantity: '3',
-                favorite: false,
-              }}
+              food={selectFoodToBuy}
               modalVisible={modalVisible}
               setModalVisible={setModalVisible}
             />
@@ -79,26 +78,26 @@ export default function ShoppingList() {
       )}
       <View style={tw`mx-4 my-2`}>
         <TextInput
-          value={foodNameToBuy}
-          onChangeText={setFoodNameToBuy}
+          value={foodName}
+          onChangeText={setFoodName}
           focusable={true}
           styletw='h-12 rounded-3xl px-5'
           placeholder='장보기 목록에 추가할 식료품을 작성해주세요.'
           returnKeyType='done'
           autoFocus={true}
           onSubmitEditing={() => {
-            if (foodNameToBuy === '') return;
-            dispatch(addToShoppingList({ name: foodNameToBuy }));
-            setFoodNameToBuy('');
+            if (foodName === '') return;
+            dispatch(addToShoppingList({ name: foodName }));
+            setFoodName('');
           }}
           blurOnSubmit={false}
         />
         <TouchableOpacity
           style={tw`absolute right-3 top-3`}
           onPress={() => {
-            if (foodNameToBuy === '') return;
-            dispatch(addToShoppingList({ name: foodNameToBuy }));
-            setFoodNameToBuy('');
+            if (foodName === '') return;
+            dispatch(addToShoppingList({ name: foodName }));
+            setFoodName('');
           }}
         >
           <Icon name='pluscircle' size={22} color='#4f46e5' />

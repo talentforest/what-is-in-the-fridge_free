@@ -2,11 +2,12 @@ import { View } from 'react-native';
 import { useState } from 'react';
 import { Food, initialFoodInfo } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
-import { useSelector } from '../../../redux/hook';
 import { AddFoodBtn } from './AddFoodBtn';
-import { Space } from '../../../constant/fridge';
+import { Space } from '../../../constant/fridgeInfo';
 import FoodDetailModal from '../../modal/FoodDetailModal';
 import tw from 'twrnc';
+import SmallFoodTag from '../../common/SmallFoodTag';
+import useGetFoodList from '../../../hooks/useGetFoodList';
 
 interface Props {
   space: Space;
@@ -15,16 +16,10 @@ interface Props {
 }
 
 export default function Compartment({ space, compartmentName, index }: Props) {
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.allFoods);
   const [selectedFood, setSelectedFood] = useState<Food>(initialFoodInfo);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const getFoodList = (itemNum: number) => {
-    const foodList = space.includes('냉동') ? freezerFoods : fridgeFoods;
-    return foodList.filter(
-      (food) => food.space === space && food.compartmentNum === `${itemNum}번`
-    );
-  };
+  const { getFoodList } = useGetFoodList();
 
   return (
     <>
@@ -38,12 +33,12 @@ export default function Compartment({ space, compartmentName, index }: Props) {
             </Text>
           </View>
           <Text styletw='text-xs text-indigo-600 mr-2'>
-            식료품 총 {getFoodList(index + 1).length} 개
+            식료품 총 {getFoodList(index + 1, space).length} 개
           </Text>
           <AddFoodBtn space={space} index={index} />
         </View>
         <View style={tw`mt-2 flex-1 flex-row flex-wrap items-center gap-2`}>
-          {getFoodList(index + 1).map((food: Food) => (
+          {getFoodList(index + 1, space).map((food: Food) => (
             <TouchableOpacity
               key={food.id}
               onPress={() => {
@@ -51,7 +46,7 @@ export default function Compartment({ space, compartmentName, index }: Props) {
                 setModalVisible(true);
               }}
             >
-              <Text styletw='text-2xl'>{food.image}</Text>
+              <SmallFoodTag food={food} />
             </TouchableOpacity>
           ))}
         </View>

@@ -1,4 +1,6 @@
-export const today = new Date().toISOString().slice(0, 10);
+import { getISODate } from './getISODate';
+
+export const today = getISODate(new Date());
 
 export function getLeftDays(expiryDate: string) {
   const diffDate = new Date(expiryDate).getTime() - new Date(today).getTime();

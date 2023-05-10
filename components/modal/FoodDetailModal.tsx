@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import { Food } from '../../constant/foods';
 import { Text } from '../native-component';
+import { getLocaleDate } from '../../util';
 import tw from 'twrnc';
 import InfoBox from './component/InfoBox';
 import SubmitBtn from '../form/SubmitBtn';
@@ -61,16 +62,17 @@ export default function FoodDetailModal({
           <View style={tw`w-full mt-2 mb-6`}>
             <View style={tw`flex-row gap-0.5`}>
               <InfoBox name='카테고리' info={editedFood.category} />
-              <InfoBox name='수량' info={editedFood.quantity} />
-              <InfoBox
-                name='즐겨찾는 식품'
-                favorite
-                info={editedFood.favorite}
-              />
+              <InfoBox name='즐겨찾는 식품' favorite={editedFood.favorite} />
             </View>
             <View style={tw`flex-row gap-0.5 mt-0.5`}>
-              <InfoBox name='구매 날짜' date={editedFood.purchaseDate} />
-              <InfoBox name='유통기한' date={editedFood.expirationDate} />
+              <InfoBox
+                name='구매 날짜'
+                info={getLocaleDate(editedFood.purchaseDate)}
+              />
+              <InfoBox
+                name='유통기한'
+                info={getLocaleDate(editedFood.expirationDate)}
+              />
             </View>
           </View>
           <SubmitBtn

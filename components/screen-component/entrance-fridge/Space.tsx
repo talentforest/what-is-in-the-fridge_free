@@ -4,7 +4,7 @@ import { Text, TouchableOpacity } from '../../native-component';
 import { NavigateProp } from '../../../navigation/Navigation';
 import { useSelector } from '../../../redux/hook';
 import { getLeftDays } from '../../../util';
-import { Space as SpaceType } from '../../../constant/fridge';
+import { Space as SpaceType } from '../../../constant/fridgeInfo';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/Feather';
 

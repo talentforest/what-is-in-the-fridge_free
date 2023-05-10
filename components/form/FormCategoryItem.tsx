@@ -16,7 +16,7 @@ export default function FormCategoryItem({ category, changeFoodInfo }: Props) {
 
   return (
     <View
-      style={tw`bg-indigo-50 flex-1 gap-1 p-2 border rounded-lg border-slate-400`}
+      style={tw`min-h-24 bg-indigo-50 flex-1 gap-1 p-2 border rounded-lg border-slate-400`}
     >
       <Text styletw='mb-2 text-indigo-500 text-xs'>식료품 카테고리</Text>
       <Text styletw='leading-5 flex-1'>{category}</Text>

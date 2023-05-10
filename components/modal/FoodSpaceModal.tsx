@@ -1,7 +1,7 @@
 import { Food } from '../../constant/foods';
 import { Dimensions, View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
-import { SpaceName } from '../../constant/fridge';
+import { SpaceName } from '../../constant/fridgeInfo';
 import RNModal from './component/Modal';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
