@@ -3,7 +3,6 @@ import { Food } from '../../constant/foods';
 import tw from 'twrnc';
 import FormNameItem from './FormNameItem';
 import FormCategoryItem from './FormCategoryItem';
-import FormQuantityItem from './FormQuantityItem';
 import FormFavoriteItem from './FormFavoriteItem';
 import FormDateItem from './FormDateItem';
 
@@ -24,11 +23,6 @@ export default function FoodForm({ changeFoodInfo, food }: Props) {
         <FormCategoryItem
           category={food.category}
           changeFoodInfo={changeFoodInfo}
-        />
-        <FormQuantityItem
-          keyboardType='numeric'
-          changeFoodInfo={changeFoodInfo}
-          value={food.quantity}
         />
         <FormFavoriteItem
           favorite={food.favorite}

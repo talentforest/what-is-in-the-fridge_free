@@ -1,4 +1,5 @@
 import { Food } from '../constant/foods';
+import { Space } from '../constant/fridgeInfo';
 import { useSelector } from '../redux/hook';
 
 export default function useCheckFood() {

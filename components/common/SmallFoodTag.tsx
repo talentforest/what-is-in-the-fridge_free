@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import { Text } from '../native-component';
 import { cutLetter } from '../../util';
-import tw from 'twrnc';
 import { Food } from '../../constant/foods';
+import tw from 'twrnc';
 
 interface Props {
   food: Food;

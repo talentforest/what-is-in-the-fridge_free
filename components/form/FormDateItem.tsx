@@ -4,8 +4,8 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { addDay, addMonth, addWeek, addYear, getISODate } from '../../util';
-import { FormLabel } from '../../screens/AddFood';
 import tw from 'twrnc';
+import { FormLabel } from '../modal/AddFoodModal';
 
 interface Props {
   label: FormLabel;
@@ -30,7 +30,7 @@ export default function FormDateItem({ label, date, changeFoodInfo }: Props) {
       return changeFoodInfo({ expirationDate: getISODate(currentDate) });
     if (label === '식료품 구매날짜')
       return changeFoodInfo({
-        purchaseDate: currentDate.toISOString().slice(0, 10),
+        purchaseDate: getISODate(currentDate),
       });
   };
 
@@ -53,15 +53,11 @@ export default function FormDateItem({ label, date, changeFoodInfo }: Props) {
               onPress={() => {
                 if (label === '식료품 유통기한')
                   return changeFoodInfo({
-                    expirationDate: new Date(btn.func(date))
-                      .toISOString()
-                      .slice(0, 10),
+                    expirationDate: getISODate(new Date(btn.func(date))),
                   });
                 if (label === '식료품 구매날짜')
                   return changeFoodInfo({
-                    purchaseDate: new Date(btn.func(date))
-                      .toISOString()
-                      .slice(0, 10),
+                    purchaseDate: getISODate(new Date(btn.func(date))),
                   });
               }}
               style={tw`justify-center ${btn.color} border border-slate-400 p-1.5 rounded-2xl`}

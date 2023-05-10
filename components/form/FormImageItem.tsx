@@ -14,7 +14,7 @@ export default function FormImageItem({ value, changeFoodInfo }: Props) {
 
   return (
     <View
-      style={tw`border self-center mb-4 p-2 w-1/3 h-28 bg-indigo-50 border-slate-400 rounded-lg`}
+      style={tw`border self-center my-4 p-2 w-1/3 h-28 bg-indigo-50 border-slate-400 rounded-lg`}
     >
       <Text styletw='mb-2 text-indigo-500 text-xs'>아이콘 선택</Text>
       <TouchableOpacity

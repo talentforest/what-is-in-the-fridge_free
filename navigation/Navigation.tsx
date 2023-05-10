@@ -13,7 +13,6 @@ import Notification from '../screens/Notification';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ExpiredFoods from '../screens/ExpiredFoods';
 import EntranceFridge from '../screens/EntranceFridge';
-import AddFoodDrawer from '../screens/AddFood';
 import ShoppingList from '../screens/ShoppingList';
 
 const BackBtn = () => {
@@ -34,7 +33,6 @@ export type RootStackParamList = {
   Home: undefined;
   EntranceFridge: undefined;
   Compartments: undefined | object;
-  AddFoodDrawer: undefined | object;
   FoodDetail: undefined;
   Favorite: undefined;
   Notification: undefined;
@@ -83,11 +81,6 @@ const Navigation = () => {
         name='Favorite'
         component={Favorite}
         options={{ ...options, title: '자주 먹는 식료품' }}
-      />
-      <Stack.Screen
-        name='AddFoodDrawer'
-        component={AddFoodDrawer}
-        options={{ ...options, title: '식료품 추가하기' }}
       />
       <Stack.Screen
         name='ExpiredFoods'

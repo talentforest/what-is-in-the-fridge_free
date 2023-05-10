@@ -1,5 +1,6 @@
+import { getISODate } from '../util';
 import { Category } from './foodCategories';
-import { CompartmentNum, Space } from './fridge';
+import { CompartmentNum, Space } from './fridgeInfo';
 
 export type FoodInfo = { [key: string]: string | boolean | Date };
 
@@ -8,7 +9,6 @@ export interface Food {
   image: string;
   name: string;
   category: Category;
-  quantity: string;
   purchaseDate: string;
   expirationDate: string;
   favorite: boolean;
@@ -21,9 +21,8 @@ export const initialFoodInfo: Food = {
   image: '',
   name: '',
   category: '채소' as Category,
-  quantity: '0',
-  purchaseDate: new Date().toISOString().slice(0, 10),
-  expirationDate: new Date().toISOString().slice(0, 10),
+  purchaseDate: getISODate(new Date()),
+  expirationDate: getISODate(new Date()),
   favorite: false,
   space: '냉장실 안쪽',
   compartmentNum: '1번',

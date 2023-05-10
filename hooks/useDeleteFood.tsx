@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from '../redux/hook';
 import { NavigateProp } from '../navigation/Navigation';
-import { Space } from '../constant/fridge';
+import { Space } from '../constant/fridgeInfo';
 import { removeFood } from '../redux/slice/allFoodsSlice';
 
 interface Props {

@@ -2,7 +2,7 @@ import { useDispatch } from '../redux/hook';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { Food, FoodInfo, initialFoodInfo } from '../constant/foods';
 import { useState } from 'react';
-import { CompartmentNum, Space } from '../constant/fridge';
+import { CompartmentNum, Space } from '../constant/fridgeInfo';
 import { addFood } from '../redux/slice/allFoodsSlice';
 import { Alert } from 'react-native';
 import { getISODate } from '../util';
