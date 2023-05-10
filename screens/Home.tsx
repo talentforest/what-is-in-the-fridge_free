@@ -1,19 +1,20 @@
 import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
-import { SafeAreaView } from '../components/native-component';
+import { SafeAreaView, Text } from '../components/native-component';
 import { ScrollView, View, Image } from 'react-native';
 import { useSelector } from '../redux/hook';
 import tw from 'twrnc';
 import BannerSlider from '../components/screen-component/home/BannerSlider';
 import Header from '../components/screen-component/home/Header';
-import FoodTagList from '../components/common/FoodTagList';
 import Footer from '../components/screen-component/home/Footer';
 import EntranceBox from '../components/screen-component/home/EntranceBox';
 import useImageLoad from '../hooks/useImageLoad';
 import useExpiredFood from '../hooks/useExpiredFoods';
+import SmallFoodTag from '../components/common/SmallFoodTag';
+import EmptyTag from '../components/common/EmptyTag';
 
 const Home = () => {
-  const { allThreeDaysLeftFoods, allExpiredFoods } = useExpiredFood();
+  const { allLeftAndExpiredFoods } = useExpiredFood();
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const [fontsLoaded] = useFonts(fonts);
 
@@ -56,16 +57,33 @@ const Home = () => {
         {assets && <BannerSlider assets={assets} />}
         <View style={tw`gap-2`}>
           <EntranceBox title='자주 먹는 식료품' destination='Favorite'>
-            <FoodTagList foods={favoriteFoods} sm />
+            {favoriteFoods.length !== 0 ? (
+              <View style={tw`mt-2 gap-1 min-h-8 flex-row flex-wrap`}>
+                {favoriteFoods.slice(0, 8).map((food) => (
+                  <SmallFoodTag key={food.id} food={food} />
+                ))}
+                {favoriteFoods.length > 8 && <Text styletw='pt-2'>...</Text>}
+              </View>
+            ) : (
+              <EmptyTag tagName='아직 자주 먹는 식료품 정보가 없습니다' />
+            )}
           </EntranceBox>
           <EntranceBox
             title='유통기한이 임박한 식료품'
             destination='ExpiredFoods'
           >
-            <FoodTagList
-              foods={[...allThreeDaysLeftFoods, ...allExpiredFoods]}
-              sm
-            />
+            {allLeftAndExpiredFoods.length !== 0 ? (
+              <View style={tw`mt-2 gap-1 min-h-8 flex-row flex-wrap`}>
+                {allLeftAndExpiredFoods.slice(0, 8).map((food) => (
+                  <SmallFoodTag key={food.id} food={food} />
+                ))}
+                {allLeftAndExpiredFoods.length > 8 && (
+                  <Text styletw='pt-2'>...</Text>
+                )}
+              </View>
+            ) : (
+              <EmptyTag tagName='아직 유통기한이 임박한 식료품이 없습니다' />
+            )}
           </EntranceBox>
         </View>
         <Footer />

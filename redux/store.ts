@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import fridgeFoodsReducer from './slice/allFoodsSlice';
 import favoriteFoodsReducer from './slice/favoriteFoodsSlice';
+import shoppingListReducer from './slice/shoppingList';
 
 export const store = configureStore({
   reducer: {
     allFoods: fridgeFoodsReducer,
     favoriteFoods: favoriteFoodsReducer,
+    shoppingList: shoppingListReducer,
   },
 });
 

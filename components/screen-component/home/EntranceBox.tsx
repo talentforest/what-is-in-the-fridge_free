@@ -26,7 +26,7 @@ export default function EntranceBox({ title, destination, children }: Props) {
 
   return (
     <TouchableOpacity
-      style={tw`border border-slate-300 flex-1 justify-between rounded-lg p-3 bg-white`}
+      style={tw`min-h-22 border border-slate-300 flex-1 justify-between rounded-lg p-3 bg-white`}
       onPress={() => navigation.navigate(destination)}
     >
       <Text styletw='text-sm text-indigo-600'>{title}</Text>
