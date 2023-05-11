@@ -31,7 +31,9 @@ export default function useAddFood({ selectedFood, compartment }: Props) {
       compartmentNum: compartment?.compartmentNum || newFood.compartmentNum,
     };
 
-    if (checkExistFood(food)) alertExistFood(food);
+    if (checkExistFood(food)) {
+      return alertExistFood(food);
+    }
 
     if (food.favorite) {
       dispatch(addFavorite(food));
@@ -40,7 +42,10 @@ export default function useAddFood({ selectedFood, compartment }: Props) {
 
     if (selectedFood) {
       removeShoppingItem();
-      Alert.alert(`${newFood.name}`, `${newFood.space} 1번에 추가되었습니다.`);
+      Alert.alert(
+        `${newFood.name}`,
+        `${newFood.space} ${newFood.compartmentNum}에 추가되었습니다.`
+      );
     }
   };
 

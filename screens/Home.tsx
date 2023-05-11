@@ -58,7 +58,7 @@ const Home = () => {
         <View style={tw`gap-2`}>
           <EntranceBox title='자주 먹는 식료품' destination='Favorite'>
             {favoriteFoods.length !== 0 ? (
-              <View style={tw`mt-2 gap-1 min-h-20 flex-row flex-wrap`}>
+              <View style={tw`mt-2 gap-1 border flex-1 flex-row flex-wrap`}>
                 {favoriteFoods.slice(0, 8).map((food) => (
                   <SmallFoodTag key={food.id} food={food} />
                 ))}
@@ -73,7 +73,7 @@ const Home = () => {
             destination='ExpiredFoods'
           >
             {allLeftAndExpiredFoods.length !== 0 ? (
-              <View style={tw`mt-2 gap-1 min-h-20 flex-row flex-wrap`}>
+              <View style={tw`mt-2 gap-1 flex-1 flex-row flex-wrap`}>
                 {allLeftAndExpiredFoods.slice(0, 8).map((food) => (
                   <SmallFoodTag key={food.id} food={food} />
                 ))}
