@@ -13,14 +13,13 @@ import {
 import { Food, initialFoodInfo } from '../constant/foods';
 import Icon from 'react-native-vector-icons/AntDesign';
 import tw from 'twrnc';
-import FoodSpaceModal from '../components/modal/FoodSpaceModal';
 import UUIDGenerator from 'react-native-uuid';
-import AddFoodModal from '../components/modal/AddFoodModal';
+import AddFoodModalBtn from '../components/screen-component/compartments/AddFoodModalBtn';
+import { getISODate } from '../util';
 
 export default function ShoppingList() {
   const [foodName, setFoodName] = useState('');
-  const [selectFoodToBuy, setSelectFoodToBuy] = useState<Food>(initialFoodInfo);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedFood, setSelectedFood] = useState<Food>(initialFoodInfo);
 
   const { shoppingList } = useSelector((state) => state.shoppingList);
   const dispatch = useDispatch();
@@ -43,19 +42,18 @@ export default function ShoppingList() {
               >
                 <Icon name='checksquareo' size={16} color='#ff8800' />
                 <Text styletw='text-indigo-600 flex-1'>{food.name}</Text>
-                <TouchableOpacity
+                <AddFoodModalBtn
+                  selectedFood={selectedFood}
                   onPress={() => {
-                    setSelectFoodToBuy({
-                      ...selectFoodToBuy,
+                    setSelectedFood({
+                      ...selectedFood,
                       id: myUuid as string,
                       name: food.name,
-                      // image: '🍐',
+                      expirationDate: getISODate(new Date()),
+                      purchaseDate: getISODate(new Date()),
                     });
-                    setModalVisible(true);
                   }}
-                >
-                  <Icon name='plus' size={18} color='#ff8800' />
-                </TouchableOpacity>
+                />
                 <TouchableOpacity
                   onPress={() =>
                     dispatch(removeFromShoppingList({ name: food.name }))
@@ -66,13 +64,6 @@ export default function ShoppingList() {
               </View>
             ))}
           </ScrollView>
-          {modalVisible && (
-            <FoodSpaceModal
-              food={selectFoodToBuy}
-              modalVisible={modalVisible}
-              setModalVisible={setModalVisible}
-            />
-          )}
         </>
       )}
       <View style={tw`mx-4 my-2`}>

@@ -12,3 +12,8 @@ export const SpaceName: Space[] = [
   '냉장실 안쪽',
   '냉장실 문쪽',
 ];
+
+export type CompartmentType = {
+  space: Space;
+  compartmentNum: CompartmentNum;
+};

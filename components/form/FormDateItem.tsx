@@ -5,10 +5,9 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import { addDay, addMonth, addWeek, addYear, getISODate } from '../../util';
 import tw from 'twrnc';
-import { FormLabel } from '../modal/AddFoodModal';
 
 interface Props {
-  label: FormLabel;
+  label: string;
   date: Date;
   changeFoodInfo: (newInfo: { [key: string]: string }) => void;
 }
@@ -38,7 +37,7 @@ export default function FormDateItem({ label, date, changeFoodInfo }: Props) {
     <View
       style={tw`bg-indigo-50 gap-1 flex-1 border p-2 rounded-lg border-slate-400`}
     >
-      <Text styletw='mb-2 text-indigo-500'>{label}</Text>
+      <Text styletw='mb-2 text-xs text-indigo-500'>{label}</Text>
       <View style={tw`justify-between gap-2`}>
         <DateTimePicker
           value={date}

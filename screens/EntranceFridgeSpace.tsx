@@ -3,7 +3,7 @@ import FridgeInfo from '../components/screen-component/entrance-fridge/FridgeInf
 import Space from '../components/screen-component/entrance-fridge/Space';
 import tw from 'twrnc';
 
-export default function EntranceFridge() {
+export default function EntranceFridgeSpace() {
   return (
     <View style={tw`flex-1 px-4 pt-2 pb-12`}>
       <FridgeInfo />

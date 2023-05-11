@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import { Food } from '../../constant/foods';
+import { Food, initialFoodInfo } from '../../constant/foods';
 import tw from 'twrnc';
-import FoodSpaceModal from '../modal/FoodSpaceModal';
 import BigFoodTag from './BigFoodTag';
 import EmptyTag from './EmptyTag';
+import AddFoodModal from '../modal/AddFoodModal';
 
 interface Props {
   foods: Food[];
@@ -12,7 +12,7 @@ interface Props {
 
 export default function FoodTagList({ foods }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedFood, setSelectedFood] = useState<Food>();
+  const [selectedFood, setSelectedFood] = useState<Food>(initialFoodInfo);
 
   return (
     <>
@@ -33,8 +33,8 @@ export default function FoodTagList({ foods }: Props) {
         </View>
       )}
       {selectedFood && modalVisible && setModalVisible && (
-        <FoodSpaceModal
-          food={selectedFood}
+        <AddFoodModal
+          selectedFood={selectedFood}
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
         />

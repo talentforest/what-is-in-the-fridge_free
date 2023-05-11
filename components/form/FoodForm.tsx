@@ -5,6 +5,7 @@ import FormNameItem from './FormNameItem';
 import FormCategoryItem from './FormCategoryItem';
 import FormFavoriteItem from './FormFavoriteItem';
 import FormDateItem from './FormDateItem';
+import FormImageItem from './FormImageItem';
 
 interface Props {
   changeFoodInfo: (newInfo: { [key: string]: string | boolean }) => void;
@@ -13,12 +14,15 @@ interface Props {
 
 export default function FoodForm({ changeFoodInfo, food }: Props) {
   return (
-    <View style={tw`w-full mt-1 mb-4`}>
-      <FormNameItem
-        changeFoodInfo={changeFoodInfo}
-        value={food.name}
-        placeholder='식료품 이름을 수정해주세요'
-      />
+    <View style={tw`mb-4`}>
+      <View style={tw`flex-row gap-1`}>
+        <FormImageItem value={food.image} changeFoodInfo={changeFoodInfo} />
+        <FormNameItem
+          changeFoodInfo={changeFoodInfo}
+          value={food.name}
+          placeholder='식료품 이름을 수정해주세요'
+        />
+      </View>
       <View style={tw`mt-1 flex-row gap-1`}>
         <FormCategoryItem
           category={food.category}

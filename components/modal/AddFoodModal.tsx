@@ -1,34 +1,32 @@
-import { CompartmentNum, Space } from '../../constant/fridgeInfo';
+import { CompartmentType } from '../../constant/fridgeInfo';
+import { Text } from '../native-component';
+import { Dimensions, ScrollView } from 'react-native';
+import { Food } from '../../constant/foods';
 import RNModal from './component/Modal';
-import FormImageItem from '../form/FormImageItem';
 import FoodForm from '../form/FoodForm';
 import SubmitBtn from '../form/SubmitBtn';
 import useAddFood from '../../hooks/useAddFood';
+import tw from 'twrnc';
+import FormSpaceItem from '../form/FormSpaceItem';
 
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
-  space: Space;
-  compartmentNum: CompartmentNum;
+  compartment?: CompartmentType;
+  selectedFood?: Food;
 }
 
-export type FormLabel =
-  | '식료품 카테고리'
-  | '식료품 이름'
-  | '식료품 구매날짜'
-  | '식료품 유통기한'
-  | '자주 먹는 식료품';
-
 export default function AddFoodModal({
-  space,
-  compartmentNum,
+  compartment,
   modalVisible,
   setModalVisible,
+  selectedFood,
 }: Props) {
-  const { newFood, changeFoodInfo, onSubmitFromForm } = useAddFood({
-    space,
-    compartmentNum,
-  });
+  const {
+    newFood,
+    addFoodInfo,
+    onAddSubmit, //
+  } = useAddFood({ selectedFood, compartment });
 
   return (
     <RNModal
@@ -36,12 +34,24 @@ export default function AddFoodModal({
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
-      <FormImageItem value={newFood.image} changeFoodInfo={changeFoodInfo} />
-      <FoodForm food={newFood} changeFoodInfo={changeFoodInfo} />
+      <ScrollView
+        contentContainerStyle={tw`justify-between w-full`}
+        style={tw`mt-4 flex-row flex-wrap w-full max-h-[${
+          Dimensions.get('window').height / 1.6
+        }px]`}
+      >
+        <Text styletw='text-orange-700 mb-4'>
+          * 이미 냉장고에 추가한 식료품은 추가할 수 없습니다.
+        </Text>
+        {!compartment && (
+          <FormSpaceItem editedFood={newFood} editFoodInfo={addFoodInfo} />
+        )}
+        <FoodForm food={newFood} changeFoodInfo={addFoodInfo} />
+      </ScrollView>
       <SubmitBtn
         btnName='식료품 정보 추가하기'
         onPress={() => {
-          onSubmitFromForm();
+          onAddSubmit();
           setModalVisible(false);
         }}
       />
