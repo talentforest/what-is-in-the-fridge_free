@@ -37,7 +37,7 @@ export default function AddFoodModal({
       <ScrollView
         contentContainerStyle={tw`justify-between w-full`}
         style={tw`mt-4 flex-row flex-wrap w-full max-h-[${
-          Dimensions.get('window').height / 1.6
+          Dimensions.get('window').height / 1.4
         }px]`}
       >
         <Text styletw='text-orange-700 mb-4'>

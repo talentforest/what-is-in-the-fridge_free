@@ -11,6 +11,10 @@ interface Props {
 }
 
 export default function FormSpaceItem({ editedFood, editFoodInfo }: Props) {
+  const compartmentNums: CompartmentNum[] = editedFood.space.includes('냉동')
+    ? ['1번', '2번']
+    : ['1번', '2번', '3번'];
+
   return (
     <View style={tw`border border-slate-400 bg-indigo-100 mb-1 p-2 rounded-lg`}>
       <Text styletw='mb-2 text-indigo-500 text-xs'>식료품 위치 선택</Text>
@@ -21,7 +25,10 @@ export default function FormSpaceItem({ editedFood, editFoodInfo }: Props) {
             onPress={() => {
               editFoodInfo({
                 space,
-                compartmentNum: '1번' as CompartmentNum,
+                compartmentNum:
+                  editedFood.compartmentNum === '3번' && space.includes('냉동')
+                    ? '2번'
+                    : editedFood.compartmentNum,
               });
             }}
             style={tw`border border-slate-400 flex-row h-10 w-[${
@@ -40,14 +47,31 @@ export default function FormSpaceItem({ editedFood, editFoodInfo }: Props) {
                 space === editedFood.space ? 'text-blue-100' : 'text-blue-600'
               } pl-2`}
             >
-              {space.slice(0, 3)}
+              {space}
             </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      <Text styletw='text-xs text-indigo-500 my-2'>추가할 칸</Text>
+      <View style={tw`flex-row gap-1`}>
+        {compartmentNums.map((compartmentNum) => (
+          <TouchableOpacity
+            key={compartmentNum}
+            onPress={() => editFoodInfo({ compartmentNum })}
+            style={tw`border border-slate-400 rounded-lg px-4 py-2 ${
+              editedFood.compartmentNum === compartmentNum
+                ? 'bg-indigo-600'
+                : 'bg-white'
+            }`}
+          >
             <Text
               styletw={`${
-                space === editedFood.space ? 'text-lime-200' : 'text-lime-700'
+                editedFood.compartmentNum === compartmentNum
+                  ? 'text-white'
+                  : 'text-indigo-600'
               }`}
             >
-              {space.slice(3, 6)}
+              {compartmentNum} 칸
             </Text>
           </TouchableOpacity>
         ))}
