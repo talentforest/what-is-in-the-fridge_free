@@ -14,9 +14,6 @@ export default function ExpiredFoods() {
 
   return (
     <ScrollView style={tw`flex-1 bg-indigo-50 p-4 gap-1`}>
-      <Text styletw='mb-4 text-slate-600'>
-        유통기한이 3일 이내이거나 지난 식료품
-      </Text>
       <View style={tw`gap-2 mb-20`}>
         <Text styletw='text-indigo-600'>냉장실</Text>
         <FoodTagList

@@ -26,13 +26,13 @@ export default function EntranceBox({ title, destination, children }: Props) {
 
   return (
     <TouchableOpacity
-      style={tw`min-h-28 border border-slate-300 flex-1 justify-between rounded-lg p-3 bg-white`}
+      style={tw`min-h-36 border border-slate-300 flex-1 rounded-lg p-3 bg-white`}
       onPress={() => navigation.navigate(destination)}
     >
-      <Text styletw='text-sm text-indigo-600'>{title}</Text>
+      <Text styletw='text-sm text-indigo-600 mb-2'>{title}</Text>
       {children}
       <View
-        style={tw`flex-row justify-end items-center self-end absolute top-0 bottom-0 right-2`}
+        style={tw`flex-row justify-end items-center self-end absolute top-0 bottom-0 right-1`}
       >
         <Icon name='chevron-right' size={25} color='#4a46e5' />
       </View>
