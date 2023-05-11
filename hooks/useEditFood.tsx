@@ -8,7 +8,7 @@ import {
   removeFavorite,
 } from '../redux/slice/favoriteFoodsSlice';
 
-export default function useChangeFoodInfo({ food }: { food: Food }) {
+export default function useEditFood({ food }: { food: Food }) {
   const [editedFood, setEditedFood] = useState(food);
   const [editing, setEditing] = useState(false);
   const dispatch = useDispatch();
