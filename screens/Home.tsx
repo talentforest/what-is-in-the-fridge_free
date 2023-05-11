@@ -34,7 +34,7 @@ const Home = () => {
         <Header />
         <View style={tw`flex-row justify-between gap-2 mt-2`}>
           {assets && (
-            <EntranceBox title='나의 냉장고' destination='EntranceFridge'>
+            <EntranceBox title='나의 냉장고' destination='EntranceFridgeSpace'>
               {assets && (
                 <Image
                   source={assets[0]}

@@ -1,7 +1,7 @@
 import { Dimensions, View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { Food } from '../../constant/foods';
-import { cutLetter, getLeftDays } from '../../util';
+import { cutLetter, getISODate, getLeftDays } from '../../util';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import tw from 'twrnc';
@@ -37,7 +37,11 @@ export default function BigFoodTag({
         <TouchableOpacity
           style={tw`self-end absolute bottom-0.5 right-0.5`}
           onPress={() => {
-            setSelectedFood(food);
+            setSelectedFood({
+              ...food,
+              expirationDate: getISODate(new Date()),
+              purchaseDate: getISODate(new Date()),
+            });
             setModalVisible(true);
           }}
         >

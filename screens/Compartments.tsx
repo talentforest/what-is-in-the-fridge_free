@@ -3,13 +3,14 @@ import { View } from 'react-native';
 import { fonts } from '../constant/fonts';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
+import { CompartmentType } from '../constant/fridgeInfo';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import tw from 'twrnc';
 
 export default function Compartments({ route }: any) {
+  const { space } = route.params;
   const [fontsLoaded] = useFonts(fonts);
   const navigation = useNavigation();
-  const { space } = route.params;
 
   useEffect(() => {
     navigation.setOptions({ title: space });
@@ -17,9 +18,11 @@ export default function Compartments({ route }: any) {
 
   const getCompartments = (numOfItems: number) => {
     return Array.from({ length: numOfItems }, (_, index) => {
-      return { name: `${index + 1}번 ${space.slice(0, 2)}칸` };
+      const compartmentNum = `${index + 1}번`;
+      return { space, compartmentNum } as CompartmentType;
     });
   };
+
   const compartments = space.includes('냉동')
     ? getCompartments(2)
     : getCompartments(3);
@@ -31,12 +34,10 @@ export default function Compartments({ route }: any) {
       <View
         style={tw`border flex-1 justify-between gap-3 p-3 border-slate-300 rounded-lg bg-stone-200`}
       >
-        {compartments.map((compartment, index) => (
+        {compartments.map((compartment) => (
           <Compartment
-            key={compartment.name}
-            space={space}
-            compartmentName={compartment.name}
-            index={index}
+            key={compartment.compartmentNum}
+            compartment={compartment}
           />
         ))}
       </View>

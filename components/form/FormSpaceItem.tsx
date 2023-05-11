@@ -12,8 +12,8 @@ interface Props {
 
 export default function FormSpaceItem({ editedFood, editFoodInfo }: Props) {
   return (
-    <View style={tw`border border-slate-400 bg-indigo-100 p-2 rounded-lg`}>
-      <Text styletw='mb-2 text-indigo-600 text-xs'>식료품 위치</Text>
+    <View style={tw`border border-slate-400 bg-indigo-100 mb-1 p-2 rounded-lg`}>
+      <Text styletw='mb-2 text-indigo-500 text-xs'>식료품 위치 선택</Text>
       <View style={tw`flex-wrap flex-row gap-1`}>
         {SpaceName.map((space) => (
           <TouchableOpacity

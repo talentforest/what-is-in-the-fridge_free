@@ -19,7 +19,7 @@ export default function FormNameItem({
 
   return (
     <View
-      style={tw`justify-between bg-indigo-50 rounded-lg border-slate-400 border p-2`}
+      style={tw`flex-1 justify-between bg-indigo-50 rounded-lg border-slate-400 border p-2`}
     >
       <Text styletw='mb-2 text-indigo-500 text-xs'>식료품 이름</Text>
       <TextInput
