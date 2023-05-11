@@ -10,7 +10,7 @@ export type EmptyTagName =
 
 export default function EmptyTag({ tagName }: { tagName: EmptyTagName }) {
   return (
-    <View style={tw`flex-1 w-full justify-center`}>
+    <View style={tw`flex-1 w-full min-h-20 justify-center`}>
       <Text styletw='text-sm text-slate-500 text-center h-2/3'>{tagName}</Text>
     </View>
   );
