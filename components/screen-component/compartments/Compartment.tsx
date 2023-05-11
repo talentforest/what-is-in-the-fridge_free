@@ -36,7 +36,7 @@ export default function Compartment({ compartment }: Props) {
           </Text>
           <AddFoodModalBtn compartment={compartment} />
         </View>
-        <View style={tw`mt-2 flex-1 flex-row flex-wrap items-center gap-2`}>
+        <View style={tw`mt-2 flex-1 flex-row flex-wrap items-center gap-1`}>
           {getFoodList(space, compartmentNum).map((food: Food) => (
             <TouchableOpacity
               key={food.id}
