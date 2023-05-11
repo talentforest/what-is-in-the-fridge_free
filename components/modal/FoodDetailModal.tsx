@@ -5,7 +5,7 @@ import { getLocaleDate } from '../../util';
 import tw from 'twrnc';
 import InfoBox from './component/InfoBox';
 import SubmitBtn from '../form/SubmitBtn';
-import useChangeFoodInfo from '../../hooks/useChangeFoodInfo';
+import useEditFood from '../../hooks/useEditFood';
 import useDeleteFood from '../../hooks/useDeleteFood';
 import FoodForm from '../form/FoodForm';
 import RNModal from './component/Modal';
@@ -28,7 +28,7 @@ export default function FoodDetailModal({
     editedFood,
     editFoodInfo,
     onEditSumbit, //
-  } = useChangeFoodInfo({ food });
+  } = useEditFood({ food });
 
   return (
     <RNModal
