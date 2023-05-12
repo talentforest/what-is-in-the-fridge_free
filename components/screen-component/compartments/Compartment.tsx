@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useState } from 'react';
 import { Food, initialFoodInfo } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
@@ -36,7 +36,10 @@ export default function Compartment({ compartment }: Props) {
           </Text>
           <AddFoodModalBtn compartment={compartment} />
         </View>
-        <View style={tw`mt-2 flex-1 flex-row flex-wrap items-center gap-1`}>
+        <ScrollView
+          contentContainerStyle={tw`flex-row flex-wrap gap-1 items-center`}
+          style={tw`mt-2 flex-1 `}
+        >
           {getFoodList(space, compartmentNum).map((food: Food) => (
             <TouchableOpacity
               key={food.id}
@@ -48,7 +51,7 @@ export default function Compartment({ compartment }: Props) {
               <SmallFoodTag food={food} />
             </TouchableOpacity>
           ))}
-        </View>
+        </ScrollView>
       </View>
       {modalVisible && (
         <FoodDetailModal
