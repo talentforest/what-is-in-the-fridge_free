@@ -14,7 +14,7 @@ export default function Compartments({ route }: any) {
 
   useEffect(() => {
     navigation.setOptions({ title: space });
-  }, [navigation]);
+  }, []);
 
   const getCompartments = (numOfItems: number) => {
     return Array.from({ length: numOfItems }, (_, index) => {

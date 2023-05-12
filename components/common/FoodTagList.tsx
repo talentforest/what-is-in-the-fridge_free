@@ -8,9 +8,10 @@ import AddFoodModal from '../modal/AddFoodModal';
 
 interface Props {
   foods: Food[];
+  editing: boolean;
 }
 
-export default function FoodTagList({ foods }: Props) {
+export default function FoodTagList({ foods, editing }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedFood, setSelectedFood] = useState<Food>(initialFoodInfo);
 
@@ -24,6 +25,7 @@ export default function FoodTagList({ foods }: Props) {
               food={food}
               setModalVisible={setModalVisible}
               setSelectedFood={setSelectedFood}
+              editing={editing}
             />
           ))}
         </View>

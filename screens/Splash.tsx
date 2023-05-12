@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { Image, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import { fonts } from '../constant/fonts';
-import { SafeAreaView, Text } from '../components/native-component';
+import { SafeBottomAreaView, Text } from '../components/native-component';
 import * as SplashScreen from 'expo-splash-screen';
 import tw from 'twrnc';
 import useImageLoad from '../hooks/useImageLoad';
@@ -40,7 +40,7 @@ export default function Splash({ appIsReady, setAppIsReady }: Props) {
   if (!fontsLoaded || !isLoaded) return null;
 
   return (
-    <SafeAreaView>
+    <SafeBottomAreaView>
       <View
         style={tw`flex-1 items-center justify-center bg-indigo-400`}
         onLayout={onLayoutRootView}
@@ -50,6 +50,6 @@ export default function Splash({ appIsReady, setAppIsReady }: Props) {
         )}
         <Text styletw='text-3xl mt-12'>냉장고에 뭐가 있지?</Text>
       </View>
-    </SafeAreaView>
+    </SafeBottomAreaView>
   );
 }
