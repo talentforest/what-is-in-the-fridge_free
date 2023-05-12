@@ -1,4 +1,4 @@
 export * from './Text';
 export * from './TouchableOpacity';
-export * from './SafeAreaView';
+export * from './SafeBottomAreaView';
 export * from './TextInput';

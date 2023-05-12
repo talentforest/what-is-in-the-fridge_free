@@ -1,6 +1,6 @@
 import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
-import { SafeAreaView, Text } from '../components/native-component';
+import { SafeBottomAreaView, Text } from '../components/native-component';
 import { ScrollView, View, Image } from 'react-native';
 import { useSelector } from '../redux/hook';
 import tw from 'twrnc';
@@ -29,8 +29,8 @@ const Home = () => {
   if (!fontsLoaded || !isLoaded) return null;
 
   return (
-    <SafeAreaView>
-      <ScrollView style={tw`px-4 mt-4`}>
+    <SafeBottomAreaView>
+      <ScrollView style={tw`px-4 mt-14`}>
         <Header />
         <View style={tw`flex-row justify-between gap-2 mt-2`}>
           {assets && (
@@ -88,7 +88,7 @@ const Home = () => {
         </View>
         <Footer />
       </ScrollView>
-    </SafeAreaView>
+    </SafeBottomAreaView>
   );
 };
 
