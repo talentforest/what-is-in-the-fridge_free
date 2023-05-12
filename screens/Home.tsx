@@ -3,6 +3,7 @@ import { useFonts } from 'expo-font';
 import { SafeBottomAreaView, Text } from '../components/native-component';
 import { ScrollView, View, Image } from 'react-native';
 import { useSelector } from '../redux/hook';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import tw from 'twrnc';
 import BannerSlider from '../components/screen-component/home/BannerSlider';
 import Header from '../components/screen-component/home/Header';
@@ -28,9 +29,11 @@ const Home = () => {
 
   if (!fontsLoaded || !isLoaded) return null;
 
+  const statusBarHeight = getStatusBarHeight(true);
+
   return (
     <SafeBottomAreaView>
-      <ScrollView style={tw`px-4 mt-14`}>
+      <ScrollView style={tw`px-4 mt-[${statusBarHeight + 10}px]`}>
         <Header />
         <View style={tw`flex-row justify-between gap-2 mt-2`}>
           {assets && (
