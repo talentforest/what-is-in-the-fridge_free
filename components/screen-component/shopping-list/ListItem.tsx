@@ -6,10 +6,10 @@ import { getISODate } from '../../../util';
 import { removeFromShoppingList } from '../../../redux/slice/shoppingList';
 import { useDispatch } from '../../../redux/hook';
 import AddFoodModalBtn from '../compartments/AddFoodModalBtn';
-import DeleteBtn from '../../common/DeleteBtn';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/AntDesign';
 import UUIDGenerator from 'react-native-uuid';
+import IconBtn from '../../common/IconBtn';
 
 interface Props {
   food: Food;
@@ -41,7 +41,8 @@ export default function ListItem({ food }: Props) {
           });
         }}
       />
-      <DeleteBtn
+      <IconBtn
+        iconName='delete'
         onPress={() => dispatch(removeFromShoppingList({ name: food.name }))}
       />
     </View>

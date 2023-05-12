@@ -16,7 +16,6 @@ interface Props {
 
 export default function useAddFood({ selectedFood, compartment }: Props) {
   const [newFood, setNewFood] = useState<Food>(selectedFood || initialFoodInfo);
-
   const { checkExistFood, alertExistFood } = useCheckFood();
   const myUuid = UUIDGenerator.v4();
   const dispatch = useDispatch();

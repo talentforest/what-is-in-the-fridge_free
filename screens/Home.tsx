@@ -56,7 +56,7 @@ const Home = () => {
         </View>
         {assets && <BannerSlider assets={assets} />}
         <View style={tw`gap-2`}>
-          <EntranceBox title='자주 먹는 식료품' destination='Favorite'>
+          <EntranceBox title='자주 먹는 식료품' destination='FavoriteFoods'>
             {favoriteFoods.length !== 0 ? (
               <View style={tw`gap-1 flex-1 flex-row flex-wrap`}>
                 {favoriteFoods.slice(0, 8).map((food) => (

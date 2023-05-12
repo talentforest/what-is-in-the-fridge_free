@@ -8,7 +8,7 @@ import { FontGmarketSansRegular } from '../constant/fonts';
 import React from 'react';
 import Home from '../screens/Home';
 import Compartments from '../screens/Compartments';
-import Favorite from '../screens/FavoriteFoods';
+import FavoriteFoods from '../screens/FavoriteFoods';
 import Notification from '../screens/Notification';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ExpiredFoods from '../screens/ExpiredFoods';
@@ -29,12 +29,11 @@ const BackBtn = () => {
 };
 
 export type RootStackParamList = {
-  DrawerNav: undefined;
   Home: undefined;
   EntranceFridgeSpace: undefined;
   Compartments: undefined | object;
   FoodDetail: undefined;
-  Favorite: undefined;
+  FavoriteFoods: undefined;
   Notification: undefined;
   ExpiredFoods: undefined;
   ShoppingList: undefined;
@@ -78,8 +77,8 @@ const Navigation = () => {
         }}
       />
       <Stack.Screen
-        name='Favorite'
-        component={Favorite}
+        name='FavoriteFoods'
+        component={FavoriteFoods}
         options={{ ...options, title: '자주 먹는 식료품' }}
       />
       <Stack.Screen
