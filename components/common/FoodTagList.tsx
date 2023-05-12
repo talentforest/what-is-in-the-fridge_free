@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import { Food, initialFoodInfo } from '../../constant/foods';
+import { Food } from '../../constant/foods';
 import tw from 'twrnc';
 import BigFoodTag from './BigFoodTag';
 import EmptyTag from './EmptyTag';
@@ -13,7 +13,7 @@ interface Props {
 
 export default function FoodTagList({ foods, editing }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedFood, setSelectedFood] = useState<Food>(initialFoodInfo);
+  const [selectedFood, setSelectedFood] = useState<Food>();
 
   return (
     <>
@@ -34,7 +34,7 @@ export default function FoodTagList({ foods, editing }: Props) {
           <EmptyTag tagName='아직 유통기한이 임박한 식료품이 없습니다' />
         </View>
       )}
-      {selectedFood && modalVisible && setModalVisible && (
+      {modalVisible && selectedFood && (
         <AddFoodModal
           selectedFood={selectedFood}
           modalVisible={modalVisible}

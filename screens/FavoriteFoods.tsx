@@ -8,21 +8,21 @@ import { useNavigation } from '@react-navigation/native';
 import tw from 'twrnc';
 import FoodTagList from '../components/common/FoodTagList';
 import EmptyTag from '../components/common/EmptyTag';
-import EditBtn from '../components/common/EditBtn';
+import IconBtn from '../components/common/IconBtn';
 
 export default function FavoriteFoods() {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const [fontsLoaded] = useFonts(fonts);
-  const navigation = useNavigation();
   const [editing, setEditing] = useState(false);
+  const navigation = useNavigation();
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () =>
         favoriteFoods.length !== 0 && (
-          <EditBtn
+          <IconBtn
             onPress={() => setEditing((prev) => !prev)}
-            editing={editing}
+            iconName={editing ? 'checkcircle' : 'edit'}
           />
         ),
     });
