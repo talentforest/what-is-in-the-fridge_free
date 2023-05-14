@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Platform, ScrollView, View } from 'react-native';
-import { SafeBottomAreaView, Text } from '../components/native-component';
+import { Text } from '../components/native-component';
 import { getISODate, getLocaleDate } from '../util';
+import { DEEP_INDIGO } from '../constant/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
 import EmptyTag from '../components/common/EmptyTag';
@@ -90,9 +91,9 @@ export default function Notification() {
   }, []);
 
   return (
-    <SafeBottomAreaView>
+    <>
       {notificationArr.length === 0 ? (
-        <View style={tw`flex-1 bg-indigo-50 p-4 gap-1`}>
+        <View style={tw`flex-1 p-4 gap-1 bg-neutral-50`}>
           <EmptyTag tagName='알림이 없습니다' />
         </View>
       ) : (
@@ -104,7 +105,7 @@ export default function Notification() {
                 style={tw`border border-slate-400 flex-row gap-3 items-center p-4 rounded-lg bg-white`}
                 key={notification.id}
               >
-                <Icon name='food-variant-off' size={24} color='#5644ff' />
+                <Icon name='food-variant-off' size={24} color={DEEP_INDIGO} />
                 <View style={tw`gap-2`}>
                   <Text>{notification.body}</Text>
                   <Text styletw='text-xs text-slate-400'>
@@ -116,7 +117,7 @@ export default function Notification() {
           </ScrollView>
         </>
       )}
-    </SafeBottomAreaView>
+    </>
   );
 }
 
@@ -139,7 +140,7 @@ async function registerForPushNotificationsAsync() {
       name: 'default',
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
+      lightColor: '#FF231F',
     });
   }
 

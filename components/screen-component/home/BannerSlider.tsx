@@ -1,9 +1,13 @@
 import { Image, View } from 'react-native';
-import { FontGmarketSansRegular } from '../../../constant/fonts';
+import {
+  FontGmarketSansBold,
+  FontGmarketSansRegular,
+} from '../../../constant/fonts';
 import { Text } from '../../native-component';
 import { Asset } from 'expo-asset';
 import Swiper from 'react-native-web-swiper';
 import tw from 'twrnc';
+import { DEEP_INDIGO } from '../../../constant/colors';
 
 interface Props {
   assets: Asset[];
@@ -13,47 +17,44 @@ export default function BannerSlider({ assets }: Props) {
   const slidesInfo = [
     {
       image: assets[0],
-      contents: '사야하는 장바구니 식료품 리스트가 무엇인가요?',
-    },
-    {
-      image: assets[1],
-      contents: '냉장고를 한눈에 관리해보세요',
+      contents: '냉장고를 한눈에 관리해보세요.',
     },
     {
       image: assets[2],
-      contents: '오늘은 어떤 재료를 사용해볼까요?',
+      contents: '장보기 리스트에 무엇이 있나요?',
     },
   ];
 
   return (
-    <View style={tw`my-10`}>
+    <View style={tw`mb-4`}>
       <Swiper
         loop
         timeout={8}
-        containerStyle={{ height: 280 }}
-        innerContainerStyle={tw`rounded-lg px-10`}
+        innerContainerStyle={tw`h-80`}
         minDistanceForAction={0.1}
         controlsProps={{
           dotsTouchable: true,
-          prevTitle: '이전',
-          nextTitle: '다음',
-          nextTitleStyle: { color: '#692eff', ...FontGmarketSansRegular },
-          prevTitleStyle: { color: '#692eff', ...FontGmarketSansRegular },
-          dotActiveStyle: { borderWidth: 2, backgroundColor: 'orange' },
+          prevTitle: '',
+          nextTitle: '',
+          dotsPos: 'top-right',
+          dotActiveStyle: { backgroundColor: DEEP_INDIGO },
         }}
       >
         {slidesInfo?.map((slide) => (
-          <View
-            key={slide.contents}
-            style={tw`w-full h-60 justify-center gap-3 items-center`}
-          >
+          <View key={slide.contents} style={tw`justify-center items-center`}>
             {assets && (
-              <Image
-                source={slide.image}
-                style={tw.style('w-auto h-48', { aspectRatio: 1 })}
-              />
+              <View style={tw`w-4/5 items-center justify-center`}>
+                <Image
+                  source={slide.image}
+                  style={tw.style('rounded-lg h-68 aspect-square')}
+                />
+              </View>
             )}
-            <Text styletw='text-base'>{slide.contents}</Text>
+            <Text
+              style={tw.style('text-base text-blue-700', FontGmarketSansBold)}
+            >
+              {slide.contents}
+            </Text>
           </View>
         ))}
       </Swiper>

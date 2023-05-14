@@ -37,10 +37,10 @@ export default function AddFoodModal({
       <ScrollView
         contentContainerStyle={tw`justify-between w-full`}
         style={tw`mt-4 flex-row flex-wrap w-full max-h-[${
-          Dimensions.get('window').height / 1.4
+          Dimensions.get('window').height / 2
         }px]`}
       >
-        <Text styletw='text-orange-700 mb-4'>
+        <Text styletw='text-orange-600 text-xs mb-4'>
           * 이미 냉장고에 추가한 식료품은 추가할 수 없습니다.
         </Text>
         {!compartment && (

@@ -6,13 +6,14 @@ import { addToShoppingList } from '../../../redux/slice/shoppingList';
 import { initialFoodInfo } from '../../../constant/foods';
 import Icon from 'react-native-vector-icons/AntDesign';
 import tw from 'twrnc';
+import { DEEP_INDIGO } from '../../../constant/colors';
 
 export default function TextInputToAddList() {
   const [foodName, setFoodName] = useState('');
   const dispatch = useDispatch();
 
   return (
-    <View style={tw`m-4`}>
+    <View style={tw`my-2`}>
       <TextInput
         value={foodName}
         onChangeText={setFoodName}
@@ -34,7 +35,7 @@ export default function TextInputToAddList() {
           setFoodName('');
         }}
       >
-        <Icon name='pluscircle' size={22} color='#4f46e5' />
+        <Icon name='pluscircle' size={22} color={DEEP_INDIGO} />
       </TouchableOpacity>
     </View>
   );

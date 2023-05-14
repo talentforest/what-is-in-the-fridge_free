@@ -1,6 +1,6 @@
 import { useFonts } from 'expo-font';
 import { View } from 'react-native';
-import { SafeBottomAreaView, Text } from '../components/native-component';
+import { Text } from '../components/native-component';
 import { fonts } from '../constant/fonts';
 import { useSelector } from '../redux/hook';
 import { useEffect, useState } from 'react';
@@ -31,17 +31,15 @@ export default function FavoriteFoods() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeBottomAreaView>
-      <View style={tw`flex-1 bg-indigo-50 p-4 gap-1`}>
-        {favoriteFoods.length !== 0 ? (
-          <>
-            <Text styletw='mb-2 text-indigo-600'>자주 먹는 식료품 목록</Text>
-            <FoodTagList foods={favoriteFoods} editing={editing} />
-          </>
-        ) : (
-          <EmptyTag tagName='아직 자주 먹는 식료품 정보가 없습니다' />
-        )}
-      </View>
-    </SafeBottomAreaView>
+    <View style={tw`flex-1 bg-neutral-50 p-4 gap-1`}>
+      {favoriteFoods.length !== 0 ? (
+        <>
+          <Text styletw='mb-2 text-indigo-600'>자주 먹는 식료품 목록</Text>
+          <FoodTagList foods={favoriteFoods} editing={editing} />
+        </>
+      ) : (
+        <EmptyTag tagName='아직 자주 먹는 식료품 정보가 없습니다' />
+      )}
+    </View>
   );
 }

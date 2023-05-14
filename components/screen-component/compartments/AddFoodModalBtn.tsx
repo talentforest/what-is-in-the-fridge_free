@@ -4,6 +4,7 @@ import { CompartmentType } from '../../../constant/fridgeInfo';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AddFoodModal from '../../modal/AddFoodModal';
 import { Food } from '../../../constant/foods';
+import { DEEP_INDIGO } from '../../../constant/colors';
 
 interface Props {
   selectedFood?: Food;
@@ -28,7 +29,7 @@ export default function AddFoodModalBtn({
   return (
     <>
       <TouchableOpacity onPress={onPressFc}>
-        <Icon name='basket-plus-outline' size={20} color='#4e45ff' />
+        <Icon name='basket-plus-outline' size={20} color={DEEP_INDIGO} />
       </TouchableOpacity>
       {modal && (
         <AddFoodModal

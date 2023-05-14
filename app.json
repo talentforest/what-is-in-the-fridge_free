@@ -7,7 +7,7 @@
     "icon": "./assets/fridge.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/fridge.png",
+      "image": "./assets/question-fridge.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
