@@ -23,7 +23,7 @@ export default function RNModal({
       isVisible={modalVisible}
       style={tw`justify-end m-0 border`}
     >
-      <View style={tw`bg-indigo-300 p-4 pb-16 rounded-2xl`}>
+      <View style={tw`bg-indigo-300 p-4 pb-8 rounded-t-2xl`}>
         <Header title={title} setModalVisible={setModalVisible} />
         {children}
       </View>

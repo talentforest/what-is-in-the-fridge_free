@@ -10,6 +10,7 @@ import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/AntDesign';
 import UUIDGenerator from 'react-native-uuid';
 import IconBtn from '../../common/IconBtn';
+import { INDIGO, YELLOW } from '../../../constant/colors';
 
 interface Props {
   food: Food;
@@ -25,7 +26,7 @@ export default function ListItem({ food }: Props) {
     <View
       style={tw`flex-row items-center gap-2 p-3 mb-1 border border-slate-300 w-full rounded-lg bg-white`}
     >
-      <Icon name='checksquareo' size={16} color='#ff8800' />
+      <Icon name='checksquareo' size={18} color={INDIGO} />
       <Text styletw='text-indigo-600 flex-1'>
         {food.image || ''} {food.name}
       </Text>

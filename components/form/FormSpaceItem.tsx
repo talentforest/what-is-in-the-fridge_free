@@ -1,9 +1,10 @@
 import { Dimensions, View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { CompartmentNum, SpaceName } from '../../constant/fridgeInfo';
+import { Food } from '../../constant/foods';
+import { INACTIVE_COLOR, YELLOW } from '../../constant/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
-import { Food } from '../../constant/foods';
 
 interface Props {
   editedFood: Food;
@@ -40,7 +41,7 @@ export default function FormSpaceItem({ editedFood, editFoodInfo }: Props) {
             <Icon
               name={space.includes('냉동') ? 'fridge-bottom' : 'fridge-top'}
               size={20}
-              color={`${space === editedFood.space ? '#fff' : '#006eff'}`}
+              color={`${space === editedFood.space ? YELLOW : INACTIVE_COLOR}`}
             />
             <Text
               styletw={`${

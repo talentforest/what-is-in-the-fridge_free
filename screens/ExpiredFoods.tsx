@@ -13,7 +13,7 @@ export default function ExpiredFoods() {
   } = useExpiredFood();
 
   return (
-    <ScrollView style={tw`flex-1 bg-indigo-50 p-4 gap-1`}>
+    <ScrollView style={tw`flex-1 bg-neutral-50 p-4 gap-1`}>
       <View style={tw`gap-2 mb-20`}>
         <Text styletw='text-indigo-600'>냉장실</Text>
         <FoodTagList

@@ -7,6 +7,7 @@ import { getLeftDays } from '../../../util';
 import { Space as SpaceType } from '../../../constant/fridgeInfo';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/Feather';
+import { DEEP_INDIGO } from '../../../constant/colors';
 
 interface Props {
   space: SpaceType;
@@ -44,7 +45,7 @@ export default function Space({ space, bottom, door }: Props) {
           <Text styletw='text-indigo-700 text-base'>
             {space} {bottom ? '3칸' : '2칸'}
           </Text>
-          <Icon name='chevron-right' size={22} color='#4e45ff' />
+          <Icon name='chevron-right' size={22} color={DEEP_INDIGO} />
         </View>
         <View
           style={tw`p-3 gap-4 border flex-1 rounded-lg bg-white border-slate-400`}

@@ -5,15 +5,17 @@ import {
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from '../components/native-component';
 import { FontGmarketSansRegular } from '../constant/fonts';
+import { DEEP_INDIGO, GRAY, LIGHT_YELLOW, YELLOW } from '../constant/colors';
 import React from 'react';
 import Home from '../screens/Home';
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
 import Notification from '../screens/Notification';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/AntDesign';
 import ExpiredFoods from '../screens/ExpiredFoods';
 import ShoppingList from '../screens/ShoppingList';
 import EntranceFridgeSpace from '../screens/EntranceFridgeSpace';
+import MyTabs from './MyTabs';
 
 const BackBtn = () => {
   const navigation = useNavigation();
@@ -23,7 +25,7 @@ const BackBtn = () => {
         navigation.goBack();
       }}
     >
-      <Icon name='keyboard-arrow-left' size={30} color='#4e45ff' />
+      <Icon name='left' size={18} color={DEEP_INDIGO} />
     </TouchableOpacity>
   );
 };
@@ -37,6 +39,7 @@ export type RootStackParamList = {
   Notification: undefined;
   ExpiredFoods: undefined;
   ShoppingList: undefined;
+  MyTabs: undefined;
 };
 
 export type NavigateProp = NavigationProp<RootStackParamList>;
@@ -45,11 +48,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const options: NativeStackNavigationOptions = {
   headerShown: true,
-  headerTintColor: '#333',
-  headerStyle: { backgroundColor: '#e0e7ff' },
+  headerTintColor: GRAY,
+  headerStyle: { backgroundColor: LIGHT_YELLOW },
   headerTitleStyle: {
     fontWeight: '900',
-    fontSize: 18,
+    fontSize: 16,
     ...FontGmarketSansRegular,
   },
   headerLeft: () => <BackBtn />,
@@ -57,11 +60,12 @@ const options: NativeStackNavigationOptions = {
 
 const Navigation = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name='MyTabs'
+        component={MyTabs}
+      />
       <Stack.Screen name='Home' component={Home} />
       <Stack.Screen
         name='EntranceFridgeSpace'

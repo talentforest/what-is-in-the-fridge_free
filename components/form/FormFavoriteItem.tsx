@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
+import { INACTIVE_COLOR } from '../../constant/colors';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -27,7 +28,7 @@ export default function FormFavoriteItem({ favorite, changeFoodInfo }: Props) {
             style={tw`justify-center flex-1 items-center`}
             onPress={() => changeFoodInfo({ favorite: true })}
           >
-            <Icon name='staro' size={40} color='#aaa' />
+            <Icon name='staro' size={40} color={INACTIVE_COLOR} />
           </TouchableOpacity>
         )}
       </View>
