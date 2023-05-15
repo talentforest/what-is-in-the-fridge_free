@@ -21,7 +21,7 @@ export default function FormNameItem({
     <View
       style={tw`flex-1 justify-between bg-indigo-50 rounded-lg border-slate-400 border p-2`}
     >
-      <Text styletw='mb-2 text-indigo-500 text-xs'>식료품 이름</Text>
+      <Text styletw='mb-2 text-indigo-500 text-xs'>식료품 이름 작성</Text>
       <TextInput
         styletw='self-end w-full'
         onChangeText={onChangeText}

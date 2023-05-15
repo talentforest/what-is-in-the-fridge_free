@@ -17,7 +17,9 @@ export default function FormSpaceItem({ editedFood, editFoodInfo }: Props) {
     : ['1번', '2번', '3번'];
 
   return (
-    <View style={tw`border border-slate-400 bg-indigo-100 mb-1 p-2 rounded-lg`}>
+    <View
+      style={tw`border border-slate-400 bg-indigo-50 mb-1 p-2 py-3 rounded-lg`}
+    >
       <Text styletw='mb-2 text-indigo-500 text-xs'>식료품 위치 선택</Text>
       <View style={tw`flex-wrap flex-row gap-1`}>
         {SpaceName.map((space) => (
@@ -45,7 +47,7 @@ export default function FormSpaceItem({ editedFood, editFoodInfo }: Props) {
             />
             <Text
               styletw={`${
-                space === editedFood.space ? 'text-blue-100' : 'text-blue-600'
+                space === editedFood.space ? 'text-white' : 'text-slate-600'
               } pl-2`}
             >
               {space}
@@ -53,7 +55,7 @@ export default function FormSpaceItem({ editedFood, editFoodInfo }: Props) {
           </TouchableOpacity>
         ))}
       </View>
-      <Text styletw='text-xs text-indigo-500 my-2'>추가할 칸</Text>
+      <Text styletw='text-xs text-indigo-500 my-2'>추가할 칸 선택</Text>
       <View style={tw`flex-row gap-1`}>
         {compartmentNums.map((compartmentNum) => (
           <TouchableOpacity
