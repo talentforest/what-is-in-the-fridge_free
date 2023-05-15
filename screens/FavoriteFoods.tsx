@@ -38,7 +38,9 @@ export default function FavoriteFoods() {
           <FoodTagList foods={favoriteFoods} editing={editing} />
         </>
       ) : (
-        <EmptyTag tagName='아직 자주 먹는 식료품 정보가 없습니다' />
+        <View style={tw`h-80`}>
+          <EmptyTag tagName='아직 자주 먹는 식료품 정보가 없습니다' />
+        </View>
       )}
     </View>
   );

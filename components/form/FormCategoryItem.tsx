@@ -17,17 +17,19 @@ export default function FormCategoryItem({ category, changeFoodInfo }: Props) {
 
   return (
     <View
-      style={tw`min-h-24 bg-indigo-50 flex-1 gap-1 p-2 border rounded-lg border-slate-400`}
+      style={tw`justify-between bg-indigo-50 flex-1 gap-1 p-2 border rounded-lg border-slate-400`}
     >
-      <Text styletw='mb-2 text-indigo-500 text-xs'>식료품 카테고리</Text>
-      <Text styletw='leading-5 flex-1'>{category}</Text>
-      <TouchableOpacity
-        onPress={() => setModalVisible(true)}
-        style={tw`flex-row items-center self-end border py-0.5 pl-2 rounded-2xl bg-yellow-300 border-slate-400`}
-      >
-        <Text styletw='text-xs'>선택하기</Text>
-        <Icon name='chevron-right' size={18} color={INDIGO} />
-      </TouchableOpacity>
+      <Text styletw='mb-2 text-indigo-500 text-xs'>식료품 카테고리 선택</Text>
+      <View style={tw`flex-row justify-between self-end w-full`}>
+        <TouchableOpacity
+          onPress={() => setModalVisible(true)}
+          style={tw`flex-row items-center border py-0.5 pl-2 rounded-lg bg-yellow-300 border-slate-400`}
+        >
+          <Text styletw='text-xs'>선택하기</Text>
+          <Icon name='chevron-right' size={18} color={INDIGO} />
+        </TouchableOpacity>
+        <Text styletw='text-base'>{category}</Text>
+      </View>
       {modalVisible && (
         <FoodCategoryModal
           modalVisible={modalVisible}

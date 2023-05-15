@@ -35,7 +35,10 @@ const Home = () => {
   const statusBarHeight = getStatusBarHeight(true);
 
   return (
-    <ScrollView style={tw`px-4 pt-[${statusBarHeight + 14}px] bg-neutral-50`}>
+    <ScrollView
+      style={tw`px-4 pt-[${statusBarHeight + 14}px] bg-neutral-50`}
+      contentContainerStyle={tw`pb-10`}
+    >
       <Header />
       {assets && <BannerSlider assets={assets} />}
       {assets && <FridgeInfo asset={[assets[3], assets[4]]} />}

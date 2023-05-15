@@ -59,9 +59,9 @@ export default function FormDateItem({ label, date, changeFoodInfo }: Props) {
                     purchaseDate: getISODate(new Date(btn.func(date))),
                   });
               }}
-              style={tw`justify-center ${btn.color} border border-slate-400 p-1.5 rounded-2xl`}
+              style={tw`justify-center ${btn.color} border border-slate-400 p-1 px-2 rounded-2xl`}
             >
-              <Text styletw='text-[11px]'>+ {btn.label}</Text>
+              <Text styletw='text-xs'>+ {btn.label}</Text>
             </TouchableOpacity>
           ))}
         </View>

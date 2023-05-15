@@ -1,5 +1,8 @@
 import { Text as RNText, TextProps } from 'react-native';
-import { FontGmarketSansRegular } from '../../constant/fonts';
+import {
+  FontGmarketSansBold,
+  FontGmarketSansRegular,
+} from '../../constant/fonts';
 import tw from 'twrnc';
 
 interface Props extends TextProps {
@@ -11,7 +14,9 @@ export function Text({ styletw, ...props }: Props) {
     <RNText
       style={tw.style(
         `text-slate-800 ${styletw || ''}`,
-        FontGmarketSansRegular
+        styletw?.includes('font-bold')
+          ? FontGmarketSansBold
+          : FontGmarketSansRegular
       )}
       {...props}
     />

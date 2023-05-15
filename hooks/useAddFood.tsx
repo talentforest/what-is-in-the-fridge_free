@@ -31,7 +31,8 @@ export default function useAddFood({ selectedFood, compartment }: Props) {
     };
 
     if (checkExistFood(food)) {
-      return alertExistFood(food);
+      const existFood = checkExistFood(food);
+      return existFood ? alertExistFood(existFood) : null;
     }
 
     if (food.favorite) {

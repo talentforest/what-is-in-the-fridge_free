@@ -32,26 +32,25 @@ export default function FoodDetailModal({
 
   return (
     <RNModal
-      title='식료품 상세 정보'
+      title={editing ? '식료품 정보 수정' : '식료품 상세 정보'}
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
-      <View
-        style={tw`w-full mt-6 gap-2 justify-center items-center rounded-lg`}
-      >
-        <Text styletw='text-6xl pt-4'>{food.image}</Text>
-      </View>
       {editing ? (
-        <>
-          <Text styletw='mt-2 text-base w-full'>식료품 정보 수정</Text>
+        <View style={tw`mt-4`}>
           <FoodForm food={editedFood} changeFoodInfo={editFoodInfo} />
           <SubmitBtn
             btnName='식료품 정보 수정 완료'
             onPress={() => onEditSumbit(food.id)}
           />
-        </>
+        </View>
       ) : (
         <>
+          <View
+            style={tw`w-full mt-6 gap-2 justify-center items-center rounded-lg`}
+          >
+            <Text styletw='text-6xl pt-4'>{food.image}</Text>
+          </View>
           <View
             style={tw`my-2 rounded-2xl border border-slate-500 self-center px-3 bg-white`}
           >
