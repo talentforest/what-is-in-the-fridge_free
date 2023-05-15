@@ -1,6 +1,7 @@
 import { getLeftDays } from '../util';
 import { Food } from '../constant/foods';
 import { useSelector } from '../redux/hook';
+import { CompartmentNum, Space } from '../constant/fridgeInfo';
 
 export default function useExpiredFoods() {
   const { fridgeFoods, freezerFoods } = useSelector((state) => state.allFoods);
@@ -36,6 +37,17 @@ export default function useExpiredFoods() {
 
   const allLeftAndExpiredFoods = [...allThreeDaysLeftFoods, ...allExpiredFoods];
 
+  const getExpiredFoodList = (space: Space, compartmentNum: CompartmentNum) => {
+    const foodList = space.includes('냉동') ? freezerFoods : fridgeFoods;
+    return foodList.filter((food) => {
+      return (
+        food.space === space &&
+        food.compartmentNum === compartmentNum &&
+        getLeftDays(food.expirationDate) < 4
+      );
+    });
+  };
+
   return {
     threeDaysLeftFridgeFoods,
     threeDaysLeftFreezerFoods,
@@ -44,5 +56,6 @@ export default function useExpiredFoods() {
     expiredFreezerFoods,
     allExpiredFoods,
     allLeftAndExpiredFoods,
+    getExpiredFoodList,
   };
 }

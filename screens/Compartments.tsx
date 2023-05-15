@@ -30,16 +30,18 @@ export default function Compartments({ route }: any) {
   if (!fontsLoaded) return null;
 
   return (
-    <View style={tw`px-4 pt-4 pb-8 flex-1 bg-neutral-50`}>
-      <View
-        style={tw`border flex-1 justify-between gap-3 p-3 border-slate-300 rounded-lg bg-stone-200`}
-      >
-        {compartments.map((compartment) => (
-          <Compartment
-            key={compartment.compartmentNum}
-            compartment={compartment}
-          />
-        ))}
+    <View style={tw`flex-1 pt-4 pb-8 bg-neutral-50`}>
+      <View style={tw`p-4 flex-1 shadow-lg`}>
+        <View
+          style={tw`border flex-1 justify-between gap-3 p-3 border-slate-300 rounded-lg bg-stone-200`}
+        >
+          {compartments.map((compartment) => (
+            <Compartment
+              key={compartment.compartmentNum}
+              compartment={compartment}
+            />
+          ))}
+        </View>
       </View>
     </View>
   );
