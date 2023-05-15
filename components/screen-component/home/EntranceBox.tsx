@@ -6,9 +6,9 @@ import {
   RootStackParamList,
 } from '../../../navigation/Navigation';
 import { ReactNode } from 'react';
+import { DEEP_INDIGO } from '../../../constant/colors';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/Feather';
-import { DEEP_INDIGO } from '../../../constant/colors';
 
 interface Props {
   title: EntranceTitle;

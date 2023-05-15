@@ -14,7 +14,7 @@ interface Props {
   food: Food;
   setModalVisible: (modalVisible: boolean) => void;
   setSelectedFood: (food: Food) => void;
-  editing: boolean;
+  editing?: boolean;
 }
 
 export default function BigFoodTag({

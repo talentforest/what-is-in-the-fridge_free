@@ -8,7 +8,7 @@ import AddFoodModal from '../modal/AddFoodModal';
 
 interface Props {
   foods: Food[];
-  editing: boolean;
+  editing?: boolean;
 }
 
 export default function FoodTagList({ foods, editing }: Props) {

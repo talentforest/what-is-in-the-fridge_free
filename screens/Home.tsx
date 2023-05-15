@@ -1,7 +1,7 @@
 import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
 import { Text } from '../components/native-component';
-import { ScrollView, View, Image } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import tw from 'twrnc';

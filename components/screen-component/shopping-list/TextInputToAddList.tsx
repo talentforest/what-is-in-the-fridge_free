@@ -4,9 +4,9 @@ import { useDispatch } from '../../../redux/hook';
 import { TextInput, TouchableOpacity } from '../../native-component';
 import { addToShoppingList } from '../../../redux/slice/shoppingList';
 import { initialFoodInfo } from '../../../constant/foods';
+import { DEEP_INDIGO } from '../../../constant/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import tw from 'twrnc';
-import { DEEP_INDIGO } from '../../../constant/colors';
 
 export default function TextInputToAddList() {
   const [foodName, setFoodName] = useState('');

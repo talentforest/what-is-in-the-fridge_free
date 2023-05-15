@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Dimensions, View } from 'react-native';
+import { View } from 'react-native';
 import Modal from 'react-native-modal';
 import tw from 'twrnc';
 import Header from './Header';

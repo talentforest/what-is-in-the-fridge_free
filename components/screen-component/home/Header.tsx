@@ -2,9 +2,9 @@ import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../../navigation/Navigation';
+import { INDIGO } from '../../../constant/colors';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { INDIGO } from '../../../constant/colors';
 
 export default function Header() {
   const navigation = useNavigation<NavigateProp>();

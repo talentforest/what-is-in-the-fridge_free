@@ -1,8 +1,8 @@
 import { Pressable, View } from 'react-native';
 import { Text } from '../../native-component';
+import { INDIGO } from '../../../constant/colors';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { INDIGO } from '../../../constant/colors';
 
 interface Props {
   title: string;
