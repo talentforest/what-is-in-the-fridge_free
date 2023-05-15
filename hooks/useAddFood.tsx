@@ -41,17 +41,11 @@ export default function useAddFood({ selectedFood, compartment }: Props) {
     dispatch(addFood(food));
 
     if (selectedFood) {
-      removeShoppingItem();
+      dispatch(removeFromShoppingList({ name: newFood.name }));
       Alert.alert(
         `${newFood.name}`,
         `${newFood.space} ${newFood.compartmentNum}에 추가되었습니다.`
       );
-    }
-  };
-
-  const removeShoppingItem = () => {
-    if (selectedFood?.image.length === 0) {
-      dispatch(removeFromShoppingList({ name: newFood.name }));
     }
   };
 

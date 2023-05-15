@@ -12,7 +12,7 @@ interface Props {
 export default function FormFavoriteItem({ favorite, changeFoodInfo }: Props) {
   return (
     <View
-      style={tw`bg-indigo-50 p-2 flex-1 justify-between border rounded-lg border-slate-400`}
+      style={tw`bg-white p-2 flex-1 justify-between rounded-lg border-2 border-indigo-500`}
     >
       <Text styletw='mb-2 text-indigo-500 text-xs'>자주 먹는 식료품</Text>
       <View style={tw`flex-1 justify-end`}>

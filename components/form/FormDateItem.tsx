@@ -35,7 +35,7 @@ export default function FormDateItem({ label, date, changeFoodInfo }: Props) {
 
   return (
     <View
-      style={tw`bg-indigo-50 gap-1 flex-1 border p-2 rounded-lg border-slate-400`}
+      style={tw`bg-white gap-1 flex-1 p-2 rounded-lg border-2 border-indigo-500`}
     >
       <Text styletw='mb-2 text-xs text-indigo-500'>{label}</Text>
       <View style={tw`justify-between gap-2`}>

@@ -1,15 +1,14 @@
 import { CompartmentType } from '../../constant/fridgeInfo';
 import { Text } from '../native-component';
-import { Dimensions, ScrollView, View } from 'react-native';
+import { Dimensions, ScrollView } from 'react-native';
 import { Food } from '../../constant/foods';
+import { useNavigation } from '@react-navigation/native';
+import { RootNavParamList } from '../../navigation/Navigation';
 import RNModal from './component/Modal';
 import FoodForm from '../form/FoodForm';
 import SubmitBtn from '../form/SubmitBtn';
 import useAddFood from '../../hooks/useAddFood';
 import tw from 'twrnc';
-import FormSpaceItem from '../form/FormSpaceItem';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../navigation/Navigation';
 
 interface Props {
   modalVisible: boolean;
@@ -26,7 +25,7 @@ export default function AddFoodModal({
 }: Props) {
   const navigation = useNavigation();
   const routes = navigation.getState().routes;
-  const currRoute = routes[routes.length - 1].name as keyof RootStackParamList;
+  const currRoute = routes[routes.length - 1].name as keyof RootNavParamList;
 
   const {
     newFood,
@@ -49,19 +48,16 @@ export default function AddFoodModal({
           Dimensions.get('window').height / 1.8
         }px]`}
       >
-        {selectedFood && currRoute === 'FavoriteFoods' && (
-          <View style={tw`items-center my-4`}>
-            <Text styletw='text-6xl py-2'>{selectedFood.image}</Text>
-            <Text>{selectedFood.name}</Text>
-          </View>
-        )}
-        {!compartment && (
-          <FormSpaceItem editedFood={newFood} editFoodInfo={addFoodInfo} />
-        )}
         <FoodForm
           selectedFood={selectedFood}
           food={newFood}
           changeFoodInfo={addFoodInfo}
+          noBigFoodImg={currRoute === 'Compartments'}
+          imageItem={!(currRoute === 'FavoriteFoods')}
+          nameItem={currRoute === 'Compartments'}
+          spaceItem={!(currRoute === 'Compartments')}
+          categoryItem={!(currRoute === 'FavoriteFoods')}
+          favoriteItem={!(currRoute === 'FavoriteFoods')}
         />
       </ScrollView>
       <SubmitBtn

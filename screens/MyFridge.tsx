@@ -5,6 +5,8 @@ import tw from 'twrnc';
 import Space from '../components/screen-component/entrance-fridge/Space';
 import InnerContainer from '../components/screen-component/entrance-fridge/InnerContainer';
 import DoorContainer from '../components/screen-component/entrance-fridge/DoorContainer';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { INDIGO, ORANGE_RED } from '../constant/colors';
 
 export default function MyFridge() {
   const statusBarHeight = getStatusBarHeight(true);
@@ -20,6 +22,16 @@ export default function MyFridge() {
         <Text styletw='text-indigo-600 text-xs'>
           아래 냉장고에서 각각의 공간으로 들어갈 수 있어요.
         </Text>
+      </View>
+      <View style={tw`mt-4 flex-row gap-3 items-center justify-center`}>
+        <View style={tw`flex-row items-center gap-1`}>
+          <Icon name='food' size={20} color={INDIGO} />
+          <Text styletw='text-slate-600'>식료품 개수</Text>
+        </View>
+        <View style={tw`flex-row items-center gap-1`}>
+          <Icon name='alert-octagram-outline' size={20} color={ORANGE_RED} />
+          <Text styletw='text-slate-600'>유통기한 임박 식료품 개수</Text>
+        </View>
       </View>
       <View
         style={tw.style('flex-1 justify-center items-center pr-4 pl-7 w-full')}

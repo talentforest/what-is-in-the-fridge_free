@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { NavigateProp } from '../../../navigation/Navigation';
-import { GRAY, INDIGO } from '../../../constant/colors';
+import { INDIGO, LIGHT_GRAY, ORANGE_RED } from '../../../constant/colors';
 import {
   CompartmentNum,
   Space as SpaceType,
@@ -68,20 +68,20 @@ export default function Space({ space, bottom, door }: Props) {
               )}
             </View>
             <View style={tw`gap-3 flex-row items-center`}>
-              <View style={tw`gap-1 flex-row items-center w-10`}>
+              <View style={tw`gap-1 flex-row items-center w-8`}>
                 <Icon
                   name='food'
-                  size={16}
+                  size={14}
                   color={`${
-                    getFoodList(space, compartment).length ? INDIGO : GRAY
+                    getFoodList(space, compartment).length ? INDIGO : LIGHT_GRAY
                   }`}
                 />
                 <Text
                   styletw={`${
                     getFoodList(space, compartment).length
-                      ? 'text-indigo-500'
-                      : 'text-slate-400'
-                  }`}
+                      ? `text-[${INDIGO}]`
+                      : `text-[${LIGHT_GRAY}]`
+                  } text-xs`}
                 >
                   {getFoodList(space, compartment).length}개
                 </Text>
@@ -89,19 +89,19 @@ export default function Space({ space, bottom, door }: Props) {
               <View style={tw`gap-1 flex-row items-center`}>
                 <Icon
                   name='alert-octagram-outline'
-                  size={18}
+                  size={16}
                   color={`${
                     getExpiredFoodList(space, compartment).length !== 0
-                      ? '#ff7b5a'
-                      : GRAY
+                      ? ORANGE_RED
+                      : LIGHT_GRAY
                   }`}
                 />
                 <Text
                   styletw={`${
                     getExpiredFoodList(space, compartment).length !== 0
-                      ? 'text-orange-400'
-                      : 'text-slate-400'
-                  }`}
+                      ? `text-[${ORANGE_RED}]`
+                      : `text-[${LIGHT_GRAY}]`
+                  } text-xs`}
                 >
                   {getExpiredFoodList(space, compartment).length}개
                 </Text>

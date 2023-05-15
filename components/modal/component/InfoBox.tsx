@@ -13,20 +13,19 @@ interface Props {
 export default function InfoBox({ name, info, favorite }: Props) {
   return (
     <View
-      style={tw`border border-slate-500 justify-between flex-1 p-2 bg-white rounded-md h-20`}
+      style={tw`border border-slate-500 justify-between flex-1 p-2 bg-slate-100 rounded-md`}
     >
       <Text styletw='text-xs text-slate-600'>{name}</Text>
-      <Text styletw='text-base self-end text-indigo-700'>{info}</Text>
-      {!info &&
-        (favorite ? (
-          <View style={tw`text-base self-end`}>
+      {info && <Text styletw='self-end text-indigo-600 text-sm'>{info}</Text>}
+      {!info && (
+        <View style={tw`self-end`}>
+          {favorite ? (
             <Icon name='star' size={30} color='gold' />
-          </View>
-        ) : (
-          <View style={tw`text-base self-end`}>
+          ) : (
             <Icon name='staro' size={30} color={INACTIVE_COLOR} />
-          </View>
-        ))}
+          )}
+        </View>
+      )}
     </View>
   );
 }

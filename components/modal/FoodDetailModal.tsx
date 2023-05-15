@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Dimensions, ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foods';
 import { Text } from '../native-component';
 import { getLocaleDate } from '../../util';
@@ -36,34 +36,42 @@ export default function FoodDetailModal({
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
+      {food.image && (
+        <View style={tw`items-center my-4`}>
+          <Text styletw='text-6xl pt-4'>{food.image}</Text>
+        </View>
+      )}
       {editing ? (
-        <View style={tw`mt-4`}>
-          <FoodForm food={editedFood} changeFoodInfo={editFoodInfo} />
+        <>
+          <ScrollView
+            contentContainerStyle={tw`justify-between w-full`}
+            style={tw`flex-row flex-wrap w-full max-h-[${
+              Dimensions.get('window').height / 1.8
+            }px]`}
+          >
+            <FoodForm
+              food={editedFood}
+              changeFoodInfo={editFoodInfo}
+              favoriteItem
+              categoryItem
+              nameItem
+              noBigFoodImg
+            />
+          </ScrollView>
           <SubmitBtn
             btnName='식료품 정보 수정 완료'
             onPress={() => onEditSumbit(food.id)}
           />
-        </View>
+        </>
       ) : (
         <>
-          <View
-            style={tw`w-full mt-6 gap-2 justify-center items-center rounded-lg`}
-          >
-            <Text styletw='text-6xl pt-4'>{food.image}</Text>
-          </View>
-          <View
-            style={tw`my-2 rounded-2xl border border-slate-500 self-center px-3 bg-white`}
-          >
-            <Text styletw='text-base text-center text-indigo-700'>
-              {editedFood.name}
-            </Text>
-          </View>
           <View style={tw`w-full mt-2 mb-6`}>
-            <View style={tw`flex-row gap-0.5`}>
+            <View style={tw`flex-row gap-0.5 h-20`}>
+              <InfoBox name='이름' info={editedFood.name} />
               <InfoBox name='카테고리' info={editedFood.category} />
               <InfoBox name='즐겨찾는 식품' favorite={editedFood.favorite} />
             </View>
-            <View style={tw`flex-row gap-0.5 mt-0.5`}>
+            <View style={tw`flex-row gap-0.5 mt-0.5 h-20`}>
               <InfoBox
                 name='구매 날짜'
                 info={getLocaleDate(editedFood.purchaseDate)}

@@ -14,18 +14,11 @@ export default function FormImageItem({ value, changeFoodInfo }: Props) {
 
   return (
     <View
-      style={tw`aspect-square border items-center p-2 bg-indigo-50 border-slate-400 rounded-lg`}
+      style={tw`aspect-square justify-center items-center p-2 bg-white border-2 border-indigo-500 rounded-lg`}
     >
-      <Text styletw='mb-1 text-indigo-500 text-xs'>아이콘 선택</Text>
-      <TouchableOpacity
-        onPress={() => setIsOpen(true)}
-        style={tw`flex-1 w-12 h-12 ${
-          value.length === 0
-            ? 'justify-center bg-white border-slate-400 items-center rounded-lg border'
-            : ''
-        }`}
-      >
-        <Text styletw='text-3xl pt-2 px-2'>{value}</Text>
+      <TouchableOpacity onPress={() => setIsOpen(true)} style={tw`flex-1`}>
+        <Text styletw='mb-1 text-indigo-500 text-xs'>아이콘 선택</Text>
+        <Text styletw='text-3xl pt-2 px-2 self-center'>{value}</Text>
       </TouchableOpacity>
       <EmojiPicker
         onEmojiSelected={(emoji) => changeFoodInfo({ image: emoji.emoji })}

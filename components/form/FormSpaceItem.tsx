@@ -18,7 +18,7 @@ export default function FormSpaceItem({ editedFood, editFoodInfo }: Props) {
 
   return (
     <View
-      style={tw`border border-slate-400 bg-indigo-50 mb-1 p-2 py-3 rounded-lg`}
+      style={tw`border-2 border-indigo-500 bg-white mb-1 p-2 py-3 rounded-lg`}
     >
       <Text styletw='mb-2 text-indigo-500 text-xs'>식료품 위치 선택</Text>
       <View style={tw`flex-wrap flex-row gap-1`}>
@@ -35,7 +35,7 @@ export default function FormSpaceItem({ editedFood, editFoodInfo }: Props) {
               });
             }}
             style={tw`border border-slate-400 flex-row h-10 w-[${
-              (Dimensions.get('window').width - 56) / 2
+              (Dimensions.get('window').width - 58) / 2
             }px] rounded-md justify-center items-center ${
               space === editedFood.space ? 'bg-indigo-600' : 'bg-white'
             }`}
