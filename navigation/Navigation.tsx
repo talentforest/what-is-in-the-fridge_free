@@ -5,17 +5,14 @@ import {
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from '../components/native-component';
 import { FontGmarketSansRegular } from '../constant/fonts';
-import { DEEP_INDIGO, GRAY, LIGHT_YELLOW, YELLOW } from '../constant/colors';
+import { DEEP_INDIGO, GRAY, LIGHT_YELLOW } from '../constant/colors';
+import MyTabs, { RootTabParamList } from './MyTabs';
 import React from 'react';
-import Home from '../screens/Home';
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
 import Notification from '../screens/Notification';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ExpiredFoods from '../screens/ExpiredFoods';
-import ShoppingList from '../screens/ShoppingList';
-import EntranceFridgeSpace from '../screens/EntranceFridgeSpace';
-import MyTabs from './MyTabs';
 
 const BackBtn = () => {
   const navigation = useNavigation();
@@ -30,16 +27,14 @@ const BackBtn = () => {
   );
 };
 
+export type RootNavParamList = RootTabParamList & RootStackParamList;
+
 export type RootStackParamList = {
-  Home: undefined;
-  EntranceFridgeSpace: undefined;
-  Compartments: undefined | object;
-  FoodDetail: undefined;
-  FavoriteFoods: undefined;
-  Notification: undefined;
-  ExpiredFoods: undefined;
-  ShoppingList: undefined;
   MyTabs: undefined;
+  Compartments: undefined | object;
+  FavoriteFoods: undefined;
+  ExpiredFoods: undefined;
+  Notification: undefined;
 };
 
 export type NavigateProp = NavigationProp<RootStackParamList>;
@@ -66,12 +61,6 @@ const Navigation = () => {
         name='MyTabs'
         component={MyTabs}
       />
-      <Stack.Screen name='Home' component={Home} />
-      <Stack.Screen
-        name='EntranceFridgeSpace'
-        component={EntranceFridgeSpace}
-        options={{ ...options, title: '냉장고칸 선택' }}
-      />
       <Stack.Screen
         name='Compartments'
         component={Compartments}
@@ -94,11 +83,6 @@ const Navigation = () => {
         name='Notification'
         component={Notification}
         options={{ ...options, title: '알림' }}
-      />
-      <Stack.Screen
-        name='ShoppingList'
-        component={ShoppingList}
-        options={{ ...options, title: '장보기 목록' }}
       />
     </Stack.Navigator>
   );

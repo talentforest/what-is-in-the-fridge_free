@@ -6,7 +6,7 @@ import Space from '../components/screen-component/entrance-fridge/Space';
 import InnerContainer from '../components/screen-component/entrance-fridge/InnerContainer';
 import DoorContainer from '../components/screen-component/entrance-fridge/DoorContainer';
 
-export default function EntranceFridgeSpace() {
+export default function MyFridge() {
   const statusBarHeight = getStatusBarHeight(true);
 
   return (
