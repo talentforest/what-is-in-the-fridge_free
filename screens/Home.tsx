@@ -13,7 +13,7 @@ import useImageLoad from '../hooks/useImageLoad';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import SmallFoodTag from '../components/common/SmallFoodTag';
 import EmptyTag from '../components/common/EmptyTag';
-import FridgeInfo from '../components/screen-component/entrance-fridge/FridgeInfo';
+import FridgeInfo from '../components/screen-component/home/FridgeInfo';
 
 const Home = () => {
   const { allLeftAndExpiredFoods } = useExpiredFood();
