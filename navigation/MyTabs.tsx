@@ -1,13 +1,17 @@
 import { FontGmarketSansRegular } from '../constant/fonts';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Dimensions } from 'react-native';
-import { GRAY, INDIGO, LIGHT_YELLOW, YELLOW } from '../constant/colors';
+import { GRAY, INDIGO, LIGHT_YELLOW } from '../constant/colors';
 import Home from '../screens/Home';
 import ShoppingList from '../screens/ShoppingList';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FavoriteFoods from '../screens/FavoriteFoods';
-import EntranceFridgeSpace from '../screens/EntranceFridgeSpace';
-import ExpiredFoods from '../screens/ExpiredFoods';
+import MyFridge from '../screens/MyFridge';
+
+export type RootTabParamList = {
+  Home: undefined;
+  MyFridge: undefined;
+  ShoppingList: undefined | object;
+};
 
 const Tab = createBottomTabNavigator();
 
@@ -29,33 +33,36 @@ export default function MyTabs() {
       }}
     >
       <Tab.Screen
-        name='홈'
+        name='home'
         component={Home}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name='home' color={color} size={20} />
           ),
+          tabBarLabel: '홈',
         }}
       />
       <Tab.Screen
-        name='나의 냉장고'
-        component={EntranceFridgeSpace}
+        name='MyFridge'
+        component={MyFridge}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name='fridge' color={color} size={20} />
           ),
+          tabBarLabel: '나의 냉장고',
         }}
       />
       <Tab.Screen
-        name='장보기 목록'
+        name='ShoppingList'
         component={ShoppingList}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon name='format-list-bulleted' color={color} size={20} />
           ),
+          tabBarLabel: '장보기 목록',
         }}
       />
     </Tab.Navigator>

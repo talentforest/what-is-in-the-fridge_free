@@ -7,8 +7,12 @@ import FormFavoriteItem from './FormFavoriteItem';
 import FormDateItem from './FormDateItem';
 import FormImageItem from './FormImageItem';
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../navigation/Navigation';
+import {
+  RootNavParamList,
+  RootStackParamList,
+} from '../../navigation/Navigation';
 import { Text } from '../native-component';
+import { RootTabParamList } from '../../navigation/MyTabs';
 
 interface Props {
   selectedFood?: Food;
@@ -23,8 +27,7 @@ export default function FoodForm({
 }: Props) {
   const navigation = useNavigation();
   const routes = navigation.getState().routes;
-  const currRoute = routes[routes.length - 1].name as keyof RootStackParamList;
-  console.log(currRoute);
+  const currRoute = routes[routes.length - 1].name as keyof RootNavParamList;
 
   return (
     <View style={tw`mb-4`}>
@@ -32,7 +35,7 @@ export default function FoodForm({
         <View style={tw`gap-1 mb-1`}>
           <View style={tw`flex-row h-22 gap-1`}>
             <FormImageItem value={food.image} changeFoodInfo={changeFoodInfo} />
-            {currRoute === '장보기 목록' ? (
+            {currRoute === 'ShoppingList' ? (
               <View
                 style={tw`flex-1 justify-between bg-indigo-50 rounded-lg border-slate-400 border p-2`}
               >
