@@ -8,7 +8,7 @@ export default function DoorContainer({ children }: { children: ReactNode }) {
       style={tw.style('w-[46%] shadow-lg justify-center items-center', {
         transform: [
           { skewY: '10deg' },
-          { translateY: 14 },
+          { translateY: 13 },
           { perspective: 1000 },
         ],
         transformOrigin: 'bottom left',
@@ -30,7 +30,7 @@ export default function DoorContainer({ children }: { children: ReactNode }) {
       />
       <View
         style={tw.style(
-          'border border-slate-400 bg-slate-200 rounded-br-lg rounded-tr-sm w-4 absolute h-full -right-4',
+          'border border-l-0 border-slate-400 bg-slate-200 rounded-br-lg rounded-tr-sm w-4 absolute h-full -right-4',
           {
             transform: [
               { skewY: '-30deg' },

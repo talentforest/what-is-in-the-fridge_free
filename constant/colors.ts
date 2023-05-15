@@ -5,3 +5,5 @@ export const DEEP_INDIGO = '#4e45ff';
 export const INACTIVE_COLOR = '#aaa';
 export const DEEP_GRAY = '#333';
 export const GRAY = '#555';
+export const LIGHT_GRAY = '#bbb';
+export const ORANGE_RED = '#ff5c33';
