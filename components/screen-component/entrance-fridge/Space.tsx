@@ -2,12 +2,15 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { NavigateProp } from '../../../navigation/Navigation';
-import { useSelector } from '../../../redux/hook';
-import { getLeftDays } from '../../../util';
-import { Space as SpaceType } from '../../../constant/fridgeInfo';
+import { GRAY, INDIGO } from '../../../constant/colors';
+import {
+  CompartmentNum,
+  Space as SpaceType,
+} from '../../../constant/fridgeInfo';
 import tw from 'twrnc';
-import Icon from 'react-native-vector-icons/Feather';
-import { DEEP_INDIGO } from '../../../constant/colors';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import useGetFoodList from '../../../hooks/useGetFoodList';
+import useExpiredFoods from '../../../hooks/useExpiredFoods';
 
 interface Props {
   space: SpaceType;
@@ -16,53 +19,96 @@ interface Props {
 }
 
 export default function Space({ space, bottom, door }: Props) {
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.allFoods);
   const navigation = useNavigation<NavigateProp>();
-
-  const foodList = space.includes('냉동') ? freezerFoods : fridgeFoods;
-
-  const getFoodListLength = () => {
-    return foodList.filter((food) => food.space === space).length;
-  };
-
-  const getExpiredFoodList = () => {
-    return foodList.filter((food) => {
-      return food.space === space && getLeftDays(food.expirationDate) < 4;
-    }).length;
-  };
+  const compartmentArr: CompartmentNum[] = bottom
+    ? ['1번', '2번', '3번']
+    : ['1번', '2번'];
+  const { getFoodList } = useGetFoodList();
+  const { getExpiredFoodList } = useExpiredFoods();
 
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('Compartments', { space })}
-      style={tw`border border-slate-400 w-full justify-center items-center ${
-        bottom
-          ? `h-[55%] rounded-b-lg border-t-0 bg-yellow-100`
-          : `h-[45%] rounded-t-lg bg-indigo-100`
-      } ${door ? 'rounded-l-none' : 'rounded-r-none'}`}
+      style={tw`p-2 border border-slate-400 w-full justify-center items-center bg-slate-200 ${
+        bottom ? `h-[60%] border-t-0` : `h-[40%] `
+      } ${door ? 'border-l-0' : ''}`}
     >
-      <View style={tw`p-2 py-3 flex-1 w-full`}>
-        <View style={tw`flex-row items-center mb-2 justify-between`}>
-          <Text styletw='text-indigo-700 text-base'>
-            {space} {bottom ? '3칸' : '2칸'}
-          </Text>
-          <Icon name='chevron-right' size={22} color={DEEP_INDIGO} />
-        </View>
-        <View
-          style={tw`p-3 gap-4 border flex-1 rounded-lg bg-white border-slate-400`}
-        >
-          <View style={tw`justify-between gap-1`}>
-            <Text styletw='text-slate-500'>식료품 총 개수</Text>
-            <Text styletw='self-end text-indigo-600 border px-2 py-1 rounded-lg border-slate-400'>
-              {getFoodListLength()}개
-            </Text>
+      <View
+        style={tw`rounded-lg flex-1 w-full border-2 border-slate-300 bg-white`}
+      >
+        {compartmentArr.map((compartment: CompartmentNum) => (
+          <View
+            key={compartment}
+            style={tw`${
+              +compartment.slice(0, 1) === compartmentArr.length
+                ? 'border-b-0'
+                : 'border-b-2'
+            } border-slate-300 flex-1 p-1.5 justify-between`}
+          >
+            <View style={tw`flex-row justify-between`}>
+              <Text
+                styletw={`text-xs ${
+                  space.includes('냉동') ? 'text-blue-600' : 'text-green-600'
+                }`}
+              >
+                {compartment}칸
+              </Text>
+              {compartment === compartmentArr[0] && (
+                <View>
+                  <Text
+                    styletw={`text-xs ${
+                      space.includes('냉동')
+                        ? 'text-blue-600'
+                        : 'text-indigo-600'
+                    }`}
+                  >
+                    {space}
+                  </Text>
+                </View>
+              )}
+            </View>
+            <View style={tw`gap-3 flex-row items-center`}>
+              <View style={tw`gap-1 flex-row items-center w-10`}>
+                <Icon
+                  name='food'
+                  size={16}
+                  color={`${
+                    getFoodList(space, compartment).length ? INDIGO : GRAY
+                  }`}
+                />
+                <Text
+                  styletw={`${
+                    getFoodList(space, compartment).length
+                      ? 'text-indigo-500'
+                      : 'text-slate-400'
+                  }`}
+                >
+                  {getFoodList(space, compartment).length}개
+                </Text>
+              </View>
+              <View style={tw`gap-1 flex-row items-center`}>
+                <Icon
+                  name='alert-octagram-outline'
+                  size={18}
+                  color={`${
+                    getExpiredFoodList(space, compartment).length !== 0
+                      ? '#ff7b5a'
+                      : GRAY
+                  }`}
+                />
+                <Text
+                  styletw={`${
+                    getExpiredFoodList(space, compartment).length !== 0
+                      ? 'text-orange-400'
+                      : 'text-slate-400'
+                  }`}
+                >
+                  {getExpiredFoodList(space, compartment).length}개
+                </Text>
+              </View>
+            </View>
           </View>
-          <View style={tw`justify-between gap-1`}>
-            <Text styletw='text-slate-500'>유통기한 임박 식품 총 개수</Text>
-            <Text styletw='self-end text-red-500 border px-2 py-1 rounded-lg border-slate-400'>
-              {getExpiredFoodList()}개
-            </Text>
-          </View>
-        </View>
+        ))}
       </View>
     </TouchableOpacity>
   );
