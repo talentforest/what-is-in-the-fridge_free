@@ -5,12 +5,12 @@ import { Text } from '../../native-component';
 import { getISODate } from '../../../util';
 import { removeFromShoppingList } from '../../../redux/slice/shoppingList';
 import { useDispatch } from '../../../redux/hook';
+import { INDIGO } from '../../../constant/colors';
 import AddFoodModalBtn from '../compartments/AddFoodModalBtn';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/AntDesign';
 import UUIDGenerator from 'react-native-uuid';
 import IconBtn from '../../common/IconBtn';
-import { INDIGO, YELLOW } from '../../../constant/colors';
 
 interface Props {
   food: Food;

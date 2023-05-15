@@ -1,13 +1,10 @@
 import { Image, View } from 'react-native';
-import {
-  FontGmarketSansBold,
-  FontGmarketSansRegular,
-} from '../../../constant/fonts';
+import { FontGmarketSansBold } from '../../../constant/fonts';
 import { Text } from '../../native-component';
 import { Asset } from 'expo-asset';
+import { DEEP_INDIGO } from '../../../constant/colors';
 import Swiper from 'react-native-web-swiper';
 import tw from 'twrnc';
-import { DEEP_INDIGO } from '../../../constant/colors';
 
 interface Props {
   assets: Asset[];

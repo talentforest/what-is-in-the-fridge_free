@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
+import { INACTIVE_COLOR } from '../../../constant/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import tw from 'twrnc';
-import { INACTIVE_COLOR } from '../../../constant/colors';
 
 interface Props {
   name: string;

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { TouchableOpacity } from '../../native-component';
 import { CompartmentType } from '../../../constant/fridgeInfo';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import AddFoodModal from '../../modal/AddFoodModal';
 import { Food } from '../../../constant/foods';
 import { DEEP_INDIGO } from '../../../constant/colors';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AddFoodModal from '../../modal/AddFoodModal';
 
 interface Props {
   selectedFood?: Food;
