@@ -5,7 +5,7 @@ import tw from 'twrnc';
 export default function DoorContainer({ children }: { children: ReactNode }) {
   return (
     <View
-      style={tw.style('w-[46%] shadow-lg justify-center items-center', {
+      style={tw.style('w-[46%] justify-center items-center', {
         transform: [
           { skewY: '10deg' },
           { translateY: 13 },
@@ -17,7 +17,7 @@ export default function DoorContainer({ children }: { children: ReactNode }) {
       {children}
       <View
         style={tw.style(
-          'border absolute -top-4 w-full h-2.5 rounded-t-md border-slate-400',
+          'border absolute -top-4 w-full h-2.5 rounded-t-md border-slate-400 bg-slate-200',
           {
             transform: [
               { skewX: '-63deg' },

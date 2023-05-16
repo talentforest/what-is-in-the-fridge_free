@@ -4,7 +4,7 @@ import tw from 'twrnc';
 
 export default function InnerContainer({ children }: { children: ReactNode }) {
   return (
-    <View style={tw`flex-1 justify-center items-center shadow-lg`}>
+    <View style={tw`flex-1 justify-center items-center `}>
       {children}
       <View
         style={tw.style(

@@ -36,7 +36,7 @@ export default function MyFridge() {
       <View
         style={tw.style('flex-1 justify-center items-center pr-4 pl-7 w-full')}
       >
-        <View style={tw`shadow-lg h-4/5 flex-row items-start`}>
+        <View style={tw`h-4/5 flex-row items-start`}>
           <InnerContainer>
             <Space space='냉동실 안쪽' />
             <Space space='냉장실 안쪽' bottom />

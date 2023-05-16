@@ -44,7 +44,9 @@ export default function ListItem({ food }: Props) {
       />
       <IconBtn
         iconName='delete'
-        onPress={() => dispatch(removeFromShoppingList({ name: food.name }))}
+        onPress={() => {
+          dispatch(removeFromShoppingList({ name: food.name }));
+        }}
       />
     </View>
   );
