@@ -39,9 +39,7 @@ export default function FoodForm({
         <Text styletw='self-center my-4 text-6xl pt-2'>{food.image}</Text>
       )}
       {imageItem && !selectedFood?.favorite && (
-        <View
-          style={tw`w-full flex-row gap-1 justify-center mb-3 h-22 shadow-lg`}
-        >
+        <View style={tw`w-full flex-row gap-1 justify-center mb-3 h-22`}>
           <FormImageItem value={food.image} changeFoodInfo={changeFoodInfo} />
         </View>
       )}
