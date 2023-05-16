@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { useState } from 'react';
-import EmojiPicker from 'rn-emoji-keyboard';
+import EmojiPicker, { ko } from 'rn-emoji-keyboard';
 import tw from 'twrnc';
 
 interface Props {
@@ -24,6 +24,7 @@ export default function FormImageItem({ value, changeFoodInfo }: Props) {
         onEmojiSelected={(emoji) => changeFoodInfo({ image: emoji.emoji })}
         open={isOpen}
         onClose={() => setIsOpen(false)}
+        translation={ko}
         disabledCategories={[
           'activities',
           'flags',
@@ -34,10 +35,7 @@ export default function FormImageItem({ value, changeFoodInfo }: Props) {
           'animals_nature',
           'objects',
         ]}
-        hideHeader={true}
         categoryPosition='top'
-        enableSearchBar={true}
-        enableSearchAnimation={true}
         enableRecentlyUsed={true}
       />
     </View>

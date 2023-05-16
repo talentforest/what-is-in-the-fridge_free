@@ -59,7 +59,7 @@ export default function Space({ space, bottom, door }: Props) {
                     styletw={`text-xs ${
                       space.includes('냉동')
                         ? 'text-blue-600'
-                        : 'text-indigo-600'
+                        : 'text-green-600'
                     }`}
                   >
                     {space}
