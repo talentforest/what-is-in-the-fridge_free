@@ -22,9 +22,7 @@ export default function Compartment({ compartment }: Props) {
 
   return (
     <>
-      <View
-        style={tw`flex-1 border border-slate-300 p-2 rounded-lg bg-white shadow-md`}
-      >
+      <View style={tw`flex-1 border border-slate-300 p-2 rounded-lg bg-white`}>
         <View style={tw`flex-row justify-between items-center`}>
           <View style={tw`flex-1`}>
             <Text styletw='text-xs text-indigo-600 border border-slate-400 self-start py-0.5 px-2 rounded-xl'>

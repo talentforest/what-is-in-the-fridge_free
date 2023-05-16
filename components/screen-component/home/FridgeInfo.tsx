@@ -11,7 +11,7 @@ export default function FridgeInfo({ asset }: { asset: Asset[] }) {
 
   return (
     <View
-      style={tw`mb-2 gap-2 p-4 rounded-lg bg-indigo-100 border-indigo-200 border shadow-md`}
+      style={tw`mb-2 gap-2 p-4 rounded-lg bg-indigo-100 border-indigo-200 border`}
     >
       <Text styletw='text-indigo-700 mb-2'>나의 냉장고 정보</Text>
       <View
