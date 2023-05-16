@@ -3,7 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as ReduxProvider } from 'react-redux';
-import { store } from './redux/store';
+import { persistor, store } from './redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 import Navigation from './navigation/Navigation';
 import Splash from './screens/Splash';
 import 'react-native-gesture-handler';
@@ -18,12 +19,14 @@ export default function App() {
 
   return (
     <ReduxProvider store={store}>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Navigation />
-          <StatusBar style='auto' />
-        </NavigationContainer>
-      </SafeAreaProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Navigation />
+            <StatusBar style='auto' />
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </PersistGate>
     </ReduxProvider>
   );
 }
