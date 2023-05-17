@@ -17,12 +17,12 @@ export default function FormCategoryItem({ category, changeFoodInfo }: Props) {
 
   return (
     <View
-      style={tw`justify-between bg-white flex-1 gap-2 p-2 rounded-lg border-2 border-indigo-500`}
+      style={tw`justify-between bg-white w-1/3 p-2 rounded-lg border-2 border-indigo-500`}
     >
-      <Text styletw='text-indigo-500 text-xs'>카테고리 선택</Text>
+      <Text styletw='text-indigo-500 text-xs mb-1'>카테고리 선택</Text>
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
-        style={tw`justify-end w-full flex-1 gap-1 items-end`}
+        style={tw`justify-end w-full gap-1 items-end`}
       >
         <Text styletw='pr-1 text-sm'>{category}</Text>
         <View style={tw`flex-row items-center`}>
