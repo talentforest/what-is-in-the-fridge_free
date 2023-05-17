@@ -1,7 +1,7 @@
 import { Dimensions, ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foods';
 import { Text } from '../native-component';
-import { getLocaleDate } from '../../util';
+import { getLeftDays, getLocaleDate } from '../../util';
 import tw from 'twrnc';
 import InfoBox from './component/InfoBox';
 import SubmitBtn from '../form/SubmitBtn';
@@ -79,6 +79,7 @@ export default function FoodDetailModal({
               <InfoBox
                 name='유통기한'
                 info={getLocaleDate(editedFood.expirationDate)}
+                leftDays={getLeftDays(editedFood.expirationDate)}
               />
             </View>
           </View>

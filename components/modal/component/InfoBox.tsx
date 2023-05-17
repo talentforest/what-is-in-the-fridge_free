@@ -8,15 +8,29 @@ interface Props {
   name: string;
   info?: string;
   favorite?: boolean;
+  leftDays?: number;
 }
 
-export default function InfoBox({ name, info, favorite }: Props) {
+export default function InfoBox({ name, info, favorite, leftDays }: Props) {
   return (
     <View
       style={tw`border border-slate-500 justify-between flex-1 p-2 bg-slate-100 rounded-md`}
     >
       <Text styletw='text-xs text-slate-600'>{name}</Text>
-      {info && <Text styletw='self-end text-indigo-600 text-sm'>{info}</Text>}
+      {info && (
+        <View style={tw`self-end items-end gap-1`}>
+          {(leftDays || leftDays === 0) && (
+            <Text
+              styletw={`text-xs ${
+                leftDays >= 0 ? 'text-green-600' : 'text-red-500'
+              }`}
+            >
+              {leftDays}일
+            </Text>
+          )}
+          <Text styletw='text-indigo-600 text-sm'>{info}</Text>
+        </View>
+      )}
       {!info && (
         <View style={tw`self-end`}>
           {favorite ? (

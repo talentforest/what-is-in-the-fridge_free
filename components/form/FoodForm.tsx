@@ -43,7 +43,7 @@ export default function FoodForm({
           <FormImageItem value={food.image} changeFoodInfo={changeFoodInfo} />
         </View>
       )}
-      <View style={tw`flex-row gap-1 mb-1 h-24`}>
+      <View style={tw`flex-row gap-1 mb-1 `}>
         {nameItem && !selectedFood?.favorite ? (
           <FormNameItem
             changeFoodInfo={changeFoodInfo}
@@ -73,7 +73,7 @@ export default function FoodForm({
       {spaceItem && (
         <FormSpaceItem editedFood={food} editFoodInfo={changeFoodInfo} />
       )}
-      <View style={tw`gap-1 flex-row`}>
+      <View style={tw`gap-1`}>
         <FormDateItem
           label='식료품 구매날짜'
           date={new Date(food.purchaseDate)}
