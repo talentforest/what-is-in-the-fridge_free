@@ -50,7 +50,6 @@ const options: NativeStackNavigationOptions = {
     fontSize: 16,
     ...FontGmarketSansRegular,
   },
-  headerTitleAlign: 'center',
   headerLeft: () => <BackBtn />,
 };
 

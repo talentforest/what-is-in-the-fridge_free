@@ -22,12 +22,14 @@ export default function MyTabs() {
         tabBarStyle: {
           backgroundColor: LIGHT_YELLOW,
           height: Dimensions.get('window').height / 10,
-          maxHeight: 80,
         },
-        tabBarItemStyle: { height: 60 },
+        tabBarItemStyle: { height: 55 },
         tabBarActiveTintColor: INDIGO,
         tabBarInactiveTintColor: GRAY,
-        tabBarLabelStyle: { fontSize: 11, ...FontGmarketSansRegular },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          ...FontGmarketSansRegular,
+        },
       }}
     >
       <Tab.Screen

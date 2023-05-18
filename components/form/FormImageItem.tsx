@@ -20,7 +20,6 @@ export default function FormImageItem({ value, changeFoodInfo }: Props) {
         <Text styletw='mb-1 text-indigo-500 text-xs'>아이콘 선택</Text>
         <Text styletw='text-3xl pt-2 px-2 self-center'>{value}</Text>
       </TouchableOpacity>
-
       <EmojiPicker
         onEmojiSelected={(emoji) => changeFoodInfo({ image: emoji.emoji })}
         open={isOpen}

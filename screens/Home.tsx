@@ -69,6 +69,7 @@ const Home = () => {
           <EmptyTag tagName='아직 유통기한이 임박한 식료품이 없습니다' />
         )}
       </EntranceBox>
+
       <Footer />
     </ScrollView>
   );
