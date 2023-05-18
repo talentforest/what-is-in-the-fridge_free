@@ -1,4 +1,4 @@
-import { Platform, View } from 'react-native';
+import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { NavigateProp } from '../../../navigation/Navigation';
@@ -30,14 +30,8 @@ export default function Space({ space, bottom, door }: Props) {
     <TouchableOpacity
       onPress={() => navigation.navigate('Compartments', { space })}
       style={tw`p-2 border border-slate-400 w-full justify-center items-center bg-slate-200 ${
-        bottom ? `h-[60%] border-t-0` : `h-[40%]`
-      } ${door ? 'border-l-0 ' : ''} ${
-        Platform.OS === 'android'
-          ? door
-            ? 'rounded-r-lg'
-            : 'rounded-l-lg'
-          : ''
-      }`}
+        bottom ? `h-[60%] border-t-0` : `h-[40%] `
+      } ${door ? 'border-l-0' : ''}`}
     >
       <View
         style={tw`rounded-lg flex-1 w-full border-2 border-slate-300 bg-white`}

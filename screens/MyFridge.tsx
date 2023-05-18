@@ -34,11 +34,7 @@ export default function MyFridge() {
         </View>
       </View>
       <View
-        style={tw.style(
-          `flex-1 justify-center items-center w-full ${
-            Platform.OS === 'ios' ? 'pr-4 pl-7' : 'px-4'
-          }`
-        )}
+        style={tw.style('flex-1 justify-center items-center pr-4 pl-7 w-full')}
       >
         <View style={tw`h-4/5 flex-row items-start`}>
           <InnerContainer>
