@@ -6,13 +6,13 @@ export default function InnerContainer({ children }: { children: ReactNode }) {
   const platformIos = Platform.OS === 'ios';
 
   return (
-    <View style={tw`flex-1 justify-center items-center `}>
+    <View style={tw`flex-1 justify-center items-center rounded-lg`}>
       {children}
       {platformIos && (
         <>
           <View
             style={tw.style(
-              'border border-slate-900  bg-slate-200 absolute -top-2 w-full h-7 rounded-t-md',
+              'border border-slate-400 bg-slate-200 absolute -top-2 w-full h-7 rounded-t-md',
               {
                 transform: [
                   { skewX: '50deg' },
