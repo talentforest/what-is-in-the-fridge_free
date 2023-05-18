@@ -1,5 +1,5 @@
 import { Text } from '../components/native-component';
-import { View } from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { INDIGO, ORANGE_RED } from '../constant/colors';
 import tw from 'twrnc';
@@ -9,11 +9,14 @@ import DoorContainer from '../components/screen-component/entrance-fridge/DoorCo
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function MyFridge() {
-  const statusBarHeight = getStatusBarHeight(true);
+  const statusBarHeight =
+    Platform.OS === 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
 
   return (
     <View
-      style={tw`flex-1 px-4 pb-2 bg-neutral-50 pt-[${statusBarHeight + 14}px]`}
+      style={tw`flex-1 px-4 pb-2 bg-neutral-50 pt-[${
+        (statusBarHeight || 0) + 14
+      }px]`}
     >
       <Text styletw='pb-2 text-lg text-slate-600'>나의 냉장고</Text>
       <View
@@ -34,7 +37,11 @@ export default function MyFridge() {
         </View>
       </View>
       <View
-        style={tw.style('flex-1 justify-center items-center pr-4 pl-7 w-full')}
+        style={tw.style(
+          `flex-1 justify-center items-center w-full ${
+            Platform.OS === 'ios' ? 'pr-4 pl-7' : 'px-4'
+          }`
+        )}
       >
         <View style={tw`h-4/5 flex-row items-start`}>
           <InnerContainer>
