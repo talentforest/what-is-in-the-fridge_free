@@ -1,6 +1,7 @@
-import { ScrollView, View } from 'react-native';
-import { Text, KeyboardAvoidingView } from '../components/native-component';
+import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
+import { Text } from '../components/native-component';
 import { useSelector } from '../redux/hook';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import RecommendedFoods from '../components/screen-component/shopping-list/RecommendedFoods';
 import TextInputToAddList from '../components/screen-component/shopping-list/TextInputToAddList';
 import ListItem from '../components/screen-component/shopping-list/ListItem';
@@ -9,8 +10,14 @@ import tw from 'twrnc';
 export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
 
+  const statusBarHeight = getStatusBarHeight(true);
+
   return (
-    <KeyboardAvoidingView>
+    <KeyboardAvoidingView
+      behavior='padding'
+      style={tw`flex-1 bg-neutral-50 px-4 pt-[${statusBarHeight + 14}px]`}
+      keyboardVerticalOffset={statusBarHeight - 20}
+    >
       <Text styletw='pb-2 text-lg text-slate-600'>장보기 식료품 목록</Text>
       <View style={tw`flex-1`}>
         <RecommendedFoods />

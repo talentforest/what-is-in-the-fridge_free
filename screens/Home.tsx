@@ -1,7 +1,7 @@
 import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
 import { Text } from '../components/native-component';
-import { Platform, ScrollView, StatusBar, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import tw from 'twrnc';
@@ -32,17 +32,17 @@ const Home = () => {
 
   if (!fontsLoaded || !isLoaded) return null;
 
-  const statusBarHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
+  const statusBarHeight = getStatusBarHeight(true);
 
   return (
     <ScrollView
-      style={tw`pt-[${(statusBarHeight || 0) + 14}px] bg-neutral-50`}
-      contentContainerStyle={tw`pb-10 px-4`}
+      style={tw`px-4 pt-[${statusBarHeight + 14}px] bg-neutral-50`}
+      contentContainerStyle={tw`pb-10`}
     >
       <Header />
       {assets && <BannerSlider assets={assets} />}
       {assets && <FridgeInfo asset={[assets[3], assets[4]]} />}
+
       <EntranceBox title='자주 먹는 식료품' destination='FavoriteFoods'>
         {favoriteFoods.length !== 0 ? (
           <View style={tw`gap-1 flex-1 flex-row flex-wrap`}>
