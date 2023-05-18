@@ -14,7 +14,7 @@ export default function SmallFoodTag({ food }: Props) {
       key={food.id}
       style={tw`border bg-white border-slate-300 gap-1 justify-center items-center h-8 flex-row px-2 py-1 rounded-2xl`}
     >
-      <Text styletw='text-xs text-center'>{food.image}</Text>
+      {food.image && <Text styletw='text-xs text-center'>{food.image}</Text>}
       <Text styletw={'text-xs text-center text-slate-600'}>
         {cutLetter(food.name, 6)}
       </Text>
