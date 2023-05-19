@@ -36,12 +36,7 @@ export default function FoodForm({
   return (
     <View style={tw`mb-4`}>
       {!noBigFoodImg && selectedFood?.image && (
-        <Text styletw='self-center my-4 text-6xl pt-2'>{food.image}</Text>
-      )}
-      {imageItem && !selectedFood?.favorite && (
-        <View style={tw`w-full flex-row gap-1 justify-center mb-3 h-22`}>
-          <FormImageItem value={food.image} changeFoodInfo={changeFoodInfo} />
-        </View>
+        <Text styletw='self-center mt-4 text-6xl pt-2'>{food.image}</Text>
       )}
       <View style={tw`flex-row gap-1 mb-1 `}>
         {nameItem && !selectedFood?.favorite ? (
@@ -70,6 +65,13 @@ export default function FoodForm({
           <InfoBox name='자주 먹는 식료품' favorite={food.favorite} />
         )}
       </View>
+      {imageItem && !selectedFood?.favorite && (
+        <FormImageItem
+          value={food.image}
+          foodName={food.name}
+          changeFoodInfo={changeFoodInfo}
+        />
+      )}
       {spaceItem && (
         <FormSpaceItem editedFood={food} editFoodInfo={changeFoodInfo} />
       )}
