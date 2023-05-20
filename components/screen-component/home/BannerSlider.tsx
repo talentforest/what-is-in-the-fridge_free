@@ -1,4 +1,4 @@
-import { Image, View } from 'react-native';
+import { Image, ImageSourcePropType, View } from 'react-native';
 import { FontGmarketSansBold } from '../../../constant/fonts';
 import { Text } from '../../native-component';
 import { Asset } from 'expo-asset';
@@ -12,14 +12,8 @@ interface Props {
 
 export default function BannerSlider({ assets }: Props) {
   const slidesInfo = [
-    {
-      image: assets[0],
-      contents: '냉장고를 한눈에 관리해보세요.',
-    },
-    {
-      image: assets[2],
-      contents: '장보기 리스트에 무엇이 있나요?',
-    },
+    { image: assets[0], contents: '냉장고를 한눈에 관리해보세요.' },
+    { image: assets[1], contents: '장보기 리스트에 무엇이 있나요?' },
   ];
 
   return (
@@ -42,7 +36,7 @@ export default function BannerSlider({ assets }: Props) {
             {assets && (
               <View style={tw`w-4/5 items-center justify-center`}>
                 <Image
-                  source={slide.image}
+                  source={slide.image as ImageSourcePropType}
                   style={tw.style('rounded-lg h-68 aspect-square')}
                 />
               </View>

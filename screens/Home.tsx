@@ -23,7 +23,6 @@ const Home = () => {
   const { isLoaded, assets } = useImageLoad({
     images: [
       require('../assets/fridge.png'),
-      require('../assets/select-food.png'),
       require('../assets/shopping-list.png'),
       require('../assets/magnifier-fridge.png'),
       require('../assets/foods-in-fridge.png'),
@@ -41,8 +40,8 @@ const Home = () => {
       contentContainerStyle={tw`pb-10 px-4`}
     >
       <Header />
-      {assets && <BannerSlider assets={assets} />}
-      {assets && <FridgeInfo asset={[assets[3], assets[4]]} />}
+      {assets && <BannerSlider assets={[assets[0], assets[1]]} />}
+      {assets && <FridgeInfo asset={[assets[2], assets[3]]} />}
       <EntranceBox title='자주 먹는 식료품' destination='FavoriteFoods'>
         {favoriteFoods.length !== 0 ? (
           <View style={tw`gap-1 flex-1 flex-row flex-wrap`}>
