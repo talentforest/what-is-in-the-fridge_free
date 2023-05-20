@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { Platform, ScrollView, View } from 'react-native';
 import { Text } from '../components/native-component';
-import { getISODate, getLocaleDate } from '../util';
-import { DEEP_INDIGO } from '../constant/colors';
+import { getLocaleDate } from '../util';
+import { LIGHT_GRAY } from '../constant/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
 import EmptyTag from '../components/common/EmptyTag';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import { useSelector } from '../redux/hook';
+import { Food } from '../constant/foods';
+import useExpiredFoods from '../hooks/useExpiredFoods';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -17,50 +20,14 @@ Notifications.setNotificationHandler({
   }),
 });
 
-interface NotiContent {
-  id: string;
-  title: string;
-  body: string;
-  data: { data: string };
-  date: string;
-}
-
 export default function Notification() {
-  const [notificationArr, setNotificationArr] = useState<NotiContent[]>([
-    {
-      id: '1',
-      title: '',
-      body: '가지의 유통기한이 임박했습니다.',
-      data: { data: '1' },
-      date: getISODate(new Date()),
-    },
-    {
-      id: '2',
-      title: '2',
-      body: '포도의 유통기한이 임박했습니다.',
-      data: { data: '2' },
-      date: getISODate(new Date()),
-    },
-    {
-      id: '3',
-      title: '3',
-      body: '오렌지의 유통기한이 임박했습니다.',
-      data: { data: '3' },
-      date: getISODate(new Date()),
-    },
-    {
-      id: '4',
-      title: '4',
-      body: '오이의 유통기한이 임박했습니다.',
-      data: { data: '4' },
-      date: getISODate(new Date()),
-    },
-  ]);
+  const { notificationList } = useSelector((state) => state.notificationList);
   const [expoPushToken, setExpoPushToken] = useState<string | undefined>('');
   const [notification, setNotification] =
     useState<Notifications.Notification>();
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
+  const { allLeftAndExpiredFoods } = useExpiredFoods();
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) =>
@@ -77,6 +44,8 @@ export default function Notification() {
         console.log(response);
       });
 
+    schedulePushNotification(allLeftAndExpiredFoods);
+
     return () => {
       if (
         typeof notificationListener.current !== 'undefined' &&
@@ -92,25 +61,41 @@ export default function Notification() {
 
   return (
     <>
-      {notificationArr.length === 0 ? (
+      {notificationList.length === 0 ? (
         <View style={tw`flex-1 p-4 gap-1 bg-neutral-50`}>
           <EmptyTag tagName='알림이 없습니다' />
         </View>
       ) : (
         <>
-          <Text styletw='p-4 text-indigo-600'>유통기한 알림</Text>
+          <View style={tw`p-4 flex-row items-center justify-between`}>
+            <Text styletw='text-indigo-600 text-base'>유통기한 알림</Text>
+            <View
+              style={tw`border bg-white border-slate-300 px-2 py-1 rounded-2xl`}
+            >
+              <Text styletw='text-sm'>전체 읽음</Text>
+            </View>
+          </View>
           <ScrollView style={tw`p-4 pt-0`} contentContainerStyle={tw`gap-2`}>
-            {notificationArr.map((notification) => (
+            {notificationList.map((notification) => (
               <View
-                style={tw`border border-slate-400 flex-row gap-3 items-center p-4 rounded-lg bg-white`}
+                style={tw`border justify-between border-slate-300 flex-row gap-3 items-center p-4 rounded-lg bg-white`}
                 key={notification.id}
               >
-                <Icon name='food-variant-off' size={24} color={DEEP_INDIGO} />
-                <View style={tw`gap-2`}>
+                <View style={tw`gap-2 flex-1`}>
+                  <View style={tw`flex-row items-center gap-0.5`}>
+                    <Icon
+                      name='alert-octagram-outline'
+                      size={16}
+                      color={LIGHT_GRAY}
+                    />
+                    <Text styletw='text-xs text-slate-400'>유통기한</Text>
+                  </View>
                   <Text>{notification.body}</Text>
-                  <Text styletw='text-xs text-slate-400'>
-                    {getLocaleDate(notification.date)}
-                  </Text>
+                  <View style={tw`flex-row gap-2`}>
+                    <Text styletw='text-xs text-slate-400'>
+                      {getLocaleDate(notification.date)}
+                    </Text>
+                  </View>
                 </View>
               </View>
             ))}
@@ -121,12 +106,13 @@ export default function Notification() {
   );
 }
 
-async function schedulePushNotification() {
+export async function schedulePushNotification(foods: Food[]) {
+  const foodNameList = foods.map((food) => food.name).join(',');
   await Notifications.scheduleNotificationAsync({
     content: {
       title: '유통기한 알림',
-      body: '가지의 유통기한이 임박했습니다.',
-      data: { data: 'goes here' },
+      body: `${foodNameList}의 유통기한이 3일 이내입니다.`,
+      data: { data: 'ExpiredFoods' },
     },
     trigger: { seconds: 2 },
   });
