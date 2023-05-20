@@ -7,9 +7,9 @@
     "icon": "./assets/fridge.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/question-fridge.png",
+      "image": "./assets/fridge.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#625dff"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -18,11 +18,20 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/fridge.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#625dff"
+      },
+      "build": {
+        "releaseType": "apk"
+      },
+      "package": "com.ellie0501.whatisinmyfridgeapp"
     },
     "web": {
       "favicon": "./assets/fridge.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "03af1134-a709-444e-b39b-02558deea4de"
+      }
     }
   }
 }
