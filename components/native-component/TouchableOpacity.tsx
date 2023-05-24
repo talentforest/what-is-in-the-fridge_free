@@ -7,6 +7,6 @@ interface Props extends TouchableOpacityProps {
   onPress: () => void;
 }
 
-export function TouchableOpacity({ onPress, ...props }: Props) {
+export function TouchableOpacity<T>({ onPress, ...props }: Props) {
   return <Touchable activeOpacity={0.6} onPress={onPress} {...props} />;
 }

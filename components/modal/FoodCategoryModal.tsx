@@ -1,21 +1,21 @@
 import { View } from 'react-native';
 import { Category, foodCategories } from '../../constant/foodCategories';
-import { Text, TouchableOpacity } from '../native-component';
+import RNModal from './common/Modal';
 import tw from 'twrnc';
-import RNModal from './component/Modal';
+import CheckBoxBtn from './form/CheckBoxBtn';
 
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
-  changeFoodInfo: (newInfo: { [key: string]: string }) => void;
-  category: Category;
+  changeInfo: (newInfo: { [key: string]: string }) => void;
+  categoryItem: Category;
 }
 
 export default function FoodCategoryModal({
   modalVisible,
   setModalVisible,
-  changeFoodInfo,
-  category,
+  changeInfo,
+  categoryItem,
 }: Props) {
   return (
     <RNModal
@@ -23,30 +23,17 @@ export default function FoodCategoryModal({
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
-      <View style={tw`mt-2 flex-row flex-wrap gap-1`}>
-        {foodCategories.map((foodCategory) => (
-          <TouchableOpacity
-            key={foodCategory.id}
+      <View style={tw`mt-5 flex-row flex-wrap gap-5`}>
+        {foodCategories.map(({ id, category }) => (
+          <CheckBoxBtn
+            key={id}
             onPress={() => {
-              changeFoodInfo({ category: foodCategory.category });
+              changeInfo({ category });
               setModalVisible(false);
             }}
-            style={tw`border p-2 rounded-md ${
-              category === foodCategory.category
-                ? 'bg-yellow-300 border-blue-600'
-                : 'bg-white border-slate-400'
-            }`}
-          >
-            <Text
-              styletw={`${
-                category === foodCategory.category
-                  ? 'text-blue-700'
-                  : 'text-slate-500'
-              }`}
-            >
-              {foodCategory.category}
-            </Text>
-          </TouchableOpacity>
+            title={category}
+            check={categoryItem === category}
+          />
         ))}
       </View>
     </RNModal>

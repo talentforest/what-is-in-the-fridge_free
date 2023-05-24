@@ -1,14 +1,14 @@
-import { Dimensions, ScrollView, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { Food } from '../../constant/foods';
 import { Text } from '../native-component';
 import { getLeftDays, getLocaleDate } from '../../util';
 import tw from 'twrnc';
-import InfoBox from './component/InfoBox';
-import SubmitBtn from '../form/SubmitBtn';
+import InfoBox from './common/InfoBox';
+import SubmitBtn from './form/SubmitBtn';
 import useEditFood from '../../hooks/useEditFood';
 import useDeleteFood from '../../hooks/useDeleteFood';
-import FoodForm from '../form/FoodForm';
-import RNModal from './component/Modal';
+import Form from './form/Form';
+import RNModal from './common/Modal';
 
 interface Props {
   modalVisible: boolean;
@@ -36,52 +36,54 @@ export default function FoodDetailModal({
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
-      {food.image && (
-        <View style={tw`items-center my-4`}>
+      <View style={tw`items-center mt-4 gap-2 mb-2`}>
+        {food.image.includes('http') ? (
+          <Image
+            style={tw`h-20 w-20 rounded-md`}
+            source={{ uri: food.image }}
+          />
+        ) : (
           <Text styletw='text-6xl pt-4'>{food.image}</Text>
-        </View>
-      )}
+        )}
+        <Text styletw='text-center px-4 leading-6'>{food.name}</Text>
+      </View>
       {editing ? (
-        <>
-          <ScrollView
-            contentContainerStyle={tw`justify-between w-full`}
-            style={tw`flex-row flex-wrap w-full max-h-[${
-              Dimensions.get('window').height / 1.8
-            }px]`}
-          >
-            <FoodForm
+        <View>
+          <View style={tw`mt-3 mb-8 gap-4`}>
+            <Form
               food={editedFood}
-              changeFoodInfo={editFoodInfo}
-              favoriteItem
-              categoryItem
-              nameItem
-              noBigFoodImg
+              changeInfo={editFoodInfo}
+              items={[
+                '카테고리',
+                '구매날짜',
+                '유통기한',
+                '즐겨찾는 식품인가요?',
+              ]}
             />
-          </ScrollView>
+          </View>
           <SubmitBtn
             btnName='식료품 정보 수정 완료'
             onPress={() => onEditSumbit(food.id)}
           />
-        </>
+        </View>
       ) : (
         <>
-          <View style={tw`w-full mt-2 mb-6`}>
-            <View style={tw`flex-row gap-0.5 h-20`}>
-              <InfoBox name='이름' info={editedFood.name} />
-              <InfoBox name='카테고리' info={editedFood.category} />
-              <InfoBox name='즐겨찾는 식품' favorite={editedFood.favorite} />
-            </View>
-            <View style={tw`flex-row gap-0.5 mt-0.5 h-20`}>
-              <InfoBox
-                name='구매 날짜'
-                info={getLocaleDate(editedFood.purchaseDate)}
-              />
-              <InfoBox
-                name='유통기한'
-                info={getLocaleDate(editedFood.expirationDate)}
-                leftDays={getLeftDays(editedFood.expirationDate)}
-              />
-            </View>
+          <View style={tw`my-3`}>
+            <InfoBox label='카테고리' info={editedFood.category} />
+            <InfoBox
+              label='구매날짜'
+              info={getLocaleDate(editedFood.purchaseDate)}
+              leftDays={getLeftDays(editedFood.purchaseDate)}
+            />
+            <InfoBox
+              label='유통기한'
+              info={getLocaleDate(editedFood.expirationDate)}
+              leftDays={getLeftDays(editedFood.expirationDate)}
+            />
+            <InfoBox
+              label='즐겨찾는 식품인가요?'
+              favorite={editedFood.favorite}
+            />
           </View>
           <SubmitBtn
             btnName='식료품 정보 수정하기'

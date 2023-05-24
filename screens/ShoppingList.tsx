@@ -3,7 +3,7 @@ import { Text, KeyboardAvoidingView } from '../components/native-component';
 import { useSelector } from '../redux/hook';
 import RecommendedFoods from '../components/screen-component/shopping-list/RecommendedFoods';
 import TextInputToAddList from '../components/screen-component/shopping-list/TextInputToAddList';
-import ListItem from '../components/screen-component/shopping-list/ListItem';
+import ShoppingItem from '../components/screen-component/shopping-list/ShoppingItem';
 import tw from 'twrnc';
 
 export default function ShoppingList() {
@@ -21,7 +21,7 @@ export default function ShoppingList() {
         ) : (
           <ScrollView style={tw`flex-1`}>
             {shoppingList.map((food) => (
-              <ListItem key={food.name} food={food} />
+              <ShoppingItem key={food.name} food={food} />
             ))}
           </ScrollView>
         )}

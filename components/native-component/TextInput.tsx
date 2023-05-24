@@ -20,7 +20,7 @@ export function TextInput({ styletw, onPress, ...props }: Props) {
         <TouchableOpacity onPress={onTouchPress}>
           <Input
             style={tw.style(
-              `border border-slate-400 h-9 p-2 rounded-lg bg-white ${
+              `border border-slate-400 h-11 p-2 rounded-lg bg-white ${
                 styletw || ''
               }`,
               FontGmarketSansRegular
@@ -31,7 +31,7 @@ export function TextInput({ styletw, onPress, ...props }: Props) {
       ) : (
         <Input
           style={tw.style(
-            `border border-slate-400 p-2 h-9 rounded-lg bg-white ${
+            `border border-slate-400 p-2 h-11 rounded-lg bg-white ${
               styletw || ''
             }`,
             FontGmarketSansRegular

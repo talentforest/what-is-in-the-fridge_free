@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 import { Food } from '../../constant/foods';
-import tw from 'twrnc';
+import { useSelector } from '../../redux/hook';
 import BigFoodTag from './BigFoodTag';
 import EmptyTag from './EmptyTag';
-import AddFoodModal from '../modal/AddFoodModal';
+import AddSelectFoodModal from '../modal/AddSelectFoodModal';
+import tw from 'twrnc';
 
 interface Props {
   foods: Food[];
-  editing?: boolean;
 }
 
-export default function FoodTagList({ foods, editing }: Props) {
+export default function FoodTagList({ foods }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedFood, setSelectedFood] = useState<Food>();
+  const { selectedFood } = useSelector((state) => state.selectedFood);
 
   return (
     <>
@@ -24,8 +24,6 @@ export default function FoodTagList({ foods, editing }: Props) {
               key={food.id}
               food={food}
               setModalVisible={setModalVisible}
-              setSelectedFood={setSelectedFood}
-              editing={editing}
             />
           ))}
         </View>
@@ -35,8 +33,7 @@ export default function FoodTagList({ foods, editing }: Props) {
         </View>
       )}
       {modalVisible && selectedFood && (
-        <AddFoodModal
-          selectedFood={selectedFood}
+        <AddSelectFoodModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
         />

@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { useDispatch } from '../../../redux/hook';
 import { DEEP_INDIGO } from '../../../constant/colors';
@@ -22,12 +22,10 @@ export default function RecommendedFoods() {
             {getRecommendedShoppingList().map((food) => (
               <TouchableOpacity
                 key={food.id}
-                style={tw`flex-row items-center justify-between gap-3 border border-slate-300 px-2 py-2 rounded-xl bg-yellow-100`}
+                style={tw`flex-row items-center justify-between gap-3 border border-slate-300 px-2 py-1 rounded-lg bg-yellow-100`}
                 onPress={() => dispatch(addToShoppingList(food))}
               >
-                <Text styletw='text-xs text-indigo-700'>
-                  {food.image} {food.name}
-                </Text>
+                <Text styletw='text-xs text-indigo-700'>{food.name}</Text>
                 <Icon name='pluscircle' size={14} color={DEEP_INDIGO} />
               </TouchableOpacity>
             ))}
