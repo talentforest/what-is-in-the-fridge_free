@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TouchableOpacity } from '../../native-component';
-import { CompartmentType } from '../../../constant/fridgeInfo';
+import { FoodLocation } from '../../../constant/fridgeInfo';
 import { Food } from '../../../constant/foods';
 import { DEEP_INDIGO } from '../../../constant/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,13 +8,13 @@ import AddFoodModal from '../../modal/AddFoodModal';
 
 interface Props {
   selectedFood?: Food;
-  compartment?: CompartmentType;
+  foodLocation?: FoodLocation;
   onPress?: () => void;
 }
 
 export default function AddFoodModalBtn({
   selectedFood,
-  compartment,
+  foodLocation,
   onPress,
 }: Props) {
   const [modal, setModal] = useState(false);
@@ -31,10 +31,10 @@ export default function AddFoodModalBtn({
       <TouchableOpacity onPress={onPressFc}>
         <Icon name='basket-plus-outline' size={20} color={DEEP_INDIGO} />
       </TouchableOpacity>
-      {modal && (
+      {modal && foodLocation && (
         <AddFoodModal
           selectedFood={selectedFood}
-          compartment={compartment}
+          foodLocation={foodLocation}
           modalVisible={modal}
           setModalVisible={setModal}
         />

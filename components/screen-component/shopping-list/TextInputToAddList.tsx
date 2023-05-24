@@ -17,7 +17,7 @@ export default function TextInputToAddList() {
       <TextInput
         value={foodName}
         onChangeText={setFoodName}
-        styletw='h-12 rounded-3xl px-5'
+        styletw='rounded-3xl px-5'
         placeholder='장보기 목록에 추가할 식료품을 작성해주세요.'
         returnKeyType='done'
         onSubmitEditing={() => {

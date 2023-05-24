@@ -3,22 +3,22 @@ import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { Food, FoodInfo, initialFoodInfo } from '../constant/foods';
 import { useState } from 'react';
 import { addFood } from '../redux/slice/allFoodsSlice';
-import { Alert } from 'react-native';
-import { CompartmentType } from '../constant/fridgeInfo';
-import { removeFromShoppingList } from '../redux/slice/shoppingList';
+import { FoodLocation } from '../constant/fridgeInfo';
 import UUIDGenerator from 'react-native-uuid';
 import useCheckFood from './useCheckFood';
 
 interface Props {
-  selectedFood?: Food;
-  compartment?: CompartmentType;
+  foodLocation: FoodLocation;
 }
 
-export default function useAddFood({ selectedFood, compartment }: Props) {
-  const [newFood, setNewFood] = useState<Food>(selectedFood || initialFoodInfo);
+export default function useAddFood({ foodLocation }: Props) {
+  const [newFood, setNewFood] = useState<Food>(initialFoodInfo);
+
   const { checkExistFood, alertExistFood } = useCheckFood();
-  const myUuid = UUIDGenerator.v4();
   const dispatch = useDispatch();
+
+  const { space, compartmentNum } = foodLocation;
+  const myUuid = UUIDGenerator.v4();
 
   const addFoodInfo = (info: FoodInfo) => setNewFood({ ...newFood, ...info });
 
@@ -26,27 +26,17 @@ export default function useAddFood({ selectedFood, compartment }: Props) {
     const food: Food = {
       ...newFood,
       id: myUuid as string,
-      space: compartment?.space || newFood.space,
-      compartmentNum: compartment?.compartmentNum || newFood.compartmentNum,
+      space,
+      compartmentNum,
     };
 
-    if (checkExistFood(food)) {
-      const existFood = checkExistFood(food);
-      return existFood ? alertExistFood(existFood) : null;
-    }
+    const existFood = checkExistFood(food);
+    if (existFood) return alertExistFood(existFood);
 
     if (food.favorite) {
       dispatch(addFavorite(food));
     }
     dispatch(addFood(food));
-
-    if (selectedFood) {
-      dispatch(removeFromShoppingList({ name: newFood.name }));
-      Alert.alert(
-        `${newFood.name}`,
-        `${newFood.space} ${newFood.compartmentNum}에 추가되었습니다.`
-      );
-    }
   };
 
   return {

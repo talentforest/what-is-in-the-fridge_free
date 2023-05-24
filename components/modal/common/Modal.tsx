@@ -3,6 +3,8 @@ import { View } from 'react-native';
 import Modal from 'react-native-modal';
 import tw from 'twrnc';
 import Header from './Header';
+import { useDispatch } from '../../../redux/hook';
+import { search } from '../../../redux/slice/searchKeywordSlice';
 
 interface Props {
   title: string;
@@ -17,14 +19,24 @@ export default function RNModal({
   modalVisible,
   setModalVisible,
 }: Props) {
+  const dispatch = useDispatch();
   return (
     <Modal
-      onBackdropPress={() => setModalVisible(false)}
+      onBackdropPress={() => {
+        setModalVisible(!modalVisible);
+        dispatch(search(''));
+      }}
       isVisible={modalVisible}
       style={tw`justify-end m-0 border`}
     >
-      <View style={tw`bg-indigo-300 p-4 pb-8 rounded-t-2xl`}>
-        <Header title={title} setModalVisible={setModalVisible} />
+      <View style={tw`bg-white p-4 pb-10 rounded-t-2xl`}>
+        <Header
+          title={title}
+          setModalVisible={() => {
+            setModalVisible(!modalVisible);
+            dispatch(search(''));
+          }}
+        />
         {children}
       </View>
     </Modal>
