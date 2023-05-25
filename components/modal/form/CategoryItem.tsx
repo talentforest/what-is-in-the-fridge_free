@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 import { Text, TextInput, TouchableOpacity } from '../../native-component';
-import { Category } from '../../../constant/foodCategories';
+import { Category, foodCategories } from '../../../constant/foodCategories';
 import tw from 'twrnc';
 import FoodCategoryModal from '../FoodCategoryModal';
 
 interface Props {
   category: Category;
   changeInfo: (newInfo: { [key: string]: string }) => void;
+  prdkind?: string;
 }
 
-export default function CategoryItem({ category, changeInfo }: Props) {
+export default function CategoryItem({ category, changeInfo, prdkind }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (

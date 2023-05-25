@@ -21,10 +21,11 @@ export type Label =
 interface Props {
   items: Label[];
   food: Food;
+  prdkind?: string;
   changeInfo: (newInfo: { [key: string]: string | boolean }) => void;
 }
 
-export default function Form({ items, changeInfo, food }: Props) {
+export default function Form({ items, prdkind, changeInfo, food }: Props) {
   return (
     <>
       {items.includes('아이콘과 이름') && (
@@ -44,7 +45,11 @@ export default function Form({ items, changeInfo, food }: Props) {
 
       {items.includes('카테고리') && (
         <FormItemContainer label='카테고리'>
-          <CategoryItem category={food.category} changeInfo={changeInfo} />
+          <CategoryItem
+            category={food.category}
+            changeInfo={changeInfo}
+            prdkind={prdkind}
+          />
         </FormItemContainer>
       )}
 

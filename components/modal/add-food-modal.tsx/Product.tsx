@@ -28,37 +28,52 @@ export interface ProductType {
 interface Props {
   product: ProductType;
   selectedFood: Food;
+  openForm: boolean;
   onPress: (product: ProductType) => void;
 }
 
-export default function Product({ product, selectedFood, onPress }: Props) {
-  const { item } = product;
+export default function Product({
+  product,
+  selectedFood,
+  openForm,
+  onPress,
+}: Props) {
+  const {
+    item: { prdlstNm, imgurl1, prdkind, capacity },
+  } = product;
+
+  const detail = [prdkind, capacity].filter(
+    (info) => info && info !== '알수없음'
+  );
 
   return (
     <TouchableOpacity
       onPress={() => onPress(product)}
-      style={tw`rounded-md border-slate-300 flex-row gap-2 py-2.5 items-center ${
-        item.prdlstNm === selectedFood.name ? 'border-b-0' : ' border-b'
-      }`}
+      style={tw`rounded-md border-slate-300 flex-row gap-2 py-2.5 items-center`}
     >
-      <Image style={tw`h-14 w-14 rounded-md`} source={{ uri: item.imgurl1 }} />
+      <Image style={tw`h-14 w-14 rounded-md`} source={{ uri: imgurl1 }} />
       <View style={tw`flex-1 gap-2 justify-center`}>
-        <Text>{item.prdlstNm}</Text>
-        <View style={tw`flex-row gap-1`}>
-          {item.prdkind !== '알수없음' && item.prdkind && (
-            <Text styletw='text-slate-500'>{item.prdkind}</Text>
-          )}
-          {item.capacity !== '알수없음' && item.capacity && (
-            <>
-              <Text styletw='text-slate-500'>/</Text>
-              <Text styletw='text-slate-500 flex-1 pb-1'>{item.capacity}</Text>
-            </>
+        <Text>{prdlstNm}</Text>
+        <View style={tw`flex-row gap-1 w-full`}>
+          {detail.map(
+            (info, index) =>
+              info !== '알수없음' &&
+              info && (
+                <Text
+                  key={info}
+                  styletw={`text-slate-500 pb-0.5 leading-5 ${
+                    index === detail.length - 1 && 'flex-1'
+                  }`}
+                >
+                  {info} {index !== detail.length - 1 && '|'}
+                </Text>
+              )
           )}
         </View>
       </View>
       <Icon
         name={
-          item.prdlstNm === selectedFood.name
+          openForm && prdlstNm === selectedFood.name
             ? 'checkmark-circle-outline'
             : 'add'
         }

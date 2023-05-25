@@ -23,7 +23,7 @@ export default function FoodCategoryModal({
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
-      <View style={tw`mt-5 flex-row flex-wrap gap-5`}>
+      <View style={tw`my-4 gap-5`}>
         {foodCategories.map(({ id, category }) => (
           <CheckBoxBtn
             key={id}
