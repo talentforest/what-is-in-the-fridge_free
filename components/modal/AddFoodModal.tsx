@@ -8,8 +8,6 @@ import TabBtn from './add-food-modal.tsx/TabBtn';
 import SearchTabContent from './add-food-modal.tsx/SearchTabContent';
 import FormTabContent from './add-food-modal.tsx/FormTabContent';
 import tw from 'twrnc';
-import { useDispatch } from '../../redux/hook';
-import { search } from '../../redux/slice/searchKeywordSlice';
 
 interface Props {
   modalVisible: boolean;
@@ -25,7 +23,6 @@ export default function AddFoodModal({
   selectedFood,
 }: Props) {
   const [searchTab, setSearchTab] = useState(true);
-  const dispatch = useDispatch();
 
   return (
     <RNModal
