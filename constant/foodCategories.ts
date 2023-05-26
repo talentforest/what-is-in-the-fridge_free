@@ -7,17 +7,17 @@ interface FoodCategory {
 export type Category =
   | '채소'
   | '과일'
-  | '정육, 수산'
-  | '우유, 계란, 유제품'
+  | '정육 · 수산'
+  | '우유 · 계란 · 유제품'
   | '간편식품'
-  | '통조림, 햄'
-  | '소스, 조미료, 오일, 장류'
-  | '아이스크림, 과자, 초콜릿'
-  | '빵, 떡, 잼'
-  | '면류, 곡류'
-  | '견과류, 콩류'
+  | '통조림 · 햄'
+  | '소스 · 조미료 · 오일 · 장류'
+  | '아이스크림 · 과자 · 초콜릿'
+  | '빵 · 떡 · 잼'
+  | '면류 · 곡류'
+  | '견과류 · 콩류'
   | '반찬'
-  | '생수, 음료수, 커피'
+  | '생수 · 음료수 · 커피'
   | '주류';
 
 export const foodCategories: FoodCategory[] = [
@@ -25,7 +25,7 @@ export const foodCategories: FoodCategory[] = [
   { id: 2, category: '과일', prdkind: [] },
   {
     id: 3,
-    category: '정육, 수산',
+    category: '정육 · 수산',
     prdkind: [
       '어묵',
       '양념육',
@@ -45,7 +45,7 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 4,
-    category: '우유, 계란, 유제품',
+    category: '우유 · 계란 · 유제품',
     prdkind: [
       '가공유',
       '발효유',
@@ -91,7 +91,7 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 6,
-    category: '통조림, 햄',
+    category: '통조림 · 햄',
     prdkind: [
       '프레스햄',
       '햄',
@@ -122,7 +122,7 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 8,
-    category: '소스, 조미료, 오일, 장류',
+    category: '소스 · 조미료 · 오일 · 장류',
     prdkind: [
       '김칫속',
       '소스류',
@@ -173,7 +173,7 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 9,
-    category: '아이스크림, 과자, 초콜릿',
+    category: '아이스크림 · 과자 · 초콜릿',
     prdkind: [
       '과자류',
       '과자',
@@ -190,7 +190,7 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 10,
-    category: '빵, 떡, 잼',
+    category: '빵 · 떡 · 잼',
     prdkind: [
       '떡류',
       '떡국/떡류(주정침지제품',
@@ -203,7 +203,7 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 11,
-    category: '면류, 곡류',
+    category: '면류 · 곡류',
     prdkind: [
       '숙면',
       '시리얼류',
@@ -220,7 +220,7 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 12,
-    category: '견과류, 콩류',
+    category: '견과류 · 콩류',
     prdkind: [
       '두부',
       '두부류',
@@ -232,7 +232,7 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 13,
-    category: '생수, 음료수, 커피',
+    category: '생수 · 음료수 · 커피',
     prdkind: [
       '침출차',
       '액상차',

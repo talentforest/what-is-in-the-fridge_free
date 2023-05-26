@@ -17,7 +17,7 @@ export default function TabBtn({ searchTab, setSearchTab }: Props) {
         }`}
       >
         <Text styletw={`${searchTab ? 'text-indigo-600' : 'text-slate-400'}`}>
-          식품 정보 검색
+          식품 가공품 정보 검색
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
