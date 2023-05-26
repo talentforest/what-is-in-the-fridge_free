@@ -8,10 +8,9 @@ import FoodCategoryModal from '../FoodCategoryModal';
 interface Props {
   category: Category;
   changeInfo: (newInfo: { [key: string]: string }) => void;
-  prdkind?: string;
 }
 
-export default function CategoryItem({ category, changeInfo, prdkind }: Props) {
+export default function CategoryItem({ category, changeInfo }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
