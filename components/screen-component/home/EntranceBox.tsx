@@ -6,7 +6,7 @@ import {
   RootStackParamList,
 } from '../../../navigation/Navigation';
 import { ReactNode } from 'react';
-import { DEEP_INDIGO } from '../../../constant/colors';
+import { DEEP_INDIGO, ORANGE_RED } from '../../../constant/colors';
 import tw from 'twrnc';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -16,11 +16,7 @@ interface Props {
   children: ReactNode;
 }
 
-type EntranceTitle =
-  | '나의 냉장고'
-  | '나의 장바구니 목록'
-  | '유통기한이 임박한 식료품'
-  | '자주 먹는 식료품';
+type EntranceTitle = '유통기한 주의 식료품' | '자주 먹는 식료품';
 
 export default function EntranceBox({ title, destination, children }: Props) {
   const navigation = useNavigation<NavigateProp>();
@@ -30,12 +26,19 @@ export default function EntranceBox({ title, destination, children }: Props) {
       style={tw`mb-2 min-h-30 border border-slate-300 flex-1 rounded-lg p-3 bg-white`}
       onPress={() => navigation.navigate(destination)}
     >
-      <Text styletw='text-sm text-indigo-600 mb-2'>{title}</Text>
+      <View style={tw`flex-row items-center mb-2 gap-1`}>
+        <Icon
+          name={title === '유통기한 주의 식료품' ? 'alert-triangle' : 'heart'}
+          size={16}
+          color={ORANGE_RED}
+        />
+        <Text styletw='text-sm text-indigo-600'>{title}</Text>
+      </View>
       {children}
       <View
         style={tw`flex-row justify-end items-center self-end absolute top-0 bottom-0 right-1`}
       >
-        <Icon name='chevron-right' size={25} color={DEEP_INDIGO} />
+        <Icon name='chevron-right' size={20} color={DEEP_INDIGO} />
       </View>
     </TouchableOpacity>
   );

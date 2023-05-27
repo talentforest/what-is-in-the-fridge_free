@@ -33,7 +33,7 @@ export default function MyFridge() {
         </View>
         <View style={tw`flex-row items-center gap-1`}>
           <Icon name='alert-octagram-outline' size={20} color={ORANGE_RED} />
-          <Text styletw='text-slate-600'>유통기한 임박 식료품 개수</Text>
+          <Text styletw='text-slate-600'>유통기한 주의 식료품 개수</Text>
         </View>
       </View>
       <View
