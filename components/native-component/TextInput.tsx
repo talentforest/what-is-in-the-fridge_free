@@ -2,6 +2,7 @@ import { TextInput as Input, Platform, TextInputProps } from 'react-native';
 import { FontGmarketSansRegular } from '../../constant/fonts';
 import tw from 'twrnc';
 import { TouchableOpacity } from './TouchableOpacity';
+import { LIGHT_GRAY } from '../../constant/colors';
 
 interface Props extends TextInputProps {
   styletw?: string;
@@ -26,6 +27,7 @@ export function TextInput({ styletw, onPress, ...props }: Props) {
               FontGmarketSansRegular
             )}
             {...props}
+            placeholderTextColor={LIGHT_GRAY}
           />
         </TouchableOpacity>
       ) : (
@@ -36,6 +38,7 @@ export function TextInput({ styletw, onPress, ...props }: Props) {
             }`,
             FontGmarketSansRegular
           )}
+          placeholderTextColor={LIGHT_GRAY}
           {...props}
         />
       )}

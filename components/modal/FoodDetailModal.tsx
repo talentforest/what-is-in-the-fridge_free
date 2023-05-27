@@ -53,12 +53,7 @@ export default function FoodDetailModal({
             <Form
               food={editedFood}
               changeInfo={editFoodInfo}
-              items={[
-                '카테고리',
-                '구매날짜',
-                '유통기한',
-                '즐겨찾는 식품인가요?',
-              ]}
+              items={['구매날짜', '유통기한', '즐겨찾는 식품인가요?']}
             />
           </View>
           <SubmitBtn

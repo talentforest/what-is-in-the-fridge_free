@@ -3,10 +3,9 @@ import { View } from 'react-native';
 import { fonts } from '../constant/fonts';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
-import { FoodLocation } from '../constant/fridgeInfo';
+import { getCompartments } from '../util';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import tw from 'twrnc';
-import { getCompartments } from '../util/getCompartments';
 
 export default function Compartments({ route }: any) {
   const { space } = route.params;

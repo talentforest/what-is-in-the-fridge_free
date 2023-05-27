@@ -1,10 +1,8 @@
 import { ReactNode } from 'react';
 import { View } from 'react-native';
 import Modal from 'react-native-modal';
-import tw from 'twrnc';
 import Header from './Header';
-import { useDispatch } from '../../../redux/hook';
-import { search } from '../../../redux/slice/searchKeywordSlice';
+import tw from 'twrnc';
 
 interface Props {
   title: string;
@@ -19,22 +17,19 @@ export default function RNModal({
   modalVisible,
   setModalVisible,
 }: Props) {
-  const dispatch = useDispatch();
   return (
     <Modal
       onBackdropPress={() => {
         setModalVisible(!modalVisible);
-        dispatch(search(''));
       }}
       isVisible={modalVisible}
-      style={tw`justify-end m-0`}
+      style={tw`m-0 justify-end`}
     >
-      <View style={tw`bg-white p-4 pb-10 rounded-t-2xl`}>
+      <View style={tw`bg-white p-4 pb-8 rounded-t-2xl max-h-[95%]`}>
         <Header
           title={title}
           setModalVisible={() => {
             setModalVisible(!modalVisible);
-            dispatch(search(''));
           }}
         />
         {children}
