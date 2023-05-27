@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { getHaccpProducts } from '../service/getHaccpProduct';
 
 export interface HaccpProductType {
@@ -22,16 +22,21 @@ export interface HaccpProductType {
 }
 
 export default function useGetProduct(deferredKeyword: string) {
-  const { data, isLoading } = useQuery(
-    ['search', deferredKeyword],
-    () => getHaccpProducts(deferredKeyword),
-    { enabled: deferredKeyword !== '' }
-  );
-
-  const products = data?.body?.items;
+  const { data, isLoading, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['search', deferredKeyword],
+      queryFn: ({ pageParam }) => getHaccpProducts(deferredKeyword, pageParam),
+      getNextPageParam: (lastPage) => {
+        if (lastPage?.nextCursor) return lastPage?.nextCursor;
+      },
+      enabled: deferredKeyword !== '',
+      initialData: { pageParams: [1], pages: [{ nextCursor: 2, pages: [] }] },
+    });
 
   return {
     isLoading,
-    products,
+    data,
+    fetchNextPage,
+    isFetchingNextPage,
   };
 }
