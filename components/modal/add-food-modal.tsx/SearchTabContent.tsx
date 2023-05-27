@@ -1,5 +1,5 @@
-import { FlatList, View } from 'react-native';
-import { useRef, useState } from 'react';
+import { ActivityIndicator, FlatList, View } from 'react-native';
+import { memo, useState } from 'react';
 import { FoodLocation } from '../../../constant/fridgeInfo';
 import { initialFoodInfo } from '../../../constant/foods';
 import { Text } from '../../native-component';
@@ -27,9 +27,8 @@ export default function SearchTabContent({
   const dispatch = useDispatch();
 
   const deferredKeyword = useDebounce(searchKeyword, 500);
-  const { products, isLoading } = useGetProduct(deferredKeyword);
-
-  const flatListRef = useRef<FlatList<HaccpProductType> | null>(null);
+  const { data, fetchNextPage, isLoading, isFetchingNextPage } =
+    useGetProduct(deferredKeyword);
 
   const onHaccpProductPress = (product: HaccpProductType) => {
     const { space, compartmentNum } = foodLocation;
@@ -51,44 +50,71 @@ export default function SearchTabContent({
     setOpenForm(true);
   };
 
+  const loadDataMore = () => {
+    fetchNextPage();
+  };
+
+  const productList = data?.pages
+    ?.map?.((row) => row?.pages?.body)
+    ?.map((row) => row?.items)
+    ?.flat();
+
+  const totalCount = data?.pages?.[0]?.pages?.body?.totalCount;
+
   return (
     <View
-      style={tw`flex-1 border border-t-0 rounded-b-md border-slate-400 bg-white p-4 w-full`}
+      style={tw`flex-1 border border-t-0 rounded-b-md border-slate-400 bg-white p-3 w-full`}
     >
       <SearchInput />
+      <Text styletw='text-slate-500 mt-2' onPress={() => fetchNextPage()}>
+        총 {totalCount || 0} 개
+      </Text>
       {!isLoading ? (
-        !!products?.length &&
+        productList?.[0] &&
         foodLocation && (
-          <>
-            <Text styletw='pt-4'>
-              검색결과: {products && products?.length}개
-            </Text>
-            <FlatList
-              ref={flatListRef}
-              keyExtractor={(_, index) => index.toString()}
-              style={tw`mt-2`}
-              contentContainerStyle={tw`justify-between w-full`}
-              data={products}
-              ItemSeparatorComponent={() => (
-                <View style={tw`border-b border-slate-400`} />
-              )}
-              renderItem={({ item }: any) => (
-                <HaccpProduct
-                  key={item.item.imgurl1}
-                  product={item}
-                  openForm={openForm}
-                  selectedFood={selectedFood}
-                  onPress={() => onHaccpProductPress(item)}
-                  setModalVisible={setModalVisible}
-                />
-              )}
-            />
-          </>
+          <FlatList
+            onEndReached={() => {
+              loadDataMore();
+            }}
+            onEndReachedThreshold={0.85}
+            contentContainerStyle={tw`justify-between w-full`}
+            keyExtractor={({ item }) =>
+              `${item.imgurl1}${item.rawmtrl}${item.barcode}${item.nutrient}${item.prdlstNm}`
+            }
+            data={productList}
+            ItemSeparatorComponent={memo(() => (
+              <View style={tw`border-b border-slate-400`} />
+            ))}
+            initialNumToRender={5}
+            renderItem={({ item }) => (
+              <HaccpProduct
+                key={`${item.imgurl1}${item.rawmtrl}${item.barcode}${item.nutrient}${item.prdlstNm}`}
+                product={item}
+                openForm={openForm}
+                setOpenForm={setOpenForm}
+                selectedFood={selectedFood}
+                onPress={() => onHaccpProductPress(item)}
+                setModalVisible={setModalVisible}
+              />
+            )}
+            ListFooterComponent={
+              isFetchingNextPage && totalCount > productList?.length ? (
+                <View style={tw`text-indigo-300 my-20`}>
+                  <ActivityIndicator />
+                </View>
+              ) : (
+                <></>
+              )
+            }
+            disableVirtualization={false}
+          />
         )
       ) : (
-        <Text styletw='text-slate-500 text-center mt-20'>로딩중...</Text>
+        <View style={tw`text-indigo-300 mt-20`}>
+          <ActivityIndicator />
+        </View>
       )}
-      {!isLoading && searchKeyword && !!!products?.length && (
+      {!isLoading && searchKeyword && !!!productList?.length && (
         <Text styletw='text-slate-500 text-center mt-20'>
           검색 결과가 없습니다.
         </Text>

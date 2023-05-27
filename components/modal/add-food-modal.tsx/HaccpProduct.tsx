@@ -5,35 +5,39 @@ import { Food } from '../../../constant/foods';
 import { useDispatch } from '../../../redux/hook';
 import { search } from '../../../redux/slice/searchKeywordSlice';
 import { HaccpProductType } from '../../../hooks/useGetProduct';
+import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/Ionicons';
 import tw from 'twrnc';
 import Form from '../form/Form';
 import SubmitBtn from '../form/SubmitBtn';
 import useAddSelectFood from '../../../hooks/useAddSelectFood';
+import { memo } from 'react';
 
 interface Props {
   product: HaccpProductType;
   selectedFood: Food;
   openForm: boolean;
+  setOpenForm: (openForm: boolean) => void;
   onPress: (product: HaccpProductType) => void;
   setModalVisible: (modalVisible: boolean) => void;
 }
 
-export default function HaccpProduct({
+const HaccpProduct = ({
   product,
   selectedFood,
   openForm,
+  setOpenForm,
   onPress,
   setModalVisible,
-}: Props) {
+}: Props) => {
   const { onChange, onSubmit } = useAddSelectFood();
   const dispatch = useDispatch();
 
   const {
-    item: { prdlstNm, imgurl1, prdkind, capacity },
+    item: { prdlstNm, imgurl1, prdkind, capacity, manufacture },
   } = product;
 
-  const detail = [prdkind, capacity].filter(
+  const detail = [prdkind, capacity, manufacture].filter(
     (info) => info && info !== '알수없음'
   );
 
@@ -43,21 +47,23 @@ export default function HaccpProduct({
         onPress={() => onPress(product)}
         style={tw`rounded-md border-slate-300 flex-row gap-2 py-2.5 items-center`}
       >
-        <Image style={tw`h-14 w-14 rounded-md`} source={{ uri: imgurl1 }} />
+        <Image
+          style={tw`h-14 w-14 rounded-md`}
+          source={{ uri: imgurl1 }}
+          alt={`${product.item.prdlstNm} image`}
+        />
         <View style={tw`flex-1 gap-2 justify-center`}>
           <Text>{prdlstNm}</Text>
-          <View style={tw`flex-row gap-1 w-full`}>
+          <View style={tw`flex-row flex-wrap gap-1 w-full`}>
             {detail.map(
               (info, index) =>
                 info !== '알수없음' &&
                 info && (
-                  <Text
-                    key={info}
-                    styletw={`text-slate-500 pb-0.5 leading-5 ${
-                      index === detail.length - 1 && 'flex-1'
-                    }`}
-                  >
-                    {info} {index !== detail.length - 1 && '|'}
+                  <Text key={info} styletw={`text-slate-500 pb-0.5 leading-5 `}>
+                    {index === detail.length - 1
+                      ? info.split('/')[0].split('_')[0].split('|')[0]
+                      : info}{' '}
+                    {index !== detail.length - 1 && '|'}
                   </Text>
                 )
             )}
@@ -74,11 +80,17 @@ export default function HaccpProduct({
         />
       </TouchableOpacity>
       {prdlstNm === selectedFood.name && openForm && (
-        <View style={tw`mb-4`}>
-          <Text styletw='text-indigo-500 mb-2 ml-1'>추가 정보</Text>
-          <View
-            style={tw`border border-slate-400 bg-slate-100 rounded-md p-3 gap-3`}
-          >
+        <Modal
+          onBackdropPress={() => setOpenForm(!openForm)}
+          isVisible={openForm}
+          animationIn={'fadeIn'}
+          style={tw`my-35 rounded-lg p-4 bg-white`}
+        >
+          <View style={tw`items-center gap-4`}>
+            <Image style={tw`h-20 w-20 rounded-md`} source={{ uri: imgurl1 }} />
+            <Text styletw='text-slate-800 mb-4 text-center'>{prdlstNm}</Text>
+          </View>
+          <View style={tw`gap-3`}>
             <Form
               items={[
                 '카테고리',
@@ -98,8 +110,10 @@ export default function HaccpProduct({
               }}
             />
           </View>
-        </View>
+        </Modal>
       )}
     </View>
   );
-}
+};
+
+export default HaccpProduct;

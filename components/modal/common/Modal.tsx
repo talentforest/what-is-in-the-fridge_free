@@ -27,7 +27,7 @@ export default function RNModal({
         dispatch(search(''));
       }}
       isVisible={modalVisible}
-      style={tw`justify-end m-0 border`}
+      style={tw`justify-end m-0`}
     >
       <View style={tw`bg-white p-4 pb-10 rounded-t-2xl`}>
         <Header
