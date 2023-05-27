@@ -5,11 +5,11 @@ import { cutLetter, getISODate, getLeftDays } from '../../util';
 import { useDispatch } from '../../redux/hook';
 import { removeFavorite } from '../../redux/slice/favoriteFoodsSlice';
 import { editFood } from '../../redux/slice/allFoodsSlice';
+import { ORANGE_RED } from '../../constant/colors';
 import { select } from '../../redux/slice/selectedFoodSlice';
 import tw from 'twrnc';
 import IconBtn from './IconBtn';
-import useRouteName from '../../hooks/useCurrRouteName';
-import { ORANGE_RED } from '../../constant/colors';
+import useRouteName from '../../hooks/useRouteName';
 
 interface Props {
   food: Food;

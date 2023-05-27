@@ -4,7 +4,7 @@ import RNModal from './common/Modal';
 import Form from './form/Form';
 import useAddSelectFood from '../../hooks/useAddSelectFood';
 import SubmitBtn from './form/SubmitBtn';
-import useRouteName from '../../hooks/useCurrRouteName';
+import useRouteName from '../../hooks/useRouteName';
 import tw from 'twrnc';
 
 interface Props {

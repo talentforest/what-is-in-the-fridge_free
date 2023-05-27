@@ -19,7 +19,7 @@ export default function InfoBox({ label, info, favorite, leftDays }: Props) {
       {info && (
         <View style={tw`gap-3 flex-row items-center flex-1`}>
           <Text styletw='text-indigo-600'>{info}</Text>
-          {(leftDays || leftDays === 0) && (
+          {(leftDays || leftDays === 0) && label === '유통기한' && (
             <Text
               styletw={`${leftDays >= 0 ? 'text-green-600' : 'text-red-500'}`}
             >

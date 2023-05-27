@@ -1,28 +1,24 @@
 import { FoodLocation } from '../../constant/fridgeInfo';
 import { Text } from '../native-component';
-import { Dimensions, View } from 'react-native';
-import { Food } from '../../constant/foods';
-import { useState } from 'react';
+import { ScrollView, View } from 'react-native';
 import RNModal from './common/Modal';
-import TabBtn from './add-food-modal.tsx/TabBtn';
-import SearchTabContent from './add-food-modal.tsx/SearchTabContent';
-import FormTabContent from './add-food-modal.tsx/FormTabContent';
 import tw from 'twrnc';
+import useAddFood from '../../hooks/useAddFood';
+import Form from './form/Form';
+import SubmitBtn from './form/SubmitBtn';
 
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
-  foodLocation?: FoodLocation;
-  selectedFood?: Food;
+  foodLocation: FoodLocation;
 }
 
 export default function AddFoodModal({
   foodLocation,
   modalVisible,
   setModalVisible,
-  selectedFood,
 }: Props) {
-  const [searchTab, setSearchTab] = useState(true);
+  const { newFood, addFoodInfo, onAddSubmit } = useAddFood({ foodLocation });
 
   return (
     <RNModal
@@ -33,22 +29,30 @@ export default function AddFoodModal({
       <Text styletw='text-slate-500 my-2'>
         * 이미 냉장고에 추가한 식료품은 추가할 수 없습니다.
       </Text>
-      <View style={tw`h-[${Dimensions.get('window').height / 5.5}]px`}>
-        <TabBtn searchTab={searchTab} setSearchTab={setSearchTab} />
-        {foodLocation &&
-          (searchTab ? (
-            <SearchTabContent
-              foodLocation={foodLocation}
-              setModalVisible={setModalVisible}
+      {foodLocation && (
+        <ScrollView style={tw`my-4`}>
+          <View style={tw`gap-5`}>
+            <Form
+              items={[
+                '아이콘과 이름',
+                '카테고리',
+                '구매날짜',
+                '유통기한',
+                '즐겨찾는 식품인가요?',
+              ]}
+              food={newFood}
+              changeInfo={addFoodInfo}
             />
-          ) : (
-            <FormTabContent
-              selectedFood={selectedFood}
-              foodLocation={foodLocation}
-              setModalVisible={setModalVisible}
-            />
-          ))}
-      </View>
+          </View>
+        </ScrollView>
+      )}
+      <SubmitBtn
+        btnName='식료품 정보 추가하기'
+        onPress={() => {
+          onAddSubmit();
+          setModalVisible(false);
+        }}
+      />
     </RNModal>
   );
 }

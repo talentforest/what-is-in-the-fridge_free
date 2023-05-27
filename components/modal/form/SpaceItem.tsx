@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Food } from '../../../constant/foods';
-import { getCompartments } from '../../../util/getCompartments';
+import { getCompartments } from '../../../util';
 import CheckBoxBtn from './CheckBoxBtn';
 import tw from 'twrnc';
 
