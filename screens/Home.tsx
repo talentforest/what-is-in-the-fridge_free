@@ -54,7 +54,7 @@ const Home = () => {
           <EmptyTag tagName='아직 자주 먹는 식료품 정보가 없습니다' />
         )}
       </EntranceBox>
-      <EntranceBox title='유통기한이 임박한 식료품' destination='ExpiredFoods'>
+      <EntranceBox title='유통기한 주의 식료품' destination='ExpiredFoods'>
         {allLeftAndExpiredFoods.length !== 0 ? (
           <View style={tw`gap-1 flex-row flex-wrap`}>
             {allLeftAndExpiredFoods.slice(0, 10).map((food) => (
