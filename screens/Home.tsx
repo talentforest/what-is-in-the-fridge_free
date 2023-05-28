@@ -1,19 +1,18 @@
 import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
-import { Text } from '../components/native-component';
 import { Platform, ScrollView, StatusBar, View } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import tw from 'twrnc';
 import BannerSlider from '../components/screen-component/home/BannerSlider';
 import Header from '../components/screen-component/home/Header';
 import Footer from '../components/screen-component/home/Footer';
 import EntranceBox from '../components/screen-component/home/EntranceBox';
 import useImageLoad from '../hooks/useImageLoad';
 import useExpiredFood from '../hooks/useExpiredFoods';
-import SmallFoodTag from '../components/common/SmallFoodTag';
 import EmptyTag from '../components/common/EmptyTag';
 import FridgeInfo from '../components/screen-component/home/FridgeInfo';
+import FoodTag from '../components/screen-component/home/FoodTag';
+import tw from 'twrnc';
 
 const Home = () => {
   const { allLeftAndExpiredFoods } = useExpiredFood();
@@ -41,33 +40,15 @@ const Home = () => {
     >
       <Header />
       {assets && <BannerSlider assets={[assets[0], assets[1]]} />}
+      <EntranceBox
+        foods={favoriteFoods.slice(0, 10)}
+        title='자주 먹는 식료품 목록'
+      />
+      <EntranceBox
+        foods={allLeftAndExpiredFoods.slice(0, 10)}
+        title='유통기한 주의 식료품 목록'
+      />
       {assets && <FridgeInfo asset={[assets[2], assets[3]]} />}
-      <EntranceBox title='자주 먹는 식료품' destination='FavoriteFoods'>
-        {favoriteFoods.length !== 0 ? (
-          <View style={tw`gap-1 flex-1 flex-row flex-wrap`}>
-            {favoriteFoods.slice(0, 10).map((food) => (
-              <SmallFoodTag key={food.id} food={food} />
-            ))}
-            {favoriteFoods.length > 8 && <Text styletw='pt-2'>...</Text>}
-          </View>
-        ) : (
-          <EmptyTag tagName='아직 자주 먹는 식료품 정보가 없습니다' />
-        )}
-      </EntranceBox>
-      <EntranceBox title='유통기한 주의 식료품' destination='ExpiredFoods'>
-        {allLeftAndExpiredFoods.length !== 0 ? (
-          <View style={tw`gap-1 flex-row flex-wrap`}>
-            {allLeftAndExpiredFoods.slice(0, 10).map((food) => (
-              <SmallFoodTag key={food.id} food={food} />
-            ))}
-            {allLeftAndExpiredFoods.length > 8 && (
-              <Text styletw='pt-2'>...</Text>
-            )}
-          </View>
-        ) : (
-          <EmptyTag tagName='아직 유통기한이 임박한 식료품이 없습니다' />
-        )}
-      </EntranceBox>
       <Footer />
     </ScrollView>
   );

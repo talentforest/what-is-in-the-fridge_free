@@ -21,7 +21,7 @@ export const initialState: { fridgeFoods: Food[]; freezerFoods: Food[] } = {
       id: 'freezer1',
       image: '🍞',
       name: '식빵',
-      category: '빵, 떡, 잼',
+      category: '빵 · 떡 · 잼',
       purchaseDate: '2022-12-20',
       expirationDate: '2022-12-20',
       favorite: false,
@@ -35,6 +35,14 @@ const allFoodsSlice = createSlice({
   name: 'allFoods',
   initialState,
   reducers: {
+    setAllFoods: (state, action: { payload: Food[] }) => {
+      if (action.payload[0].space.includes('냉장')) {
+        state.fridgeFoods = action.payload;
+      }
+      if (action.payload[0].space.includes('냉동')) {
+        state.freezerFoods = action.payload;
+      }
+    },
     addFood: (state, action: { payload: Food }) => {
       if (action.payload.space.includes('냉장')) {
         state.fridgeFoods = [...state.fridgeFoods, action.payload];
@@ -77,6 +85,7 @@ const allFoodsSlice = createSlice({
 
 const { reducer: allFoodsReducer } = allFoodsSlice;
 
-export const { addFood, removeFood, editFood } = allFoodsSlice.actions;
+export const { setAllFoods, addFood, removeFood, editFood } =
+  allFoodsSlice.actions;
 
 export default allFoodsReducer;

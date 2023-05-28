@@ -17,7 +17,7 @@ export default function BannerSlider({ assets }: Props) {
   ];
 
   return (
-    <View style={tw`mb-4`}>
+    <View style={tw`mb-0`}>
       <Swiper
         loop
         timeout={8}

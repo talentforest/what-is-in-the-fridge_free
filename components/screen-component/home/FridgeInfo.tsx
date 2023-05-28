@@ -2,18 +2,19 @@ import { Image, View } from 'react-native';
 import { Text } from '../../native-component';
 import { useSelector } from '../../../redux/hook';
 import { Asset } from 'expo-asset';
-import tw from 'twrnc';
 import useExpiredFood from '../../../hooks/useExpiredFoods';
+import tw from 'twrnc';
 
 export default function FridgeInfo({ asset }: { asset: Asset[] }) {
   const { fridgeFoods, freezerFoods } = useSelector((state) => state.allFoods);
   const { allExpiredFoods } = useExpiredFood();
 
   return (
-    <View
-      style={tw`mb-2 gap-2 p-4 rounded-lg bg-indigo-100 border-indigo-300 border`}
-    >
-      <Text styletw='text-indigo-700 mb-2'>나의 냉장고 정보</Text>
+    <View style={tw`mb-2 mt-8 gap-2`}>
+      <View style={tw`flex-row items-center gap-2`}>
+        <Text styletw='text-indigo-700'>나의 냉장고 요약</Text>
+        <View style={tw`border h-0.5 flex-1 border-indigo-400`} />
+      </View>
       <View
         style={tw`border rounded-lg bg-white border-slate-300 flex-row items-center justify-center py-2 gap-4 px-5`}
       >

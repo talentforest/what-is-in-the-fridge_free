@@ -2,7 +2,7 @@ import { INDIGO } from '../../constant/colors';
 import { TouchableOpacity } from '../native-component';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-type IconName = 'pluscircle' | 'delete' | 'checkcircle' | 'edit';
+type IconName = 'plus' | 'delete' | 'checkcircle' | 'edit';
 
 interface Props {
   onPress: () => void;

@@ -51,8 +51,8 @@ export default function AddSelectFoodModal({
             <Form
               items={[
                 currRoute !== 'FavoriteFoods' && '아이콘과 이름',
-                '위치 선택',
                 '카테고리',
+                '위치 선택',
                 '구매날짜',
                 '유통기한',
                 currRoute !== 'FavoriteFoods' && '즐겨찾는 식품인가요?',
