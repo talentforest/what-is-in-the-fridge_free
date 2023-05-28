@@ -10,6 +10,9 @@ const favoriteFoodsSlice = createSlice({
   name: 'favoriteFoods',
   initialState,
   reducers: {
+    setFavoriteList: (state, action: { payload: Food[] }) => {
+      state.favoriteFoods = deduplicate(action.payload);
+    },
     addFavorite: (state, action: { payload: Food }) => {
       state.favoriteFoods = deduplicate([
         ...state.favoriteFoods,
@@ -31,7 +34,7 @@ const favoriteFoodsSlice = createSlice({
 
 const { reducer: favoriteFoodsReducer } = favoriteFoodsSlice;
 
-export const { addFavorite, removeFavorite, editFavorite } =
+export const { setFavoriteList, addFavorite, removeFavorite, editFavorite } =
   favoriteFoodsSlice.actions;
 
 export default favoriteFoodsReducer;

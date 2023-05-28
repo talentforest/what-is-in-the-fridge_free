@@ -48,6 +48,12 @@ export default function useExpiredFoods() {
     });
   };
 
+  const freezerFoodList = [
+    ...expiredFreezerFoods,
+    ...threeDaysLeftFreezerFoods,
+  ];
+  const fridgeFoodList = [...expiredFridgeFoods, ...threeDaysLeftFridgeFoods];
+
   return {
     threeDaysLeftFridgeFoods,
     threeDaysLeftFreezerFoods,
@@ -57,5 +63,7 @@ export default function useExpiredFoods() {
     allExpiredFoods,
     allLeftAndExpiredFoods,
     getExpiredFoodList,
+    freezerFoodList,
+    fridgeFoodList,
   };
 }

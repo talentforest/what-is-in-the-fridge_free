@@ -10,6 +10,12 @@ const shoppingListSlice = createSlice({
   name: 'shoppingList',
   initialState,
   reducers: {
+    setShoppingList: (state, action: { payload: Food[] }) => {
+      state.shoppingList = deduplicate([
+        ...state.shoppingList,
+        ...action.payload,
+      ]);
+    },
     addToShoppingList: (state, action: { payload: Food }) => {
       state.shoppingList = deduplicate([...state.shoppingList, action.payload]);
     },
@@ -23,7 +29,7 @@ const shoppingListSlice = createSlice({
 
 const { reducer: shoppingListReducer } = shoppingListSlice;
 
-export const { addToShoppingList, removeFromShoppingList } =
+export const { setShoppingList, addToShoppingList, removeFromShoppingList } =
   shoppingListSlice.actions;
 
 export default shoppingListReducer;
