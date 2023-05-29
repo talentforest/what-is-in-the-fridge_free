@@ -10,7 +10,7 @@ export interface Food {
   name: string;
   category: Category;
   purchaseDate: string;
-  expirationDate: string;
+  expiredDate: string;
   favorite: boolean;
   space: Space;
   compartmentNum: CompartmentNum;
@@ -22,7 +22,7 @@ export const initialFoodInfo: Food = {
   name: '',
   category: '채소' as Category,
   purchaseDate: getISODate(new Date()),
-  expirationDate: getISODate(new Date()),
+  expiredDate: getISODate(new Date()),
   favorite: false,
   space: '냉장실 안쪽',
   compartmentNum: '1번',

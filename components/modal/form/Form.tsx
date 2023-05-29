@@ -25,6 +25,7 @@ interface Props {
 }
 
 export default function Form({ items, changeInfo, food }: Props) {
+  // 유효성 체크!!!
   return (
     <>
       {items.includes('아이콘과 이름') && (
@@ -61,7 +62,7 @@ export default function Form({ items, changeInfo, food }: Props) {
         <FormItemContainer label='유통기한'>
           <DateItem
             expiredDate
-            date={new Date(food.expirationDate)}
+            date={new Date(food.expiredDate)}
             changeInfo={changeInfo}
           />
         </FormItemContainer>

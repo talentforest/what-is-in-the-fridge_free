@@ -15,7 +15,13 @@ export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
 
   if (!appIsReady) {
-    return <Splash appIsReady={appIsReady} setAppIsReady={setAppIsReady} />;
+    return (
+      <Splash
+        appIsReady={appIsReady}
+        setAppIsReady={setAppIsReady}
+        persistor={persistor}
+      />
+    );
   }
 
   const client = new QueryClient();

@@ -13,7 +13,8 @@ interface Props {
 }
 
 export default function FoodTag({ food, label }: Props) {
-  const leftDays = getLeftDays(food.expirationDate);
+  const { expiredDate, image, name } = food;
+  const leftDays = getLeftDays(expiredDate);
   // 31일 이전이면 주 단위로 -> 27일 -> 3주 6일
 
   return (
@@ -22,14 +23,14 @@ export default function FoodTag({ food, label }: Props) {
       style={tw`w-19 border-2 bg-white border-indigo-200 justify-between items-center rounded-lg py-2`}
     >
       <View style={tw`h-8 w-6 justify-center`}>
-        {food.image.includes('http') ? (
-          <Image style={tw`h-5 w-5 rounded-md`} source={{ uri: food.image }} />
+        {image.includes('http') ? (
+          <Image style={tw`h-5 w-5 rounded-md`} source={{ uri: image }} />
         ) : (
-          <Text styletw='text-xl pt-0.5'>{food.image}</Text>
+          <Text styletw='text-xl pt-0.5'>{image}</Text>
         )}
       </View>
       <Text styletw={'text-xs text-center text-slate-600'}>
-        {cutLetter(food.name, 6)}
+        {cutLetter(name, 6)}
       </Text>
 
       {label === '자주 먹는 식료품 목록' && (
@@ -38,7 +39,9 @@ export default function FoodTag({ food, label }: Props) {
 
       {label === '유통기한 주의 식료품 목록' && (
         <Text
-          styletw={`text-${0 > leftDays ? 'red' : 'yellow'}-600 text-xs pt-1`}
+          styletw={`${
+            0 > leftDays ? 'text-red-600' : 'text-yellow-600'
+          } text-xs pt-1`}
         >
           {leftDays >= 0 ? `${leftDays}일 남음` : `${leftDays}일`}
         </Text>

@@ -35,7 +35,7 @@ export default function FavoriteFoodItem({ food, setModalVisible }: Props) {
     dispatch(
       select({
         ...food,
-        expirationDate: getISODate(new Date()),
+        expiredDate: getISODate(new Date()),
         purchaseDate: getISODate(new Date()),
       })
     );

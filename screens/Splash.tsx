@@ -6,13 +6,19 @@ import { Text } from '../components/native-component';
 import * as SplashScreen from 'expo-splash-screen';
 import tw from 'twrnc';
 import useImageLoad from '../hooks/useImageLoad';
+import { Persistor } from 'redux-persist';
 
 interface Props {
   appIsReady: boolean;
   setAppIsReady: (appIsReady: boolean) => void;
+  persistor: Persistor;
 }
 
-export default function Splash({ appIsReady, setAppIsReady }: Props) {
+export default function Splash({
+  appIsReady,
+  setAppIsReady,
+  persistor,
+}: Props) {
   const [fontsLoaded] = useFonts(fonts);
   const { isLoaded, assets } = useImageLoad({
     images: [require('../assets/question-fridge.png')],
@@ -22,6 +28,7 @@ export default function Splash({ appIsReady, setAppIsReady }: Props) {
     async function prepareApp() {
       try {
         await new Promise((resolve) => setTimeout(resolve, 3000));
+        await persistor.purge();
       } catch (e) {
         console.warn(e);
       } finally {

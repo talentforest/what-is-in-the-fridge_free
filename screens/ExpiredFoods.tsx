@@ -41,7 +41,7 @@ export default function ExpiredFoods() {
                 checkList={freezerCheckList}
                 setCheckList={setFreezerCheckList}
               >
-                <LeftDay expiredDate={food.expirationDate} />
+                <LeftDay expiredDate={food.expiredDate} />
               </FoodListItem>
             ))
           ) : (
@@ -59,7 +59,7 @@ export default function ExpiredFoods() {
                 checkList={fridgeCheckList}
                 setCheckList={setFridgeCheckList}
               >
-                <LeftDay expiredDate={food.expirationDate} />
+                <LeftDay expiredDate={food.expiredDate} />
               </FoodListItem>
             ))
           ) : (

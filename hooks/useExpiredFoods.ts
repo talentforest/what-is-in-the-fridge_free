@@ -15,13 +15,12 @@ export default function useExpiredFoods() {
 
   const threeDaysLeftFoods = allFoods?.filter((food: Food) => {
     return (
-      0 <= getLeftDays(food.expirationDate) &&
-      getLeftDays(food.expirationDate) < 4
+      0 <= getLeftDays(food.expiredDate) && getLeftDays(food.expiredDate) < 4
     );
   });
 
   const expiredFoods = allFoods?.filter((food: Food) => {
-    return getLeftDays(food.expirationDate) < 0;
+    return getLeftDays(food.expiredDate) < 0;
   });
 
   const allLeftAndExpiredFoods = [...threeDaysLeftFoods, ...expiredFoods];
@@ -30,7 +29,7 @@ export default function useExpiredFoods() {
     return allFoods.filter((food) => {
       const checkSpace = food.space === space;
       const checkCompartmentNum = food.compartmentNum === compartmentNum;
-      const checkLeftDays = getLeftDays(food.expirationDate) < 4;
+      const checkLeftDays = getLeftDays(food.expiredDate) < 4;
 
       if (compartmentNum)
         return checkSpace && checkCompartmentNum && checkLeftDays;
