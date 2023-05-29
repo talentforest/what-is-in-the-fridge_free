@@ -4,15 +4,12 @@ import { fonts } from '../constant/fonts';
 import { useDispatch, useSelector } from '../redux/hook';
 import { useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import {
-  SafeBottomAreaView,
-  Text,
-  TouchableOpacity,
-} from '../components/native-component';
+import { SafeBottomAreaView, Text } from '../components/native-component';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import { Food } from '../constant/foods';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { INACTIVE_COLOR, ORANGE_RED } from '../constant/colors';
+import { setShoppingList } from '../redux/slice/shoppingList';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EmptyTag from '../components/common/EmptyTag';
 import TableLabel from '../components/common/TableLabel';
@@ -21,7 +18,6 @@ import useCheckFood from '../hooks/useCheckFood';
 import TableListContainer from '../components/common/TableListContainer';
 import FixedBtn from '../components/common/FixedBtn';
 import tw from 'twrnc';
-import { setShoppingList } from '../redux/slice/shoppingList';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
