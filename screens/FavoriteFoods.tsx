@@ -29,7 +29,7 @@ export default function FavoriteFoods() {
   const [checkList, setCheckList] = useState<Food[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const { checkExistFood } = useCheckFood();
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.allFoods);
+  const { allFoods } = useSelector((state) => state.allFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { selectedFood } = useSelector((state) => state.selectedFood);
   const dispatch = useDispatch();
@@ -56,7 +56,7 @@ export default function FavoriteFoods() {
   };
 
   const changeFav = () => {
-    return [...fridgeFoods, ...freezerFoods].map((food) => {
+    return allFoods.map((food) => {
       if (checkList.some((item) => item.id === food.id)) {
         return { ...food, favorite: false };
       }

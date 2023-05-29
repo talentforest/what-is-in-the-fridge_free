@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Food } from '../../constant/foods';
 import { Space } from '../../constant/fridgeInfo';
 
-export const initialState: { fridgeFoods: Food[]; freezerFoods: Food[] } = {
-  fridgeFoods: [
+export const initialState: { allFoods: Food[] } = {
+  allFoods: [
     {
       id: 'fridge1',
       image: '🍎',
@@ -15,8 +15,6 @@ export const initialState: { fridgeFoods: Food[]; freezerFoods: Food[] } = {
       space: '냉장실 안쪽',
       compartmentNum: '1번',
     },
-  ],
-  freezerFoods: [
     {
       id: 'freezer1',
       image: '🍞',
@@ -36,49 +34,24 @@ const allFoodsSlice = createSlice({
   initialState,
   reducers: {
     setAllFoods: (state, action: { payload: Food[] }) => {
-      if (action.payload[0].space.includes('냉장')) {
-        state.fridgeFoods = action.payload;
-      }
-      if (action.payload[0].space.includes('냉동')) {
-        state.freezerFoods = action.payload;
-      }
+      state.allFoods = action.payload;
     },
     addFood: (state, action: { payload: Food }) => {
-      if (action.payload.space.includes('냉장')) {
-        state.fridgeFoods = [...state.fridgeFoods, action.payload];
-      }
-      if (action.payload.space.includes('냉동')) {
-        state.freezerFoods = [...state.freezerFoods, action.payload];
-      }
+      state.allFoods = [...state.allFoods, action.payload];
     },
     removeFood: (state, action: { payload: { id: string; space: Space } }) => {
-      if (action.payload.space.includes('냉장')) {
-        state.fridgeFoods = state.fridgeFoods.filter(
-          (food) => food.id !== action.payload.id
-        );
-      }
-      if (action.payload.space.includes('냉동')) {
-        state.freezerFoods = state.freezerFoods.filter(
-          (food) => food.id !== action.payload.id
-        );
-      }
+      state.allFoods = state.allFoods.filter(
+        (food) => food.id !== action.payload.id
+      );
     },
     editFood: (
       state,
       action: { payload: { foodId: string; editedFood: Food } }
     ) => {
-      if (action.payload.editedFood.space.includes('냉장')) {
-        state.fridgeFoods = state.fridgeFoods.map((food) => {
-          const { foodId, editedFood } = action.payload;
-          return food.id === foodId ? editedFood : food;
-        });
-      }
-      if (action.payload.editedFood.space.includes('냉동')) {
-        state.freezerFoods = state.freezerFoods.map((food) => {
-          const { foodId, editedFood } = action.payload;
-          return food.id === foodId ? editedFood : food;
-        });
-      }
+      state.allFoods = state.allFoods.map((food) => {
+        const { foodId, editedFood } = action.payload;
+        return food.id === foodId ? editedFood : food;
+      });
     },
   },
 });

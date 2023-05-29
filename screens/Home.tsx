@@ -11,7 +11,6 @@ import useImageLoad from '../hooks/useImageLoad';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import EmptyTag from '../components/common/EmptyTag';
 import FridgeInfo from '../components/screen-component/home/FridgeInfo';
-import FoodTag from '../components/screen-component/home/FoodTag';
 import tw from 'twrnc';
 
 const Home = () => {

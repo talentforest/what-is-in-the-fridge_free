@@ -5,6 +5,7 @@ import { DEEP_INDIGO } from '../../constant/colors';
 import { Food } from '../../constant/foods';
 import Icon from 'react-native-vector-icons/Feather';
 import tw from 'twrnc';
+import LeftDay from './LeftDay';
 
 interface Props {
   food: Food;
@@ -44,15 +45,7 @@ export default function ExpiredFoodItem({
         <Text>{food.name}</Text>
       </View>
       <View style={tw`w-22 items-end`}>
-        <Text
-          styletw={`${
-            0 > getLeftDays(food.expirationDate)
-              ? 'text-red-600'
-              : 'text-amber-600'
-          }`}
-        >
-          {getLeftDays(food.expirationDate)}일
-        </Text>
+        <LeftDay expiredDate={food.expirationDate} />
       </View>
     </View>
   );

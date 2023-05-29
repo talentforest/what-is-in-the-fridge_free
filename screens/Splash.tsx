@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { Image, View } from 'react-native';
+import { Image, ImageSourcePropType, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import { fonts } from '../constant/fonts';
 import { Text } from '../components/native-component';
@@ -45,7 +45,10 @@ export default function Splash({ appIsReady, setAppIsReady }: Props) {
       onLayout={onLayoutRootView}
     >
       {assets && (
-        <Image source={assets[0]} style={{ width: 200, height: 200 }} />
+        <Image
+          source={assets[0] as ImageSourcePropType}
+          style={{ width: 200, height: 200 }}
+        />
       )}
       <Text styletw='text-3xl mt-12'>냉장고에 뭐가 있지?</Text>
     </View>
