@@ -20,7 +20,7 @@ export const initialFoodInfo: Food = {
   id: '0',
   image: '🍲',
   name: '',
-  category: '채소' as Category,
+  category: '신선식품',
   purchaseDate: getISODate(new Date()),
   expiredDate: getISODate(new Date()),
   favorite: false,

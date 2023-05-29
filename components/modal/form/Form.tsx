@@ -25,7 +25,6 @@ interface Props {
 }
 
 export default function Form({ items, changeInfo, food }: Props) {
-  // 유효성 체크!!!
   return (
     <>
       {items.includes('아이콘과 이름') && (

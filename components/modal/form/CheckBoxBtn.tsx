@@ -18,7 +18,7 @@ export default function CheckBoxBtn({ onPress, check, title }: Props) {
         color={check ? ORANGE_RED : INACTIVE_COLOR}
         size={18}
       />
-      <Text styletw={`${check ? 'text-slate-900' : 'text-slate-500'}`}>
+      <Text styletw={`text-sm ${check ? 'text-slate-900' : 'text-slate-500'}`}>
         {title}
       </Text>
     </TouchableOpacity>
