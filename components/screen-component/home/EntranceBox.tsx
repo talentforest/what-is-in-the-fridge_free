@@ -2,7 +2,6 @@ import { ScrollView, View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../../navigation/Navigation';
-import { DEEP_INDIGO } from '../../../constant/colors';
 import { Food } from '../../../constant/foods';
 import { INDIGO } from '../../../constant/colors';
 import { EmptyTagName } from '../../common/EmptyTag';

@@ -32,7 +32,7 @@ export default function DateItem({ expiredDate, date, changeInfo }: Props) {
   const changeDate = (date: Date) => {
     return changeInfo(
       expiredDate
-        ? { expirationDate: getISODate(date) }
+        ? { expiredDate: getISODate(date) }
         : { purchaseDate: getISODate(date) }
     );
   };

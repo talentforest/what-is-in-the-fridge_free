@@ -11,15 +11,15 @@ interface Props {
 
 export default function SmallFoodTag({ food }: Props) {
   const { checkExpired, checkLeftThreeDays } = useExpiredFoods();
-  const { expirationDate } = food;
+  const { expiredDate } = food;
 
   return (
     <View
       key={food.id}
       style={tw`border bg-white border-slate-300 gap-1 justify-center items-center h-8 flex-row px-2 py-1 rounded-2xl ${
-        checkExpired(expirationDate)
+        checkExpired(expiredDate)
           ? 'bg-red-100'
-          : checkLeftThreeDays(expirationDate)
+          : checkLeftThreeDays(expiredDate)
           ? 'bg-amber-100'
           : ''
       }`}
@@ -32,12 +32,12 @@ export default function SmallFoodTag({ food }: Props) {
       <Text styletw={'text-xs text-center text-slate-600'}>
         {cutLetter(food.name, 6)}
       </Text>
-      {(checkExpired(expirationDate) || checkLeftThreeDays(expirationDate)) && (
+      {(checkExpired(expiredDate) || checkLeftThreeDays(expiredDate)) && (
         <View
           style={tw`h-2 w-2 rounded-full right-0 top-0 ${
-            checkExpired(expirationDate)
+            checkExpired(expiredDate)
               ? 'bg-red-500'
-              : checkLeftThreeDays(expirationDate)
+              : checkLeftThreeDays(expiredDate)
               ? 'bg-amber-500'
               : ''
           }`}

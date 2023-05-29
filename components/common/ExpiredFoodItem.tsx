@@ -45,7 +45,7 @@ export default function ExpiredFoodItem({
         <Text>{food.name}</Text>
       </View>
       <View style={tw`w-22 items-end`}>
-        <LeftDay expiredDate={food.expirationDate} />
+        <LeftDay expiredDate={food.expiredDate} />
       </View>
     </View>
   );

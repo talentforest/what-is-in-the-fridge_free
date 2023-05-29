@@ -72,8 +72,8 @@ export default function FoodDetailModal({
             />
             <InfoBox
               label='유통기한'
-              info={getLocaleDate(editedFood.expirationDate)}
-              leftDays={getLeftDays(editedFood.expirationDate)}
+              info={getLocaleDate(editedFood.expiredDate)}
+              leftDays={getLeftDays(editedFood.expiredDate)}
             />
             <InfoBox
               label='즐겨찾는 식품인가요?'
