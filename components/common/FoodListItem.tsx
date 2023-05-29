@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { cutLetter } from '../../util';
-import { INDIGO } from '../../constant/colors';
+import { DEEP_INDIGO, INDIGO } from '../../constant/colors';
 import { Food } from '../../constant/foods';
 import { ReactNode } from 'react';
 import { INACTIVE_COLOR } from '../../constant/colors';
@@ -40,7 +40,7 @@ export default function FoodListItem({
       <Icon
         name={!existInList(food.id) ? 'square' : 'check-square'}
         size={18}
-        color={!existInList(food.id) ? INACTIVE_COLOR : INDIGO}
+        color={!existInList(food.id) ? INACTIVE_COLOR : DEEP_INDIGO}
       />
       <View style={tw`flex-1 flex-row items-center gap-2`}>
         <Text styletw='text-2xl'>{food.image}</Text>

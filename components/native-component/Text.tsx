@@ -13,7 +13,7 @@ export function Text({ styletw, ...props }: Props) {
   return (
     <RNText
       style={tw.style(
-        `text-slate-800 ${styletw || ''}`,
+        `text-sm text-slate-800 ${styletw || ''}`,
         styletw?.includes('font-bold')
           ? FontGmarketSansBold
           : FontGmarketSansRegular

@@ -1,45 +1,49 @@
 import { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { SafeBottomAreaView, Text } from '../components/native-component';
 import { Food } from '../constant/foods';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { useDispatch, useSelector } from '../redux/hook';
-import { getLeftDays } from '../util';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import TableLabel from '../components/common/TableLabel';
 import FoodListItem from '../components/common/FoodListItem';
-import tw from 'twrnc';
 import TableListContainer from '../components/common/TableListContainer';
 import FixedBtn from '../components/common/FixedBtn';
 import LeftDay from '../components/common/LeftDay';
+import tw from 'twrnc';
 
 export default function ExpiredFoods() {
+  const [checkList, setCheckList] = useState<Food[]>([]);
   const { allFoods } = useSelector((state) => state.allFoods);
-  const { freezerLeftExpiredFoods, fridgeLeftExpiredFoods } = useExpiredFood();
-  const [freezerCheckList, setFreezerCheckList] = useState<Food[]>([]);
-  const [fridgeCheckList, setFridgeCheckList] = useState<Food[]>([]);
+
+  const {
+    allLeftAndExpiredFoods,
+    freezerLeftExpiredFoods,
+    fridgeLeftExpiredFoods,
+  } = useExpiredFood();
   const dispatch = useDispatch();
 
   const onDeletePress = () => {
     const filteredArr = allFoods.filter((item1) => {
-      return !fridgeCheckList.some((item2) => item2.id === item1.id);
+      return !checkList.some((item2) => item2.id === item1.id);
     });
 
     dispatch(setAllFoods(filteredArr));
-    setFridgeCheckList([]);
+    setCheckList([]);
   };
 
   return (
     <SafeBottomAreaView>
-      <ScrollView style={tw`flex-1 bg-neutral-50 gap-1`}>
+      <ScrollView style={tw`bg-neutral-50 gap-1`}>
         <TableListContainer>
           <TableLabel title='냉동실 식료품' label='유통기한 경과' />
           {freezerLeftExpiredFoods.length !== 0 ? (
             freezerLeftExpiredFoods.map((food) => (
               <FoodListItem
+                key={food.id}
                 food={food}
-                checkList={freezerCheckList}
-                setCheckList={setFreezerCheckList}
+                checkList={checkList}
+                setCheckList={setCheckList}
               >
                 <LeftDay expiredDate={food.expiredDate} />
               </FoodListItem>
@@ -55,9 +59,10 @@ export default function ExpiredFoods() {
           {fridgeLeftExpiredFoods.length !== 0 ? (
             fridgeLeftExpiredFoods.map((food) => (
               <FoodListItem
+                key={food.id}
                 food={food}
-                checkList={fridgeCheckList}
-                setCheckList={setFridgeCheckList}
+                checkList={checkList}
+                setCheckList={setCheckList}
               >
                 <LeftDay expiredDate={food.expiredDate} />
               </FoodListItem>
@@ -69,9 +74,9 @@ export default function ExpiredFoods() {
           )}
         </TableListContainer>
       </ScrollView>
-      {(fridgeCheckList || freezerCheckList) && (
+      {!!checkList.length && (
         <FixedBtn
-          btnName='자주 먹는 식료품에서 삭제'
+          btnName='나의 냉장고에서 삭제'
           onDeletePress={onDeletePress}
         />
       )}
