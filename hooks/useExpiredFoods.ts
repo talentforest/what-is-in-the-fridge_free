@@ -4,66 +4,55 @@ import { useSelector } from '../redux/hook';
 import { CompartmentNum, Space } from '../constant/fridgeInfo';
 
 export default function useExpiredFoods() {
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.allFoods);
+  const { allFoods } = useSelector((state) => state.allFoods);
 
-  const threeDaysLeftFridgeFoods = fridgeFoods.filter((food: Food) => {
+  const checkExpired = (expiredDate: string) => {
+    return 0 > getLeftDays(expiredDate);
+  };
+  const checkLeftThreeDays = (expiredDate: string) => {
+    return 0 <= getLeftDays(expiredDate) && getLeftDays(expiredDate) < 4;
+  };
+
+  const threeDaysLeftFoods = allFoods?.filter((food: Food) => {
     return (
       0 <= getLeftDays(food.expirationDate) &&
       getLeftDays(food.expirationDate) < 4
     );
   });
 
-  const threeDaysLeftFreezerFoods = freezerFoods.filter((food: Food) => {
-    return (
-      0 <= getLeftDays(food.expirationDate) &&
-      getLeftDays(food.expirationDate) < 4
-    );
-  });
-
-  const allThreeDaysLeftFoods = [
-    ...threeDaysLeftFridgeFoods,
-    ...threeDaysLeftFreezerFoods,
-  ];
-
-  const expiredFridgeFoods = fridgeFoods.filter((food: Food) => {
+  const expiredFoods = allFoods?.filter((food: Food) => {
     return getLeftDays(food.expirationDate) < 0;
   });
 
-  const expiredFreezerFoods = freezerFoods.filter((food: Food) => {
-    return getLeftDays(food.expirationDate) < 0;
-  });
+  const allLeftAndExpiredFoods = [...threeDaysLeftFoods, ...expiredFoods];
 
-  const allExpiredFoods = [...expiredFridgeFoods, ...expiredFreezerFoods];
+  const getExpiredFoods = (space: Space, compartmentNum?: CompartmentNum) => {
+    return allFoods.filter((food) => {
+      const checkSpace = food.space === space;
+      const checkCompartmentNum = food.compartmentNum === compartmentNum;
+      const checkLeftDays = getLeftDays(food.expirationDate) < 4;
 
-  const allLeftAndExpiredFoods = [...allThreeDaysLeftFoods, ...allExpiredFoods];
+      if (compartmentNum)
+        return checkSpace && checkCompartmentNum && checkLeftDays;
 
-  const getExpiredFoodList = (space: Space, compartmentNum: CompartmentNum) => {
-    const foodList = space.includes('냉동') ? freezerFoods : fridgeFoods;
-    return foodList.filter((food) => {
-      return (
-        food.space === space &&
-        food.compartmentNum === compartmentNum &&
-        getLeftDays(food.expirationDate) < 4
-      );
+      return checkSpace && checkLeftDays;
     });
   };
 
-  const freezerFoodList = [
-    ...expiredFreezerFoods,
-    ...threeDaysLeftFreezerFoods,
-  ];
-  const fridgeFoodList = [...expiredFridgeFoods, ...threeDaysLeftFridgeFoods];
+  const freezerLeftExpiredFoods = allLeftAndExpiredFoods.filter((food) =>
+    food.space.includes('냉동')
+  );
+
+  const fridgeLeftExpiredFoods = allLeftAndExpiredFoods.filter((food) =>
+    food.space.includes('냉장')
+  );
 
   return {
-    threeDaysLeftFridgeFoods,
-    threeDaysLeftFreezerFoods,
-    allThreeDaysLeftFoods,
-    expiredFridgeFoods,
-    expiredFreezerFoods,
-    allExpiredFoods,
+    checkExpired,
+    checkLeftThreeDays,
+    freezerLeftExpiredFoods,
+    fridgeLeftExpiredFoods,
     allLeftAndExpiredFoods,
-    getExpiredFoodList,
-    freezerFoodList,
-    fridgeFoodList,
+    getExpiredFoods,
   };
 }

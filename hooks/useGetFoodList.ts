@@ -2,9 +2,7 @@ import { CompartmentNum, Space } from '../constant/fridgeInfo';
 import { useSelector } from '../redux/hook';
 
 export default function useGetFoodList() {
-  const { fridgeFoods, freezerFoods } = useSelector((state) => state.allFoods);
-
-  const allFoods = [...fridgeFoods, ...freezerFoods];
+  const { allFoods } = useSelector((state) => state.allFoods);
 
   const getFoodList = (space: Space, compartmentNum: CompartmentNum) => {
     const matchFoods = allFoods.filter(

@@ -11,16 +11,17 @@ import FoodListItem from '../components/common/FoodListItem';
 import tw from 'twrnc';
 import TableListContainer from '../components/common/TableListContainer';
 import FixedBtn from '../components/common/FixedBtn';
+import LeftDay from '../components/common/LeftDay';
 
 export default function ExpiredFoods() {
-  const { fridgeFoods } = useSelector((state) => state.allFoods);
-  const { fridgeFoodList, freezerFoodList } = useExpiredFood();
+  const { allFoods } = useSelector((state) => state.allFoods);
+  const { freezerLeftExpiredFoods, fridgeLeftExpiredFoods } = useExpiredFood();
   const [freezerCheckList, setFreezerCheckList] = useState<Food[]>([]);
   const [fridgeCheckList, setFridgeCheckList] = useState<Food[]>([]);
   const dispatch = useDispatch();
 
   const onDeletePress = () => {
-    const filteredArr = fridgeFoods.filter((item1) => {
+    const filteredArr = allFoods.filter((item1) => {
       return !fridgeCheckList.some((item2) => item2.id === item1.id);
     });
 
@@ -33,22 +34,14 @@ export default function ExpiredFoods() {
       <ScrollView style={tw`flex-1 bg-neutral-50 gap-1`}>
         <TableListContainer>
           <TableLabel title='냉동실 식료품' label='유통기한 경과' />
-          {freezerFoodList.length !== 0 ? (
-            freezerFoodList.map((food) => (
+          {freezerLeftExpiredFoods.length !== 0 ? (
+            freezerLeftExpiredFoods.map((food) => (
               <FoodListItem
                 food={food}
                 checkList={freezerCheckList}
                 setCheckList={setFreezerCheckList}
               >
-                <Text
-                  styletw={`${
-                    0 > getLeftDays(food.expirationDate)
-                      ? 'text-red-600'
-                      : 'text-amber-600'
-                  }`}
-                >
-                  {getLeftDays(food.expirationDate)}일
-                </Text>
+                <LeftDay expiredDate={food.expirationDate} />
               </FoodListItem>
             ))
           ) : (
@@ -59,22 +52,14 @@ export default function ExpiredFoods() {
         </TableListContainer>
         <TableListContainer>
           <TableLabel title='냉장실 식료품' label='유통기한 경과' />
-          {fridgeFoodList.length !== 0 ? (
-            fridgeFoodList.map((food) => (
+          {fridgeLeftExpiredFoods.length !== 0 ? (
+            fridgeLeftExpiredFoods.map((food) => (
               <FoodListItem
                 food={food}
                 checkList={fridgeCheckList}
                 setCheckList={setFridgeCheckList}
               >
-                <Text
-                  styletw={`${
-                    0 > getLeftDays(food.expirationDate)
-                      ? 'text-red-600'
-                      : 'text-amber-600'
-                  }`}
-                >
-                  {getLeftDays(food.expirationDate)}일
-                </Text>
+                <LeftDay expiredDate={food.expirationDate} />
               </FoodListItem>
             ))
           ) : (
