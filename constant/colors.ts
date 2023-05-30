@@ -7,3 +7,5 @@ export const DEEP_GRAY = '#333';
 export const GRAY = '#555';
 export const LIGHT_GRAY = '#bbb';
 export const ORANGE_RED = '#ff6c47';
+
+export const BG_LIGHT_GRAY = '#f3f3f3';

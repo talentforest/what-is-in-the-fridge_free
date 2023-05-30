@@ -9,7 +9,6 @@ import Footer from '../components/screen-component/home/Footer';
 import EntranceBox from '../components/screen-component/home/EntranceBox';
 import useImageLoad from '../hooks/useImageLoad';
 import useExpiredFood from '../hooks/useExpiredFoods';
-import EmptyTag from '../components/common/EmptyTag';
 import FridgeInfo from '../components/screen-component/home/FridgeInfo';
 import tw from 'twrnc';
 

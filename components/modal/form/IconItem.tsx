@@ -11,6 +11,7 @@ interface Props {
 
 export default function FormImageItem({ value, changeInfo }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <View>
       <View
@@ -20,7 +21,7 @@ export default function FormImageItem({ value, changeInfo }: Props) {
           <Image style={tw`h-10 w-10 rounded-md`} source={{ uri: value }} />
         ) : (
           <TouchableOpacity onPress={() => setIsOpen(true)}>
-            <Text styletw='text-3xl pt-1'>{value}</Text>
+            <Text styletw='text-2xl pt-0.5'>{value}</Text>
           </TouchableOpacity>
         )}
       </View>

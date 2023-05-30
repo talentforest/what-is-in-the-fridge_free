@@ -9,7 +9,7 @@ import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import { Food } from '../constant/foods';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { INACTIVE_COLOR, ORANGE_RED } from '../constant/colors';
-import { setShoppingList } from '../redux/slice/shoppingList';
+import { addItemsToShoppingList } from '../redux/slice/shoppingList';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EmptyTag from '../components/common/EmptyTag';
 import TableLabel from '../components/common/TableLabel';
@@ -39,10 +39,6 @@ export default function FavoriteFoods() {
     });
   };
 
-  const existFoodInList = checkList.some((food) => {
-    return checkExistFood(food);
-  });
-
   const onDeletePress = () => {
     dispatch(setAllFoods(changeFavState()));
 
@@ -55,7 +51,7 @@ export default function FavoriteFoods() {
   };
 
   const addShoppingListPress = () => {
-    dispatch(setShoppingList(checkList));
+    dispatch(addItemsToShoppingList(checkList));
     Alert.alert(
       '장보기 목록 추가',
       `${checkList

@@ -29,7 +29,7 @@ export default function AddSelectFoodModal({
         * 이미 냉장고에 추가한 식료품은 추가할 수 없습니다.
       </Text>
       <View
-        style={tw`mt-4 w-full items-center gap-4 h-[${
+        style={tw`mt-2 w-full items-center gap-4 h-[${
           Dimensions.get('window').height / 6
         }]px`}
       >
@@ -46,9 +46,10 @@ export default function AddSelectFoodModal({
             <Text>{selectedFood.name}</Text>
           </View>
         )}
-        <ScrollView style={tw`w-full`}>
+        <ScrollView style={tw`w-full`} showsVerticalScrollIndicator={false}>
           <View style={tw`gap-5 mb-8`}>
             <Form
+              editableName={false}
               items={[
                 currRoute !== 'FavoriteFoods' && '아이콘과 이름',
                 '카테고리',

@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import tw from 'twrnc';
+import { BG_LIGHT_GRAY } from '../../constant/colors';
 
 interface Props {
   children: ReactNode;
@@ -23,16 +24,16 @@ export function KeyboardAvoidingView({ children }: Props) {
       {PlatformIOS ? (
         <RNKeyboardAvoidingView
           behavior='padding'
-          style={tw`flex-1 bg-neutral-50 px-4 pt-[${
+          style={tw`flex-1 bg-[${BG_LIGHT_GRAY}] pt-[${
             (statusBarHeight || 0) + 14
           }px]`}
-          keyboardVerticalOffset={(statusBarHeight || 0) - 44}
+          keyboardVerticalOffset={0}
         >
           {children}
         </RNKeyboardAvoidingView>
       ) : (
         <View
-          style={tw`flex-1 bg-neutral-50 px-4 pt-[${
+          style={tw`flex-1 bg-[${BG_LIGHT_GRAY}] px-4 pt-[${
             (statusBarHeight || 0) + 14
           }px]`}
         >
