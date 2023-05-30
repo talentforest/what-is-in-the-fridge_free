@@ -53,38 +53,29 @@ export default function ExpiredFoods() {
 
   return (
     <SafeBottomAreaView>
-      <View
-        style={tw`justify-center gap-1 m-4 bg-white p-4 border-slate-400 rounded-md`}
-      >
-        <Text styletw='text-indigo-600 mb-2 text-base'>
-          총 {length}개의 식료품
-        </Text>
-        <View style={tw`flex-row gap-1 items-center`}>
-          <Icon
-            name={
-              getCaution(length)?.level === 1
-                ? 'thumbsup'
-                : getCaution(length)?.level === 2
-                ? 'alert'
-                : ''
-            }
-            size={16}
-            color={
-              getCaution(length)?.level === 1
-                ? DEEP_INDIGO
-                : getCaution(length)?.level === 2
-                ? ORANGE_RED
-                : getCaution(length)?.level === 3
-                ? 'red'
-                : ''
-            }
-          />
-          <Text styletw='text-slate-600 flex-1'>
-            {getCaution(length)?.guide}
-          </Text>
-        </View>
+      <View style={tw`flex-row gap-1 items-center py-3 px-5`}>
+        <Icon
+          name={
+            getCaution(length)?.level === 1
+              ? 'thumbsup'
+              : getCaution(length)?.level === 2
+              ? 'alert'
+              : ''
+          }
+          size={16}
+          color={
+            getCaution(length)?.level === 1
+              ? DEEP_INDIGO
+              : getCaution(length)?.level === 2
+              ? ORANGE_RED
+              : getCaution(length)?.level === 3
+              ? 'red'
+              : ''
+          }
+        />
+        <Text styletw='text-slate-600 flex-1'>{getCaution(length)?.guide}</Text>
       </View>
-      <ScrollView style={tw`bg-white gap-1`}>
+      <View style={tw`flex-1 gap-2`}>
         <TableListContainer>
           <TableLabel title='냉동실 식료품' label='유통기한 경과' />
           {freezerLeftExpiredFoods.length !== 0 ? (
@@ -123,7 +114,7 @@ export default function ExpiredFoods() {
             </Text>
           )}
         </TableListContainer>
-      </ScrollView>
+      </View>
       {!!checkList.length && (
         <FixedBtn
           btnName='나의 냉장고에서 삭제'

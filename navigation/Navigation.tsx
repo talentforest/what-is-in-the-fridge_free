@@ -5,7 +5,7 @@ import {
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from '../components/native-component';
 import { FontGmarketSansRegular } from '../constant/fonts';
-import { DEEP_INDIGO, GRAY, LIGHT_YELLOW } from '../constant/colors';
+import { BG_LIGHT_GRAY, DEEP_INDIGO, GRAY } from '../constant/colors';
 import MyTabs, { RootTabParamList } from './MyTabs';
 import React from 'react';
 import Compartments from '../screens/Compartments';
@@ -44,7 +44,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const options: NativeStackNavigationOptions = {
   headerShown: true,
   headerTintColor: GRAY,
-  headerStyle: { backgroundColor: LIGHT_YELLOW },
+  headerShadowVisible: false,
+  headerStyle: { backgroundColor: BG_LIGHT_GRAY },
   headerTitleStyle: {
     fontWeight: '900',
     fontSize: 16,
