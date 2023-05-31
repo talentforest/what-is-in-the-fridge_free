@@ -6,6 +6,7 @@ import { addFood } from '../redux/slice/allFoodsSlice';
 import { FoodLocation } from '../constant/fridgeInfo';
 import UUIDGenerator from 'react-native-uuid';
 import useCheckFood from './useCheckFood';
+import { Alert } from 'react-native';
 
 interface Props {
   foodLocation: FoodLocation;
@@ -22,13 +23,19 @@ export default function useAddFood({ foodLocation }: Props) {
 
   const addFoodInfo = (info: FoodInfo) => setNewFood({ ...newFood, ...info });
 
-  const onAddSubmit = () => {
+  const onAddSubmit = (setModalVisible: (visible: boolean) => void) => {
     const food: Food = {
       ...newFood,
       id: myUuid as string,
       space,
       compartmentNum,
     };
+
+    if (food.name === '')
+      return Alert.alert(
+        '이름 작성 안내',
+        '식료품의 이름이 작성되지 않았습니다.'
+      );
 
     const existFood = checkExistFood(food);
     if (existFood) return alertExistFood(existFood);
@@ -37,6 +44,7 @@ export default function useAddFood({ foodLocation }: Props) {
       dispatch(addFavorite(food));
     }
     dispatch(addFood(food));
+    setModalVisible(false);
   };
 
   return {

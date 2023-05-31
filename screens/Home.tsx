@@ -35,6 +35,7 @@ const Home = () => {
     <ScrollView
       style={tw`pt-[${(statusBarHeight || 0) + 14}px] bg-neutral-50`}
       contentContainerStyle={tw`pb-10 px-4`}
+      showsVerticalScrollIndicator={false}
     >
       <Header />
       {assets && <BannerSlider assets={[assets[0], assets[1]]} />}

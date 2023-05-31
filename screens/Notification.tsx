@@ -75,7 +75,11 @@ export default function Notification() {
               <Text styletw='text-sm'>전체 읽음</Text>
             </View>
           </View>
-          <ScrollView style={tw`p-4 pt-0`} contentContainerStyle={tw`gap-2`}>
+          <ScrollView
+            style={tw`p-4 pt-0`}
+            contentContainerStyle={tw`gap-2`}
+            showsVerticalScrollIndicator={false}
+          >
             {notificationList.map((notification) => (
               <View
                 style={tw`border justify-between border-slate-300 flex-row gap-3 items-center p-4 rounded-lg bg-white`}

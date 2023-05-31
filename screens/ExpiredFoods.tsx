@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { SafeBottomAreaView, Text } from '../components/native-component';
 import { Food } from '../constant/foods';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';

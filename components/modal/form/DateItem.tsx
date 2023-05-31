@@ -1,73 +1,65 @@
 import { View } from 'react-native';
 import { Text, TextInput, TouchableOpacity } from '../../native-component';
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
-import { getISODate } from '../../../util';
+import { getDateKr, getISODate } from '../../../util';
 import { useState } from 'react';
 import { addDateBtns } from '../../../constant/addDateBtns';
 import { INDIGO } from '../../../constant/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import tw from 'twrnc';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 interface Props {
-  expiredDate?: boolean;
-  date: Date;
+  expiredDateItem?: boolean;
+  date: string;
   changeInfo: (newInfo: { [key: string]: string }) => void;
 }
 
-export default function DateItem({ expiredDate, date, changeInfo }: Props) {
-  const [openDatePicker, setOpenDatePicker] = useState(false);
+export default function DateItem({ expiredDateItem, date, changeInfo }: Props) {
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  const handleDateChange = (
-    _: DateTimePickerEvent,
-    selectedDate: Date | undefined
-  ) => {
-    const currentDate = selectedDate || date;
+  const toggleDatePicker = () => {
+    setDatePickerVisibility((prev) => !prev);
+  };
 
-    changeDate(currentDate);
-    return setOpenDatePicker(false);
+  const onConfirm = (date: Date) => {
+    changeDate(date);
+    toggleDatePicker();
   };
 
   const changeDate = (date: Date) => {
-    return changeInfo(
-      expiredDate
-        ? { expiredDate: getISODate(date) }
-        : { purchaseDate: getISODate(date) }
-    );
+    if (expiredDateItem) {
+      return changeInfo({ expiredDate: getISODate(date) });
+    }
+    return changeInfo({ purchaseDate: getISODate(date) });
   };
 
   return (
     <View>
-      {openDatePicker ? (
-        <DateTimePicker
-          value={date}
-          locale='ko'
-          mode='date'
-          display='default'
-          onChange={handleDateChange}
-          style={tw`mb-2`}
+      <View>
+        <TextInput value={getDateKr(date)} editable={false} />
+        <Icon
+          name='calendar'
+          size={18}
+          color={INDIGO}
+          style={tw`absolute p-2.5 pl-10 right-0 top-0.5`}
+          onPress={toggleDatePicker}
         />
-      ) : (
-        <View>
-          <TextInput
-            value={new Date(date).toLocaleDateString('ko')}
-            editable={false}
-            styletw='text-slate-700 h-10'
-          />
-          <TouchableOpacity
-            onPress={() => setOpenDatePicker(true)}
-            style={tw`absolute right-3 top-3 h-6`}
-          >
-            <Icon name='calendar' size={16} color={INDIGO} />
-          </TouchableOpacity>
-        </View>
-      )}
+      </View>
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode='date'
+        locale='ko_KO'
+        cancelTextIOS='취소'
+        confirmTextIOS='확인'
+        date={new Date(date)}
+        onConfirm={onConfirm}
+        onCancel={toggleDatePicker}
+      />
       <View style={tw`mt-2 flex-row gap-1 flex-wrap justify-end items-center`}>
         {addDateBtns.map((btn) => (
           <TouchableOpacity
             key={btn.label}
-            onPress={() => changeDate(btn.func(date))}
+            onPress={() => changeDate(btn.func(new Date(date)))}
             style={tw`justify-center bg-${btn.btnColor}-300 border border-slate-400 p-0.5 px-2 rounded-2xl`}
           >
             <Text styletw='text-xs'>+ {btn.label}</Text>

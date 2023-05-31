@@ -1,37 +1,44 @@
-import { useState } from 'react';
 import { View } from 'react-native';
-import { Text, TextInput, TouchableOpacity } from '../../native-component';
 import { Category, foodCategories } from '../../../constant/foodCategories';
+import CheckBoxItem from './CheckBoxItem';
 import tw from 'twrnc';
-import FoodCategoryModal from '../FoodCategoryModal';
+import { Text, TextInput, TouchableOpacity } from '../../native-component';
+import { useState } from 'react';
 
 interface Props {
-  category: Category;
+  fixedCategory: Category;
   changeInfo: (newInfo: { [key: string]: string }) => void;
 }
 
-export default function CategoryItem({ category, changeInfo }: Props) {
-  const [modalVisible, setModalVisible] = useState(false);
+export default function CategoryItem({ fixedCategory, changeInfo }: Props) {
+  const [categoryOpen, setCategoryOpen] = useState(false);
 
   return (
-    <>
+    <View style={tw`gap-2`}>
       <View>
-        <TextInput styletw='w-full h-10' value={category} editable={false} />
+        <TextInput styletw='w-full' value={fixedCategory} editable={false} />
         <TouchableOpacity
-          onPress={() => setModalVisible(true)}
-          style={tw`absolute top-3.5 right-3 flex-row items-center`}
+          onPress={() => setCategoryOpen((prev) => !prev)}
+          style={tw`absolute p-2.5 pl-10 right-0 top-0.5`}
         >
-          <Text styletw='text-xs text-indigo-500'>변경</Text>
+          <Text styletw='text-indigo-500'>변경</Text>
         </TouchableOpacity>
       </View>
-      {modalVisible && (
-        <FoodCategoryModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          changeInfo={changeInfo}
-          categoryItem={category}
-        />
+      {categoryOpen && (
+        <View style={tw`gap-2`}>
+          {foodCategories.map(({ category }) => (
+            <CheckBoxItem
+              key={category}
+              onPress={() => {
+                changeInfo({ category });
+                setCategoryOpen(false);
+              }}
+              title={category}
+              check={category === fixedCategory}
+            />
+          ))}
+        </View>
       )}
-    </>
+    </View>
   );
 }

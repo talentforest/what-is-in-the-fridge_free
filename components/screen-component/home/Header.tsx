@@ -16,7 +16,7 @@ export default function Header() {
         style={tw`ml-4`}
         onPress={() => navigation.navigate('Notification')}
       >
-        <Icon name='md-notifications' size={22} color={INDIGO} />
+        <Icon name='md-notifications' size={20} color={INDIGO} />
       </TouchableOpacity>
     </View>
   );

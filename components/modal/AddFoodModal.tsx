@@ -30,7 +30,7 @@ export default function AddFoodModal({
         * 이미 냉장고에 추가한 식료품은 추가할 수 없습니다.
       </Text>
       {foodLocation && (
-        <ScrollView style={tw`my-4`}>
+        <ScrollView style={tw`my-4`} showsVerticalScrollIndicator={false}>
           <View style={tw`gap-5`}>
             <Form
               editableName={true}
@@ -50,8 +50,7 @@ export default function AddFoodModal({
       <SubmitBtn
         btnName='식료품 정보 추가하기'
         onPress={() => {
-          onAddSubmit();
-          setModalVisible(false);
+          onAddSubmit(setModalVisible);
         }}
       />
     </RNModal>

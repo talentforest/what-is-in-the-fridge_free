@@ -1,7 +1,7 @@
-import { Image, View } from 'react-native';
+import { Image, ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foods';
 import { Text } from '../native-component';
-import { getLeftDays, getLocaleDate } from '../../util';
+import { getDateKr, getLeftDays } from '../../util';
 import tw from 'twrnc';
 import InfoBox from './common/InfoBox';
 import SubmitBtn from './form/SubmitBtn';
@@ -48,31 +48,36 @@ export default function FoodDetailModal({
         <Text styletw='text-center px-4 leading-6'>{food.name}</Text>
       </View>
       {editing ? (
-        <View>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={tw`mt-3 mb-8 gap-4`}>
             <Form
               food={editedFood}
               changeInfo={editFoodInfo}
-              items={['구매날짜', '유통기한', '즐겨찾는 식품인가요?']}
+              items={[
+                '카테고리',
+                '구매날짜',
+                '유통기한',
+                '즐겨찾는 식품인가요?',
+              ]}
             />
           </View>
           <SubmitBtn
             btnName='식료품 정보 수정 완료'
             onPress={() => onEditSumbit(food.id)}
           />
-        </View>
+        </ScrollView>
       ) : (
         <>
           <View style={tw`my-3`}>
             <InfoBox label='카테고리' info={editedFood.category} />
             <InfoBox
               label='구매날짜'
-              info={getLocaleDate(editedFood.purchaseDate)}
+              info={getDateKr(editedFood.purchaseDate)}
               leftDays={getLeftDays(editedFood.purchaseDate)}
             />
             <InfoBox
               label='유통기한'
-              info={getLocaleDate(editedFood.expiredDate)}
+              info={getDateKr(editedFood.expiredDate)}
               leftDays={getLeftDays(editedFood.expiredDate)}
             />
             <InfoBox
