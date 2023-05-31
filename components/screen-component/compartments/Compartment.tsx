@@ -36,7 +36,8 @@ export default function Compartment({ foodLocation }: Props) {
         </View>
         <ScrollView
           contentContainerStyle={tw`flex-row flex-wrap gap-1 items-center`}
-          style={tw`mt-2 flex-1 `}
+          style={tw`mt-2 flex-1`}
+          showsVerticalScrollIndicator={false}
         >
           {getFoodList(space, compartmentNum).map((food: Food) => (
             <TouchableOpacity

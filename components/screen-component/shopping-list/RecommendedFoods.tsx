@@ -1,4 +1,4 @@
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { useDispatch } from '../../../redux/hook';
 import { DEEP_INDIGO } from '../../../constant/colors';

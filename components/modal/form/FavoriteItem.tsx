@@ -1,9 +1,6 @@
-import { Text, TouchableOpacity } from '../../native-component';
 import { View } from 'react-native';
-import { INACTIVE_COLOR, ORANGE_RED } from '../../../constant/colors';
-import Icon from 'react-native-vector-icons/Ionicons';
+import CheckBoxBtn from './CheckBoxItem';
 import tw from 'twrnc';
-import CheckBoxBtn from './CheckBoxBtn';
 
 interface Props {
   favorite: boolean;
