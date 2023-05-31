@@ -43,11 +43,9 @@ export default function useHandleCheckList() {
           text: '삭제 후 추가',
           onPress: () => {
             if (existFood) {
-              dispatch(
-                removeFood({ id: existFood.id, space: existFood.space })
-              );
               onModalPress(food);
             }
+            return;
           },
           style: 'default',
         },
