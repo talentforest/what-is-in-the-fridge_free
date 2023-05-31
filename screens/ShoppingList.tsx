@@ -70,6 +70,7 @@ export default function ShoppingList() {
                 <TouchableOpacity
                   style={tw`py-2 pl-2`}
                   onPress={() => {
+                    // 삭제 후 추가
                     checkExistFood(food)
                       ? onExistFoodPress(food, onModalPress)
                       : onModalPress(food);
