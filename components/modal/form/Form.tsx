@@ -61,17 +61,17 @@ export default function Form({ items, changeInfo, food, editableName }: Props) {
 
       {items.includes('구매날짜') && (
         <FormItemContainer label='구매날짜'>
-          <DateItem
-            purchaseDate={food.purchaseDate}
-            expiredDate={food.expiredDate}
-            changeInfo={changeInfo}
-          />
+          <DateItem date={food.purchaseDate} changeInfo={changeInfo} />
         </FormItemContainer>
       )}
 
       {items.includes('유통기한') && (
         <FormItemContainer label='유통기한'>
-          <DateItem expiredDate={food.expiredDate} changeInfo={changeInfo} />
+          <DateItem
+            expiredInfo
+            date={food.expiredDate}
+            changeInfo={changeInfo}
+          />
         </FormItemContainer>
       )}
 

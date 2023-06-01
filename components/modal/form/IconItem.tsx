@@ -1,8 +1,10 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { useState } from 'react';
+import { INDIGO } from '../../../constant/colors';
 import EmojiPicker, { ko } from 'rn-emoji-keyboard';
 import tw from 'twrnc';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
   value: string;
@@ -18,7 +20,11 @@ export default function FormImageItem({ value, changeInfo }: Props) {
         onPress={() => setIsOpen(true)}
         style={tw`border border-slate-400 rounded-lg flex-1 aspect-square justify-center items-center`}
       >
-        <Text styletw='text-2xl pt-0.5'>{value}</Text>
+        {value === '' ? (
+          <Icon name='food-fork-drink' color={INDIGO} size={22} />
+        ) : (
+          <Text styletw='text-2xl pt-0.5'>{value}</Text>
+        )}
       </TouchableOpacity>
 
       <EmojiPicker

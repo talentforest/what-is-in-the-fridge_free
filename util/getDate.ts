@@ -17,18 +17,18 @@ export const getTodayIsoDateKr = () => {
   return `${year}-${month}-${date}`;
 };
 
-export const today = getISODate(new Date());
-
 export function getLeftDays(expiryDate: string) {
-  const diffDate = new Date(expiryDate).getTime() - new Date(today).getTime();
+  const diffDate =
+    new Date(expiryDate).getTime() - new Date(getTodayIsoDateKr()).getTime();
   const leftDays = diffDate / (1000 * 60 * 60 * 24);
+
   return leftDays;
 }
 
 export const getRelativeDate = (days: number) => {
-  const now = moment();
-  const futureDate = now.add(days, 'day');
-  const relativeTime = futureDate.fromNow();
+  const now = moment().add(9, 'hours');
+  const futureDate = now.add(days, 'days');
+  const relativeTime = futureDate.fromNow(false);
 
   return relativeTime;
 };

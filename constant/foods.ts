@@ -18,7 +18,7 @@ export interface Food {
 
 export const initialFoodInfo: Food = {
   id: '0',
-  image: '🍲',
+  image: '',
   name: '',
   category: '신선식품류',
   purchaseDate: getTodayIsoDateKr(),
