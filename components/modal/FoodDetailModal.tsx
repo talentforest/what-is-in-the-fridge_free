@@ -8,6 +8,8 @@ import useDeleteFood from '../../hooks/useDeleteFood';
 import Form from './form/Form';
 import RNModal from './common/Modal';
 import tw from 'twrnc';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { INDIGO } from '../../constant/colors';
 
 interface Props {
   modalVisible: boolean;
@@ -36,13 +38,10 @@ export default function FoodDetailModal({
       modalVisible={modalVisible}
     >
       <View style={tw`items-center mt-4 gap-2 mb-2`}>
-        {food.image.includes('http') ? (
-          <Image
-            style={tw`h-20 w-20 rounded-md`}
-            source={{ uri: food.image }}
-          />
+        {food.image !== '' ? (
+          <Text styletw='text-4xl pt-4'>{food.image}</Text>
         ) : (
-          <Text styletw='text-6xl pt-4'>{food.image}</Text>
+          <Icon name='food-fork-drink' size={20} color={INDIGO} />
         )}
         <Text styletw='text-center px-4 leading-6'>{food.name}</Text>
       </View>

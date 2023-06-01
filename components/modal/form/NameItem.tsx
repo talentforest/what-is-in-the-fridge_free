@@ -17,7 +17,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
       editable={editable}
       onChangeText={onChangeText}
       value={name}
-      placeholder='식료품 이름을 수정해주세요'
+      placeholder={`식료품 이름을 작성해주세요`}
       focusable={true}
       selectTextOnFocus={true}
       showSoftInputOnFocus={true}
