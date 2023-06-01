@@ -1,46 +1,38 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
-import { DEEP_INDIGO, INACTIVE_COLOR } from '../../../constant/colors';
-import Icon from 'react-native-vector-icons/Octicons';
-import tw from 'twrnc';
 import { Label } from '../form/Form';
+import { getDateKr } from '../../../util';
+import tw from 'twrnc';
+import LeftDay from '../../common/LeftDay';
 
 interface Props {
   label: Label;
   info?: string;
   favorite?: boolean;
-  leftDays?: number;
 }
 
-export default function InfoBox({ label, info, favorite, leftDays }: Props) {
+export default function InfoBox({ label, info, favorite }: Props) {
+  const dateItem = label === '구매날짜' || label === '유통기한';
+
   return (
-    <View style={tw`items-center gap-2 p-2.5 flex-row`}>
+    <View
+      style={tw`items-center gap-2 p-2.5 flex-row border-b border-slate-300`}
+    >
       <Text styletw='text-slate-600'>{label} : </Text>
+
       {info && (
         <View style={tw`gap-3 flex-row items-center flex-1`}>
-          <Text styletw='text-indigo-600'>{info}</Text>
-          {(leftDays || leftDays === 0) && label === '유통기한' && (
-            <Text
-              styletw={`${leftDays >= 0 ? 'text-green-600' : 'text-red-500'}`}
-            >
-              {leftDays >= 0
-                ? `${leftDays}일 남음`
-                : `${Math.abs(leftDays)}일 지남`}
-            </Text>
-          )}
+          <Text styletw='text-indigo-600'>
+            {dateItem ? getDateKr(info) : info}
+          </Text>
+          {label === '유통기한' && <LeftDay expiredDate={info} />}
         </View>
       )}
+
       {!info && (
-        <View style={tw`flex-row items-center gap-1`}>
-          <Icon
-            name={favorite ? 'check-circle' : 'circle'}
-            color={favorite ? DEEP_INDIGO : INACTIVE_COLOR}
-            size={16}
-          />
-          <Text styletw={`text-indigo-600`}>
-            {favorite ? '맞아요' : '아니에요'}
-          </Text>
-        </View>
+        <Text styletw={`text-indigo-600`}>
+          {favorite ? '맞아요' : '아니에요'}
+        </Text>
       )}
     </View>
   );

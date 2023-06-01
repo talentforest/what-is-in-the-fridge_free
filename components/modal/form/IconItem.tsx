@@ -1,4 +1,4 @@
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { useState } from 'react';
 import EmojiPicker, { ko } from 'rn-emoji-keyboard';
@@ -14,17 +14,13 @@ export default function FormImageItem({ value, changeInfo }: Props) {
 
   return (
     <View>
-      <View
+      <TouchableOpacity
+        onPress={() => setIsOpen(true)}
         style={tw`border border-slate-400 rounded-lg flex-1 aspect-square justify-center items-center`}
       >
-        {value.includes('http') ? (
-          <Image style={tw`h-10 w-10 rounded-md`} source={{ uri: value }} />
-        ) : (
-          <TouchableOpacity onPress={() => setIsOpen(true)}>
-            <Text styletw='text-2xl pt-0.5'>{value}</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+        <Text styletw='text-2xl pt-0.5'>{value}</Text>
+      </TouchableOpacity>
+
       <EmojiPicker
         onEmojiSelected={(emoji) => changeInfo({ image: emoji.emoji })}
         open={isOpen}

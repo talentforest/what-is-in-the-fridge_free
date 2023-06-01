@@ -5,17 +5,23 @@ import { useState } from 'react';
 import { addDateBtns } from '../../../constant/addDateBtns';
 import { INDIGO } from '../../../constant/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
-import tw from 'twrnc';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import tw from 'twrnc';
 
 interface Props {
-  expiredDateItem?: boolean;
-  date: string;
+  purchaseDate?: string;
+  expiredDate: string;
   changeInfo: (newInfo: { [key: string]: string }) => void;
 }
 
-export default function DateItem({ expiredDateItem, date, changeInfo }: Props) {
+export default function DateItem({
+  purchaseDate,
+  expiredDate,
+  changeInfo,
+}: Props) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const date = purchaseDate || expiredDate;
 
   const toggleDatePicker = () => {
     setDatePickerVisibility((prev) => !prev);
@@ -27,7 +33,7 @@ export default function DateItem({ expiredDateItem, date, changeInfo }: Props) {
   };
 
   const changeDate = (date: Date) => {
-    if (expiredDateItem) {
+    if (expiredDate) {
       return changeInfo({ expiredDate: getISODate(date) });
     }
     return changeInfo({ purchaseDate: getISODate(date) });
@@ -54,7 +60,10 @@ export default function DateItem({ expiredDateItem, date, changeInfo }: Props) {
         date={new Date(date)}
         onConfirm={onConfirm}
         onCancel={toggleDatePicker}
+        minimumDate={expiredDate ? new Date() : undefined}
+        maximumDate={purchaseDate ? new Date(expiredDate) : undefined}
       />
+
       <View style={tw`mt-2 flex-row gap-1 flex-wrap justify-end items-center`}>
         {addDateBtns.map((btn) => (
           <TouchableOpacity

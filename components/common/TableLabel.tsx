@@ -12,7 +12,7 @@ interface Props {
 export default function TableLabel({ title, label }: Props) {
   return (
     <View
-      style={tw`h-12 gap-2 border-b border-slate-300 flex-row items-center justify-between`}
+      style={tw`h-12 -mx-4 px-4 gap-2 border-b border-slate-300 flex-row items-center justify-between`}
     >
       <Icon name='list' size={18} color={DEEP_INDIGO} />
       <Text styletw='flex-1 text-indigo-500'>{title}</Text>

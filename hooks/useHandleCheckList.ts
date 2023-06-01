@@ -3,7 +3,6 @@ import { Food } from '../constant/foods';
 import { useDispatch, useSelector } from '../redux/hook';
 import { setShoppingList } from '../redux/slice/shoppingList';
 import { Alert } from 'react-native';
-import { removeFood } from '../redux/slice/allFoodsSlice';
 
 export default function useHandleCheckList() {
   const [entireCheck, setEntireCheck] = useState(false);
@@ -24,9 +23,9 @@ export default function useHandleCheckList() {
     setEntireCheck(false);
   };
 
-  const onEntirePress = () => {
+  const onEntirePress = (list: Food[]) => {
     setEntireCheck((prev) => !prev);
-    return !entireCheck ? setCheckList(shoppingList) : setCheckList([]);
+    return !entireCheck ? setCheckList(list) : setCheckList([]);
   };
 
   const onExistFoodPress = (food: Food, onModalPress: (food: Food) => void) => {

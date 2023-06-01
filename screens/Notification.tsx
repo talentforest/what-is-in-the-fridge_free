@@ -5,7 +5,6 @@ import { getLocaleDate } from '../util';
 import { LIGHT_GRAY } from '../constant/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
-import EmptyTag from '../components/common/EmptyTag';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { useSelector } from '../redux/hook';
@@ -63,7 +62,7 @@ export default function Notification() {
     <>
       {notificationList.length === 0 ? (
         <View style={tw`flex-1 p-4 gap-1 bg-neutral-50`}>
-          <EmptyTag tagName='알림이 없습니다' />
+          <Text>알림이 없습니다.</Text>
         </View>
       ) : (
         <>

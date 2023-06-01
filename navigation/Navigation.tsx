@@ -79,7 +79,7 @@ const Navigation = () => {
       <Stack.Screen
         name='ExpiredFoods'
         component={ExpiredFoods}
-        options={{ ...options, title: '유통기한 임박 식료품' }}
+        options={{ ...options, title: '유통기한 주의 식료품' }}
       />
       <Stack.Screen
         name='Notification'

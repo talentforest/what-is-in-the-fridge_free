@@ -1,30 +1,36 @@
-import { useState } from 'react';
-import { View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { SafeBottomAreaView, Text } from '../components/native-component';
-import { Food } from '../constant/foods';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { useDispatch, useSelector } from '../redux/hook';
-import { DEEP_INDIGO, ORANGE_RED } from '../constant/colors';
+import { ORANGE_RED } from '../constant/colors';
 import { caution } from '../constant/caution';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import TableLabel from '../components/common/TableLabel';
-import FoodListItem from '../components/common/FoodListItem';
-import TableListContainer from '../components/common/TableListContainer';
+import TableItem from '../components/common/TableItem';
+import useHandleCheckList from '../hooks/useHandleCheckList';
+import TableTotalItem from '../components/common/TableTotalItem';
 import FixedBtn from '../components/common/FixedBtn';
 import LeftDay from '../components/common/LeftDay';
-import Icon from 'react-native-vector-icons/Octicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
 
 export default function ExpiredFoods() {
-  const [checkList, setCheckList] = useState<Food[]>([]);
   const { allFoods } = useSelector((state) => state.allFoods);
+  const dispatch = useDispatch();
 
   const {
     allLeftAndExpiredFoods,
     freezerLeftExpiredFoods,
     fridgeLeftExpiredFoods,
   } = useExpiredFood();
-  const dispatch = useDispatch();
+
+  const {
+    entireCheck,
+    setEntireCheck,
+    checkList,
+    setCheckList,
+    onEntirePress,
+  } = useHandleCheckList();
 
   const onDeletePress = () => {
     const filteredArr = allFoods.filter((item1) => {
@@ -36,91 +42,92 @@ export default function ExpiredFoods() {
   };
 
   const getCaution = (length: number) => {
-    const level =
-      length <= 3
-        ? 1
-        : length <= 8
-        ? 2
-        : length <= 15
-        ? 3
-        : length > 15
-        ? 4
-        : null;
-    return caution.find((item) => item.level === level);
+    return caution.find((item) => item.max > length);
   };
 
   const length = allLeftAndExpiredFoods.length;
 
   return (
     <SafeBottomAreaView>
-      <View style={tw`flex-row gap-1 items-center py-3 px-5`}>
-        <Icon
-          name={
-            getCaution(length)?.level === 1
-              ? 'thumbsup'
-              : getCaution(length)?.level === 2
-              ? 'alert'
-              : ''
-          }
-          size={16}
-          color={
-            getCaution(length)?.level === 1
-              ? DEEP_INDIGO
-              : getCaution(length)?.level === 2
-              ? ORANGE_RED
-              : getCaution(length)?.level === 3
-              ? 'red'
-              : ''
-          }
-        />
-        <Text styletw='text-slate-600 flex-1'>{getCaution(length)?.guide}</Text>
-      </View>
-      <View style={tw`flex-1 gap-2`}>
-        <TableListContainer>
+      <View style={tw`flex-1 pb-2`}>
+        <View style={tw`flex-row gap-1 items-center py-3 px-5`}>
+          <Icon
+            name={length > 3 ? 'fridge-alert-outline' : 'fridge-outline'}
+            size={18}
+            color={length > 15 ? 'red' : length > 3 ? 'orange' : 'green'}
+          />
+          <Text styletw='text-slate-600 flex-1'>
+            {getCaution(length)?.guide}
+          </Text>
+        </View>
+        <View style={tw`flex-1 bg-white px-4 border-b border-slate-300`}>
           <TableLabel title='냉동실 식료품' label='유통기한 경과' />
           {freezerLeftExpiredFoods.length !== 0 ? (
-            freezerLeftExpiredFoods.map((food) => (
-              <FoodListItem
-                key={food.id}
-                food={food}
-                checkList={checkList}
-                setCheckList={setCheckList}
-              >
-                <LeftDay expiredDate={food.expiredDate} />
-              </FoodListItem>
-            ))
+            <FlatList
+              keyExtractor={(item) => item.id}
+              showsVerticalScrollIndicator={false}
+              data={freezerLeftExpiredFoods}
+              renderItem={({ item }) => (
+                <TableItem
+                  key={item.name}
+                  food={item}
+                  checkList={checkList}
+                  setCheckList={setCheckList}
+                  setEntireCheck={setEntireCheck}
+                >
+                  <LeftDay expiredDate={item.expiredDate} />
+                </TableItem>
+              )}
+            />
           ) : (
-            <Text styletw='px-4 text-sm text-center self-center mt-15 text-slate-500'>
-              냉동실에 유통기한이 임박한 식품이 없습니다.
+            <Text styletw='text-slate-500 text-center mt-22'>
+              유통기한 주의 식료품이 없습니다.
             </Text>
           )}
-        </TableListContainer>
-        <TableListContainer>
+        </View>
+        <View style={tw`flex-1 bg-white px-4`}>
           <TableLabel title='냉장실 식료품' label='유통기한 경과' />
           {fridgeLeftExpiredFoods.length !== 0 ? (
-            fridgeLeftExpiredFoods.map((food) => (
-              <FoodListItem
-                key={food.id}
-                food={food}
-                checkList={checkList}
-                setCheckList={setCheckList}
-              >
-                <LeftDay expiredDate={food.expiredDate} />
-              </FoodListItem>
-            ))
+            <FlatList
+              keyExtractor={(item) => item.id}
+              showsVerticalScrollIndicator={false}
+              data={fridgeLeftExpiredFoods}
+              renderItem={({ item }) => (
+                <TableItem
+                  key={item.name}
+                  food={item}
+                  checkList={checkList}
+                  setCheckList={setCheckList}
+                  setEntireCheck={setEntireCheck}
+                >
+                  <LeftDay expiredDate={item.expiredDate} />
+                </TableItem>
+              )}
+            />
           ) : (
-            <Text styletw='px-4 text-sm text-center self-center mt-15 text-slate-500'>
-              냉동실에 유통기한이 임박한 식품이 없습니다.
+            <Text styletw='text-slate-500 text-center mt-22'>
+              유통기한 주의 식료품이 없습니다.
             </Text>
           )}
-        </TableListContainer>
+        </View>
+
+        {!!allLeftAndExpiredFoods.length && (
+          <TableTotalItem
+            label={`총 ${allLeftAndExpiredFoods.length}개의 유통기한 주의 식료품`}
+            onEntirePress={() => onEntirePress(allLeftAndExpiredFoods)}
+            list={allLeftAndExpiredFoods}
+            entireCheck={entireCheck}
+          />
+        )}
+
+        {!!checkList.length && (
+          <FixedBtn
+            btnName='나의 냉장고에서 삭제'
+            onDeletePress={onDeletePress}
+            listLength={checkList.length}
+          />
+        )}
       </View>
-      {!!checkList.length && (
-        <FixedBtn
-          btnName='나의 냉장고에서 삭제'
-          onDeletePress={onDeletePress}
-        />
-      )}
     </SafeBottomAreaView>
   );
 }

@@ -52,17 +52,10 @@ export default function Space({ space, bottom, door }: Props) {
             } border-slate-300 flex-1 p-1.5 justify-between`}
           >
             <View style={tw`flex-row justify-between`}>
-              <Text
-                styletw={`text-xs ${
-                  space.includes('냉동') ? 'text-blue-600' : 'text-green-600'
-                }`}
-              >
-                {compartment}칸
-              </Text>
               {compartment === compartmentArr[0] && (
                 <View>
                   <Text
-                    styletw={`text-xs ${
+                    styletw={`${
                       space.includes('냉동')
                         ? 'text-blue-600'
                         : 'text-green-600'
@@ -87,7 +80,7 @@ export default function Space({ space, bottom, door }: Props) {
                     getFoodList(space, compartment).length
                       ? `text-[${INDIGO}]`
                       : `text-[${LIGHT_GRAY}]`
-                  } text-xs`}
+                  }`}
                 >
                   {getFoodList(space, compartment).length}개
                 </Text>
@@ -107,7 +100,7 @@ export default function Space({ space, bottom, door }: Props) {
                     getExpiredFoods(space, compartment).length !== 0
                       ? `text-[${ORANGE_RED}]`
                       : `text-[${LIGHT_GRAY}]`
-                  } text-xs`}
+                  }`}
                 >
                   {getExpiredFoods(space, compartment).length}개
                 </Text>

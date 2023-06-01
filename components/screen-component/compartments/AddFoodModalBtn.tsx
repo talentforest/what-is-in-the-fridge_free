@@ -33,7 +33,6 @@ export default function AddFoodModalBtn({
       </TouchableOpacity>
       {modal && foodLocation && (
         <AddFoodModal
-          selectedFood={selectedFood}
           foodLocation={foodLocation}
           modalVisible={modal}
           setModalVisible={setModal}

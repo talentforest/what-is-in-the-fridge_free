@@ -1,30 +1,33 @@
 import { useFonts } from 'expo-font';
-import { Alert, View } from 'react-native';
+import { Alert, FlatList, View } from 'react-native';
 import { fonts } from '../constant/fonts';
 import { useDispatch, useSelector } from '../redux/hook';
-import { useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
 import { SafeBottomAreaView, Text } from '../components/native-component';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
-import { Food } from '../constant/foods';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
-import { INACTIVE_COLOR, ORANGE_RED } from '../constant/colors';
 import { addItemsToShoppingList } from '../redux/slice/shoppingList';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import EmptyTag from '../components/common/EmptyTag';
 import TableLabel from '../components/common/TableLabel';
-import FoodListItem from '../components/common/FoodListItem';
+import TableItem from '../components/common/TableItem';
 import useCheckFood from '../hooks/useCheckFood';
-import TableListContainer from '../components/common/TableListContainer';
 import FixedBtn from '../components/common/FixedBtn';
+import ExistFoodMark from '../components/common/ExistFoodMark';
+import useHandleCheckList from '../hooks/useHandleCheckList';
+import TableTotalItem from '../components/common/TableTotalItem';
 import tw from 'twrnc';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
-  const [checkList, setCheckList] = useState<Food[]>([]);
 
   const { allFoods } = useSelector((state) => state.allFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+
+  const {
+    entireCheck,
+    setEntireCheck,
+    checkList,
+    setCheckList,
+    onEntirePress,
+  } = useHandleCheckList();
 
   const { checkExistFood } = useCheckFood();
 
@@ -64,56 +67,50 @@ export default function FavoriteFoods() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeBottomAreaView style={tw`flex-1 bg-neutral-50 pb-3 gap-1`}>
-      {favoriteFoods.length !== 0 ? (
-        <>
-          <ScrollView contentContainerStyle={tw`mb-10 bg-white`}>
-            <TableListContainer>
-              <TableLabel title={'냉동실 식료품'} label='식료품 유무' />
-              {favoriteFoods.map((food) => (
-                <FoodListItem
-                  key={food.id}
-                  food={food}
+    <SafeBottomAreaView style={tw`flex-1 bg-neutral-50`}>
+      <View style={tw`flex-1 pb-2`}>
+        <View style={tw`flex-1 bg-white px-4`}>
+          <TableLabel title='식료품' label='식료품 유무' />
+          {favoriteFoods.length !== 0 ? (
+            <FlatList
+              keyExtractor={(item) => item.id}
+              showsVerticalScrollIndicator={false}
+              data={favoriteFoods}
+              renderItem={({ item }) => (
+                <TableItem
+                  key={item.name}
+                  food={item}
                   checkList={checkList}
                   setCheckList={setCheckList}
+                  setEntireCheck={setEntireCheck}
                 >
-                  <View style={tw`flex-row items-center gap-1 pl-2`}>
-                    <Icon
-                      name={
-                        checkExistFood(food)
-                          ? 'fridge-outline'
-                          : 'fridge-off-outline'
-                      }
-                      size={15}
-                      color={checkExistFood(food) ? INACTIVE_COLOR : ORANGE_RED}
-                    />
-                    <Text
-                      styletw={`${
-                        checkExistFood(food)
-                          ? 'text-slate-400'
-                          : 'text-orange-600'
-                      }`}
-                    >
-                      {checkExistFood(food) ? '있음' : '없음'}
-                    </Text>
-                  </View>
-                </FoodListItem>
-              ))}
-            </TableListContainer>
-          </ScrollView>
-          {!!checkList.length && (
-            <FixedBtn
-              btnName='자주 먹는 식료품 해제'
-              onDeletePress={onDeletePress}
-              addShoppingListPress={addShoppingListPress}
+                  <ExistFoodMark exist={!!checkExistFood(item)} />
+                </TableItem>
+              )}
             />
+          ) : (
+            <Text styletw='text-slate-500 text-center mt-22'>
+              자주 먹는 식료품이 없습니다.
+            </Text>
           )}
-        </>
-      ) : (
-        <View style={tw`mb-4 h-24 bg-white rounded-lg border border-slate-300`}>
-          <EmptyTag tagName='아직 자주 먹는 식료품 정보가 없습니다' />
         </View>
-      )}
+        {!!favoriteFoods.length && (
+          <TableTotalItem
+            label={`총 ${favoriteFoods.length}개의 자주 먹는 식료품`}
+            onEntirePress={() => onEntirePress(favoriteFoods)}
+            list={favoriteFoods}
+            entireCheck={entireCheck}
+          />
+        )}
+        {!!checkList.length && (
+          <FixedBtn
+            btnName='자주 먹는 식료품 해제'
+            onDeletePress={onDeletePress}
+            addShoppingListPress={addShoppingListPress}
+            listLength={favoriteFoods.length}
+          />
+        )}
+      </View>
     </SafeBottomAreaView>
   );
 }
