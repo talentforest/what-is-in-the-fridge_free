@@ -5,13 +5,15 @@ import useRouteName from '../../hooks/useRouteName';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
 
+type FixBtnName =
+  | '자주 먹는 식료품 해제'
+  | '나의 냉장고에서 삭제'
+  | '장보기 목록에 추가'
+  | '장보기 리스트에서 삭제';
+
 interface Props {
   onDeletePress: () => void;
-  btnName:
-    | '자주 먹는 식료품 해제'
-    | '나의 냉장고에서 삭제'
-    | '장보기 목록에 추가'
-    | '장보기 리스트에서 삭제';
+  btnName: FixBtnName;
   addShoppingListPress?: () => void;
   listLength: number;
 }
@@ -25,7 +27,7 @@ export default function FixedBtn({
   const { currRoute } = useRouteName();
 
   return (
-    <View style={tw`gap-1 px-4 py-2`}>
+    <View style={tw`gap-1 px-4 py-2 pb-2`}>
       <Text styletw='text-slate-600'>선택한 항목: {listLength}개</Text>
       <TouchableOpacity
         onPress={onDeletePress}

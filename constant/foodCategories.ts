@@ -5,35 +5,35 @@ interface FoodCategory {
 }
 
 export type Category =
-  | '신선식품'
-  | '간편 · 즉석식품'
-  | '계란 · 유제품'
-  | '반찬'
+  | '신선식품류'
+  | '간편 · 즉석식품류'
+  | '계란 · 유제품류'
+  | '반찬류'
   | '소스 · 조미료 · 오일 · 장류'
-  | '디저트 식품'
+  | '디저트 식품류'
   | '생수 · 음료수 · 커피 · 주류'
-  | '기타식품';
+  | '기타식품류';
 
 export const foodCategories: FoodCategory[] = [
   {
     id: 1,
-    category: '신선식품',
+    category: '신선식품류',
   },
   {
     id: 2,
-    category: '간편 · 즉석식품',
+    category: '간편 · 즉석식품류',
   },
   {
     id: 7,
-    category: '디저트 식품',
+    category: '디저트 식품류',
   },
   {
     id: 3,
-    category: '반찬',
+    category: '반찬류',
   },
   {
     id: 4,
-    category: '계란 · 유제품',
+    category: '계란 · 유제품류',
   },
   {
     id: 6,
@@ -46,6 +46,6 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 10,
-    category: '기타식품',
+    category: '기타식품류',
   },
 ];

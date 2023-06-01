@@ -2,8 +2,8 @@ import { Image, ImageSourcePropType, View } from 'react-native';
 import { Text } from '../../native-component';
 import { useSelector } from '../../../redux/hook';
 import { Asset } from 'expo-asset';
-import tw from 'twrnc';
 import useExpiredFoods from '../../../hooks/useExpiredFoods';
+import tw from 'twrnc';
 
 export default function FridgeInfo({ asset }: { asset: Asset[] }) {
   const { allFoods } = useSelector((state) => state.allFoods);
@@ -12,7 +12,7 @@ export default function FridgeInfo({ asset }: { asset: Asset[] }) {
   return (
     <View style={tw`mb-2 mt-8 gap-2`}>
       <View style={tw`flex-row items-center gap-2`}>
-        <Text styletw='text-indigo-700'>나의 냉장고 요약</Text>
+        <Text styletw='text-indigo-600 text-base'>나의 냉장고 요약</Text>
         <View style={tw`border h-0.5 flex-1 border-indigo-400`} />
       </View>
       <View
@@ -31,7 +31,7 @@ export default function FridgeInfo({ asset }: { asset: Asset[] }) {
         style={tw`bg-white border border-slate-300 rounded-lg flex-row items-center justify-center gap-4 py-2 px-5`}
       >
         <View style={tw`items-start justify-between gap-3`}>
-          <Text styletw='text-center text-gray-700'>유통기한 임박 식료품</Text>
+          <Text styletw='text-center text-gray-700'>유통기한 주의 식료품</Text>
           <Text styletw='text-center pt-2 text-indigo-600 text-xl '>
             <Text styletw='text-xs text-slate-600 pt-5'>TOTAL</Text>{' '}
             {allLeftAndExpiredFoods.length}개

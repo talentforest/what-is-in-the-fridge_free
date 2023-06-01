@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { Category, foodCategories } from '../../../constant/foodCategories';
-import CheckBoxItem from './CheckBoxItem';
-import tw from 'twrnc';
 import { Text, TextInput, TouchableOpacity } from '../../native-component';
 import { useState } from 'react';
+import CheckBoxItem from './CheckBoxItem';
+import tw from 'twrnc';
 
 interface Props {
   fixedCategory: Category;

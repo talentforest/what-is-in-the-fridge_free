@@ -1,4 +1,4 @@
-import { getLeftDays } from '../../util';
+import { getLeftDays, getRelativeDate } from '../../util';
 import { Text } from '../native-component';
 
 interface Props {
@@ -6,13 +6,13 @@ interface Props {
 }
 
 export default function LeftDay({ expiredDate }: Props) {
+  const leftDays = getLeftDays(expiredDate);
+
   return (
     <Text
-      styletw={`${
-        0 > getLeftDays(expiredDate) ? 'text-red-600' : 'text-amber-600'
-      }`}
+      styletw={`${0 > leftDays ? 'text-red-600' : 'text-yellow-600'} text-xs`}
     >
-      {getLeftDays(expiredDate)}일
+      {leftDays === 0 ? '오늘' : getRelativeDate(leftDays)}
     </Text>
   );
 }

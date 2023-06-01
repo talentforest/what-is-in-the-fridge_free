@@ -17,7 +17,7 @@ interface Props {
   setEntireCheck: (check: boolean) => void;
 }
 
-export default function FoodListItem({
+export default function TableItem({
   food,
   checkList,
   setCheckList,

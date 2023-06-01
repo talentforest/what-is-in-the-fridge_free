@@ -1,6 +1,6 @@
 import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
-import { Platform, ScrollView, StatusBar, View } from 'react-native';
+import { Platform, ScrollView, StatusBar } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import BannerSlider from '../components/screen-component/home/BannerSlider';

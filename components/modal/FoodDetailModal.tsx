@@ -1,14 +1,13 @@
 import { Image, ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foods';
 import { Text } from '../native-component';
-import { getDateKr, getLeftDays } from '../../util';
-import tw from 'twrnc';
 import InfoBox from './common/InfoBox';
 import SubmitBtn from './form/SubmitBtn';
 import useEditFood from '../../hooks/useEditFood';
 import useDeleteFood from '../../hooks/useDeleteFood';
 import Form from './form/Form';
 import RNModal from './common/Modal';
+import tw from 'twrnc';
 
 interface Props {
   modalVisible: boolean;
@@ -47,6 +46,7 @@ export default function FoodDetailModal({
         )}
         <Text styletw='text-center px-4 leading-6'>{food.name}</Text>
       </View>
+
       {editing ? (
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={tw`mt-3 mb-8 gap-4`}>
@@ -68,18 +68,10 @@ export default function FoodDetailModal({
         </ScrollView>
       ) : (
         <>
-          <View style={tw`my-3`}>
+          <View style={tw`my-3 border-t border-slate-300`}>
             <InfoBox label='카테고리' info={editedFood.category} />
-            <InfoBox
-              label='구매날짜'
-              info={getDateKr(editedFood.purchaseDate)}
-              leftDays={getLeftDays(editedFood.purchaseDate)}
-            />
-            <InfoBox
-              label='유통기한'
-              info={getDateKr(editedFood.expiredDate)}
-              leftDays={getLeftDays(editedFood.expiredDate)}
-            />
+            <InfoBox label='구매날짜' info={editedFood.purchaseDate} />
+            <InfoBox label='유통기한' info={editedFood.expiredDate} />
             <InfoBox
               label='즐겨찾는 식품인가요?'
               favorite={editedFood.favorite}

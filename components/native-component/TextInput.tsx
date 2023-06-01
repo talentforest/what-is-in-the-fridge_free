@@ -1,8 +1,8 @@
 import { TextInput as Input, Platform, TextInputProps } from 'react-native';
 import { FontGmarketSansRegular } from '../../constant/fonts';
-import tw from 'twrnc';
 import { TouchableOpacity } from './TouchableOpacity';
 import { LIGHT_GRAY } from '../../constant/colors';
+import tw from 'twrnc';
 
 interface Props extends TextInputProps {
   styletw?: string;

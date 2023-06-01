@@ -3,10 +3,10 @@ import { Image, ImageSourcePropType, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import { fonts } from '../constant/fonts';
 import { Text } from '../components/native-component';
+import { Persistor } from 'redux-persist';
 import * as SplashScreen from 'expo-splash-screen';
 import tw from 'twrnc';
 import useImageLoad from '../hooks/useImageLoad';
-import { Persistor } from 'redux-persist';
 
 interface Props {
   appIsReady: boolean;

@@ -15,6 +15,18 @@ export default function TextInputToAddList() {
   const dispatch = useDispatch();
   const myUuid = UUIDGenerator.v4();
 
+  const onSubmitEditing = () => {
+    if (foodName === '') return;
+    dispatch(
+      addToShoppingList({
+        ...initialFoodInfo,
+        id: myUuid as string,
+        name: foodName,
+      })
+    );
+    setFoodName('');
+  };
+
   return (
     <View style={tw`my-2 mx-4 bg-[${BG_LIGHT_GRAY}]`}>
       <TextInput
@@ -23,26 +35,12 @@ export default function TextInputToAddList() {
         styletw='rounded-3xl px-5'
         placeholder='장보기 목록에 추가할 식료품을 작성해주세요.'
         returnKeyType='done'
-        onSubmitEditing={() => {
-          if (foodName === '') return;
-          dispatch(
-            addToShoppingList({
-              ...initialFoodInfo,
-              id: myUuid as string,
-              name: foodName,
-            })
-          );
-          setFoodName('');
-        }}
+        onSubmitEditing={onSubmitEditing}
         blurOnSubmit={false}
       />
       <TouchableOpacity
         style={tw`absolute bottom-2.5 right-2`}
-        onPress={() => {
-          if (foodName === '') return;
-          dispatch(addToShoppingList({ ...initialFoodInfo, name: foodName }));
-          setFoodName('');
-        }}
+        onPress={onSubmitEditing}
       >
         <Icon name='pluscircle' size={24} color={INDIGO} />
       </TouchableOpacity>

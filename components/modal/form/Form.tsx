@@ -9,9 +9,10 @@ import SpaceItem from './SpaceItem';
 import DateItem from './DateItem';
 import NameItem from './NameItem';
 import FavoriteItem from './FavoriteItem';
+import RecommendedIcon from './RecommendedIcon';
 
 export type Label =
-  | '위치 선택'
+  | '냉장고 위치 선택'
   | '아이콘과 이름'
   | '카테고리'
   | '구매날짜'
@@ -42,11 +43,12 @@ export default function Form({ items, changeInfo, food, editableName }: Props) {
           {!editableName && (
             <Text styletw='ml-12 mt-1 text-xs'>이름은 변경할 수 없습니다.</Text>
           )}
+          <RecommendedIcon name={food.name} changeInfo={changeInfo} />
         </FormItemContainer>
       )}
 
-      {items.includes('위치 선택') && (
-        <FormItemContainer label='위치 선택'>
+      {items.includes('냉장고 위치 선택') && (
+        <FormItemContainer label='냉장고 위치 선택'>
           <SpaceItem food={food} changeInfo={changeInfo} />
         </FormItemContainer>
       )}
@@ -59,17 +61,17 @@ export default function Form({ items, changeInfo, food, editableName }: Props) {
 
       {items.includes('구매날짜') && (
         <FormItemContainer label='구매날짜'>
-          <DateItem date={food.purchaseDate} changeInfo={changeInfo} />
+          <DateItem
+            purchaseDate={food.purchaseDate}
+            expiredDate={food.expiredDate}
+            changeInfo={changeInfo}
+          />
         </FormItemContainer>
       )}
 
       {items.includes('유통기한') && (
         <FormItemContainer label='유통기한'>
-          <DateItem
-            expiredDateItem
-            date={food.expiredDate}
-            changeInfo={changeInfo}
-          />
+          <DateItem expiredDate={food.expiredDate} changeInfo={changeInfo} />
         </FormItemContainer>
       )}
 
