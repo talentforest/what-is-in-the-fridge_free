@@ -1,16 +1,16 @@
 import { View } from 'react-native';
 import { Text } from '../native-component';
 import { INACTIVE_COLOR, INDIGO } from '../../constant/colors';
+import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import useRouteName from '../../hooks/useRouteName';
 import tw from 'twrnc';
 
 export default function ExistFoodMark({ exist }: { exist: boolean }) {
-  const { currRoute } = useRouteName();
+  const route = useRoute();
 
   return (
     <>
-      {currRoute !== 'ShoppingList' ? (
+      {route.name !== 'ShoppingList' ? (
         <View style={tw`flex-row gap-0.5 items-center`}>
           <Icon
             name={exist ? 'fridge-outline' : 'fridge-off-outline'}

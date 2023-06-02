@@ -1,10 +1,10 @@
 import { Text } from '../native-component';
 import { Dimensions, Image, ScrollView, View } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import RNModal from './common/Modal';
 import Form from './form/Form';
 import useAddSelectFood from '../../hooks/useAddSelectFood';
 import SubmitBtn from './form/SubmitBtn';
-import useRouteName from '../../hooks/useRouteName';
 import tw from 'twrnc';
 
 interface Props {
@@ -17,7 +17,7 @@ export default function AddSelectFoodModal({
   setModalVisible,
 }: Props) {
   const { selectedFood, onChange, onSubmit } = useAddSelectFood();
-  const { currRoute } = useRouteName();
+  const route = useRoute();
 
   return (
     <RNModal
@@ -33,7 +33,7 @@ export default function AddSelectFoodModal({
           Dimensions.get('window').height / 6
         }]px`}
       >
-        {currRoute === 'FavoriteFoods' && (
+        {route.name === 'FavoriteFoods' && (
           <View style={tw`items-center gap-2`}>
             {selectedFood.image.includes('http') ? (
               <Image
@@ -51,12 +51,12 @@ export default function AddSelectFoodModal({
             <Form
               editableName={false}
               items={[
-                currRoute !== 'FavoriteFoods' && '아이콘과 이름',
+                route.name !== 'FavoriteFoods' && '아이콘과 이름',
                 '카테고리',
                 '냉장고 위치 선택',
                 '구매날짜',
                 '유통기한',
-                currRoute !== 'FavoriteFoods' && '즐겨찾는 식품인가요?',
+                route.name !== 'FavoriteFoods' && '즐겨찾는 식품인가요?',
               ]}
               food={selectedFood}
               changeInfo={onChange}

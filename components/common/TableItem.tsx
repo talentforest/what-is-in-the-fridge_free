@@ -1,12 +1,12 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { cutLetter } from '../../util';
-import { INDIGO } from '../../constant/colors';
+import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
 import { Food } from '../../constant/foods';
 import { ReactNode } from 'react';
 import { INACTIVE_COLOR } from '../../constant/colors';
-import Icon from 'react-native-vector-icons/Feather';
-import useRouteName from '../../hooks/useRouteName';
+import { useRoute } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
 
 interface Props {
@@ -23,7 +23,7 @@ export default function TableItem({
   setCheckList,
   children,
 }: Props) {
-  const { currRoute } = useRouteName();
+  const route = useRoute();
 
   const onCheckPress = (food: Food) => {
     if (existInList(food.id)) {
@@ -42,14 +42,19 @@ export default function TableItem({
       style={tw`h-12 flex-row gap-2 items-center justify-between border-b border-slate-300`}
     >
       <Icon
-        name={!existInList(food.id) ? 'square' : 'check-square'}
+        name={
+          !existInList(food.id) ? 'square-outline' : 'checkbox-marked-outline'
+        }
         size={18}
         color={!existInList(food.id) ? INACTIVE_COLOR : INDIGO}
       />
       <View style={tw`flex-1 flex-row items-center gap-2`}>
-        {currRoute !== 'ShoppingList' && (
-          <Text styletw='text-2xl'>{food.image}</Text>
-        )}
+        {route.name !== 'ShoppingList' &&
+          (food.image === '' ? (
+            <Icon name='food-variant' size={20} color={LIGHT_GRAY} />
+          ) : (
+            <Text styletw='text-lg'>{food.image}</Text>
+          ))}
         <Text styletw='flex-1 text-sm'>{cutLetter(food.name, 28)}</Text>
       </View>
       <View style={tw`w-22 items-end`}>{children}</View>
