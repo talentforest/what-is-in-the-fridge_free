@@ -1,4 +1,4 @@
-import { getTodayIsoDateKr } from '../util';
+import { getFormattedDate } from '../util';
 import { Category } from './foodCategories';
 import { CompartmentNum, Space } from './fridgeInfo';
 
@@ -21,8 +21,8 @@ export const initialFoodInfo: Food = {
   image: '',
   name: '',
   category: '신선식품류',
-  purchaseDate: getTodayIsoDateKr(),
-  expiredDate: getTodayIsoDateKr(),
+  purchaseDate: getFormattedDate(new Date()),
+  expiredDate: getFormattedDate(new Date()),
   favorite: false,
   space: '냉장실 안쪽',
   compartmentNum: '1번',

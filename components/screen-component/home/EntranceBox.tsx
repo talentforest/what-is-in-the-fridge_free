@@ -32,10 +32,10 @@ export default function EntranceBox({ title, foods }: Props) {
       <Text styletw='text-base text-indigo-600'>{title}</Text>
       <TouchableOpacity
         onPress={onPress}
-        style={tw`gap-2 flex-row justify-between`}
+        style={tw`gap-2 flex-row justify-between border border-slate-300 bg-indigo-50 rounded-lg p-2`}
       >
         {foods.length !== 0 ? (
-          <View style={tw`flex-row gap-1 flex-wrap flex-1`}>
+          <View style={tw`flex-row min-h-24 gap-1 flex-wrap flex-1 `}>
             {foods.slice(0, 8).map((food) => (
               <FoodTag key={food.id} food={food}>
                 {title === '유통기한 주의 식료품 목록' && (
@@ -46,9 +46,7 @@ export default function EntranceBox({ title, foods }: Props) {
             {foods.length > 8 && <Text>...</Text>}
           </View>
         ) : (
-          <View
-            style={tw`p-4 h-24 justify-center items-center gap-4 border flex-1 rounded-lg border-slate-300 bg-white`}
-          >
+          <View style={tw`p-4 h-24 justify-center items-center gap-2 flex-1`}>
             <Text styletw='text-sm text-slate-500 text-center'>
               {title === '자주 먹는 식료품 목록'
                 ? '아직 자주 먹는 식료품 정보가 없습니다'

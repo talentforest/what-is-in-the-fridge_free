@@ -1,18 +1,27 @@
-import { getLeftDays, getRelativeDate } from '../../util';
+import { getRelativeTime } from '../../util';
 import { Text } from '../native-component';
+import useExpiredFoods from '../../hooks/useExpiredFoods';
 
 interface Props {
   expiredDate: string;
 }
 
-export default function LeftDay({ expiredDate }: Props) {
-  const leftDays = getLeftDays(expiredDate);
+function LeftDay({ expiredDate }: Props) {
+  const { checkExpired, checkLeftThreeDays } = useExpiredFoods();
 
   return (
     <Text
-      styletw={`${0 > leftDays ? 'text-red-600' : 'text-yellow-600'} text-xs`}
+      styletw={`${
+        checkExpired(expiredDate)
+          ? 'text-red-600'
+          : checkLeftThreeDays(expiredDate)
+          ? 'text-amber-600'
+          : 'text-green-600'
+      } text-xs`}
     >
-      {leftDays === 0 ? '오늘' : getRelativeDate(leftDays)}
+      {getRelativeTime(expiredDate)}
     </Text>
   );
 }
+
+export default LeftDay;

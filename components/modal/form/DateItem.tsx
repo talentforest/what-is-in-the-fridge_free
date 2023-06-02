@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Text, TextInput, TouchableOpacity } from '../../native-component';
-import { getDateKr, getISODate } from '../../../util';
+import { getFormattedDate } from '../../../util';
 import { useState } from 'react';
 import { addDateBtns } from '../../../constant/addDateBtns';
 import { INDIGO } from '../../../constant/colors';
@@ -28,15 +28,18 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
 
   const changeDate = (date: Date) => {
     if (expiredInfo) {
-      return changeInfo({ expiredDate: getISODate(date) });
+      return changeInfo({ expiredDate: getFormattedDate(date) });
     }
-    return changeInfo({ purchaseDate: getISODate(date) });
+    return changeInfo({ purchaseDate: getFormattedDate(date) });
   };
 
   return (
     <View>
       <View>
-        <TextInput value={getDateKr(date)} editable={false} />
+        <TextInput
+          value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
+          editable={false}
+        />
         <Icon
           name='calendar'
           size={18}
