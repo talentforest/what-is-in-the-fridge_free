@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
 import { Label } from '../form/Form';
-import { getDateKr } from '../../../util';
+import { getFormattedDate } from '../../../util';
 import tw from 'twrnc';
 import LeftDay from '../../common/LeftDay';
 
@@ -23,7 +23,7 @@ export default function InfoBox({ label, info, favorite }: Props) {
       {info && (
         <View style={tw`gap-3 flex-row items-center flex-1`}>
           <Text styletw='text-indigo-600'>
-            {dateItem ? getDateKr(info) : info}
+            {dateItem ? getFormattedDate(info, 'YYYY년 MM월 DD일') : info}
           </Text>
           {label === '유통기한' && <LeftDay expiredDate={info} />}
         </View>

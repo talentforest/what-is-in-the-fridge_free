@@ -18,11 +18,7 @@ export default function ExpiredFoods() {
   const { allFoods } = useSelector((state) => state.allFoods);
   const dispatch = useDispatch();
 
-  const {
-    allLeftAndExpiredFoods,
-    freezerLeftExpiredFoods,
-    fridgeLeftExpiredFoods,
-  } = useExpiredFood();
+  const { allExpiredFoods, filterExpiredFoods } = useExpiredFood();
 
   const {
     entireCheck,
@@ -45,7 +41,7 @@ export default function ExpiredFoods() {
     return caution.find((item) => item.max > length);
   };
 
-  const length = allLeftAndExpiredFoods.length;
+  const length = allExpiredFoods.length;
 
   return (
     <SafeBottomAreaView>
@@ -62,11 +58,11 @@ export default function ExpiredFoods() {
         </View>
         <View style={tw`flex-1 bg-white px-4 border-b border-slate-300`}>
           <TableLabel title='냉동실 식료품' label='유통기한 경과' />
-          {freezerLeftExpiredFoods.length !== 0 ? (
+          {filterExpiredFoods('냉동실').length !== 0 ? (
             <FlatList
               keyExtractor={(item) => item.id}
               showsVerticalScrollIndicator={false}
-              data={freezerLeftExpiredFoods}
+              data={filterExpiredFoods('냉동실')}
               renderItem={({ item }) => (
                 <TableItem
                   key={item.name}
@@ -87,11 +83,11 @@ export default function ExpiredFoods() {
         </View>
         <View style={tw`flex-1 bg-white px-4`}>
           <TableLabel title='냉장실 식료품' label='유통기한 경과' />
-          {fridgeLeftExpiredFoods.length !== 0 ? (
+          {filterExpiredFoods('냉장실').length !== 0 ? (
             <FlatList
               keyExtractor={(item) => item.id}
               showsVerticalScrollIndicator={false}
-              data={fridgeLeftExpiredFoods}
+              data={filterExpiredFoods('냉장실')}
               renderItem={({ item }) => (
                 <TableItem
                   key={item.name}
@@ -111,11 +107,11 @@ export default function ExpiredFoods() {
           )}
         </View>
 
-        {!!allLeftAndExpiredFoods.length && (
+        {!!allExpiredFoods.length && (
           <TableTotalItem
-            label={`총 ${allLeftAndExpiredFoods.length}개의 유통기한 주의 식료품`}
-            onEntirePress={() => onEntirePress(allLeftAndExpiredFoods)}
-            list={allLeftAndExpiredFoods}
+            label={`총 ${allExpiredFoods.length}개의 유통기한 주의 식료품`}
+            onEntirePress={() => onEntirePress(allExpiredFoods)}
+            list={allExpiredFoods}
             entireCheck={entireCheck}
           />
         )}

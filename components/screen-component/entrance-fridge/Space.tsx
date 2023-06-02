@@ -23,8 +23,9 @@ export default function Space({ space, bottom, door }: Props) {
   const compartmentArr: CompartmentNum[] = bottom
     ? ['1번', '2번', '3번']
     : ['1번', '2번'];
+
   const { getFoodList } = useGetFoodList();
-  const { getExpiredFoods } = useExpiredFoods();
+  const { filterExpiredFoods } = useExpiredFoods();
 
   return (
     <TouchableOpacity
@@ -90,19 +91,19 @@ export default function Space({ space, bottom, door }: Props) {
                   name='alert-octagram-outline'
                   size={16}
                   color={`${
-                    getExpiredFoods(space, compartment).length !== 0
+                    filterExpiredFoods(space, compartment).length !== 0
                       ? ORANGE_RED
                       : LIGHT_GRAY
                   }`}
                 />
                 <Text
                   styletw={`${
-                    getExpiredFoods(space, compartment).length !== 0
+                    filterExpiredFoods(space, compartment).length !== 0
                       ? `text-[${ORANGE_RED}]`
                       : `text-[${LIGHT_GRAY}]`
                   }`}
                 >
-                  {getExpiredFoods(space, compartment).length}개
+                  {filterExpiredFoods(space, compartment).length}개
                 </Text>
               </View>
             </View>

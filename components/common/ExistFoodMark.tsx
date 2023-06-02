@@ -10,7 +10,7 @@ export default function ExistFoodMark({ exist }: { exist: boolean }) {
 
   return (
     <>
-      {currRoute === 'ShoppingList' && exist && (
+      {currRoute !== 'ShoppingList' ? (
         <View style={tw`flex-row gap-0.5 items-center`}>
           <Icon
             name={exist ? 'fridge-outline' : 'fridge-off-outline'}
@@ -22,6 +22,8 @@ export default function ExistFoodMark({ exist }: { exist: boolean }) {
             {exist ? '있음' : '없음'}
           </Text>
         </View>
+      ) : (
+        <></>
       )}
     </>
   );
