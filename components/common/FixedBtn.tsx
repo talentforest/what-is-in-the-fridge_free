@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { GRAY } from '../../constant/colors';
-import useRouteName from '../../hooks/useRouteName';
+import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
 
@@ -24,7 +24,7 @@ export default function FixedBtn({
   btnName,
   listLength,
 }: Props) {
-  const { currRoute } = useRouteName();
+  const route = useRoute();
 
   return (
     <View style={tw`gap-1 px-4 py-2 pb-2`}>
@@ -38,7 +38,7 @@ export default function FixedBtn({
         </View>
         <Text styletw='text-white'>{btnName}</Text>
       </TouchableOpacity>
-      {currRoute === 'ExpiredFoods' && (
+      {route.name === 'ExpiredFoods' && (
         <View style={tw`flex-row gap-2`}>
           <Icon name='arrow-right-bottom' size={18} color={GRAY} />
           <Text styletw='text-slate-500'>

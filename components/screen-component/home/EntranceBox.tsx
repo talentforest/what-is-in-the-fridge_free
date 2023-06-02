@@ -28,11 +28,13 @@ export default function EntranceBox({ title, foods }: Props) {
   };
 
   return (
-    <View style={tw`my-4 gap-2`}>
+    <View
+      style={tw`my-4 gap-2 border border-slate-300 bg-white shadow-sm rounded-lg p-2`}
+    >
       <Text styletw='text-base text-indigo-600'>{title}</Text>
       <TouchableOpacity
         onPress={onPress}
-        style={tw`gap-2 flex-row justify-between border border-slate-300 bg-indigo-50 rounded-lg p-2`}
+        style={tw`gap-2 flex-row justify-between`}
       >
         {foods.length !== 0 ? (
           <View style={tw`flex-row min-h-24 gap-1 flex-wrap flex-1 `}>
@@ -55,7 +57,7 @@ export default function EntranceBox({ title, foods }: Props) {
           </View>
         )}
         <Icon
-          name='rightcircle'
+          name='rightcircleo'
           size={18}
           color={INDIGO}
           style={tw`self-center`}

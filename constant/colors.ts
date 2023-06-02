@@ -9,4 +9,4 @@ export const LIGHT_GRAY = '#bbb';
 export const ORANGE_RED = '#ff6c47';
 export const ORANGE = '#ff9e43';
 
-export const BG_LIGHT_GRAY = '#f3f3f3';
+export const BG_LIGHT_GRAY = '#f6f6f6';

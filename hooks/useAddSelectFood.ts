@@ -4,14 +4,14 @@ import { removeFromShoppingList } from '../redux/slice/shoppingList';
 import { addFood, removeFood } from '../redux/slice/allFoodsSlice';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
+import { useRoute } from '@react-navigation/native';
 import useCheckFood from './useCheckFood';
 import UUIDGenerator from 'react-native-uuid';
-import useRouteName from './useRouteName';
 
 export default function useAddSelectFood() {
   const { checkExistFood, alertExistFood } = useCheckFood();
   const { selectedFood } = useSelector((state) => state.selectedFood);
-  const { currRoute } = useRouteName();
+  const route = useRoute();
 
   const dispatch = useDispatch();
   const myUuid = UUIDGenerator.v4();
@@ -25,7 +25,7 @@ export default function useAddSelectFood() {
 
     const existFood = checkExistFood(selectedFoodWithId);
     if (existFood) {
-      if (currRoute !== 'ShoppingList') return alertExistFood(existFood);
+      if (route.name !== 'ShoppingList') return alertExistFood(existFood);
       dispatch(removeFood({ id: existFood.id, space: existFood.space }));
     }
 
