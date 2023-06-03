@@ -10,7 +10,6 @@ import MyTabs, { RootTabParamList } from './MyTabs';
 import React from 'react';
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
-import Notification from '../screens/Notification';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ExpiredFoods from '../screens/ExpiredFoods';
 
@@ -27,17 +26,16 @@ const BackBtn = () => {
   );
 };
 
-export type RootNavParamList = RootTabParamList & RootStackParamList;
-
 export type RootStackParamList = {
   MyTabs: undefined;
   Compartments: undefined | object;
   FavoriteFoods: undefined;
   ExpiredFoods: undefined;
-  Notification: undefined;
 };
 
-export type NavigateProp = NavigationProp<RootStackParamList>;
+export type RootNavParamList = RootTabParamList & RootStackParamList;
+
+export type NavigateProp = NavigationProp<RootNavParamList>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -80,11 +78,6 @@ const Navigation = () => {
         name='ExpiredFoods'
         component={ExpiredFoods}
         options={{ ...options, title: '유통기한 주의 식료품' }}
-      />
-      <Stack.Screen
-        name='Notification'
-        component={Notification}
-        options={{ ...options, title: '알림' }}
       />
     </Stack.Navigator>
   );
