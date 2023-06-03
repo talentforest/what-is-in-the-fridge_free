@@ -3,15 +3,14 @@ import { useFonts } from 'expo-font';
 import { Platform, ScrollView, StatusBar, View } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { BG_LIGHT_GRAY } from '../constant/colors';
 import { Text } from '../components/native-component';
-import { BG_LIGHT_GRAY, GRAY } from '../constant/colors';
 import BannerSlider from '../components/screen-component/home/BannerSlider';
-import Header from '../components/screen-component/home/Header';
 import Footer from '../components/screen-component/home/Footer';
 import EntranceBox from '../components/screen-component/home/EntranceBox';
 import useImageLoad from '../hooks/useImageLoad';
 import useExpiredFood from '../hooks/useExpiredFoods';
-import Icon from 'react-native-vector-icons/Octicons';
+import FridgeInfo from '../components/screen-component/home/FridgeInfo';
 import tw from 'twrnc';
 
 const Home = () => {
@@ -39,34 +38,19 @@ const Home = () => {
       contentContainerStyle={tw`pb-10 px-4`}
       showsVerticalScrollIndicator={false}
     >
-      <Header />
-      <View style={tw`border border-slate-300 bg-white p-3 rounded-lg`}>
-        <Text styletw='text-base text-indigo-600'>나의 냉장고 정보</Text>
-        <View style={tw`self-center mt-5 mb-2`}>
-          <Text styletw='text-slate-500 mb-2'>
-            냉장고 정보가 아직 설정되지 않았습니다.
-          </Text>
-          <View
-            style={tw`flex-row items-center gap-2 self-center border border-slate-400 rounded-lg bg-amber-300 px-3 py-2`}
-          >
-            <Text styletw='text-slate-700'>설정하러 가기</Text>
-            <Icon name='chevron-right' size={18} color={GRAY} />
-          </View>
-        </View>
+      <View style={tw`flex-row items-center justify-between mb-3`}>
+        <Text styletw='flex-1 text-xl'>냉장고에 뭐가 있지?</Text>
       </View>
-
+      <FridgeInfo />
       <EntranceBox
         foods={favoriteFoods.slice(0, 10)}
         title='자주 먹는 식료품 목록'
       />
-
       {assets && <BannerSlider assets={[assets[0], assets[1]]} />}
-
       <EntranceBox
         foods={allExpiredFoods.slice(0, 10)}
         title='유통기한 주의 식료품 목록'
       />
-
       <Footer />
     </ScrollView>
   );
