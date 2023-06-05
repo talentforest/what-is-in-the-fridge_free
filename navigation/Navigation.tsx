@@ -2,35 +2,23 @@ import {
   NativeStackNavigationOptions,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from '../components/native-component';
+import { NavigationProp } from '@react-navigation/native';
 import { FontGmarketSansRegular } from '../constant/fonts';
-import { BG_LIGHT_GRAY, DEEP_INDIGO, GRAY } from '../constant/colors';
+import { BG_LIGHT_GRAY, GRAY } from '../constant/colors';
 import MyTabs, { RootTabParamList } from './MyTabs';
 import React from 'react';
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
-import Icon from 'react-native-vector-icons/AntDesign';
 import ExpiredFoods from '../screens/ExpiredFoods';
-
-const BackBtn = () => {
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.goBack();
-      }}
-    >
-      <Icon name='left' size={18} color={DEEP_INDIGO} />
-    </TouchableOpacity>
-  );
-};
+import BackBtn from '../components/common/BackBtn';
+import FridgeSetting from '../screens/FridgeSetting';
 
 export type RootStackParamList = {
   MyTabs: undefined;
   Compartments: undefined | object;
   FavoriteFoods: undefined;
   ExpiredFoods: undefined;
+  FridgeSetting: undefined;
 };
 
 export type RootNavParamList = RootTabParamList & RootStackParamList;
@@ -78,6 +66,11 @@ const Navigation = () => {
         name='ExpiredFoods'
         component={ExpiredFoods}
         options={{ ...options, title: '유통기한 주의 식료품' }}
+      />
+      <Stack.Screen
+        name='FridgeSetting'
+        component={FridgeSetting}
+        options={{ ...options, title: '나의 냉장고 설정' }}
       />
     </Stack.Navigator>
   );

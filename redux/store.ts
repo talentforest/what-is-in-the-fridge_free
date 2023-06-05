@@ -16,12 +16,14 @@ import favoriteFoodsReducer from './slice/favoriteFoodsSlice';
 import shoppingListReducer from './slice/shoppingList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import selectedFoodReducer from './slice/selectedFoodSlice';
+import fridgeInfoReducer from './slice/fridgeInfoSlice';
 
 const reducers = {
   allFoods: allFoodsReducer,
   favoriteFoods: favoriteFoodsReducer,
   shoppingList: shoppingListReducer,
   selectedFood: selectedFoodReducer,
+  fridgeInfo: fridgeInfoReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

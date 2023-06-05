@@ -1,13 +1,17 @@
 import { Platform, StatusBar, View } from 'react-native';
 import { Text } from '../components/native-component';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import tw from 'twrnc';
+import { useNavigation } from '@react-navigation/native';
+import { NavigateProp } from '../navigation/Navigation';
 import SettingContainer from '../components/screen-component/setting/SettingContainer';
 import SettingItem from '../components/screen-component/setting/SettingItem';
+import tw from 'twrnc';
 
 export default function Setting() {
   const statusBarHeight =
     Platform.OS === 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
+
+  const navigation = useNavigation<NavigateProp>();
 
   return (
     <View
@@ -20,7 +24,7 @@ export default function Setting() {
       <SettingContainer title='냉장고 설정'>
         <SettingItem
           title='나의 냉장고 설정 변경'
-          onPress={() => console.log('설정')}
+          onPress={() => navigation.navigate('FridgeSetting')}
           iconName='fridge-outline'
         />
         <SettingItem
@@ -44,6 +48,13 @@ export default function Setting() {
       </SettingContainer>
 
       <SettingContainer title='기타'>
+        <SettingItem
+          title='테마'
+          onPress={() => console.log('테마')}
+          iconName='theme-light-dark'
+        >
+          <Text>라이트 모드</Text>
+        </SettingItem>
         <SettingItem
           title='현재버전'
           onPress={() => console.log('현재버전')}
