@@ -1,6 +1,11 @@
 import { FontGmarketSansRegular } from '../constant/fonts';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { GRAY, INDIGO, LIGHT_YELLOW } from '../constant/colors';
+import {
+  CARROT_COLOR,
+  DEEP_INDIGO,
+  GRAY,
+  LIGHT_INDIGO,
+} from '../constant/colors';
 import Home from '../screens/Home';
 import Setting from '../screens/Setting';
 import ShoppingList from '../screens/ShoppingList';
@@ -22,18 +27,21 @@ export default function MyTabs() {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: LIGHT_YELLOW,
-          maxHeight: 80,
+          backgroundColor: CARROT_COLOR,
+          height: 68,
         },
         tabBarItemStyle: {
-          height: 52,
-          alignItems: 'center',
-          justifyContent: 'center',
-          paddingBottom: 2,
+          paddingTop: 5,
+          paddingBottom: 12,
+          height: 68,
         },
-        tabBarActiveTintColor: INDIGO,
+        tabBarActiveTintColor: DEEP_INDIGO,
         tabBarInactiveTintColor: GRAY,
-        tabBarLabelStyle: { fontSize: 11, ...FontGmarketSansRegular },
+        tabBarLabelStyle: {
+          fontSize: 11,
+
+          ...FontGmarketSansRegular,
+        },
         headerShown: false,
       }}
     >
