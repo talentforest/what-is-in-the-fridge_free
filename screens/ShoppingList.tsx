@@ -48,7 +48,7 @@ export default function ShoppingList() {
 
       <RecommendedFoods />
 
-      <View style={tw`flex-1 bg-white px-4`}>
+      <View style={tw`flex-1 px-4 bg-white`}>
         <TableLabel title='식료품' label='냉장고 추가' />
         {shoppingList.length !== 0 ? (
           <FlatList
@@ -88,7 +88,7 @@ export default function ShoppingList() {
 
       {!!shoppingList.length && (
         <TableTotalItem
-          label={`장보기 목록 : 총 ${shoppingList.length}개`}
+          label={`전체 선택 : 총 ${shoppingList.length}개`}
           onEntirePress={() => onEntirePress(shoppingList)}
           list={shoppingList}
           entireCheck={entireCheck}

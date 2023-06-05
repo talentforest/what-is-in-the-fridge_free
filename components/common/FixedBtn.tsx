@@ -27,7 +27,7 @@ export default function FixedBtn({
   const route = useRoute();
 
   return (
-    <View style={tw`gap-1 px-4 py-2 pb-2`}>
+    <View style={tw`gap-1 px-4 pb-2`}>
       <Text styletw='text-slate-600'>선택한 항목: {listLength}개</Text>
       <TouchableOpacity
         onPress={onDeletePress}

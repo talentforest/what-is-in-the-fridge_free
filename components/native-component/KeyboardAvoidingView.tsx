@@ -33,7 +33,7 @@ export function KeyboardAvoidingView({ children }: Props) {
         </RNKeyboardAvoidingView>
       ) : (
         <View
-          style={tw`flex-1 bg-[${BG_LIGHT_GRAY}] px-4 pt-[${
+          style={tw`flex-1 bg-[${BG_LIGHT_GRAY}] pt-[${
             (statusBarHeight || 0) + 14
           }px]`}
         >

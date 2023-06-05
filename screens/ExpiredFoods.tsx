@@ -2,7 +2,7 @@ import { FlatList, View } from 'react-native';
 import { SafeBottomAreaView, Text } from '../components/native-component';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { useDispatch, useSelector } from '../redux/hook';
-import { ORANGE_RED } from '../constant/colors';
+import { BG_LIGHT_GRAY, ORANGE_RED } from '../constant/colors';
 import { caution } from '../constant/caution';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import TableLabel from '../components/common/TableLabel';
@@ -45,7 +45,7 @@ export default function ExpiredFoods() {
 
   return (
     <SafeBottomAreaView>
-      <View style={tw`flex-1 pb-2`}>
+      <View style={tw`flex-1 pb-2 bg-[${BG_LIGHT_GRAY}]`}>
         <View style={tw`flex-row gap-1 items-center py-3 px-5`}>
           <Icon
             name={length > 3 ? 'fridge-alert-outline' : 'fridge-outline'}
