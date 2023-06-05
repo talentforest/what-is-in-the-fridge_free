@@ -2,6 +2,7 @@ import { ScrollView, View } from 'react-native';
 import { SafeBottomAreaView, Text } from '../components/native-component';
 import { useSelector } from '../redux/hook';
 import { Space } from '../constant/fridgeInfo';
+import { BG_LIGHT_GRAY } from '../constant/colors';
 import CheckSquareBtn from '../components/screen-component/setting/CheckSquareBtn';
 import SquareBtn from '../components/screen-component/setting/SquareItem';
 import FridgeShape from '../components/common/FridgeShape';
@@ -11,7 +12,7 @@ export default function FridgeSetting() {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
   return (
-    <SafeBottomAreaView style={tw`flex-1 bg-neutral-50`}>
+    <SafeBottomAreaView style={tw`flex-1 bg-[${BG_LIGHT_GRAY}]`}>
       <ScrollView style={tw`flex-1 p-4`} contentContainerStyle={tw`pb-20`}>
         <View style={tw`mb-8`}>
           <Text styletw='text-indigo-600 mb-2'>나의 냉장고</Text>

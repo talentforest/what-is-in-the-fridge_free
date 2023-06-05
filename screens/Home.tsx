@@ -44,12 +44,12 @@ const Home = () => {
       <FridgeInfo />
       <EntranceBox
         foods={favoriteFoods.slice(0, 10)}
-        title='자주 먹는 식료품 목록'
+        title='자주 먹는 식료품'
       />
       {assets && <BannerSlider assets={[assets[0], assets[1]]} />}
       <EntranceBox
         foods={allExpiredFoods.slice(0, 10)}
-        title='유통기한 주의 식료품 목록'
+        title='유통기한 주의 식료품'
       />
       <Footer />
     </ScrollView>

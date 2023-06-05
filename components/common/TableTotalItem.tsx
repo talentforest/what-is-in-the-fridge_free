@@ -19,7 +19,9 @@ export default function TableTotalItem({
   list,
 }: Props) {
   return (
-    <View style={tw`px-4 flex-row items-center gap-2 h-14`}>
+    <View
+      style={tw`px-4 border-t border-slate-300 flex-row items-center gap-2 h-12`}
+    >
       <View style={tw`w-5 h-5 justify-center`}>
         <TouchableOpacity
           onPress={() => onEntirePress(list)}

@@ -15,10 +15,10 @@ export default function FoodTag({ food, children }: Props) {
   return (
     <View
       key={food.id}
-      style={tw`bg-white border border-slate-300 gap-1.5 justify-center items-center h-8 flex-row px-2 py-1 rounded-2xl`}
+      style={tw`bg-amber-50 border border-indigo-200 gap-1.5 justify-center items-center h-8 flex-row px-3 py-1 rounded-full`}
     >
       <Text styletw='pt-0.5 text-xs'>{food.image}</Text>
-      <Text styletw={'text-center text-slate-600'}>
+      <Text styletw={'text-center text-[13px] text-slate-700'}>
         {cutLetter(food.name, 6)}
       </Text>
       {children}

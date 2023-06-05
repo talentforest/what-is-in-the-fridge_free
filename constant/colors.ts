@@ -1,4 +1,5 @@
 export const YELLOW = '#ffd36b';
+export const DEEP_YELLOW = '#ffb404';
 export const LIGHT_YELLOW = '#ffeda3';
 export const LIGHT_INDIGO = '#b3a8fa';
 export const INDIGO = '#605dff';

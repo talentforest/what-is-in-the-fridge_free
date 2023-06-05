@@ -28,7 +28,7 @@ export default function TextInputToAddList() {
   };
 
   return (
-    <View style={tw`my-2 mx-4 bg-[${BG_LIGHT_GRAY}]`}>
+    <View style={tw`my-2 mx-4`}>
       <TextInput
         value={foodName}
         onChangeText={setFoodName}
