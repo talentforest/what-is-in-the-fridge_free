@@ -1,7 +1,5 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
-import { GRAY } from '../../constant/colors';
-import { useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
 
@@ -24,10 +22,8 @@ export default function FixedBtn({
   btnName,
   listLength,
 }: Props) {
-  const route = useRoute();
-
   return (
-    <View style={tw`gap-1 px-4 pb-2`}>
+    <View style={tw`gap-1 px-4 mt-4`}>
       <Text styletw='text-slate-600'>선택한 항목: {listLength}개</Text>
       <TouchableOpacity
         onPress={onDeletePress}
@@ -38,14 +34,7 @@ export default function FixedBtn({
         </View>
         <Text styletw='text-white'>{btnName}</Text>
       </TouchableOpacity>
-      {route.name === 'ExpiredFoods' && (
-        <View style={tw`flex-row gap-2`}>
-          <Icon name='arrow-right-bottom' size={18} color={GRAY} />
-          <Text styletw='text-slate-500'>
-            냉장고에서 정리하신 식품을 삭제해주세요.
-          </Text>
-        </View>
-      )}
+
       {addShoppingListPress && (
         <TouchableOpacity
           onPress={addShoppingListPress}
