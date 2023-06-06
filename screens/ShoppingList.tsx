@@ -7,7 +7,6 @@ import {
 import { useSelector } from '../redux/hook';
 import { GRAY, INDIGO } from '../constant/colors';
 import { Food } from '../constant/foods';
-import RecommendedFoods from '../components/screen-component/shopping-list/RecommendedFoods';
 import TextInputToAddList from '../components/screen-component/shopping-list/TextInputToAddList';
 import TableLabel from '../components/common/TableLabel';
 import TableItem from '../components/common/TableItem';
@@ -45,8 +44,6 @@ export default function ShoppingList() {
   return (
     <KeyboardAvoidingView>
       <Text styletw={`pb-2 px-4 text-lg`}>장보기 목록</Text>
-
-      <RecommendedFoods />
 
       <View style={tw`flex-1 px-4 bg-white`}>
         <TableLabel title='식료품' label='냉장고 추가' />
