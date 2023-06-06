@@ -6,21 +6,19 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
 
 interface Props {
-  entireCheck: boolean;
-  label: string;
-  onEntirePress: (list: Food[]) => void;
   list: Food[];
+  entireCheck: boolean;
+  onEntirePress: (list: Food[]) => void;
 }
 
 export default function TableTotalItem({
   entireCheck,
-  label,
   onEntirePress,
   list,
 }: Props) {
   return (
     <View
-      style={tw`px-4 border-t border-slate-300 flex-row items-center gap-2 h-12`}
+      style={tw`border-t border-slate-300 flex-row items-center gap-2 h-11`}
     >
       <View style={tw`w-5 h-5 justify-center`}>
         <TouchableOpacity
@@ -38,7 +36,7 @@ export default function TableTotalItem({
           />
         </TouchableOpacity>
       </View>
-      <Text styletw='text-indigo-500 flex-1'>{label}</Text>
+      <Text styletw='text-indigo-500 flex-1'>전체 선택하기</Text>
     </View>
   );
 }

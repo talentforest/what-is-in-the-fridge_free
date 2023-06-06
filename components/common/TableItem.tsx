@@ -11,35 +11,23 @@ import tw from 'twrnc';
 
 interface Props {
   food: Food;
-  checkList: Food[];
+  onCheckPress: (food: Food) => void;
+  existInList: (id: string) => Food | undefined;
   children: ReactNode;
-  setCheckList: (food: Food[]) => void;
-  setEntireCheck: (check: boolean) => void;
 }
 
 export default function TableItem({
   food,
-  checkList,
-  setCheckList,
+  onCheckPress,
+  existInList,
   children,
 }: Props) {
   const route = useRoute();
 
-  const onCheckPress = (food: Food) => {
-    if (existInList(food.id)) {
-      return setCheckList(checkList.filter((item) => item.id !== food.id));
-    }
-    setCheckList([...checkList, food]);
-  };
-
-  const existInList = (id: string) => {
-    return checkList.find((food) => food.id === id);
-  };
-
   return (
     <TouchableOpacity
       onPress={() => onCheckPress(food)}
-      style={tw`h-12 flex-row gap-2 items-center justify-between border-b border-slate-300`}
+      style={tw`h-12 flex-row gap-2 items-center justify-between`}
     >
       <Icon
         name={
