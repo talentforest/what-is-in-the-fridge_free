@@ -1,13 +1,18 @@
 import { ReactNode } from 'react';
 import { Platform, View } from 'react-native';
+import { useSelector } from '../../../redux/hook';
 import tw from 'twrnc';
 
 export default function DoorContainer({ children }: { children: ReactNode }) {
   const platformIos = Platform.OS === 'ios';
+  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
+
   return (
     <View
       style={tw.style(
-        `${platformIos ? 'w-[45%]' : 'flex-1'} justify-center items-center`,
+        `${fridgeInfo.freezer === 'bottom' ? 'flex-col-reverse' : ''} ${
+          platformIos ? 'w-[45%]' : 'flex-1'
+        } justify-center items-center`,
         {
           transform: Platform.select({
             ios: [

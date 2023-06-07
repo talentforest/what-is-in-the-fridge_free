@@ -4,6 +4,7 @@ import { useSelector } from '../../redux/hook';
 import { getCompartments } from '../../util';
 import tw from 'twrnc';
 import Compartment from './Compartment';
+import { Space } from '../../constant/fridgeInfo';
 
 export default function FridgeShape() {
   const {
@@ -17,68 +18,54 @@ export default function FridgeShape() {
           freezer === 'top' ? '' : 'flex-col-reverse'
         } flex-1 gap-1 border border-slate-400 p-1 rounded-lg bg-neutral-300`}
       >
-        {/* 냉동실 안쪽 */}
-        <View style={tw`gap-0.5 h-1/3`}>
-          <Text styletw='text-blue-500 text-sm absolute top-1 z-10 text-xs left-1 '>
-            냉동실 안쪽
-          </Text>
-          {getCompartments(compartments['freezerInner']).map(
-            ({ compartmentNum }) => (
-              <Compartment
-                key={compartmentNum}
-                compartmentNum={compartmentNum}
-              />
-            )
-          )}
-        </View>
-        {/* 냉장실 안쪽 */}
-        <View style={tw`flex-1 gap-0.5`}>
-          <Text styletw='text-indigo-500 text-sm absolute top-1 z-10 left-1 text-xs'>
-            냉장실 안쪽
-          </Text>
-          {getCompartments(compartments['fridgeInner']).map(
-            ({ compartmentNum }) => (
-              <Compartment
-                key={compartmentNum}
-                compartmentNum={compartmentNum}
-              />
-            )
-          )}
-        </View>
+        {['냉동실 안쪽', '냉장실 안쪽'].map((space) => (
+          <View
+            style={tw`gap-0.5 ${space.includes('냉동') ? 'h-1/3' : 'flex-1'}`}
+          >
+            <Text
+              styletw={`${
+                space.includes('냉동') ? 'text-blue-500' : 'text-teal-600'
+              } text-sm absolute top-1 z-10 text-xs left-1 '`}
+            >
+              {space}
+            </Text>
+            {getCompartments(compartments[space as Space]).map(
+              ({ compartmentNum }) => (
+                <Compartment
+                  key={compartmentNum}
+                  compartmentNum={compartmentNum}
+                />
+              )
+            )}
+          </View>
+        ))}
       </View>
       <View
         style={tw`${
           freezer === 'top' ? '' : 'flex-col-reverse'
         } flex-1 gap-1 border border-slate-400 p-1 rounded-lg bg-neutral-300`}
       >
-        {/* 냉동실 문쪽 */}
-        <View style={tw`h-1/3 gap-0.5`}>
-          <Text styletw='text-blue-500 text-sm absolute top-1 z-10 left-1 text-xs'>
-            냉동실 문쪽
-          </Text>
-          {getCompartments(compartments['freezerDoor']).map(
-            ({ compartmentNum }) => (
-              <Compartment
-                key={compartmentNum}
-                compartmentNum={compartmentNum}
-              />
-            )
-          )}
-        </View>
-        {/* 냉장실 문쪽 */}
-        <View style={tw`flex-1 gap-0.5`}>
-          <Text styletw='text-indigo-500 text-sm absolute top-1 z-10 left-1 text-xs'>
-            냉장실 문쪽
-          </Text>
-          {getCompartments(compartments['fridgeDoor']).map(
-            ({ compartmentNum }) => (
-              <Compartment
-                key={compartmentNum}
-                compartmentNum={compartmentNum}
-              />
-            )
-          )}
-        </View>
+        {['냉동실 문쪽', '냉장실 문쪽'].map((space) => (
+          <View
+            style={tw`gap-0.5 ${space.includes('냉동') ? 'h-1/3' : 'flex-1'}`}
+          >
+            <Text
+              styletw={`${
+                space.includes('냉동') ? 'text-blue-500' : 'text-teal-600'
+              } text-sm absolute top-1 z-10 text-xs left-1`}
+            >
+              {space}
+            </Text>
+            {getCompartments(compartments[space as Space]).map(
+              ({ compartmentNum }) => (
+                <Compartment
+                  key={compartmentNum}
+                  compartmentNum={compartmentNum}
+                />
+              )
+            )}
+          </View>
+        ))}
       </View>
     </View>
   );

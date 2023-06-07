@@ -37,7 +37,7 @@ export default function EntranceBox({ title, foods }: Props) {
         />
       </View>
       <View
-        style={tw`mt-2 flex-row items-center gap-1 p-3 bg-white rounded-lg border border-slate-300`}
+        style={tw`mt-2 flex-row items-center gap-1 p-3 bg-amber-50 rounded-lg border border-slate-300`}
       >
         <Icon
           name={
