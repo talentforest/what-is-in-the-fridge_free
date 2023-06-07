@@ -32,7 +32,7 @@ export default function Form({ items, changeInfo, food, editableName }: Props) {
     <>
       {items.includes('아이콘과 이름') && (
         <FormItemContainer label='아이콘과 이름'>
-          <View style={tw`flex-row items-center justify-between gap-1`}>
+          <View style={tw`flex-1 flex-row items-center gap-1`}>
             <IconItem value={food.image} changeInfo={changeInfo} />
             <NameItem
               name={food.name}
