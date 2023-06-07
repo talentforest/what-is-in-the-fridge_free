@@ -1,11 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { Space } from '../../constant/fridgeInfo';
 
 export type FreezerLocation = 'top' | 'bottom';
-export type Space =
-  | 'freezerInner'
-  | 'freezerDoor'
-  | 'fridgeInner'
-  | 'fridgeDoor';
 
 interface FridgeInfo {
   type: '일반형 냉장고';
@@ -18,10 +14,10 @@ export const initialState: { fridgeInfo: FridgeInfo } = {
     type: '일반형 냉장고',
     freezer: 'top',
     compartments: {
-      freezerInner: 2,
-      freezerDoor: 2,
-      fridgeInner: 3,
-      fridgeDoor: 3,
+      '냉동실 안쪽': 2,
+      '냉동실 문쪽': 2,
+      '냉장실 안쪽': 3,
+      '냉장실 문쪽': 3,
     },
   },
 };

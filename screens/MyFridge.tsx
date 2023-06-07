@@ -7,10 +7,13 @@ import Space from '../components/screen-component/entrance-fridge/Space';
 import InnerContainer from '../components/screen-component/entrance-fridge/InnerContainer';
 import DoorContainer from '../components/screen-component/entrance-fridge/DoorContainer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from '../redux/hook';
 
 export default function MyFridge() {
   const statusBarHeight =
     Platform.OS === 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
+
+  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
   return (
     <View
@@ -28,7 +31,7 @@ export default function MyFridge() {
       </View>
       <View style={tw`mt-4 flex-row gap-3 items-center justify-center`}>
         <View style={tw`flex-row items-center gap-1`}>
-          <Icon name='food' size={20} color={INDIGO} />
+          <Icon name='food-fork-drink' size={20} color={INDIGO} />
           <Text styletw='text-slate-600'>식료품 개수</Text>
         </View>
         <View style={tw`flex-row items-center gap-1`}>
@@ -43,14 +46,14 @@ export default function MyFridge() {
           }`
         )}
       >
-        <View style={tw`h-4/5 flex-row items-start`}>
+        <View style={tw`h-[90%] flex-row items-start`}>
           <InnerContainer>
             <Space space='냉동실 안쪽' />
-            <Space space='냉장실 안쪽' bottom />
+            <Space space='냉장실 안쪽' />
           </InnerContainer>
           <DoorContainer>
-            <Space space='냉동실 문쪽' door />
-            <Space space='냉장실 문쪽' door bottom />
+            <Space space='냉동실 문쪽' />
+            <Space space='냉장실 문쪽' />
           </DoorContainer>
         </View>
       </View>

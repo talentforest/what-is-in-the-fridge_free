@@ -1,12 +1,18 @@
 import { ReactNode } from 'react';
 import { Platform, View } from 'react-native';
 import tw from 'twrnc';
+import { useSelector } from '../../../redux/hook';
 
 export default function InnerContainer({ children }: { children: ReactNode }) {
   const platformIos = Platform.OS === 'ios';
+  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
   return (
-    <View style={tw`flex-1 justify-center items-center rounded-lg`}>
+    <View
+      style={tw`${
+        fridgeInfo.freezer === 'bottom' ? 'flex-col-reverse' : ''
+      } flex-1 justify-center items-center rounded-lg`}
+    >
       {children}
       {platformIos && (
         <>
