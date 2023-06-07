@@ -10,7 +10,7 @@ interface Props {
 
 export default function FormItemContainer({ label, children }: Props) {
   return (
-    <View style={tw`justify-between`}>
+    <View style={tw`justify-between min-h-14`}>
       <Text styletw='text-indigo-500 mb-2'>{label}</Text>
       {children}
     </View>

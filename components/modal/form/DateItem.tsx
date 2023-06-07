@@ -15,15 +15,11 @@ interface Props {
 }
 
 export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-  const toggleDatePicker = () => {
-    setDatePickerVisibility((prev) => !prev);
-  };
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   const onConfirm = (date: Date) => {
     changeDate(date);
-    toggleDatePicker();
+    setDatePickerVisible(false);
   };
 
   const changeDate = (date: Date) => {
@@ -34,29 +30,30 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
   };
 
   return (
-    <View>
+    <View style={tw`min-h-20`}>
       <View>
         <TextInput
           value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
           editable={false}
+          styletw='text-slate-600'
         />
         <Icon
           name='calendar'
           size={18}
           color={INDIGO}
           style={tw`absolute p-2.5 pl-10 right-0 top-0.5`}
-          onPress={toggleDatePicker}
+          onPress={() => setDatePickerVisible(true)}
         />
       </View>
       <DateTimePickerModal
-        isVisible={isDatePickerVisible}
+        isVisible={datePickerVisible}
         mode='date'
         locale='ko_KO'
         cancelTextIOS='취소'
         confirmTextIOS='확인'
         date={new Date(date)}
         onConfirm={onConfirm}
-        onCancel={toggleDatePicker}
+        onCancel={() => setDatePickerVisible(false)}
       />
 
       <View style={tw`mt-2 flex-row gap-1 flex-wrap justify-end items-center`}>

@@ -15,8 +15,12 @@ export default function CategoryItem({ fixedCategory, changeInfo }: Props) {
 
   return (
     <View style={tw`gap-2`}>
-      <View>
-        <TextInput styletw='w-full' value={fixedCategory} editable={false} />
+      <View style={tw`h-11`}>
+        <TextInput
+          styletw='w-full text-slate-600'
+          value={fixedCategory}
+          editable={false}
+        />
         <TouchableOpacity
           onPress={() => setCategoryOpen((prev) => !prev)}
           style={tw`absolute p-2.5 pl-10 right-0 top-0.5`}
@@ -25,7 +29,7 @@ export default function CategoryItem({ fixedCategory, changeInfo }: Props) {
         </TouchableOpacity>
       </View>
       {categoryOpen && (
-        <View style={tw`gap-2`}>
+        <View style={tw`gap-2 min-h-55`}>
           {foodCategories.map(({ category }) => (
             <CheckBoxItem
               key={category}
