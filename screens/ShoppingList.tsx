@@ -3,6 +3,7 @@ import {
   Text,
   KeyboardAvoidingView,
   TouchableOpacity,
+  SafeBottomAreaView,
 } from '../components/native-component';
 import { useSelector } from '../redux/hook';
 import { DEEP_INDIGO, INDIGO } from '../constant/colors';
