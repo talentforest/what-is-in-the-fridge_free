@@ -4,7 +4,7 @@ import { useDispatch } from '../../../redux/hook';
 import { TextInput, TouchableOpacity } from '../../native-component';
 import { addToShoppingList } from '../../../redux/slice/shoppingList';
 import { initialFoodInfo } from '../../../constant/foods';
-import { BG_LIGHT_GRAY, INDIGO } from '../../../constant/colors';
+import { INDIGO } from '../../../constant/colors';
 import UUIDGenerator from 'react-native-uuid';
 import Icon from 'react-native-vector-icons/AntDesign';
 import tw from 'twrnc';
@@ -28,7 +28,7 @@ export default function TextInputToAddList() {
   };
 
   return (
-    <View style={tw`my-2 mx-4`}>
+    <View style={tw`my-2 mx-4 h-12`}>
       <TextInput
         value={foodName}
         onChangeText={setFoodName}
@@ -39,7 +39,7 @@ export default function TextInputToAddList() {
         blurOnSubmit={false}
       />
       <TouchableOpacity
-        style={tw`absolute bottom-2.5 right-2`}
+        style={tw`absolute bottom-3.5 right-2`}
         onPress={onSubmitEditing}
       >
         <Icon name='pluscircle' size={24} color={INDIGO} />

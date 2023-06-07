@@ -43,7 +43,7 @@ export default function TableItem({
           ) : (
             <Text styletw='text-lg'>{food.image}</Text>
           ))}
-        <Text styletw='flex-1 text-sm'>{cutLetter(food.name, 28)}</Text>
+        <Text styletw='text-sm'>{cutLetter(food.name, 28)}</Text>
       </View>
       <View style={tw`w-22 items-end`}>{children}</View>
     </TouchableOpacity>
