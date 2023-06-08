@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
 import { Platform, View } from 'react-native';
-import tw from 'twrnc';
 import { useSelector } from '../../../redux/hook';
+import tw from 'twrnc';
 
 export default function InnerContainer({ children }: { children: ReactNode }) {
-  const platformIos = Platform.OS === 'ios';
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
+  const platformIos = Platform.OS === 'ios';
 
   return (
     <View

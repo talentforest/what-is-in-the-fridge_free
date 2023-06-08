@@ -16,11 +16,11 @@ interface Props {
 }
 
 export default function Space({ space }: Props) {
-  const navigation = useNavigation<NavigateProp>();
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
   const { getFoodList } = useGetFoodList();
   const { filterExpiredFoods } = useExpiredFoods();
+  const navigation = useNavigation<NavigateProp>();
 
   const compartmentNums = fridgeInfo.compartments[space];
 
@@ -48,13 +48,13 @@ export default function Space({ space }: Props) {
               getCompartments(compartmentNums).length
                 ? 'border-b-0'
                 : 'border-b-2'
-            } border-slate-300 flex-1 p-1.5 justify-between`}
+            } border-slate-300 flex-1 px-1 justify-between`}
           >
             {compartmentNum === '1번' && (
               <Text
                 styletw={`${
                   space.includes('냉동') ? 'text-blue-700' : 'text-teal-700'
-                } absolute right-0`}
+                } absolute left-1 top-0.5 text-[13px]`}
               >
                 {space}
               </Text>

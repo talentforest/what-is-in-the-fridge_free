@@ -2,18 +2,15 @@ import { Text } from '../components/native-component';
 import { Platform, StatusBar, View } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { INDIGO, ORANGE_RED } from '../constant/colors';
-import tw from 'twrnc';
 import Space from '../components/screen-component/entrance-fridge/Space';
 import InnerContainer from '../components/screen-component/entrance-fridge/InnerContainer';
 import DoorContainer from '../components/screen-component/entrance-fridge/DoorContainer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSelector } from '../redux/hook';
+import tw from 'twrnc';
 
 export default function MyFridge() {
   const statusBarHeight =
     Platform.OS === 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
-
-  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
   return (
     <View
