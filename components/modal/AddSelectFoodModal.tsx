@@ -28,49 +28,43 @@ export default function AddSelectFoodModal({
       <Text styletw='text-slate-500 my-2'>
         * 이미 냉장고에 추가한 식료품은 추가할 수 없습니다.
       </Text>
-      <View
-        style={tw`mt-2 w-full items-center gap-4 h-[${
-          Dimensions.get('window').height / 6
-        }]px`}
-      >
-        {route.name === 'FavoriteFoods' && (
-          <View style={tw`items-center gap-2`}>
-            {selectedFood.image.includes('http') ? (
-              <Image
-                style={tw`h-20 w-20 rounded-md`}
-                source={{ uri: selectedFood.image }}
-              />
-            ) : (
-              <Text styletw='text-5xl pt-4'>{selectedFood.image}</Text>
-            )}
-            <Text>{selectedFood.name}</Text>
-          </View>
-        )}
-        <ScrollView style={tw`w-full`} showsVerticalScrollIndicator={false}>
-          <View style={tw`gap-5 mb-8`}>
-            <Form
-              editableName={false}
-              items={[
-                route.name !== 'FavoriteFoods' && '아이콘과 이름',
-                '카테고리',
-                '냉장고 위치 선택',
-                '구매날짜',
-                '유통기한',
-                route.name !== 'FavoriteFoods' && '즐겨찾는 식품인가요?',
-              ]}
-              food={selectedFood}
-              changeInfo={onChange}
+
+      {route.name === 'FavoriteFoods' && (
+        <View style={tw`items-center gap-2`}>
+          {selectedFood.image.includes('http') ? (
+            <Image
+              style={tw`h-20 w-20 rounded-md`}
+              source={{ uri: selectedFood.image }}
             />
-          </View>
-        </ScrollView>
-        <SubmitBtn
-          btnName='식료품 정보 추가하기'
-          onPress={() => {
-            onSubmit();
-            setModalVisible(false);
-          }}
+          ) : (
+            <Text styletw='text-5xl pt-4'>{selectedFood.image}</Text>
+          )}
+          <Text>{selectedFood.name}</Text>
+        </View>
+      )}
+
+      <ScrollView style={tw`my-4`} showsVerticalScrollIndicator={false}>
+        <Form
+          editableName={false}
+          items={[
+            route.name !== 'FavoriteFoods' && '아이콘과 이름',
+            '카테고리',
+            '냉장고 위치 선택',
+            '구매날짜',
+            '유통기한',
+            route.name !== 'FavoriteFoods' && '즐겨찾는 식품인가요?',
+          ]}
+          food={selectedFood}
+          changeInfo={onChange}
         />
-      </View>
+      </ScrollView>
+      <SubmitBtn
+        btnName='식료품 정보 추가하기'
+        onPress={() => {
+          onSubmit();
+          setModalVisible(false);
+        }}
+      />
     </RNModal>
   );
 }
