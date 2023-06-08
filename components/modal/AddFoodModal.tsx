@@ -29,22 +29,21 @@ export default function AddFoodModal({
       <Text styletw='text-slate-500 my-2'>
         * 이미 냉장고에 추가한 식료품은 추가할 수 없습니다.
       </Text>
+
       {foodLocation && (
         <ScrollView style={tw`my-4`} showsVerticalScrollIndicator={false}>
-          <View style={tw`gap-5`}>
-            <Form
-              editableName={true}
-              items={[
-                '아이콘과 이름',
-                '카테고리',
-                '구매날짜',
-                '유통기한',
-                '즐겨찾는 식품인가요?',
-              ]}
-              food={newFood}
-              changeInfo={addFoodInfo}
-            />
-          </View>
+          <Form
+            editableName={true}
+            items={[
+              '아이콘과 이름',
+              '카테고리',
+              '구매날짜',
+              '유통기한',
+              '즐겨찾는 식품인가요?',
+            ]}
+            food={newFood}
+            changeInfo={addFoodInfo}
+          />
         </ScrollView>
       )}
       <SubmitBtn

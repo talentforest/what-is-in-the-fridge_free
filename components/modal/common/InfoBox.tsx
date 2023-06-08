@@ -16,7 +16,7 @@ export default function InfoBox({ label, info, favorite }: Props) {
 
   return (
     <View
-      style={tw`items-center gap-2 p-2.5 flex-row border-b border-slate-300`}
+      style={tw`items-center gap-2 p-2.5 py-3.5 flex-row border-t border-slate-300`}
     >
       <Text styletw='text-slate-600'>{label} : </Text>
 

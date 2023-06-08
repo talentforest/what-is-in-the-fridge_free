@@ -47,35 +47,32 @@ export default function FoodDetailModal({
       </View>
 
       {editing ? (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={tw`mt-3 mb-8 gap-4`}>
-            <Form
-              food={editedFood}
-              changeInfo={editFoodInfo}
-              items={[
-                '카테고리',
-                '구매날짜',
-                '유통기한',
-                '즐겨찾는 식품인가요?',
-              ]}
-            />
-          </View>
-          <SubmitBtn
-            btnName='식료품 정보 수정 완료'
-            onPress={() => onEditSumbit(food.id)}
+        <ScrollView style={tw`my-4`} showsVerticalScrollIndicator={false}>
+          <Form
+            food={editedFood}
+            changeInfo={editFoodInfo}
+            items={['카테고리', '구매날짜', '유통기한', '즐겨찾는 식품인가요?']}
           />
         </ScrollView>
       ) : (
+        <View style={tw`my-3`}>
+          <InfoBox label='카테고리' info={editedFood.category} />
+          <InfoBox label='구매날짜' info={editedFood.purchaseDate} />
+          <InfoBox label='유통기한' info={editedFood.expiredDate} />
+          <InfoBox
+            label='즐겨찾는 식품인가요?'
+            favorite={editedFood.favorite}
+          />
+        </View>
+      )}
+
+      {editing ? (
+        <SubmitBtn
+          btnName='식료품 정보 수정 완료'
+          onPress={() => onEditSumbit(food.id)}
+        />
+      ) : (
         <>
-          <View style={tw`my-3 border-t border-slate-300`}>
-            <InfoBox label='카테고리' info={editedFood.category} />
-            <InfoBox label='구매날짜' info={editedFood.purchaseDate} />
-            <InfoBox label='유통기한' info={editedFood.expiredDate} />
-            <InfoBox
-              label='즐겨찾는 식품인가요?'
-              favorite={editedFood.favorite}
-            />
-          </View>
           <SubmitBtn
             btnName='식료품 정보 수정하기'
             onPress={() => setEditing((prev) => !prev)}

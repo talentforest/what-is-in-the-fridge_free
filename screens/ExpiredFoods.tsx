@@ -61,7 +61,7 @@ export default function ExpiredFoods() {
           style={tw`bg-white px-4 flex-1 rounded-lg border border-slate-300`}
         >
           <TableLabel title='식료품' label='유통기한' />
-          {filterExpiredFoods(tab) ? (
+          {!!filterExpiredFoods(tab).length ? (
             <TableContainer
               list={filterExpiredFoods(tab)}
               renderItem={({ item }) => (
@@ -78,7 +78,7 @@ export default function ExpiredFoods() {
               )}
             />
           ) : (
-            <Text styletw='text-slate-500 text-center mt-22'>
+            <Text styletw='text-slate-400 text-center mt-14'>
               유통기한 주의 식료품이 없습니다.
             </Text>
           )}
