@@ -3,12 +3,20 @@ import { View } from 'react-native';
 import { fonts } from '../constant/fonts';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
+import { useSelector } from '../redux/hook';
 import { getCompartments } from '../util';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import tw from 'twrnc';
+import { Space } from '../constant/fridgeInfo';
 
-export default function Compartments({ route }: any) {
+interface RouteParams {
+  route: { params: { space: Space } };
+}
+
+export default function Compartments({ route }: RouteParams) {
+  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { space } = route.params;
+
   const [fontsLoaded] = useFonts(fonts);
   const navigation = useNavigation();
 
@@ -16,8 +24,7 @@ export default function Compartments({ route }: any) {
     navigation.setOptions({ title: space });
   }, []);
 
-  const freezer = space.includes('냉동');
-  const compartments = freezer ? getCompartments(2) : getCompartments(3);
+  const compartments = getCompartments(fridgeInfo.compartments[space]);
 
   if (!fontsLoaded) return null;
 
