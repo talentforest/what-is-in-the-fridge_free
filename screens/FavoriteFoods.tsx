@@ -21,6 +21,7 @@ export default function FavoriteFoods() {
 
   const {
     entireCheck,
+    setEntireCheck,
     checkList,
     onCheckPress,
     existInList,
@@ -41,6 +42,7 @@ export default function FavoriteFoods() {
         .join(', ')} 식료품이 추가되었습니다.`
     );
     setCheckList([]);
+    setEntireCheck(false);
   };
 
   if (!fontsLoaded) return null;

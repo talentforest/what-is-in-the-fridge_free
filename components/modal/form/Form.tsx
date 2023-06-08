@@ -29,7 +29,7 @@ interface Props {
 
 export default function Form({ items, changeInfo, food, editableName }: Props) {
   return (
-    <>
+    <View style={tw`gap-4 `}>
       {items.includes('아이콘과 이름') && (
         <FormItemContainer label='아이콘과 이름'>
           <View style={tw`flex-1 flex-row items-center gap-1`}>
@@ -53,12 +53,6 @@ export default function Form({ items, changeInfo, food, editableName }: Props) {
         </FormItemContainer>
       )}
 
-      {items.includes('카테고리') && (
-        <FormItemContainer label='카테고리'>
-          <CategoryItem fixedCategory={food.category} changeInfo={changeInfo} />
-        </FormItemContainer>
-      )}
-
       {items.includes('구매날짜') && (
         <FormItemContainer label='구매날짜'>
           <DateItem date={food.purchaseDate} changeInfo={changeInfo} />
@@ -75,11 +69,17 @@ export default function Form({ items, changeInfo, food, editableName }: Props) {
         </FormItemContainer>
       )}
 
+      {items.includes('카테고리') && (
+        <FormItemContainer label='카테고리'>
+          <CategoryItem fixedCategory={food.category} changeInfo={changeInfo} />
+        </FormItemContainer>
+      )}
+
       {items.includes('즐겨찾는 식품인가요?') && (
         <FormItemContainer label='즐겨찾는 식품인가요?'>
           <FavoriteItem favorite={food.favorite} changeInfo={changeInfo} />
         </FormItemContainer>
       )}
-    </>
+    </View>
   );
 }
