@@ -25,7 +25,7 @@ export default function FridgeShape() {
             <Text
               styletw={`${
                 space.includes('냉동') ? 'text-blue-500' : 'text-teal-600'
-              } text-sm absolute top-1 z-10 text-xs left-1 '`}
+              } text-sm absolute top-1 z-10 text-xs left-1`}
             >
               {space}
             </Text>
