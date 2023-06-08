@@ -40,9 +40,6 @@ export default function Form({ items, changeInfo, food, editableName }: Props) {
               editable={editableName || false}
             />
           </View>
-          {!editableName && (
-            <Text styletw='ml-12 mt-1 text-xs'>이름은 변경할 수 없습니다.</Text>
-          )}
           <RecommendedIcon name={food.name} changeInfo={changeInfo} />
         </FormItemContainer>
       )}

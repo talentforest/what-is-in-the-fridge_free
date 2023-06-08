@@ -1,10 +1,10 @@
 import { View } from 'react-native';
 import { Text } from '../native-component';
 import { useSelector } from '../../redux/hook';
+import { Space } from '../../constant/fridgeInfo';
 import { getCompartments } from '../../util';
 import tw from 'twrnc';
 import Compartment from './Compartment';
-import { Space } from '../../constant/fridgeInfo';
 
 export default function FridgeShape() {
   const {
