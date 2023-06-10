@@ -56,7 +56,9 @@ export default function Splash({
           style={{ width: 200, height: 200 }}
         />
       )}
-      <Text styletw='text-3xl mt-12'>냉장고에 뭐가 있지?</Text>
+      <Text style={tw`mt-12`} fontSize={20}>
+        냉장고에 뭐가 있지?
+      </Text>
     </View>
   );
 }

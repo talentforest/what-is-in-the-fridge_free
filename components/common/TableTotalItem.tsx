@@ -2,8 +2,9 @@ import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { DEEP_INDIGO, INACTIVE_COLOR } from '../../constant/colors';
 import { Food } from '../../constant/foods';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
+import Icon from '../native-component/Icon';
+import { scaleH } from '../../util';
 
 interface Props {
   list: Food[];
@@ -18,14 +19,17 @@ export default function TableTotalItem({
 }: Props) {
   return (
     <View
-      style={tw`border-t border-slate-300 flex-row items-center gap-2 h-11`}
+      style={tw`h-[${scaleH(
+        43
+      )}px] border-t border-slate-300 flex-row items-center gap-2`}
     >
-      <View style={tw`w-5 h-5 justify-center`}>
+      <View style={tw`justify-center items-center`}>
         <TouchableOpacity
           onPress={() => onEntirePress(list)}
-          style={tw`w-5.5 h-5.5 justify-center`}
+          style={tw`justify-center`}
         >
           <Icon
+            type='MaterialCommunityIcons'
             name={
               !entireCheck
                 ? 'checkbox-blank-outline'
@@ -36,7 +40,7 @@ export default function TableTotalItem({
           />
         </TouchableOpacity>
       </View>
-      <Text styletw='text-indigo-500 flex-1'>전체 선택하기</Text>
+      <Text style={tw`text-indigo-500`}>전체 선택하기</Text>
     </View>
   );
 }

@@ -6,8 +6,8 @@ import {
   View,
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import tw from 'twrnc';
 import { BG_LIGHT_GRAY } from '../../constant/colors';
+import tw from 'twrnc';
 
 interface Props {
   children: ReactNode;

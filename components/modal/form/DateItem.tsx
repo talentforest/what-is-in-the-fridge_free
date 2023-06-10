@@ -4,9 +4,9 @@ import { getFormattedDate } from '../../../util';
 import { useState } from 'react';
 import { addDateBtns } from '../../../constant/addDateBtns';
 import { INDIGO } from '../../../constant/colors';
-import Icon from 'react-native-vector-icons/AntDesign';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import tw from 'twrnc';
+import Icon from '../../native-component/Icon';
 
 interface Props {
   expiredInfo?: boolean;
@@ -30,20 +30,18 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
   };
 
   return (
-    <View style={tw`min-h-20`}>
-      <View>
+    <View style={tw``}>
+      <View
+        style={tw`flex-1 border border-slate-400 rounded-lg flex-row items-center justify-between px-2`}
+      >
         <TextInput
           value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
           editable={false}
-          styletw='text-slate-600'
+          style={tw`border-0 pl-0 text-slate-600`}
         />
-        <Icon
-          name='calendar'
-          size={18}
-          color={INDIGO}
-          style={tw`absolute p-2.5 pl-10 right-0 top-0.5`}
-          onPress={() => setDatePickerVisible(true)}
-        />
+        <TouchableOpacity onPress={() => setDatePickerVisible(true)}>
+          <Icon type='AntDesign' name='calendar' size={18} color={INDIGO} />
+        </TouchableOpacity>
       </View>
       <DateTimePickerModal
         isVisible={datePickerVisible}
@@ -63,7 +61,7 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
             onPress={() => changeDate(btn.func(new Date(date)))}
             style={tw`justify-center bg-${btn.btnColor}-300 border border-slate-400 p-0.5 px-2 rounded-2xl`}
           >
-            <Text styletw='text-xs'>+ {btn.label}</Text>
+            <Text fontSize={12}>+ {btn.label}</Text>
           </TouchableOpacity>
         ))}
       </View>

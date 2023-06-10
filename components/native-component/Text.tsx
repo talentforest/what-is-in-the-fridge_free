@@ -1,22 +1,23 @@
-import { Text as RNText, TextProps } from 'react-native';
+import { Text as RNText, TextProps, TextStyle } from 'react-native';
 import {
   FontGmarketSansBold,
   FontGmarketSansRegular,
 } from '../../constant/fonts';
+import { scaleFont } from '../../util';
 import tw from 'twrnc';
 
 interface Props extends TextProps {
-  styletw?: string;
+  fontSize?: number;
+  style?: TextStyle;
 }
 
-export function Text({ styletw, ...props }: Props) {
+export function Text({ fontSize, style, ...props }: Props) {
   return (
     <RNText
       style={tw.style(
-        `text-sm text-slate-800 ${styletw || ''}`,
-        styletw?.includes('font-bold')
-          ? FontGmarketSansBold
-          : FontGmarketSansRegular
+        `text-slate-800 text-[${scaleFont(fontSize || 14)}px]`,
+        FontGmarketSansRegular,
+        style
       )}
       {...props}
     />

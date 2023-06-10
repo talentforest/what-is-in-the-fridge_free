@@ -69,7 +69,7 @@ export default function FavoriteFoods() {
               )}
             />
           ) : (
-            <Text styletw='text-slate-500 text-center mt-22'>
+            <Text style={tw`text-slate-500 text-center mt-22`}>
               자주 먹는 식료품이 없습니다.
             </Text>
           )}

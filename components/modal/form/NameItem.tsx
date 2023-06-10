@@ -1,4 +1,5 @@
 import { TextInput } from '../../native-component';
+import tw from 'twrnc';
 
 interface Props {
   name: string;
@@ -11,7 +12,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
 
   return (
     <TextInput
-      styletw={`flex-1 ${
+      style={tw`flex-1 ${
         !editable ? 'bg-slate-100 text-slate-600' : 'bg-white'
       }`}
       editable={editable}

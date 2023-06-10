@@ -1,4 +1,4 @@
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import { SafeBottomAreaView, Text } from '../components/native-component';
 import { BG_LIGHT_GRAY } from '../constant/colors';
 import { useState } from 'react';
@@ -78,7 +78,7 @@ export default function ExpiredFoods() {
               )}
             />
           ) : (
-            <Text styletw='text-slate-400 text-center mt-14'>
+            <Text style={tw`text-slate-400 text-center mt-14`}>
               유통기한 주의 식료품이 없습니다.
             </Text>
           )}

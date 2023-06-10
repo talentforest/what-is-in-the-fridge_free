@@ -49,7 +49,7 @@ export default function RecommendedIcon({ name, changeInfo }: Props) {
                   changeInfo({ image: emoji.emoji });
                 }}
               >
-                <Text key={emoji.en} styletw='text-2xl -mb-1'>
+                <Text key={emoji.en} style={tw`-mb-1`}>
                   {emoji.emoji}
                 </Text>
               </TouchableOpacity>

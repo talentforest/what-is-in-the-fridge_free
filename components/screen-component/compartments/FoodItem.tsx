@@ -1,17 +1,17 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
-import { cutLetter } from '../../../util';
+import { cutLetter, scaleH } from '../../../util';
 import { Food } from '../../../constant/foods';
 import { INDIGO } from '../../../constant/colors';
+import Icon from '../../native-component/Icon';
 import useExpiredFoods from '../../../hooks/useExpiredFoods';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
 
 interface Props {
   food: Food;
 }
 
-export default function FoodTag({ food }: Props) {
+export default function FoodItem({ food }: Props) {
   const { checkExpired, checkLeftThreeDays } = useExpiredFoods();
   const { expiredDate } = food;
 
@@ -24,15 +24,24 @@ export default function FoodTag({ food }: Props) {
   return (
     <View
       key={food.id}
-      style={tw`${bgColor} border border-slate-300 gap-1 justify-center items-center flex-row px-2 py-1 rounded-2xl`}
+      style={tw`${bgColor} h-[${scaleH(
+        6
+      )}] border border-slate-300 gap-1 justify-center items-center flex-row px-[${scaleH(
+        5
+      )}px] rounded-full`}
     >
       {food.image === '' ? (
-        <Icon name='food-fork-drink' size={14} color={INDIGO} />
+        <Icon
+          type='MaterialCommunityIcons'
+          name='food-fork-drink'
+          size={14}
+          color={INDIGO}
+        />
       ) : (
-        <Text styletw='text-xs pt-0.5'>{food.image}</Text>
+        <Text fontSize={13}>{food.image}</Text>
       )}
 
-      <Text styletw={'text-xs text-center text-slate-600'}>
+      <Text style={tw`text-center text-slate-600 mt-0.5`} fontSize={12}>
         {cutLetter(food.name, 6)}
       </Text>
 

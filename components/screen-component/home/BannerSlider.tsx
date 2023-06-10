@@ -42,7 +42,8 @@ export default function BannerSlider({ assets }: Props) {
               </View>
             )}
             <Text
-              style={tw.style('text-base text-slate-700', FontGmarketSansBold)}
+              style={tw.style('text-slate-700', FontGmarketSansBold)}
+              fontSize={18}
             >
               {slide.contents}
             </Text>

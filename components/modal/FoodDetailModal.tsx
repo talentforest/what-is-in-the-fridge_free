@@ -1,6 +1,7 @@
-import { Image, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foods';
 import { Text } from '../native-component';
+import { INDIGO } from '../../constant/colors';
 import InfoBox from './common/InfoBox';
 import SubmitBtn from './form/SubmitBtn';
 import useEditFood from '../../hooks/useEditFood';
@@ -8,8 +9,7 @@ import useDeleteFood from '../../hooks/useDeleteFood';
 import Form from './form/Form';
 import RNModal from './common/Modal';
 import tw from 'twrnc';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { INDIGO } from '../../constant/colors';
+import Icon from '../native-component/Icon';
 
 interface Props {
   modalVisible: boolean;
@@ -39,11 +39,18 @@ export default function FoodDetailModal({
     >
       <View style={tw`items-center mt-4 gap-2 mb-2`}>
         {food.image !== '' ? (
-          <Text styletw='text-4xl pt-4'>{food.image}</Text>
+          <Text style={tw`pt-4`} fontSize={24}>
+            {food.image}
+          </Text>
         ) : (
-          <Icon name='food-fork-drink' size={20} color={INDIGO} />
+          <Icon
+            type='MaterialCommunityIcons'
+            name='food-fork-drink'
+            size={20}
+            color={INDIGO}
+          />
         )}
-        <Text styletw='text-center px-4 leading-6'>{food.name}</Text>
+        <Text style={tw`text-center px-4 leading-6`}>{food.name}</Text>
       </View>
 
       {editing ? (

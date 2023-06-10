@@ -4,10 +4,10 @@ import { fonts } from '../constant/fonts';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { useSelector } from '../redux/hook';
-import { getCompartments } from '../util';
+import { getCompartments, scaleH } from '../util';
+import { Space } from '../constant/fridgeInfo';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import tw from 'twrnc';
-import { Space } from '../constant/fridgeInfo';
 
 interface RouteParams {
   route: { params: { space: Space } };
@@ -31,7 +31,9 @@ export default function Compartments({ route }: RouteParams) {
   return (
     <View style={tw`flex-1 pt-4 pb-8 bg-neutral-50`}>
       <View
-        style={tw`border flex-1 m-4 justify-between gap-3 p-3 border-slate-300 rounded-lg bg-neutral-200`}
+        style={tw`p-[${scaleH(10)}] gap-[${scaleH(
+          3
+        )}] border w-[90%] m-auto flex-1 my-4 justify-between border-slate-300 rounded-lg bg-neutral-200`}
       >
         {compartments.map((compartment) => (
           <Compartment

@@ -20,14 +20,14 @@ export default function TabBtn({ tab, name, onPress, length }: Props) {
       }`}
     >
       <Text
-        styletw={`${
+        style={tw`${
           name.slice(0, 3) === tab ? 'text-indigo-600' : 'text-slate-400'
         }`}
       >
         {name} 식료품
       </Text>
       <Text
-        styletw={`text-xs ${
+        style={tw`${
           name !== tab
             ? 'text-slate-400'
             : length <= 2
@@ -38,6 +38,7 @@ export default function TabBtn({ tab, name, onPress, length }: Props) {
             ? 'text-red-600'
             : 'text-slate-400'
         }`}
+        fontSize={12}
       >
         {length}개
       </Text>

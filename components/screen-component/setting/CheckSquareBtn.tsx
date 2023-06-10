@@ -1,9 +1,15 @@
 import { Text, TouchableOpacity } from '../../native-component';
-import { GRAY, INACTIVE_COLOR, INDIGO } from '../../../constant/colors';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import tw from 'twrnc';
+import {
+  GRAY,
+  INACTIVE_COLOR,
+  INDIGO,
+  LIGHT_INDIGO,
+} from '../../../constant/colors';
 import { changeLocation } from '../../../redux/slice/fridgeInfoSlice';
 import { useDispatch } from '../../../redux/hook';
+import tw from 'twrnc';
+import Icon from '../../native-component/Icon';
+import { scaleH } from '../../../util';
 
 interface Props {
   name: string;
@@ -31,10 +37,11 @@ export default function CheckSquareBtn({
         )
       }
       style={tw`${
-        check ? 'bg-amber-50 border-amber-500' : 'bg-white border-slate-300'
-      } flex-1 flex-row items-center border px-2 py-3 rounded-md`}
+        check ? 'bg-indigo-50 border-indigo-600' : 'bg-white border-slate-300'
+      } flex-1 flex-row items-center border px-2 rounded-md h-[${scaleH(11)}]`}
     >
       <Icon
+        type='MaterialCommunityIcons'
         name={
           check
             ? 'checkbox-marked-circle-outline'
@@ -42,16 +49,16 @@ export default function CheckSquareBtn({
         }
         color={check ? INDIGO : INACTIVE_COLOR}
         size={18}
-        style={tw`pr-2`}
       />
       {iconName && (
         <Icon
+          type='MaterialCommunityIcons'
           name={iconName}
-          color={check ? INDIGO : INACTIVE_COLOR}
+          color={check ? GRAY : INACTIVE_COLOR}
           size={16}
         />
       )}
-      <Text styletw={`${check ? 'text-indigo-500' : 'text-slate-400'} pl-1`}>
+      <Text style={tw`${check ? 'text-slate-600' : 'text-slate-400'} pl-1`}>
         {name}
       </Text>
     </TouchableOpacity>

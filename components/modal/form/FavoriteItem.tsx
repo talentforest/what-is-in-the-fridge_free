@@ -9,7 +9,7 @@ interface Props {
 
 export default function FavoriteItem({ favorite, changeInfo }: Props) {
   return (
-    <View style={tw`gap-4 mt-1 flex-row`}>
+    <View style={tw`flex-1 gap-4 flex-row mt-2`}>
       <CheckBoxBtn
         title='맞아요'
         check={favorite}

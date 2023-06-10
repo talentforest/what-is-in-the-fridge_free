@@ -2,11 +2,10 @@ import { Text } from '../components/native-component';
 import { Platform, StatusBar, View } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { INDIGO, ORANGE_RED } from '../constant/colors';
-import Space from '../components/screen-component/entrance-fridge/Space';
-import InnerContainer from '../components/screen-component/entrance-fridge/InnerContainer';
-import DoorContainer from '../components/screen-component/entrance-fridge/DoorContainer';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '../components/native-component/Icon';
+import FridgeShape from '../components/common/FridgeShape';
 import tw from 'twrnc';
+import { scaleH } from '../util';
 
 export default function MyFridge() {
   const statusBarHeight =
@@ -18,40 +17,43 @@ export default function MyFridge() {
         (statusBarHeight || 0) + 14
       }px]`}
     >
-      <Text styletw='pb-2 text-lg text-slate-600'>나의 냉장고</Text>
-      <View
-        style={tw`justify-end items-center border border-slate-300 mt-5 rounded-3xl py-2 px-3 self-center bg-yellow-200`}
-      >
-        <Text styletw='text-indigo-600 text-xs'>
-          아래 냉장고에서 각각의 공간으로 들어갈 수 있어요.
-        </Text>
-      </View>
-      <View style={tw`mt-4 flex-row gap-3 items-center justify-center`}>
-        <View style={tw`flex-row items-center gap-1`}>
-          <Icon name='food-fork-drink' size={20} color={INDIGO} />
-          <Text styletw='text-slate-600'>식료품 개수</Text>
+      <Text style={tw`pb-2 text-slate-600`} fontSize={18}>
+        나의 냉장고
+      </Text>
+      <View style={tw`flex-1 justify-center items-center gap-5`}>
+        <View style={tw`justify-center items-center`}>
+          <View
+            style={tw`mb-[${scaleH(
+              4
+            )}] border border-slate-300 rounded-full py-2 px-3 bg-yellow-200`}
+          >
+            <Text style={tw`text-indigo-600`} fontSize={12}>
+              아래 냉장고에서 각각의 공간으로 들어갈 수 있어요.
+            </Text>
+          </View>
+          <View style={tw`mt-4 flex-row gap-3 items-center justify-center`}>
+            <View style={tw`flex-row items-center gap-1`}>
+              <Icon
+                type='MaterialCommunityIcons'
+                name='food-fork-drink'
+                size={20}
+                color={INDIGO}
+              />
+              <Text style={tw`text-slate-600`}>식료품 개수</Text>
+            </View>
+            <View style={tw`flex-row items-center gap-1`}>
+              <Icon
+                type='MaterialCommunityIcons'
+                name='alert-octagram-outline'
+                size={20}
+                color={ORANGE_RED}
+              />
+              <Text style={tw`text-slate-600`}>유통기한 주의 식료품 개수</Text>
+            </View>
+          </View>
         </View>
-        <View style={tw`flex-row items-center gap-1`}>
-          <Icon name='alert-octagram-outline' size={20} color={ORANGE_RED} />
-          <Text styletw='text-slate-600'>유통기한 주의 식료품 개수</Text>
-        </View>
-      </View>
-      <View
-        style={tw.style(
-          `flex-1 justify-center items-center w-full ${
-            Platform.OS === 'ios' ? 'pr-4 pl-7' : 'px-4'
-          }`
-        )}
-      >
-        <View style={tw`h-[90%] flex-row items-start`}>
-          <InnerContainer>
-            <Space space='냉동실 안쪽' />
-            <Space space='냉장실 안쪽' />
-          </InnerContainer>
-          <DoorContainer>
-            <Space space='냉동실 문쪽' />
-            <Space space='냉장실 문쪽' />
-          </DoorContainer>
+        <View style={tw`h-[80%] max-h-[700px] w-[90%]`}>
+          <FridgeShape showInfo />
         </View>
       </View>
     </View>

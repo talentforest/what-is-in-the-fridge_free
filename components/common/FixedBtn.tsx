@@ -1,7 +1,8 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import tw from 'twrnc';
+import Icon from '../native-component/Icon';
+import { scaleH } from '../../util';
 
 type FixBtnName =
   | '자주 먹는 식료품 해제'
@@ -24,26 +25,40 @@ export default function FixedBtn({
 }: Props) {
   return (
     <View style={tw`gap-1 px-4 mt-4`}>
-      <Text styletw='text-slate-600'>선택한 항목: {listLength}개</Text>
+      <Text style={tw`text-slate-600`}>선택한 항목: {listLength}개</Text>
       <TouchableOpacity
         onPress={onDeletePress}
-        style={tw`bg-indigo-500 py-2.5 px-4 flex-row items-center gap-1.5 border border-indigo-300 rounded-md self-start`}
+        style={tw`h-[${scaleH(
+          43
+        )}px] bg-indigo-500 py-2.5 px-4 flex-row items-center gap-1.5 border border-indigo-300 rounded-md self-start`}
       >
         <View style={tw`w-5 text-center items-center`}>
-          <Icon name='trash-can-outline' size={18} color='#fff' />
+          <Icon
+            type='MaterialCommunityIcons'
+            name='trash-can-outline'
+            size={18}
+            color='#fff'
+          />
         </View>
-        <Text styletw='text-white'>{btnName}</Text>
+        <Text style={tw`text-white`}>{btnName}</Text>
       </TouchableOpacity>
 
       {addShoppingListPress && (
         <TouchableOpacity
           onPress={addShoppingListPress}
-          style={tw`bg-teal-600 border-indigo-300 py-2.5 px-4 flex-row items-center gap-1.5 border rounded-md self-start`}
+          style={tw`h-[${scaleH(
+            43
+          )}px] bg-teal-600 border-indigo-300 py-2.5 px-4 flex-row items-center gap-1.5 border rounded-md self-start`}
         >
           <View style={tw`w-5 text-center items-center`}>
-            <Icon name='basket-plus-outline' size={18} color='#fff' />
+            <Icon
+              type='MaterialCommunityIcons'
+              name='basket-plus-outline'
+              size={18}
+              color='#fff'
+            />
           </View>
-          <Text styletw={'text-white'}>장보기 목록 추가</Text>
+          <Text style={tw`text-white`}>장보기 목록 추가</Text>
         </TouchableOpacity>
       )}
     </View>

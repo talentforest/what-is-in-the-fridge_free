@@ -10,10 +10,10 @@ export default function FridgeInfo() {
   const { getFoodList } = useGetFoodList();
 
   return (
-    <View style={tw`mb-2 min-h-36`}>
-      <Text styletw='text-base text-indigo-600 mt-2'>나의 냉장고 정보</Text>
-      <View style={tw`w-full my-2 justify-start gap-1`}>
-        <View style={tw`gap-1 flex-row`}>
+    <View style={tw`mb-2 flex-1`}>
+      <Text style={tw`text-indigo-600 mt-2`}>나의 냉장고 정보</Text>
+      <View style={tw`gap-1 flex-1 mt-3`}>
+        <View style={tw`gap-1 flex-row flex-1`}>
           <FridgeInfoBox
             iconName='fridge-bottom'
             name='냉동실 식료품'
