@@ -5,7 +5,7 @@ import { Text, TouchableOpacity } from '../../native-component';
 import { FoodLocation } from '../../../constant/fridgeInfo';
 import FoodDetailModal from '../../modal/FoodDetailModal';
 import tw from 'twrnc';
-import FoodTag from './FoodTag';
+import FoodItem from './FoodItem';
 import useGetFoodList from '../../../hooks/useGetFoodList';
 import AddFoodModalBtn from './AddFoodModalBtn';
 
@@ -24,19 +24,21 @@ export default function Compartment({ foodLocation }: Props) {
     <>
       <View style={tw`flex-1 border border-slate-300 rounded-lg bg-white`}>
         <View
-          style={tw`flex-row justify-between items-center p-2 py-1.5 bg-neutral-100 rounded-t-lg`}
+          style={tw`flex-row justify-between items-center pt-1.5 px-2 rounded-t-lg`}
         >
           <View style={tw`flex-1`}>
-            <Text styletw='text-xs text-indigo-600'>{compartmentNum}칸</Text>
+            <Text style={tw`text-indigo-600`} fontSize={12}>
+              {compartmentNum}칸
+            </Text>
           </View>
-          <Text styletw='text-xs text-indigo-600 mr-2'>
+          <Text style={tw`text-indigo-600 mr-2`} fontSize={12}>
             식료품 총 {getFoodList(space, compartmentNum).length}개
           </Text>
           <AddFoodModalBtn foodLocation={foodLocation} />
         </View>
         <ScrollView
           contentContainerStyle={tw`flex-row flex-wrap gap-1 items-center`}
-          style={tw`m-2 flex-1`}
+          style={tw`m-1 flex-1`}
           showsVerticalScrollIndicator={false}
         >
           {getFoodList(space, compartmentNum).map((food: Food) => (
@@ -47,7 +49,7 @@ export default function Compartment({ foodLocation }: Props) {
                 setModalVisible(true);
               }}
             >
-              <FoodTag food={food} />
+              <FoodItem food={food} />
             </TouchableOpacity>
           ))}
         </ScrollView>

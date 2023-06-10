@@ -14,22 +14,24 @@ export default function CategoryItem({ fixedCategory, changeInfo }: Props) {
   const [categoryOpen, setCategoryOpen] = useState(false);
 
   return (
-    <View style={tw`gap-2`}>
-      <View style={tw`h-11`}>
+    <View style={tw`gap-2 flex-1`}>
+      <View>
         <TextInput
-          styletw='w-full text-slate-600'
+          style={tw`w-full text-slate-600`}
           value={fixedCategory}
           editable={false}
         />
         <TouchableOpacity
           onPress={() => setCategoryOpen((prev) => !prev)}
-          style={tw`absolute p-2.5 pl-10 right-0 top-0.5`}
+          style={tw`absolute p-2.5 pl-10 right-0 top-2`}
         >
-          <Text styletw='text-indigo-500'>변경</Text>
+          <Text style={tw`text-indigo-500`} fontSize={13}>
+            변경
+          </Text>
         </TouchableOpacity>
       </View>
       {categoryOpen && (
-        <View style={tw`gap-2 min-h-55`}>
+        <View style={tw`gap-2 flex-1`}>
           {foodCategories.map(({ category }) => (
             <CheckBoxItem
               key={category}

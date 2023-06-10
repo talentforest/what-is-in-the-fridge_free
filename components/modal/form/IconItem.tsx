@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { INDIGO } from '../../../constant/colors';
 import EmojiPicker, { ko } from 'rn-emoji-keyboard';
 import tw from 'twrnc';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '../../native-component/Icon';
 
 interface Props {
   value: string;
@@ -15,15 +15,22 @@ export default function FormImageItem({ value, changeInfo }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <View>
+    <View style={tw`h-full`}>
       <TouchableOpacity
         onPress={() => setIsOpen(true)}
         style={tw`border border-slate-400 rounded-lg flex-1 aspect-square justify-center items-center`}
       >
         {value === '' ? (
-          <Icon name='food-fork-drink' color={INDIGO} size={22} />
+          <Icon
+            type='MaterialCommunityIcons'
+            name='food-fork-drink'
+            color={INDIGO}
+            size={22}
+          />
         ) : (
-          <Text styletw='text-2xl pt-0.5'>{value}</Text>
+          <Text style={tw`pt-0.5`} fontSize={18}>
+            {value}
+          </Text>
         )}
       </TouchableOpacity>
 

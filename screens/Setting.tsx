@@ -19,18 +19,15 @@ export default function Setting() {
         (statusBarHeight || 0) + 14
       }px]`}
     >
-      <Text styletw='pb-2 text-lg text-slate-600'>설정</Text>
+      <Text style={tw`pb-2 text-slate-600`} fontSize={18}>
+        설정
+      </Text>
 
       <SettingContainer title='냉장고 설정'>
         <SettingItem
           title='나의 냉장고 설정 변경'
           onPress={() => navigation.navigate('FridgeSetting')}
           iconName='fridge-outline'
-        />
-        <SettingItem
-          title='식품 정보 입력 설정'
-          onPress={() => console.log('설정')}
-          iconName='text-box-check-outline'
         />
       </SettingContainer>
 
@@ -47,21 +44,16 @@ export default function Setting() {
         />
       </SettingContainer>
 
-      <SettingContainer title='기타'>
-        <SettingItem
-          title='테마'
-          onPress={() => console.log('테마')}
-          iconName='theme-light-dark'
-        >
-          <Text>라이트 모드</Text>
-        </SettingItem>
+      <SettingContainer title='버전'>
         <SettingItem
           title='현재버전'
           onPress={() => console.log('현재버전')}
           disabled
           iconName='information-outline'
         >
-          <Text>v 0.0.0</Text>
+          <Text style={tw`text-slate-400`} fontSize={13}>
+            v 0.0.0
+          </Text>
         </SettingItem>
       </SettingContainer>
     </View>

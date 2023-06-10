@@ -6,8 +6,9 @@ import { addToShoppingList } from '../../../redux/slice/shoppingList';
 import { initialFoodInfo } from '../../../constant/foods';
 import { INDIGO } from '../../../constant/colors';
 import UUIDGenerator from 'react-native-uuid';
-import Icon from 'react-native-vector-icons/AntDesign';
 import tw from 'twrnc';
+import Icon from '../../native-component/Icon';
+import { scaleH } from '../../../util';
 
 export default function TextInputToAddList() {
   const [foodName, setFoodName] = useState('');
@@ -28,21 +29,22 @@ export default function TextInputToAddList() {
   };
 
   return (
-    <View style={tw`my-2 mx-4 h-12`}>
+    <View
+      style={tw`my-2 mx-4 h-[${scaleH(
+        11
+      )}]px border border-slate-400 rounded-full flex-row items-center bg-white justify-between`}
+    >
       <TextInput
         value={foodName}
         onChangeText={setFoodName}
-        styletw='rounded-3xl px-5'
+        style={tw`rounded-full border-0 flex-1 pl-3`}
         placeholder='장보기 목록에 추가할 식료품을 작성해주세요.'
         returnKeyType='done'
         onSubmitEditing={onSubmitEditing}
         blurOnSubmit={false}
       />
-      <TouchableOpacity
-        style={tw`absolute bottom-3.5 right-2`}
-        onPress={onSubmitEditing}
-      >
-        <Icon name='pluscircle' size={24} color={INDIGO} />
+      <TouchableOpacity onPress={onSubmitEditing} style={tw`pr-2`}>
+        <Icon type='AntDesign' name='pluscircle' size={24} color={INDIGO} />
       </TouchableOpacity>
     </View>
   );

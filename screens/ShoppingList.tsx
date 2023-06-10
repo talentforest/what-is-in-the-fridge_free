@@ -3,7 +3,6 @@ import {
   Text,
   KeyboardAvoidingView,
   TouchableOpacity,
-  SafeBottomAreaView,
 } from '../components/native-component';
 import { useSelector } from '../redux/hook';
 import { DEEP_INDIGO, INDIGO } from '../constant/colors';
@@ -11,7 +10,6 @@ import { Food } from '../constant/foods';
 import TextInputToAddList from '../components/screen-component/shopping-list/TextInputToAddList';
 import TableLabel from '../components/common/TableLabel';
 import TableItem from '../components/common/TableItem';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AddSelectFoodModal from '../components/modal/AddSelectFoodModal';
 import FixedBtn from '../components/common/FixedBtn';
 import useCheckFood from '../hooks/useCheckFood';
@@ -20,6 +18,7 @@ import useToggleModal from '../hooks/useToggleModal';
 import TableTotalItem from '../components/common/TableTotalItem';
 import TableContainer from '../components/common/TableContainer';
 import tw from 'twrnc';
+import Icon from '../components/native-component/Icon';
 
 export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
@@ -45,7 +44,9 @@ export default function ShoppingList() {
 
   return (
     <KeyboardAvoidingView>
-      <Text styletw={`pb-2 px-4 text-lg`}>장보기 목록</Text>
+      <Text style={tw`pb-2 px-4`} fontSize={18}>
+        장보기 목록
+      </Text>
 
       <View style={tw`mx-4 flex-1`}>
         <View
@@ -67,6 +68,7 @@ export default function ShoppingList() {
                     onPress={() => addToFridgePress(item)}
                   >
                     <Icon
+                      type='MaterialCommunityIcons'
                       name='plus'
                       size={22}
                       color={checkExistFood(item) ? INDIGO : DEEP_INDIGO}
@@ -76,7 +78,7 @@ export default function ShoppingList() {
               )}
             />
           ) : (
-            <Text styletw='text-slate-500 text-center mt-22 flex-1'>
+            <Text style={tw`text-slate-500 text-center mt-22 flex-1`}>
               아직 장보기 목록이 없습니다.
             </Text>
           )}

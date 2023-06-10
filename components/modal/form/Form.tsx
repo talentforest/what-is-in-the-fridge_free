@@ -1,7 +1,5 @@
 import { View } from 'react-native';
 import { Food } from '../../../constant/foods';
-import { Text } from '../../native-component';
-import tw from 'twrnc';
 import FormItemContainer from './FormItemContainer';
 import CategoryItem from './CategoryItem';
 import IconItem from './IconItem';
@@ -10,6 +8,7 @@ import DateItem from './DateItem';
 import NameItem from './NameItem';
 import FavoriteItem from './FavoriteItem';
 import RecommendedIcon from './RecommendedIcon';
+import tw from 'twrnc';
 
 export type Label =
   | '냉장고 위치 선택'
@@ -29,7 +28,7 @@ interface Props {
 
 export default function Form({ items, changeInfo, food, editableName }: Props) {
   return (
-    <View style={tw`gap-4 `}>
+    <View>
       {items.includes('아이콘과 이름') && (
         <FormItemContainer label='아이콘과 이름'>
           <View style={tw`flex-1 flex-row items-center gap-1`}>

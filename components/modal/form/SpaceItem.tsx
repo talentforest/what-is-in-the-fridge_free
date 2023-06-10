@@ -1,11 +1,10 @@
 import { View } from 'react-native';
 import { Food } from '../../../constant/foods';
-import { getCompartments } from '../../../util';
+import { getCompartments, scaleH } from '../../../util';
 import { useSelector } from '../../../redux/hook';
+import { Space } from '../../../constant/fridgeInfo';
 import CheckBoxBtn from './CheckBoxItem';
 import tw from 'twrnc';
-import { Space } from '../../../constant/fridgeInfo';
-import FridgeShape from '../../common/FridgeShape';
 
 interface Props {
   food: Food;
@@ -19,8 +18,8 @@ export default function SpaceItem({ food, changeInfo }: Props) {
   const compartments = getCompartments(totalNum);
 
   return (
-    <View style={tw`gap-5 flex-row justify-between`}>
-      <View style={tw`gap-5`}>
+    <View style={tw`gap-5 flex-row justify-between flex-1`}>
+      <View style={tw`gap-4`}>
         <View style={tw`flex-row gap-5`}>
           {['냉장실', '냉동실'].map((type) => (
             <CheckBoxBtn
@@ -64,33 +63,28 @@ export default function SpaceItem({ food, changeInfo }: Props) {
           ))}
         </View>
       </View>
-      <View style={tw`flex-row h-20 w-18`}>
-        <View
-          style={tw`${
-            fridgeInfo.freezer === 'top' ? '' : 'flex-col-reverse'
-          } border border-slate-500 bg-neutral-300 rounded-md gap-1 p-1 flex-1`}
-        >
-          {['냉동실 안쪽', '냉장실 안쪽'].map((space) => (
-            <View
-              style={tw`${
-                food.space === space ? 'bg-amber-300' : 'bg-white'
-              } rounded-sm ${space.includes('냉동') ? 'h-1/3' : 'flex-1'}`}
-            />
-          ))}
-        </View>
-        <View
-          style={tw`${
-            fridgeInfo.freezer === 'top' ? '' : 'flex-col-reverse'
-          } border border-slate-500 bg-neutral-300 rounded-md gap-1 p-1 flex-1`}
-        >
-          {['냉동실 문쪽', '냉장실 문쪽'].map((space) => (
-            <View
-              style={tw`${
-                food.space === space ? 'bg-amber-300' : 'bg-white'
-              } rounded-sm ${space.includes('냉동') ? 'h-1/3' : 'flex-1'}`}
-            />
-          ))}
-        </View>
+      <View
+        style={tw`h-[${scaleH(12)}] w-[${scaleH(
+          12
+        )}] absolute right-0 -top-5 flex-row`}
+      >
+        {['안쪽', '문쪽'].map((side) => (
+          <View
+            key={side}
+            style={tw`${
+              fridgeInfo.freezer === 'top' ? '' : 'flex-col-reverse'
+            } border border-slate-400 bg-neutral-300 rounded-[3px] gap-1 p-1 flex-1`}
+          >
+            {[`냉동실 ${side}`, `냉장실 ${side}`].map((space) => (
+              <View
+                key={space}
+                style={tw`${
+                  food.space === space ? 'bg-amber-300' : 'bg-white'
+                } rounded-sm ${space.includes('냉동') ? 'h-1/3' : 'flex-1'}`}
+              />
+            ))}
+          </View>
+        ))}
       </View>
     </View>
   );

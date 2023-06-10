@@ -1,72 +1,67 @@
 import { View } from 'react-native';
-import { Text } from '../native-component';
+import { Text, TouchableOpacity } from '../native-component';
 import { useSelector } from '../../redux/hook';
 import { Space } from '../../constant/fridgeInfo';
 import { getCompartments } from '../../util';
-import tw from 'twrnc';
+import { useNavigation } from '@react-navigation/native';
+import { NavigateProp } from '../../navigation/Navigation';
 import Compartment from './Compartment';
+import tw from 'twrnc';
 
-export default function FridgeShape() {
+interface FridgeShapeProps {
+  showInfo?: boolean;
+}
+
+export default function FridgeShape({ showInfo = false }: FridgeShapeProps) {
+  const navigation = useNavigation<NavigateProp>();
   const {
     fridgeInfo: { compartments, freezer },
   } = useSelector((state) => state.fridgeInfo);
 
+  const fridgeLocation = freezer === 'top' ? '' : 'flex-col-reverse';
+
   return (
-    <View style={tw`flex-row w-2/3 h-84`}>
-      <View
-        style={tw`${
-          freezer === 'top' ? '' : 'flex-col-reverse'
-        } flex-1 gap-1 border border-slate-400 p-1 rounded-lg bg-neutral-300`}
-      >
-        {['냉동실 안쪽', '냉장실 안쪽'].map((space) => (
-          <View
-            style={tw`gap-0.5 ${space.includes('냉동') ? 'h-1/3' : 'flex-1'}`}
-          >
-            <Text
-              styletw={`${
-                space.includes('냉동') ? 'text-blue-500' : 'text-teal-600'
-              } text-sm absolute top-1 z-10 text-xs left-1`}
+    <View style={tw`flex-row flex-1`}>
+      {['안쪽', '문쪽'].map((side) => (
+        <View
+          key={side}
+          style={tw`${fridgeLocation} flex-1 rounded-lg bg-neutral-200`}
+        >
+          {[`냉동실 ${side}`, `냉장실 ${side}`].map((space) => (
+            <TouchableOpacity
+              key={space}
+              disabled={showInfo ? false : true}
+              onPress={() => navigation.navigate('Compartments', { space })}
+              style={tw`justify-center border border-slate-300 ${
+                space.includes('냉동')
+                  ? 'h-[40%] rounded-t-lg'
+                  : 'h-[60%] rounded-b-lg'
+              }`}
             >
-              {space}
-            </Text>
-            {getCompartments(compartments[space as Space]).map(
-              ({ compartmentNum }) => (
-                <Compartment
-                  key={compartmentNum}
-                  compartmentNum={compartmentNum}
-                />
-              )
-            )}
-          </View>
-        ))}
-      </View>
-      <View
-        style={tw`${
-          freezer === 'top' ? '' : 'flex-col-reverse'
-        } flex-1 gap-1 border border-slate-400 p-1 rounded-lg bg-neutral-300`}
-      >
-        {['냉동실 문쪽', '냉장실 문쪽'].map((space) => (
-          <View
-            style={tw`gap-0.5 ${space.includes('냉동') ? 'h-1/3' : 'flex-1'}`}
-          >
-            <Text
-              styletw={`${
-                space.includes('냉동') ? 'text-blue-500' : 'text-teal-600'
-              } text-sm absolute top-1 z-10 text-xs left-1`}
-            >
-              {space}
-            </Text>
-            {getCompartments(compartments[space as Space]).map(
-              ({ compartmentNum }) => (
-                <Compartment
-                  key={compartmentNum}
-                  compartmentNum={compartmentNum}
-                />
-              )
-            )}
-          </View>
-        ))}
-      </View>
+              <Text
+                style={tw`${
+                  space.includes('냉동') ? 'text-blue-500' : 'text-teal-600'
+                } absolute top-3 z-10 left-3`}
+                fontSize={14}
+              >
+                {space}
+              </Text>
+              <View style={tw`flex-1 gap-1 py-2`}>
+                {getCompartments(compartments[space as Space]).map(
+                  ({ compartmentNum }) => (
+                    <Compartment
+                      key={compartmentNum}
+                      showInfo={showInfo}
+                      space={space as Space}
+                      compartmentNum={compartmentNum}
+                    />
+                  )
+                )}
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      ))}
     </View>
   );
 }

@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from '../native-component';
-import Icon from 'react-native-vector-icons/AntDesign';
 import { DEEP_INDIGO } from '../../constant/colors';
+import Icon from '../native-component/Icon';
 
 export default function BackBtn() {
   const navigation = useNavigation();
@@ -11,7 +11,7 @@ export default function BackBtn() {
         navigation.goBack();
       }}
     >
-      <Icon name='left' size={18} color={DEEP_INDIGO} />
+      <Icon type='AntDesign' name='left' size={18} color={DEEP_INDIGO} />
     </TouchableOpacity>
   );
 }

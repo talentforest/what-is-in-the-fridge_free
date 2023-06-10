@@ -1,5 +1,5 @@
 import { Text } from '../native-component';
-import { Dimensions, Image, ScrollView, View } from 'react-native';
+import { Image, ScrollView, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import RNModal from './common/Modal';
 import Form from './form/Form';
@@ -25,7 +25,7 @@ export default function AddSelectFoodModal({
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
-      <Text styletw='text-slate-500 my-2'>
+      <Text style={tw`text-slate-500 my-2`}>
         * 이미 냉장고에 추가한 식료품은 추가할 수 없습니다.
       </Text>
 
@@ -37,7 +37,9 @@ export default function AddSelectFoodModal({
               source={{ uri: selectedFood.image }}
             />
           ) : (
-            <Text styletw='text-5xl pt-4'>{selectedFood.image}</Text>
+            <Text style={tw`pt-4`} fontSize={24}>
+              {selectedFood.image}
+            </Text>
           )}
           <Text>{selectedFood.name}</Text>
         </View>

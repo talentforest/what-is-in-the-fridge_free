@@ -1,6 +1,6 @@
 import { FoodLocation } from '../../constant/fridgeInfo';
 import { Text } from '../native-component';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import RNModal from './common/Modal';
 import useAddFood from '../../hooks/useAddFood';
 import Form from './form/Form';
@@ -26,7 +26,7 @@ export default function AddFoodModal({
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
-      <Text styletw='text-slate-500 my-2'>
+      <Text style={tw`text-slate-500 my-2`}>
         * 이미 냉장고에 추가한 식료품은 추가할 수 없습니다.
       </Text>
 

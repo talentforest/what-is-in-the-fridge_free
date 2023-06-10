@@ -12,6 +12,7 @@ import FavoriteFoods from '../screens/FavoriteFoods';
 import ExpiredFoods from '../screens/ExpiredFoods';
 import BackBtn from '../components/common/BackBtn';
 import FridgeSetting from '../screens/FridgeSetting';
+import { scaleFont } from '../util';
 
 export type RootStackParamList = {
   MyTabs: undefined;
@@ -33,8 +34,7 @@ const options: NativeStackNavigationOptions = {
   headerShadowVisible: false,
   headerStyle: { backgroundColor: BG_LIGHT_GRAY },
   headerTitleStyle: {
-    fontWeight: '900',
-    fontSize: 16,
+    fontSize: scaleFont(16),
     ...FontGmarketSansRegular,
   },
   headerTitleAlign: 'center',
