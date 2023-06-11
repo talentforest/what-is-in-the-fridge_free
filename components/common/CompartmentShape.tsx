@@ -13,7 +13,7 @@ interface Props {
   showInfo?: boolean;
 }
 
-export default function Compartment({
+export default function CompartmentShape({
   showInfo,
   space,
   compartmentNum,

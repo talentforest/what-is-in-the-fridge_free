@@ -29,7 +29,7 @@ export default function FridgeSetting() {
           <Text style={tw`text-indigo-600`}>나의 냉장고 타입</Text>
           <CheckBoxItem
             title='일반형 냉장고'
-            onPress={() => console.log('hi')}
+            onPress={() => console.log('disabled')}
             check={fridgeInfo.type === '일반형 냉장고'}
             disabled
           />
