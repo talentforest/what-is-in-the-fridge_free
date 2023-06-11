@@ -46,7 +46,7 @@ export default function RecommendedIcon({ name, changeInfo }: Props) {
               <TouchableOpacity
                 key={emoji.en}
                 onPress={() => {
-                  changeInfo({ image: emoji.emoji });
+                  changeInfo({ image: emoji.emoji, name: emoji.ko });
                 }}
               >
                 <Text key={emoji.en} style={tw`-mb-1`}>

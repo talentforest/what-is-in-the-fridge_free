@@ -5,7 +5,7 @@ import { Space } from '../../constant/fridgeInfo';
 import { getCompartments, scaleH } from '../../util';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
-import Compartment from './Compartment';
+import CompartmentShape from './CompartmentShape';
 import tw from 'twrnc';
 
 interface FridgeShapeProps {
@@ -49,7 +49,7 @@ export default function FridgeShape({ showInfo = false }: FridgeShapeProps) {
               <View style={tw`flex-1 gap-1 py-[${scaleH(6)}]`}>
                 {getCompartments(compartments[space as Space]).map(
                   ({ compartmentNum }) => (
-                    <Compartment
+                    <CompartmentShape
                       key={compartmentNum}
                       showInfo={showInfo}
                       space={space as Space}

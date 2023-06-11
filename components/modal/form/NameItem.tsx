@@ -3,6 +3,7 @@ import tw from 'twrnc';
 
 interface Props {
   name: string;
+
   changeInfo: (newInfo: { [key: string]: string }) => void;
   editable: boolean;
 }
