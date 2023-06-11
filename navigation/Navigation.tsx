@@ -23,7 +23,6 @@ export type RootStackParamList = {
 };
 
 export type RootNavParamList = RootTabParamList & RootStackParamList;
-
 export type NavigateProp = NavigationProp<RootNavParamList>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -34,7 +33,7 @@ const options: NativeStackNavigationOptions = {
   headerShadowVisible: false,
   headerStyle: { backgroundColor: BG_LIGHT_GRAY },
   headerTitleStyle: {
-    fontSize: scaleFont(16),
+    fontSize: scaleFont(18),
     ...FontGmarketSansRegular,
   },
   headerTitleAlign: 'center',

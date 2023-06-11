@@ -24,11 +24,11 @@ export default function Compartment({
   return (
     <View
       key={compartmentNum}
-      style={tw`flex-1 w-[92%] mx-auto rounded-[3px] justify-end items-end border border-slate-300 bg-white`}
+      style={tw`flex-1 w-[92%] mx-auto rounded-[4px] justify-end items-end border border-slate-300 bg-white`}
     >
       {space.includes('문쪽') && (
         <View
-          style={tw`border w-full absolute left-0 h-[55%] rounded-b-md border-slate-300 bg-slate-100`}
+          style={tw`border w-full absolute left-0 h-[60%] rounded-b-[4px] border-slate-400  bg-slate-100`}
         />
       )}
       {showInfo && (

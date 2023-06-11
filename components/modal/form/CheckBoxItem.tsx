@@ -7,11 +7,21 @@ interface Props {
   onPress: () => void;
   check: boolean;
   title: string;
+  disabled?: boolean;
 }
 
-export default function CheckBoxItem({ onPress, check, title }: Props) {
+export default function CheckBoxItem({
+  disabled,
+  onPress,
+  check,
+  title,
+}: Props) {
   return (
-    <TouchableOpacity style={tw`flex-row items-center gap-1`} onPress={onPress}>
+    <TouchableOpacity
+      disabled={disabled}
+      style={tw`flex-row items-center gap-1`}
+      onPress={onPress}
+    >
       <Icon
         type='Ionicons'
         name={check ? 'checkbox-outline' : 'square-outline'}

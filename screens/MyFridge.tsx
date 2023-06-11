@@ -23,15 +23,13 @@ export default function MyFridge() {
       <View style={tw`flex-1 justify-center items-center gap-5`}>
         <View style={tw`justify-center items-center`}>
           <View
-            style={tw`mb-[${scaleH(
-              4
-            )}] border border-slate-300 rounded-full py-2 px-3 bg-yellow-200`}
+            style={tw`border border-slate-300 rounded-full py-2 px-3 bg-yellow-200`}
           >
             <Text style={tw`text-indigo-600`} fontSize={12}>
               아래 냉장고에서 각각의 공간으로 들어갈 수 있어요.
             </Text>
           </View>
-          <View style={tw`mt-4 flex-row gap-3 items-center justify-center`}>
+          <View style={tw`mt-2 flex-row gap-3 items-center justify-center`}>
             <View style={tw`flex-row items-center gap-1`}>
               <Icon
                 type='MaterialCommunityIcons'
