@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { useSelector } from '../../redux/hook';
 import { Space } from '../../constant/fridgeInfo';
-import { getCompartments } from '../../util';
+import { getCompartments, scaleH } from '../../util';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
 import Compartment from './Compartment';
@@ -41,12 +41,12 @@ export default function FridgeShape({ showInfo = false }: FridgeShapeProps) {
               <Text
                 style={tw`${
                   space.includes('냉동') ? 'text-blue-500' : 'text-teal-600'
-                } absolute top-3 z-10 left-3`}
+                } absolute top-[${scaleH(2.5)}] z-10 left-[${scaleH(2.5)}]`}
                 fontSize={14}
               >
                 {space}
               </Text>
-              <View style={tw`flex-1 gap-1 py-2`}>
+              <View style={tw`flex-1 gap-1 py-[${scaleH(6)}]`}>
                 {getCompartments(compartments[space as Space]).map(
                   ({ compartmentNum }) => (
                     <Compartment

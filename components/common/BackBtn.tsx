@@ -11,7 +11,7 @@ export default function BackBtn() {
         navigation.goBack();
       }}
     >
-      <Icon type='AntDesign' name='left' size={18} color={DEEP_INDIGO} />
+      <Icon type='AntDesign' name='left' size={22} color={DEEP_INDIGO} />
     </TouchableOpacity>
   );
 }
