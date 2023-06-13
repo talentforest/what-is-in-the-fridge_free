@@ -6,8 +6,7 @@ import {
 } from '../components/native-component';
 import { useSelector } from '../redux/hook';
 import { DEEP_INDIGO, INDIGO } from '../constant/colors';
-import { Food } from '../constant/foods';
-import TextInputToAddList from '../components/screen-component/shopping-list/TextInputToAddList';
+import { Food, initialFoodInfo } from '../constant/foods';
 import TableLabel from '../components/common/TableLabel';
 import TableItem from '../components/common/TableItem';
 import AddSelectFoodModal from '../components/modal/AddSelectFoodModal';
@@ -19,8 +18,15 @@ import TableTotalItem from '../components/common/TableTotalItem';
 import TableContainer from '../components/common/TableContainer';
 import tw from 'twrnc';
 import Icon from '../components/native-component/Icon';
+import Header from '../components/common/Header';
+import TextInputBox from '../components/common/TextInputBox';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addToShoppingList } from '../redux/slice/shoppingList';
+import UUIDGenerator from 'react-native-uuid';
 
 export default function ShoppingList() {
+  const [keyword, setKeyword] = useState('');
   const { shoppingList } = useSelector((state) => state.shoppingList);
 
   const {
@@ -32,7 +38,6 @@ export default function ShoppingList() {
     onCheckPress,
     existInList,
   } = useHandleCheckList();
-
   const { checkExistFood } = useCheckFood();
   const { modalVisible, setModalVisible, onModalPress } = useToggleModal();
 
@@ -42,13 +47,25 @@ export default function ShoppingList() {
       : onModalPress(food);
   };
 
+  const dispatch = useDispatch();
+  const myUuid = UUIDGenerator.v4();
+
+  const onSubmitEditing = () => {
+    if (keyword === '') return;
+    dispatch(
+      addToShoppingList({
+        ...initialFoodInfo,
+        id: myUuid as string,
+        name: keyword,
+      })
+    );
+    setKeyword('');
+  };
+
   return (
     <KeyboardAvoidingView>
-      <Text style={tw`pb-2 px-4`} fontSize={18}>
-        장보기 목록
-      </Text>
-
-      <View style={tw`mx-4 flex-1`}>
+      <Header title='장보기 목록' />
+      <View style={tw`flex-1`}>
         <View
           style={tw`flex-1 px-4 bg-white rounded-lg border border-slate-300`}
         >
@@ -97,7 +114,14 @@ export default function ShoppingList() {
           />
         )}
       </View>
-      <TextInputToAddList />
+
+      <TextInputBox
+        value={keyword}
+        setValue={setKeyword}
+        iconName='plus'
+        placeholder='식료품 이름을 작성해주세요.'
+        onSubmitEditing={onSubmitEditing}
+      />
 
       {modalVisible && (
         <AddSelectFoodModal

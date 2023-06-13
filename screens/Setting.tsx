@@ -6,6 +6,7 @@ import { NavigateProp } from '../navigation/Navigation';
 import SettingContainer from '../components/screen-component/setting/SettingContainer';
 import SettingItem from '../components/screen-component/setting/SettingItem';
 import tw from 'twrnc';
+import Header from '../components/common/Header';
 
 export default function Setting() {
   const statusBarHeight =
@@ -19,9 +20,7 @@ export default function Setting() {
         (statusBarHeight || 0) + 14
       }px]`}
     >
-      <Text style={tw`pb-2 text-slate-600`} fontSize={18}>
-        설정
-      </Text>
+      <Header title='설정' />
 
       <SettingContainer title='냉장고 설정'>
         <SettingItem

@@ -33,7 +33,7 @@ export default function FoodItem({ food }: Props) {
       {food.image === '' ? (
         <Icon
           type='MaterialCommunityIcons'
-          name='food-fork-drink'
+          name='food-outline'
           size={14}
           color={INDIGO}
         />

@@ -44,7 +44,7 @@ export default function TableItem({
           (food.image === '' ? (
             <Icon
               type='MaterialCommunityIcons'
-              name='food-variant'
+              name='food-outline'
               size={20}
               color={LIGHT_GRAY}
             />
