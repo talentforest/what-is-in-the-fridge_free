@@ -5,10 +5,10 @@ import { TextInput, TouchableOpacity } from '../../native-component';
 import { addToShoppingList } from '../../../redux/slice/shoppingList';
 import { initialFoodInfo } from '../../../constant/foods';
 import { INDIGO } from '../../../constant/colors';
-import UUIDGenerator from 'react-native-uuid';
-import tw from 'twrnc';
-import Icon from '../../native-component/Icon';
 import { scaleH } from '../../../util';
+import UUIDGenerator from 'react-native-uuid';
+import Icon from '../../native-component/Icon';
+import tw from 'twrnc';
 
 export default function TextInputToAddList() {
   const [foodName, setFoodName] = useState('');
@@ -30,7 +30,7 @@ export default function TextInputToAddList() {
 
   return (
     <View
-      style={tw`my-2 mx-4 h-[${scaleH(
+      style={tw`my-2 h-[${scaleH(
         11
       )}]px border border-slate-400 rounded-full flex-row items-center bg-white justify-between`}
     >
@@ -44,7 +44,7 @@ export default function TextInputToAddList() {
         blurOnSubmit={false}
       />
       <TouchableOpacity onPress={onSubmitEditing} style={tw`pr-2`}>
-        <Icon type='AntDesign' name='pluscircle' size={24} color={INDIGO} />
+        <Icon type='AntDesign' name='plus' size={24} color={INDIGO} />
       </TouchableOpacity>
     </View>
   );

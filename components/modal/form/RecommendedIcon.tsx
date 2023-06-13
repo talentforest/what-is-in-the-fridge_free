@@ -2,6 +2,7 @@ import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { foodEmojis } from '../../../constant/foodEmojis';
 import tw from 'twrnc';
+import { scaleH } from '../../../util';
 
 interface Props {
   name: string;
@@ -39,7 +40,7 @@ export default function RecommendedIcon({ name, changeInfo }: Props) {
   return (
     <>
       {!!getRecommendedEmojis(name)?.length ? (
-        <View style={tw`flex-row gap-1.5 w-full mt-1`}>
+        <View style={tw`flex-row gap-3.5 w-full mt-${scaleH(2)}`}>
           {getRecommendedEmojis(name)
             ?.slice(0, 7)
             ?.map((emoji) => (
@@ -49,7 +50,7 @@ export default function RecommendedIcon({ name, changeInfo }: Props) {
                   changeInfo({ image: emoji.emoji, name: emoji.ko });
                 }}
               >
-                <Text key={emoji.en} style={tw`-mb-1`}>
+                <Text key={emoji.en} style={tw`-mb-1`} fontSize={20}>
                   {emoji.emoji}
                 </Text>
               </TouchableOpacity>

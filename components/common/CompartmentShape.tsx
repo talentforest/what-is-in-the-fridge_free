@@ -21,6 +21,21 @@ export default function CompartmentShape({
   const { getFoodList } = useGetFoodList();
   const { filterExpiredFoods } = useExpiredFoods();
 
+  const compartmentInfo = [
+    {
+      name: '식료품 개수',
+      icon: 'food-outline',
+      list: getFoodList(space, compartmentNum),
+      color: INDIGO,
+    },
+    {
+      name: '유통기한 주의 개수',
+      icon: 'fridge-industrial-alert-outline',
+      list: filterExpiredFoods(space, compartmentNum),
+      color: ORANGE_RED,
+    },
+  ];
+
   return (
     <View
       key={compartmentNum}
@@ -28,55 +43,31 @@ export default function CompartmentShape({
     >
       {space.includes('문쪽') && (
         <View
-          style={tw`border w-full absolute left-0 h-[60%] rounded-b-[4px] border-slate-400  bg-slate-100`}
+          style={tw`border w-full absolute left-0 h-[60%] rounded-b-[4px] border-slate-300 shadow-md  bg-slate-100`}
         />
       )}
       {showInfo && (
-        <View style={tw`mb-0.5 px-2 flex-row gap-2`}>
-          <View style={tw`gap-1 flex-row items-center`}>
-            <Icon
-              type='MaterialCommunityIcons'
-              name='food-fork-drink'
-              size={14}
-              color={`${
-                getFoodList(space as Space, compartmentNum).length
-                  ? INDIGO
-                  : LIGHT_GRAY
-              }`}
-            />
-            <Text
-              style={tw`${
-                getFoodList(space as Space, compartmentNum).length
-                  ? `text-[${INDIGO}]`
-                  : `text-[${LIGHT_GRAY}]`
-              }`}
-              fontSize={12}
-            >
-              {getFoodList(space as Space, compartmentNum).length}개
-            </Text>
-          </View>
-          <View style={tw`gap-1 flex-row items-center`}>
-            <Icon
-              type='MaterialCommunityIcons'
-              name='alert-octagram-outline'
-              size={15}
-              color={`${
-                filterExpiredFoods(space as Space, compartmentNum).length !== 0
-                  ? ORANGE_RED
-                  : LIGHT_GRAY
-              }`}
-            />
-            <Text
-              style={tw`${
-                filterExpiredFoods(space as Space, compartmentNum).length !== 0
-                  ? `text-[${ORANGE_RED}]`
-                  : `text-[${LIGHT_GRAY}]`
-              }`}
-              fontSize={12}
-            >
-              {filterExpiredFoods(space as Space, compartmentNum).length}개
-            </Text>
-          </View>
+        <View style={tw`mb-0.5 px-2 flex-row gap-2 items-center`}>
+          {compartmentInfo.map((info) => (
+            <View key={info.name} style={tw`gap-1 flex-row items-center`}>
+              <Icon
+                type='MaterialCommunityIcons'
+                name={info.icon}
+                size={14}
+                color={`${!!info.list.length ? info.color : LIGHT_GRAY}`}
+              />
+              <Text
+                style={tw`${
+                  info.list.length
+                    ? `text-[${info.color}]`
+                    : `text-[${LIGHT_GRAY}]`
+                }`}
+                fontSize={12}
+              >
+                {info.list.length}개
+              </Text>
+            </View>
+          ))}
         </View>
       )}
     </View>

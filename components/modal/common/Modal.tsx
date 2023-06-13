@@ -20,9 +20,10 @@ export default function RNModal({
   return (
     <Modal
       onBackdropPress={() => {
-        setModalVisible(!modalVisible);
+        setModalVisible(false);
       }}
       isVisible={modalVisible}
+      avoidKeyboard
       style={tw`m-0 justify-end`}
     >
       <View style={tw`bg-white p-4 pb-6 rounded-t-2xl max-h-[95%]`}>

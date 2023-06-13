@@ -45,7 +45,7 @@ export default function FoodDetailModal({
         ) : (
           <Icon
             type='MaterialCommunityIcons'
-            name='food-fork-drink'
+            name='food-outline'
             size={20}
             color={INDIGO}
           />
