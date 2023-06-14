@@ -39,6 +39,7 @@ export default function Form({ items, changeInfo, food, editableName }: Props) {
               editable={editableName || false}
             />
           </View>
+
           <RecommendedIcon name={food.name} changeInfo={changeInfo} />
         </FormItemContainer>
       )}

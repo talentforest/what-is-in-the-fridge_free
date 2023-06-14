@@ -5,7 +5,7 @@ import { Space } from '../constant/fridgeInfo';
 import { BG_LIGHT_GRAY } from '../constant/colors';
 import { scaleH } from '../util';
 import { changeLocation } from '../redux/slice/fridgeInfoSlice';
-import SquareBtn from '../components/screen-component/setting/SquareItem';
+import VariationBtn from '../components/screen-component/setting/VariationBtn';
 import FridgeShape from '../components/common/FridgeShape';
 import CheckBoxItem from '../components/modal/form/CheckBoxItem';
 import tw from 'twrnc';
@@ -66,7 +66,7 @@ export default function FridgeSetting() {
           {['냉동실', '냉장실'].map((type) => (
             <View key={type} style={tw`flex-row gap-2`}>
               {[`${type} 안쪽`, `${type} 문쪽`].map((name) => (
-                <SquareBtn key={name} name={name as Space} />
+                <VariationBtn key={name} name={name as Space} />
               ))}
             </View>
           ))}

@@ -7,12 +7,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Food } from '../../constant/foods';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
+import TextInputBox from '../common/TextInputBox';
 import Icon from '../native-component/Icon';
 import RNModal from './common/Modal';
 import tw from 'twrnc';
-import SearchInput from '../screen-component/my-fridge/SearchInput';
-import TextInputContainer from '../common/TextInputBox';
-import TextInputBox from '../common/TextInputBox';
 
 interface Props {
   modalVisible: boolean;
@@ -76,7 +74,7 @@ export default function SearchFoodModal({
                 ({ image, name, space, compartmentNum }) => (
                   <View
                     key={name}
-                    style={tw`gap-2 border-b border-slate-300 mx-3 py-4 flex-row items-center bg-indigo`}
+                    style={tw`gap-2 border-b border-slate-300 mx-3 py-3.5 flex-row items-center bg-white`}
                   >
                     <Text style={tw`w-[35%] text-slate-700`}>
                       <Text fontSize={12}>

@@ -23,13 +23,13 @@ export default function CompartmentShape({
 
   const compartmentInfo = [
     {
-      name: '식료품 개수',
+      name: '식료품',
       icon: 'food-outline',
       list: getFoodList(space, compartmentNum),
       color: INDIGO,
     },
     {
-      name: '유통기한 주의 개수',
+      name: '유통기한 주의',
       icon: 'fridge-industrial-alert-outline',
       list: filterExpiredFoods(space, compartmentNum),
       color: ORANGE_RED,
@@ -39,7 +39,7 @@ export default function CompartmentShape({
   return (
     <View
       key={compartmentNum}
-      style={tw`flex-1 w-[92%] mx-auto rounded-[4px] justify-end items-end border border-slate-300 bg-white`}
+      style={tw`flex-1 w-[92%] mx-auto rounded-[4px] justify-end border border-slate-300 bg-white`}
     >
       {space.includes('문쪽') && (
         <View
@@ -47,7 +47,7 @@ export default function CompartmentShape({
         />
       )}
       {showInfo && (
-        <View style={tw`mb-0.5 px-2 flex-row gap-2 items-center`}>
+        <View style={tw`mb-0.5 px-2 gap-2 justify-center`}>
           {compartmentInfo.map((info) => (
             <View key={info.name} style={tw`gap-1 flex-row items-center`}>
               <Icon
@@ -64,7 +64,7 @@ export default function CompartmentShape({
                 }`}
                 fontSize={12}
               >
-                {info.list.length}개
+                {info.name} {info.list.length}개
               </Text>
             </View>
           ))}

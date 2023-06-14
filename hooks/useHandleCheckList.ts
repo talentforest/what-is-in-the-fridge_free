@@ -5,7 +5,10 @@ import { Alert } from 'react-native';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { FoodType } from '../screens/ExpiredFoods';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
-import { setShoppingList } from '../redux/slice/shoppingList';
+import {
+  addItemsToShoppingList,
+  setShoppingList,
+} from '../redux/slice/shoppingList';
 import { useRoute } from '@react-navigation/native';
 
 export default function useHandleCheckList(tab?: FoodType) {
@@ -106,6 +109,18 @@ export default function useHandleCheckList(tab?: FoodType) {
     );
   };
 
+  const addShoppingListPress = () => {
+    dispatch(addItemsToShoppingList(checkList));
+    Alert.alert(
+      '장보기 목록 추가',
+      `${checkList
+        .map((food) => food.name)
+        .join(', ')} 식료품이 추가되었습니다.`
+    );
+    setCheckList([]);
+    setEntireCheck(false);
+  };
+
   return {
     entireCheck,
     setEntireCheck,
@@ -116,5 +131,6 @@ export default function useHandleCheckList(tab?: FoodType) {
     onEntirePress,
     onExistFoodPress,
     existInList,
+    addShoppingListPress,
   };
 }

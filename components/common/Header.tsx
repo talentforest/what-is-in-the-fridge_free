@@ -1,12 +1,12 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
-import { GRAY } from '../../constant/colors';
+import { DEEP_INDIGO } from '../../constant/colors';
 import tw from 'twrnc';
 import Icon from '../native-component/Icon';
 
 interface Props {
   title: '나의 냉장고' | '설정' | '장보기 목록';
-  iconName?: 'search';
+  iconName?: 'search' | 'heart-plus';
   onPress?: () => void;
 }
 
@@ -18,7 +18,12 @@ export default function Header({ title, iconName, onPress }: Props) {
       </Text>
       {iconName && onPress && (
         <TouchableOpacity onPress={onPress}>
-          <Icon name={iconName} type='Ionicons' size={22} color={GRAY} />
+          <Icon
+            name={iconName}
+            type={iconName === 'search' ? 'Ionicons' : 'MaterialCommunityIcons'}
+            size={22}
+            color={DEEP_INDIGO}
+          />
         </TouchableOpacity>
       )}
     </View>

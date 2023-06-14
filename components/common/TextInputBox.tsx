@@ -35,7 +35,7 @@ export default function TextInputBox({
         style={tw`text-slate-600 flex-1 rounded-full border-0`}
         onSubmitEditing={onSubmitEditing}
       />
-      <TouchableOpacity onPress={onSubmitEditing} style={tw`pr-2`}>
+      <TouchableOpacity onPress={onSubmitEditing}>
         <Icon type='AntDesign' name={iconName} size={22} color={LIGHT_GRAY} />
       </TouchableOpacity>
     </View>
