@@ -7,7 +7,7 @@ import tw from 'twrnc';
 
 interface Props {
   food: Food;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export default function FoodTag({ food, children }: Props) {
@@ -19,10 +19,10 @@ export default function FoodTag({ food, children }: Props) {
       )}] bg-amber-50 border border-indigo-200 gap-1.5 justify-center items-center flex-row px-2.5 rounded-full`}
     >
       {food.image && <Text fontSize={12}>{food.image}</Text>}
-      <Text style={tw`text-center text-slate-500`} fontSize={12}>
+      <Text style={tw`text-center text-slate-600`} fontSize={12}>
         {cutLetter(food.name, 6)}
       </Text>
-      {children}
+      {children ? children : <></>}
     </View>
   );
 }

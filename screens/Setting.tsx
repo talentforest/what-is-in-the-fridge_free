@@ -46,7 +46,7 @@ export default function Setting() {
       <SettingContainer title='버전'>
         <SettingItem
           title='현재버전'
-          onPress={() => console.log('현재버전')}
+          onPress={() => console.log('disabled')}
           disabled
           iconName='information-outline'
         >

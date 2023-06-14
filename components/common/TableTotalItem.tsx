@@ -23,24 +23,22 @@ export default function TableTotalItem({
         43
       )}px] border-t border-slate-300 flex-row items-center gap-2`}
     >
-      <View style={tw`justify-center items-center`}>
-        <TouchableOpacity
-          onPress={() => onEntirePress(list)}
-          style={tw`justify-center`}
-        >
-          <Icon
-            type='MaterialCommunityIcons'
-            name={
-              !entireCheck
-                ? 'checkbox-blank-outline'
-                : 'checkbox-marked-outline'
-            }
-            size={20}
-            color={!entireCheck ? INACTIVE_COLOR : DEEP_INDIGO}
-          />
-        </TouchableOpacity>
-      </View>
-      <Text style={tw`text-indigo-500`}>전체 선택하기</Text>
+      <TouchableOpacity
+        onPress={() => onEntirePress(list)}
+        style={tw`justify-center flex-row items-center gap-2`}
+      >
+        <Icon
+          type='MaterialCommunityIcons'
+          name={
+            !entireCheck ? 'checkbox-blank-outline' : 'checkbox-marked-outline'
+          }
+          size={20}
+          color={!entireCheck ? INACTIVE_COLOR : DEEP_INDIGO}
+        />
+        <Text style={tw`text-indigo-500`}>
+          전체 <Text style={tw`text-orange-600`}>{list.length}</Text>개 선택하기
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }

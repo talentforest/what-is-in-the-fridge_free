@@ -7,12 +7,12 @@ import TableLabel from '../components/common/TableLabel';
 import TableItem from '../components/common/TableItem';
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import TableTotalItem from '../components/common/TableTotalItem';
-import FixedBtn from '../components/common/FixedBtn';
 import LeftDay from '../components/common/LeftDay';
-import TabBtn from '../components/common/TabBtn';
 import ExpiredState from '../components/screen-component/expired-foods/ExpiredState';
 import TableContainer from '../components/common/TableContainer';
 import tw from 'twrnc';
+import SquareBtn from '../components/common/SquareBtn';
+import TabBtn from '../components/common/TabBtn';
 
 export type FoodType = '냉동실' | '냉장실';
 
@@ -43,18 +43,15 @@ export default function ExpiredFoods() {
         <ExpiredState length={allExpiredFoods.length} />
 
         <View style={tw`flex-row gap-1 items-center mb-2`}>
-          <TabBtn
-            name='냉장실'
-            tab={tab}
-            onPress={() => onTabPress('냉장실')}
-            length={filterExpiredFoods('냉장실').length}
-          />
-          <TabBtn
-            name='냉동실'
-            tab={tab}
-            onPress={() => onTabPress('냉동실')}
-            length={filterExpiredFoods('냉동실').length}
-          />
+          {['냉장실', '냉동실'].map((btnName) => (
+            <TabBtn
+              key={btnName}
+              btnName={btnName}
+              setOpenTab={() => onTabPress(btnName as FoodType)}
+              active={btnName.slice(0, 3) === tab}
+              length={filterExpiredFoods(btnName as FoodType).length}
+            />
+          ))}
         </View>
 
         <View
@@ -93,11 +90,15 @@ export default function ExpiredFoods() {
         </View>
 
         {!!checkList.length && (
-          <FixedBtn
-            btnName='나의 냉장고에서 삭제'
-            onDeletePress={() => onDeletePress(allExpiredFoods)}
-            listLength={checkList.length}
-          />
+          <View style={tw`gap-1 px-4 mt-4`}>
+            <Text style={tw`text-slate-600`}>
+              선택한 항목: {checkList.length}개
+            </Text>
+            <SquareBtn
+              btnName='나의 냉장고에서 삭제'
+              onPress={() => onDeletePress(allExpiredFoods)}
+            />
+          </View>
         )}
       </View>
     </SafeBottomAreaView>

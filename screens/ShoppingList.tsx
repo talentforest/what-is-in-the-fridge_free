@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addToShoppingList } from '../redux/slice/shoppingList';
 import { View } from 'react-native';
 import {
   Text,
@@ -10,20 +13,18 @@ import { Food, initialFoodInfo } from '../constant/foods';
 import TableLabel from '../components/common/TableLabel';
 import TableItem from '../components/common/TableItem';
 import AddSelectFoodModal from '../components/modal/AddSelectFoodModal';
-import FixedBtn from '../components/common/FixedBtn';
 import useCheckFood from '../hooks/useCheckFood';
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useToggleModal from '../hooks/useToggleModal';
 import TableTotalItem from '../components/common/TableTotalItem';
 import TableContainer from '../components/common/TableContainer';
-import tw from 'twrnc';
 import Icon from '../components/native-component/Icon';
 import Header from '../components/common/Header';
 import TextInputBox from '../components/common/TextInputBox';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addToShoppingList } from '../redux/slice/shoppingList';
 import UUIDGenerator from 'react-native-uuid';
+import FavoriteListModal from '../components/modal/FavoriteListModal';
+import SquareBtn from '../components/common/SquareBtn';
+import tw from 'twrnc';
 
 export default function ShoppingList() {
   const [keyword, setKeyword] = useState('');
@@ -38,6 +39,7 @@ export default function ShoppingList() {
     onCheckPress,
     existInList,
   } = useHandleCheckList();
+  const [listModal, setListModal] = useState(false);
   const { checkExistFood } = useCheckFood();
   const { modalVisible, setModalVisible, onModalPress } = useToggleModal();
 
@@ -64,7 +66,11 @@ export default function ShoppingList() {
 
   return (
     <KeyboardAvoidingView>
-      <Header title='장보기 목록' />
+      <Header
+        title='장보기 목록'
+        iconName='heart-plus'
+        onPress={() => setListModal((prev) => !prev)}
+      />
       <View style={tw`flex-1`}>
         <View
           style={tw`flex-1 px-4 bg-white rounded-lg border border-slate-300`}
@@ -79,6 +85,7 @@ export default function ShoppingList() {
                   food={item}
                   onCheckPress={onCheckPress}
                   existInList={existInList}
+                  image={false}
                 >
                   <TouchableOpacity
                     style={tw`pl-2`}
@@ -107,11 +114,15 @@ export default function ShoppingList() {
         </View>
 
         {!!checkList.length && (
-          <FixedBtn
-            btnName='장보기 리스트에서 삭제'
-            onDeletePress={() => onDeletePress(shoppingList)}
-            listLength={checkList.length}
-          />
+          <View style={tw`gap-1 px-4 mt-4`}>
+            <Text style={tw`text-slate-600`}>
+              선택한 항목: {checkList.length}개
+            </Text>
+            <SquareBtn
+              btnName='장보기 리스트에서 삭제'
+              onPress={() => onDeletePress(shoppingList)}
+            />
+          </View>
         )}
       </View>
 
@@ -127,6 +138,12 @@ export default function ShoppingList() {
         <AddSelectFoodModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+        />
+      )}
+      {listModal && (
+        <FavoriteListModal
+          modalVisible={listModal}
+          setModalVisible={setListModal}
         />
       )}
     </KeyboardAvoidingView>

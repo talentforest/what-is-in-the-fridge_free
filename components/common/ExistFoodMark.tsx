@@ -10,22 +10,17 @@ export default function ExistFoodMark({ exist }: { exist: boolean }) {
 
   return (
     <>
-      {route.name !== 'ShoppingList' ? (
-        <View style={tw`flex-row gap-0.5 items-center`}>
-          <Icon
-            type='MaterialCommunityIcons'
-            name={exist ? 'fridge-outline' : 'fridge-off-outline'}
-            size={15}
-            color={exist ? INDIGO : INACTIVE_COLOR}
-          />
-
-          <Text style={tw`${exist ? 'text-indigo-500' : 'text-slate-400'}`}>
-            {exist ? '있음' : '없음'}
-          </Text>
-        </View>
-      ) : (
-        <></>
-      )}
+      <View style={tw`flex-row gap-0.5 items-center`}>
+        <Icon
+          type='MaterialCommunityIcons'
+          name={exist ? 'fridge-outline' : 'fridge-off-outline'}
+          size={15}
+          color={exist ? INDIGO : INACTIVE_COLOR}
+        />
+        <Text style={tw`${exist ? 'text-indigo-500' : 'text-slate-400'}`}>
+          {exist ? '있음' : '없음'}
+        </Text>
+      </View>
     </>
   );
 }

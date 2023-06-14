@@ -15,7 +15,7 @@ interface Props {
   name: Space;
 }
 
-export default function SquareBtn({ name }: Props) {
+export default function VariationBtn({ name }: Props) {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const dispatch = useDispatch();
 

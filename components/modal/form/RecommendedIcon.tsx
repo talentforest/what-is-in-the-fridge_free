@@ -1,8 +1,9 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { foodEmojis } from '../../../constant/foodEmojis';
-import tw from 'twrnc';
 import { scaleH } from '../../../util';
+import { useRoute } from '@react-navigation/native';
+import tw from 'twrnc';
 
 interface Props {
   name: string;
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export default function RecommendedIcon({ name, changeInfo }: Props) {
+  const route = useRoute();
+
   const getRecommendedEmojis = (name: string) => {
     if (name === '') return;
     return getMatchChar(name);
@@ -47,6 +50,8 @@ export default function RecommendedIcon({ name, changeInfo }: Props) {
               <TouchableOpacity
                 key={emoji.en}
                 onPress={() => {
+                  if (route.name === 'ShoppingList')
+                    return changeInfo({ image: emoji.emoji });
                   changeInfo({ image: emoji.emoji, name: emoji.ko });
                 }}
               >
