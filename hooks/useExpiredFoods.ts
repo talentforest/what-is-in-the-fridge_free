@@ -14,9 +14,6 @@ export default function useExpiredFoods() {
     return Math.round(leftDays);
   }, []);
 
-  // 여기서 함수를 남발해서 그런 것 같다.
-  // expired가 매개변수로 들어가니 바뀔때마다 매번 연산해야되는구나.
-
   const allExpiredFoods = allFoods.filter(
     (food) => getLeftDays(food.expiredDate) < 4
   );
@@ -25,7 +22,7 @@ export default function useExpiredFoods() {
     space: '냉동실' | '냉장실' | Space,
     compartmentNum?: CompartmentNum
   ) => {
-    return allExpiredFoods.filter((food) => {
+    const filteredFoods = allExpiredFoods.filter((food) => {
       if (space === '냉동실') return food.space.includes('냉동실');
       if (space === '냉장실') return food.space.includes('냉장실');
 
@@ -35,6 +32,14 @@ export default function useExpiredFoods() {
       if (compartmentNum) return matchSpace && matchCompartmentNum;
       return matchSpace;
     });
+
+    const sortedFood = filteredFoods.sort(
+      (food1, food2) =>
+        new Date(food1.expiredDate).getTime() -
+        new Date(food2.expiredDate).getTime()
+    );
+
+    return sortedFood;
   };
 
   const checkExpired = (expiredDate: string) => {

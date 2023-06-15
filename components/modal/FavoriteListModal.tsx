@@ -20,13 +20,13 @@ interface Props {
   setModalVisible: (modalVisible: boolean) => void;
 }
 
-type TabName = '냉장고에 없는 식료품' | '냉장고에 있는 식료품';
+type TabName = '냉장고에 없어요' | '냉장고에 있어요';
 
 export default function FavoriteListModal({
   modalVisible,
   setModalVisible,
 }: Props) {
-  const [openTab, setOpenTab] = useState<TabName>('냉장고에 없는 식료품');
+  const [openTab, setOpenTab] = useState<TabName>('냉장고에 없어요');
 
   const {
     checkList,
@@ -52,7 +52,7 @@ export default function FavoriteListModal({
       <View style={tw`h-[${scaleH(140)}] px-1`}>
         <View style={tw`my-2 flex-1`}>
           <View style={tw`flex-row pb-2`}>
-            {['냉장고에 없는 식료품', '냉장고에 있는 식료품'].map((btnName) => (
+            {['냉장고에 없어요', '냉장고에 있어요'].map((btnName) => (
               <TabBtn
                 key={btnName}
                 btnName={btnName}
@@ -62,12 +62,12 @@ export default function FavoriteListModal({
                 }}
                 active={openTab === btnName}
                 length={
-                  btnName === '냉장고에 없는 식료품'
+                  btnName === '냉장고에 없어요'
                     ? nonExistFavoriteFoods.length
                     : existFavoriteFoods.length
                 }
                 iconName={
-                  btnName === '냉장고에 없는 식료품'
+                  btnName === '냉장고에 없어요'
                     ? 'fridge-off-outline'
                     : 'fridge-outline'
                 }
@@ -75,13 +75,13 @@ export default function FavoriteListModal({
             ))}
           </View>
           <View style={tw`flex-1`}>
-            {['냉장고에 없는 식료품', '냉장고에 있는 식료품'].map(
+            {['냉장고에 없어요', '냉장고에 있어요'].map(
               (btnName) =>
                 openTab === btnName && (
                   <TableContainer
                     key={btnName}
                     list={
-                      btnName === '냉장고에 없는 식료품'
+                      btnName === '냉장고에 없어요'
                         ? nonExistFavoriteFoods
                         : existFavoriteFoods
                     }
@@ -110,54 +110,6 @@ export default function FavoriteListModal({
             )}
           </View>
 
-          {/* {openTab === '냉장고에 없는 식료품' &&
-            !!nonExistFavoriteFoods.length && (
-              <TableContainer
-                list={nonExistFavoriteFoods}
-                renderItem={({ item }) => (
-                  <TableItem
-                    key={item.name}
-                    food={item}
-                    onCheckPress={onCheckPress}
-                    existInList={existInList}
-                  >
-                    <Icon
-                      type='MaterialCommunityIcons'
-                      name='basket-remove-outline'
-                      size={18}
-                      color={
-                        !checkExistShoppingList(item) ? ORANGE_RED : LIGHT_GRAY
-                      }
-                    />
-                  </TableItem>
-                )}
-              />
-            )}
-
-          {openTab === '냉장고에 있는 식료품' &&
-            !!existFavoriteFoods.length && (
-              <TableContainer
-                list={existFavoriteFoods}
-                renderItem={({ item }) => (
-                  <TableItem
-                    key={item.name}
-                    food={item}
-                    onCheckPress={onCheckPress}
-                    existInList={existInList}
-                  >
-                    <Icon
-                      type='MaterialCommunityIcons'
-                      name='basket-remove-outline'
-                      size={18}
-                      color={
-                        !checkExistShoppingList(item) ? ORANGE_RED : LIGHT_GRAY
-                      }
-                    />
-                  </TableItem>
-                )}
-              />
-            )} */}
-
           {!favoriteFoods.length && (
             <Text style={tw`text-slate-500 text-center mt-22`}>
               자주 먹는 식료품이 없습니다.
@@ -172,7 +124,7 @@ export default function FavoriteListModal({
             </Text>
             <View style={tw`flex-row flex-wrap gap-1 my-2`}>
               {checkList.map((item) => (
-                <FoodTag food={item} />
+                <FoodTag key={item.id} food={item} />
               ))}
             </View>
             <SquareBtn

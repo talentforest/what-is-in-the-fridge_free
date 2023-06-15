@@ -24,11 +24,9 @@ export default function FoodItem({ food }: Props) {
   return (
     <View
       key={food.id}
-      style={tw`${bgColor} h-[${scaleH(
-        6
-      )}] border border-slate-300 gap-1 justify-center items-center flex-row px-[${scaleH(
-        5
-      )}px] rounded-full`}
+      style={tw`${bgColor} rounded-full border border-indigo-300 gap-1 justify-center items-center flex-row px-[${scaleH(
+        8
+      )}px] h-[${scaleH(7)}]`}
     >
       {food.image === '' ? (
         <Icon

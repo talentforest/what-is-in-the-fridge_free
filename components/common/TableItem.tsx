@@ -41,21 +41,28 @@ export default function TableItem({
         size={18}
         color={!existInList(food.id) ? INACTIVE_COLOR : INDIGO}
       />
-      <View style={tw`flex-1 flex-row items-center gap-2`}>
+      <View style={tw`flex-1 flex-row items-center gap-1`}>
         {image &&
           (food.image === '' ? (
             <Icon
               type='MaterialCommunityIcons'
               name='food-outline'
-              size={20}
+              size={18}
               color={LIGHT_GRAY}
             />
           ) : (
-            <Text fontSize={16}>{food.image}</Text>
+            <Text fontSize={14}>{food.image}</Text>
           ))}
-        <Text fontSize={14}>{cutLetter(food.name, 28)}</Text>
+        <Text
+          fontSize={14}
+          style={tw`flex-1 ${
+            existInList(food.id) ? 'text-indigo-500' : 'text-slate-700'
+          }`}
+        >
+          {cutLetter(food.name, 28)}
+        </Text>
       </View>
-      <View style={tw`items-end`}>{children}</View>
+      <View style={tw`items-end w-[16%]`}>{children}</View>
     </TouchableOpacity>
   );
 }
