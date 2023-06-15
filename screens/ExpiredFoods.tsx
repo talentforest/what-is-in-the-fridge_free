@@ -57,7 +57,7 @@ export default function ExpiredFoods() {
         <View
           style={tw`bg-white px-4 flex-1 rounded-lg border border-slate-300`}
         >
-          <TableLabel title='식료품' label='유통기한' />
+          <TableLabel title='식료품' label='유통기한 임박 순' />
           {!!filterExpiredFoods(tab).length ? (
             <TableContainer
               list={filterExpiredFoods(tab)}
@@ -69,7 +69,7 @@ export default function ExpiredFoods() {
                   existInList={existInList}
                 >
                   <View style={tw`flex-row items-center`}>
-                    <LeftDay expiredDate={item.expiredDate} />
+                    <LeftDay fontSize={13} expiredDate={item.expiredDate} />
                   </View>
                 </TableItem>
               )}

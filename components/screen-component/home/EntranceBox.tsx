@@ -27,8 +27,8 @@ export default function EntranceBox({ title, foods }: Props) {
   };
 
   return (
-    <View style={tw`my-6`}>
-      <TouchableOpacity onPress={onPress} style={tw`mb-2 h-[${scaleH(74)}px]`}>
+    <TouchableOpacity onPress={onPress} style={tw`my-6`}>
+      <View style={tw`mb-2 h-[${scaleH(74)}px]`}>
         <View style={tw`flex-row items-center justify-between`}>
           <Text style={tw`text-indigo-600`}>{title}</Text>
           <Icon
@@ -70,14 +70,14 @@ export default function EntranceBox({ title, foods }: Props) {
             </View>
           )}
         </View>
-      </TouchableOpacity>
+      </View>
       <View style={tw`gap-2 flex-row justify-between`}>
         {foods.length !== 0 && (
           <View style={tw`flex-row gap-0.5 flex-wrap flex-1`}>
             {foods.slice(0, 6).map((food) => (
               <FoodTag key={food.id} food={food}>
                 {title === '유통기한 주의 식료품' && (
-                  <LeftDay expiredDate={food.expiredDate} />
+                  <LeftDay fontSize={12} expiredDate={food.expiredDate} />
                 )}
               </FoodTag>
             ))}
@@ -89,6 +89,6 @@ export default function EntranceBox({ title, foods }: Props) {
           </View>
         )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

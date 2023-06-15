@@ -5,9 +5,10 @@ import tw from 'twrnc';
 
 interface Props {
   expiredDate: string;
+  fontSize: number;
 }
 
-function LeftDay({ expiredDate }: Props) {
+function LeftDay({ expiredDate, fontSize }: Props) {
   const { checkExpired, checkLeftThreeDays } = useExpiredFoods();
 
   return (
@@ -19,7 +20,7 @@ function LeftDay({ expiredDate }: Props) {
           ? 'text-amber-600'
           : 'text-green-600'
       }`}
-      fontSize={11}
+      fontSize={fontSize}
     >
       {getRelativeTime(expiredDate)}
     </Text>
