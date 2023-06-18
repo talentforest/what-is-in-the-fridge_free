@@ -2,14 +2,13 @@ import { useFonts } from 'expo-font';
 import { View } from 'react-native';
 import { fonts } from '../constant/fonts';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from '../redux/hook';
 import { getCompartments, scaleH } from '../util';
 import { Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import tw from 'twrnc';
-import { Text } from '../components/native-component';
 
 interface RouteParams {
   route: RouteProp<RootStackParamList, 'Compartments'>;

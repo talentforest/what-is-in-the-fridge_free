@@ -31,7 +31,7 @@ export default function VariationBtn({ name }: Props) {
           style={tw`px-1 items-center justify-center`}
           onPress={() => {
             const maxNum =
-              name === '냉동실 안쪽' || name === '냉동실 문쪽' ? 4 : 5;
+              name === '냉동실 안쪽' || name === '냉동실 문쪽' ? 3 : 5;
 
             if (fridgeInfo.compartments[name] >= maxNum) return;
             dispatch(plusCompartment(name));

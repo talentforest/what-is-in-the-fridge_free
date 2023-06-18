@@ -30,30 +30,12 @@ export default function Setting() {
         />
       </SettingContainer>
 
-      <SettingContainer title='데이터 관리'>
+      <SettingContainer title='기타'>
         <SettingItem
-          title='백업 (데이터 내보내기)'
-          onPress={() => console.log('백업')}
-          iconName='export-variant'
+          title='의견 남기기'
+          onPress={() => console.log('의견')}
+          iconName='comment-edit-outline'
         />
-        <SettingItem
-          title='복원 (데이터 가져오기)'
-          onPress={() => console.log('복원')}
-          iconName='restore'
-        />
-      </SettingContainer>
-
-      <SettingContainer title='버전'>
-        <SettingItem
-          title='현재버전'
-          onPress={() => console.log('disabled')}
-          disabled
-          iconName='information-outline'
-        >
-          <Text style={tw`text-slate-400`} fontSize={13}>
-            v 0.0.0
-          </Text>
-        </SettingItem>
       </SettingContainer>
     </View>
   );
