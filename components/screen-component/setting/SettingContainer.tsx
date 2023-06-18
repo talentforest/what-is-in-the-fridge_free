@@ -11,7 +11,7 @@ export default function SettingContainer({
   children: ReactNode;
 }) {
   return (
-    <View style={tw`my-3`}>
+    <View style={tw`mb-6`}>
       <View style={tw`py-2 border-b border-slate-300`}>
         <Text style={tw`text-indigo-600`} fontSize={12}>
           {title}

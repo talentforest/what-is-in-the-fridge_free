@@ -4,7 +4,7 @@ import { Space } from '../../constant/fridgeInfo';
 export type FreezerLocation = 'top' | 'bottom';
 
 interface FridgeInfo {
-  type: '일반형 냉장고';
+  type: '일반형 냉장고' | '냉장고 타입 설정 없음';
   freezer: FreezerLocation;
   compartments: { [key in Space]: number };
 }
@@ -26,11 +26,8 @@ const fridgeInfoSlice = createSlice({
   name: 'fridgeInfo',
   initialState,
   reducers: {
-    changeLocation: (
-      state,
-      action: { payload: { freezer: FreezerLocation } }
-    ) => {
-      state.fridgeInfo = { ...state.fridgeInfo, ...action.payload };
+    changeSetting: (state, action: { payload: FridgeInfo }) => {
+      state.fridgeInfo = { ...action.payload };
     },
     plusCompartment: (state, action: { payload: Space }) => {
       state.fridgeInfo = {
@@ -55,7 +52,7 @@ const fridgeInfoSlice = createSlice({
 
 const { reducer: fridgeInfoReducer } = fridgeInfoSlice;
 
-export const { changeLocation, plusCompartment, minusCompartment } =
+export const { changeSetting, plusCompartment, minusCompartment } =
   fridgeInfoSlice.actions;
 
 export default fridgeInfoReducer;
