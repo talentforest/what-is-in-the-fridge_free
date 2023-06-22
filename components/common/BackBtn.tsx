@@ -5,6 +5,7 @@ import Icon from '../native-component/Icon';
 
 export default function BackBtn() {
   const navigation = useNavigation();
+
   return (
     <TouchableOpacity
       onPress={() => {

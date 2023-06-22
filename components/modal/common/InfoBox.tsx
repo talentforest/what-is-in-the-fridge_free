@@ -2,10 +2,10 @@ import { View } from 'react-native';
 import { Text } from '../../native-component';
 import { Label } from '../form/Form';
 import { getFormattedDate } from '../../../util';
+import { GREEN, ORANGE_RED } from '../../../constant/colors';
 import tw from 'twrnc';
 import LeftDay from '../../common/LeftDay';
 import Icon from '../../native-component/Icon';
-import { DEEP_YELLOW, GREEN, ORANGE_RED } from '../../../constant/colors';
 
 interface Props {
   label: Label;

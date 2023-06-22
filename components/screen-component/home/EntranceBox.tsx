@@ -4,11 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../../navigation/Navigation';
 import { Food } from '../../../constant/foods';
 import { INDIGO, ORANGE_RED } from '../../../constant/colors';
+import { scaleH } from '../../../util';
 import LeftDay from '../../common/LeftDay';
 import FoodTag from './FoodTag';
 import tw from 'twrnc';
 import Icon from '../../native-component/Icon';
-import { scaleH } from '../../../util';
 
 interface Props {
   title: EntranceTitle;

@@ -33,7 +33,7 @@ export default function MyFridge() {
               아래 냉장고에서 각각의 공간으로 들어갈 수 있어요.
             </Text>
           </View>
-          <View style={tw`h-[80%] max-h-[700px] w-[90%]`}>
+          <View style={tw`h-[85%] max-h-[700px] w-[90%]`}>
             <FridgeShape showInfo />
           </View>
         </View>
