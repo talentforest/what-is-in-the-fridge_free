@@ -1,6 +1,6 @@
 import { Text } from '../native-component';
 import { LIGHT_GRAY, ORANGE_RED } from '../../constant/colors';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { scaleH } from '../../util';
 import { useState } from 'react';
 import RNModal from './common/Modal';

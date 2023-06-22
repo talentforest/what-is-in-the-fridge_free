@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { DEEP_INDIGO } from '../../constant/colors';
+import { useRoute } from '@react-navigation/native';
 import tw from 'twrnc';
 import Icon from '../native-component/Icon';
-import { useRoute } from '@react-navigation/native';
 
 interface Props {
   title: '나의 냉장고' | '설정' | '장보기 목록';
@@ -13,6 +13,7 @@ interface Props {
 
 export default function Header({ title, iconName, onPress }: Props) {
   const route = useRoute();
+
   return (
     <View style={tw`pb-4 flex-row justify-between items-center`}>
       <Text style={tw`text-slate-700`} fontSize={18}>

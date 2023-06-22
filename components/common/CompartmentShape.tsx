@@ -48,23 +48,21 @@ export default function CompartmentShape({
       )}
       {showInfo && (
         <View style={tw`mb-0.5 px-2 gap-2 justify-center`}>
-          {compartmentInfo.map((info) => (
-            <View key={info.name} style={tw`gap-1 flex-row items-center`}>
+          {compartmentInfo.map(({ name, icon, list, color }) => (
+            <View key={name} style={tw`gap-1 flex-row items-center`}>
               <Icon
                 type='MaterialCommunityIcons'
-                name={info.icon}
+                name={icon}
                 size={14}
-                color={`${!!info.list.length ? info.color : LIGHT_GRAY}`}
+                color={`${!!list.length ? color : LIGHT_GRAY}`}
               />
               <Text
                 style={tw`${
-                  info.list.length
-                    ? `text-[${info.color}]`
-                    : `text-[${LIGHT_GRAY}]`
+                  list.length ? `text-[${color}]` : `text-[${LIGHT_GRAY}]`
                 }`}
                 fontSize={12}
               >
-                {info.name} {info.list.length}개
+                {name} {list.length}개
               </Text>
             </View>
           ))}

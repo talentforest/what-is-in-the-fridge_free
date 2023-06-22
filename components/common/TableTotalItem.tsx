@@ -2,9 +2,9 @@ import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { DEEP_INDIGO, INACTIVE_COLOR } from '../../constant/colors';
 import { Food } from '../../constant/foods';
+import { scaleH } from '../../util';
 import tw from 'twrnc';
 import Icon from '../native-component/Icon';
-import { scaleH } from '../../util';
 
 interface Props {
   list: Food[];

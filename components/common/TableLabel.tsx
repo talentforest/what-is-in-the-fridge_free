@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { Text } from '../native-component';
 import { DEEP_INDIGO } from '../../constant/colors';
+import { scaleH } from '../../util';
 import tw from 'twrnc';
 import Icon from '../native-component/Icon';
-import { scaleH } from '../../util';
 
 interface Props {
   title: '식료품';

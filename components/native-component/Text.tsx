@@ -1,8 +1,5 @@
 import { Text as RNText, TextProps, TextStyle } from 'react-native';
-import {
-  FontGmarketSansBold,
-  FontGmarketSansRegular,
-} from '../../constant/fonts';
+import { FontGmarketSansRegular } from '../../constant/fonts';
 import { scaleFont } from '../../util';
 import tw from 'twrnc';
 
