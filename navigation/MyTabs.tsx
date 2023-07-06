@@ -7,7 +7,7 @@ import Home from '../screens/Home';
 import Setting from '../screens/Setting';
 import ShoppingList from '../screens/ShoppingList';
 import MyFridge from '../screens/MyFridge';
-import Icon from '../components/native-component/Icon';
+import TabIcon from './TabIcon';
 
 export type RootTabParamList = {
   Home: undefined;
@@ -17,6 +17,7 @@ export type RootTabParamList = {
 };
 
 const Tab = createBottomTabNavigator();
+const DEVICE_HEIGHT = Dimensions.get('screen').height;
 
 export default function MyTabs() {
   return (
@@ -25,8 +26,8 @@ export default function MyTabs() {
       screenOptions={{
         tabBarStyle: {
           backgroundColor: CARROT_COLOR,
-          height: Dimensions.get('screen').height / 13,
-          minHeight: 68,
+          height:
+            DEVICE_HEIGHT < 700 ? DEVICE_HEIGHT / 10 : DEVICE_HEIGHT / 8.5,
         },
         tabBarActiveTintColor: DEEP_INDIGO,
         tabBarInactiveTintColor: GRAY,
@@ -46,12 +47,7 @@ export default function MyTabs() {
         component={Home}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon
-              type='MaterialCommunityIcons'
-              name='home-outline'
-              color={color}
-              size={20}
-            />
+            <TabIcon name='home-outline' color={color} />
           ),
           tabBarLabel: '홈',
         }}
@@ -61,12 +57,7 @@ export default function MyTabs() {
         component={MyFridge}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon
-              type='MaterialCommunityIcons'
-              name='fridge-outline'
-              color={color}
-              size={20}
-            />
+            <TabIcon name='fridge-outline' color={color} />
           ),
           tabBarLabel: '나의 냉장고',
         }}
@@ -76,7 +67,7 @@ export default function MyTabs() {
         component={ShoppingList}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon type='Feather' name='list' color={color} size={20} />
+            <TabIcon name='format-list-bulleted' color={color} />
           ),
           tabBarLabel: '장보기 목록',
         }}
@@ -86,12 +77,7 @@ export default function MyTabs() {
         component={Setting}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon
-              type='Feather'
-              name='more-horizontal'
-              color={color}
-              size={20}
-            />
+            <TabIcon name='dots-horizontal' color={color} />
           ),
           tabBarLabel: '더보기',
         }}
