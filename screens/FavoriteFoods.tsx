@@ -14,7 +14,7 @@ import TableContainer from '../components/common/TableContainer';
 import TableItem from '../components/common/TableItem';
 import ExistFoodMark from '../components/common/ExistFoodMark';
 import useCheckFood from '../hooks/useCheckFood';
-import SquareBtn from '../components/common/SquareBtn';
+import SquareBtn from '../components/common/Buttons/SquareBtn';
 import UUIDGenerator from 'react-native-uuid';
 import useFavoriteFoods from '../hooks/useFavoriteFoods';
 import tw from 'twrnc';

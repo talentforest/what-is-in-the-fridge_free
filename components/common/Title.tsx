@@ -1,5 +1,4 @@
 import { View } from 'react-native';
-import { LIGHT_INDIGO } from '../../constant/colors';
 import { Text } from '../native-component';
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { scaleFont } from '../../util';
@@ -13,7 +12,7 @@ interface Props {
 
 export default function Title({ title, iconName }: Props) {
   return (
-    <View style={tw`flex-row items-center gap-0.5`}>
+    <View style={tw`flex-row items-center gap-1`}>
       {iconName && (
         <Icon
           type='MaterialCommunityIcons'

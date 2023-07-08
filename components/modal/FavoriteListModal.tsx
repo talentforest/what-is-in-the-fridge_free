@@ -8,11 +8,11 @@ import TableContainer from '../common/TableContainer';
 import TableItem from '../common/TableItem';
 import useHandleCheckList from '../../hooks/useHandleCheckList';
 import useCheckFood from '../../hooks/useCheckFood';
-import SquareBtn from '../common/SquareBtn';
+import SquareBtn from '../common/Buttons/SquareBtn';
 import useFavoriteFoods from '../../hooks/useFavoriteFoods';
-import TabBtn from '../common/TabBtn';
+import TabBtn from '../common/Buttons/TabBtn';
 import tw from 'twrnc';
-import FoodTag from '../screen-component/home/FoodTag';
+import FoodTag from '../common/Box/FoodBox';
 import Icon from '../native-component/Icon';
 
 interface Props {

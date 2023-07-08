@@ -1,7 +1,7 @@
 import { useRoute } from '@react-navigation/native';
-import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
-import { Text, TouchableOpacity } from '../native-component';
-import Icon from '../native-component/Icon';
+import { INDIGO, LIGHT_GRAY } from '../../../constant/colors';
+import { Text, TouchableOpacity } from '../../native-component';
+import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {

@@ -1,17 +1,16 @@
-import { View } from 'react-native';
-import { Food } from '../../constant/foods';
-import { Text, TouchableOpacity } from '../native-component';
-import { scaleFont } from '../../util';
+import { Food } from '../../../constant/foods';
+import { Text, TouchableOpacity } from '../../native-component';
+import { scaleFont, scaleH } from '../../../util';
 import { useState } from 'react';
-import { LIGHT_GRAY, ORANGE_RED } from '../../constant/colors';
-import Icon from '../native-component/Icon';
+import { LIGHT_GRAY, ORANGE_RED } from '../../../constant/colors';
+import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
   food: Food;
 }
 
-export default function FoodBox({ food }: Props) {
+export default function CheckFoodBox({ food }: Props) {
   const [checked, setChecked] = useState(false);
 
   return (
@@ -22,7 +21,9 @@ export default function FoodBox({ food }: Props) {
         checked
           ? 'border-orange-500 bg-orange-100'
           : 'bg-white border-indigo-300'
-      } p-2.5 flex-row gap-0.5 rounded-lg border-2`}
+      } px-2.5 flex-row items-center gap-0.5 rounded-lg border-2 h-[${scaleH(
+        10
+      )}]`}
     >
       <Icon
         name='cart-arrow-down'

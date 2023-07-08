@@ -10,7 +10,7 @@ import React from 'react';
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
 import ExpiredFoods from '../screens/ExpiredFoods';
-import BackBtn from '../components/common/BackBtn';
+import BackBtn from '../components/common/Buttons/BackBtn';
 import FridgeSetting from '../screens/FridgeSetting';
 import { scaleFont } from '../util';
 
@@ -22,6 +22,7 @@ export type RootStackParamList = {
   FridgeSetting: undefined;
 };
 
+export type RouteName = keyof RootTabParamList | keyof RootStackParamList;
 export type RootNavParamList = RootTabParamList & RootStackParamList;
 export type NavigateProp = NavigationProp<RootNavParamList>;
 

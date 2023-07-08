@@ -23,7 +23,7 @@ import Header from '../components/common/Header';
 import TextInputBox from '../components/common/TextInputBox';
 import UUIDGenerator from 'react-native-uuid';
 import FavoriteListModal from '../components/modal/FavoriteListModal';
-import SquareBtn from '../components/common/SquareBtn';
+import SquareBtn from '../components/common/Buttons/SquareBtn';
 import tw from 'twrnc';
 
 export default function ShoppingList() {

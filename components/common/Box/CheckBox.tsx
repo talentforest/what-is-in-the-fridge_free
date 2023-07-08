@@ -1,5 +1,5 @@
-import { INACTIVE_COLOR } from '../../constant/colors';
-import Icon from '../native-component/Icon';
+import { INACTIVE_COLOR } from '../../../constant/colors';
+import Icon from '../../native-component/Icon';
 
 interface Props {
   checked: boolean;

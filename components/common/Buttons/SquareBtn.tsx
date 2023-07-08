@@ -1,7 +1,7 @@
 import { View } from 'react-native';
-import { scaleH } from '../../util';
-import { Text, TouchableOpacity } from '../native-component';
-import Icon from '../native-component/Icon';
+import { scaleH } from '../../../util';
+import { Text, TouchableOpacity } from '../../native-component';
+import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 
 type btnName =
