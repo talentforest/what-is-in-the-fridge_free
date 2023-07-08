@@ -7,6 +7,6 @@ interface Props {
 
 export default function TabIcon({ name, color }: Props) {
   return (
-    <Icon type='MaterialCommunityIcons' name={name} color={color} size={18} />
+    <Icon type='MaterialCommunityIcons' name={name} color={color} size={20} />
   );
 }

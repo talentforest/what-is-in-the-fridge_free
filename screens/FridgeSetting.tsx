@@ -30,7 +30,7 @@ export default function FridgeSetting() {
                 key={type}
                 title={type}
                 onPress={() => onChangePress({ type })}
-                check={fridgeInfo.type === type}
+                checked={fridgeInfo.type === type}
               />
             ))}
           </View>
@@ -75,7 +75,7 @@ export default function FridgeSetting() {
                         freezer: name === '상단' ? 'top' : 'bottom',
                       })
                     }
-                    check={
+                    checked={
                       fridgeInfo.freezer ===
                       (name === '상단' ? 'top' : 'bottom')
                     }

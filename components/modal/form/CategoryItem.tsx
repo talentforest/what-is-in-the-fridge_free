@@ -37,7 +37,7 @@ export default function CategoryItem({ fixedCategory, changeInfo }: Props) {
                 setCategoryOpen(false);
               }}
               title={category}
-              check={category === fixedCategory}
+              checked={category === fixedCategory}
             />
           ))}
         </View>

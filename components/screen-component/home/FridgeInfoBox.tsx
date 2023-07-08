@@ -1,36 +1,38 @@
-import { View } from 'react-native';
-import { INDIGO, ORANGE_RED } from '../../../constant/colors';
+import { Image, ImageSourcePropType, View } from 'react-native';
 import { Text } from '../../native-component';
-import Icon from '../../native-component/Icon';
+import { scaleFont } from '../../../util';
+import { FontGmarketSansBold } from '../../../constant/fonts';
+import { Asset } from 'expo-asset';
 import tw from 'twrnc';
-import { scaleH } from '../../../util';
-import '../../../tailwind.config';
+import Title from '../../common/Title';
 
 interface Props {
-  iconName: string;
+  asset: Asset;
   foodLength: number;
   name: string;
 }
 
-export default function FridgeInfoBox({ iconName, name, foodLength }: Props) {
+export default function FridgeInfoBox({ asset, name, foodLength }: Props) {
   return (
     <View
-      style={tw`flex-row flex-1 border border-slate-300 rounded-lg bg-white px-3 h-[${scaleH(
-        12
-      )}]`}
+      style={tw`flex-1 gap-4 border-2 border-slate-300 rounded-lg p-3 bg-blue-400`}
     >
-      <View style={tw`flex-row items-center`}>
-        <Icon
-          type='MaterialCommunityIcons'
-          name={iconName}
-          color={name ? INDIGO : ORANGE_RED}
-        />
+      <Title title={name} />
+      <View style={tw`flex-row items-end justify-between`}>
+        {asset && (
+          <Image source={asset as ImageSourcePropType} style={tw`w-13 h-13`} />
+        )}
 
-        <Text style={tw`text-slate-600 mx-1`}>{name} : </Text>
-      </View>
-      <View style={tw`flex-row items-center`}>
-        <Text style={tw`text-amber-600`}>{foodLength}</Text>
-        <Text style={tw`text-slate-500`}>개</Text>
+        <View style={tw`flex-row items-end`}>
+          <Text
+            style={tw.style(`text-white text-[${scaleFont(30)}px]`, {
+              ...FontGmarketSansBold,
+            })}
+          >
+            {foodLength}
+          </Text>
+          <Text style={tw`text-slate-200 mb-0.5`}>개</Text>
+        </View>
       </View>
     </View>
   );

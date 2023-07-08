@@ -6,6 +6,7 @@ import FridgeShape from '../components/common/FridgeShape';
 import Header from '../components/common/Header';
 import SearchFoodModal from '../components/modal/SearchFoodModal';
 import tw from 'twrnc';
+import Icon from '../components/native-component/Icon';
 
 export default function MyFridge() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,15 +27,14 @@ export default function MyFridge() {
         />
 
         <View style={tw`flex-1 justify-center items-center gap-5`}>
-          <View
-            style={tw`border border-slate-300 rounded-full py-2 px-3 bg-yellow-200`}
-          >
+          <View style={tw`flex-row items-center gap-1`}>
+            <Icon name='information-circle-outline' type='Ionicons' size={16} />
             <Text style={tw`text-indigo-600`} fontSize={12}>
               아래 냉장고에서 각각의 공간으로 들어갈 수 있어요.
             </Text>
           </View>
-          <View style={tw`h-[85%] max-h-[700px] w-[90%]`}>
-            <FridgeShape showInfo />
+          <View style={tw`h-4/5 max-h-[700px] w-[90%]`}>
+            <FridgeShape />
           </View>
         </View>
       </View>
