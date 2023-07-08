@@ -21,7 +21,7 @@ export default function FridgeInfo({ assets }: Props) {
   ];
 
   return (
-    <View style={tw`gap-2 mt-3 flex-row flex-1 mb-2`}>
+    <View style={tw`gap-2 mt-3 flex-row flex-1`}>
       <FridgeInfoBox
         asset={assets[0]}
         name='냉동실 식료품'

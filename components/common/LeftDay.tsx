@@ -19,7 +19,7 @@ function LeftDay({ expiredDate, fontSize }: Props) {
           : checkLeftThreeDays(expiredDate)
           ? 'text-amber-600'
           : 'text-green-600'
-      }`}
+      } pl-1 pt-1`}
       fontSize={fontSize}
     >
       {getRelativeTime(expiredDate)}

@@ -5,7 +5,7 @@ import { Food } from '../../constant/foods';
 import { scaleH } from '../../util';
 import tw from 'twrnc';
 import Icon from '../native-component/Icon';
-import CheckBox from './CheckBox';
+import CheckBox from './Box/CheckBox';
 
 interface Props {
   list: Food[];

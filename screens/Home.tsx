@@ -1,19 +1,19 @@
 import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
-import { Platform, ScrollView, StatusBar, View } from 'react-native';
+import { Platform, ScrollView, StatusBar } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import EntranceBox from '../components/screen-component/home/EntranceBox';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import FridgeInfo from '../components/screen-component/home/FridgeInfo';
-import ShoppingListBox from '../components/screen-component/home/ShoppingListBox';
 import LogoTitle from '../components/screen-component/home/LogoTitle';
-import tw from 'twrnc';
 import useImageLoad from '../hooks/useImageLoad';
+import tw from 'twrnc';
 
 const Home = () => {
   const { allExpiredFoods } = useExpiredFood();
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+  const { shoppingList } = useSelector((state) => state.shoppingList);
   const [fontsLoaded] = useFonts(fonts);
   const { isLoaded, assets } = useImageLoad({
     images: [require('../assets/ice.png'), require('../assets/fruits.png')],
@@ -26,25 +26,42 @@ const Home = () => {
 
   return (
     <ScrollView
-      style={tw`pt-[${(statusBarHeight || 0) + 14}px] bg-blue-50`}
+      style={tw`pt-[${(statusBarHeight || 0) + 14}px] bg-sky-100`}
       contentContainerStyle={tw`pb-20 px-4`}
       showsVerticalScrollIndicator={false}
     >
       <LogoTitle />
 
       {assets && <FridgeInfo assets={assets} />}
-
-      <ShoppingListBox />
-
       <EntranceBox
-        foods={favoriteFoods.slice(0, 10)}
-        title='자주 먹는 식료품'
-        desc='자주 먹는 식료품은 냉장고에 더 빠르게 추가하세요.'
+        foods={shoppingList}
+        info={{
+          title: '장봐야할 식료품',
+          desc: '카트에 넣으신 식료품을 터치해주세요.',
+          iconName: 'cart',
+          bgColor: 'bg-indigo-600',
+          route: 'ShoppingList',
+        }}
       />
       <EntranceBox
-        foods={allExpiredFoods.slice(0, 10)}
-        title='유통기한 주의 식료품'
-        desc='유통기한 주의 식료품을 쉽게 관리해보세요.'
+        foods={allExpiredFoods.slice(0, 8)}
+        info={{
+          title: '유통기한 주의 식료품',
+          desc: '유통기한 주의 식료품을 쉽게 관리해보세요.',
+          iconName: 'alert-circle',
+          bgColor: 'bg-slate-600',
+          route: 'ExpiredFoods',
+        }}
+      />
+      <EntranceBox
+        foods={favoriteFoods.slice(0, 8)}
+        info={{
+          title: '자주 먹는 식료품',
+          desc: '자주 먹는 식료품은 냉장고에 빠르게 추가하세요.',
+          iconName: 'tag-heart',
+          bgColor: 'bg-amber-500',
+          route: 'FavoriteFoods',
+        }}
       />
     </ScrollView>
   );

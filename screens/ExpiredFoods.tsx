@@ -11,8 +11,8 @@ import LeftDay from '../components/common/LeftDay';
 import ExpiredState from '../components/screen-component/expired-foods/ExpiredState';
 import TableContainer from '../components/common/TableContainer';
 import tw from 'twrnc';
-import SquareBtn from '../components/common/SquareBtn';
-import TabBtn from '../components/common/TabBtn';
+import SquareBtn from '../components/common/Buttons/SquareBtn';
+import TabBtn from '../components/common/Buttons/TabBtn';
 
 export type FoodType = '냉동실' | '냉장실';
 

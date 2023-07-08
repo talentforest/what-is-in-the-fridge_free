@@ -7,7 +7,7 @@ import { ReactNode } from 'react';
 import { INACTIVE_COLOR } from '../../constant/colors';
 import Icon from '../native-component/Icon';
 import tw from 'twrnc';
-import CheckBox from './CheckBox';
+import CheckBox from './Box/CheckBox';
 
 interface Props {
   food: Food;

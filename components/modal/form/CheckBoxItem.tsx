@@ -2,7 +2,7 @@ import { Text, TouchableOpacity } from '../../native-component';
 import { INACTIVE_COLOR, ORANGE_RED } from '../../../constant/colors';
 import tw from 'twrnc';
 import Icon from '../../native-component/Icon';
-import CheckBox from '../../common/CheckBox';
+import CheckBox from '../../common/Box/CheckBox';
 
 interface Props {
   onPress: () => void;
