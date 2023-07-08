@@ -32,8 +32,8 @@ export default function Compartments({ route }: RouteParams) {
   return (
     <View style={tw`flex-1 pt-4 pb-8 bg-neutral-50`}>
       <View
-        style={tw`p-[${scaleH(10)}] gap-[${scaleH(
-          3
+        style={tw`p-[${scaleH(8)}] gap-[${scaleH(
+          2
         )}] border w-[90%] m-auto flex-1 mt-3 mb-4 justify-between border-slate-300 rounded-lg bg-neutral-200`}
       >
         {compartments.map((compartment) => (

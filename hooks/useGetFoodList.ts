@@ -4,22 +4,17 @@ import { useSelector } from '../redux/hook';
 export default function useGetFoodList() {
   const { allFoods } = useSelector((state) => state.allFoods);
 
-  const getFoodList = (
-    space: '냉동실' | '냉장실' | Space,
-    compartmentNum?: CompartmentNum
-  ) => {
-    const matchFoods = allFoods.filter((food) => {
+  const getFoodList = (space: Space, compartmentNum?: CompartmentNum) => {
+    return allFoods.filter((food) => {
       if (compartmentNum) {
-        const checkLocation =
-          food.space === space && food.compartmentNum === compartmentNum;
-        return checkLocation;
+        const matchSpace = food.space === space;
+        const matchCompartmentNum = food.compartmentNum === compartmentNum;
+
+        return matchSpace && matchCompartmentNum;
       }
 
-      if (space === '냉동실') return food.space.includes('냉동');
-      if (space === '냉장실') return food.space.includes('냉장');
+      return food.space === space;
     });
-
-    return matchFoods;
   };
 
   return {

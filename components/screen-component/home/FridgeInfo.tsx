@@ -1,36 +1,37 @@
+import { Asset } from 'expo-asset';
 import { View } from 'react-native';
-import { Text } from '../../native-component';
-import { useSelector } from '../../../redux/hook';
 import useGetFoodList from '../../../hooks/useGetFoodList';
 import FridgeInfoBox from './FridgeInfoBox';
 import tw from 'twrnc';
 
-export default function FridgeInfo() {
-  const { shoppingList } = useSelector((state) => state.shoppingList);
+interface Props {
+  assets: Asset[];
+}
+
+export default function FridgeInfo({ assets }: Props) {
   const { getFoodList } = useGetFoodList();
 
+  const getFridgeFoods = [
+    ...getFoodList('냉장실 안쪽'),
+    ...getFoodList('냉장실 문쪽'),
+  ];
+  const getFreezerFoods = [
+    ...getFoodList('냉동실 안쪽'),
+    ...getFoodList('냉동실 문쪽'),
+  ];
+
   return (
-    <View style={tw`mb-2 flex-1`}>
-      <Text style={tw`text-indigo-600 mt-2`}>나의 냉장고 정보</Text>
-      <View style={tw`gap-1 flex-1 mt-3`}>
-        <View style={tw`gap-1 flex-row flex-1`}>
-          <FridgeInfoBox
-            iconName='fridge-bottom'
-            name='냉동실 식료품'
-            foodLength={getFoodList('냉동실').length}
-          />
-          <FridgeInfoBox
-            iconName='fridge-top'
-            name='냉장실 식료품'
-            foodLength={getFoodList('냉장실').length}
-          />
-        </View>
-        <FridgeInfoBox
-          iconName='basket-outline'
-          name='장보기 목록 식료품'
-          foodLength={shoppingList.length}
-        />
-      </View>
+    <View style={tw`gap-2 mt-3 flex-row flex-1 mb-2`}>
+      <FridgeInfoBox
+        asset={assets[0]}
+        name='냉동실 식료품'
+        foodLength={getFreezerFoods.length}
+      />
+      <FridgeInfoBox
+        asset={assets[1]}
+        name='냉장실 식료품'
+        foodLength={getFridgeFoods.length}
+      />
     </View>
   );
 }

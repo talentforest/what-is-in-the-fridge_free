@@ -1,19 +1,17 @@
 import { View } from 'react-native';
-import { Text, TouchableOpacity } from '../native-component';
+import { TouchableOpacity } from '../native-component';
 import { useSelector } from '../../redux/hook';
 import { Space } from '../../constant/fridgeInfo';
 import { getCompartments, scaleH } from '../../util';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
 import CompartmentShape from './CompartmentShape';
+import CompartmentInfo from '../screen-component/my-fridge/CompartmentInfo';
 import tw from 'twrnc';
 
-interface FridgeShapeProps {
-  showInfo?: boolean;
-}
-
-export default function FridgeShape({ showInfo = false }: FridgeShapeProps) {
+export default function FridgeShape() {
   const navigation = useNavigation<NavigateProp>();
+  const route = useRoute();
 
   const {
     fridgeInfo: { compartments, freezer },
@@ -28,38 +26,24 @@ export default function FridgeShape({ showInfo = false }: FridgeShapeProps) {
             freezer === 'top' ? '' : 'flex-col-reverse'
           } flex-1 rounded-md`}
         >
-          {[`냉동실 ${side}`, `냉장실 ${side}`].map((space) => (
+          {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (
             <TouchableOpacity
               key={space}
-              disabled={showInfo ? false : true}
+              disabled={route.name !== 'Setting' ? false : true}
               onPress={() => navigation.navigate('Compartments', { space })}
               style={tw`justify-center bg-neutral-200 border border-slate-400 ${
                 space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'
               } ${space.includes('문쪽') ? 'rounded-r-md' : 'rounded-l-md'}`}
             >
-              <View
-                style={tw`border absolute z-10 left-[${scaleH(
-                  2.5
-                )}] -top-[${scaleH(
-                  2
-                )}] px-2 py-1 rounded-full border-slate-400 bg-indigo-200`}
-              >
-                <Text
-                  style={tw`${
-                    space.includes('냉동') ? 'text-blue-500' : 'text-teal-600'
-                  }`}
-                  fontSize={12}
-                >
-                  {space}
-                </Text>
-              </View>
+              {route.name !== 'FridgeSetting' && (
+                <CompartmentInfo space={space} />
+              )}
               <View style={tw`flex-1 gap-1 py-[${scaleH(6)}]`}>
-                {getCompartments(compartments[space as Space]).map(
+                {getCompartments(compartments[space]).map(
                   ({ compartmentNum }) => (
                     <CompartmentShape
                       key={compartmentNum}
-                      showInfo={showInfo}
-                      space={space as Space}
+                      space={space}
                       compartmentNum={compartmentNum}
                     />
                   )

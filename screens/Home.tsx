@@ -1,30 +1,22 @@
-import { FontGmarketSansBold, fonts } from '../constant/fonts';
+import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
 import { Platform, ScrollView, StatusBar, View } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { BG_LIGHT_GRAY } from '../constant/colors';
-import { SafeBottomAreaView, Text } from '../components/native-component';
-import BannerSlider from '../components/screen-component/home/BannerSlider';
-import Footer from '../components/screen-component/home/Footer';
 import EntranceBox from '../components/screen-component/home/EntranceBox';
-import useImageLoad from '../hooks/useImageLoad';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import FridgeInfo from '../components/screen-component/home/FridgeInfo';
+import ShoppingListBox from '../components/screen-component/home/ShoppingListBox';
+import LogoTitle from '../components/screen-component/home/LogoTitle';
 import tw from 'twrnc';
+import useImageLoad from '../hooks/useImageLoad';
 
 const Home = () => {
   const { allExpiredFoods } = useExpiredFood();
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const [fontsLoaded] = useFonts(fonts);
-
   const { isLoaded, assets } = useImageLoad({
-    images: [
-      require('../assets/fridge.png'),
-      require('../assets/shopping-list.png'),
-      require('../assets/magnifier-fridge.png'),
-      require('../assets/foods-in-fridge.png'),
-    ],
+    images: [require('../assets/ice.png'), require('../assets/fruits.png')],
   });
 
   if (!fontsLoaded || !isLoaded) return null;
@@ -33,35 +25,28 @@ const Home = () => {
     Platform.OS === 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
 
   return (
-    <SafeBottomAreaView>
-      <ScrollView
-        style={tw`pt-[${(statusBarHeight || 0) + 14}px] bg-[${BG_LIGHT_GRAY}]`}
-        contentContainerStyle={tw`pb-4 px-4`}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={tw`flex-row items-center justify-between mb-5`}>
-          <Text style={tw.style({ ...FontGmarketSansBold })} fontSize={18}>
-            냉장고에 뭐가 있지?
-          </Text>
-        </View>
+    <ScrollView
+      style={tw`pt-[${(statusBarHeight || 0) + 14}px] bg-blue-50`}
+      contentContainerStyle={tw`pb-20 px-4`}
+      showsVerticalScrollIndicator={false}
+    >
+      <LogoTitle />
 
-        <FridgeInfo />
+      {assets && <FridgeInfo assets={assets} />}
 
-        <EntranceBox
-          foods={favoriteFoods.slice(0, 10)}
-          title='자주 먹는 식료품'
-        />
+      <ShoppingListBox />
 
-        {assets && <BannerSlider assets={[assets[0], assets[1]]} />}
-
-        <EntranceBox
-          foods={allExpiredFoods.slice(0, 10)}
-          title='유통기한 주의 식료품'
-        />
-
-        <Footer />
-      </ScrollView>
-    </SafeBottomAreaView>
+      <EntranceBox
+        foods={favoriteFoods.slice(0, 10)}
+        title='자주 먹는 식료품'
+        desc='자주 먹는 식료품은 냉장고에 더 빠르게 추가하세요.'
+      />
+      <EntranceBox
+        foods={allExpiredFoods.slice(0, 10)}
+        title='유통기한 주의 식료품'
+        desc='유통기한 주의 식료품을 쉽게 관리해보세요.'
+      />
+    </ScrollView>
   );
 };
 

@@ -1,6 +1,14 @@
 import { FontGmarketSansRegular } from '../constant/fonts';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { CARROT_COLOR, DEEP_INDIGO, GRAY } from '../constant/colors';
+import {
+  CARROT_COLOR,
+  DEEP_INDIGO,
+  DEEP_YELLOW,
+  GRAY,
+  INDIGO,
+  LIGHT_GRAY,
+  LIGHT_INDIGO,
+} from '../constant/colors';
 import { Dimensions } from 'react-native';
 import { scaleFont } from '../util';
 import Home from '../screens/Home';
@@ -25,12 +33,12 @@ export default function MyTabs() {
       initialRouteName='Home'
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: CARROT_COLOR,
+          backgroundColor: '#434aff',
           height:
             DEVICE_HEIGHT < 700 ? DEVICE_HEIGHT / 10 : DEVICE_HEIGHT / 8.5,
         },
-        tabBarActiveTintColor: DEEP_INDIGO,
-        tabBarInactiveTintColor: GRAY,
+        tabBarActiveTintColor: DEEP_YELLOW,
+        tabBarInactiveTintColor: '#fff',
         tabBarIconStyle: {
           marginTop: 10,
         },

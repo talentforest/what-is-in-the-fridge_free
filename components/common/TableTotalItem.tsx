@@ -5,6 +5,7 @@ import { Food } from '../../constant/foods';
 import { scaleH } from '../../util';
 import tw from 'twrnc';
 import Icon from '../native-component/Icon';
+import CheckBox from './CheckBox';
 
 interface Props {
   list: Food[];
@@ -27,14 +28,7 @@ export default function TableTotalItem({
         onPress={() => onEntirePress(list)}
         style={tw`justify-center flex-row items-center gap-2`}
       >
-        <Icon
-          type='MaterialCommunityIcons'
-          name={
-            !entireCheck ? 'checkbox-blank-outline' : 'checkbox-marked-outline'
-          }
-          size={20}
-          color={!entireCheck ? INACTIVE_COLOR : DEEP_INDIGO}
-        />
+        <CheckBox checked={!entireCheck} activeColor={DEEP_INDIGO} />
         <Text style={tw`text-indigo-500`}>
           전체 <Text style={tw`text-orange-600`}>{list.length}</Text>개 선택하기
         </Text>

@@ -7,6 +7,7 @@ import { ReactNode } from 'react';
 import { INACTIVE_COLOR } from '../../constant/colors';
 import Icon from '../native-component/Icon';
 import tw from 'twrnc';
+import CheckBox from './CheckBox';
 
 interface Props {
   food: Food;
@@ -33,14 +34,7 @@ export default function TableItem({
         45
       )}px]`}
     >
-      <Icon
-        type='MaterialCommunityIcons'
-        name={
-          !existInList(food.id) ? 'square-outline' : 'checkbox-marked-outline'
-        }
-        size={18}
-        color={!existInList(food.id) ? INACTIVE_COLOR : INDIGO}
-      />
+      <CheckBox checked={!existInList(food.id)} activeColor={INDIGO} />
       <View style={tw`flex-1 flex-row items-center gap-1`}>
         {image &&
           (food.image === '' ? (
