@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addToShoppingList } from '../redux/slice/shoppingList';
 import { View } from 'react-native';
@@ -19,12 +20,12 @@ import useToggleModal from '../hooks/useToggleModal';
 import TableTotalItem from '../components/common/TableTotalItem';
 import TableContainer from '../components/common/TableContainer';
 import Icon from '../components/native-component/Icon';
-import Header from '../components/common/Header';
 import TextInputBox from '../components/common/TextInputBox';
 import UUIDGenerator from 'react-native-uuid';
 import FavoriteListModal from '../components/modal/FavoriteListModal';
 import SquareBtn from '../components/common/Buttons/SquareBtn';
 import tw from 'twrnc';
+import HeaderBtn from '../components/common/Buttons/HeaderBtn';
 
 export default function ShoppingList() {
   const [keyword, setKeyword] = useState('');
@@ -39,9 +40,21 @@ export default function ShoppingList() {
     onCheckPress,
     existInList,
   } = useHandleCheckList();
+  const navigation = useNavigation();
   const [listModal, setListModal] = useState(false);
   const { checkExistFood } = useCheckFood();
   const { modalVisible, setModalVisible, onModalPress } = useToggleModal();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderBtn
+          iconName='heart-plus'
+          onPress={() => setListModal((prev) => !prev)}
+        />
+      ),
+    });
+  }, []);
 
   const addToFridgePress = (food: Food) => {
     checkExistFood(food)
@@ -66,11 +79,6 @@ export default function ShoppingList() {
 
   return (
     <KeyboardAvoidingView>
-      <Header
-        title='장보기 목록'
-        iconName='heart-plus'
-        onPress={() => setListModal((prev) => !prev)}
-      />
       <View style={tw`flex-1`}>
         <View
           style={tw`flex-1 px-4 bg-white rounded-lg border border-slate-300`}
