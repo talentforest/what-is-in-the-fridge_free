@@ -1,41 +1,31 @@
-import { useState } from 'react';
-import { Text } from '../components/native-component';
-import { Platform, StatusBar, View } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { useEffect, useState } from 'react';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import FridgeShape from '../components/common/FridgeShape';
-import Header from '../components/common/Header';
 import SearchFoodModal from '../components/modal/SearchFoodModal';
 import tw from 'twrnc';
-import Icon from '../components/native-component/Icon';
+import HeaderBtn from '../components/common/Buttons/HeaderBtn';
 
 export default function MyFridge() {
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-  const statusBarHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderBtn
+          iconName={'search'}
+          onPress={() => setModalVisible((prev) => !prev)}
+        />
+      ),
+    });
+  }, []);
 
   return (
     <>
-      <View
-        style={tw`flex-1 px-4 pb-2 bg-neutral-50 pt-[${
-          (statusBarHeight || 0) + 14
-        }px]`}
-      >
-        <Header
-          title='나의 냉장고'
-          iconName='search'
-          onPress={() => setModalVisible((prev) => !prev)}
-        />
-
-        <View style={tw`flex-1 justify-center items-center gap-5`}>
-          <View style={tw`flex-row items-center gap-1`}>
-            <Icon name='information-circle-outline' type='Ionicons' size={16} />
-            <Text style={tw`text-indigo-600`} fontSize={12}>
-              아래 냉장고에서 각각의 공간으로 들어갈 수 있어요.
-            </Text>
-          </View>
-          <View style={tw`h-4/5 max-h-[700px] w-[90%]`}>
-            <FridgeShape />
-          </View>
+      <View style={tw`flex-1 px-4 py-2 bg-blue-50 justify-center items-center`}>
+        <View style={tw`h-4/5 max-h-[700px] w-[90%]`}>
+          <FridgeShape />
         </View>
       </View>
       {modalVisible && (
