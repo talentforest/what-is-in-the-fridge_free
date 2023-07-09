@@ -12,11 +12,20 @@ export default function CompartmentShape({ space, compartmentNum }: Props) {
   return (
     <View
       key={compartmentNum}
-      style={tw`flex-1 w-[92%] mx-auto rounded-[4px] justify-end border border-slate-300 bg-white`}
+      style={tw`flex-1 w-full mx-auto rounded-md justify-end border border-slate-400 bg-white`}
     >
       {space.includes('문쪽') && (
         <View
-          style={tw`border w-full absolute left-0 h-[60%] rounded-b-[4px] border-slate-300 shadow-md  bg-slate-100`}
+          style={tw.style(
+            `w-full absolute left-0 h-[60%] rounded-b-md border border-slate-300 shadow-md bg-slate-100`,
+            {
+              shadowOffset: { width: 1, height: -1 },
+              shadowColor: '#666',
+              shadowOpacity: 0.4,
+              elevation: 5,
+              shadowRadius: 3,
+            }
+          )}
         />
       )}
     </View>

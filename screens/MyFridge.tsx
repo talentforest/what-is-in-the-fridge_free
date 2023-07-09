@@ -24,7 +24,7 @@ export default function MyFridge() {
   return (
     <>
       <View style={tw`flex-1 px-4 py-2 bg-blue-50 justify-center items-center`}>
-        <View style={tw`h-4/5 max-h-[700px] w-[90%]`}>
+        <View style={tw`w-[90%] h-[90%] max-h-[700px]`}>
           <FridgeShape />
         </View>
       </View>

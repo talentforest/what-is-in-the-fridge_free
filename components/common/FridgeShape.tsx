@@ -22,23 +22,26 @@ export default function FridgeShape() {
       {['안쪽', '문쪽'].map((side) => (
         <View
           key={side}
-          style={tw`${
-            freezer === 'top' ? '' : 'flex-col-reverse'
-          } flex-1 rounded-md`}
+          style={tw`${freezer === 'top' ? '' : 'flex-col-reverse'} flex-1`}
         >
           {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (
             <TouchableOpacity
               key={space}
               disabled={route.name !== 'Setting' ? false : true}
               onPress={() => navigation.navigate('Compartments', { space })}
-              style={tw`justify-center bg-neutral-200 border border-slate-400 ${
+              style={tw`justify-center bg-neutral-300 border border-slate-400 ${
                 space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'
-              } ${space.includes('문쪽') ? 'rounded-r-md' : 'rounded-l-md'}`}
+              } ${space.includes('문쪽') ? 'rounded-r-lg' : 'rounded-l-lg'}`}
             >
+              <View
+                style={tw`absolute z-10 w-full h-full opacity-50 ${
+                  space.includes('냉동') ? 'bg-blue-400' : 'bg-amber-300'
+                } ${space.includes('문쪽') ? 'rounded-r-lg' : 'rounded-l-lg'}`}
+              />
               {route.name !== 'FridgeSetting' && (
                 <CompartmentInfo space={space} />
               )}
-              <View style={tw`flex-1 gap-1 py-[${scaleH(6)}]`}>
+              <View style={tw`flex-1 gap-[${scaleH(1.5)}] p-[${scaleH(8)}]`}>
                 {getCompartments(compartments[space]).map(
                   ({ compartmentNum }) => (
                     <CompartmentShape
