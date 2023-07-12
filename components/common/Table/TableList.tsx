@@ -1,5 +1,5 @@
 import { FlatList, ListRenderItem, View } from 'react-native';
-import { Food } from '../../constant/foods';
+import { Food } from '../../../constant/foods';
 import tw from 'twrnc';
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
   renderItem: ListRenderItem<Food> | null | undefined;
 }
 
-export default function TableContainer({ list, renderItem }: Props) {
+export default function TableList({ list, renderItem }: Props) {
   return (
     <FlatList
       keyExtractor={(item) => item.id}

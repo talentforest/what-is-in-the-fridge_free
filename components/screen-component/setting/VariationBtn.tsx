@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity } from '../../native-component';
-import { DEEP_YELLOW, ORANGE_RED } from '../../../constant/colors';
+import { BLUE, DEEP_YELLOW, ORANGE_RED } from '../../../constant/colors';
 import { useDispatch, useSelector } from '../../../redux/hook';
 import { View } from 'react-native';
 import {
@@ -23,7 +23,7 @@ export default function VariationBtn({ name }: Props) {
     <View
       style={tw`h-[${scaleH(
         20
-      )}] gap-3 justify-center flex-1 items-center border border-slate-200 px-2 rounded-md bg-white`}
+      )}] gap-3 justify-center flex-1 items-center border border-blue-400 px-2 rounded-md`}
     >
       <Text>{name}</Text>
       <View style={tw`flex-row items-center justify-center`}>
@@ -39,8 +39,8 @@ export default function VariationBtn({ name }: Props) {
         >
           <Icon
             type='MaterialCommunityIcons'
-            name='plus'
-            color={DEEP_YELLOW}
+            name='plus-circle'
+            color={BLUE}
             size={20}
           />
         </TouchableOpacity>
@@ -56,7 +56,7 @@ export default function VariationBtn({ name }: Props) {
         >
           <Icon
             type='MaterialCommunityIcons'
-            name='minus'
+            name='minus-circle'
             color={ORANGE_RED}
             size={20}
           />

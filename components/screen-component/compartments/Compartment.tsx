@@ -8,6 +8,7 @@ import tw from 'twrnc';
 import FoodItem from './FoodItem';
 import useGetFoodList from '../../../hooks/useGetFoodList';
 import AddFoodModalBtn from './AddFoodModalBtn';
+import InnerShadow from '../../common/InnerShadow';
 
 interface Props {
   foodLocation: FoodLocation;
@@ -22,7 +23,10 @@ export default function Compartment({ foodLocation }: Props) {
 
   return (
     <>
-      <View style={tw`flex-1 border border-slate-300 rounded-lg bg-white`}>
+      <View
+        style={tw.style(`flex-1 border border-slate-300 rounded-lg bg-white`)}
+      >
+        <InnerShadow />
         <View
           style={tw`flex-row justify-between items-center pt-1.5 px-2 rounded-t-lg`}
         >

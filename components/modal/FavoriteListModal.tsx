@@ -4,8 +4,8 @@ import { View } from 'react-native';
 import { scaleH } from '../../util';
 import { useState } from 'react';
 import RNModal from './common/Modal';
-import TableContainer from '../common/TableContainer';
-import TableItem from '../common/TableItem';
+import TableList from '../common/Table/TableList';
+import TableItem from '../common/Table/TableItem';
 import useHandleCheckList from '../../hooks/useHandleCheckList';
 import useCheckFood from '../../hooks/useCheckFood';
 import SquareBtn from '../common/Buttons/SquareBtn';
@@ -42,7 +42,7 @@ export default function FavoriteListModal({
     nonExistFavoriteFoods,
     existFavoriteFoods, //
   } = useFavoriteFoods();
-
+  console.log(nonExistFavoriteFoods, '...');
   return (
     <RNModal
       title='즐겨찾는 식료품 목록에서 추가'
@@ -51,6 +51,7 @@ export default function FavoriteListModal({
     >
       <View style={tw`h-[${scaleH(140)}] px-1`}>
         <View style={tw`my-2 flex-1`}>
+          {/* 탭버튼 */}
           <View style={tw`flex-row pb-2`}>
             {['냉장고에 없어요', '냉장고에 있어요'].map((btnName) => (
               <TabBtn
@@ -61,59 +62,45 @@ export default function FavoriteListModal({
                   setCheckList([]);
                 }}
                 active={openTab === btnName}
-                length={
-                  btnName === '냉장고에 없어요'
-                    ? nonExistFavoriteFoods.length
-                    : existFavoriteFoods.length
-                }
                 iconName={
-                  btnName === '냉장고에 없어요'
-                    ? 'fridge-off-outline'
-                    : 'fridge-outline'
+                  btnName === '냉장고에 없어요' ? 'fridge-off' : 'fridge'
                 }
               />
             ))}
           </View>
-          <View style={tw`flex-1`}>
-            {['냉장고에 없어요', '냉장고에 있어요'].map(
-              (btnName) =>
-                openTab === btnName && (
-                  <TableContainer
-                    key={btnName}
-                    list={
-                      btnName === '냉장고에 없어요'
-                        ? nonExistFavoriteFoods
-                        : existFavoriteFoods
-                    }
-                    renderItem={({ item }) => (
-                      <TableItem
-                        key={item.name}
-                        food={item}
-                        onCheckPress={onCheckPress}
-                        existInList={existInList}
-                        disabled={!!checkExistShoppingList(item)}
-                      >
-                        <Icon
-                          type='MaterialCommunityIcons'
-                          name='basket-remove-outline'
-                          size={18}
-                          color={
-                            !checkExistShoppingList(item)
-                              ? ORANGE_RED
-                              : LIGHT_GRAY
-                          }
-                        />
-                      </TableItem>
-                    )}
-                  />
-                )
-            )}
-          </View>
+          {/* 식료품 리스트 */}
 
-          {!favoriteFoods.length && (
-            <Text style={tw`text-slate-500 text-center mt-22`}>
-              자주 먹는 식료품이 없습니다.
-            </Text>
+          {!!!favoriteFoods.length ? (
+            <View style={tw`border mt-22`}>
+              <Text style={tw`text-slate-500 text-center`}>
+                자주 먹는 식료품이 없습니다.
+              </Text>
+            </View>
+          ) : (
+            <View style={tw`mb-10`}>
+              {['냉장고에 없어요', '냉장고에 있어요'].map(
+                (btnName) =>
+                  openTab === btnName && (
+                    <TableList
+                      key={btnName}
+                      list={
+                        btnName === '냉장고에 없어요'
+                          ? nonExistFavoriteFoods
+                          : existFavoriteFoods
+                      }
+                      renderItem={({ item }) => (
+                        <TableItem
+                          key={item.name}
+                          food={item}
+                          onCheckPress={onCheckPress}
+                          existInList={existInList}
+                          disabled={!!checkExistShoppingList(item)}
+                        />
+                      )}
+                    />
+                  )
+              )}
+            </View>
           )}
         </View>
 

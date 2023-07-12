@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { TouchableOpacity } from '../native-component';
+import { Text, TouchableOpacity } from '../native-component';
 import { useSelector } from '../../redux/hook';
 import { Space } from '../../constant/fridgeInfo';
 import { getCompartments, scaleH } from '../../util';
@@ -37,7 +37,7 @@ export default function FridgeShape() {
                 space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'
               } ${doorRadius(space)}`}
             >
-              {route.name !== 'FridgeSetting' && (
+              {route.name !== 'FridgeSetting' ? (
                 <>
                   <View
                     style={tw`absolute z-10 w-full h-full opacity-80 bg-white
@@ -45,8 +45,31 @@ export default function FridgeShape() {
                   />
                   <CompartmentInfo space={space} />
                 </>
+              ) : (
+                <>
+                  <View
+                    style={tw`${doorRadius(space)} ${
+                      space.includes('냉동')
+                        ? 'border-blue-400'
+                        : 'border-yellow-400'
+                    } border-2 absolute z-10 w-full h-full`}
+                  />
+                  <Text
+                    style={tw`absolute z-10 w-full text-center font-bold ${
+                      space.includes('냉동')
+                        ? 'text-blue-600'
+                        : 'text-yellow-600'
+                    }`}
+                  >
+                    {space.slice(0, 3)}
+                  </Text>
+                </>
               )}
-              <View style={tw`flex-1 gap-[${scaleH(1.5)}] p-[${scaleH(8)}]`}>
+              <View
+                style={tw`flex-1 gap-[${scaleH(1.5)}] p-[${scaleH(
+                  route.name !== 'FridgeSetting' ? 8 : 4
+                )}]`}
+              >
                 {getCompartments(compartments[space]).map(
                   ({ compartmentNum }) => (
                     <CompartmentShape

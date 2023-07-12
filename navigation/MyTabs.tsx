@@ -1,16 +1,16 @@
-import { FontGmarketSansRegular } from '../constant/fonts';
+import { FontGmarketSansBold, FontGmarketSansRegular } from '../constant/fonts';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { DEEP_BLUE, DEEP_YELLOW } from '../constant/colors';
+import { DEEP_GRAY, DEEP_YELLOW } from '../constant/colors';
 import { Dimensions } from 'react-native';
 import { scaleFont } from '../util';
 import Home from '../screens/Home';
 import Setting from '../screens/Setting';
 import ShoppingList from '../screens/ShoppingList';
 import MyFridge from '../screens/MyFridge';
-import TabIcon from './TabIcon';
+import Icon from '../components/native-component/Icon';
 
 export type RootTabParamList = {
   Home: undefined;
@@ -19,7 +19,7 @@ export type RootTabParamList = {
   ShoppingList: undefined;
 };
 
-const BG_COLOR = '#d6e6ff';
+export const HEADER_BGCOLOR = '#dbecff';
 const TAB_BG_COLOR = '#648fff';
 
 const Tab = createBottomTabNavigator();
@@ -44,14 +44,14 @@ const tabBarOptions = {
 
 const headerOptions: BottomTabNavigationOptions = {
   headerShown: true,
-  headerTintColor: DEEP_BLUE,
+  headerTintColor: DEEP_GRAY,
   headerShadowVisible: false,
   headerStyle: {
-    backgroundColor: BG_COLOR,
+    backgroundColor: HEADER_BGCOLOR,
   },
   headerTitleStyle: {
-    fontSize: scaleFont(18),
-    ...FontGmarketSansRegular,
+    fontSize: scaleFont(17),
+    ...FontGmarketSansBold,
   },
   headerTitleAlign: 'left',
 };
@@ -100,9 +100,17 @@ export default function MyTabs() {
           tabBarLabel: '더보기',
           headerTitle: '설정',
           ...headerOptions,
-          headerTitleAlign: 'center',
+          // headerStyle: {
+          //   backgroundColor: '#fff',
+          // },
         }}
       />
     </Tab.Navigator>
+  );
+}
+
+export function TabIcon({ name, color }: { name: string; color: string }) {
+  return (
+    <Icon type='MaterialCommunityIcons' name={name} color={color} size={18} />
   );
 }

@@ -12,8 +12,8 @@ export default function SettingContainer({
 }) {
   return (
     <View style={tw`mb-6`}>
-      <View style={tw`py-2 border-b border-slate-300`}>
-        <Text style={tw`text-indigo-600`} fontSize={12}>
+      <View style={tw`py-2.5 px-1 border-b border-blue-300`}>
+        <Text style={tw`text-slate-600`} fontSize={12}>
           {title}
         </Text>
       </View>

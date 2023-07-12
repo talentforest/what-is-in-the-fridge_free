@@ -26,7 +26,7 @@ const Home = () => {
 
   return (
     <ScrollView
-      style={tw`pt-[${(statusBarHeight || 0) + 14}px] bg-blue-100`}
+      style={tw`pt-[${(statusBarHeight || 0) + 14}px] bg-blue-50`}
       contentContainerStyle={tw`pb-20 px-4`}
       showsVerticalScrollIndicator={false}
     >

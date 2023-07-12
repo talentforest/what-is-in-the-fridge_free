@@ -30,11 +30,13 @@ export default function Compartments({ route }: RouteParams) {
   if (!fontsLoaded) return null;
 
   return (
-    <View style={tw`flex-1 pt-4 pb-8 bg-neutral-50`}>
+    <View style={tw`flex-1 pt-4 pb-8 bg-blue-50 justify-center`}>
       <View
-        style={tw`p-[${scaleH(8)}] gap-[${scaleH(
+        style={tw`p-[${scaleH(12)}] gap-[${scaleH(
           2
-        )}] border w-[90%] m-auto flex-1 mt-3 mb-4 justify-between border-slate-300 rounded-lg bg-neutral-200`}
+        )}] border border-slate-300 ${
+          space.includes('냉동') ? 'h-4/5' : 'flex-1'
+        } w-[90%] m-auto mt-3 mb-4 self-center justify-center rounded-lg bg-neutral-200`}
       >
         {compartments.map((compartment) => (
           <Compartment

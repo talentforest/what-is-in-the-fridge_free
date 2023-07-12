@@ -1,4 +1,4 @@
-import { DEEP_BLUE } from '../../../constant/colors';
+import { DEEP_GRAY } from '../../../constant/colors';
 import { TouchableOpacity } from '../../native-component';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
@@ -14,8 +14,8 @@ export default function HeaderBtn({ iconName, onPress }: Props) {
       <Icon
         name={iconName}
         type={iconName === 'search' ? 'Ionicons' : 'MaterialCommunityIcons'}
-        size={24}
-        color={DEEP_BLUE}
+        size={22}
+        color={DEEP_GRAY}
       />
     </TouchableOpacity>
   );

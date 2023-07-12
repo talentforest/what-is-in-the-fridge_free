@@ -11,14 +11,14 @@ import {
 import { useSelector } from '../redux/hook';
 import { DEEP_INDIGO, INDIGO } from '../constant/colors';
 import { Food, initialFoodInfo } from '../constant/foods';
-import TableLabel from '../components/common/TableLabel';
-import TableItem from '../components/common/TableItem';
+import TableLabel from '../components/common/Table/TableLabel';
+import TableItem from '../components/common/Table/TableItem';
 import AddSelectFoodModal from '../components/modal/AddSelectFoodModal';
 import useCheckFood from '../hooks/useCheckFood';
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useToggleModal from '../hooks/useToggleModal';
-import TableTotalItem from '../components/common/TableTotalItem';
-import TableContainer from '../components/common/TableContainer';
+import TableTotalItem from '../components/common/Table/TableTotalItem';
+import TableList from '../components/common/Table/TableList';
 import Icon from '../components/native-component/Icon';
 import TextInputBox from '../components/common/TextInputBox';
 import UUIDGenerator from 'react-native-uuid';
@@ -26,6 +26,7 @@ import FavoriteListModal from '../components/modal/FavoriteListModal';
 import SquareBtn from '../components/common/Buttons/SquareBtn';
 import tw from 'twrnc';
 import HeaderBtn from '../components/common/Buttons/HeaderBtn';
+import TableContainer from '../components/common/Table/TableContainer';
 
 export default function ShoppingList() {
   const [keyword, setKeyword] = useState('');
@@ -80,12 +81,10 @@ export default function ShoppingList() {
   return (
     <KeyboardAvoidingView>
       <View style={tw`flex-1`}>
-        <View
-          style={tw`flex-1 px-4 bg-stone-50 rounded-sm border border-slate-300`}
-        >
+        <TableContainer>
           <TableLabel title='식료품' label='냉장고 추가' />
           {shoppingList.length !== 0 ? (
-            <TableContainer
+            <TableList
               list={shoppingList}
               renderItem={({ item }) => (
                 <TableItem
@@ -119,7 +118,7 @@ export default function ShoppingList() {
             list={shoppingList}
             entireCheck={entireCheck}
           />
-        </View>
+        </TableContainer>
 
         {/* {!!checkList.length && (
           <View style={tw`gap-1 px-4 mt-4`}>

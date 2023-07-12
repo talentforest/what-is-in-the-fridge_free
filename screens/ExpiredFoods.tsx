@@ -1,18 +1,19 @@
 import { View } from 'react-native';
 import { SafeBottomAreaView, Text } from '../components/native-component';
-import { BG_LIGHT_GRAY } from '../constant/colors';
 import { useState } from 'react';
+import { scaleH } from '../util';
 import useExpiredFood from '../hooks/useExpiredFoods';
-import TableLabel from '../components/common/TableLabel';
-import TableItem from '../components/common/TableItem';
+import TableLabel from '../components/common/Table/TableLabel';
+import TableItem from '../components/common/Table/TableItem';
 import useHandleCheckList from '../hooks/useHandleCheckList';
-import TableTotalItem from '../components/common/TableTotalItem';
+import TableTotalItem from '../components/common/Table/TableTotalItem';
 import LeftDay from '../components/common/LeftDay';
 import ExpiredState from '../components/screen-component/expired-foods/ExpiredState';
-import TableContainer from '../components/common/TableContainer';
+import TableList from '../components/common/Table/TableList';
 import tw from 'twrnc';
 import SquareBtn from '../components/common/Buttons/SquareBtn';
 import TabBtn from '../components/common/Buttons/TabBtn';
+import TableContainer from '../components/common/Table/TableContainer';
 
 export type FoodType = '냉동실' | '냉장실';
 
@@ -39,27 +40,27 @@ export default function ExpiredFoods() {
 
   return (
     <SafeBottomAreaView>
-      <View style={tw`flex-1 pb-4 px-4 bg-[${BG_LIGHT_GRAY}]`}>
-        <ExpiredState length={allExpiredFoods.length} />
-
-        <View style={tw`flex-row gap-1 items-center mb-2`}>
+      <View style={tw`flex-1 p-[${scaleH(14)}px] bg-blue-50`}>
+        {/* 탭 버튼 */}
+        <View style={tw`flex-row items-center mb-2`}>
           {['냉장실', '냉동실'].map((btnName) => (
             <TabBtn
               key={btnName}
-              btnName={btnName}
+              btnName={`${btnName} 보기`}
+              iconName='fridge'
               setOpenTab={() => onTabPress(btnName as FoodType)}
-              active={btnName.slice(0, 3) === tab}
+              active={btnName === tab}
               length={filterExpiredFoods(btnName as FoodType).length}
             />
           ))}
         </View>
-
-        <View
-          style={tw`bg-white px-4 flex-1 rounded-lg border border-slate-300`}
-        >
-          <TableLabel title='식료품' label='유통기한 임박 순' />
+        {/* 목록 표 */}
+        <TableContainer>
+          <TableLabel title={`${tab} 식료품`} label='유통기한' />
+          {/* 냉장고 상태 문구 */}
+          <ExpiredState length={filterExpiredFoods(tab as FoodType).length} />
           {!!filterExpiredFoods(tab).length ? (
-            <TableContainer
+            <TableList
               list={filterExpiredFoods(tab)}
               renderItem={({ item }) => (
                 <TableItem
@@ -79,7 +80,7 @@ export default function ExpiredFoods() {
               유통기한 주의 식료품이 없습니다.
             </Text>
           )}
-
+          {/* 전체 선택하기 */}
           {!!filterExpiredFoods(tab).length && (
             <TableTotalItem
               onEntirePress={() => onEntirePress(filterExpiredFoods(tab))}
@@ -87,7 +88,7 @@ export default function ExpiredFoods() {
               entireCheck={entireCheck}
             />
           )}
-        </View>
+        </TableContainer>
 
         {!!checkList.length && (
           <View style={tw`gap-1 px-4 mt-4`}>

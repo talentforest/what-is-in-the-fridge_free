@@ -1,19 +1,18 @@
 import { View } from 'react-native';
-import { Text, TouchableOpacity } from '../native-component';
-import { cutLetter, scaleH } from '../../util';
-import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
-import { Food } from '../../constant/foods';
+import { Text, TouchableOpacity } from '../../native-component';
+import { cutLetter, scaleH } from '../../../util';
+import { GRAY, LIGHT_GRAY } from '../../../constant/colors';
+import { Food } from '../../../constant/foods';
 import { ReactNode } from 'react';
-import { INACTIVE_COLOR } from '../../constant/colors';
-import Icon from '../native-component/Icon';
+import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
-import CheckBox from './Box/CheckBox';
+import CheckBox from '../Box/CheckBox';
 
 interface Props {
   food: Food;
   onCheckPress: (food: Food) => void;
   existInList: (id: string) => Food | undefined;
-  children: ReactNode;
+  children?: ReactNode;
   image?: boolean;
   disabled?: boolean;
 }
@@ -30,18 +29,18 @@ export default function TableItem({
     <TouchableOpacity
       disabled={disabled}
       onPress={() => onCheckPress(food)}
-      style={tw`flex-row gap-2 items-center justify-between h-[${scaleH(
+      style={tw`flex-row gap-1 items-center justify-between h-[${scaleH(
         48
       )}px]`}
     >
-      <CheckBox checked={!existInList(food.id)} activeColor={INDIGO} />
-      <View style={tw`flex-1 flex-row items-center gap-1`}>
+      <CheckBox checked={!existInList(food.id)} activeColor={GRAY} />
+      <View style={tw`flex-1 flex-row items-center gap-2 ml-1`}>
         {image &&
           (food.image === '' ? (
             <Icon
               type='MaterialCommunityIcons'
-              name='food-outline'
-              size={20}
+              name='food'
+              size={18}
               color={LIGHT_GRAY}
             />
           ) : (

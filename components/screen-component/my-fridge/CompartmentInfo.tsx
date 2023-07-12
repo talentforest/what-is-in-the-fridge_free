@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
 import { Space } from '../../../constant/fridgeInfo';
-import { BLUE, DEEP_GRAY, DEEP_YELLOW } from '../../../constant/colors';
+import { BLUE, DEEP_YELLOW } from '../../../constant/colors';
 import { scaleH } from '../../../util';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
@@ -42,7 +42,7 @@ export default function CompartmentInfo({ space }: { space: Space }) {
           size={16}
           color={space.includes('냉동') ? BLUE : DEEP_YELLOW}
         />
-        <Text style={tw`text-slate-600`} fontSize={scaleH(16)}>
+        <Text style={tw`text-slate-600`} fontSize={scaleH(14)}>
           {space}
         </Text>
       </View>
@@ -66,11 +66,13 @@ export default function CompartmentInfo({ space }: { space: Space }) {
         ))}
       </View>
       {/* 들어가기 버튼 */}
-      <View style={tw`flex-row items-center self-end`}>
-        <Text fontSize={14} style={tw.style(`text-slate-700 font-bold`)}>
+      <View
+        style={tw`flex-row items-center self-end border border-slate-300 px-3.5 py-1.5 rounded-full bg-amber-300`}
+      >
+        <Text fontSize={12} style={tw.style(`text-blue-700 font-bold`)}>
           들어가기
         </Text>
-        <Icon name='enter' type='Ionicons' size={20} color={DEEP_GRAY} />
+        <Icon name='enter' type='Ionicons' size={16} color={BLUE} />
       </View>
     </View>
   );
