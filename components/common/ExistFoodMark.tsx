@@ -10,7 +10,7 @@ export default function ExistFoodMark({ exist }: { exist: boolean }) {
       <View style={tw`flex-row gap-0.5 items-center`}>
         <Icon
           type='MaterialCommunityIcons'
-          name={exist ? 'fridge-outline' : 'fridge-off-outline'}
+          name={exist ? 'fridge' : 'fridge-off'}
           size={15}
           color={exist ? INDIGO : INACTIVE_COLOR}
         />

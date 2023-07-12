@@ -1,6 +1,7 @@
 import { useRoute } from '@react-navigation/native';
-import { INDIGO, LIGHT_GRAY } from '../../../constant/colors';
+import { BLUE, INACTIVE_COLOR } from '../../../constant/colors';
 import { Text, TouchableOpacity } from '../../native-component';
+import { getColorByFoodLength } from '../../../constant/caution';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 
@@ -8,8 +9,8 @@ interface Props {
   btnName: string;
   setOpenTab: (btnName: string) => void;
   active: boolean;
-  length: number;
-  iconName?: 'fridge-off-outline' | 'fridge-outline';
+  length?: number;
+  iconName?: 'fridge-off' | 'fridge';
 }
 
 export default function TabBtn({
@@ -25,37 +26,31 @@ export default function TabBtn({
     <TouchableOpacity
       key={btnName}
       onPress={() => setOpenTab(btnName)}
-      style={tw`flex-row gap-1 items-center justify-between px-2 py-1 border-b-2 ${
-        active ? 'border-indigo-400' : 'border-slate-200'
+      style={tw`flex-row gap-1 items-center justify-between px-1.5 pb-1 pt-0 border-b-2 ${
+        active ? 'border-blue-500' : 'border-slate-300'
       }`}
     >
       {iconName && (
         <Icon
           name={iconName}
           type='MaterialCommunityIcons'
-          size={17}
-          color={active ? INDIGO : LIGHT_GRAY}
+          size={16}
+          color={active ? BLUE : INACTIVE_COLOR}
         />
       )}
       <Text
-        style={tw`my-2 ${active ? ' text-indigo-600' : 'text-slate-400'}`}
+        style={tw`my-2 ${
+          active ? ' text-blue-700' : `text-[${INACTIVE_COLOR}]`
+        }`}
         fontSize={14}
       >
         {btnName}
       </Text>
-      {route.name === 'ExpiredFoods' && (
+      {route.name === 'ExpiredFoods' && length && (
         <Text
           fontSize={12}
           style={tw`${
-            !active
-              ? 'text-slate-400'
-              : length <= 2
-              ? 'text-green-600'
-              : length <= 8
-              ? 'text-amber-600'
-              : length > 8
-              ? 'text-red-600'
-              : 'text-slate-400'
+            active ? getColorByFoodLength(length) : `text-[${INACTIVE_COLOR}]`
           }`}
         >
           {length}개

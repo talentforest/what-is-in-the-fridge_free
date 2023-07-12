@@ -16,16 +16,7 @@ export default function CompartmentShape({ space, compartmentNum }: Props) {
     >
       {space.includes('문쪽') && (
         <View
-          style={tw.style(
-            `w-full absolute left-0 h-[60%] rounded-b-md border border-slate-300 shadow-md bg-slate-100`,
-            {
-              shadowOffset: { width: 1, height: -1 },
-              shadowColor: '#666',
-              shadowOpacity: 0.4,
-              elevation: 5,
-              shadowRadius: 3,
-            }
-          )}
+          style={tw`w-full absolute left-0 h-[60%] rounded-b-md border border-slate-300 shadow-md bg-slate-100`}
         />
       )}
     </View>

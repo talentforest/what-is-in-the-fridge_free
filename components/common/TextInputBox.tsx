@@ -22,9 +22,9 @@ export default function TextInputBox({
 }: Props) {
   return (
     <View
-      style={tw`w-full border h-[${scaleH(11)}] pl-[${scaleH(10)}] pr-[${scaleH(
+      style={tw`w-full pl-[${scaleH(10)}] pr-[${scaleH(
         12
-      )}] my-3 border-slate-400 rounded-full items-center  flex-row bg-white`}
+      )}] my-3 border border-slate-400 rounded-full items-center flex-row bg-white`}
     >
       <TextInput
         value={value}
@@ -32,7 +32,7 @@ export default function TextInputBox({
         placeholder={placeholder}
         returnKeyType='done'
         blurOnSubmit={false}
-        style={tw`text-slate-600 flex-1 rounded-full border-0`}
+        style={tw`text-slate-600 flex-1 rounded-full border-0 my-0.5`}
         onSubmitEditing={onSubmitEditing}
       />
       <TouchableOpacity onPress={onSubmitEditing}>

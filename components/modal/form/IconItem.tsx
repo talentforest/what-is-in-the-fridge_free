@@ -23,7 +23,7 @@ export default function FormImageItem({ value, changeInfo }: Props) {
         {value === '' ? (
           <Icon
             type='MaterialCommunityIcons'
-            name='food-outline'
+            name='food'
             color={INDIGO}
             size={22}
           />

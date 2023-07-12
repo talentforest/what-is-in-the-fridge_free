@@ -7,7 +7,7 @@ type CautionLevel = {
 export const caution: CautionLevel[] = [
   {
     level: 1,
-    guide: '냉장고가 깔끔해요!',
+    guide: '깔끔해요!',
     max: 2,
   },
   {
@@ -22,7 +22,15 @@ export const caution: CautionLevel[] = [
   },
   {
     level: 4,
-    guide: '냉장고 대청소가 시급해요.',
+    guide: '대청소가 시급해요.',
     max: 10000000,
   },
 ];
+
+export const getColorByFoodLength = (length: number) => {
+  return length >= 15
+    ? 'text-red-600'
+    : length >= 3
+    ? 'text-orange-600'
+    : 'text-green-700';
+};

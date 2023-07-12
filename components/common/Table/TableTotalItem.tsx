@@ -1,11 +1,11 @@
 import { View } from 'react-native';
-import { Text, TouchableOpacity } from '../native-component';
-import { DEEP_INDIGO, INACTIVE_COLOR } from '../../constant/colors';
-import { Food } from '../../constant/foods';
-import { scaleH } from '../../util';
+import { Text, TouchableOpacity } from '../../native-component';
+import { DEEP_INDIGO, INACTIVE_COLOR } from '../../../constant/colors';
+import { Food } from '../../../constant/foods';
+import { scaleH } from '../../../util';
 import tw from 'twrnc';
-import Icon from '../native-component/Icon';
-import CheckBox from './Box/CheckBox';
+import Icon from '../../native-component/Icon';
+import CheckBox from '../Box/CheckBox';
 
 interface Props {
   list: Food[];
@@ -21,7 +21,7 @@ export default function TableTotalItem({
   return (
     <View
       style={tw`h-[${scaleH(
-        43
+        48
       )}px] border-t border-slate-300 flex-row items-center gap-2`}
     >
       <TouchableOpacity

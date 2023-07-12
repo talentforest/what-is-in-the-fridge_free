@@ -3,16 +3,16 @@ import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
-import { FontGmarketSansRegular } from '../constant/fonts';
-import { BG_LIGHT_GRAY, GRAY } from '../constant/colors';
-import MyTabs, { RootTabParamList } from './MyTabs';
+import { FontGmarketSansBold } from '../constant/fonts';
+import { DEEP_GRAY } from '../constant/colors';
+import { scaleFont } from '../util';
+import MyTabs, { HEADER_BGCOLOR, RootTabParamList } from './MyTabs';
 import React from 'react';
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
 import ExpiredFoods from '../screens/ExpiredFoods';
 import BackBtn from '../components/common/Buttons/BackBtn';
 import FridgeSetting from '../screens/FridgeSetting';
-import { scaleFont } from '../util';
 
 export type RootStackParamList = {
   MyTabs: undefined;
@@ -30,12 +30,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const options: NativeStackNavigationOptions = {
   headerShown: true,
-  headerTintColor: GRAY,
+  headerTintColor: DEEP_GRAY,
   headerShadowVisible: false,
-  headerStyle: { backgroundColor: BG_LIGHT_GRAY },
+  headerStyle: { backgroundColor: HEADER_BGCOLOR },
   headerTitleStyle: {
-    fontSize: scaleFont(18),
-    ...FontGmarketSansRegular,
+    fontSize: scaleFont(16),
+    ...FontGmarketSansBold,
   },
   headerTitleAlign: 'center',
   headerLeft: () => <BackBtn />,

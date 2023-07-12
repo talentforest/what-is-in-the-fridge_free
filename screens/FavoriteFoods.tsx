@@ -1,4 +1,3 @@
-import { BG_LIGHT_GRAY } from '../constant/colors';
 import { useFonts } from 'expo-font';
 import { Alert, KeyboardAvoidingView, View } from 'react-native';
 import { useState } from 'react';
@@ -7,17 +6,19 @@ import { useDispatch } from '../redux/hook';
 import { SafeBottomAreaView, Text } from '../components/native-component';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { Food, initialFoodInfo } from '../constant/foods';
-import TableLabel from '../components/common/TableLabel';
+import TableLabel from '../components/common/Table/TableLabel';
 import useHandleCheckList from '../hooks/useHandleCheckList';
-import TableTotalItem from '../components/common/TableTotalItem';
-import TableContainer from '../components/common/TableContainer';
-import TableItem from '../components/common/TableItem';
+import TableTotalItem from '../components/common/Table/TableTotalItem';
+import TableList from '../components/common/Table/TableList';
+import TableItem from '../components/common/Table/TableItem';
 import ExistFoodMark from '../components/common/ExistFoodMark';
 import useCheckFood from '../hooks/useCheckFood';
 import SquareBtn from '../components/common/Buttons/SquareBtn';
 import UUIDGenerator from 'react-native-uuid';
 import useFavoriteFoods from '../hooks/useFavoriteFoods';
 import tw from 'twrnc';
+import { scaleH } from '../util';
+import TableContainer from '../components/common/Table/TableContainer';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
@@ -55,14 +56,12 @@ export default function FavoriteFoods() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeBottomAreaView style={tw`bg-[${BG_LIGHT_GRAY}] flex-1 px-4 pb-4 pt-2`}>
+    <SafeBottomAreaView style={tw`p-[${scaleH(14)}px] flex-1`}>
       <View style={tw`flex-1`}>
-        <View
-          style={tw`bg-white px-4 flex-1 rounded-lg border border-slate-300`}
-        >
+        <TableContainer>
           <TableLabel title='식료품' label='식료품 유무' />
           {favoriteFoods.length !== 0 ? (
-            <TableContainer
+            <TableList
               list={[...nonExistFavoriteFoods, ...existFavoriteFoods]}
               renderItem={({ item }) => (
                 <TableItem
@@ -87,7 +86,7 @@ export default function FavoriteFoods() {
               entireCheck={entireCheck}
             />
           )}
-        </View>
+        </TableContainer>
         {!!checkList.length && (
           <View style={tw`gap-1 px-4 mt-4`}>
             <Text style={tw`text-slate-600`}>

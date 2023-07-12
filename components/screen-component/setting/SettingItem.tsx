@@ -1,9 +1,9 @@
 import { Text, TouchableOpacity } from '../../native-component';
-import { INDIGO } from '../../../constant/colors';
+import { BLUE } from '../../../constant/colors';
+import { scaleH } from '../../../util';
 import { ReactNode } from 'react';
 import tw from 'twrnc';
 import Icon from '../../native-component/Icon';
-import { scaleH } from '../../../util';
 
 interface Props {
   title: string;
@@ -25,16 +25,16 @@ export default function SettingItem({
       onPress={onPress}
       style={tw`h-[${scaleH(
         46
-      )}px] flex-row justify-between items-center gap-1 border-b border-slate-300 px-2 bg-white`}
+      )}px] px-1 flex-row justify-between items-center border-b border-blue-300 gap-2 bg-white`}
       disabled={disabled}
     >
       <Icon
         type='MaterialCommunityIcons'
         name={iconName}
         size={18}
-        color={INDIGO}
+        color={BLUE}
       />
-      <Text style={tw`ml-1.5 text-slate-600 flex-1`}>{title}</Text>
+      <Text style={tw`text-blue-600 flex-1`}>{title}</Text>
       {children}
     </TouchableOpacity>
   );
