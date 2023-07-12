@@ -26,7 +26,7 @@ const Home = () => {
 
   return (
     <ScrollView
-      style={tw`pt-[${(statusBarHeight || 0) + 14}px] bg-blue-50`}
+      style={tw`pt-[${(statusBarHeight || 0) + 14}px] bg-blue-100`}
       contentContainerStyle={tw`pb-20 px-4`}
       showsVerticalScrollIndicator={false}
     >
@@ -39,7 +39,7 @@ const Home = () => {
           title: '장봐야할 식료품',
           desc: '카트에 넣으신 식료품을 터치해주세요.',
           iconName: 'cart',
-          bgColor: 'bg-indigo-600',
+          bgColor: 'bg-indigo-500',
           route: 'ShoppingList',
         }}
       />
@@ -49,7 +49,7 @@ const Home = () => {
           title: '유통기한 주의 식료품',
           desc: '유통기한 주의 식료품을 쉽게 관리해보세요.',
           iconName: 'alert-circle',
-          bgColor: 'bg-slate-600',
+          bgColor: 'bg-slate-500',
           route: 'ExpiredFoods',
         }}
       />

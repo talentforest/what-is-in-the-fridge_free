@@ -31,7 +31,7 @@ export default function TableItem({
       disabled={disabled}
       onPress={() => onCheckPress(food)}
       style={tw`flex-row gap-2 items-center justify-between h-[${scaleH(
-        45
+        48
       )}px]`}
     >
       <CheckBox checked={!existInList(food.id)} activeColor={INDIGO} />
@@ -41,7 +41,7 @@ export default function TableItem({
             <Icon
               type='MaterialCommunityIcons'
               name='food-outline'
-              size={18}
+              size={20}
               color={LIGHT_GRAY}
             />
           ) : (

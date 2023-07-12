@@ -24,21 +24,13 @@ export function KeyboardAvoidingView({ children }: Props) {
       {PlatformIOS ? (
         <RNKeyboardAvoidingView
           behavior='padding'
-          style={tw`flex-1 px-4 bg-blue-50 pt-[${
-            (statusBarHeight || 0) + 14
-          }px]`}
-          keyboardVerticalOffset={0}
+          style={tw`flex-1 p-4 bg-blue-50`}
+          keyboardVerticalOffset={65}
         >
           {children}
         </RNKeyboardAvoidingView>
       ) : (
-        <View
-          style={tw`flex-1 px-4 bg-[${BG_LIGHT_GRAY}] pt-[${
-            (statusBarHeight || 0) + 14
-          }px]`}
-        >
-          {children}
-        </View>
+        <View style={tw`flex-1 px-4 bg-[${BG_LIGHT_GRAY}]`}>{children}</View>
       )}
     </>
   );

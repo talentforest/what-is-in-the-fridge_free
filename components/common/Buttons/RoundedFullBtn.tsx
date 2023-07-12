@@ -1,4 +1,3 @@
-import { FontGmarketSansBold } from '../../../constant/fonts';
 import { Text, TouchableOpacity } from '../../native-component';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp, RouteName } from '../../../navigation/Navigation';
@@ -20,11 +19,7 @@ export default function RoundedFullBtn({ title, iconName, route }: Props) {
       onPress={() => navigate.navigate(route)}
       style={tw`flex-row items-center self-end pl-5 pt-5`}
     >
-      <Text
-        style={tw.style(`text-white text-[${scaleFont(13)}px]`, {
-          ...FontGmarketSansBold,
-        })}
-      >
+      <Text style={tw`text-white text-[${scaleFont(13)}px] font-bold`}>
         {title}
       </Text>
 
