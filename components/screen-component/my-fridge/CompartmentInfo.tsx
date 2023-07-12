@@ -1,13 +1,12 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
 import { Space } from '../../../constant/fridgeInfo';
-import { DEEP_BLUE, INDIGO, ORANGE_RED } from '../../../constant/colors';
+import { BLUE, DEEP_GRAY, DEEP_YELLOW } from '../../../constant/colors';
 import { scaleH } from '../../../util';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 import useGetFoodList from '../../../hooks/useGetFoodList';
 import useExpiredFoods from '../../../hooks/useExpiredFoods';
-import { FontGmarketSansBold } from '../../../constant/fonts';
 
 export default function CompartmentInfo({ space }: { space: Space }) {
   const { getFoodList } = useGetFoodList();
@@ -15,64 +14,63 @@ export default function CompartmentInfo({ space }: { space: Space }) {
 
   const compartmentInfo = [
     {
-      name: '식료품',
-      icon: 'food',
-      list: (space: Space) => getFoodList(space),
-      color: INDIGO,
+      name: '총 식료품',
+      foodList: (space: Space) => getFoodList(space),
+      activeColor: 'text-teal-600',
     },
     {
       name: '유통기한 주의',
-      icon: 'fridge-industrial-alert',
-      list: (space: Space) => filterExpiredFoods(space),
-      color: ORANGE_RED,
+      foodList: (space: Space) => filterExpiredFoods(space),
+      activeColor: 'text-red-500',
     },
   ];
 
+  const getColor = (listLength: number, activeColor: string) => {
+    const inActiveColor = 'text-slate-500';
+    return listLength ? activeColor : inActiveColor;
+  };
+
   return (
     <View style={tw`absolute top-0 z-10 p-[${scaleH(14)}px] h-full w-full`}>
-      <View style={tw`pb-5`}>
-        <Text
-          style={tw`${
-            space.includes('냉동') ? 'text-blue-600' : 'text-indigo-700'
-          }`}
-          fontSize={scaleH(16)}
-        >
+      {/* 냉장고 칸 이름 */}
+      <View
+        style={tw`border-b border-slate-400 mb-3 pt-1 pb-2 flex-row items-center gap-1`}
+      >
+        <Icon
+          name='information'
+          type='MaterialCommunityIcons'
+          size={16}
+          color={space.includes('냉동') ? BLUE : DEEP_YELLOW}
+        />
+        <Text style={tw`text-slate-600`} fontSize={scaleH(16)}>
           {space}
         </Text>
       </View>
-      <View style={tw`gap-3 mb-5 flex-1`}>
-        {compartmentInfo.map(({ name, icon, list, color }) => (
-          <View key={name} style={tw`gap-1 mb-1 flex-row`}>
-            <Icon
-              type='MaterialCommunityIcons'
-              name={icon}
-              size={16}
-              color={`${!!list(space as Space).length ? color : '#fff'}`}
-            />
+      {/* 냉장고 칸 정보 */}
+      <View style={tw`gap-4 flex-1`}>
+        {compartmentInfo.map(({ name, foodList, activeColor }) => (
+          <View key={name} style={tw`flex-row items-center justify-between`}>
+            <Text style={tw`${getColor(foodList(space).length, activeColor)}`}>
+              {name}
+            </Text>
             <Text
-              style={tw.style(
-                `${
-                  list(space as Space).length ? `text-[${color}]` : `text-white`
-                }`,
-                { ...FontGmarketSansBold }
-              )}
-              fontSize={15}
+              style={tw`${getColor(
+                foodList(space).length,
+                activeColor
+              )} font-bold`}
+              fontSize={14}
             >
-              {list(space as Space).length}개
+              {foodList(space).length}개
             </Text>
           </View>
         ))}
       </View>
-      <View style={tw`flex-row items-center self-center pb-2`}>
-        <Text fontSize={14} style={tw`text-blue-700`}>
+      {/* 들어가기 버튼 */}
+      <View style={tw`flex-row items-center self-end`}>
+        <Text fontSize={14} style={tw.style(`text-slate-700 font-bold`)}>
           들어가기
         </Text>
-        <Icon
-          name='enter-outline'
-          type='Ionicons'
-          size={22}
-          color={DEEP_BLUE}
-        />
+        <Icon name='enter' type='Ionicons' size={20} color={DEEP_GRAY} />
       </View>
     </View>
   );

@@ -1,7 +1,6 @@
 import { Image, ImageSourcePropType, View } from 'react-native';
 import { Text } from '../../native-component';
 import { scaleFont } from '../../../util';
-import { FontGmarketSansBold } from '../../../constant/fonts';
 import { Asset } from 'expo-asset';
 import tw from 'twrnc';
 import Title from '../../common/Title';
@@ -27,11 +26,7 @@ export default function FridgeInfoBox({ asset, name, foodLength }: Props) {
 
         <View style={tw`flex-row items-end gap-0.5`}>
           <Text style={tw`text-slate-200 mb-0.5`}>총 : </Text>
-          <Text
-            style={tw.style(`text-white text-[${scaleFont(30)}px]`, {
-              ...FontGmarketSansBold,
-            })}
-          >
+          <Text style={tw`text-white text-[${scaleFont(30)}px] font-bold`}>
             {foodLength}
           </Text>
           <Text style={tw`text-slate-200 mb-0.5`}>개</Text>

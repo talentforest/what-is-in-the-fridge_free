@@ -1,9 +1,9 @@
-import { FontGmarketSansBold, FontGmarketSansRegular } from '../constant/fonts';
+import { FontGmarketSansRegular } from '../constant/fonts';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { BLUE, DEEP_BLUE, DEEP_YELLOW } from '../constant/colors';
+import { DEEP_BLUE, DEEP_YELLOW } from '../constant/colors';
 import { Dimensions } from 'react-native';
 import { scaleFont } from '../util';
 import Home from '../screens/Home';
@@ -19,7 +19,7 @@ export type RootTabParamList = {
   ShoppingList: undefined;
 };
 
-const BG_COLOR = '#e2edff';
+const BG_COLOR = '#d6e6ff';
 const TAB_BG_COLOR = '#648fff';
 
 const Tab = createBottomTabNavigator();

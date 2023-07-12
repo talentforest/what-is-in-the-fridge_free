@@ -5,6 +5,7 @@ import FridgeShape from '../components/common/FridgeShape';
 import SearchFoodModal from '../components/modal/SearchFoodModal';
 import tw from 'twrnc';
 import HeaderBtn from '../components/common/Buttons/HeaderBtn';
+import { Text } from '../components/native-component';
 
 export default function MyFridge() {
   const navigation = useNavigation();
@@ -23,8 +24,8 @@ export default function MyFridge() {
 
   return (
     <>
-      <View style={tw`flex-1 px-4 py-2 bg-blue-50 justify-center items-center`}>
-        <View style={tw`w-[90%] h-[90%] max-h-[700px]`}>
+      <View style={tw`flex-1 px-4 bg-blue-100 justify-center items-center`}>
+        <View style={tw`w-[95%] h-[90%] max-h-[700px]`}>
           <FridgeShape />
         </View>
       </View>

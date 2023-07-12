@@ -81,7 +81,7 @@ export default function ShoppingList() {
     <KeyboardAvoidingView>
       <View style={tw`flex-1`}>
         <View
-          style={tw`flex-1 px-4 bg-white rounded-lg border border-slate-300`}
+          style={tw`flex-1 px-4 bg-stone-50 rounded-sm border border-slate-300`}
         >
           <TableLabel title='식료품' label='냉장고 추가' />
           {shoppingList.length !== 0 ? (
@@ -121,7 +121,7 @@ export default function ShoppingList() {
           />
         </View>
 
-        {!!checkList.length && (
+        {/* {!!checkList.length && (
           <View style={tw`gap-1 px-4 mt-4`}>
             <Text style={tw`text-slate-600`}>
               선택한 항목: {checkList.length}개
@@ -131,7 +131,7 @@ export default function ShoppingList() {
               onPress={() => onDeletePress(shoppingList)}
             />
           </View>
-        )}
+        )} */}
       </View>
 
       <TextInputBox

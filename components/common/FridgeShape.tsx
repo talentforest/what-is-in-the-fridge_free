@@ -17,6 +17,10 @@ export default function FridgeShape() {
     fridgeInfo: { compartments, freezer },
   } = useSelector((state) => state.fridgeInfo);
 
+  const doorRadius = (space: Space) => {
+    return space.includes('문쪽') ? 'rounded-r-lg' : 'rounded-l-lg';
+  };
+
   return (
     <View style={tw`flex-row flex-1`}>
       {['안쪽', '문쪽'].map((side) => (
@@ -31,15 +35,16 @@ export default function FridgeShape() {
               onPress={() => navigation.navigate('Compartments', { space })}
               style={tw`justify-center bg-neutral-300 border border-slate-400 ${
                 space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'
-              } ${space.includes('문쪽') ? 'rounded-r-lg' : 'rounded-l-lg'}`}
+              } ${doorRadius(space)}`}
             >
-              <View
-                style={tw`absolute z-10 w-full h-full opacity-50 ${
-                  space.includes('냉동') ? 'bg-blue-400' : 'bg-amber-300'
-                } ${space.includes('문쪽') ? 'rounded-r-lg' : 'rounded-l-lg'}`}
-              />
               {route.name !== 'FridgeSetting' && (
-                <CompartmentInfo space={space} />
+                <>
+                  <View
+                    style={tw`absolute z-10 w-full h-full opacity-80 bg-white
+                    ${doorRadius(space)}`}
+                  />
+                  <CompartmentInfo space={space} />
+                </>
               )}
               <View style={tw`flex-1 gap-[${scaleH(1.5)}] p-[${scaleH(8)}]`}>
                 {getCompartments(compartments[space]).map(

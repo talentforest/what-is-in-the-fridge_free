@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 import { Text } from '../native-component';
-import { FontGmarketSansBold } from '../../constant/fonts';
 import { scaleFont } from '../../util';
 import Icon from '../native-component/Icon';
 import tw from 'twrnc';
@@ -21,11 +20,7 @@ export default function Title({ title, iconName }: Props) {
           color={'#fff'}
         />
       )}
-      <Text
-        style={tw.style(`text-white text-[${scaleFont(18)}px]`, {
-          ...FontGmarketSansBold,
-        })}
-      >
+      <Text style={tw`text-white text-[${scaleFont(18)}px] font-bold`}>
         {title}
       </Text>
     </View>
