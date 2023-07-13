@@ -14,6 +14,7 @@ interface Props {
 
 export function KeyboardAvoidingView({ children }: Props) {
   const PlatformIOS = Platform.OS === 'ios';
+
   const statusBarHeight = PlatformIOS
     ? getStatusBarHeight(true)
     : StatusBar.currentHeight;
@@ -23,8 +24,8 @@ export function KeyboardAvoidingView({ children }: Props) {
       {PlatformIOS ? (
         <RNKeyboardAvoidingView
           behavior='padding'
-          style={tw`flex-1 p-4 bg-blue-50`}
-          keyboardVerticalOffset={60}
+          style={tw`flex-1 bg-blue-50`}
+          keyboardVerticalOffset={40 + (statusBarHeight || 0)}
         >
           {children}
         </RNKeyboardAvoidingView>

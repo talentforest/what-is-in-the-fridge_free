@@ -40,7 +40,7 @@ export default function FavoriteListModal({
     nonExistFavoriteFoods,
     existFavoriteFoods, //
   } = useFavoriteFoods();
-  console.log(nonExistFavoriteFoods, '...');
+
   return (
     <RNModal
       title='즐겨찾는 식료품 목록에서 추가'

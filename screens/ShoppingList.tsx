@@ -27,6 +27,7 @@ import SquareBtn from '../components/common/Buttons/SquareBtn';
 import tw from 'twrnc';
 import HeaderBtn from '../components/common/Buttons/HeaderBtn';
 import TableContainer from '../components/common/Table/TableContainer';
+import Container from '../components/common/LayoutBox/Container';
 
 export default function ShoppingList() {
   const [keyword, setKeyword] = useState('');
@@ -80,7 +81,7 @@ export default function ShoppingList() {
 
   return (
     <KeyboardAvoidingView>
-      <View style={tw`flex-1`}>
+      <Container>
         <TableContainer>
           <TableLabel title='식료품' label='냉장고 추가' />
           {shoppingList.length !== 0 ? (
@@ -131,16 +132,15 @@ export default function ShoppingList() {
             />
           </View>
         )} */}
-      </View>
 
-      <TextInputBox
-        value={keyword}
-        setValue={setKeyword}
-        iconName='plus'
-        placeholder='식료품 이름을 작성해주세요.'
-        onSubmitEditing={onSubmitEditing}
-      />
-
+        <TextInputBox
+          value={keyword}
+          setValue={setKeyword}
+          iconName='plus'
+          placeholder='식료품 이름을 작성해주세요.'
+          onSubmitEditing={onSubmitEditing}
+        />
+      </Container>
       {modalVisible && (
         <AddSelectFoodModal
           modalVisible={modalVisible}
