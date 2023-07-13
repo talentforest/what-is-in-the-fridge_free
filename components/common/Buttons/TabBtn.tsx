@@ -26,7 +26,7 @@ export default function TabBtn({
     <TouchableOpacity
       key={btnName}
       onPress={() => setOpenTab(btnName)}
-      style={tw`flex-row gap-1 items-center justify-between px-1.5 pb-1 pt-0 border-b-2 ${
+      style={tw`flex-row gap-1 items-center justify-between px-1.5 pb-2 border-b-2 ${
         active ? 'border-blue-500' : 'border-slate-300'
       }`}
     >
@@ -39,14 +39,12 @@ export default function TabBtn({
         />
       )}
       <Text
-        style={tw`my-2 ${
-          active ? ' text-blue-700' : `text-[${INACTIVE_COLOR}]`
-        }`}
+        style={tw`${active ? ' text-blue-700' : `text-[${INACTIVE_COLOR}]`}`}
         fontSize={14}
       >
         {btnName}
       </Text>
-      {route.name === 'ExpiredFoods' && length && (
+      {route.name === 'ExpiredFoods' && !!length && (
         <Text
           fontSize={12}
           style={tw`${

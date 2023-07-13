@@ -9,6 +9,7 @@ import { Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import tw from 'twrnc';
+import Container from '../components/common/LayoutBox/Container';
 
 interface RouteParams {
   route: RouteProp<RootStackParamList, 'Compartments'>;
@@ -30,13 +31,13 @@ export default function Compartments({ route }: RouteParams) {
   if (!fontsLoaded) return null;
 
   return (
-    <View style={tw`flex-1 pt-4 pb-8 bg-blue-50 justify-center`}>
+    <Container>
       <View
-        style={tw`p-[${scaleH(12)}] gap-[${scaleH(
+        style={tw`p-[${scaleH(10)}] gap-[${scaleH(
           2
         )}] border border-slate-300 ${
           space.includes('냉동') ? 'h-4/5' : 'flex-1'
-        } w-[90%] m-auto mt-3 mb-4 self-center justify-center rounded-lg bg-neutral-200`}
+        } w-full m-auto self-center justify-center rounded-lg bg-neutral-200`}
       >
         {compartments.map((compartment) => (
           <Compartment
@@ -45,6 +46,6 @@ export default function Compartments({ route }: RouteParams) {
           />
         ))}
       </View>
-    </View>
+    </Container>
   );
 }

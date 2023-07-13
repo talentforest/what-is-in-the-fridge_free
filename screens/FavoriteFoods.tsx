@@ -19,6 +19,7 @@ import useFavoriteFoods from '../hooks/useFavoriteFoods';
 import tw from 'twrnc';
 import { scaleH } from '../util';
 import TableContainer from '../components/common/Table/TableContainer';
+import Container from '../components/common/LayoutBox/Container';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
@@ -56,8 +57,8 @@ export default function FavoriteFoods() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeBottomAreaView style={tw`p-[${scaleH(14)}px] flex-1`}>
-      <View style={tw`flex-1`}>
+    <SafeBottomAreaView>
+      <Container>
         <TableContainer>
           <TableLabel title='식료품' label='식료품 유무' />
           {favoriteFoods.length !== 0 ? (
@@ -102,7 +103,7 @@ export default function FavoriteFoods() {
             />
           </View>
         )}
-      </View>
+      </Container>
     </SafeBottomAreaView>
   );
 }

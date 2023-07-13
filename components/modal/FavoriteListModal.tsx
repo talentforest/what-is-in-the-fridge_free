@@ -1,5 +1,4 @@
 import { Text } from '../native-component';
-import { LIGHT_GRAY, ORANGE_RED } from '../../constant/colors';
 import { View } from 'react-native';
 import { scaleH } from '../../util';
 import { useState } from 'react';
@@ -13,7 +12,6 @@ import useFavoriteFoods from '../../hooks/useFavoriteFoods';
 import TabBtn from '../common/Buttons/TabBtn';
 import tw from 'twrnc';
 import FoodTag from '../common/Box/FoodBox';
-import Icon from '../native-component/Icon';
 
 interface Props {
   modalVisible: boolean;
@@ -52,7 +50,7 @@ export default function FavoriteListModal({
       <View style={tw`h-[${scaleH(140)}] px-1`}>
         <View style={tw`my-2 flex-1`}>
           {/* 탭버튼 */}
-          <View style={tw`flex-row pb-2`}>
+          <View style={tw`flex-row pt-3 pb-1`}>
             {['냉장고에 없어요', '냉장고에 있어요'].map((btnName) => (
               <TabBtn
                 key={btnName}

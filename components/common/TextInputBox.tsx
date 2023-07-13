@@ -24,7 +24,7 @@ export default function TextInputBox({
     <View
       style={tw`w-full pl-[${scaleH(10)}] pr-[${scaleH(
         12
-      )}] my-3 border border-slate-400 rounded-full items-center flex-row bg-white`}
+      )}] my-3 border-2 border-slate-300 rounded-full items-center flex-row bg-white`}
     >
       <TextInput
         value={value}

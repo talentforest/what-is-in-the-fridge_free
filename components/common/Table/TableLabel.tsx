@@ -15,7 +15,7 @@ export default function TableLabel({ title, label }: Props) {
     <View
       style={tw`h-[${scaleH(
         43
-      )}px] -mx-4 px-4 gap-2 bg-amber-200 rounded-t-lg border-b border-slate-300 flex-row items-center justify-between`}
+      )}px] -mx-4 px-4 gap-2 bg-amber-200 rounded-t-sm border-b border-slate-300 flex-row items-center justify-between`}
     >
       <Icon type='Feather' name='list' size={18} color={DEEP_INDIGO} />
       <Text style={tw`text-slate-600`}>{title}</Text>
