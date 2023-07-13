@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FridgeShape from '../components/common/FridgeShape';
 import SearchFoodModal from '../components/modal/SearchFoodModal';
-import tw from 'twrnc';
 import HeaderBtn from '../components/common/Buttons/HeaderBtn';
-import { Text } from '../components/native-component';
+import Container from '../components/common/LayoutBox/Container';
+import tw from 'twrnc';
 
 export default function MyFridge() {
   const navigation = useNavigation();
@@ -23,11 +23,9 @@ export default function MyFridge() {
   }, []);
 
   return (
-    <>
-      <View style={tw`flex-1 px-4 bg-blue-50 justify-center items-center`}>
-        <View style={tw`w-[95%] h-[85%] max-h-[700px]`}>
-          <FridgeShape />
-        </View>
+    <Container>
+      <View style={tw`w-[95%] h-[90%] max-h-[700px] m-auto`}>
+        <FridgeShape />
       </View>
       {modalVisible && (
         <SearchFoodModal
@@ -35,6 +33,6 @@ export default function MyFridge() {
           setModalVisible={setModalVisible}
         />
       )}
-    </>
+    </Container>
   );
 }

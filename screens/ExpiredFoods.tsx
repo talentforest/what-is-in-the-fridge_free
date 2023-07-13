@@ -14,6 +14,7 @@ import tw from 'twrnc';
 import SquareBtn from '../components/common/Buttons/SquareBtn';
 import TabBtn from '../components/common/Buttons/TabBtn';
 import TableContainer from '../components/common/Table/TableContainer';
+import Container from '../components/common/LayoutBox/Container';
 
 export type FoodType = '냉동실' | '냉장실';
 
@@ -40,7 +41,7 @@ export default function ExpiredFoods() {
 
   return (
     <SafeBottomAreaView>
-      <View style={tw`flex-1 p-[${scaleH(14)}px] bg-blue-50`}>
+      <Container>
         {/* 탭 버튼 */}
         <View style={tw`flex-row items-center mb-2`}>
           {['냉장실', '냉동실'].map((btnName) => (
@@ -90,7 +91,7 @@ export default function ExpiredFoods() {
           )}
         </TableContainer>
 
-        {!!checkList.length && (
+        {/* {!!checkList.length && (
           <View style={tw`gap-1 px-4 mt-4`}>
             <Text style={tw`text-slate-600`}>
               선택한 항목: {checkList.length}개
@@ -100,8 +101,8 @@ export default function ExpiredFoods() {
               onPress={() => onDeletePress(allExpiredFoods)}
             />
           </View>
-        )}
-      </View>
+        )} */}
+      </Container>
     </SafeBottomAreaView>
   );
 }
