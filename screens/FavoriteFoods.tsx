@@ -3,7 +3,11 @@ import { Alert, KeyboardAvoidingView, View } from 'react-native';
 import { useState } from 'react';
 import { fonts } from '../constant/fonts';
 import { useDispatch } from '../redux/hook';
-import { SafeBottomAreaView, Text } from '../components/native-component';
+import {
+  SafeBottomAreaView,
+  Text,
+  TouchableOpacity,
+} from '../components/native-component';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { Food, initialFoodInfo } from '../constant/foods';
 import TableLabel from '../components/common/Table/TableLabel';
@@ -21,6 +25,8 @@ import { scaleH } from '../util';
 import TableContainer from '../components/common/Table/TableContainer';
 import Container from '../components/common/LayoutBox/Container';
 import TableItemSetting from '../components/common/Table/TableItemSetting';
+import Icon from '../components/native-component/Icon';
+import { DEEP_INDIGO, LIGHT_GRAY } from '../constant/colors';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
@@ -88,7 +94,9 @@ export default function FavoriteFoods() {
           )}
           <TableItemSetting
             list={checkList}
+            onAddPress={addShoppingListPress}
             onPress={() => onDeletePress(favoriteFoods)}
+            buttons={['delete-favorite', 'add-shopping-list']}
           />
         </TableContainer>
       </Container>

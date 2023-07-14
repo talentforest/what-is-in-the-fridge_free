@@ -101,6 +101,7 @@ export default function ShoppingList() {
           <TableItemSetting
             list={checkList}
             onPress={() => onDeletePress(shoppingList)}
+            buttons={['delete']}
           />
         </TableContainer>
         {/* 키보드 인풋 */}

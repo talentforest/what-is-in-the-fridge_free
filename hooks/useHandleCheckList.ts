@@ -110,15 +110,24 @@ export default function useHandleCheckList(tab?: FoodType) {
   };
 
   const addShoppingListPress = () => {
+    if (checkList.length === 0) return;
     dispatch(addItemsToShoppingList(checkList));
     Alert.alert(
       '장보기 목록 추가',
       `${checkList
         .map((food) => food.name)
-        .join(', ')} 식료품이 추가되었습니다.`
+        .join(', ')} 식료품이 추가되었습니다.`,
+      [
+        {
+          text: '확인',
+          onPress: () => {
+            setCheckList([]);
+            setEntireCheck(false);
+          },
+          style: 'default',
+        },
+      ]
     );
-    setCheckList([]);
-    setEntireCheck(false);
   };
 
   return {
