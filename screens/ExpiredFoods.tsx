@@ -87,6 +87,7 @@ export default function ExpiredFoods() {
           <TableItemSetting
             list={checkList}
             onPress={() => onDeletePress(allExpiredFoods)}
+            buttons={['delete']}
           />
         </TableContainer>
       </Container>
