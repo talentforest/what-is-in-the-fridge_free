@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import Modal from 'react-native-modal';
 import Header from './Header';
 import tw from 'twrnc';
+import { SafeBottomAreaView } from '../../native-component';
 
 interface Props {
   title: string;
@@ -26,15 +27,17 @@ export default function RNModal({
       avoidKeyboard
       style={tw`m-0 justify-end`}
     >
-      <View style={tw`bg-white p-4 pb-6 rounded-t-2xl max-h-[95%]`}>
-        <Header
-          title={title}
-          setModalVisible={() => {
-            setModalVisible(!modalVisible);
-          }}
-        />
-        {children}
-      </View>
+      <SafeAreaView>
+        <View style={tw`bg-white p-4 rounded-2xl `}>
+          <Header
+            title={title}
+            setModalVisible={() => {
+              setModalVisible(!modalVisible);
+            }}
+          />
+          {children}
+        </View>
+      </SafeAreaView>
     </Modal>
   );
 }

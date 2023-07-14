@@ -27,8 +27,9 @@ export default function Compartment({ foodLocation }: Props) {
         style={tw.style(`flex-1 border border-slate-300 rounded-lg bg-white`)}
       >
         <InnerShadow />
+        {/* 칸 정보 */}
         <View
-          style={tw`flex-row justify-between items-center pt-1.5 px-2 rounded-t-lg`}
+          style={tw`flex-row justify-between items-center pt-2 px-3 rounded-t-lg`}
         >
           <View style={tw`flex-1`}>
             <Text style={tw`text-indigo-600`} fontSize={12}>
@@ -40,8 +41,9 @@ export default function Compartment({ foodLocation }: Props) {
           </Text>
           <AddFoodModalBtn foodLocation={foodLocation} />
         </View>
+        {/* 식료품 리스트 */}
         <ScrollView
-          contentContainerStyle={tw`flex-row flex-wrap gap-1 items-center`}
+          contentContainerStyle={tw`flex-row px-2 py-1 flex-wrap gap-1 items-center`}
           style={tw`m-1 flex-1`}
           showsVerticalScrollIndicator={false}
         >

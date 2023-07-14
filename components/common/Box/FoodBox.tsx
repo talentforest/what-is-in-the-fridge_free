@@ -14,8 +14,8 @@ export default function FoodBox({ food, expiredDate }: Props) {
   return (
     <View
       key={food.id}
-      style={tw`bg-amber-50 border-2 border-indigo-200 gap-1 justify-center items-center flex-row p-2 rounded-lg h-${scaleH(
-        10
+      style={tw`bg-amber-50 border-2 border-indigo-200 gap-1 justify-center items-center flex-row px-2 rounded-lg h-${scaleH(
+        9
       )}`}
     >
       {food.image && <Text fontSize={12}>{food.image}</Text>}

@@ -1,8 +1,7 @@
 import { Text, TouchableOpacity } from '../../native-component';
-import { INACTIVE_COLOR, ORANGE_RED } from '../../../constant/colors';
-import tw from 'twrnc';
-import Icon from '../../native-component/Icon';
+import { INDIGO } from '../../../constant/colors';
 import CheckBox from '../../common/Box/CheckBox';
+import tw from 'twrnc';
 
 interface Props {
   onPress: () => void;
@@ -23,7 +22,7 @@ export default function CheckBoxItem({
       style={tw`flex-row items-center gap-1`}
       onPress={onPress}
     >
-      <CheckBox checked={checked} activeColor={ORANGE_RED} />
+      <CheckBox checked={checked} activeColor={INDIGO} />
       <Text
         style={tw`${checked ? 'text-slate-900' : 'text-slate-500'}`}
         fontSize={14}
