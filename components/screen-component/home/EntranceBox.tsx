@@ -33,7 +33,7 @@ export default function EntranceBox({ info, foods }: Props) {
 
   const { title, desc, iconName, bgColor, route } = info;
 
-  const FOLD_NUM = 6;
+  const MAX_NUM = 6;
   const color = bgColor.slice(3).slice(0, -4);
 
   return (
@@ -43,27 +43,31 @@ export default function EntranceBox({ info, foods }: Props) {
 
       {foods.length !== 0 ? (
         <View style={tw`flex-row gap-1.5 flex-wrap flex-1 mt-2 items-center`}>
-          {title === '장봐야할 식료품' ? (
+          {title === '장봐야할 식료품' && (
             <>
-              {foods.slice(0, FOLD_NUM).map((food) => (
+              {foods.slice(0, MAX_NUM).map((food) => (
                 <CheckFoodBox key={food.id} food={food} />
               ))}
               {isOpen &&
                 foods
-                  .slice(FOLD_NUM)
+                  .slice(MAX_NUM)
                   .map((food) => <CheckFoodBox key={food.id} food={food} />)}
-              <MoreOpenBtn isOpen={isOpen} setIsOpen={setIsOpen} />
+              {foods.length > MAX_NUM && (
+                <MoreOpenBtn isOpen={isOpen} setIsOpen={setIsOpen} />
+              )}
             </>
-          ) : (
+          )}
+          {(title === '유통기한 주의 식료품' ||
+            title === '자주 먹는 식료품') && (
             <>
-              {foods.map((food) => (
+              {foods.slice(0, MAX_NUM).map((food) => (
                 <FoodTag
                   key={food.id}
                   food={food}
                   expiredDate={title === '유통기한 주의 식료품'}
                 />
               ))}
-              {foods.length > 6 && (
+              {foods.length > MAX_NUM && (
                 <Icon
                   name='more-horizontal'
                   type='Feather'

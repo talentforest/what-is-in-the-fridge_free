@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { cutLetter, scaleH } from '../../../util';
-import { GRAY, LIGHT_GRAY } from '../../../constant/colors';
+import { BLUE, GRAY, INDIGO, LIGHT_GRAY } from '../../../constant/colors';
 import { Food } from '../../../constant/foods';
 import { ReactNode } from 'react';
 import Icon from '../../native-component/Icon';
@@ -33,7 +33,7 @@ export default function TableItem({
         48
       )}px]`}
     >
-      <CheckBox checked={!existInList(food.id)} activeColor={GRAY} />
+      <CheckBox checked={!!existInList(food.id)} activeColor={BLUE} />
       <View style={tw`flex-1 flex-row items-center gap-2 ml-1`}>
         {image &&
           (food.image === '' ? (
@@ -49,7 +49,7 @@ export default function TableItem({
         <Text
           fontSize={14}
           style={tw`flex-1 ${
-            existInList(food.id) ? 'text-indigo-500' : 'text-slate-700'
+            existInList(food.id) ? 'text-blue-600' : 'text-slate-700'
           }`}
         >
           {cutLetter(food.name, 28)}

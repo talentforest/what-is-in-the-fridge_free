@@ -1,20 +1,18 @@
 import { View } from 'react-native';
 import { SafeBottomAreaView, Text } from '../components/native-component';
 import { useState } from 'react';
-import { scaleH } from '../util';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import TableLabel from '../components/common/Table/TableLabel';
 import TableItem from '../components/common/Table/TableItem';
 import useHandleCheckList from '../hooks/useHandleCheckList';
-import TableTotalItem from '../components/common/Table/TableTotalItem';
 import LeftDay from '../components/common/LeftDay';
 import ExpiredState from '../components/screen-component/expired-foods/ExpiredState';
 import TableList from '../components/common/Table/TableList';
-import tw from 'twrnc';
-import SquareBtn from '../components/common/Buttons/SquareBtn';
 import TabBtn from '../components/common/Buttons/TabBtn';
 import TableContainer from '../components/common/Table/TableContainer';
 import Container from '../components/common/LayoutBox/Container';
+import TableItemSetting from '../components/common/Table/TableItemSetting';
+import tw from 'twrnc';
 
 export type FoodType = '냉동실' | '냉장실';
 
@@ -57,9 +55,14 @@ export default function ExpiredFoods() {
         </View>
         {/* 목록 표 */}
         <TableContainer>
-          <TableLabel title={`${tab} 식료품`} label='유통기한' />
+          <TableLabel
+            title={`${tab} 식료품`}
+            label='유통기한'
+            entireChecked={entireCheck}
+            onEntirePress={() => onEntirePress(filterExpiredFoods(tab))}
+          />
           {/* 냉장고 상태 문구 */}
-          <ExpiredState length={filterExpiredFoods(tab as FoodType).length} />
+          <ExpiredState length={filterExpiredFoods(tab).length} />
           {!!filterExpiredFoods(tab).length ? (
             <TableList
               list={filterExpiredFoods(tab)}
@@ -77,31 +80,15 @@ export default function ExpiredFoods() {
               )}
             />
           ) : (
-            <Text style={tw`text-slate-400 text-center mt-14`}>
+            <Text style={tw`text-slate-400 text-center pt-14 flex-1`}>
               유통기한 주의 식료품이 없습니다.
             </Text>
           )}
-          {/* 전체 선택하기 */}
-          {!!filterExpiredFoods(tab).length && (
-            <TableTotalItem
-              onEntirePress={() => onEntirePress(filterExpiredFoods(tab))}
-              list={filterExpiredFoods(tab)}
-              entireCheck={entireCheck}
-            />
-          )}
+          <TableItemSetting
+            list={checkList}
+            onPress={() => onDeletePress(allExpiredFoods)}
+          />
         </TableContainer>
-
-        {/* {!!checkList.length && (
-          <View style={tw`gap-1 px-4 mt-4`}>
-            <Text style={tw`text-slate-600`}>
-              선택한 항목: {checkList.length}개
-            </Text>
-            <SquareBtn
-              btnName='나의 냉장고에서 삭제'
-              onPress={() => onDeletePress(allExpiredFoods)}
-            />
-          </View>
-        )} */}
       </Container>
     </SafeBottomAreaView>
   );

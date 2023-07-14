@@ -1,15 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addToShoppingList } from '../redux/slice/shoppingList';
-import { View } from 'react-native';
 import {
   Text,
   KeyboardAvoidingView,
   TouchableOpacity,
 } from '../components/native-component';
 import { useSelector } from '../redux/hook';
-import { DEEP_INDIGO, INDIGO } from '../constant/colors';
+import { BLUE, LIGHT_GRAY } from '../constant/colors';
 import { Food, initialFoodInfo } from '../constant/foods';
 import TableLabel from '../components/common/Table/TableLabel';
 import TableItem from '../components/common/Table/TableItem';
@@ -17,21 +15,20 @@ import AddSelectFoodModal from '../components/modal/AddSelectFoodModal';
 import useCheckFood from '../hooks/useCheckFood';
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useToggleModal from '../hooks/useToggleModal';
-import TableTotalItem from '../components/common/Table/TableTotalItem';
+import TableItemSetting from '../components/common/Table/TableItemSetting';
 import TableList from '../components/common/Table/TableList';
 import Icon from '../components/native-component/Icon';
 import TextInputBox from '../components/common/TextInputBox';
 import UUIDGenerator from 'react-native-uuid';
-import FavoriteListModal from '../components/modal/FavoriteListModal';
-import SquareBtn from '../components/common/Buttons/SquareBtn';
-import tw from 'twrnc';
-import HeaderBtn from '../components/common/Buttons/HeaderBtn';
 import TableContainer from '../components/common/Table/TableContainer';
 import Container from '../components/common/LayoutBox/Container';
+import tw from 'twrnc';
 
 export default function ShoppingList() {
   const [keyword, setKeyword] = useState('');
   const { shoppingList } = useSelector((state) => state.shoppingList);
+  const dispatch = useDispatch();
+  const myUuid = UUIDGenerator.v4();
 
   const {
     entireCheck,
@@ -42,30 +39,14 @@ export default function ShoppingList() {
     onCheckPress,
     existInList,
   } = useHandleCheckList();
-  const navigation = useNavigation();
-  const [listModal, setListModal] = useState(false);
   const { checkExistFood } = useCheckFood();
   const { modalVisible, setModalVisible, onModalPress } = useToggleModal();
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <HeaderBtn
-          iconName='heart-plus'
-          onPress={() => setListModal((prev) => !prev)}
-        />
-      ),
-    });
-  }, []);
 
   const addToFridgePress = (food: Food) => {
     checkExistFood(food)
       ? onExistFoodPress(food, onModalPress)
       : onModalPress(food);
   };
-
-  const dispatch = useDispatch();
-  const myUuid = UUIDGenerator.v4();
 
   const onSubmitEditing = () => {
     if (keyword === '') return;
@@ -82,8 +63,14 @@ export default function ShoppingList() {
   return (
     <KeyboardAvoidingView>
       <Container>
+        {/* 장보기 목록 */}
         <TableContainer>
-          <TableLabel title='식료품' label='냉장고 추가' />
+          <TableLabel
+            title='장봐야할 식료품'
+            label='냉장고 추가'
+            entireChecked={entireCheck}
+            onEntirePress={() => onEntirePress(shoppingList)}
+          />
           {shoppingList.length !== 0 ? (
             <TableList
               list={shoppingList}
@@ -95,15 +82,12 @@ export default function ShoppingList() {
                   existInList={existInList}
                   image={false}
                 >
-                  <TouchableOpacity
-                    style={tw`pl-2`}
-                    onPress={() => addToFridgePress(item)}
-                  >
+                  <TouchableOpacity onPress={() => addToFridgePress(item)}>
                     <Icon
                       type='MaterialCommunityIcons'
                       name='plus'
                       size={22}
-                      color={checkExistFood(item) ? INDIGO : DEEP_INDIGO}
+                      color={checkExistFood(item) ? LIGHT_GRAY : BLUE}
                     />
                   </TouchableOpacity>
                 </TableItem>
@@ -114,25 +98,12 @@ export default function ShoppingList() {
               아직 장보기 목록이 없습니다.
             </Text>
           )}
-          <TableTotalItem
-            onEntirePress={() => onEntirePress(shoppingList)}
-            list={shoppingList}
-            entireCheck={entireCheck}
+          <TableItemSetting
+            list={checkList}
+            onPress={() => onDeletePress(shoppingList)}
           />
         </TableContainer>
-
-        {/* {!!checkList.length && (
-          <View style={tw`gap-1 px-4 mt-4`}>
-            <Text style={tw`text-slate-600`}>
-              선택한 항목: {checkList.length}개
-            </Text>
-            <SquareBtn
-              btnName='장보기 리스트에서 삭제'
-              onPress={() => onDeletePress(shoppingList)}
-            />
-          </View>
-        )} */}
-
+        {/* 키보드 인풋 */}
         <TextInputBox
           value={keyword}
           setValue={setKeyword}
@@ -145,12 +116,6 @@ export default function ShoppingList() {
         <AddSelectFoodModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-        />
-      )}
-      {listModal && (
-        <FavoriteListModal
-          modalVisible={listModal}
-          setModalVisible={setListModal}
         />
       )}
     </KeyboardAvoidingView>

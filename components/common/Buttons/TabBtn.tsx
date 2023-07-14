@@ -44,11 +44,13 @@ export default function TabBtn({
       >
         {btnName}
       </Text>
-      {route.name === 'ExpiredFoods' && !!length && (
+      {route.name === 'ExpiredFoods' && (
         <Text
           fontSize={12}
           style={tw`${
-            active ? getColorByFoodLength(length) : `text-[${INACTIVE_COLOR}]`
+            active
+              ? getColorByFoodLength(length || 0)
+              : `text-[${INACTIVE_COLOR}]`
           }`}
         >
           {length}개

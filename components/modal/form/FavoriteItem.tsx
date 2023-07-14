@@ -12,14 +12,14 @@ export default function FavoriteItem({ favorite, changeInfo }: Props) {
     <View style={tw`flex-1 gap-4 flex-row mt-2`}>
       <CheckBoxBtn
         title='맞아요'
-        check={favorite}
+        checked={favorite}
         onPress={() => {
           changeInfo({ favorite: true });
         }}
       />
       <CheckBoxBtn
         title='아니에요'
-        check={!favorite}
+        checked={!favorite}
         onPress={() => {
           changeInfo({ favorite: false });
         }}

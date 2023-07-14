@@ -59,7 +59,7 @@ const Home = () => {
           foods={favoriteFoods.slice(0, 8)}
           info={{
             title: '자주 먹는 식료품',
-            desc: '자주 먹는 식료품은 냉장고에 빠르게 추가하세요.',
+            desc: '자주 먹는 식료품은 장보기 목록에 빠르게 추가하세요.',
             iconName: 'tag-heart',
             bgColor: 'bg-amber-500',
             route: 'FavoriteFoods',

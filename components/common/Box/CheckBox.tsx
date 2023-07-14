@@ -10,9 +10,9 @@ export default function CheckBox({ checked, activeColor }: Props) {
   return (
     <Icon
       type='MaterialCommunityIcons'
-      name={checked ? 'checkbox-marked-outline' : 'square-outline'}
+      name={checked ? 'checkbox-marked' : 'square-outline'}
       color={checked ? activeColor : INACTIVE_COLOR}
-      size={20}
+      size={18}
     />
   );
 }
