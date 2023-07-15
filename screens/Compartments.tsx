@@ -10,6 +10,7 @@ import { RootStackParamList } from '../navigation/Navigation';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import tw from 'twrnc';
 import Container from '../components/common/LayoutBox/Container';
+import { SafeBottomAreaView } from '../components/native-component';
 
 interface RouteParams {
   route: RouteProp<RootStackParamList, 'Compartments'>;
@@ -31,21 +32,23 @@ export default function Compartments({ route }: RouteParams) {
   if (!fontsLoaded) return null;
 
   return (
-    <Container>
-      <View
-        style={tw`p-[${scaleH(10)}] gap-[${scaleH(
-          2
-        )}] border border-slate-300 ${
-          space.includes('냉동') ? 'h-4/5' : 'flex-1'
-        } w-full m-auto self-center justify-center rounded-lg bg-neutral-200`}
-      >
-        {compartments.map((compartment) => (
-          <Compartment
-            key={compartment.compartmentNum}
-            foodLocation={{ ...compartment, space }}
-          />
-        ))}
-      </View>
-    </Container>
+    <SafeBottomAreaView>
+      <Container>
+        <View
+          style={tw`p-[${scaleH(10)}] gap-[${scaleH(
+            2
+          )}] border border-slate-300 ${
+            space.includes('냉동') ? 'h-4/5' : 'flex-1'
+          } w-full m-auto self-center justify-center rounded-lg bg-neutral-200`}
+        >
+          {compartments.map((compartment) => (
+            <Compartment
+              key={compartment.compartmentNum}
+              foodLocation={{ ...compartment, space }}
+            />
+          ))}
+        </View>
+      </Container>
+    </SafeBottomAreaView>
   );
 }

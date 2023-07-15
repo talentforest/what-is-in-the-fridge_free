@@ -1,9 +1,8 @@
 import { ReactNode } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { Dimensions, SafeAreaView, View } from 'react-native';
 import Modal from 'react-native-modal';
 import Header from './Header';
 import tw from 'twrnc';
-import { SafeBottomAreaView } from '../../native-component';
 
 interface Props {
   title: string;
@@ -18,17 +17,18 @@ export default function RNModal({
   modalVisible,
   setModalVisible,
 }: Props) {
+  const MODAL_HEIGHT = Dimensions.get('screen').height * 0.8;
+
   return (
     <Modal
       onBackdropPress={() => {
         setModalVisible(false);
       }}
       isVisible={modalVisible}
-      avoidKeyboard
       style={tw`m-0 justify-end`}
     >
-      <SafeAreaView>
-        <View style={tw`bg-white p-4 rounded-2xl `}>
+      <SafeAreaView style={tw`flex-1 justify-end`}>
+        <View style={tw`bg-white p-4 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}>
           <Header
             title={title}
             setModalVisible={() => {

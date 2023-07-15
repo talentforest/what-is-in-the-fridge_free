@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from '../components/native-component';
 import { useSelector } from '../redux/hook';
-import { BLUE, LIGHT_GRAY } from '../constant/colors';
+import { BLUE, DEEP_GRAY, LIGHT_GRAY } from '../constant/colors';
 import { Food, initialFoodInfo } from '../constant/foods';
 import TableLabel from '../components/common/Table/TableLabel';
 import TableItem from '../components/common/Table/TableItem';
@@ -23,6 +23,7 @@ import UUIDGenerator from 'react-native-uuid';
 import TableContainer from '../components/common/Table/TableContainer';
 import Container from '../components/common/LayoutBox/Container';
 import tw from 'twrnc';
+import { View } from 'react-native';
 
 export default function ShoppingList() {
   const [keyword, setKeyword] = useState('');
@@ -67,10 +68,15 @@ export default function ShoppingList() {
         <TableContainer>
           <TableLabel
             title='장봐야할 식료품'
-            label='냉장고 추가'
             entireChecked={entireCheck}
             onEntirePress={() => onEntirePress(shoppingList)}
-          />
+          >
+            <View
+              style={tw`justify-end flex-row items-center gap-0.5 rounded-full`}
+            >
+              <Text style={tw`text-slate-600`}>추가</Text>
+            </View>
+          </TableLabel>
           {shoppingList.length !== 0 ? (
             <TableList
               list={shoppingList}
@@ -82,12 +88,15 @@ export default function ShoppingList() {
                   existInList={existInList}
                   image={false}
                 >
-                  <TouchableOpacity onPress={() => addToFridgePress(item)}>
+                  <TouchableOpacity
+                    onPress={() => addToFridgePress(item)}
+                    style={tw`p-1.5`}
+                  >
                     <Icon
                       type='MaterialCommunityIcons'
                       name='plus'
                       size={22}
-                      color={checkExistFood(item) ? LIGHT_GRAY : BLUE}
+                      color={checkExistFood(item) ? LIGHT_GRAY : DEEP_GRAY}
                     />
                   </TouchableOpacity>
                 </TableItem>

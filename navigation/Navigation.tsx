@@ -60,12 +60,12 @@ const Navigation = () => {
       <Stack.Screen
         name='FavoriteFoods'
         component={FavoriteFoods}
-        options={{ ...options, title: '자주 먹는 식료품' }}
+        options={{ ...options, title: '자주 먹는 식료품 관리' }}
       />
       <Stack.Screen
         name='ExpiredFoods'
         component={ExpiredFoods}
-        options={{ ...options, title: '유통기한 주의 식료품' }}
+        options={{ ...options, title: '유통기한 주의 식료품 관리' }}
       />
       <Stack.Screen
         name='FridgeSetting'
