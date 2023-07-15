@@ -46,10 +46,8 @@ export default function ExpiredFoods() {
             <TabBtn
               key={btnName}
               btnName={`${btnName} 보기`}
-              iconName='fridge'
               setOpenTab={() => onTabPress(btnName as FoodType)}
               active={btnName === tab}
-              length={filterExpiredFoods(btnName as FoodType).length}
             />
           ))}
         </View>
@@ -57,6 +55,7 @@ export default function ExpiredFoods() {
         <TableContainer>
           <TableLabel
             title={`유통기한 주의 식료품`}
+            listLength={filterExpiredFoods(tab as FoodType).length}
             entireChecked={entireCheck}
             onEntirePress={() => onEntirePress(filterExpiredFoods(tab))}
           >

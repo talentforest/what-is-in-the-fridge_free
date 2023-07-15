@@ -37,16 +37,14 @@ export default function FoodDetailModal({
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
-      <View style={tw`items-center mt-4 gap-2 mb-2`}>
+      <View style={tw`items-center mt-4 gap-2`}>
         {food.image !== '' ? (
-          <Text style={tw`pt-4`} fontSize={24}>
-            {food.image}
-          </Text>
+          <Text fontSize={30}>{food.image}</Text>
         ) : (
           <Icon
             type='MaterialCommunityIcons'
             name='food'
-            size={20}
+            size={28}
             color={INDIGO}
           />
         )}
@@ -58,7 +56,12 @@ export default function FoodDetailModal({
           <Form
             food={editedFood}
             changeInfo={editFoodInfo}
-            items={['카테고리', '구매날짜', '유통기한', '즐겨찾는 식품인가요?']}
+            items={[
+              '카테고리',
+              '구매날짜',
+              '유통기한',
+              '자주 먹는 식품인가요?',
+            ]}
           />
         </ScrollView>
       ) : (
@@ -67,7 +70,7 @@ export default function FoodDetailModal({
           <InfoBox label='구매날짜' info={editedFood.purchaseDate} />
           <InfoBox label='유통기한' info={editedFood.expiredDate} />
           <InfoBox
-            label='즐겨찾는 식품인가요?'
+            label='자주 먹는 식품인가요?'
             favorite={editedFood.favorite}
           />
         </View>

@@ -41,7 +41,7 @@ export default function VariationBtn({ name }: Props) {
             type='MaterialCommunityIcons'
             name='plus-circle'
             color={BLUE}
-            size={20}
+            size={22}
           />
         </TouchableOpacity>
         <Text style={tw`mx-1 text-indigo-600 w-5 text-center`} fontSize={16}>
@@ -58,7 +58,7 @@ export default function VariationBtn({ name }: Props) {
             type='MaterialCommunityIcons'
             name='minus-circle'
             color={ORANGE_RED}
-            size={20}
+            size={22}
           />
         </TouchableOpacity>
       </View>

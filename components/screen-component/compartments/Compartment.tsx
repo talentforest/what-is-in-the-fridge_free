@@ -29,16 +29,18 @@ export default function Compartment({ foodLocation }: Props) {
         <InnerShadow />
         {/* 칸 정보 */}
         <View
-          style={tw`flex-row justify-between items-center pt-2 px-3 rounded-t-lg`}
+          style={tw`flex-row justify-between items-center pl-3 pr-1.5 rounded-t-lg`}
         >
-          <View style={tw`flex-1`}>
-            <Text style={tw`text-indigo-600`} fontSize={12}>
+          <View style={tw`flex-row gap-1 items-center`}>
+            <Text style={tw`text-slate-600`} fontSize={13}>
               {compartmentNum}칸
             </Text>
+            <Text>|</Text>
+            <Text style={tw`text-slate-600`} fontSize={13}>
+              식료품 {getFoodList(space, compartmentNum).length}개
+            </Text>
           </View>
-          <Text style={tw`text-indigo-600 mr-2`} fontSize={12}>
-            식료품 총 {getFoodList(space, compartmentNum).length}개
-          </Text>
+
           <AddFoodModalBtn foodLocation={foodLocation} />
         </View>
         {/* 식료품 리스트 */}

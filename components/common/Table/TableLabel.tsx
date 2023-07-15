@@ -8,6 +8,7 @@ import tw from 'twrnc';
 
 interface Props {
   title: string;
+  listLength: number;
   entireChecked: boolean;
   onEntirePress: () => void;
   children: ReactNode;
@@ -15,6 +16,7 @@ interface Props {
 
 export default function TableLabel({
   title,
+  listLength,
   entireChecked,
   onEntirePress,
   children,
@@ -33,7 +35,13 @@ export default function TableLabel({
           color={entireChecked ? DEEP_INDIGO : INACTIVE_COLOR}
         />
       </TouchableOpacity>
-      <Text style={tw`text-slate-600 flex-1`}>{title}</Text>
+      <View style={tw`flex-row flex-1 gap-1 items-center`}>
+        <Text style={tw`text-slate-600`}>{title}</Text>
+        <Text style={tw`text-slate-600`} fontSize={12}>
+          |
+        </Text>
+        <Text style={tw`text-slate-600`}>{listLength}개</Text>
+      </View>
       {children}
     </View>
   );

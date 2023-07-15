@@ -34,7 +34,7 @@ export default function CheckFoodBox({ food }: Props) {
       <Text
         style={tw`${
           checked ? 'text-orange-500' : 'text-slate-500'
-        } text-[${scaleFont(14)}px]`}
+        } text-[${scaleFont(14)}px] py-1`}
       >
         {food.name}
       </Text>

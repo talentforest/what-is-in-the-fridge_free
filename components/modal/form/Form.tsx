@@ -16,7 +16,7 @@ export type Label =
   | '카테고리'
   | '구매날짜'
   | '유통기한'
-  | '즐겨찾는 식품인가요?'
+  | '자주 먹는 식품인가요?'
   | false;
 
 interface Props {
@@ -72,8 +72,8 @@ export default function Form({ items, changeInfo, food, editableName }: Props) {
         </FormItemContainer>
       )}
 
-      {items.includes('즐겨찾는 식품인가요?') && (
-        <FormItemContainer label='즐겨찾는 식품인가요?'>
+      {items.includes('자주 먹는 식품인가요?') && (
+        <FormItemContainer label='자주 먹는 식품인가요?'>
           <FavoriteItem favorite={food.favorite} changeInfo={changeInfo} />
         </FormItemContainer>
       )}
