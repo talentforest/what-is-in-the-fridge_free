@@ -1,54 +1,37 @@
 import { useFonts } from 'expo-font';
-import { Alert, KeyboardAvoidingView, View } from 'react-native';
-import { useState } from 'react';
 import { fonts } from '../constant/fonts';
-import { useDispatch } from '../redux/hook';
 import {
   SafeBottomAreaView,
   Text,
   TouchableOpacity,
 } from '../components/native-component';
-import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
-import { Food, initialFoodInfo } from '../constant/foods';
+import { View } from 'react-native';
+import { useState } from 'react';
+import { DEEP_YELLOW, INDIGO, LIGHT_INDIGO } from '../constant/colors';
 import TableLabel from '../components/common/Table/TableLabel';
 import useHandleCheckList from '../hooks/useHandleCheckList';
-import TableTotalItem from '../components/common/Table/TableItemSetting';
 import TableList from '../components/common/Table/TableList';
 import TableItem from '../components/common/Table/TableItem';
-import ExistFoodMark from '../components/common/ExistFoodMark';
 import useCheckFood from '../hooks/useCheckFood';
-import SquareBtn from '../components/common/Buttons/SquareBtn';
-import UUIDGenerator from 'react-native-uuid';
 import useFavoriteFoods from '../hooks/useFavoriteFoods';
-import tw from 'twrnc';
-import { scaleH } from '../util';
 import TableContainer from '../components/common/Table/TableContainer';
 import Container from '../components/common/LayoutBox/Container';
 import TableItemSetting from '../components/common/Table/TableItemSetting';
 import Icon from '../components/native-component/Icon';
-import { DEEP_INDIGO, LIGHT_GRAY } from '../constant/colors';
+import tw from 'twrnc';
+
+type Filter = '전체' | '냉장고에 있음' | '냉장고에 없음';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
-  const [keyword, setKeyword] = useState('');
-  const myUuid = UUIDGenerator.v4();
-  const dispatch = useDispatch();
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [isFilter, setIsFilter] = useState<Filter>('전체');
 
   const {
     favoriteFoods,
     nonExistFavoriteFoods,
     existFavoriteFoods, //
   } = useFavoriteFoods();
-
-  const onSubmitEditing = () => {
-    const foodToAdd: Food = {
-      ...initialFoodInfo,
-      name: keyword,
-      id: myUuid as string,
-    };
-    dispatch(addFavorite(foodToAdd));
-    Alert.alert('추가 알림', '성공적으로 추가되었습니다.');
-  };
 
   const {
     entireCheck,
@@ -61,6 +44,16 @@ export default function FavoriteFoods() {
   } = useHandleCheckList();
   const { checkExistFood } = useCheckFood();
 
+  const filterList = (filter: Filter) => {
+    setIsFilter(filter);
+  };
+
+  const getTableList = () => {
+    if (isFilter === '냉장고에 있음') return [...existFavoriteFoods];
+    if (isFilter === '냉장고에 없음') return [...nonExistFavoriteFoods];
+    return [...nonExistFavoriteFoods, ...existFavoriteFoods];
+  };
+
   if (!fontsLoaded) return null;
 
   return (
@@ -68,14 +61,57 @@ export default function FavoriteFoods() {
       <Container>
         <TableContainer>
           <TableLabel
-            title='식료품'
-            label='식료품 유무'
+            title='자주 먹는 식료품'
             entireChecked={entireCheck}
             onEntirePress={() => onEntirePress(favoriteFoods)}
-          />
+          >
+            <TouchableOpacity
+              onPress={() => setFilterOpen((prev) => !prev)}
+              style={tw`justify-end flex-row items-center gap-0.5 rounded-full`}
+            >
+              <Icon
+                type='MaterialCommunityIcons'
+                name={'chevron-down'}
+                size={22}
+                color={INDIGO}
+              />
+              <Text style={tw`text-indigo-600`}>{isFilter}</Text>
+            </TouchableOpacity>
+          </TableLabel>
+          {filterOpen && (
+            <View style={tw`flex-row flex-wrap pt-2 gap-1`}>
+              {['전체', '냉장고에 있음', '냉장고에 없음'].map((filter) => (
+                <TouchableOpacity
+                  onPress={() => filterList(filter as Filter)}
+                  key={filter}
+                  style={tw`flex-row items-center gap-0.5 border py-1 px-2 rounded-full ${
+                    filter === isFilter
+                      ? 'bg-amber-50 border-amber-500'
+                      : 'border-slate-400 bg-white'
+                  }`}
+                >
+                  {filter !== '전체' && (
+                    <Icon
+                      type='MaterialCommunityIcons'
+                      name='filter'
+                      size={16}
+                      color={filter === isFilter ? DEEP_YELLOW : LIGHT_INDIGO}
+                    />
+                  )}
+                  <Text
+                    style={tw`${
+                      filter === isFilter ? 'text-amber-600' : 'text-slate-500'
+                    }`}
+                  >
+                    {filter}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
           {favoriteFoods.length !== 0 ? (
             <TableList
-              list={[...nonExistFavoriteFoods, ...existFavoriteFoods]}
+              list={getTableList()}
               renderItem={({ item }) => (
                 <TableItem
                   key={item.name}
@@ -83,7 +119,15 @@ export default function FavoriteFoods() {
                   onCheckPress={onCheckPress}
                   existInList={existInList}
                 >
-                  <ExistFoodMark exist={!!checkExistFood(item)} />
+                  <Text
+                    style={tw`${
+                      !!checkExistFood(item)
+                        ? 'text-indigo-500'
+                        : 'text-slate-400'
+                    }`}
+                  >
+                    {!!checkExistFood(item) ? '있음' : '없음'}
+                  </Text>
                 </TableItem>
               )}
             />

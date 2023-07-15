@@ -41,7 +41,7 @@ export default function ExpiredFoods() {
     <SafeBottomAreaView>
       <Container>
         {/* 탭 버튼 */}
-        <View style={tw`flex-row items-center mb-2`}>
+        <View style={tw`flex-row items-center ml-1 gap-0.5`}>
           {['냉장실', '냉동실'].map((btnName) => (
             <TabBtn
               key={btnName}
@@ -56,11 +56,16 @@ export default function ExpiredFoods() {
         {/* 목록 표 */}
         <TableContainer>
           <TableLabel
-            title={`${tab} 식료품`}
-            label='유통기한'
+            title={`유통기한 주의 식료품`}
             entireChecked={entireCheck}
             onEntirePress={() => onEntirePress(filterExpiredFoods(tab))}
-          />
+          >
+            <View
+              style={tw`justify-end flex-row items-center gap-0.5 rounded-full`}
+            >
+              <Text style={tw`text-slate-600`}>유통기한</Text>
+            </View>
+          </TableLabel>
           {/* 냉장고 상태 문구 */}
           <ExpiredState length={filterExpiredFoods(tab).length} />
           {!!filterExpiredFoods(tab).length ? (

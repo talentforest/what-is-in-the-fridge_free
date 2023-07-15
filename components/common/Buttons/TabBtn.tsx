@@ -26,8 +26,8 @@ export default function TabBtn({
     <TouchableOpacity
       key={btnName}
       onPress={() => setOpenTab(btnName)}
-      style={tw`flex-row gap-1 items-center justify-between px-1.5 pb-2 border-b-2 ${
-        active ? 'border-blue-500' : 'border-slate-300'
+      style={tw`flex-row gap-1 items-center rounded-t-lg justify-between px-2 py-2 border-2 border-b-0 border-slate-300 ${
+        active ? 'bg-amber-200' : 'bg-white'
       }`}
     >
       {iconName && (

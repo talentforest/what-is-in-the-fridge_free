@@ -31,7 +31,11 @@ export default function AddFoodModal({
       </Text>
 
       {foodLocation && (
-        <ScrollView style={tw`my-4`} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={tw`my-4`}
+          // contentContainerStyle={tw`border`}
+          showsVerticalScrollIndicator={false}
+        >
           <Form
             editableName={true}
             items={[

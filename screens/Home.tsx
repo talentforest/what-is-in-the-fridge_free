@@ -26,12 +26,12 @@ const Home = () => {
     Platform.OS === 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
 
   return (
-    <Container>
-      <ScrollView
-        style={tw`pt-[${statusBarHeight || 0}px]`}
-        contentContainerStyle={tw`pb-10`}
-        showsVerticalScrollIndicator={false}
-      >
+    <ScrollView
+      style={tw`pt-[${statusBarHeight || 0}px]`}
+      contentContainerStyle={tw`pb-10`}
+      showsVerticalScrollIndicator={false}
+    >
+      <Container>
         <LogoTitle />
 
         {assets && <FridgeInfo assets={assets} />}
@@ -65,8 +65,8 @@ const Home = () => {
             route: 'FavoriteFoods',
           }}
         />
-      </ScrollView>
-    </Container>
+      </Container>
+    </ScrollView>
   );
 };
 

@@ -29,7 +29,7 @@ export default function TableItem({
     <TouchableOpacity
       disabled={disabled}
       onPress={() => onCheckPress(food)}
-      style={tw`flex-row gap-1 items-center justify-between h-[${scaleH(
+      style={tw`flex-row gap-1 border-b border-slate-300 items-center justify-between h-[${scaleH(
         48
       )}px]`}
     >

@@ -15,7 +15,7 @@ export default function SubmitBtn({ btnName, onPress }: Props) {
       onPress={onPress}
       style={tw`h-[${
         screenHeightPercentage * 1.7
-      }] w-full px-3 mb-1.5 flex-row items-center justify-center border border-slate-500 rounded-lg bg-indigo-500`}
+      }] w-full px-3 mt-1 flex-row items-center justify-center border border-slate-500 rounded-lg bg-indigo-500`}
     >
       <Text style={tw`text-white text-center`}>{btnName}</Text>
     </TouchableOpacity>

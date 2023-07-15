@@ -5,6 +5,7 @@ import { scaleH } from '../../../util';
 import {
   DEEP_GRAY,
   DEEP_INDIGO,
+  DEEP_YELLOW,
   LIGHT_GRAY,
   ORANGE_RED,
 } from '../../../constant/colors';
@@ -14,7 +15,7 @@ import Icon from '../../native-component/Icon';
 type Button = 'delete-favorite' | 'add-shopping-list' | 'delete';
 interface Props {
   list: Food[];
-  onAddPress: () => void;
+  onAddPress?: () => void;
   onPress: () => void;
   buttons: Button[];
 }
@@ -29,12 +30,14 @@ export default function TableItemSetting({
     <View
       style={tw`h-[${scaleH(
         48
-      )}px] border-t border-slate-300 flex-row items-center justify-between gap-2`}
+      )}px] flex-row items-center justify-between gap-2`}
     >
-      <Text style={tw`text-indigo-500`}>{list.length}개의 식료품 선택</Text>
+      <Text style={tw`${!!list.length ? 'text-indigo-500' : 'text-slate-500'}`}>
+        {list.length}개의 식료품 선택
+      </Text>
       <View style={tw`flex-row items-center gap-2`}>
         {/* 장보기 목록 추가 버튼 */}
-        {buttons.includes('add-shopping-list') && (
+        {buttons.includes('add-shopping-list') && onAddPress && (
           <TouchableOpacity
             onPress={onAddPress}
             disabled={!list.length}
@@ -59,7 +62,7 @@ export default function TableItemSetting({
               type='MaterialCommunityIcons'
               name='tag-minus'
               size={22}
-              color={list.length ? ORANGE_RED : LIGHT_GRAY}
+              color={list.length ? DEEP_YELLOW : LIGHT_GRAY}
             />
           </TouchableOpacity>
         )}
@@ -74,7 +77,7 @@ export default function TableItemSetting({
               type='MaterialCommunityIcons'
               name='trash-can'
               size={22}
-              color={list.length ? DEEP_GRAY : LIGHT_GRAY}
+              color={list.length ? ORANGE_RED : LIGHT_GRAY}
             />
           </TouchableOpacity>
         )}

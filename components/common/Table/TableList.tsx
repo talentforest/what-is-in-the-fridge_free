@@ -13,9 +13,6 @@ export default function TableList({ list, renderItem }: Props) {
       keyExtractor={(item) => item.id}
       showsVerticalScrollIndicator={false}
       data={list}
-      ItemSeparatorComponent={() => (
-        <View style={tw`border-b border-slate-200`} />
-      )}
       renderItem={renderItem}
     />
   );

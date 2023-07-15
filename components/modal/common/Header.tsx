@@ -13,7 +13,7 @@ export default function Header({ title, setModalVisible }: Props) {
   return (
     <View style={tw`flex-row w-full items-center justify-between`}>
       <Text fontSize={18}>{title}</Text>
-      <Pressable onPress={() => setModalVisible(false)}>
+      <Pressable onPress={() => setModalVisible(false)} style={tw`p-1`}>
         <Icon
           type='MaterialCommunityIcons'
           name='close'
