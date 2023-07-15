@@ -54,7 +54,7 @@ export default function AddSelectFoodModal({
             '냉장고 위치 선택',
             '구매날짜',
             '유통기한',
-            route.name !== 'FavoriteFoods' && '즐겨찾는 식품인가요?',
+            route.name !== 'FavoriteFoods' && '자주 먹는 식품인가요?',
           ]}
           food={selectedFood}
           changeInfo={onChange}

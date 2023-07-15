@@ -31,11 +31,7 @@ export default function AddFoodModal({
       </Text>
 
       {foodLocation && (
-        <ScrollView
-          style={tw`my-4`}
-          // contentContainerStyle={tw`border`}
-          showsVerticalScrollIndicator={false}
-        >
+        <ScrollView style={tw`my-4`} showsVerticalScrollIndicator={false}>
           <Form
             editableName={true}
             items={[
@@ -43,7 +39,7 @@ export default function AddFoodModal({
               '카테고리',
               '구매날짜',
               '유통기한',
-              '즐겨찾는 식품인가요?',
+              '자주 먹는 식품인가요?',
             ]}
             food={newFood}
             changeInfo={addFoodInfo}

@@ -26,7 +26,7 @@ export default function FoodItem({ food }: Props) {
       key={food.id}
       style={tw`${bgColor} rounded-full border border-indigo-300 gap-1 justify-center items-center flex-row px-[${scaleH(
         8
-      )}px] h-[${scaleH(7)}]`}
+      )}px] h-[${scaleH(8)}]`}
     >
       {food.image === '' ? (
         <Icon
@@ -36,11 +36,13 @@ export default function FoodItem({ food }: Props) {
           color={INDIGO}
         />
       ) : (
-        <Text fontSize={13}>{food.image}</Text>
+        <Text fontSize={13} style={tw`pb-0.5`}>
+          {food.image}
+        </Text>
       )}
 
-      <Text style={tw`text-center text-slate-600 mt-0.5`} fontSize={12}>
-        {cutLetter(food.name, 6)}
+      <Text style={tw`text-center text-slate-600 py-1`} fontSize={12}>
+        {cutLetter(food.name, 8)}
       </Text>
 
       {(checkExpired(expiredDate) || checkLeftThreeDays(expiredDate)) && (

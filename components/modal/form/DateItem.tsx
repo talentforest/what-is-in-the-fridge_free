@@ -37,7 +37,7 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
         <TextInput
           value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
           editable={false}
-          style={tw`border-0 pl-0 text-slate-600`}
+          style={tw`border-0 pl-0 my-0.5 text-slate-600`}
         />
         <TouchableOpacity onPress={() => setDatePickerVisible(true)}>
           <Icon type='AntDesign' name='calendar' size={18} color={INDIGO} />
@@ -59,7 +59,7 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
           <TouchableOpacity
             key={btn.label}
             onPress={() => changeDate(btn.func(new Date(date)))}
-            style={tw`justify-center bg-${btn.btnColor}-300 border border-slate-400 p-0.5 px-2 rounded-2xl`}
+            style={tw`justify-center bg-${btn.btnColor}-300 border border-slate-400 py-1 px-2 rounded-2xl`}
           >
             <Text fontSize={12}>+ {btn.label}</Text>
           </TouchableOpacity>

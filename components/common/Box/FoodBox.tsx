@@ -19,7 +19,7 @@ export default function FoodBox({ food, expiredDate }: Props) {
       )}`}
     >
       {food.image && <Text fontSize={12}>{food.image}</Text>}
-      <Text style={tw`text-center text-slate-600 pt-0.5`} fontSize={14}>
+      <Text style={tw`text-center text-slate-600 py-1`} fontSize={14}>
         {cutLetter(food.name, 6)}
       </Text>
       {expiredDate && <LeftDay fontSize={12} expiredDate={food.expiredDate} />}

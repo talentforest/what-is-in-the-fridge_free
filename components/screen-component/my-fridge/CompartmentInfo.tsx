@@ -16,7 +16,7 @@ export default function CompartmentInfo({ space }: { space: Space }) {
     {
       name: '총 식료품',
       foodList: (space: Space) => getFoodList(space),
-      activeColor: 'text-teal-600',
+      activeColor: 'text-blue-600',
     },
     {
       name: '유통기한 주의',

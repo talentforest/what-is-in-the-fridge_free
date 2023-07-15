@@ -48,7 +48,7 @@ export default function TableItem({
           ))}
         <Text
           fontSize={14}
-          style={tw`flex-1 ${
+          style={tw`flex-1 py-1 ${
             existInList(food.id) ? 'text-blue-600' : 'text-slate-700'
           }`}
         >

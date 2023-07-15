@@ -7,7 +7,7 @@ import {
 } from '../components/native-component';
 import { View } from 'react-native';
 import { useState } from 'react';
-import { DEEP_YELLOW, INDIGO, LIGHT_INDIGO } from '../constant/colors';
+import { DEEP_YELLOW, INDIGO, LIGHT_GRAY } from '../constant/colors';
 import TableLabel from '../components/common/Table/TableLabel';
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import TableList from '../components/common/Table/TableList';
@@ -36,6 +36,7 @@ export default function FavoriteFoods() {
   const {
     entireCheck,
     checkList,
+    setCheckList,
     onCheckPress,
     existInList,
     onEntirePress,
@@ -45,6 +46,7 @@ export default function FavoriteFoods() {
   const { checkExistFood } = useCheckFood();
 
   const filterList = (filter: Filter) => {
+    setCheckList([]);
     setIsFilter(filter);
   };
 
@@ -62,6 +64,7 @@ export default function FavoriteFoods() {
         <TableContainer>
           <TableLabel
             title='자주 먹는 식료품'
+            listLength={getTableList().length}
             entireChecked={entireCheck}
             onEntirePress={() => onEntirePress(favoriteFoods)}
           >
@@ -75,7 +78,7 @@ export default function FavoriteFoods() {
                 size={22}
                 color={INDIGO}
               />
-              <Text style={tw`text-indigo-600`}>{isFilter}</Text>
+              <Text style={tw`text-indigo-500`}>{isFilter}</Text>
             </TouchableOpacity>
           </TableLabel>
           {filterOpen && (
@@ -95,7 +98,7 @@ export default function FavoriteFoods() {
                       type='MaterialCommunityIcons'
                       name='filter'
                       size={16}
-                      color={filter === isFilter ? DEEP_YELLOW : LIGHT_INDIGO}
+                      color={filter === isFilter ? DEEP_YELLOW : LIGHT_GRAY}
                     />
                   )}
                   <Text
@@ -110,29 +113,37 @@ export default function FavoriteFoods() {
             </View>
           )}
           {favoriteFoods.length !== 0 ? (
-            <TableList
-              list={getTableList()}
-              renderItem={({ item }) => (
-                <TableItem
-                  key={item.name}
-                  food={item}
-                  onCheckPress={onCheckPress}
-                  existInList={existInList}
-                >
-                  <Text
-                    style={tw`${
-                      !!checkExistFood(item)
-                        ? 'text-indigo-500'
-                        : 'text-slate-400'
-                    }`}
-                  >
-                    {!!checkExistFood(item) ? '있음' : '없음'}
-                  </Text>
-                </TableItem>
+            <>
+              {!!getTableList().length ? (
+                <TableList
+                  list={getTableList()}
+                  renderItem={({ item }) => (
+                    <TableItem
+                      key={item.name}
+                      food={item}
+                      onCheckPress={onCheckPress}
+                      existInList={existInList}
+                    >
+                      <Text
+                        style={tw`${
+                          !!checkExistFood(item)
+                            ? 'text-indigo-500'
+                            : 'text-slate-500'
+                        }`}
+                      >
+                        {!!checkExistFood(item) ? '있음' : '없음'}
+                      </Text>
+                    </TableItem>
+                  )}
+                />
+              ) : (
+                <Text style={tw`text-slate-500 text-center mt-22 flex-1`}>
+                  결과가 없습니다.
+                </Text>
               )}
-            />
+            </>
           ) : (
-            <Text style={tw`text-slate-500 text-center mt-22`}>
+            <Text style={tw`text-slate-500 text-center mt-22 flex-1`}>
               자주 먹는 식료품이 없습니다.
             </Text>
           )}

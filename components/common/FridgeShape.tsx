@@ -46,13 +46,16 @@ export default function FridgeShape() {
                   <CompartmentInfo space={space} />
                 </>
               ) : (
+                // 나의 냉장고 설정
                 <>
                   <View
                     style={tw`${doorRadius(space)} ${
                       space.includes('냉동')
                         ? 'border-blue-400'
                         : 'border-yellow-400'
-                    } border-2 absolute z-10 w-full h-full`}
+                    } border-4 ${
+                      space.includes('문쪽') ? 'border-l-0' : 'border-r-0'
+                    }  absolute z-10 w-full h-full`}
                   />
                   <Text
                     style={tw`absolute z-10 w-full text-center font-bold ${

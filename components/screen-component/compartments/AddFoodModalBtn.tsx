@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { TouchableOpacity } from '../../native-component';
 import { FoodLocation } from '../../../constant/fridgeInfo';
-import { DEEP_INDIGO } from '../../../constant/colors';
+import { BLUE } from '../../../constant/colors';
 import AddFoodModal from '../../modal/AddFoodModal';
 import Icon from '../../native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
   foodLocation?: FoodLocation;
@@ -22,12 +23,12 @@ export default function AddFoodModalBtn({ foodLocation, onPress }: Props) {
 
   return (
     <>
-      <TouchableOpacity onPress={onPressFc}>
+      <TouchableOpacity onPress={onPressFc} style={tw`p-1.5`}>
         <Icon
           type='MaterialCommunityIcons'
           name='basket-plus'
-          size={18}
-          color={DEEP_INDIGO}
+          size={20}
+          color={BLUE}
         />
       </TouchableOpacity>
       {modal && foodLocation && (

@@ -68,6 +68,7 @@ export default function ShoppingList() {
         <TableContainer>
           <TableLabel
             title='장봐야할 식료품'
+            listLength={shoppingList.length}
             entireChecked={entireCheck}
             onEntirePress={() => onEntirePress(shoppingList)}
           >

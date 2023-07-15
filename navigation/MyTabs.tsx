@@ -100,9 +100,10 @@ export default function MyTabs() {
           tabBarLabel: '더보기',
           headerTitle: '설정',
           ...headerOptions,
-          // headerStyle: {
-          //   backgroundColor: '#fff',
-          // },
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#fff',
+          },
         }}
       />
     </Tab.Navigator>

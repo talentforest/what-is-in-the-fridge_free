@@ -18,9 +18,7 @@ export default function SelectContainter({ title, children }: Props) {
       )}] border border-slate-300 p-4 rounded-lg bg-white`}
     >
       <View style={tw`border-b pb-3 border-blue-400 mb-2`}>
-        <Text style={tw`text-blue-700`} fontSize={16}>
-          {title}
-        </Text>
+        <Text style={tw`text-blue-700`}>{title}</Text>
       </View>
       {children}
     </View>
