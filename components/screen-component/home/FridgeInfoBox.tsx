@@ -3,7 +3,6 @@ import { Text } from '../../native-component';
 import { scaleFont } from '../../../util';
 import { Asset } from 'expo-asset';
 import tw from 'twrnc';
-import Title from '../../common/Title';
 import Box from '../../common/LayoutBox/Box';
 
 interface Props {
@@ -14,8 +13,10 @@ interface Props {
 
 export default function FridgeInfoBox({ asset, name, foodLength }: Props) {
   return (
-    <Box bgColor='bg-blue-500'>
-      <Title title={name} />
+    <Box bgColor='bg-blue-300'>
+      <Text style={tw`text-blue-600 text-[${scaleFont(18)}px] font-bold`}>
+        {name}
+      </Text>
       <View style={tw`flex-row items-end justify-between mt-3`}>
         {asset && (
           <Image
@@ -25,11 +26,11 @@ export default function FridgeInfoBox({ asset, name, foodLength }: Props) {
         )}
 
         <View style={tw`flex-row items-end gap-0.5`}>
-          <Text style={tw`text-slate-200 mb-0.5`}>총 : </Text>
-          <Text style={tw`text-white text-[${scaleFont(30)}px] font-bold`}>
+          <Text style={tw`text-white mb-0.5`}>총 : </Text>
+          <Text style={tw`text-blue-600 text-[${scaleFont(30)}px] font-bold`}>
             {foodLength}
           </Text>
-          <Text style={tw`text-slate-200 mb-0.5`}>개</Text>
+          <Text style={tw`text-white mb-0.5`}>개</Text>
         </View>
       </View>
     </Box>

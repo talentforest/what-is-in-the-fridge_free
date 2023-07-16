@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity } from '../../native-component';
-import { BLUE } from '../../../constant/colors';
+import { GRAY } from '../../../constant/colors';
 import { scaleH } from '../../../util';
 import { ReactNode } from 'react';
 import tw from 'twrnc';
@@ -32,9 +32,9 @@ export default function SettingItem({
         type='MaterialCommunityIcons'
         name={iconName}
         size={18}
-        color={BLUE}
+        color={GRAY}
       />
-      <Text style={tw`text-blue-600 flex-1`}>{title}</Text>
+      <Text style={tw`text-slate-600 flex-1`}>{title}</Text>
       {children}
     </TouchableOpacity>
   );

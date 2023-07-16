@@ -54,7 +54,6 @@ const Navigation = () => {
         component={Compartments}
         options={{
           ...options,
-          title: '냉장고 안 식료품',
         }}
       />
       <Stack.Screen

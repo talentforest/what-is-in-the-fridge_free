@@ -39,7 +39,7 @@ const Home = () => {
           foods={shoppingList}
           info={{
             title: '장봐야할 식료품',
-            desc: '카트에 넣으신 식료품을 터치해주세요.',
+            desc: '장보기 목록에 있는 식료품을 한눈에 볼 수 있어요.',
             iconName: 'cart',
             bgColor: 'bg-indigo-500',
             route: 'ShoppingList',
