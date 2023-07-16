@@ -33,7 +33,7 @@ export default function FridgeShape() {
               key={space}
               disabled={route.name !== 'Setting' ? false : true}
               onPress={() => navigation.navigate('Compartments', { space })}
-              style={tw`justify-center bg-neutral-300 border border-slate-400 ${
+              style={tw`justify-center bg-neutral-300 border-2 border-slate-300 ${
                 space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'
               } ${doorRadius(space)}`}
             >

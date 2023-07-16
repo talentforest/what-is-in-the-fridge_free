@@ -1,13 +1,14 @@
+import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
-import { Text } from '../../native-component';
+import { Text, TouchableOpacity } from '../../native-component';
 import { Food } from '../../../constant/foods';
-import { RouteName } from '../../../navigation/Navigation';
+import { NavigateProp, RouteName } from '../../../navigation/Navigation';
 import { useState } from 'react';
+import { LIGHT_YELLOW } from '../../../constant/colors';
 import FoodTag from '../../common/Box/FoodBox';
 import Title from '../../common/Title';
 import Box from '../../common/LayoutBox/Box';
 import tw from 'twrnc';
-import RoundedFullBtn from '../../common/Buttons/RoundedFullBtn';
 import CheckFoodBox from '../../common/Box/CheckFoodBox';
 import MoreOpenBtn from '../../common/Buttons/MoreOpenBtn';
 import Icon from '../../native-component/Icon';
@@ -30,6 +31,7 @@ interface Props {
 
 export default function EntranceBox({ info, foods }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigation<NavigateProp>();
 
   const { title, desc, iconName, bgColor, route } = info;
 
@@ -39,12 +41,12 @@ export default function EntranceBox({ info, foods }: Props) {
   return (
     <Box bgColor={bgColor}>
       <Title title={title} iconName={iconName} />
-      <Text style={tw`text-white my-3`}>{desc}</Text>
+      <Text style={tw`text-white mt-3 mb-1`}>{desc}</Text>
 
       {foods.length !== 0 ? (
-        <View style={tw`flex-row gap-1.5 flex-wrap flex-1 mt-2 items-center`}>
+        <View style={tw`flex-1 mt-2`}>
           {title === '장봐야할 식료품' && (
-            <>
+            <View style={tw`flex-row gap-1.5 flex-wrap items-center`}>
               {foods.slice(0, MAX_NUM).map((food) => (
                 <CheckFoodBox key={food.id} food={food} />
               ))}
@@ -55,11 +57,11 @@ export default function EntranceBox({ info, foods }: Props) {
               {foods.length > MAX_NUM && (
                 <MoreOpenBtn isOpen={isOpen} setIsOpen={setIsOpen} />
               )}
-            </>
+            </View>
           )}
           {(title === '유통기한 주의 식료품' ||
             title === '자주 먹는 식료품') && (
-            <>
+            <View style={tw`flex-row gap-1.5 flex-wrap items-center`}>
               {foods.slice(0, MAX_NUM).map((food) => (
                 <FoodTag
                   key={food.id}
@@ -75,7 +77,7 @@ export default function EntranceBox({ info, foods }: Props) {
                   color='#fff'
                 />
               )}
-            </>
+            </View>
           )}
         </View>
       ) : (
@@ -83,7 +85,35 @@ export default function EntranceBox({ info, foods }: Props) {
           아직 식료품이 없어요
         </Text>
       )}
-      <RoundedFullBtn title='더보기' route={route} iconName='chevron-right' />
+      <View style={tw`items-center justify-between flex-row-reverse mt-6`}>
+        <TouchableOpacity
+          onPress={() => navigate.navigate(route)}
+          style={tw`flex-row items-center self-end`}
+        >
+          <Text style={tw`text-white font-bold`} fontSize={14}>
+            더보기
+          </Text>
+          <Icon
+            name='chevron-right'
+            type='MaterialCommunityIcons'
+            color='#fff'
+            size={20}
+          />
+        </TouchableOpacity>
+        {title === '장봐야할 식료품' && (
+          <View style={tw`flex-row items-center gap-0.5`}>
+            <Icon
+              name='information'
+              type='MaterialCommunityIcons'
+              size={16}
+              color={LIGHT_YELLOW}
+            />
+            <Text style={tw`text-amber-200`}>
+              카트에 넣은 식료품을 터치하세요.
+            </Text>
+          </View>
+        )}
+      </View>
     </Box>
   );
 }

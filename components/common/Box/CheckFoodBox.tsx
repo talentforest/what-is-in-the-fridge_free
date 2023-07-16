@@ -26,7 +26,7 @@ export default function CheckFoodBox({ food }: Props) {
       )}]`}
     >
       <Icon
-        name='cart-arrow-down'
+        name={checked ? 'cart-arrow-down' : 'cart-outline'}
         type='MaterialCommunityIcons'
         size={16}
         color={checked ? ORANGE_RED : LIGHT_GRAY}

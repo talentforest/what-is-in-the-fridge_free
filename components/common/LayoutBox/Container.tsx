@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import { View } from 'react-native';
 import { scaleH } from '../../../util';
-import tw from 'twrnc';
 import { useRoute } from '@react-navigation/native';
+import tw from 'twrnc';
 
 export default function Container({ children }: { children: ReactNode }) {
   const route = useRoute();
