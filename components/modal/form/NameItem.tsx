@@ -13,7 +13,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
 
   return (
     <TextInput
-      style={tw`flex-1 ${
+      style={tw`flex-1 rounded-lg ${
         !editable ? 'bg-slate-100 text-slate-600' : 'bg-white'
       }`}
       editable={editable}

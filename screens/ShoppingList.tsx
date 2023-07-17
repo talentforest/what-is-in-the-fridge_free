@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from '../components/native-component';
 import { useSelector } from '../redux/hook';
-import { BLUE, DEEP_GRAY, LIGHT_GRAY } from '../constant/colors';
+import { DEEP_GRAY, LIGHT_GRAY } from '../constant/colors';
 import { Food, initialFoodInfo } from '../constant/foods';
 import TableLabel from '../components/common/Table/TableLabel';
 import TableItem from '../components/common/Table/TableItem';

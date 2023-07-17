@@ -32,7 +32,7 @@ export default function TextInputBox({
         placeholder={placeholder}
         returnKeyType='done'
         blurOnSubmit={false}
-        style={tw`text-slate-600 flex-1 rounded-full border-0 my-0.5`}
+        style={tw`text-slate-600 flex-1 border-0 my-0.5`}
         onSubmitEditing={onSubmitEditing}
       />
       <TouchableOpacity onPress={onSubmitEditing}>

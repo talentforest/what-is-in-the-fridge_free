@@ -26,7 +26,7 @@ export default function FoodItem({ food }: Props) {
       key={food.id}
       style={tw`${bgColor} rounded-full border border-indigo-300 gap-1 justify-center items-center flex-row px-[${scaleH(
         8
-      )}px] h-[${scaleH(8)}]`}
+      )}px] py-[${scaleH(3)}px]`}
     >
       {food.image === '' ? (
         <Icon
@@ -36,12 +36,12 @@ export default function FoodItem({ food }: Props) {
           color={INDIGO}
         />
       ) : (
-        <Text fontSize={13} style={tw`pb-0.5`}>
+        <Text fontSize={12} style={tw`pb-0.5`}>
           {food.image}
         </Text>
       )}
 
-      <Text style={tw`text-center text-slate-600 py-1`} fontSize={12}>
+      <Text fontSize={14} style={tw`text-center text-slate-600 py-0.5`}>
         {cutLetter(food.name, 8)}
       </Text>
 

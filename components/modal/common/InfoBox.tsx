@@ -27,7 +27,7 @@ export default function InfoBox({ label, info, favorite }: Props) {
           <Text style={tw`text-slate-800`}>
             {dateItem ? getFormattedDate(info, 'YYYY년 MM월 DD일') : info}
           </Text>
-          {label === '유통기한' && <LeftDay fontSize={12} expiredDate={info} />}
+          {label === '유통기한' && <LeftDay expiredDate={info} />}
         </View>
       )}
 

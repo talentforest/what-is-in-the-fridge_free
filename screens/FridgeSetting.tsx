@@ -34,7 +34,7 @@ export default function FridgeSetting() {
                   checked={fridgeInfo.type === type}
                 />
               ))}
-              <Text style={tw`text-slate-500 mt-1`} fontSize={12}>
+              <Text fontSize={14} style={tw`text-slate-500 mt-1`}>
                 현재 일반형 냉장고만 지원됩니다.
               </Text>
             </View>
@@ -67,7 +67,7 @@ export default function FridgeSetting() {
             ))}
           </SelectContainter>
           <SelectContainter title='냉장고 결과'>
-            <View style={tw`flex-1 w-[70%] h-[${scaleH(80)}] mx-auto`}>
+            <View style={tw`flex-1 w-[70%] h-${scaleH(80)} mx-auto`}>
               <FridgeShape />
             </View>
           </SelectContainter>

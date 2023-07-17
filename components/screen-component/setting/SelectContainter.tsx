@@ -13,11 +13,11 @@ interface Props {
 export default function SelectContainter({ title, children }: Props) {
   return (
     <View
-      style={tw`gap-1 mb-[${scaleH(
-        10
-      )}] border border-slate-300 p-4 rounded-lg bg-white`}
+      style={tw`gap-1 mb-[${scaleH(10)}] border border-slate-300 p-[${scaleH(
+        14
+      )}px] rounded-lg bg-white`}
     >
-      <View style={tw`border-b pb-3 border-blue-400 mb-2`}>
+      <View style={tw`border-b pb-3 border-blue-400 mb-[${scaleH(14)}px]`}>
         <Text style={tw`text-blue-700`}>{title}</Text>
       </View>
       {children}

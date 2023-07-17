@@ -13,7 +13,7 @@ export default function SettingContainer({
   return (
     <View style={tw`mb-8`}>
       <View style={tw`pb-2.5 px-1 border-b border-blue-300`}>
-        <Text style={tw`text-blue-600`} fontSize={12}>
+        <Text fontSize={14} style={tw`text-blue-600`}>
           {title}
         </Text>
       </View>

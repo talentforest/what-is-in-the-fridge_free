@@ -2,13 +2,14 @@ import { getRelativeTime } from '../../util';
 import { Text } from '../native-component';
 import useExpiredFoods from '../../hooks/useExpiredFoods';
 import tw from 'twrnc';
+import { useRoute } from '@react-navigation/native';
 
 interface Props {
   expiredDate: string;
-  fontSize: number;
 }
 
-function LeftDay({ expiredDate, fontSize }: Props) {
+function LeftDay({ expiredDate }: Props) {
+  const route = useRoute();
   const { checkExpired, checkLeftThreeDays } = useExpiredFoods();
 
   return (
@@ -19,8 +20,8 @@ function LeftDay({ expiredDate, fontSize }: Props) {
           : checkLeftThreeDays(expiredDate)
           ? 'text-amber-600'
           : 'text-green-600'
-      } pl-1 pt-1`}
-      fontSize={fontSize}
+      } pl-1`}
+      fontSize={route.name === 'ExpiredFoods' ? 14 : 12}
     >
       {getRelativeTime(expiredDate)}
     </Text>

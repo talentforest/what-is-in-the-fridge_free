@@ -28,7 +28,7 @@ export default function FormImageItem({ value, changeInfo }: Props) {
             size={22}
           />
         ) : (
-          <Text style={tw`pt-0.5`} fontSize={18}>
+          <Text fontSize={18} style={tw`pt-0.5`}>
             {value}
           </Text>
         )}

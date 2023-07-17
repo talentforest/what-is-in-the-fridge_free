@@ -24,12 +24,13 @@ export function TextInput({ style, onPress, ...props }: Props) {
   return (
     <>
       {Platform.OS === 'android' ? (
-        <TouchableOpacity style={tw`flex-1`} onPress={onTouchPress}>
+        <TouchableOpacity
+          style={tw`flex-1 h-[${scaleH(42)}px]`}
+          onPress={onTouchPress}
+        >
           <Input
             style={tw.style(
-              `border border-slate-400 h-[${scaleH(
-                42
-              )}px] p-2 rounded-lg bg-white text-[${scaleFont(14)}px]`,
+              `h-full border border-slate-400 px-2 text-[${scaleFont(14)}px]`,
               FontGmarketSansRegular,
               style
             )}

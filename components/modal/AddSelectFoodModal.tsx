@@ -37,7 +37,7 @@ export default function AddSelectFoodModal({
               source={{ uri: selectedFood.image }}
             />
           ) : (
-            <Text style={tw`pt-4`} fontSize={24}>
+            <Text fontSize={22} style={tw`pt-4`}>
               {selectedFood.image}
             </Text>
           )}

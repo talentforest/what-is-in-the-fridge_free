@@ -22,7 +22,7 @@ export default function VariationBtn({ name }: Props) {
   return (
     <View
       style={tw`h-[${scaleH(
-        20
+        18
       )}] gap-3 justify-center flex-1 items-center border border-blue-400 px-2 rounded-md`}
     >
       <Text>{name}</Text>
@@ -44,7 +44,7 @@ export default function VariationBtn({ name }: Props) {
             size={22}
           />
         </TouchableOpacity>
-        <Text style={tw`mx-1 text-indigo-600 w-5 text-center`} fontSize={16}>
+        <Text style={tw`mx-1 text-indigo-600 w-5 text-center`}>
           {fridgeInfo.compartments[name]}
         </Text>
         <TouchableOpacity

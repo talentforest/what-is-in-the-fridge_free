@@ -12,6 +12,7 @@ import tw from 'twrnc';
 import CheckFoodBox from '../../common/Box/CheckFoodBox';
 import MoreOpenBtn from '../../common/Buttons/MoreOpenBtn';
 import Icon from '../../native-component/Icon';
+import { FontGmarketSansBold } from '../../../constant/fonts';
 
 export type EntranceTitle =
   | '유통기한 주의 식료품'
@@ -44,7 +45,7 @@ export default function EntranceBox({ info, foods }: Props) {
       <Text style={tw`text-white mt-3 mb-1`}>{desc}</Text>
 
       {foods.length !== 0 ? (
-        <View style={tw`flex-1 mt-2`}>
+        <View style={tw`flex-1 mt-[${22}px] mb-[${28}px]`}>
           {title === '장봐야할 식료품' && (
             <View style={tw`flex-row gap-1.5 flex-wrap items-center`}>
               {foods.slice(0, MAX_NUM).map((food) => (
@@ -81,7 +82,7 @@ export default function EntranceBox({ info, foods }: Props) {
           )}
         </View>
       ) : (
-        <Text style={tw`text-${color}-200 text-center py-8`}>
+        <Text fontSize={14} style={tw`text-${color}-200 text-center py-8`}>
           아직 식료품이 없어요
         </Text>
       )}
@@ -90,7 +91,10 @@ export default function EntranceBox({ info, foods }: Props) {
           onPress={() => navigate.navigate(route)}
           style={tw`flex-row items-center self-end`}
         >
-          <Text style={tw`text-white font-bold`} fontSize={14}>
+          <Text
+            fontSize={14}
+            style={tw.style(`text-white`, FontGmarketSansBold)}
+          >
             더보기
           </Text>
           <Icon
@@ -100,15 +104,15 @@ export default function EntranceBox({ info, foods }: Props) {
             size={20}
           />
         </TouchableOpacity>
-        {title === '장봐야할 식료품' && (
+        {title === '장봐야할 식료품' && !!foods.length && (
           <View style={tw`flex-row items-center gap-0.5`}>
             <Icon
               name='information'
               type='MaterialCommunityIcons'
-              size={16}
+              size={12}
               color={LIGHT_YELLOW}
             />
-            <Text style={tw`text-amber-200`}>
+            <Text fontSize={12} style={tw`text-amber-200`}>
               카트에 넣은 식료품을 터치하세요.
             </Text>
           </View>
