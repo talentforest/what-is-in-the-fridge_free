@@ -21,9 +21,9 @@ export default function CheckFoodBox({ food }: Props) {
         checked
           ? 'border-orange-500 bg-orange-100'
           : 'bg-white border-indigo-300'
-      } px-2.5 flex-row items-center gap-0.5 rounded-lg border-2 h-[${scaleH(
+      } flex-row items-center gap-0.5 rounded-lg border-2 px-[${scaleFont(
         10
-      )}]`}
+      )}px] py-[${scaleFont(5)}px]`}
     >
       <Icon
         name={checked ? 'cart-arrow-down' : 'cart-outline'}
@@ -32,9 +32,8 @@ export default function CheckFoodBox({ food }: Props) {
         color={checked ? ORANGE_RED : LIGHT_GRAY}
       />
       <Text
-        style={tw`${
-          checked ? 'text-orange-500' : 'text-slate-500'
-        } text-[${scaleFont(14)}px] py-1`}
+        fontSize={14}
+        style={tw`${checked ? 'text-orange-500' : 'text-slate-500'} py-1`}
       >
         {food.name}
       </Text>

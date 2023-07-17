@@ -4,6 +4,7 @@ import { useSelector } from '../../redux/hook';
 import { Space } from '../../constant/fridgeInfo';
 import { getCompartments, scaleH } from '../../util';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { FontGmarketSansBold } from '../../constant/fonts';
 import { NavigateProp } from '../../navigation/Navigation';
 import CompartmentShape from './CompartmentShape';
 import CompartmentInfo from '../screen-component/my-fridge/CompartmentInfo';
@@ -53,16 +54,17 @@ export default function FridgeShape() {
                       space.includes('냉동')
                         ? 'border-blue-400'
                         : 'border-yellow-400'
-                    } border-4 ${
-                      space.includes('문쪽') ? 'border-l-0' : 'border-r-0'
-                    }  absolute z-10 w-full h-full`}
+                    } border-4 absolute z-10 w-full h-full`}
                   />
                   <Text
-                    style={tw`absolute z-10 w-full text-center font-bold ${
-                      space.includes('냉동')
-                        ? 'text-blue-600'
-                        : 'text-yellow-600'
-                    }`}
+                    style={tw.style(
+                      `absolute z-10 w-full text-center ${
+                        space.includes('냉동')
+                          ? 'text-blue-600'
+                          : 'text-yellow-600'
+                      }`,
+                      FontGmarketSansBold
+                    )}
                   >
                     {space.slice(0, 3)}
                   </Text>

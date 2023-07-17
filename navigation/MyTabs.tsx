@@ -4,7 +4,7 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import { DEEP_GRAY, DEEP_YELLOW } from '../constant/colors';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import { scaleFont } from '../util';
 import Home from '../screens/Home';
 import Setting from '../screens/Setting';
@@ -24,19 +24,25 @@ const TAB_BG_COLOR = '#648fff';
 
 const Tab = createBottomTabNavigator();
 const DEVICE_HEIGHT = Dimensions.get('screen').height;
+const PLATFORM_TAB_HEIGHT = Platform.OS === 'android' ? 85 : 100;
 
 const tabBarOptions = {
   tabBarStyle: {
     backgroundColor: TAB_BG_COLOR,
-    height: DEVICE_HEIGHT < 700 ? DEVICE_HEIGHT / 10 : DEVICE_HEIGHT / 8.5,
+    height: DEVICE_HEIGHT < 700 ? DEVICE_HEIGHT / 10 : PLATFORM_TAB_HEIGHT,
+  },
+  tabBarItemStyle: {
+    margin: 5,
+    paddingTop: 10,
+    gap: 10,
   },
   tabBarActiveTintColor: DEEP_YELLOW,
   tabBarInactiveTintColor: '#fff',
   tabBarIconStyle: {
-    marginTop: 10,
+    flex: 1,
   },
   tabBarLabelStyle: {
-    marginVertical: 10,
+    flex: 1,
     fontSize: scaleFont(11),
     ...FontGmarketSansRegular,
   },

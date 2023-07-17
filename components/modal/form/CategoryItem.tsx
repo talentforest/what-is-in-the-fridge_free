@@ -23,9 +23,7 @@ export default function CategoryItem({ fixedCategory, changeInfo }: Props) {
         )}] border border-slate-400 rounded-lg items-center flex-row gap-2 justify-between`}
       >
         <Text style={tw`text-slate-600 border-0 pl-2`}>{fixedCategory}</Text>
-        <Text style={tw`text-indigo-500 p-2`} fontSize={13}>
-          변경
-        </Text>
+        <Text style={tw`text-indigo-500 p-2`}>변경</Text>
       </TouchableOpacity>
       {categoryOpen && (
         <View style={tw`gap-2 flex-1`}>

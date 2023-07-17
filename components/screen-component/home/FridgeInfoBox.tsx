@@ -1,9 +1,10 @@
 import { Image, ImageSourcePropType, View } from 'react-native';
 import { Text } from '../../native-component';
-import { scaleFont } from '../../../util';
 import { Asset } from 'expo-asset';
 import tw from 'twrnc';
 import Box from '../../common/LayoutBox/Box';
+import { scaleFont } from '../../../util';
+import { FontGmarketSansBold } from '../../../constant/fonts';
 
 interface Props {
   asset: Asset;
@@ -14,10 +15,13 @@ interface Props {
 export default function FridgeInfoBox({ asset, name, foodLength }: Props) {
   return (
     <Box bgColor='bg-blue-300'>
-      <Text style={tw`text-blue-600 text-[${scaleFont(18)}px] font-bold`}>
+      <Text
+        fontSize={16}
+        style={tw.style(`text-blue-600`, FontGmarketSansBold)}
+      >
         {name}
       </Text>
-      <View style={tw`flex-row items-end justify-between mt-3`}>
+      <View style={tw`flex-row items-end justify-between mt-3 mb-1`}>
         {asset && (
           <Image
             source={asset as ImageSourcePropType}
@@ -25,9 +29,12 @@ export default function FridgeInfoBox({ asset, name, foodLength }: Props) {
           />
         )}
 
-        <View style={tw`flex-row items-end gap-0.5`}>
+        <View style={tw`flex-row items-end gap-0.5 h-full`}>
           <Text style={tw`text-white mb-0.5`}>총 : </Text>
-          <Text style={tw`text-blue-600 text-[${scaleFont(30)}px] font-bold`}>
+          <Text
+            fontSize={30}
+            style={tw.style(`text-blue-600 pt-4`, FontGmarketSansBold)}
+          >
             {foodLength}
           </Text>
           <Text style={tw`text-white mb-0.5`}>개</Text>

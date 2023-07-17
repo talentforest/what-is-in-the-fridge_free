@@ -10,6 +10,7 @@ import Form from './form/Form';
 import RNModal from './common/Modal';
 import tw from 'twrnc';
 import Icon from '../native-component/Icon';
+import { scaleFont } from '../../util';
 
 interface Props {
   modalVisible: boolean;
@@ -39,7 +40,7 @@ export default function FoodDetailModal({
     >
       <View style={tw`items-center mt-4 gap-2`}>
         {food.image !== '' ? (
-          <Text fontSize={30}>{food.image}</Text>
+          <Text style={tw`text-[${scaleFont(30)}px]`}>{food.image}</Text>
         ) : (
           <Icon
             type='MaterialCommunityIcons'

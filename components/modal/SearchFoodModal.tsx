@@ -77,7 +77,7 @@ export default function SearchFoodModal({
                     style={tw`gap-2 border-b border-slate-300 mx-3 py-3.5 flex-row items-center bg-white`}
                   >
                     <Text style={tw`w-[35%] text-slate-700`}>
-                      <Text fontSize={12}>
+                      <Text fontSize={14}>
                         {image ? (
                           image
                         ) : (

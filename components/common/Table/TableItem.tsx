@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { cutLetter, scaleH } from '../../../util';
-import { BLUE, GRAY, INDIGO, LIGHT_GRAY } from '../../../constant/colors';
+import { BLUE, LIGHT_GRAY } from '../../../constant/colors';
 import { Food } from '../../../constant/foods';
 import { ReactNode } from 'react';
 import Icon from '../../native-component/Icon';
@@ -44,10 +44,9 @@ export default function TableItem({
               color={LIGHT_GRAY}
             />
           ) : (
-            <Text fontSize={14}>{food.image}</Text>
+            <Text>{food.image}</Text>
           ))}
         <Text
-          fontSize={14}
           style={tw`flex-1 py-1 ${
             existInList(food.id) ? 'text-blue-600' : 'text-slate-700'
           }`}

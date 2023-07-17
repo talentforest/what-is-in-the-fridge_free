@@ -78,7 +78,7 @@ export default function ExpiredFoods() {
                   existInList={existInList}
                 >
                   <View style={tw`flex-row items-center`}>
-                    <LeftDay fontSize={13} expiredDate={item.expiredDate} />
+                    <LeftDay expiredDate={item.expiredDate} />
                   </View>
                 </TableItem>
               )}

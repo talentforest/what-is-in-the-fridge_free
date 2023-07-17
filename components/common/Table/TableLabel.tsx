@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
-import { DEEP_INDIGO, INACTIVE_COLOR, INDIGO } from '../../../constant/colors';
+import { DEEP_INDIGO, INACTIVE_COLOR } from '../../../constant/colors';
 import { scaleH } from '../../../util';
 import { ReactNode } from 'react';
 import Icon from '../../native-component/Icon';
@@ -37,7 +37,7 @@ export default function TableLabel({
       </TouchableOpacity>
       <View style={tw`flex-row flex-1 gap-1 items-center`}>
         <Text style={tw`text-slate-600`}>{title}</Text>
-        <Text style={tw`text-slate-600`} fontSize={12}>
+        <Text fontSize={12} style={tw`text-slate-600`}>
           |
         </Text>
         <Text style={tw`text-slate-600`}>{listLength}개</Text>

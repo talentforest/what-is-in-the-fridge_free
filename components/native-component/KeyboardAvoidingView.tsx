@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import {
+  Dimensions,
   Platform,
   KeyboardAvoidingView as RNKeyboardAvoidingView,
   StatusBar,
@@ -19,6 +20,8 @@ export function KeyboardAvoidingView({ children }: Props) {
     ? getStatusBarHeight(true)
     : StatusBar.currentHeight;
 
+  const relativePaddingAndroid = Dimensions.get('screen').height / 8.2;
+
   return (
     <>
       {PlatformIOS ? (
@@ -30,7 +33,13 @@ export function KeyboardAvoidingView({ children }: Props) {
           {children}
         </RNKeyboardAvoidingView>
       ) : (
-        <View style={tw`flex-1 px-4 bg-blue-50`}>{children}</View>
+        <RNKeyboardAvoidingView
+          behavior='padding'
+          style={tw`flex-1 bg-blue-50`}
+          keyboardVerticalOffset={-relativePaddingAndroid}
+        >
+          {children}
+        </RNKeyboardAvoidingView>
       )}
     </>
   );

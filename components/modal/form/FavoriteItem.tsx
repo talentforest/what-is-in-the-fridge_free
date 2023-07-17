@@ -38,7 +38,7 @@ export default function FavoriteItem({ favorite, changeInfo }: Props) {
             color={DEEP_YELLOW}
             size={14}
           />
-          <Text style={tw`text-amber-600`} fontSize={12}>
+          <Text style={tw`text-amber-600`}>
             자주 먹는 식료품 목록에 추가됩니다.
           </Text>
         </View>

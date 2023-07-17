@@ -7,6 +7,7 @@ import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 import useGetFoodList from '../../../hooks/useGetFoodList';
 import useExpiredFoods from '../../../hooks/useExpiredFoods';
+import { FontGmarketSansBold } from '../../../constant/fonts';
 
 export default function CompartmentInfo({ space }: { space: Space }) {
   const { getFoodList } = useGetFoodList();
@@ -42,9 +43,7 @@ export default function CompartmentInfo({ space }: { space: Space }) {
           size={16}
           color={space.includes('냉동') ? BLUE : DEEP_YELLOW}
         />
-        <Text style={tw`text-slate-600`} fontSize={scaleH(14)}>
-          {space}
-        </Text>
+        <Text style={tw`text-slate-600`}>{space}</Text>
       </View>
       {/* 냉장고 칸 정보 */}
       <View style={tw`gap-4 flex-1`}>
@@ -54,11 +53,10 @@ export default function CompartmentInfo({ space }: { space: Space }) {
               {name}
             </Text>
             <Text
-              style={tw`${getColor(
-                foodList(space).length,
-                activeColor
-              )} font-bold`}
-              fontSize={14}
+              style={tw.style(
+                `${getColor(foodList(space).length, activeColor)}`,
+                FontGmarketSansBold
+              )}
             >
               {foodList(space).length}개
             </Text>
@@ -69,7 +67,10 @@ export default function CompartmentInfo({ space }: { space: Space }) {
       <View
         style={tw`flex-row items-center self-end border border-slate-300 px-3.5 py-1.5 rounded-full bg-amber-300`}
       >
-        <Text fontSize={12} style={tw.style(`text-blue-700 font-bold`)}>
+        <Text
+          fontSize={14}
+          style={tw.style(`text-blue-700`, FontGmarketSansBold)}
+        >
           들어가기
         </Text>
         <Icon name='enter' type='Ionicons' size={16} color={BLUE} />

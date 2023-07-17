@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Food } from '../../../constant/foods';
-import { cutLetter, scaleH } from '../../../util';
+import { cutLetter, scaleFont, scaleH } from '../../../util';
 import { Text } from '../../native-component';
 import LeftDay from '../LeftDay';
 import tw from 'twrnc';
@@ -14,15 +14,15 @@ export default function FoodBox({ food, expiredDate }: Props) {
   return (
     <View
       key={food.id}
-      style={tw`bg-amber-50 border-2 border-indigo-200 gap-1 justify-center items-center flex-row px-2 rounded-lg h-${scaleH(
-        9
-      )}`}
+      style={tw`bg-amber-50 border-2 border-indigo-200 gap-1 justify-center items-center flex-row px-[${scaleFont(
+        10
+      )}px] py-[${scaleFont(5)}px] rounded-lg `}
     >
-      {food.image && <Text fontSize={12}>{food.image}</Text>}
-      <Text style={tw`text-center text-slate-600 py-1`} fontSize={14}>
+      {food.image && <Text>{food.image}</Text>}
+      <Text style={tw`text-center text-slate-600 py-1`}>
         {cutLetter(food.name, 6)}
       </Text>
-      {expiredDate && <LeftDay fontSize={12} expiredDate={food.expiredDate} />}
+      {expiredDate && <LeftDay expiredDate={food.expiredDate} />}
     </View>
   );
 }
