@@ -17,17 +17,16 @@ export default function RNModal({
   modalVisible,
   setModalVisible,
 }: Props) {
-  const MODAL_HEIGHT = Dimensions.get('screen').height * 0.8;
+  const MODAL_HEIGHT = Dimensions.get('screen').height * 0.85;
 
   return (
     <Modal
-      onBackdropPress={() => {
-        setModalVisible(false);
-      }}
+      statusBarTranslucent={true}
+      onBackdropPress={() => setModalVisible(false)}
       isVisible={modalVisible}
       style={tw`m-0 justify-end`}
     >
-      <SafeAreaView style={tw`flex-1 justify-end`}>
+      <SafeAreaView style={tw`justify-end`}>
         <View style={tw`bg-white p-4 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}>
           <Header
             title={title}
