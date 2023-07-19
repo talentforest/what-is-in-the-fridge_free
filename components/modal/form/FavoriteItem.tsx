@@ -21,7 +21,6 @@ export default function FavoriteItem({ favorite, changeInfo }: Props) {
             changeInfo({ favorite: true });
           }}
         />
-
         <CheckBoxBtn
           title='아니에요'
           checked={!favorite}

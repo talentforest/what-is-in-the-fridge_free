@@ -29,22 +29,6 @@ export default function AddSelectFoodModal({
         * 이미 냉장고에 추가한 식료품은 추가할 수 없습니다.
       </Text>
 
-      {route.name === 'FavoriteFoods' && (
-        <View style={tw`items-center gap-2`}>
-          {selectedFood.image.includes('http') ? (
-            <Image
-              style={tw`h-20 w-20 rounded-md`}
-              source={{ uri: selectedFood.image }}
-            />
-          ) : (
-            <Text fontSize={22} style={tw`pt-4`}>
-              {selectedFood.image}
-            </Text>
-          )}
-          <Text>{selectedFood.name}</Text>
-        </View>
-      )}
-
       <ScrollView style={tw`my-4`} showsVerticalScrollIndicator={false}>
         <Form
           editableName={false}

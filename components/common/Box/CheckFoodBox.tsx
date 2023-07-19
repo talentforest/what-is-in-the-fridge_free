@@ -2,7 +2,7 @@ import { Food } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
 import { scaleFont, scaleH } from '../../../util';
 import { useState } from 'react';
-import { LIGHT_GRAY, ORANGE_RED } from '../../../constant/colors';
+import { DEEP_YELLOW, LIGHT_GRAY, ORANGE_RED } from '../../../constant/colors';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 
@@ -18,9 +18,7 @@ export default function CheckFoodBox({ food }: Props) {
       key={food.id}
       onPress={() => setChecked((prev) => !prev)}
       style={tw`${
-        checked
-          ? 'border-orange-500 bg-orange-100'
-          : 'bg-white border-indigo-300'
+        checked ? 'border-amber-500 bg-amber-50' : 'bg-white border-indigo-300'
       } flex-row items-center gap-0.5 rounded-lg border-2 px-[${scaleFont(
         10
       )}px] py-[${scaleFont(5)}px]`}
@@ -29,11 +27,11 @@ export default function CheckFoodBox({ food }: Props) {
         name={checked ? 'cart-arrow-down' : 'cart-outline'}
         type='MaterialCommunityIcons'
         size={16}
-        color={checked ? ORANGE_RED : LIGHT_GRAY}
+        color={checked ? DEEP_YELLOW : LIGHT_GRAY}
       />
       <Text
         fontSize={14}
-        style={tw`${checked ? 'text-orange-500' : 'text-slate-500'} py-1`}
+        style={tw`${checked ? 'text-amber-500' : 'text-slate-500'} py-1`}
       >
         {food.name}
       </Text>

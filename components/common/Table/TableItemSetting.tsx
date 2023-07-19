@@ -45,8 +45,8 @@ export default function TableItemSetting({
           >
             <Icon
               type='MaterialCommunityIcons'
-              name='playlist-plus'
-              size={26}
+              name='basket-plus'
+              size={22}
               color={list.length ? DEEP_INDIGO : LIGHT_GRAY}
             />
           </TouchableOpacity>
