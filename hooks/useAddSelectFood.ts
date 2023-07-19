@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import { removeFromShoppingList } from '../redux/slice/shoppingList';
 import { addFood, removeFood } from '../redux/slice/allFoodsSlice';
-import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
+import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
 import useCheckFood from './useCheckFood';
@@ -29,9 +29,12 @@ export default function useAddSelectFood() {
       dispatch(removeFood({ id: existFood.id, space: existFood.space }));
     }
 
-    if (selectedFood.favorite) dispatch(addFavorite(selectedFoodWithId));
+    if (selectedFood.favorite) {
+      dispatch(addFavorite(selectedFoodWithId));
+    } else {
+      dispatch(removeFavorite(selectedFoodWithId));
+    }
     dispatch(addFood(selectedFoodWithId));
-
     dispatch(removeFromShoppingList({ name: selectedFoodWithId.name }));
 
     Alert.alert(

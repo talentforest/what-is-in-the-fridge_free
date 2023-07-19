@@ -9,6 +9,7 @@ import {
 import { useSelector } from '../redux/hook';
 import { DEEP_GRAY, LIGHT_GRAY } from '../constant/colors';
 import { Food, initialFoodInfo } from '../constant/foods';
+import { View } from 'react-native';
 import TableLabel from '../components/common/Table/TableLabel';
 import TableItem from '../components/common/Table/TableItem';
 import AddSelectFoodModal from '../components/modal/AddSelectFoodModal';
@@ -23,7 +24,7 @@ import UUIDGenerator from 'react-native-uuid';
 import TableContainer from '../components/common/Table/TableContainer';
 import Container from '../components/common/LayoutBox/Container';
 import tw from 'twrnc';
-import { View } from 'react-native';
+import useFavoriteFoods from '../hooks/useFavoriteFoods';
 
 export default function ShoppingList() {
   const [keyword, setKeyword] = useState('');
@@ -40,13 +41,17 @@ export default function ShoppingList() {
     onCheckPress,
     existInList,
   } = useHandleCheckList();
+  const { checkFavorite } = useFavoriteFoods();
   const { checkExistFood } = useCheckFood();
   const { modalVisible, setModalVisible, onModalPress } = useToggleModal();
 
   const addToFridgePress = (food: Food) => {
+    const favorite = checkFavorite(food);
+    const selectedFood = { ...food, favorite } as Food;
+
     checkExistFood(food)
-      ? onExistFoodPress(food, onModalPress)
-      : onModalPress(food);
+      ? onExistFoodPress(selectedFood, onModalPress)
+      : onModalPress(selectedFood);
   };
 
   const onSubmitEditing = () => {
