@@ -1,3 +1,4 @@
+import { Food } from '../constant/foods';
 import { useSelector } from '../redux/hook';
 import useCheckFood from './useCheckFood';
 
@@ -13,9 +14,13 @@ export default function useFavoriteFoods() {
     (food) => !checkExistFood(food)
   );
 
+  const checkFavorite = (food: Food) =>
+    !!favoriteFoods.find((favoriteFood) => favoriteFood.name === food.name);
+
   return {
     existFavoriteFoods,
     nonExistFavoriteFoods,
     favoriteFoods,
+    checkFavorite,
   };
 }
