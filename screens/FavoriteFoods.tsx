@@ -24,7 +24,7 @@ type Filter = '전체' | '냉장고에 있음' | '냉장고에 없음';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
-  const [filterOpen, setFilterOpen] = useState(false);
+
   const [isFilter, setIsFilter] = useState<Filter>('전체');
 
   const {
@@ -68,50 +68,37 @@ export default function FavoriteFoods() {
             entireChecked={entireCheck}
             onEntirePress={() => onEntirePress(favoriteFoods)}
           >
-            <TouchableOpacity
-              onPress={() => setFilterOpen((prev) => !prev)}
-              style={tw`justify-end flex-row items-center gap-0.5 rounded-full`}
-            >
-              <Icon
-                type='MaterialCommunityIcons'
-                name={'chevron-down'}
-                size={22}
-                color={INDIGO}
-              />
-              <Text style={tw`text-indigo-500`}>{isFilter}</Text>
-            </TouchableOpacity>
+            <Text style={tw`text-indigo-500`}>{isFilter}</Text>
           </TableLabel>
-          {filterOpen && (
-            <View style={tw`flex-row flex-wrap pt-2 gap-1`}>
-              {['전체', '냉장고에 있음', '냉장고에 없음'].map((filter) => (
-                <TouchableOpacity
-                  onPress={() => filterList(filter as Filter)}
-                  key={filter}
-                  style={tw`flex-row items-center gap-0.5 border py-1 px-2 rounded-full ${
-                    filter === isFilter
-                      ? 'bg-amber-50 border-amber-500'
-                      : 'border-slate-400 bg-white'
+          <View style={tw`flex-row flex-wrap pt-[${14}px] gap-1`}>
+            {['전체', '냉장고에 있음', '냉장고에 없음'].map((filter) => (
+              <TouchableOpacity
+                onPress={() => filterList(filter as Filter)}
+                key={filter}
+                style={tw`flex-row items-center gap-0.5 border py-1 px-2 rounded-full ${
+                  filter === isFilter
+                    ? 'bg-amber-50 border-amber-500'
+                    : 'border-slate-400 bg-white'
+                }`}
+              >
+                {filter !== '전체' && (
+                  <Icon
+                    type='MaterialCommunityIcons'
+                    name='filter'
+                    size={16}
+                    color={filter === isFilter ? DEEP_YELLOW : LIGHT_GRAY}
+                  />
+                )}
+                <Text
+                  style={tw`${
+                    filter === isFilter ? 'text-amber-600' : 'text-slate-500'
                   }`}
                 >
-                  {filter !== '전체' && (
-                    <Icon
-                      type='MaterialCommunityIcons'
-                      name='filter'
-                      size={16}
-                      color={filter === isFilter ? DEEP_YELLOW : LIGHT_GRAY}
-                    />
-                  )}
-                  <Text
-                    style={tw`${
-                      filter === isFilter ? 'text-amber-600' : 'text-slate-500'
-                    }`}
-                  >
-                    {filter}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
+                  {filter}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
           {favoriteFoods.length !== 0 ? (
             <>
               {!!getTableList().length ? (

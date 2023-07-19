@@ -26,8 +26,8 @@ export default function AddFoodModalBtn({ foodLocation, onPress }: Props) {
       <TouchableOpacity onPress={onPressFc} style={tw`p-1.5 pb-1`}>
         <Icon
           type='MaterialCommunityIcons'
-          name='basket-plus'
-          size={20}
+          name='plus'
+          size={26}
           color={INDIGO}
         />
       </TouchableOpacity>

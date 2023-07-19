@@ -35,7 +35,7 @@ export default function TableLabel({
           color={entireChecked ? DEEP_INDIGO : INACTIVE_COLOR}
         />
       </TouchableOpacity>
-      <View style={tw`flex-row flex-1 gap-1 items-center`}>
+      <View style={tw`flex-row flex-1 gap-2.5 items-center`}>
         <Text style={tw`text-slate-600`}>{title}</Text>
         <Text fontSize={12} style={tw`text-slate-600`}>
           |

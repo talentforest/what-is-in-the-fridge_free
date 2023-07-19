@@ -42,10 +42,10 @@ export default function EntranceBox({ info, foods }: Props) {
   return (
     <Box bgColor={bgColor}>
       <Title title={title} iconName={iconName} />
-      <Text style={tw`text-white mt-3 mb-1`}>{desc}</Text>
+      <Text style={tw`text-white mt-3`}>{desc}</Text>
 
       {foods.length !== 0 ? (
-        <View style={tw`flex-1 mt-[${22}px] mb-[${28}px]`}>
+        <View style={tw`flex-1 mt-[${16}px] mb-[${28}px]`}>
           {title === '장봐야할 식료품' && (
             <View style={tw`flex-row gap-1.5 flex-wrap items-center`}>
               {foods.slice(0, MAX_NUM).map((food) => (
@@ -68,6 +68,7 @@ export default function EntranceBox({ info, foods }: Props) {
                   key={food.id}
                   food={food}
                   expiredDate={title === '유통기한 주의 식료품'}
+                  color={title === '유통기한 주의 식료품' ? 'slate' : 'amber'}
                 />
               ))}
               {foods.length > MAX_NUM && (
