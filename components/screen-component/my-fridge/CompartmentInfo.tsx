@@ -68,7 +68,7 @@ export default function CompartmentInfo({ space }: { space: Space }) {
         style={tw`flex-row items-center self-end border border-slate-300 px-3.5 py-1.5 rounded-full bg-amber-300`}
       >
         <Text
-          fontSize={14}
+          fontSize={12}
           style={tw.style(`text-blue-700`, FontGmarketSansBold)}
         >
           들어가기

@@ -1,3 +1,4 @@
+import { scaleH } from '../../../util';
 import { TextInput } from '../../native-component';
 import tw from 'twrnc';
 
