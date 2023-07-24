@@ -27,6 +27,7 @@
       "build": {
         "releaseType": "apk"
       },
+
       "package": "com.ellie0501.whatisinmyfridgeapp"
     },
     "web": {

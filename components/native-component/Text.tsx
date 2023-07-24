@@ -1,7 +1,7 @@
 import { Text as RNText, TextProps, TextStyle } from 'react-native';
 import { FontGmarketSansRegular } from '../../constant/fonts';
 import tw from 'twrnc';
-import { scaleFont } from '../../util';
+import { responsiveFontSize, scaleFont } from '../../util';
 
 interface Props extends TextProps {
   style?: TextStyle;
@@ -12,7 +12,7 @@ export function Text({ style, fontSize, ...props }: Props) {
   return (
     <RNText
       style={tw.style(
-        `text-slate-700 text-[${scaleFont(fontSize || 14)}px]`,
+        `text-slate-700 text-[${responsiveFontSize(fontSize || 14)}px]`,
         FontGmarketSansRegular,
         style
       )}

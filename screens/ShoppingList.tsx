@@ -10,6 +10,7 @@ import { useSelector } from '../redux/hook';
 import { DEEP_GRAY, LIGHT_GRAY } from '../constant/colors';
 import { Food, initialFoodInfo } from '../constant/foods';
 import { View } from 'react-native';
+import { FormSteps } from '../constant/formInfo';
 import TableLabel from '../components/common/Table/TableLabel';
 import TableItem from '../components/common/Table/TableItem';
 import AddSelectFoodModal from '../components/modal/AddSelectFoodModal';
@@ -23,8 +24,8 @@ import TextInputBox from '../components/common/TextInputBox';
 import UUIDGenerator from 'react-native-uuid';
 import TableContainer from '../components/common/Table/TableContainer';
 import Container from '../components/common/LayoutBox/Container';
-import tw from 'twrnc';
 import useFavoriteFoods from '../hooks/useFavoriteFoods';
+import tw from 'twrnc';
 
 export default function ShoppingList() {
   const [keyword, setKeyword] = useState('');
@@ -132,6 +133,13 @@ export default function ShoppingList() {
         <AddSelectFoodModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+          formSteps={
+            [
+              { id: 1, name: '식품 정보' },
+              { id: 2, name: '식품 위치' },
+              { id: 3, name: '식품 날짜' },
+            ] as FormSteps
+          }
         />
       )}
     </KeyboardAvoidingView>

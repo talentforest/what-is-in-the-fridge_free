@@ -2,6 +2,8 @@ import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foods';
 import { Text } from '../native-component';
 import { INDIGO } from '../../constant/colors';
+import { scaleFont } from '../../util';
+import { FormStep } from '../../constant/formInfo';
 import InfoBox from './common/InfoBox';
 import SubmitBtn from './form/SubmitBtn';
 import useEditFood from '../../hooks/useEditFood';
@@ -10,18 +12,19 @@ import Form from './form/Form';
 import RNModal from './common/Modal';
 import tw from 'twrnc';
 import Icon from '../native-component/Icon';
-import { scaleFont } from '../../util';
 
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
   food: Food;
+  formSteps: FormStep[];
 }
 
 export default function FoodDetailModal({
   modalVisible,
   setModalVisible,
   food,
+  formSteps,
 }: Props) {
   const { deleteFood } = useDeleteFood({ space: food.space, setModalVisible });
   const {
@@ -38,35 +41,34 @@ export default function FoodDetailModal({
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
-      <View style={tw`items-center mt-4 gap-2`}>
-        {food.image !== '' ? (
-          <Text style={tw`text-[${scaleFont(30)}px]`}>{food.image}</Text>
-        ) : (
-          <Icon
-            type='MaterialCommunityIcons'
-            name='food'
-            size={28}
-            color={INDIGO}
-          />
-        )}
-        <Text style={tw`text-center px-4 leading-6`}>{food.name}</Text>
-      </View>
-
       {editing ? (
-        <ScrollView style={tw`my-4`} showsVerticalScrollIndicator={false}>
-          <Form
-            food={editedFood}
-            changeInfo={editFoodInfo}
-            items={[
-              '카테고리',
-              '구매날짜',
-              '유통기한',
-              '자주 먹는 식품인가요?',
-            ]}
-          />
-        </ScrollView>
+        <Form
+          food={editedFood}
+          changeInfo={editFoodInfo}
+          items={[
+            '아이콘과 이름',
+            '카테고리',
+            '구매날짜',
+            '유통기한',
+            '자주 먹는 식품인가요?',
+          ]}
+          formSteps={formSteps}
+        />
       ) : (
         <View style={tw`my-3`}>
+          <View style={tw`items-center mb-4 gap-2`}>
+            {food.image !== '' ? (
+              <Text style={tw`text-[${scaleFont(30)}px]`}>{food.image}</Text>
+            ) : (
+              <Icon
+                type='MaterialCommunityIcons'
+                name='food'
+                size={28}
+                color={INDIGO}
+              />
+            )}
+            <Text style={tw`text-center px-4 leading-6`}>{food.name}</Text>
+          </View>
           <InfoBox label='카테고리' info={editedFood.category} />
           <InfoBox label='구매날짜' info={editedFood.purchaseDate} />
           <InfoBox label='유통기한' info={editedFood.expiredDate} />

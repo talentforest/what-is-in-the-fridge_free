@@ -32,7 +32,7 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
   return (
     <View>
       <View
-        style={tw`flex-1 border border-slate-400 rounded-lg flex-row items-center justify-between px-2`}
+        style={tw`border border-slate-400 rounded-lg flex-row items-center justify-between px-2`}
       >
         <TextInput
           value={getFormattedDate(date, 'YYYY년 MM월 DD일')}

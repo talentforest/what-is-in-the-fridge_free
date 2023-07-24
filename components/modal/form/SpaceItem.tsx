@@ -18,7 +18,7 @@ export default function SpaceItem({ food, changeInfo }: Props) {
   const compartments = getCompartments(totalNum);
 
   return (
-    <View style={tw`gap-5 flex-row justify-between flex-1`}>
+    <View style={tw`gap-5 py-2 flex-row justify-between`}>
       <View style={tw`gap-4`}>
         <View style={tw`flex-row gap-5`}>
           {['냉장실', '냉동실'].map((type) => (

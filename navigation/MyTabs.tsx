@@ -24,7 +24,7 @@ const TAB_BG_COLOR = '#648fff';
 
 const Tab = createBottomTabNavigator();
 const DEVICE_HEIGHT = Dimensions.get('screen').height;
-const PLATFORM_TAB_HEIGHT = Platform.OS === 'android' ? 85 : 100;
+const PLATFORM_TAB_HEIGHT = Platform.OS === 'android' ? 70 : 100;
 
 const tabBarOptions = {
   tabBarStyle: {

@@ -25,8 +25,6 @@ export default function RNModal({
       onBackdropPress={() => setModalVisible(false)}
       isVisible={modalVisible}
       style={tw`m-0 justify-end`}
-      swipeDirection={['down']}
-      onSwipeComplete={() => setModalVisible(false)}
     >
       <SafeAreaView style={tw`justify-end`}>
         <View style={tw`bg-white p-4 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}>
