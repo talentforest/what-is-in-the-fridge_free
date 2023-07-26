@@ -5,7 +5,7 @@ import { INDIGO } from '../../../constant/colors';
 import AddFoodModal from '../../modal/AddFoodModal';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
-import { FormSteps } from '../../../constant/formInfo';
+import { FormStep } from '../../../constant/formInfo';
 
 interface Props {
   foodLocation?: FoodLocation;
@@ -41,7 +41,7 @@ export default function AddFoodModalBtn({ foodLocation, onPress }: Props) {
             [
               { id: 1, name: '식품 정보' },
               { id: 2, name: '식품 날짜' },
-            ] as FormSteps
+            ] as FormStep[]
           }
         />
       )}
