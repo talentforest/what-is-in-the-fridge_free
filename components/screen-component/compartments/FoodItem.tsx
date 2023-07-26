@@ -28,19 +28,6 @@ export default function FoodItem({ food }: Props) {
         3
       )}px] rounded-full border border-indigo-300 gap-1 justify-center items-center flex-row  `}
     >
-      {food.image === '' ? (
-        <Icon
-          type='MaterialCommunityIcons'
-          name='food'
-          size={14}
-          color={INDIGO}
-        />
-      ) : (
-        <Text fontSize={12} style={tw`pb-0.5`}>
-          {food.image}
-        </Text>
-      )}
-
       <Text fontSize={14} style={tw`text-center text-slate-600 py-0.5`}>
         {cutLetter(food.name, 8)}
       </Text>

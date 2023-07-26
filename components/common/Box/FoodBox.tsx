@@ -19,7 +19,6 @@ export default function FoodBox({ food, expiredDate, color }: Props) {
         10
       )}px] py-[${scaleFont(5)}px] rounded-lg `}
     >
-      {food.image && <Text>{food.image}</Text>}
       <Text style={tw`text-center text-${color}-700 py-1`}>
         {cutLetter(food.name, 6)}
       </Text>
