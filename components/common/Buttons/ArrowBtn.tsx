@@ -7,21 +7,16 @@ import tw from 'twrnc';
 
 interface Props {
   type: 'previous' | 'next';
-
   moveStep: () => void;
   active: boolean;
 }
 
-export default function ArrowBtn({
-  type,
-
-  moveStep,
-  active,
-}: Props) {
+export default function ArrowBtn({ type, moveStep, active }: Props) {
   return (
     <View>
       <TouchableOpacity
         onPress={moveStep}
+        disabled={!active}
         style={tw`flex-row items-center p-2`}
       >
         {type === 'previous' && (

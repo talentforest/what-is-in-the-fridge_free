@@ -10,7 +10,7 @@ import { useSelector } from '../redux/hook';
 import { DEEP_GRAY, LIGHT_GRAY } from '../constant/colors';
 import { Food, initialFoodInfo } from '../constant/foods';
 import { View } from 'react-native';
-import { FormSteps } from '../constant/formInfo';
+import { FormStep } from '../constant/formInfo';
 import TableLabel from '../components/common/Table/TableLabel';
 import TableItem from '../components/common/Table/TableItem';
 import AddSelectFoodModal from '../components/modal/AddSelectFoodModal';
@@ -138,7 +138,7 @@ export default function ShoppingList() {
               { id: 1, name: '식품 정보' },
               { id: 2, name: '식품 위치' },
               { id: 3, name: '식품 날짜' },
-            ] as FormSteps
+            ] as FormStep[]
           }
         />
       )}

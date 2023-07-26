@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { Food, initialFoodInfo } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
 import { FoodLocation } from '../../../constant/fridgeInfo';
+import { FormStep } from '../../../constant/formInfo';
 import FoodDetailModal from '../../modal/FoodDetailModal';
 import tw from 'twrnc';
 import FoodItem from './FoodItem';
 import useGetFoodList from '../../../hooks/useGetFoodList';
 import AddFoodModalBtn from './AddFoodModalBtn';
-import { FormSteps } from '../../../constant/formInfo';
 
 interface Props {
   foodLocation: FoodLocation;
@@ -65,7 +65,7 @@ export default function Compartment({ foodLocation }: Props) {
             [
               { id: 1, name: '식품 정보' },
               { id: 2, name: '식품 날짜' },
-            ] as FormSteps
+            ] as FormStep[]
           }
         />
       )}
