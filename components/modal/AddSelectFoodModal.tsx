@@ -1,11 +1,9 @@
-import { View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { FormStep } from '../../constant/formInfo';
 import RNModal from './common/Modal';
 import Form from './form/Form';
 import useAddSelectFood from '../../hooks/useAddSelectFood';
 import SubmitBtn from './form/SubmitBtn';
-import tw from 'twrnc';
 
 interface Props {
   modalVisible: boolean;

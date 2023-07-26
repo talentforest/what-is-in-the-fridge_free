@@ -53,7 +53,8 @@ export default function Form({
 
   const moveStep = (direction: 'prev' | 'next', currentStepId: number) => {
     const prevStepId = currentStepId === 1 ? 0 : currentStepId - 2;
-    const nextStepId = currentStepId === 3 ? currentStepId - 1 : currentStepId;
+    const nextStepId =
+      currentStepId === formSteps.length ? currentStepId - 1 : currentStepId;
     const stepId = direction === 'prev' ? prevStepId : nextStepId;
 
     animatedForm(stepId);
@@ -130,13 +131,13 @@ export default function Form({
                 </FormItemContainer>
               )}
             </View>
-            <View style={tw`w-full px-1`}>
-              {items.includes('냉장고 위치 선택') && (
+            {items.includes('냉장고 위치 선택') && (
+              <View style={tw`w-full px-1`}>
                 <FormItemContainer label='냉장고 위치 선택'>
                   <SpaceItem food={food} changeInfo={changeInfo} />
                 </FormItemContainer>
-              )}
-            </View>
+              </View>
+            )}
             <View style={tw`w-full px-1`}>
               {items.includes('구매날짜') && (
                 <FormItemContainer label='구매날짜'>
