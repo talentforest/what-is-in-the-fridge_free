@@ -75,16 +75,6 @@ export default function MyTabs() {
         }}
       />
       <Tab.Screen
-        name='MyFridge'
-        component={MyFridge}
-        options={{
-          tabBarIcon: ({ color }) => <TabIcon name='fridge' color={color} />,
-          tabBarLabel: '나의 냉장고',
-          headerTitle: '나의 냉장고',
-          ...headerOptions,
-        }}
-      />
-      <Tab.Screen
         name='ShoppingList'
         component={ShoppingList}
         options={{
@@ -93,6 +83,16 @@ export default function MyTabs() {
           ),
           tabBarLabel: '장보기 목록',
           headerTitle: '장보기 목록',
+          ...headerOptions,
+        }}
+      />
+      <Tab.Screen
+        name='MyFridge'
+        component={MyFridge}
+        options={{
+          tabBarIcon: ({ color }) => <TabIcon name='fridge' color={color} />,
+          tabBarLabel: '나의 냉장고',
+          headerTitle: '나의 냉장고',
           ...headerOptions,
         }}
       />
