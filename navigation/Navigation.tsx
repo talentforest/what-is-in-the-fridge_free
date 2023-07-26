@@ -4,9 +4,9 @@ import {
 } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
 import { FontGmarketSansBold } from '../constant/fonts';
-import { DEEP_GRAY } from '../constant/colors';
+import { DEEP_GRAY, HEADER_BGCOLOR } from '../constant/colors';
 import { scaleFont } from '../util';
-import MyTabs, { HEADER_BGCOLOR, RootTabParamList } from './MyTabs';
+import MyTabs, { RootTabParamList } from './MyTabs';
 import React from 'react';
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';

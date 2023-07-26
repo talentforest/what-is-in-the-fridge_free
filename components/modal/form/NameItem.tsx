@@ -14,18 +14,19 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
 
   return (
     <TextInput
-      style={tw`flex-1 rounded-lg ${
+      style={tw`h-[${scaleH(44)}px] rounded-lg ${
         !editable ? 'bg-slate-100 text-slate-600' : 'bg-white'
       }`}
       editable={editable}
       onChangeText={onChangeText}
       value={name}
       placeholder={`식료품 이름을 작성해주세요`}
-      focusable={true}
+      focusable={false}
       selectTextOnFocus={true}
       showSoftInputOnFocus={true}
       returnKeyType='next'
       returnKeyLabel='다음'
+      pointerEvents={editable ? 'auto' : 'none'}
     />
   );
 }

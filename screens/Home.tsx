@@ -10,7 +10,7 @@ import LogoTitle from '../components/screen-component/home/LogoTitle';
 import useImageLoad from '../hooks/useImageLoad';
 import tw from 'twrnc';
 import Container from '../components/common/LayoutBox/Container';
-import { HEADER_BGCOLOR } from '../navigation/MyTabs';
+import { HEADER_BGCOLOR } from '../constant/colors';
 
 const Home = () => {
   const { allExpiredFoods } = useExpiredFood();

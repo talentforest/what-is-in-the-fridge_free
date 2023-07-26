@@ -21,7 +21,7 @@ export default function CategoryItem({ fixedCategory, changeInfo }: Props) {
       <TouchableOpacity
         onPress={() => setCategoryOpen((prev) => !prev)}
         style={tw`h-[${scaleH(
-          42
+          44
         )}px] border border-slate-400 rounded-lg items-center flex-row gap-2 justify-between`}
       >
         <Text style={tw`text-slate-600 border-0 pl-2`}>{fixedCategory}</Text>
