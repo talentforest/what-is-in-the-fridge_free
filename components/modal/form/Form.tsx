@@ -93,7 +93,7 @@ export default function Form({
         <Animated.View
           style={{
             width: FORM_WIDTH,
-            height: scaleH(300),
+            height: scaleH(320),
             transform: [{ translateX: stepTranslateX }],
           }}
           {...panResponder.panHandlers}

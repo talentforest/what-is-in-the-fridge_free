@@ -25,7 +25,7 @@ export function TextInput({ style, onPress, ...props }: Props) {
     <>
       {Platform.OS === 'android' ? (
         <TouchableOpacity
-          style={tw`flex-1 h-[${scaleH(42)}px]`}
+          style={tw`flex-1 h-[${scaleH(44)}px]`}
           onPress={onTouchPress}
         >
           <Input

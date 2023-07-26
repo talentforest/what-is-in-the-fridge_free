@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Text, TextInput, TouchableOpacity } from '../../native-component';
-import { getFormattedDate } from '../../../util';
+import { getFormattedDate, scaleH } from '../../../util';
 import { useState } from 'react';
 import { addDateBtns } from '../../../constant/addDateBtns';
 import { INDIGO } from '../../../constant/colors';
@@ -32,12 +32,15 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
   return (
     <View>
       <View
-        style={tw`border border-slate-400 rounded-lg flex-row items-center justify-between px-2`}
+        style={tw`h-[${scaleH(
+          44
+        )}px] border border-slate-400 rounded-lg flex-row items-center justify-between px-2`}
       >
         <TextInput
           value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
           editable={false}
-          style={tw`border-0 pl-0 my-0.5 text-slate-600`}
+          pointerEvents='none'
+          style={tw`border-0 pl-0 my-0 py-0 text-slate-600`}
         />
         <TouchableOpacity onPress={() => setDatePickerVisible(true)}>
           <Icon type='AntDesign' name='calendar' size={18} color={INDIGO} />
@@ -52,6 +55,8 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
         date={new Date(date)}
         onConfirm={onConfirm}
         onCancel={() => setDatePickerVisible(false)}
+        textColor='#000'
+        isDarkModeEnabled={false}
       />
 
       <View style={tw`mt-2 flex-row gap-1 flex-wrap justify-end items-center`}>

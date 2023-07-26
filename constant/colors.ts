@@ -15,3 +15,6 @@ export const LIGHT_GRAY = '#bbb';
 export const ORANGE_RED = '#ff6c47';
 export const ORANGE = '#ff9e43';
 export const CARROT_COLOR = '#faa97e';
+
+export const HEADER_BGCOLOR = '#dbecff';
+export const TAB_BG_COLOR = '#648fff';

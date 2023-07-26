@@ -3,7 +3,12 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { DEEP_GRAY, DEEP_YELLOW } from '../constant/colors';
+import {
+  DEEP_GRAY,
+  DEEP_YELLOW,
+  HEADER_BGCOLOR,
+  TAB_BG_COLOR,
+} from '../constant/colors';
 import { Dimensions, Platform } from 'react-native';
 import { scaleFont } from '../util';
 import Home from '../screens/Home';
@@ -18,9 +23,6 @@ export type RootTabParamList = {
   Setting: undefined;
   ShoppingList: undefined;
 };
-
-export const HEADER_BGCOLOR = '#dbecff';
-const TAB_BG_COLOR = '#648fff';
 
 const Tab = createBottomTabNavigator();
 const DEVICE_HEIGHT = Dimensions.get('screen').height;
