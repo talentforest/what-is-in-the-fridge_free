@@ -10,6 +10,7 @@ import LogoTitle from '../components/screen-component/home/LogoTitle';
 import useImageLoad from '../hooks/useImageLoad';
 import tw from 'twrnc';
 import Container from '../components/common/LayoutBox/Container';
+import { HEADER_BGCOLOR } from '../navigation/MyTabs';
 
 const Home = () => {
   const { allExpiredFoods } = useExpiredFood();
@@ -27,7 +28,7 @@ const Home = () => {
 
   return (
     <ScrollView
-      style={tw`pt-[${statusBarHeight || 0}px]`}
+      style={tw`pt-[${statusBarHeight || 0}px] bg-[${HEADER_BGCOLOR}]`}
       contentContainerStyle={tw`pb-10`}
       showsVerticalScrollIndicator={false}
     >
@@ -41,7 +42,7 @@ const Home = () => {
             title: '장봐야할 식료품',
             desc: '장보기 목록에 있는 식료품을 한눈에 볼 수 있어요.',
             iconName: 'cart',
-            bgColor: 'bg-indigo-500',
+            bgColor: 'bg-blue-500',
             route: 'ShoppingList',
           }}
         />
@@ -51,7 +52,7 @@ const Home = () => {
             title: '유통기한 주의 식료품',
             desc: '유통기한 주의 식료품을 쉽게 관리해보세요.',
             iconName: 'alert-circle',
-            bgColor: 'bg-slate-500',
+            bgColor: 'bg-slate-600',
             route: 'ExpiredFoods',
           }}
         />
@@ -61,7 +62,7 @@ const Home = () => {
             title: '자주 먹는 식료품',
             desc: '자주 먹는 식료품은 장보기 목록에 빠르게 추가하세요.',
             iconName: 'tag-heart',
-            bgColor: 'bg-amber-500',
+            bgColor: 'bg-indigo-500',
             route: 'FavoriteFoods',
           }}
         />
