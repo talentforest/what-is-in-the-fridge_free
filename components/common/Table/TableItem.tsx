@@ -35,17 +35,6 @@ export default function TableItem({
     >
       <CheckBox checked={!!existInList(food.id)} activeColor={BLUE} />
       <View style={tw`flex-1 flex-row items-center gap-2 ml-1`}>
-        {image &&
-          (food.image === '' ? (
-            <Icon
-              type='MaterialCommunityIcons'
-              name='food'
-              size={18}
-              color={LIGHT_GRAY}
-            />
-          ) : (
-            <Text>{food.image}</Text>
-          ))}
         <Text
           style={tw`flex-1 py-1 ${
             existInList(food.id) ? 'text-blue-600' : 'text-slate-700'

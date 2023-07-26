@@ -3,9 +3,9 @@ import { Food } from '../../../constant/foods';
 import { useEffect, useRef, useState } from 'react';
 import { FormStep, FormLabel, FormStepName } from '../../../constant/formInfo';
 import { scaleH } from '../../../util';
+import { Text } from '../../native-component';
 import FormItemContainer from './FormItemContainer';
 import CategoryItem from './CategoryItem';
-import IconItem from './IconItem';
 import SpaceItem from './SpaceItem';
 import DateItem from './DateItem';
 import NameItem from './NameItem';
@@ -102,14 +102,16 @@ export default function Form({
             <View style={tw`w-full px-1`}>
               {items.includes('아이콘과 이름') && (
                 <FormItemContainer label='아이콘과 이름'>
-                  <View style={tw`flex-row items-center gap-1`}>
-                    <IconItem value={food.image} changeInfo={changeInfo} />
-                    <NameItem
-                      name={food.name}
-                      changeInfo={changeInfo}
-                      editable={editableName || false}
-                    />
-                  </View>
+                  <NameItem
+                    name={food.name}
+                    changeInfo={changeInfo}
+                    editable={editableName || false}
+                  />
+                  {!!!editableName && (
+                    <Text style={tw`pt-2 text-blue-600`} fontSize={13}>
+                      이름은 변경할 수 없습니다.
+                    </Text>
+                  )}
                 </FormItemContainer>
               )}
 

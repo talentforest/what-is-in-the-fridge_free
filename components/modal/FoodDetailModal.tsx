@@ -57,16 +57,6 @@ export default function FoodDetailModal({
       ) : (
         <View style={tw`my-3`}>
           <View style={tw`items-center mb-4 gap-2`}>
-            {food.image !== '' ? (
-              <Text style={tw`text-[${scaleFont(30)}px]`}>{food.image}</Text>
-            ) : (
-              <Icon
-                type='MaterialCommunityIcons'
-                name='food'
-                size={28}
-                color={INDIGO}
-              />
-            )}
             <Text style={tw`text-center px-4 leading-6`}>{food.name}</Text>
           </View>
           <InfoBox label='카테고리' info={editedFood.category} />
