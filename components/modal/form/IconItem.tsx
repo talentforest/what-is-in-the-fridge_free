@@ -36,6 +36,7 @@ export default function FormImageItem({ value, changeInfo }: Props) {
 
       <EmojiPicker
         onEmojiSelected={(emoji) => changeInfo({ image: emoji.emoji })}
+        emojiSize={30}
         open={isOpen}
         onClose={() => setIsOpen(false)}
         translation={ko}
@@ -51,6 +52,8 @@ export default function FormImageItem({ value, changeInfo }: Props) {
         ]}
         categoryPosition='top'
         enableRecentlyUsed={true}
+        expandable={false}
+        defaultHeight={'50%'}
       />
     </View>
   );
