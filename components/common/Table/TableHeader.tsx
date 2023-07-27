@@ -2,25 +2,24 @@ import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { DEEP_INDIGO, INACTIVE_COLOR } from '../../../constant/colors';
 import { scaleH } from '../../../util';
-import { ReactNode } from 'react';
-import Icon from '../../native-component/Icon';
-import tw from 'twrnc';
+import { Filter } from './TableFilters';
 import CheckBox from '../Box/CheckBox';
+import tw from 'twrnc';
 
 interface Props {
   title: string;
   listLength: number;
   entireChecked: boolean;
   onEntirePress: () => void;
-  children: ReactNode;
+  columnTitle: '추가' | '유통기한' | Filter;
 }
 
-export default function TableLabel({
+export default function TableHeader({
   title,
   listLength,
   entireChecked,
   onEntirePress,
-  children,
+  columnTitle,
 }: Props) {
   return (
     <View
@@ -41,7 +40,9 @@ export default function TableLabel({
         </Text>
         <Text style={tw`text-slate-600`}>{listLength}개</Text>
       </View>
-      {children}
+      <View style={tw`justify-end flex-row items-center gap-0.5 rounded-full`}>
+        <Text style={tw`text-slate-600`}>{columnTitle}</Text>
+      </View>
     </View>
   );
 }

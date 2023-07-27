@@ -3,21 +3,21 @@ import { Food } from '../constant/foods';
 import { useDispatch, useSelector } from '../redux/hook';
 import { Alert } from 'react-native';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
-import { FoodType } from '../screens/ExpiredFoods';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import {
   addItemsToShoppingList,
   setShoppingList,
 } from '../redux/slice/shoppingList';
 import { useRoute } from '@react-navigation/native';
-import useExpiredFoods from './useExpiredFoods';
+import { SpaceType } from '../constant/fridgeInfo';
 
-export default function useHandleCheckList(tab?: FoodType) {
+export default function useHandleCheckList(
+  totalLength: number,
+  tab?: SpaceType
+) {
   const route = useRoute();
   const [entireCheck, setEntireCheck] = useState(false);
   const [checkList, setCheckList] = useState<Food[]>([]);
-  const { allExpiredFoods, filterExpiredFoods } = useExpiredFoods();
-  const totalLength = filterExpiredFoods(tab as FoodType).length;
 
   const { allFoods } = useSelector((state) => state.allFoods);
   const dispatch = useDispatch();
