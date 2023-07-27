@@ -93,7 +93,6 @@ export default function ShoppingList() {
                   food={item}
                   onCheckPress={onCheckPress}
                   existInList={existInList}
-                  image={false}
                 >
                   <TouchableOpacity
                     onPress={() => addToFridgePress(item)}

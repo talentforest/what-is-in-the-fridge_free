@@ -100,15 +100,15 @@ export default function Form({
         >
           <View style={tw`flex-row`}>
             <View style={tw`w-full px-1`}>
-              {items.includes('아이콘과 이름') && (
-                <FormItemContainer label='아이콘과 이름'>
+              {items.includes('이름') && (
+                <FormItemContainer label='이름'>
                   <NameItem
                     name={food.name}
                     changeInfo={changeInfo}
                     editable={editableName || false}
                   />
                   {!!!editableName && (
-                    <Text style={tw`pt-2 text-blue-600`} fontSize={13}>
+                    <Text style={tw`pt-2 text-amber-600`} fontSize={12}>
                       이름은 변경할 수 없습니다.
                     </Text>
                   )}

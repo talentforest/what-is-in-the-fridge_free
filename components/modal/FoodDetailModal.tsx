@@ -1,8 +1,5 @@
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { Food } from '../../constant/foods';
-import { Text } from '../native-component';
-import { INDIGO } from '../../constant/colors';
-import { scaleFont } from '../../util';
 import { FormStep } from '../../constant/formInfo';
 import InfoBox from './common/InfoBox';
 import SubmitBtn from './form/SubmitBtn';
@@ -11,7 +8,6 @@ import useDeleteFood from '../../hooks/useDeleteFood';
 import Form from './form/Form';
 import RNModal from './common/Modal';
 import tw from 'twrnc';
-import Icon from '../native-component/Icon';
 
 interface Props {
   modalVisible: boolean;
@@ -46,7 +42,7 @@ export default function FoodDetailModal({
           food={editedFood}
           changeInfo={editFoodInfo}
           items={[
-            '아이콘과 이름',
+            '이름',
             '카테고리',
             '구매날짜',
             '유통기한',
@@ -55,10 +51,8 @@ export default function FoodDetailModal({
           formSteps={formSteps}
         />
       ) : (
-        <View style={tw`my-3`}>
-          <View style={tw`items-center mb-4 gap-2`}>
-            <Text style={tw`text-center px-4 leading-6`}>{food.name}</Text>
-          </View>
+        <View style={tw`my-3 border-b border-slate-300`}>
+          <InfoBox label='이름' info={food.name} />
           <InfoBox label='카테고리' info={editedFood.category} />
           <InfoBox label='구매날짜' info={editedFood.purchaseDate} />
           <InfoBox label='유통기한' info={editedFood.expiredDate} />

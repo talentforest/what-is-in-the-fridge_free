@@ -1,10 +1,9 @@
 import { Image, ImageSourcePropType, View } from 'react-native';
 import { Text } from '../../native-component';
 import { Asset } from 'expo-asset';
+import { FontGmarketSansBold } from '../../../constant/fonts';
 import tw from 'twrnc';
 import Box from '../../common/LayoutBox/Box';
-import { scaleFont } from '../../../util';
-import { FontGmarketSansBold } from '../../../constant/fonts';
 
 interface Props {
   asset: Asset;

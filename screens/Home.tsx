@@ -3,6 +3,7 @@ import { useFonts } from 'expo-font';
 import { Platform, ScrollView, StatusBar } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { HEADER_BGCOLOR } from '../constant/colors';
 import EntranceBox from '../components/screen-component/home/EntranceBox';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import FridgeInfo from '../components/screen-component/home/FridgeInfo';
@@ -10,7 +11,6 @@ import LogoTitle from '../components/screen-component/home/LogoTitle';
 import useImageLoad from '../hooks/useImageLoad';
 import tw from 'twrnc';
 import Container from '../components/common/LayoutBox/Container';
-import { HEADER_BGCOLOR } from '../constant/colors';
 
 const Home = () => {
   const { allExpiredFoods } = useExpiredFood();
@@ -29,7 +29,7 @@ const Home = () => {
   return (
     <ScrollView
       style={tw`pt-[${statusBarHeight || 0}px] bg-[${HEADER_BGCOLOR}]`}
-      contentContainerStyle={tw`pb-10`}
+      contentContainerStyle={tw`pb-10 bg-blue-50`}
       showsVerticalScrollIndicator={false}
     >
       <Container>

@@ -33,7 +33,6 @@ export default function SearchFoodModal({
 
   const onSubmitEditing = () => {
     if (keyword === '') return;
-
     setKeyword(keyword);
   };
 
@@ -43,7 +42,7 @@ export default function SearchFoodModal({
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
     >
-      <View style={tw`mt-2`}>
+      <View>
         <TextInputBox
           value={keyword}
           setValue={setKeyword}
@@ -51,16 +50,13 @@ export default function SearchFoodModal({
           placeholder='식료품의 이름을 작성해주세요.'
           onSubmitEditing={onSubmitEditing}
         />
-        {!!keyword.length && !!getSearchedFoods(keyword).length && (
-          <Text style={tw`pt-1 pb-2 mx-3 text-slate-600`}>
-            냉장고 속 {getSearchedFoods(keyword).length}
-            개의 식료품을 찾았습니다.
-          </Text>
-        )}
+
         <View
-          style={tw`gap-2 border-b border-slate-400 mx-3 py-3.5 flex-row items-center`}
+          style={tw`gap-2 border-b border-slate-400 mt-1 mx-3 py-3.5 flex-row items-center`}
         >
-          <Text style={tw`w-[35%] text-indigo-600`}>식료품</Text>
+          <Text style={tw`w-[35%] text-indigo-600`}>
+            식료품 / {!!keyword.length ? getSearchedFoods(keyword).length : 0}개
+          </Text>
           <Text style={tw`flex-1 text-indigo-600`}>위치</Text>
           <Text style={tw`text-indigo-600`}>이동</Text>
         </View>
@@ -71,23 +67,12 @@ export default function SearchFoodModal({
           {!!keyword.length &&
             (getSearchedFoods(keyword).length ? (
               getSearchedFoods(keyword).map(
-                ({ image, name, space, compartmentNum }) => (
+                ({ name, space, compartmentNum }) => (
                   <View
                     key={name}
-                    style={tw`gap-2 border-b border-slate-300 mx-3 py-3.5 flex-row items-center bg-white`}
+                    style={tw`gap-2 border-b border-slate-300 mx-3 flex-row items-center bg-white`}
                   >
                     <Text style={tw`w-[35%] text-slate-700`}>
-                      <Text fontSize={14}>
-                        {image ? (
-                          image
-                        ) : (
-                          <Icon
-                            type='MaterialCommunityIcons'
-                            name='food-outline'
-                            size={14}
-                          />
-                        )}
-                      </Text>{' '}
                       {cutLetter(name, 6)}
                     </Text>
 
@@ -108,6 +93,7 @@ export default function SearchFoodModal({
                         navigation.navigate('Compartments', { space });
                         setModalVisible(false);
                       }}
+                      style={tw`p-3 pr-1`}
                     >
                       <Icon
                         type='MaterialCommunityIcons'

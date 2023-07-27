@@ -2,8 +2,6 @@ import { View } from 'react-native';
 import { Text } from '../../native-component';
 import { cutLetter, scaleH } from '../../../util';
 import { Food } from '../../../constant/foods';
-import { INDIGO } from '../../../constant/colors';
-import Icon from '../../native-component/Icon';
 import useExpiredFoods from '../../../hooks/useExpiredFoods';
 import tw from 'twrnc';
 

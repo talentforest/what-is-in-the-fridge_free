@@ -8,7 +8,7 @@ export const caution: CautionLevel[] = [
   {
     level: 1,
     guide: '깔끔해요!',
-    max: 2,
+    max: 1,
   },
   {
     level: 2,
@@ -30,7 +30,7 @@ export const caution: CautionLevel[] = [
 export const getColorByFoodLength = (length: number) => {
   return length >= 15
     ? 'text-red-600'
-    : length >= 3
+    : length >= 2
     ? 'text-orange-600'
     : 'text-green-700';
 };

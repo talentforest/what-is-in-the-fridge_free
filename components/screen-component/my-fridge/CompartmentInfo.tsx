@@ -2,12 +2,12 @@ import { View } from 'react-native';
 import { Text } from '../../native-component';
 import { Space } from '../../../constant/fridgeInfo';
 import { BLUE, DEEP_YELLOW } from '../../../constant/colors';
+import { FontGmarketSansBold } from '../../../constant/fonts';
 import { scaleH } from '../../../util';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 import useGetFoodList from '../../../hooks/useGetFoodList';
 import useExpiredFoods from '../../../hooks/useExpiredFoods';
-import { FontGmarketSansBold } from '../../../constant/fonts';
 
 export default function CompartmentInfo({ space }: { space: Space }) {
   const { getFoodList } = useGetFoodList();

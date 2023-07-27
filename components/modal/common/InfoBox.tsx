@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
-import { Label } from '../form/Form';
+import { FormLabel } from '../../../constant/formInfo';
 import { getFormattedDate } from '../../../util';
 import { GREEN, ORANGE_RED } from '../../../constant/colors';
 import tw from 'twrnc';
@@ -8,7 +8,7 @@ import LeftDay from '../../common/LeftDay';
 import Icon from '../../native-component/Icon';
 
 interface Props {
-  label: Label;
+  label: FormLabel;
   info?: string;
   favorite?: boolean;
 }

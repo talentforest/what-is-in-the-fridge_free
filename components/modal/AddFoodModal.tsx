@@ -1,12 +1,9 @@
 import { FoodLocation } from '../../constant/fridgeInfo';
-import { Text } from '../native-component';
-import { ScrollView, View } from 'react-native';
+import { FormStep } from '../../constant/formInfo';
 import RNModal from './common/Modal';
 import useAddFood from '../../hooks/useAddFood';
 import Form from './form/Form';
 import SubmitBtn from './form/SubmitBtn';
-import tw from 'twrnc';
-import { FormStep } from '../../constant/formInfo';
 
 interface Props {
   modalVisible: boolean;
@@ -33,7 +30,7 @@ export default function AddFoodModal({
         <Form
           editableName={true}
           items={[
-            '아이콘과 이름',
+            '이름',
             '카테고리',
             '구매날짜',
             '유통기한',
