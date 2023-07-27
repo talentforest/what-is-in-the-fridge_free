@@ -7,7 +7,7 @@ import {
 } from '../../../redux/slice/fridgeInfoSlice';
 import { Space } from '../../../constant/fridgeInfo';
 import { scaleH } from '../../../util';
-import CountBtn from '../../common/Buttons/CountBtn';
+import CountBtn from '../../common/buttons/CountBtn';
 import useGetFoodList from '../../../hooks/useGetFoodList';
 import tw from 'twrnc';
 

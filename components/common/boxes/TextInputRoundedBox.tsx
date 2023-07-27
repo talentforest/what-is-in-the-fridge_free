@@ -1,8 +1,8 @@
 import { View } from 'react-native';
-import { scaleH } from '../../util';
-import { TextInput, TouchableOpacity } from '../native-component';
-import { LIGHT_GRAY } from '../../constant/colors';
-import Icon from '../native-component/Icon';
+import { scaleH } from '../../../util';
+import { TextInput, TouchableOpacity } from '../../native-component';
+import { LIGHT_GRAY } from '../../../constant/colors';
+import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
   onSubmitEditing: () => void;
 }
 
-export default function TextInputBox({
+export default function TextInputRoundedBox({
   value,
   setValue,
   iconName,

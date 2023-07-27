@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { DEEP_INDIGO, INACTIVE_COLOR } from '../../../constant/colors';
-import { scaleH } from '../../../util';
 import { Filter } from './TableFilters';
-import CheckBox from '../Box/CheckBox';
+import { scaleH } from '../../../util';
+import CheckBox from '../boxes/CheckBox';
 import tw from 'twrnc';
 
 interface Props {

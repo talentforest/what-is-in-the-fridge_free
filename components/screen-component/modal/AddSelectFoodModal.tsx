@@ -1,9 +1,9 @@
 import { useRoute } from '@react-navigation/native';
-import { FormStep } from '../../constant/formInfo';
-import RNModal from './common/Modal';
-import Form from './form/Form';
-import useAddSelectFood from '../../hooks/useAddSelectFood';
-import SubmitBtn from './form/SubmitBtn';
+import { FormStep } from '../../../constant/formInfo';
+import RNModal from '../../common/modal/Modal';
+import Form from '../../common/form/Form';
+import useAddSelectFood from '../../../hooks/useAddSelectFood';
+import SubmitBtn from '../../common/form/SubmitBtn';
 
 interface Props {
   modalVisible: boolean;

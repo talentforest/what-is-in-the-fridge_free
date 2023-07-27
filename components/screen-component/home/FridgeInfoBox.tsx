@@ -3,7 +3,7 @@ import { Text } from '../../native-component';
 import { Asset } from 'expo-asset';
 import { FontGmarketSansBold } from '../../../constant/fonts';
 import tw from 'twrnc';
-import Box from '../../common/LayoutBox/Box';
+import Box from '../../common/layout/Box';
 
 interface Props {
   asset: Asset;

@@ -11,7 +11,7 @@ import React from 'react';
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
 import ExpiredFoods from '../screens/ExpiredFoods';
-import BackBtn from '../components/common/Buttons/BackBtn';
+import BackBtn from '../components/common/buttons/BackBtn';
 import FridgeSetting from '../screens/FridgeSetting';
 
 export type RootStackParamList = {

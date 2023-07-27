@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FridgeShape from '../components/common/FridgeShape';
-import SearchFoodModal from '../components/modal/SearchFoodModal';
-import HeaderBtn from '../components/common/Buttons/HeaderBtn';
-import Container from '../components/common/LayoutBox/Container';
+import SearchFoodModal from '../components/screen-component/modal/SearchFoodModal';
+import HeaderBtn from '../components/common/buttons/HeaderBtn';
+import Container from '../components/common/layout/Container';
 import tw from 'twrnc';
 
 export default function MyFridge() {

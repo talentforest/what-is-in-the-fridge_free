@@ -5,10 +5,10 @@ import { Space } from '../constant/fridgeInfo';
 import { scaleH } from '../util';
 import { changeSetting } from '../redux/slice/fridgeInfoSlice';
 import FridgeShape from '../components/common/FridgeShape';
-import CheckBoxItem from '../components/modal/form/CheckBoxItem';
 import SelectContainter from '../components/screen-component/setting/SelectContainter';
-import Container from '../components/common/LayoutBox/Container';
 import CompartmentsSettingBox from '../components/screen-component/setting/CompartmentsSettingBox';
+import Container from '../components/common/layout/Container';
+import CheckBoxItem from '../components/common/form/CheckBoxItem';
 import tw from 'twrnc';
 
 export default function FridgeSetting() {

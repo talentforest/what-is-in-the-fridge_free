@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import { Text, TouchableOpacity } from '../native-component';
-import { cutLetter, scaleH } from '../../util';
-import { useSelector } from '../../redux/hook';
+import { Text, TouchableOpacity } from '../../native-component';
+import { cutLetter, scaleH } from '../../../util';
+import { useSelector } from '../../../redux/hook';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Food } from '../../constant/foods';
+import { Food } from '../../../constant/foods';
 import { useNavigation } from '@react-navigation/native';
-import { NavigateProp } from '../../navigation/Navigation';
-import TextInputBox from '../common/TextInputBox';
-import Icon from '../native-component/Icon';
-import RNModal from './common/Modal';
+import { NavigateProp } from '../../../navigation/Navigation';
+import TextInputRoundedBox from '../../common/boxes/TextInputRoundedBox';
+import Icon from '../../native-component/Icon';
+import RNModal from '../../common/modal/Modal';
 import tw from 'twrnc';
 
 interface Props {
@@ -43,7 +43,7 @@ export default function SearchFoodModal({
       setModalVisible={setModalVisible}
     >
       <View>
-        <TextInputBox
+        <TextInputRoundedBox
           value={keyword}
           setValue={setKeyword}
           iconName='search1'

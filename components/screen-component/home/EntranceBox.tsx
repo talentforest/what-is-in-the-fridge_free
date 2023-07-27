@@ -5,14 +5,14 @@ import { Food } from '../../../constant/foods';
 import { NavigateProp, RouteName } from '../../../navigation/Navigation';
 import { useState } from 'react';
 import { LIGHT_YELLOW } from '../../../constant/colors';
-import FoodTag from '../../common/Box/FoodBox';
-import Title from '../../common/Title';
-import Box from '../../common/LayoutBox/Box';
-import tw from 'twrnc';
-import CheckFoodBox from '../../common/Box/CheckFoodBox';
-import MoreOpenBtn from '../../common/Buttons/MoreOpenBtn';
-import Icon from '../../native-component/Icon';
 import { FontGmarketSansBold } from '../../../constant/fonts';
+import FoodTag from '../../common/boxes/FoodBox';
+import Title from '../../common/Title';
+import Box from '../../common/layout/Box';
+import tw from 'twrnc';
+import CheckFoodBox from '../../common/boxes/CheckFoodBox';
+import MoreOpenBtn from '../../common/buttons/MoreOpenBtn';
+import Icon from '../../native-component/Icon';
 
 export type EntranceTitle =
   | '유통기한 주의 식료품'

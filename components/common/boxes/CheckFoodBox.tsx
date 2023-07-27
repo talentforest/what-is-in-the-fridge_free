@@ -1,6 +1,6 @@
 import { Food } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
-import { scaleFont } from '../../../util';
+import { scaleH } from '../../../util';
 import { useState } from 'react';
 import { DEEP_YELLOW, LIGHT_GRAY } from '../../../constant/colors';
 import Icon from '../../native-component/Icon';
@@ -19,9 +19,8 @@ export default function CheckFoodBox({ food }: Props) {
       onPress={() => setChecked((prev) => !prev)}
       style={tw`${
         checked ? 'border-amber-500 bg-amber-50' : 'bg-white border-indigo-300'
-      } flex-row items-center gap-0.5 rounded-lg border-2 px-[${scaleFont(
-        10
-      )}px] py-[${scaleFont(5)}px]`}
+      } flex-row items-center gap-0.5 rounded-lg border-2 
+      px-[${scaleH(10)}px] py-[${scaleH(5)}px]`}
     >
       <Icon
         name={checked ? 'cart-arrow-down' : 'cart-outline'}
