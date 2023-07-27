@@ -113,7 +113,7 @@ export default function EntranceBox({ info, foods }: Props) {
               size={12}
               color={LIGHT_YELLOW}
             />
-            <Text fontSize={12} style={tw`text-amber-200`}>
+            <Text fontSize={14} style={tw`text-amber-300`}>
               카트에 넣은 식료품을 터치하세요.
             </Text>
           </View>
