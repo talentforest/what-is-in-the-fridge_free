@@ -10,7 +10,7 @@ export default function ExpiredState({ length }: Props) {
   const getCaution = (num: number) => caution.find((item) => item.max >= num);
 
   return (
-    <Text fontSize={12} style={tw`${getColorByFoodLength(length)} pt-3 pb-1`}>
+    <Text fontSize={12} style={tw`${getColorByFoodLength(length)} pt-3`}>
       {getCaution(length)?.guide}
     </Text>
   );

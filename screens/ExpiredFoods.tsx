@@ -1,25 +1,23 @@
 import { View } from 'react-native';
-import { SafeBottomAreaView, Text } from '../components/native-component';
+import { SafeBottomAreaView } from '../components/native-component';
 import { useState } from 'react';
+import { SpaceType } from '../constant/fridgeInfo';
 import useExpiredFood from '../hooks/useExpiredFoods';
-import TableLabel from '../components/common/Table/TableLabel';
-import TableItem from '../components/common/Table/TableItem';
 import useHandleCheckList from '../hooks/useHandleCheckList';
-import LeftDay from '../components/common/LeftDay';
 import ExpiredState from '../components/screen-component/expired-foods/ExpiredState';
-import TableList from '../components/common/Table/TableList';
-import TabBtn from '../components/common/Buttons/TabBtn';
+import Container from '../components/LayoutBox/Container';
 import TableContainer from '../components/common/Table/TableContainer';
-import Container from '../components/common/LayoutBox/Container';
-import TableItemSetting from '../components/common/Table/TableItemSetting';
+import TabBtn from '../components/common/Buttons/TabBtn';
+import TableHeader from '../components/common/Table/TableHeader';
+import TableBody from '../components/common/Table/TableBody';
+import TableFooter from '../components/common/Table/TableFooter';
 import tw from 'twrnc';
 
-export type FoodType = '냉동실' | '냉장실';
-
 export default function ExpiredFoods() {
-  const [tab, setTab] = useState<FoodType>('냉장실');
+  const [tab, setTab] = useState<SpaceType>('냉장실');
   const { allExpiredFoods, filterExpiredFoods } = useExpiredFood();
 
+  const totalLength = filterExpiredFoods(tab as SpaceType).length;
   const {
     entireCheck,
     setEntireCheck,
@@ -29,9 +27,9 @@ export default function ExpiredFoods() {
     onDeletePress,
     onCheckPress,
     existInList,
-  } = useHandleCheckList(tab);
+  } = useHandleCheckList(totalLength, tab);
 
-  const onTabPress = (name: FoodType) => {
+  const onTabPress = (name: SpaceType) => {
     setTab(name);
     setEntireCheck(false);
     setCheckList([]);
@@ -46,49 +44,36 @@ export default function ExpiredFoods() {
             <TabBtn
               key={btnName}
               btnName={`${btnName} 보기`}
-              setOpenTab={() => onTabPress(btnName as FoodType)}
+              setOpenTab={() => onTabPress(btnName as SpaceType)}
               active={btnName === tab}
             />
           ))}
         </View>
-        {/* 목록 표 */}
+
+        {/* 전체 표 */}
         <TableContainer>
-          <TableLabel
+          <TableHeader
             title={`유통기한 주의 식료품`}
-            listLength={filterExpiredFoods(tab as FoodType).length}
+            listLength={filterExpiredFoods(tab).length}
             entireChecked={entireCheck}
             onEntirePress={() => onEntirePress(filterExpiredFoods(tab))}
-          >
-            <View
-              style={tw`justify-end flex-row items-center gap-0.5 rounded-full`}
-            >
-              <Text style={tw`text-slate-600`}>유통기한</Text>
-            </View>
-          </TableLabel>
+            columnTitle='유통기한'
+          />
+
+          {/* 식료품 리스트 */}
+          <TableBody
+            existListItem={!!filterExpiredFoods(tab).length}
+            list={filterExpiredFoods(tab)}
+            onCheckPress={onCheckPress}
+            existInList={existInList}
+            noneItemNoti='유통기한 주의 식료품이 없습니다.'
+          />
+
           {/* 냉장고 상태 문구 */}
           <ExpiredState length={filterExpiredFoods(tab).length} />
-          {!!filterExpiredFoods(tab).length ? (
-            <TableList
-              list={filterExpiredFoods(tab)}
-              renderItem={({ item }) => (
-                <TableItem
-                  key={item.name}
-                  food={item}
-                  onCheckPress={onCheckPress}
-                  existInList={existInList}
-                >
-                  <View style={tw`flex-row items-center`}>
-                    <LeftDay expiredDate={item.expiredDate} />
-                  </View>
-                </TableItem>
-              )}
-            />
-          ) : (
-            <Text style={tw`text-slate-400 text-center pt-14 flex-1`}>
-              유통기한 주의 식료품이 없습니다.
-            </Text>
-          )}
-          <TableItemSetting
+
+          {/* 식료품 선택 개수와 버튼 */}
+          <TableFooter
             list={checkList}
             onPress={() => onDeletePress(allExpiredFoods)}
             buttons={['delete']}

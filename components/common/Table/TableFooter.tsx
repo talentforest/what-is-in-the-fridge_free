@@ -19,7 +19,7 @@ interface Props {
   buttons: Button[];
 }
 
-export default function TableItemSetting({
+export default function TableFooter({
   list,
   onAddPress,
   onPress,
@@ -28,7 +28,7 @@ export default function TableItemSetting({
   return (
     <View
       style={tw`h-[${scaleH(
-        48
+        40
       )}px] flex-row items-center justify-between gap-2`}
     >
       <Text style={tw`${!!list.length ? 'text-indigo-500' : 'text-slate-500'}`}>
@@ -50,6 +50,7 @@ export default function TableItemSetting({
             />
           </TouchableOpacity>
         )}
+
         {/* 자주먹는 식품 해제 버튼 */}
         {buttons.includes('delete-favorite') && (
           <TouchableOpacity
@@ -65,6 +66,7 @@ export default function TableItemSetting({
             />
           </TouchableOpacity>
         )}
+
         {/* 삭제 버튼 */}
         {buttons.includes('delete') && (
           <TouchableOpacity
