@@ -10,11 +10,14 @@ import {
   setShoppingList,
 } from '../redux/slice/shoppingList';
 import { useRoute } from '@react-navigation/native';
+import useExpiredFoods from './useExpiredFoods';
 
 export default function useHandleCheckList(tab?: FoodType) {
   const route = useRoute();
   const [entireCheck, setEntireCheck] = useState(false);
   const [checkList, setCheckList] = useState<Food[]>([]);
+  const { allExpiredFoods, filterExpiredFoods } = useExpiredFoods();
+  const totalLength = filterExpiredFoods(tab as FoodType).length;
 
   const { allFoods } = useSelector((state) => state.allFoods);
   const dispatch = useDispatch();
@@ -52,9 +55,12 @@ export default function useHandleCheckList(tab?: FoodType) {
 
   const onCheckPress = (food: Food) => {
     if (existInList(food.id)) {
+      if (checkList.length === totalLength) setEntireCheck((prev) => !prev);
       return setCheckList(checkList.filter((item) => item.id !== food.id));
     }
     setCheckList([...checkList, food]);
+    if (checkList.length + 1 === totalLength)
+      return setEntireCheck((prev) => !prev);
   };
 
   const changeFavState = () => {

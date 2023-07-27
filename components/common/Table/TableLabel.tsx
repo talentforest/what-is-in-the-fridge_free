@@ -5,6 +5,7 @@ import { scaleH } from '../../../util';
 import { ReactNode } from 'react';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
+import CheckBox from '../Box/CheckBox';
 
 interface Props {
   title: string;
@@ -28,11 +29,9 @@ export default function TableLabel({
       )}px] -mx-4 px-4 gap-2 border-b-2 border-slate-300 flex-row items-center justify-between`}
     >
       <TouchableOpacity onPress={onEntirePress}>
-        <Icon
-          type='MaterialCommunityIcons'
-          name={entireChecked ? 'checkbox-marked' : 'square-outline'}
-          size={18}
-          color={entireChecked ? DEEP_INDIGO : INACTIVE_COLOR}
+        <CheckBox
+          checked={entireChecked}
+          activeColor={entireChecked ? DEEP_INDIGO : INACTIVE_COLOR}
         />
       </TouchableOpacity>
       <View style={tw`flex-row flex-1 gap-2.5 items-center`}>
