@@ -10,13 +10,13 @@ import useFavoriteFoods from '../hooks/useFavoriteFoods';
 import useCheckFood from '../hooks/useCheckFood';
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useToggleModal from '../hooks/useToggleModal';
-import AddSelectFoodModal from '../components/modal/AddSelectFoodModal';
-import Container from '../components/LayoutBox/Container';
-import TableContainer from '../components/common/Table/TableContainer';
-import TableHeader from '../components/common/Table/TableHeader';
-import TableBody from '../components/common/Table/TableBody';
-import TableFooter from '../components/common/Table/TableFooter';
-import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
+import AddSelectFoodModal from '../components/screen-component/modal/AddSelectFoodModal';
+import Container from '../components/common/layout/Container';
+import TableContainer from '../components/common/table/TableContainer';
+import TableHeader from '../components/common/table/TableHeader';
+import TableBody from '../components/common/table/TableBody';
+import TableFooter from '../components/common/table/TableFooter';
+import TextInputRoundedBox from '../components/common/boxes/TextInputRoundedBox';
 
 export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);

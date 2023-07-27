@@ -5,7 +5,7 @@ import { BLUE } from '../../../constant/colors';
 import { Food } from '../../../constant/foods';
 import { ReactNode } from 'react';
 import tw from 'twrnc';
-import CheckBox from '../Box/CheckBox';
+import CheckBox from '../boxes/CheckBox';
 
 interface Props {
   food: Food;

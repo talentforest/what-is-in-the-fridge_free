@@ -2,14 +2,14 @@ import { useFonts } from 'expo-font';
 import { fonts } from '../constant/fonts';
 import { SafeBottomAreaView } from '../components/native-component';
 import { useState } from 'react';
-import TableFilters, { Filter } from '../components/common/Table/TableFilters';
+import TableFilters, { Filter } from '../components/common/table/TableFilters';
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useFavoriteFoods from '../hooks/useFavoriteFoods';
-import Container from '../components/LayoutBox/Container';
-import TableContainer from '../components/common/Table/TableContainer';
-import TableHeader from '../components/common/Table/TableHeader';
-import TableBody from '../components/common/Table/TableBody';
-import TableFooter from '../components/common/Table/TableFooter';
+import Container from '../components/common/layout/Container';
+import TableContainer from '../components/common/table/TableContainer';
+import TableHeader from '../components/common/table/TableHeader';
+import TableBody from '../components/common/table/TableBody';
+import TableFooter from '../components/common/table/TableFooter';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);

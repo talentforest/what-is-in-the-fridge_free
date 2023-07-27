@@ -4,9 +4,9 @@ import { useRoute } from '@react-navigation/native';
 import { View } from 'react-native';
 import { DEEP_GRAY, LIGHT_GRAY } from '../../../constant/colors';
 import useCheckFood from '../../../hooks/useCheckFood';
+import LeftDay from '../LeftDay';
 import TableList from './TableList';
 import TableItem from './TableItem';
-import LeftDay from '../LeftDay';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 

@@ -10,7 +10,7 @@ import FridgeInfo from '../components/screen-component/home/FridgeInfo';
 import LogoTitle from '../components/screen-component/home/LogoTitle';
 import useImageLoad from '../hooks/useImageLoad';
 import tw from 'twrnc';
-import Container from '../components/common/LayoutBox/Container';
+import Container from '../components/common/layout/Container';
 
 const Home = () => {
   const { allExpiredFoods } = useExpiredFood();

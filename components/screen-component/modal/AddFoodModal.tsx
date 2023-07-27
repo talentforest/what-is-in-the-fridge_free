@@ -1,9 +1,9 @@
-import { FoodLocation } from '../../constant/fridgeInfo';
-import { FormStep } from '../../constant/formInfo';
-import RNModal from './common/Modal';
-import useAddFood from '../../hooks/useAddFood';
-import Form from './form/Form';
-import SubmitBtn from './form/SubmitBtn';
+import { FoodLocation } from '../../../constant/fridgeInfo';
+import { FormStep } from '../../../constant/formInfo';
+import RNModal from '../../common/modal/Modal';
+import useAddFood from '../../../hooks/useAddFood';
+import Form from '../../common/form/Form';
+import SubmitBtn from '../../common/form/SubmitBtn';
 
 interface Props {
   modalVisible: boolean;

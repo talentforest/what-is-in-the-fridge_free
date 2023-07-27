@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity } from '../../native-component';
 import { INDIGO } from '../../../constant/colors';
-import CheckBox from '../../common/Box/CheckBox';
+import CheckBox from '../boxes/CheckBox';
 import tw from 'twrnc';
 
 interface Props {

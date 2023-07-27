@@ -3,10 +3,10 @@ import { Category, foodCategories } from '../../../constant/foodCategories';
 import { Text, TouchableOpacity } from '../../native-component';
 import { useState } from 'react';
 import { scaleH } from '../../../util';
+import { FontGmarketSansBold } from '../../../constant/fonts';
 import CheckBoxItem from './CheckBoxItem';
 import tw from 'twrnc';
 import Modal from 'react-native-modal';
-import { FontGmarketSansBold } from '../../../constant/fonts';
 
 interface Props {
   fixedCategory: Category;

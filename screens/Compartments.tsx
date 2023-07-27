@@ -10,7 +10,7 @@ import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/native-component';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import tw from 'twrnc';
-import Container from '../components/common/LayoutBox/Container';
+import Container from '../components/common/layout/Container';
 
 interface RouteParams {
   route: RouteProp<RootStackParamList, 'Compartments'>;

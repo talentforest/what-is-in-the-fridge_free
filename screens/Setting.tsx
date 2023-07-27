@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../navigation/Navigation';
 import SettingContainer from '../components/screen-component/setting/SettingContainer';
 import SettingItem from '../components/screen-component/setting/SettingItem';
-import Container from '../components/common/LayoutBox/Container';
+import Container from '../components/common/layout/Container';
 
 export default function Setting() {
   const navigation = useNavigation<NavigateProp>();

@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 import { Text } from '../native-component';
 import { FontGmarketSansBold } from '../../constant/fonts';
-import { scaleFont } from '../../util';
 import Icon from '../native-component/Icon';
 import tw from 'twrnc';
 

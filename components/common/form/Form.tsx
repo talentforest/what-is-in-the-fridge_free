@@ -11,7 +11,7 @@ import DateItem from './DateItem';
 import NameItem from './NameItem';
 import FavoriteItem from './FavoriteItem';
 import StepIndicator from './StepIndicator';
-import ArrowBtn from '../../common/Buttons/ArrowBtn';
+import ArrowBtn from '../buttons/ArrowBtn';
 import tw from 'twrnc';
 
 interface Props {

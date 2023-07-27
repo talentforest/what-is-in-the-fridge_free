@@ -1,12 +1,12 @@
 import { View } from 'react-native';
-import { Food } from '../../constant/foods';
-import { FormStep } from '../../constant/formInfo';
-import InfoBox from './common/InfoBox';
-import SubmitBtn from './form/SubmitBtn';
-import useEditFood from '../../hooks/useEditFood';
-import useDeleteFood from '../../hooks/useDeleteFood';
-import Form from './form/Form';
-import RNModal from './common/Modal';
+import { Food } from '../../../constant/foods';
+import { FormStep } from '../../../constant/formInfo';
+import InfoBox from '../../common/modal/InfoBox';
+import SubmitBtn from '../../common/form/SubmitBtn';
+import useEditFood from '../../../hooks/useEditFood';
+import useDeleteFood from '../../../hooks/useDeleteFood';
+import Form from '../../common/form/Form';
+import RNModal from '../../common/modal/Modal';
 import tw from 'twrnc';
 
 interface Props {

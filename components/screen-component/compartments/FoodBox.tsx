@@ -9,7 +9,7 @@ interface Props {
   food: Food;
 }
 
-export default function FoodItem({ food }: Props) {
+export default function FoodBox({ food }: Props) {
   const { checkExpired, checkLeftThreeDays } = useExpiredFoods();
   const { expiredDate } = food;
 
@@ -22,7 +22,7 @@ export default function FoodItem({ food }: Props) {
   return (
     <View
       key={food.id}
-      style={tw`${bgColor} h-[${scaleH(28)}px] px-[${scaleH(8)}px py-[${scaleH(
+      style={tw`${bgColor} h-[${scaleH(28)}px] px-[${scaleH(9)}px py-[${scaleH(
         3
       )}px] rounded-full border border-indigo-300 gap-1 justify-center items-center flex-row  `}
     >

@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { TouchableOpacity } from '../../native-component';
 import { FoodLocation } from '../../../constant/fridgeInfo';
 import { INDIGO } from '../../../constant/colors';
-import AddFoodModal from '../../modal/AddFoodModal';
+import { FormStep } from '../../../constant/formInfo';
+import AddFoodModal from '../modal/AddFoodModal';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
-import { FormStep } from '../../../constant/formInfo';
 
 interface Props {
   foodLocation?: FoodLocation;
   onPress?: () => void;
 }
 
-export default function AddFoodModalBtn({ foodLocation, onPress }: Props) {
+export default function AddFoodBtn({ foodLocation, onPress }: Props) {
   const [modal, setModal] = useState(false);
 
   const onPressFc = () => {

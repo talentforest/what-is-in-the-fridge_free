@@ -22,6 +22,14 @@ export default function FridgeShape() {
     return space.includes('문쪽') ? 'rounded-r-lg' : 'rounded-l-lg';
   };
 
+  const spaceHeight = (space: Space) => {
+    return space.includes('냉동') ? 'h-[40%]' : 'h-[60%]';
+  };
+
+  const spaceColor = (space: Space) => {
+    return space.includes('냉동') ? 'blue' : 'yellow';
+  };
+
   return (
     <View style={tw`flex-row flex-1`}>
       {['안쪽', '문쪽'].map((side) => (
@@ -34,14 +42,13 @@ export default function FridgeShape() {
               key={space}
               disabled={route.name !== 'Setting' ? false : true}
               onPress={() => navigation.navigate('Compartments', { space })}
-              style={tw`justify-center bg-neutral-300 border-2 border-slate-300 ${
-                space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'
-              } ${doorRadius(space)}`}
+              style={tw`justify-center bg-neutral-300 border-2 border-slate-300 
+              ${spaceHeight(space)} ${doorRadius(space)}`}
             >
               {route.name !== 'FridgeSetting' ? (
                 <>
                   <View
-                    style={tw`absolute z-10 w-full h-full opacity-80 bg-white
+                    style={tw`absolute z-10 w-full h-full opacity-80 bg-white 
                     ${doorRadius(space)}`}
                   />
                   <CompartmentInfo space={space} />
@@ -50,19 +57,13 @@ export default function FridgeShape() {
                 // 나의 냉장고 설정
                 <>
                   <View
-                    style={tw`${doorRadius(space)} ${
-                      space.includes('냉동')
-                        ? 'border-blue-400'
-                        : 'border-yellow-400'
-                    } border-4 absolute z-10 w-full h-full`}
+                    style={tw`border-4 absolute z-10 w-full h-full
+                    ${doorRadius(space)} border-${spaceColor(space)}-400`}
                   />
                   <Text
                     style={tw.style(
-                      `absolute z-10 w-full text-center ${
-                        space.includes('냉동')
-                          ? 'text-blue-600'
-                          : 'text-yellow-600'
-                      }`,
+                      `absolute z-10 w-full text-center 
+                      text-${spaceColor(space)}-400`,
                       FontGmarketSansBold
                     )}
                   >
@@ -71,9 +72,8 @@ export default function FridgeShape() {
                 </>
               )}
               <View
-                style={tw`flex-1 gap-[${scaleH(1.5)}] p-[${scaleH(
-                  route.name !== 'FridgeSetting' ? 8 : 4
-                )}]`}
+                style={tw`flex-1 gap-[${scaleH(1.5)}]
+                p-[${scaleH(route.name !== 'FridgeSetting' ? 8 : 4)}]`}
               >
                 {getCompartments(compartments[space]).map(
                   ({ compartmentNum }) => (

@@ -4,11 +4,11 @@ import { Food, initialFoodInfo } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
 import { FoodLocation } from '../../../constant/fridgeInfo';
 import { FormStep } from '../../../constant/formInfo';
-import FoodDetailModal from '../../modal/FoodDetailModal';
-import tw from 'twrnc';
-import FoodItem from './FoodItem';
+import FoodDetailModal from '../modal/FoodDetailModal';
+import FoodBox from './FoodBox';
 import useGetFoodList from '../../../hooks/useGetFoodList';
-import AddFoodModalBtn from './AddFoodModalBtn';
+import AddFoodBtn from './AddFoodBtn';
+import tw from 'twrnc';
 
 interface Props {
   foodLocation: FoodLocation;
@@ -35,7 +35,7 @@ export default function Compartment({ foodLocation }: Props) {
               식료품 {getFoodList(space, compartmentNum).length}개
             </Text>
           </View>
-          <AddFoodModalBtn foodLocation={foodLocation} />
+          <AddFoodBtn foodLocation={foodLocation} />
         </View>
         {/* 식료품 리스트 */}
         <ScrollView
@@ -51,7 +51,7 @@ export default function Compartment({ foodLocation }: Props) {
                 setModalVisible(true);
               }}
             >
-              <FoodItem food={food} />
+              <FoodBox food={food} />
             </TouchableOpacity>
           ))}
         </ScrollView>

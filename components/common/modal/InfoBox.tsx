@@ -4,7 +4,7 @@ import { FormLabel } from '../../../constant/formInfo';
 import { getFormattedDate } from '../../../util';
 import { GREEN, ORANGE_RED } from '../../../constant/colors';
 import tw from 'twrnc';
-import LeftDay from '../../common/LeftDay';
+import LeftDay from '../LeftDay';
 import Icon from '../../native-component/Icon';
 
 interface Props {

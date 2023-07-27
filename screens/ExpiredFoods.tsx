@@ -5,12 +5,12 @@ import { SpaceType } from '../constant/fridgeInfo';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import ExpiredState from '../components/screen-component/expired-foods/ExpiredState';
-import Container from '../components/LayoutBox/Container';
-import TableContainer from '../components/common/Table/TableContainer';
-import TabBtn from '../components/common/Buttons/TabBtn';
-import TableHeader from '../components/common/Table/TableHeader';
-import TableBody from '../components/common/Table/TableBody';
-import TableFooter from '../components/common/Table/TableFooter';
+import Container from '../components/common/layout/Container';
+import TableContainer from '../components/common/table/TableContainer';
+import TabBtn from '../components/common/buttons/TabBtn';
+import TableHeader from '../components/common/table/TableHeader';
+import TableBody from '../components/common/table/TableBody';
+import TableFooter from '../components/common/table/TableFooter';
 import tw from 'twrnc';
 
 export default function ExpiredFoods() {
