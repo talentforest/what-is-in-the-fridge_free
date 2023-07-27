@@ -13,7 +13,7 @@ export default function TabBtn({ btnName, setOpenTab, active }: Props) {
     <TouchableOpacity
       key={btnName}
       onPress={() => setOpenTab(btnName)}
-      style={tw`flex-row gap-1 items-center justify-between p-2.5 border-2 border-b-0  ${
+      style={tw`flex-row gap-1 ios:rounded-t-lg items-center justify-between p-2.5 border-2 border-b-0  ${
         active ? 'bg-amber-200 border-amber-400' : 'bg-white border-slate-300'
       }`}
     >
