@@ -66,7 +66,7 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
             onPress={() => changeDate(btn.func(new Date(date)))}
             style={tw`justify-center bg-${btn.btnColor}-300 border border-slate-400 py-1 px-2 rounded-2xl`}
           >
-            <Text>+ {btn.label}</Text>
+            <Text fontSize={12}>+ {btn.label}</Text>
           </TouchableOpacity>
         ))}
       </View>

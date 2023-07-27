@@ -1,6 +1,5 @@
-import { FlatList, ListRenderItem, View } from 'react-native';
+import { FlatList, ListRenderItem } from 'react-native';
 import { Food } from '../../../constant/foods';
-import tw from 'twrnc';
 
 interface Props {
   list: Food[];

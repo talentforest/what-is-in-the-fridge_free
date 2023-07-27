@@ -3,7 +3,6 @@ import { Text, TouchableOpacity } from '../../native-component';
 import { Food } from '../../../constant/foods';
 import { scaleH } from '../../../util';
 import {
-  DEEP_GRAY,
   DEEP_INDIGO,
   DEEP_YELLOW,
   LIGHT_GRAY,

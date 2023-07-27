@@ -1,9 +1,8 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
-import CheckBoxItem from '../../modal/form/CheckBoxItem';
-import tw from 'twrnc';
 import { scaleH } from '../../../util';
 import { ReactNode } from 'react';
+import tw from 'twrnc';
 
 interface Props {
   title: string;

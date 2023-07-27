@@ -1,10 +1,9 @@
 import { View } from 'react-native';
+import { Text } from '../../native-component';
+import { DEEP_YELLOW } from '../../../constant/colors';
 import CheckBoxBtn from './CheckBoxItem';
 import tw from 'twrnc';
-import { Text } from '../../native-component';
 import Icon from '../../native-component/Icon';
-import { DEEP_YELLOW } from '../../../constant/colors';
-import { scaleH } from '../../../util';
 
 interface Props {
   favorite: boolean;
@@ -13,7 +12,7 @@ interface Props {
 
 export default function FavoriteItem({ favorite, changeInfo }: Props) {
   return (
-    <View style={tw`gap-4 mt-2`}>
+    <View style={tw`gap-3 mt-1`}>
       <View style={tw`flex-row items-center gap-2`}>
         <CheckBoxBtn
           title='맞아요'

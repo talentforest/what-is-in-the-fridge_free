@@ -4,7 +4,7 @@ export type FormStep = { id: number; name: FormStepName };
 
 export type FormLabel =
   | '냉장고 위치 선택'
-  | '아이콘과 이름'
+  | '이름'
   | '카테고리'
   | '구매날짜'
   | '유통기한'

@@ -1,8 +1,8 @@
 import { Food } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
-import { scaleFont, scaleH } from '../../../util';
+import { scaleFont } from '../../../util';
 import { useState } from 'react';
-import { DEEP_YELLOW, LIGHT_GRAY, ORANGE_RED } from '../../../constant/colors';
+import { DEEP_YELLOW, LIGHT_GRAY } from '../../../constant/colors';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 

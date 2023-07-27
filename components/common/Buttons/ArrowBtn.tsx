@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 import { DEEP_YELLOW, LIGHT_GRAY } from '../../../constant/colors';
-import { FormStep } from '../../../constant/formInfo';
 import { Text, TouchableOpacity } from '../../native-component';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';

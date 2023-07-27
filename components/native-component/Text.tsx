@@ -12,7 +12,7 @@ export function Text({ style, fontSize, ...props }: Props) {
   return (
     <RNText
       style={tw.style(
-        `text-slate-700 text-[${responsiveFontSize(fontSize || 14)}px]`,
+        `text-slate-700 text-[${responsiveFontSize(fontSize || 14)}px] py-0.5`,
         FontGmarketSansRegular,
         style
       )}
