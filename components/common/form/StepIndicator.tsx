@@ -10,22 +10,27 @@ interface Props {
 }
 
 export default function StepIndicator({ formSteps, currentStepId }: Props) {
+  const activeStyle = (stepId: number) => {
+    return currentStepId === stepId
+      ? 'bg-amber-500 border-amber-300 border'
+      : 'bg-white border-slate-400';
+  };
+
+  const activeTextStyle = (stepId: number) => {
+    return currentStepId === stepId ? 'text-white' : 'text-slate-400';
+  };
+
   return (
     <View style={tw`flex-row gap-3 justify-center items-center`}>
       {formSteps.map((step) => (
         <View
           key={step.id}
-          style={tw`${
-            currentStepId === step.id
-              ? 'bg-amber-500 border-amber-300 border'
-              : 'bg-white border-slate-400'
-          }  w-5.5 h-5.5 text-center justify-center items-center rounded-full`}
+          style={tw`${activeStyle(step.id)}
+           w-5.5 h-5.5 text-center justify-center items-center rounded-full`}
         >
           <Text
             style={tw.style(
-              `${
-                currentStepId === step.id ? 'text-white' : 'text-slate-400'
-              } pl-[1px] pt-[1px]`,
+              `${activeTextStyle(step.id)} pl-[1px] pt-[1px]`,
               FontGmarketSansBold
             )}
             fontSize={10}

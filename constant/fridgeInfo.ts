@@ -13,10 +13,3 @@ export type FoodLocation = {
   space: Space;
   compartmentNum: CompartmentNum;
 };
-
-export const SpaceName: Space[] = [
-  '냉동실 안쪽',
-  '냉동실 문쪽',
-  '냉장실 안쪽',
-  '냉장실 문쪽',
-];

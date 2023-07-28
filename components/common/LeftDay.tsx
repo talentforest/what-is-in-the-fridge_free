@@ -12,15 +12,15 @@ function LeftDay({ expiredDate }: Props) {
   const route = useRoute();
   const { checkExpired, checkLeftThreeDays } = useExpiredFoods();
 
+  const getColor = checkExpired(expiredDate)
+    ? 'text-red-600'
+    : checkLeftThreeDays(expiredDate)
+    ? 'text-amber-600'
+    : 'text-green-600';
+
   return (
     <Text
-      style={tw`${
-        checkExpired(expiredDate)
-          ? 'text-red-600'
-          : checkLeftThreeDays(expiredDate)
-          ? 'text-amber-600'
-          : 'text-green-600'
-      } ml-1`}
+      style={tw`${getColor} ml-1`}
       fontSize={route.name === 'ExpiredFoods' ? 14 : 12}
     >
       {getRelativeTime(expiredDate)}

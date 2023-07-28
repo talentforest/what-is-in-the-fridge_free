@@ -41,9 +41,8 @@ export function TextInput({ style, onPress, ...props }: Props) {
       ) : (
         <Input
           style={tw.style(
-            `border border-slate-400 p-2 h-[${scaleH(
-              42
-            )}px] rounded-lg bg-white`,
+            `h-[${scaleH(42)}px] 
+            border border-slate-400 p-2 rounded-lg bg-white`,
             FontGmarketSansRegular,
             style
           )}

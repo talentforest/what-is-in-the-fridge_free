@@ -4,9 +4,9 @@ import { Food, FoodInfo, initialFoodInfo } from '../constant/foods';
 import { useState } from 'react';
 import { addFood } from '../redux/slice/allFoodsSlice';
 import { FoodLocation } from '../constant/fridgeInfo';
+import { Alert } from 'react-native';
 import UUIDGenerator from 'react-native-uuid';
 import useCheckFood from './useCheckFood';
-import { Alert } from 'react-native';
 
 interface Props {
   foodLocation: FoodLocation;
@@ -31,11 +31,12 @@ export default function useAddFood({ foodLocation }: Props) {
       compartmentNum,
     };
 
-    if (food.name === '')
+    if (food.name === '') {
       return Alert.alert(
         '이름 작성 안내',
         '식료품의 이름이 작성되지 않았습니다.'
       );
+    }
 
     const existFood = checkExistFood(food);
     if (existFood) return alertExistFood(existFood);

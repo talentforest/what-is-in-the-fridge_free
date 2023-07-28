@@ -24,9 +24,8 @@ export default function SquareBtn({ btnName, onPress }: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw`h-[${scaleH(
-        43
-      )}px] bg-indigo-500 py-2.5 px-4 flex-row items-center gap-1.5 border border-indigo-300 rounded-md self-start`}
+      style={tw`bg-indigo-500 py-2.5 px-4 flex-row items-center gap-1.5 border border-indigo-300 rounded-md self-start 
+      h-[${scaleH(43)}px]`}
     >
       <View style={tw`w-5 text-center items-center`}>
         <Icon

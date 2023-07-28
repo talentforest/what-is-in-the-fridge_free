@@ -6,13 +6,14 @@ import { getCompartments, scaleH } from '../../util';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { NavigateProp } from '../../navigation/Navigation';
-import CompartmentShape from './CompartmentShape';
-import CompartmentInfo from '../screen-component/my-fridge/CompartmentInfo';
+import CompartmentBox from '../screen-component/setting/CompartmentBox';
+import FridgeSpace from '../screen-component/my-fridge/FridgeSpace';
 import tw from 'twrnc';
 
 export default function FridgeShape() {
   const navigation = useNavigation<NavigateProp>();
   const route = useRoute();
+  const routeFridgeSetting = route.name === 'FridgeSetting';
 
   const {
     fridgeInfo: { compartments, freezer },
@@ -40,44 +41,42 @@ export default function FridgeShape() {
           {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (
             <TouchableOpacity
               key={space}
-              disabled={route.name !== 'Setting' ? false : true}
+              disabled={!routeFridgeSetting ? false : true}
               onPress={() => navigation.navigate('Compartments', { space })}
               style={tw`justify-center bg-neutral-300 border-2 border-slate-300 
               ${spaceHeight(space)} ${doorRadius(space)}`}
             >
-              {route.name !== 'FridgeSetting' ? (
+              {!routeFridgeSetting && (
                 <>
                   <View
                     style={tw`absolute z-10 w-full h-full opacity-80 bg-white 
                     ${doorRadius(space)}`}
                   />
-                  <CompartmentInfo space={space} />
+                  <FridgeSpace space={space} />
                 </>
-              ) : (
-                // 나의 냉장고 설정
-                <>
-                  <View
-                    style={tw`border-4 absolute z-10 w-full h-full
+              )}
+              {routeFridgeSetting && (
+                <View
+                  style={tw`border-4 absolute z-10 w-full h-full justify-center
                     ${doorRadius(space)} border-${spaceColor(space)}-400`}
-                  />
+                >
                   <Text
                     style={tw.style(
-                      `absolute z-10 w-full text-center 
-                      text-${spaceColor(space)}-400`,
+                      `text-center text-${spaceColor(space)}-600`,
                       FontGmarketSansBold
                     )}
                   >
                     {space.slice(0, 3)}
                   </Text>
-                </>
+                </View>
               )}
               <View
                 style={tw`flex-1 gap-[${scaleH(1.5)}]
-                p-[${scaleH(route.name !== 'FridgeSetting' ? 8 : 4)}]`}
+                p-[${scaleH(!routeFridgeSetting ? 8 : 4)}]`}
               >
                 {getCompartments(compartments[space]).map(
                   ({ compartmentNum }) => (
-                    <CompartmentShape
+                    <CompartmentBox
                       key={compartmentNum}
                       space={space}
                       compartmentNum={compartmentNum}

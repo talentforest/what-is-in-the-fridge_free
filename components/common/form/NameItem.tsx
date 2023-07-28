@@ -12,11 +12,11 @@ interface Props {
 export default function NameItem({ name, changeInfo, editable }: Props) {
   const onChangeText = (value: string) => changeInfo({ name: value });
 
+  const editableStyle = !editable ? 'bg-slate-100 text-slate-600' : 'bg-white';
+
   return (
     <TextInput
-      style={tw`h-[${scaleH(44)}px] rounded-lg ${
-        !editable ? 'bg-slate-100 text-slate-600' : 'bg-white'
-      }`}
+      style={tw`h-[${scaleH(44)}px] rounded-lg ${editableStyle}`}
       editable={editable}
       onChangeText={onChangeText}
       value={name}

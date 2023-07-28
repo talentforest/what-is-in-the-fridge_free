@@ -31,6 +31,10 @@ export default function TableBody({
 
   const { checkExistFood } = useCheckFood();
 
+  const existFoodColor = (item: Food) => {
+    return !!checkExistFood(item) ? 'text-indigo-500' : 'text-slate-500';
+  };
+
   return (
     <>
       {existListItem ? (
@@ -53,13 +57,7 @@ export default function TableBody({
 
                 {/* 자주 먹는 식료품 정보 */}
                 {route.name === 'FavoriteFoods' && (
-                  <Text
-                    style={tw`${
-                      !!checkExistFood(item)
-                        ? 'text-indigo-500'
-                        : 'text-slate-500'
-                    }`}
-                  >
+                  <Text style={tw`${existFoodColor(item)}`}>
                     {!!checkExistFood(item) ? '있음' : '없음'}
                   </Text>
                 )}

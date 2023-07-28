@@ -27,9 +27,8 @@ export default function TableFooter({
 }: Props) {
   return (
     <View
-      style={tw`h-[${scaleH(
-        40
-      )}px] flex-row items-center justify-between gap-2`}
+      style={tw`h-[${scaleH(40)}px]
+      flex-row items-center justify-between gap-2`}
     >
       <Text style={tw`${!!list.length ? 'text-indigo-500' : 'text-slate-500'}`}>
         {list.length}개의 식료품 선택

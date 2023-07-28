@@ -6,10 +6,11 @@ import SearchFoodModal from '../components/screen-component/modal/SearchFoodModa
 import HeaderBtn from '../components/common/buttons/HeaderBtn';
 import Container from '../components/common/layout/Container';
 import tw from 'twrnc';
+import useToggleModal from '../hooks/useToggleModal';
 
 export default function MyFridge() {
   const navigation = useNavigation();
-  const [modalVisible, setModalVisible] = useState(false);
+  const { modalVisible, setModalVisible } = useToggleModal();
 
   useEffect(() => {
     navigation.setOptions({

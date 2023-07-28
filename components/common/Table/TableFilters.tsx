@@ -12,35 +12,38 @@ interface Props {
 }
 
 export default function TableFilters({ currentFilter, changeFilter }: Props) {
+  const activeBoxStyle = (filter: Filter) => {
+    return filter === currentFilter
+      ? 'bg-amber-50 border-amber-500'
+      : 'border-slate-400 bg-white';
+  };
+
+  const activeTextColor = (filter: Filter) => {
+    return filter === currentFilter ? 'text-amber-600' : 'text-slate-500';
+  };
+
   return (
     <View style={tw`flex-row flex-wrap pt-2 gap-1`}>
-      {['전체', '냉장고에 있음', '냉장고에 없음'].map((filter) => (
-        <TouchableOpacity
-          onPress={() => changeFilter(filter as Filter)}
-          key={filter}
-          style={tw`flex-row items-center gap-0.5 border py-1 px-2 rounded-full ${
-            filter === currentFilter
-              ? 'bg-amber-50 border-amber-500'
-              : 'border-slate-400 bg-white'
-          }`}
-        >
-          {filter !== '전체' && (
-            <Icon
-              type='MaterialCommunityIcons'
-              name='filter'
-              size={16}
-              color={filter === currentFilter ? DEEP_YELLOW : LIGHT_GRAY}
-            />
-          )}
-          <Text
-            style={tw`${
-              filter === currentFilter ? 'text-amber-600' : 'text-slate-500'
-            }`}
+      {(['전체', '냉장고에 있음', '냉장고에 없음'] as Filter[]).map(
+        (filter) => (
+          <TouchableOpacity
+            onPress={() => changeFilter(filter)}
+            key={filter}
+            style={tw`flex-row items-center gap-0.5 border py-1 px-2 rounded-full 
+          ${activeBoxStyle(filter)}`}
           >
-            {filter}
-          </Text>
-        </TouchableOpacity>
-      ))}
+            {filter !== '전체' && (
+              <Icon
+                type='MaterialCommunityIcons'
+                name='filter'
+                size={16}
+                color={filter === currentFilter ? DEEP_YELLOW : LIGHT_GRAY}
+              />
+            )}
+            <Text style={tw`${activeTextColor(filter)}`}>{filter}</Text>
+          </TouchableOpacity>
+        )
+      )}
     </View>
   );
 }
