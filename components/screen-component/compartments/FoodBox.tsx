@@ -19,23 +19,20 @@ export default function FoodBox({ food }: Props) {
     ? 'bg-amber-100'
     : 'bg-white';
 
+  const textColor = checkExpired(expiredDate) ? 'bg-red-500' : 'bg-amber-500';
+
   return (
     <View
       key={food.id}
-      style={tw`${bgColor} h-[${scaleH(28)}px] px-[${scaleH(9)}px py-[${scaleH(
-        3
-      )}px] rounded-full border border-indigo-300 gap-1 justify-center items-center flex-row  `}
+      style={tw`rounded-full border border-indigo-300 gap-1 justify-center items-center flex-row
+      ${bgColor} h-[${scaleH(28)}px] px-[${scaleH(9)}px py-[${scaleH(3)}px]`}
     >
       <Text fontSize={14} style={tw`text-center text-slate-600 py-0.5`}>
         {cutLetter(food.name, 8)}
       </Text>
 
       {(checkExpired(expiredDate) || checkLeftThreeDays(expiredDate)) && (
-        <View
-          style={tw`h-2 w-2 rounded-full ${
-            checkExpired(expiredDate) ? 'bg-red-500' : 'bg-amber-500'
-          }`}
-        />
+        <View style={tw`h-2 w-2 rounded-full ${textColor}`} />
       )}
     </View>
   );

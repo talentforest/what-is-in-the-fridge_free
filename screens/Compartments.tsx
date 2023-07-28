@@ -29,17 +29,16 @@ export default function Compartments({ route }: RouteParams) {
 
   const compartments = getCompartments(fridgeInfo.compartments[space]);
 
+  const height = space.includes('냉동') ? 'h-4/5' : 'flex-1';
+
   if (!fontsLoaded) return null;
 
   return (
     <SafeBottomAreaView>
       <Container>
         <View
-          style={tw`p-[${scaleH(10)}] gap-[${scaleH(
-            2
-          )}] border border-slate-300 ${
-            space.includes('냉동') ? 'h-4/5' : 'flex-1'
-          } w-full m-auto self-center justify-center rounded-lg bg-neutral-200`}
+          style={tw`p-[${scaleH(10)}] gap-[${scaleH(2)}] ${height}
+          border border-slate-300 w-full m-auto self-center justify-center rounded-lg bg-neutral-200`}
         >
           {compartments.map((compartment) => (
             <Compartment

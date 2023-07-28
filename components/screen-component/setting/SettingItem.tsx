@@ -2,8 +2,8 @@ import { Text, TouchableOpacity } from '../../native-component';
 import { GRAY } from '../../../constant/colors';
 import { scaleH } from '../../../util';
 import { ReactNode } from 'react';
-import tw from 'twrnc';
 import Icon from '../../native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
   title: string;
@@ -23,9 +23,8 @@ export default function SettingItem({
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw`h-[${scaleH(
-        46
-      )}px] px-1 flex-row justify-between items-center border-b border-blue-300 gap-2 bg-white`}
+      style={tw`h-[${scaleH(46)}px]
+      px-1 flex-row justify-between items-center border-b border-blue-300 gap-2 bg-white`}
       disabled={disabled}
     >
       <Icon

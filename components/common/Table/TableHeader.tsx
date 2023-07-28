@@ -23,9 +23,8 @@ export default function TableHeader({
 }: Props) {
   return (
     <View
-      style={tw`h-[${scaleH(
-        46
-      )}px] -mx-4 px-4 gap-2 border-b-2 border-slate-300 flex-row items-center justify-between`}
+      style={tw`h-[${scaleH(46)}px]
+      -mx-4 px-4 gap-2 border-b-2 border-slate-300 flex-row items-center justify-between`}
     >
       <TouchableOpacity onPress={onEntirePress}>
         <CheckBox

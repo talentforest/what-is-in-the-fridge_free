@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { CompartmentNum, Space } from '../../constant/fridgeInfo';
+import { CompartmentNum, Space } from '../../../constant/fridgeInfo';
 import tw from 'twrnc';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   showInfo?: boolean;
 }
 
-export default function CompartmentShape({ space, compartmentNum }: Props) {
+export default function CompartmentBox({ space, compartmentNum }: Props) {
   return (
     <View
       key={compartmentNum}

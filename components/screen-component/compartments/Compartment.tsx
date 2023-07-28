@@ -8,6 +8,7 @@ import FoodDetailModal from '../modal/FoodDetailModal';
 import FoodBox from './FoodBox';
 import useGetFoodList from '../../../hooks/useGetFoodList';
 import AddFoodBtn from './AddFoodBtn';
+import useToggleModal from '../../../hooks/useToggleModal';
 import tw from 'twrnc';
 
 interface Props {
@@ -17,8 +18,8 @@ interface Props {
 export default function Compartment({ foodLocation }: Props) {
   const { space, compartmentNum } = foodLocation;
   const [selectedFood, setSelectedFood] = useState<Food>(initialFoodInfo);
-  const [modalVisible, setModalVisible] = useState(false);
 
+  const { modalVisible, setModalVisible } = useToggleModal();
   const { getFoodList } = useGetFoodList();
 
   return (

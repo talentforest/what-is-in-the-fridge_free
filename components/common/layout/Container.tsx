@@ -6,6 +6,7 @@ import tw from 'twrnc';
 
 export default function Container({ children }: { children: ReactNode }) {
   const route = useRoute();
+
   return (
     <View
       style={tw`flex-1 p-[${scaleH(14)}px] ${

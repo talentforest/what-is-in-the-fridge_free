@@ -123,7 +123,6 @@ export default function Form({
                   />
                 </FormItemContainer>
               )}
-
               {items.includes('자주 먹는 식품인가요?') && (
                 <FormItemContainer label='자주 먹는 식품인가요?'>
                   <FavoriteItem
