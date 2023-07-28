@@ -7,11 +7,11 @@ import tw from 'twrnc';
 export type Filter = '전체' | '냉장고에 있음' | '냉장고에 없음';
 
 interface Props {
-  isFilter: Filter;
+  currentFilter: Filter;
   changeFilter: (filter: Filter) => void;
 }
 
-export default function TableFilters({ isFilter, changeFilter }: Props) {
+export default function TableFilters({ currentFilter, changeFilter }: Props) {
   return (
     <View style={tw`flex-row flex-wrap pt-2 gap-1`}>
       {['전체', '냉장고에 있음', '냉장고에 없음'].map((filter) => (
@@ -19,7 +19,7 @@ export default function TableFilters({ isFilter, changeFilter }: Props) {
           onPress={() => changeFilter(filter as Filter)}
           key={filter}
           style={tw`flex-row items-center gap-0.5 border py-1 px-2 rounded-full ${
-            filter === isFilter
+            filter === currentFilter
               ? 'bg-amber-50 border-amber-500'
               : 'border-slate-400 bg-white'
           }`}
@@ -29,12 +29,12 @@ export default function TableFilters({ isFilter, changeFilter }: Props) {
               type='MaterialCommunityIcons'
               name='filter'
               size={16}
-              color={filter === isFilter ? DEEP_YELLOW : LIGHT_GRAY}
+              color={filter === currentFilter ? DEEP_YELLOW : LIGHT_GRAY}
             />
           )}
           <Text
             style={tw`${
-              filter === isFilter ? 'text-amber-600' : 'text-slate-500'
+              filter === currentFilter ? 'text-amber-600' : 'text-slate-500'
             }`}
           >
             {filter}
