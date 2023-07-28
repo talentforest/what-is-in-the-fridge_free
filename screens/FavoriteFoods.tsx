@@ -13,7 +13,7 @@ import TableFooter from '../components/common/table/TableFooter';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
-  const [isFilter, setIsFilter] = useState<Filter>('전체');
+  const [currentFilter, setCurrentFilter] = useState<Filter>('전체');
 
   const {
     favoriteFoods,
@@ -21,13 +21,13 @@ export default function FavoriteFoods() {
     existFavoriteFoods, //
   } = useFavoriteFoods();
 
-  const getTableList = (isFilter: Filter) => {
-    if (isFilter === '냉장고에 있음') return [...existFavoriteFoods];
-    if (isFilter === '냉장고에 없음') return [...nonExistFavoriteFoods];
+  const getTableList = (filter: Filter) => {
+    if (filter === '냉장고에 있음') return [...existFavoriteFoods];
+    if (filter === '냉장고에 없음') return [...nonExistFavoriteFoods];
     return [...nonExistFavoriteFoods, ...existFavoriteFoods];
   };
 
-  const totalLength = getTableList(isFilter).length;
+  const totalLength = getTableList(currentFilter).length;
   const {
     entireCheck,
     setEntireCheck,
@@ -42,7 +42,7 @@ export default function FavoriteFoods() {
 
   const changeFilter = (filter: Filter) => {
     setCheckList([]);
-    setIsFilter(filter);
+    setCurrentFilter(filter);
     setEntireCheck(false);
   };
 
@@ -54,19 +54,22 @@ export default function FavoriteFoods() {
         <TableContainer>
           <TableHeader
             title='자주 먹는 식료품'
-            listLength={getTableList(isFilter).length}
+            listLength={getTableList(currentFilter).length}
             entireChecked={entireCheck}
             onEntirePress={() => onEntirePress(favoriteFoods)}
-            columnTitle={isFilter}
+            columnTitle={currentFilter}
           />
 
           {/* 필터 */}
-          <TableFilters isFilter={isFilter} changeFilter={changeFilter} />
+          <TableFilters
+            currentFilter={currentFilter}
+            changeFilter={changeFilter}
+          />
 
           {/* 자주 먹는 식료품 목록 */}
           <TableBody
             existListItem={!!favoriteFoods.length}
-            list={getTableList(isFilter)}
+            list={getTableList(currentFilter)}
             onCheckPress={onCheckPress}
             existInList={existInList}
             noneItemNoti='자주 먹는 식료품이 아직 없습니다.'
