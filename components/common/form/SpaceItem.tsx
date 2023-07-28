@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Food } from '../../../constant/foods';
 import { getCompartments } from '../../../util';
 import { useSelector } from '../../../redux/hook';
-import { Space } from '../../../constant/fridgeInfo';
+import { Space, SpaceSide, SpaceType } from '../../../constant/fridgeInfo';
 import CheckBoxBtn from './CheckBoxItem';
 import tw from 'twrnc';
 
@@ -17,38 +17,42 @@ export default function SpaceItem({ food, changeInfo }: Props) {
   const totalNum = fridgeInfo.compartments[food.space];
   const compartments = getCompartments(totalNum);
 
+  const onSpaceTypePress = (type: SpaceType) => {
+    const currentSpace = `${type} ${food.space.slice(4, 6)}` as Space;
+    const largestNum = fridgeInfo.compartments[currentSpace];
+    if (+food.compartmentNum.slice(0, 1) > largestNum) {
+      return changeInfo({
+        space: `${type} ${food.space.slice(4, 6)}`,
+        compartmentNum: `${largestNum}번`,
+      });
+    }
+    changeInfo({ space: `${type} ${food.space.slice(4, 6)}` });
+  };
+
+  const onSpaceSidePress = (spaceSide: SpaceSide) => {
+    changeInfo({ space: `${food.space.slice(0, 3)} ${spaceSide}` });
+  };
+
   return (
     <View style={tw`gap-5 py-2 flex-row justify-between`}>
       <View style={tw`gap-4`}>
         <View style={tw`flex-row gap-5`}>
-          {['냉장실', '냉동실'].map((type) => (
+          {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
             <CheckBoxBtn
-              key={type}
-              title={type}
-              checked={type === food.space.slice(0, 3)}
-              onPress={() => {
-                const currSpace = `${type} ${food.space.slice(4, 6)}` as Space;
-                const largestNum = fridgeInfo.compartments[currSpace];
-                if (+food.compartmentNum.slice(0, 1) > largestNum) {
-                  return changeInfo({
-                    space: `${type} ${food.space.slice(4, 6)}`,
-                    compartmentNum: `${largestNum}번`,
-                  });
-                }
-                changeInfo({ space: `${type} ${food.space.slice(4, 6)}` });
-              }}
+              key={spaceType}
+              title={spaceType}
+              checked={spaceType === food.space.slice(0, 3)}
+              onPress={() => onSpaceTypePress(spaceType)}
             />
           ))}
         </View>
         <View style={tw`flex-row gap-5`}>
-          {['안쪽', '문쪽'].map((side) => (
+          {(['안쪽', '문쪽'] as SpaceSide[]).map((spaceSide) => (
             <CheckBoxBtn
-              key={side}
-              title={side}
-              checked={side === food.space.slice(4, 6)}
-              onPress={() => {
-                changeInfo({ space: `${food.space.slice(0, 3)} ${side}` });
-              }}
+              key={spaceSide}
+              title={spaceSide}
+              checked={spaceSide === food.space.slice(4, 6)}
+              onPress={() => onSpaceSidePress(spaceSide)}
             />
           ))}
         </View>
