@@ -5,7 +5,7 @@ import Header from './Header';
 import tw from 'twrnc';
 
 interface Props {
-  title: string;
+  title?: string;
   children: ReactNode;
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
@@ -27,13 +27,17 @@ export default function RNModal({
       style={tw`m-0 justify-end`}
     >
       <SafeAreaView style={tw`justify-end`}>
-        <View style={tw`bg-white p-4 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}>
-          <Header
-            title={title}
-            setModalVisible={() => {
-              setModalVisible(!modalVisible);
-            }}
-          />
+        <View
+          style={tw`bg-indigo-100 p-4 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}
+        >
+          {title && (
+            <Header
+              title={title}
+              setModalVisible={() => {
+                setModalVisible(!modalVisible);
+              }}
+            />
+          )}
           {children}
         </View>
       </SafeAreaView>

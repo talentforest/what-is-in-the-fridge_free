@@ -33,13 +33,13 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
     <View>
       <View
         style={tw`h-[${scaleH(44)}px] 
-        border border-slate-400 rounded-lg flex-row items-center justify-between px-2`}
+        border border-slate-400 bg-white rounded-lg flex-row items-center justify-between px-2`}
       >
         <TextInput
           value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
           editable={false}
           pointerEvents='none'
-          style={tw`border-0 pl-0 my-0 py-0 text-slate-600`}
+          style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
         />
         <TouchableOpacity onPress={() => setDatePickerVisible(true)}>
           <Icon type='AntDesign' name='calendar' size={18} color={INDIGO} />

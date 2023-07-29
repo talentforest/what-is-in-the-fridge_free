@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { scaleH } from '../../../util';
 import { FontGmarketSansBold } from '../../../constant/fonts';
 import CheckBoxItem from './CheckBoxItem';
+import RNModal from '../modal/Modal';
 import tw from 'twrnc';
-import Modal from 'react-native-modal';
 
 interface Props {
   fixedCategory: Category;
@@ -21,19 +21,14 @@ export default function CategoryItem({ fixedCategory, changeInfo }: Props) {
       <TouchableOpacity
         onPress={() => setCategoryOpen((prev) => !prev)}
         style={tw`h-[${scaleH(44)}px] 
-        border border-slate-400 rounded-lg items-center flex-row gap-2 justify-between`}
+        border border-slate-400 bg-white rounded-lg items-center flex-row gap-2 justify-between`}
       >
-        <Text style={tw`text-slate-600 border-0 pl-2`}>{fixedCategory}</Text>
+        <Text style={tw`text-slate-900 border-0 pl-2`}>{fixedCategory}</Text>
         <Text style={tw`text-indigo-500 p-2`}>변경</Text>
       </TouchableOpacity>
 
-      <Modal
-        statusBarTranslucent={true}
-        onBackdropPress={() => setCategoryOpen(false)}
-        isVisible={categoryOpen}
-        style={tw`m-0 justify-end`}
-      >
-        <View style={tw`rounded-lg bg-white px-5 py-8 gap-5`}>
+      <RNModal modalVisible={categoryOpen} setModalVisible={setCategoryOpen}>
+        <View style={tw`p-4 gap-5`}>
           <Text
             fontSize={16}
             style={tw.style('text-slate-600 mb-1', FontGmarketSansBold)}
@@ -52,7 +47,7 @@ export default function CategoryItem({ fixedCategory, changeInfo }: Props) {
             />
           ))}
         </View>
-      </Modal>
+      </RNModal>
     </>
   );
 }

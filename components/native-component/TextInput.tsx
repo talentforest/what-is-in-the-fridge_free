@@ -7,7 +7,7 @@ import {
 import { FontGmarketSansRegular } from '../../constant/fonts';
 import { TouchableOpacity } from './TouchableOpacity';
 import { LIGHT_GRAY } from '../../constant/colors';
-import { scaleFont, scaleH } from '../../util';
+import { responsiveFontSize, scaleFont, scaleH } from '../../util';
 import tw from 'twrnc';
 
 interface Props extends TextInputProps {
@@ -30,7 +30,8 @@ export function TextInput({ style, onPress, ...props }: Props) {
         >
           <Input
             style={tw.style(
-              `h-full border border-slate-400 px-2 text-[${scaleFont(14)}px]`,
+              `h-full border border-slate-400 px-2 
+              text-[${responsiveFontSize(14)}px]`,
               FontGmarketSansRegular,
               style
             )}
@@ -42,7 +43,8 @@ export function TextInput({ style, onPress, ...props }: Props) {
         <Input
           style={tw.style(
             `h-[${scaleH(42)}px] 
-            border border-slate-400 p-2 rounded-lg bg-white`,
+            border border-slate-400 p-2 rounded-lg bg-white 
+            text-[${responsiveFontSize(14)}px]`,
             FontGmarketSansRegular,
             style
           )}

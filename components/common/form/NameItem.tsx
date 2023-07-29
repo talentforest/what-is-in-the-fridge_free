@@ -12,7 +12,7 @@ interface Props {
 export default function NameItem({ name, changeInfo, editable }: Props) {
   const onChangeText = (value: string) => changeInfo({ name: value });
 
-  const editableStyle = !editable ? 'bg-slate-100 text-slate-600' : 'bg-white';
+  const editableStyle = !editable ? 'bg-slate-200 text-slate-900' : 'bg-white';
 
   return (
     <TextInput
