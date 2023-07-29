@@ -11,13 +11,11 @@ interface Props {
 
 export default function StepIndicator({ formSteps, currentStepId }: Props) {
   const activeStyle = (stepId: number) => {
-    return currentStepId === stepId
-      ? 'bg-amber-500 border-amber-300 border'
-      : 'bg-white border-slate-400';
+    return currentStepId === stepId ? 'bg-blue-500 border-blue-300 border' : '';
   };
 
   const activeTextStyle = (stepId: number) => {
-    return currentStepId === stepId ? 'text-white' : 'text-slate-400';
+    return currentStepId === stepId ? 'text-white' : 'text-slate-500';
   };
 
   return (
