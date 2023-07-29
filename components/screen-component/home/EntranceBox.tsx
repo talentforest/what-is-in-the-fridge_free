@@ -60,15 +60,14 @@ export default function EntranceBox({ info, foods }: Props) {
               )}
             </View>
           )}
-          {(title === '유통기한 주의 식료품' ||
-            title === '자주 먹는 식료품') && (
+          {title !== '장봐야할 식료품' && (
             <View style={tw`flex-row gap-1.5 flex-wrap items-center`}>
               {foods.slice(0, MAX_NUM).map((food) => (
                 <FoodTag
                   key={food.id}
                   food={food}
                   expiredDate={title === '유통기한 주의 식료품'}
-                  color={title === '유통기한 주의 식료품' ? 'slate' : 'amber'}
+                  color={title === '유통기한 주의 식료품' ? 'slate' : 'indigo'}
                 />
               ))}
               {foods.length > MAX_NUM && (

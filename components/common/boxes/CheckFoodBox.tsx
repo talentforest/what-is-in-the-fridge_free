@@ -2,7 +2,7 @@ import { Food } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
 import { scaleH } from '../../../util';
 import { useState } from 'react';
-import { DEEP_YELLOW, GRAY } from '../../../constant/colors';
+import { BLUE, DEEP_YELLOW, GRAY } from '../../../constant/colors';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 
@@ -15,9 +15,9 @@ export default function CheckFoodBox({ food }: Props) {
 
   const checkedBoxStyle = checked
     ? 'border-amber-500 bg-amber-50'
-    : 'bg-white border-indigo-300';
+    : 'bg-white border-blue-300';
 
-  const checkedTextStyle = checked ? DEEP_YELLOW : GRAY;
+  const checkedTextStyle = checked ? 'text-amber-500' : 'text-blue-600';
 
   return (
     <TouchableOpacity
@@ -30,9 +30,9 @@ export default function CheckFoodBox({ food }: Props) {
         name={checked ? 'cart-arrow-down' : 'cart-outline'}
         type='MaterialCommunityIcons'
         size={16}
-        color={checkedTextStyle}
+        color={checked ? DEEP_YELLOW : BLUE}
       />
-      <Text fontSize={14} style={tw`text-[${checkedTextStyle}] py-1`}>
+      <Text fontSize={14} style={tw`${checkedTextStyle} py-1`}>
         {food.name}
       </Text>
     </TouchableOpacity>
