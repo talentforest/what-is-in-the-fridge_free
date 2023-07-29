@@ -6,6 +6,7 @@ import tw from 'twrnc';
 
 interface Props {
   title?: string;
+  bgColor?: string;
   children: ReactNode;
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
@@ -13,6 +14,7 @@ interface Props {
 
 export default function RNModal({
   title,
+  bgColor = 'bg-blue-50',
   children,
   modalVisible,
   setModalVisible,
@@ -27,9 +29,7 @@ export default function RNModal({
       style={tw`m-0 justify-end`}
     >
       <SafeAreaView style={tw`justify-end`}>
-        <View
-          style={tw`bg-indigo-100 p-4 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}
-        >
+        <View style={tw`${bgColor} p-4 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}>
           {title && (
             <Header
               title={title}

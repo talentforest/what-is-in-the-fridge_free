@@ -34,6 +34,7 @@ export default function FoodDetailModal({
   return (
     <RNModal
       title={editing ? '식료품 정보 수정' : '식료품 상세 정보'}
+      bgColor={editing ? 'bg-blue-50' : 'bg-white'}
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
@@ -51,7 +52,7 @@ export default function FoodDetailModal({
           formSteps={formSteps}
         />
       ) : (
-        <View style={tw`my-3 border-b border-slate-300`}>
+        <View style={tw`my-3`}>
           <InfoBox label='이름' info={food.name} />
           <InfoBox label='카테고리' info={editedFood.category} />
           <InfoBox label='구매날짜' info={editedFood.purchaseDate} />

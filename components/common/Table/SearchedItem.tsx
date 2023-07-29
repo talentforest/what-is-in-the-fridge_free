@@ -29,7 +29,7 @@ export default function SearchedItem({ setModalVisible, food }: Props) {
 
   return (
     <View
-      style={tw`gap-2 border-b border-slate-300 mx-3 flex-row items-center bg-white`}
+      style={tw`gap-2 border-b border-slate-300 mx-3 px-1 flex-row items-center`}
     >
       <Text style={tw`w-[35%] text-slate-700`}>{cutLetter(name, 6)}</Text>
       <Text style={tw`flex-1 text-slate-500`}>

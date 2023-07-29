@@ -45,18 +45,22 @@ export default function SearchFoodModal({
         <TextInputRoundedBox
           value={keyword}
           setValue={setKeyword}
-          iconName='search1'
+          iconName='search'
           placeholder='식료품의 이름을 작성해주세요.'
           onSubmitEditing={onSubmitEditing}
         />
 
         {/* 식료품 찾기 테이블 헤더 */}
         <View
-          style={tw`gap-2 border-b border-slate-400 mt-1 mx-3 py-3.5 flex-row items-center`}
+          style={tw`gap-2 border-b border-slate-400 mt-1 mx-3 px-1 py-3.5 flex-row items-center`}
         >
-          <Text style={tw`w-[35%] text-indigo-600`}>
-            식료품 | {!!keyword.length ? getSearchedFoods(keyword).length : 0}개
-          </Text>
+          <View style={tw`flex-row gap-2 w-[35%]`}>
+            <Text style={tw`text-indigo-600`}>식료품</Text>
+            <Text>|</Text>
+            <Text>
+              {!!keyword.length ? getSearchedFoods(keyword).length : 0}개
+            </Text>
+          </View>
           <Text style={tw`flex-1 text-indigo-600`}>위치</Text>
           <Text style={tw`text-indigo-600`}>이동</Text>
         </View>

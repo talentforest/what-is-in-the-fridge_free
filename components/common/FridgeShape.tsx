@@ -31,6 +31,12 @@ export default function FridgeShape() {
     return space.includes('냉동') ? 'blue' : 'yellow';
   };
 
+  const borderColorByRoute = (space: Space) => {
+    return routeFridgeSetting
+      ? `border-${spaceColor(space)}-500`
+      : 'border-slate-300';
+  };
+
   return (
     <View style={tw`flex-row flex-1`}>
       {['안쪽', '문쪽'].map((side) => (
@@ -43,8 +49,9 @@ export default function FridgeShape() {
               key={space}
               disabled={!routeFridgeSetting ? false : true}
               onPress={() => navigation.navigate('Compartments', { space })}
-              style={tw`justify-center bg-neutral-300 border-2 border-slate-300 
-              ${spaceHeight(space)} ${doorRadius(space)}`}
+              style={tw`justify-center bg-neutral-300 border-2  
+              ${spaceHeight(space)} ${doorRadius(space)} 
+              ${borderColorByRoute(space)}`}
             >
               {!routeFridgeSetting && (
                 <>
@@ -57,16 +64,20 @@ export default function FridgeShape() {
               )}
               {routeFridgeSetting && (
                 <View
-                  style={tw`border-4 absolute z-10 w-full h-full justify-center
-                    ${doorRadius(space)} border-${spaceColor(space)}-400`}
+                  style={tw`${doorRadius(space)} 
+                  absolute z-10 w-full h-full justify-center`}
                 >
+                  <View
+                    style={tw`absolute border w-full h-full opacity-20 
+                    bg-${spaceColor(space)}-400 ${doorRadius(space)}`}
+                  />
                   <Text
                     style={tw.style(
                       `text-center text-${spaceColor(space)}-600`,
                       FontGmarketSansBold
                     )}
                   >
-                    {space.slice(0, 3)}
+                    {space}
                   </Text>
                 </View>
               )}

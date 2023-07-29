@@ -10,7 +10,7 @@ interface Props {
 
 export default function HeaderBtn({ iconName, onPress }: Props) {
   return (
-    <TouchableOpacity onPress={onPress} style={tw`pr-4`}>
+    <TouchableOpacity onPress={onPress} style={tw`px-4 py-1`}>
       <Icon
         name={iconName}
         type={iconName === 'search' ? 'Ionicons' : 'MaterialCommunityIcons'}

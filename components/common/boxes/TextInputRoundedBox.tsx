@@ -1,14 +1,14 @@
 import { View } from 'react-native';
 import { scaleH } from '../../../util';
 import { TextInput, TouchableOpacity } from '../../native-component';
-import { LIGHT_GRAY } from '../../../constant/colors';
+import { GRAY, LIGHT_GRAY } from '../../../constant/colors';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
   value: string;
   setValue: (keyword: string) => void;
-  iconName: 'search1' | 'plus';
+  iconName: 'search' | 'plus';
   placeholder: string;
   onSubmitEditing: () => void;
 }
@@ -35,7 +35,12 @@ export default function TextInputRoundedBox({
         onSubmitEditing={onSubmitEditing}
       />
       <TouchableOpacity onPress={onSubmitEditing}>
-        <Icon type='AntDesign' name={iconName} size={22} color={LIGHT_GRAY} />
+        <Icon
+          type={iconName === 'search' ? 'Ionicons' : 'MaterialCommunityIcons'}
+          name={iconName}
+          size={22}
+          color={value.length === 0 ? LIGHT_GRAY : GRAY}
+        />
       </TouchableOpacity>
     </View>
   );

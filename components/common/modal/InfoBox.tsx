@@ -18,7 +18,9 @@ export default function InfoBox({ label, info, favorite }: Props) {
 
   return (
     <View
-      style={tw`items-center gap-2 p-2.5 py-4 flex-row border-t border-slate-300`}
+      style={tw`items-center gap-2 p-2.5 py-4 flex-row ${
+        label === '자주 먹는 식품인가요?' ? '' : 'border-b'
+      } border-slate-300`}
     >
       <Text style={tw`text-indigo-600`}>{label} : </Text>
 
