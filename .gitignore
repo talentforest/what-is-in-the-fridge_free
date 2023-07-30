@@ -2,6 +2,7 @@ node_modules/
 .expo/
 .idea/
 eas.json
+app.json
 dist/
 npm-debug.*
 *.jks
@@ -13,6 +14,7 @@ npm-debug.*
 web-build/
 .env/
 .environment/
+
 
 # macOS
 .DS_Store
