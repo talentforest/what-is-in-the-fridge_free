@@ -3,7 +3,7 @@ import AIcon from 'react-native-vector-icons/AntDesign';
 import IIcon from 'react-native-vector-icons/Ionicons';
 import FIcon from 'react-native-vector-icons/Feather';
 import { INDIGO } from '../../constant/colors';
-import { scaleFont } from '../../util';
+import { responsiveFontSize } from '../../util';
 import { Platform } from 'react-native';
 
 interface IconProps {
@@ -24,32 +24,16 @@ export default function Icon({
   return (
     <>
       {type === 'MaterialCommunityIcons' && (
-        <MIcon
-          name={name}
-          size={scaleFont(size) * PLATFORM_RATIO}
-          color={color}
-        />
+        <MIcon name={name} size={responsiveFontSize(size)} color={color} />
       )}
       {type === 'AntDesign' && (
-        <AIcon
-          name={name}
-          size={scaleFont(size) * PLATFORM_RATIO}
-          color={color}
-        />
+        <AIcon name={name} size={responsiveFontSize(size)} color={color} />
       )}
       {type === 'Ionicons' && (
-        <IIcon
-          name={name}
-          size={scaleFont(size) * PLATFORM_RATIO}
-          color={color}
-        />
+        <IIcon name={name} size={responsiveFontSize(size)} color={color} />
       )}
       {type === 'Feather' && (
-        <FIcon
-          name={name}
-          size={scaleFont(size) * PLATFORM_RATIO}
-          color={color}
-        />
+        <FIcon name={name} size={responsiveFontSize(size)} color={color} />
       )}
     </>
   );

@@ -7,7 +7,7 @@ import {
 import { FontGmarketSansRegular } from '../../constant/fonts';
 import { TouchableOpacity } from './TouchableOpacity';
 import { LIGHT_GRAY } from '../../constant/colors';
-import { responsiveFontSize, scaleFont, scaleH } from '../../util';
+import { responsiveFontSize, scaleH } from '../../util';
 import tw from 'twrnc';
 
 interface Props extends TextInputProps {

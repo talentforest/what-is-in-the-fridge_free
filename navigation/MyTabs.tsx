@@ -10,7 +10,7 @@ import {
   TAB_BG_COLOR,
 } from '../constant/colors';
 import { Dimensions, Platform } from 'react-native';
-import { scaleFont } from '../util';
+import { responsiveFontSize } from '../util';
 import Home from '../screens/Home';
 import Setting from '../screens/Setting';
 import ShoppingList from '../screens/ShoppingList';
@@ -26,7 +26,7 @@ export type RootTabParamList = {
 
 const Tab = createBottomTabNavigator();
 const DEVICE_HEIGHT = Dimensions.get('screen').height;
-const PLATFORM_TAB_HEIGHT = Platform.OS === 'android' ? 70 : 100;
+const PLATFORM_TAB_HEIGHT = Platform.OS === 'android' ? 65 : 100;
 
 const tabBarOptions = {
   tabBarStyle: {
@@ -45,7 +45,7 @@ const tabBarOptions = {
   },
   tabBarLabelStyle: {
     flex: 1,
-    fontSize: scaleFont(11),
+    fontSize: responsiveFontSize(10),
     ...FontGmarketSansRegular,
   },
 };
@@ -58,7 +58,7 @@ const headerOptions: BottomTabNavigationOptions = {
     backgroundColor: HEADER_BGCOLOR,
   },
   headerTitleStyle: {
-    fontSize: scaleFont(17),
+    fontSize: responsiveFontSize(18),
     ...FontGmarketSansBold,
   },
   headerTitleAlign: 'left',
