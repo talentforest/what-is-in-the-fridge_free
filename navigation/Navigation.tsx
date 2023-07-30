@@ -5,7 +5,7 @@ import {
 import { NavigationProp } from '@react-navigation/native';
 import { FontGmarketSansBold } from '../constant/fonts';
 import { DEEP_GRAY, HEADER_BGCOLOR } from '../constant/colors';
-import { scaleFont } from '../util';
+import { responsiveFontSize } from '../util';
 import MyTabs, { RootTabParamList } from './MyTabs';
 import React from 'react';
 import Compartments from '../screens/Compartments';
@@ -34,7 +34,7 @@ const options: NativeStackNavigationOptions = {
   headerShadowVisible: false,
   headerStyle: { backgroundColor: HEADER_BGCOLOR },
   headerTitleStyle: {
-    fontSize: scaleFont(16),
+    fontSize: responsiveFontSize(17),
     ...FontGmarketSansBold,
   },
   headerTitleAlign: 'center',

@@ -1,7 +1,7 @@
 import { Text as RNText, TextProps, TextStyle } from 'react-native';
 import { FontGmarketSansRegular } from '../../constant/fonts';
+import { responsiveFontSize } from '../../util';
 import tw from 'twrnc';
-import { responsiveFontSize, scaleFont } from '../../util';
 
 interface Props extends TextProps {
   style?: TextStyle;
