@@ -12,6 +12,11 @@ import TableHeader from '../components/common/table/TableHeader';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
 import tw from 'twrnc';
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+} from 'react-native-google-mobile-ads';
 
 export default function ExpiredFoods() {
   const [tab, setTab] = useState<SpaceType>('냉장실');
@@ -80,6 +85,13 @@ export default function ExpiredFoods() {
           />
         </TableContainer>
       </Container>
+      <BannerAd
+        unitId={TestIds.BANNER}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly: true,
+        }}
+      />
     </SafeBottomAreaView>
   );
 }
