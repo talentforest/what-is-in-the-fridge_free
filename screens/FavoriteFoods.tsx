@@ -10,6 +10,11 @@ import TableContainer from '../components/common/table/TableContainer';
 import TableHeader from '../components/common/table/TableHeader';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+} from 'react-native-google-mobile-ads';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
@@ -84,6 +89,13 @@ export default function FavoriteFoods() {
           />
         </TableContainer>
       </Container>
+      <BannerAd
+        unitId={TestIds.BANNER}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly: true,
+        }}
+      />
     </SafeBottomAreaView>
   );
 }

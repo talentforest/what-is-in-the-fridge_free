@@ -11,6 +11,11 @@ import { SafeBottomAreaView } from '../components/native-component';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import tw from 'twrnc';
 import Container from '../components/common/layout/Container';
+import {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+} from 'react-native-google-mobile-ads';
 
 interface RouteParams {
   route: RouteProp<RootStackParamList, 'Compartments'>;
@@ -48,6 +53,13 @@ export default function Compartments({ route }: RouteParams) {
           ))}
         </View>
       </Container>
+      <BannerAd
+        unitId={TestIds.BANNER}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+        requestOptions={{
+          requestNonPersonalizedAdsOnly: true,
+        }}
+      />
     </SafeBottomAreaView>
   );
 }
