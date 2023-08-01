@@ -9,6 +9,7 @@ import TableList from './TableList';
 import TableItem from './TableItem';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
+import IndicatorExist from '../IndicatorExist';
 
 interface Props {
   existListItem: boolean;
@@ -28,12 +29,7 @@ export default function TableBody({
   addToFridgePress,
 }: Props) {
   const route = useRoute();
-
   const { checkExistFood } = useCheckFood();
-
-  const existFoodColor = (item: Food) => {
-    return !!checkExistFood(item) ? 'text-indigo-500' : 'text-slate-500';
-  };
 
   return (
     <>
@@ -57,9 +53,7 @@ export default function TableBody({
 
                 {/* 자주 먹는 식료품 정보 */}
                 {route.name === 'FavoriteFoods' && (
-                  <Text style={tw`${existFoodColor(item)}`}>
-                    {!!checkExistFood(item) ? '있음' : '없음'}
-                  </Text>
+                  <IndicatorExist food={item} />
                 )}
 
                 {/* 장보기 식료품 추가 버튼 */}

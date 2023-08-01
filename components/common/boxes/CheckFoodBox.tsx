@@ -24,17 +24,17 @@ export default function CheckFoodBox({ food }: Props) {
       key={food.id}
       onPress={() => setChecked((prev) => !prev)}
       style={tw`${checkedBoxStyle} flex-row items-center gap-0.5 rounded-lg border-2 
-      px-[${scaleH(10)}px] py-[${scaleH(5)}px]`}
+      pr-[${scaleH(7)}px] pl-[${scaleH(10)}px] py-[${scaleH(5)}px]`}
     >
-      <Icon
-        name={checked ? 'cart-arrow-down' : 'cart-outline'}
-        type='MaterialCommunityIcons'
-        size={16}
-        color={checked ? DEEP_YELLOW : BLUE}
-      />
       <Text fontSize={14} style={tw`${checkedTextStyle} py-1`}>
         {food.name}
       </Text>
+      <Icon
+        name={checked ? 'check-circle' : 'circle-outline'}
+        type='MaterialCommunityIcons'
+        size={14}
+        color={checked ? DEEP_YELLOW : BLUE}
+      />
     </TouchableOpacity>
   );
 }
