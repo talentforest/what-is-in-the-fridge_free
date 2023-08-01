@@ -9,8 +9,8 @@ import useExpiredFood from '../hooks/useExpiredFoods';
 import FridgeInfo from '../components/screen-component/home/FridgeInfo';
 import LogoTitle from '../components/screen-component/home/LogoTitle';
 import useImageLoad from '../hooks/useImageLoad';
-import tw from 'twrnc';
 import Container from '../components/common/layout/Container';
+import tw from 'twrnc';
 
 const Home = () => {
   const { allExpiredFoods } = useExpiredFood();
@@ -36,6 +36,18 @@ const Home = () => {
         <LogoTitle />
 
         {assets && <FridgeInfo assets={assets} />}
+
+        <EntranceBox
+          foods={allExpiredFoods}
+          info={{
+            title: '유통기한 주의 식료품',
+            desc: '유통기한 주의 식료품을 쉽게 관리해보세요.',
+            iconName: 'alert-circle',
+            bgColor: 'bg-slate-600',
+            route: 'ExpiredFoods',
+          }}
+        />
+
         <EntranceBox
           foods={shoppingList}
           info={{
@@ -46,18 +58,9 @@ const Home = () => {
             route: 'ShoppingList',
           }}
         />
+
         <EntranceBox
-          foods={allExpiredFoods.slice(0, 8)}
-          info={{
-            title: '유통기한 주의 식료품',
-            desc: '유통기한 주의 식료품을 쉽게 관리해보세요.',
-            iconName: 'alert-circle',
-            bgColor: 'bg-slate-600',
-            route: 'ExpiredFoods',
-          }}
-        />
-        <EntranceBox
-          foods={favoriteFoods.slice(0, 8)}
+          foods={favoriteFoods}
           info={{
             title: '자주 먹는 식료품',
             desc: '자주 먹는 식료품은 장보기 목록에 빠르게 추가하세요.',
