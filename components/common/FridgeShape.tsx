@@ -6,7 +6,7 @@ import { getCompartments, scaleH } from '../../util';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { NavigateProp } from '../../navigation/Navigation';
-import CompartmentBox from '../screen-component/setting/CompartmentBox';
+import CompartmentBox from '../screen-component/fridge-setting/CompartmentBox';
 import FridgeSpace from '../screen-component/my-fridge/FridgeSpace';
 import tw from 'twrnc';
 

@@ -11,7 +11,7 @@ interface Props {
 
 export default function FormItemContainer({ label, children }: Props) {
   return (
-    <View style={tw`justify-start mb-[${scaleH(26)}]`}>
+    <View style={tw`justify-start flex-1`}>
       <Text style={tw`text-indigo-500 mb-1`}>{label}</Text>
       {children}
     </View>

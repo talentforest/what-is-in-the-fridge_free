@@ -12,7 +12,6 @@ import {
 import { Dimensions, Platform } from 'react-native';
 import { responsiveFontSize } from '../util';
 import Home from '../screens/Home';
-import Setting from '../screens/Setting';
 import ShoppingList from '../screens/ShoppingList';
 import MyFridge from '../screens/MyFridge';
 import Icon from '../components/native-component/Icon';
@@ -20,7 +19,6 @@ import Icon from '../components/native-component/Icon';
 export type RootTabParamList = {
   Home: undefined;
   MyFridge: undefined;
-  Setting: undefined;
   ShoppingList: undefined;
 };
 
@@ -77,18 +75,6 @@ export default function MyTabs() {
         }}
       />
       <Tab.Screen
-        name='ShoppingList'
-        component={ShoppingList}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <TabIcon name='format-list-bulleted' color={color} />
-          ),
-          tabBarLabel: '장보기 목록',
-          headerTitle: '장보기 목록',
-          ...headerOptions,
-        }}
-      />
-      <Tab.Screen
         name='MyFridge'
         component={MyFridge}
         options={{
@@ -99,19 +85,15 @@ export default function MyTabs() {
         }}
       />
       <Tab.Screen
-        name='Setting'
-        component={Setting}
+        name='ShoppingList'
+        component={ShoppingList}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabIcon name='dots-horizontal' color={color} />
+            <TabIcon name='format-list-bulleted' color={color} />
           ),
-          tabBarLabel: '더보기',
-          headerTitle: '설정',
+          tabBarLabel: '장보기 목록',
+          headerTitle: '장보기 목록',
           ...headerOptions,
-          headerTitleAlign: 'center',
-          headerStyle: {
-            backgroundColor: '#fff',
-          },
         }}
       />
     </Tab.Navigator>

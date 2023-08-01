@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { View } from 'react-native';
+import { NavigateProp } from '../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';
 import FridgeShape from '../components/common/FridgeShape';
 import SearchFoodModal from '../components/screen-component/modal/SearchFoodModal';
@@ -9,16 +10,22 @@ import tw from 'twrnc';
 import useToggleModal from '../hooks/useToggleModal';
 
 export default function MyFridge() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigateProp>();
   const { modalVisible, setModalVisible } = useToggleModal();
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <HeaderBtn
-          iconName={'search'}
-          onPress={() => setModalVisible((prev) => !prev)}
-        />
+        <View style={tw`flex-row pr-1.5`}>
+          <HeaderBtn
+            iconName={'search'}
+            onPress={() => setModalVisible((prev) => !prev)}
+          />
+          <HeaderBtn
+            iconName={'settings-sharp'}
+            onPress={() => navigation.navigate('FridgeSetting')}
+          />
+        </View>
       ),
     });
   }, []);

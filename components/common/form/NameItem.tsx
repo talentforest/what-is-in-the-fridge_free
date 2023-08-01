@@ -16,7 +16,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
 
   return (
     <TextInput
-      style={tw`h-[${scaleH(44)}px] rounded-lg ${editableStyle}`}
+      style={tw`h-[${scaleH(44)}px] border rounded-lg ${editableStyle}`}
       editable={editable}
       onChangeText={onChangeText}
       value={name}

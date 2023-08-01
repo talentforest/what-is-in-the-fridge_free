@@ -93,13 +93,13 @@ export default function Form({
         <Animated.View
           style={{
             width: FORM_WIDTH,
-            height: scaleH(320),
+            height: scaleH(300),
             transform: [{ translateX: stepTranslateX }],
           }}
           {...panResponder.panHandlers}
         >
-          <View style={tw`flex-row`}>
-            <View style={tw`w-full px-1`}>
+          <View style={tw`flex-row flex-1`}>
+            <View style={tw`w-full px-1 gap-2`}>
               {items.includes('이름') && (
                 <FormItemContainer label='이름'>
                   <NameItem
@@ -107,11 +107,11 @@ export default function Form({
                     changeInfo={changeInfo}
                     editable={editableName || false}
                   />
-                  {!!!editableName && (
+                  {/* {!!!editableName && (
                     <Text style={tw`pt-2 text-amber-600`} fontSize={12}>
                       이름은 변경할 수 없습니다.
                     </Text>
-                  )}
+                  )} */}
                 </FormItemContainer>
               )}
 
