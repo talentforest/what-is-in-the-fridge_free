@@ -23,7 +23,7 @@ export default function TextInputRoundedBox({
   return (
     <View
       style={tw`w-full mt-3 border-2 border-slate-300 rounded-full items-center flex-row bg-white
-      pl-[${scaleH(10)}] pr-[${scaleH(12)}] `}
+      pl-[${scaleH(10)}px] pr-[${scaleH(12)}px]`}
     >
       <TextInput
         value={value}

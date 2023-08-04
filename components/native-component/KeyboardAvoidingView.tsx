@@ -4,10 +4,10 @@ import {
   Platform,
   KeyboardAvoidingView as RNKeyboardAvoidingView,
   StatusBar,
-  View,
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 import tw from 'twrnc';
+import { scaleH } from '../../util';
 
 interface Props {
   children: ReactNode;
@@ -20,7 +20,7 @@ export function KeyboardAvoidingView({ children }: Props) {
     ? getStatusBarHeight(true)
     : StatusBar.currentHeight;
 
-  const relativePaddingAndroid = Dimensions.get('screen').height / 8.2;
+  const relativePaddingAndroid = Dimensions.get('screen').height / 7.5;
 
   return (
     <>
@@ -34,9 +34,9 @@ export function KeyboardAvoidingView({ children }: Props) {
         </RNKeyboardAvoidingView>
       ) : (
         <RNKeyboardAvoidingView
-          behavior='padding'
-          style={tw`flex-1 bg-blue-50`}
-          keyboardVerticalOffset={-relativePaddingAndroid}
+          behavior='height'
+          style={tw`flex-1 bg-blue-50 border`}
+          keyboardVerticalOffset={-200}
         >
           {children}
         </RNKeyboardAvoidingView>

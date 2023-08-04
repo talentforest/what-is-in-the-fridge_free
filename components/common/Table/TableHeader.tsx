@@ -11,7 +11,7 @@ interface Props {
   listLength: number;
   entireChecked: boolean;
   onEntirePress: () => void;
-  columnTitle: '추가' | '유통기한' | Filter;
+  columnTitle: '추가' | '유통기한순' | Filter;
 }
 
 export default function TableHeader({
@@ -24,7 +24,7 @@ export default function TableHeader({
   return (
     <View
       style={tw`h-[${scaleH(46)}px]
-      -mx-4 px-4 gap-2 border-b-2 border-slate-300 flex-row items-center justify-between`}
+      -mx-4 px-4 gap-1 border-b-2 border-slate-300 flex-row items-center justify-between`}
     >
       <TouchableOpacity onPress={onEntirePress}>
         <CheckBox
@@ -32,15 +32,16 @@ export default function TableHeader({
           activeColor={entireChecked ? DEEP_INDIGO : INACTIVE_COLOR}
         />
       </TouchableOpacity>
-      <View style={tw`flex-row flex-1 gap-2.5 items-center`}>
-        <Text style={tw`text-slate-600`}>{title}</Text>
-        <Text fontSize={12} style={tw`text-slate-600`}>
-          |
-        </Text>
-        <Text style={tw`text-slate-600`}>{listLength}개</Text>
+      <View style={tw`flex-row flex-1 items-end gap-1.5`}>
+        <Text style={tw`text-slate-800`}>{title}</Text>
+        {listLength !== 0 && (
+          <Text style={tw`text-slate-500`} fontSize={12}>
+            {listLength}개
+          </Text>
+        )}
       </View>
       <View style={tw`justify-end flex-row items-center gap-0.5 rounded-full`}>
-        <Text style={tw`text-slate-600`}>{columnTitle}</Text>
+        <Text style={tw`text-slate-500`}>{columnTitle}</Text>
       </View>
     </View>
   );

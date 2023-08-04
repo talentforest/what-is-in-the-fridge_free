@@ -1,10 +1,11 @@
 import { ReactNode } from 'react';
-import { Dimensions, SafeAreaView, View } from 'react-native';
+import { Dimensions, SafeAreaView, StyleProp, View } from 'react-native';
 import Modal from 'react-native-modal';
 import Header from './Header';
 import tw from 'twrnc';
 
 interface Props {
+  style?: StyleProp<any>;
   title?: string;
   bgColor?: string;
   children: ReactNode;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export default function RNModal({
+  style,
   title,
   bgColor = 'bg-blue-50',
   children,
@@ -21,12 +23,14 @@ export default function RNModal({
 }: Props) {
   const MODAL_HEIGHT = Dimensions.get('screen').height * 0.85;
 
+  const closeModal = () => setModalVisible(false);
+
   return (
     <Modal
       statusBarTranslucent={true}
-      onBackdropPress={() => setModalVisible(false)}
+      onBackdropPress={closeModal}
       isVisible={modalVisible}
-      style={tw`m-0 justify-end`}
+      style={tw.style(`m-0 justify-end`, style)}
     >
       <SafeAreaView style={tw`justify-end`}>
         <View style={tw`${bgColor} p-4 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}>

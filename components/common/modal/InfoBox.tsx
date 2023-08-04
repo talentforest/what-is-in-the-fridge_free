@@ -18,14 +18,14 @@ export default function InfoBox({ label, info, favorite }: Props) {
 
   return (
     <View
-      style={tw`items-center gap-2 p-2.5 py-4 flex-row ${
-        label === '자주 먹는 식품인가요?' ? '' : 'border-b'
+      style={tw`items-center gap-1 p-2.5 py-4 flex-row ${
+        label === '자주 먹는 식품' ? '' : 'border-b'
       } border-slate-300`}
     >
-      <Text style={tw`text-indigo-600`}>{label} : </Text>
+      <Text style={tw`text-indigo-600 w-[30%]`}>{label} :</Text>
 
       {info && (
-        <View style={tw`gap-3 flex-row items-center flex-1`}>
+        <View style={tw`gap-1 flex-row items-end flex-1`}>
           <Text style={tw`text-slate-800`}>
             {dateItem ? getFormattedDate(info, 'YYYY년 MM월 DD일') : info}
           </Text>
@@ -34,7 +34,7 @@ export default function InfoBox({ label, info, favorite }: Props) {
       )}
 
       {!info && (
-        <View style={tw`items-center flex-row gap-0.5`}>
+        <View style={tw`gap-1 flex-row items-end flex-1`}>
           <Icon
             type='AntDesign'
             name={favorite ? 'checksquareo' : 'closesquareo'}

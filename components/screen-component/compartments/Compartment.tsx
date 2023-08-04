@@ -29,19 +29,16 @@ export default function Compartment({ foodLocation }: Props) {
       >
         {/* 칸 정보 */}
         <View style={tw`flex-row justify-between items-center pl-3 pr-1.5`}>
-          <View style={tw`flex-row gap-2 items-center`}>
-            <Text style={tw`text-slate-500`}>{compartmentNum}칸</Text>
-            <Text>|</Text>
-            <Text style={tw`text-slate-500`}>
-              식료품 {getFoodList(space, compartmentNum).length}개
-            </Text>
-          </View>
+          <Text style={tw`text-slate-500`}>
+            {compartmentNum}칸 | 식료품{' '}
+            {getFoodList(space, compartmentNum).length}개
+          </Text>
           <AddFoodBtn foodLocation={foodLocation} />
         </View>
         {/* 식료품 리스트 */}
         <ScrollView
-          contentContainerStyle={tw`flex-row px-1 pb-1 flex-wrap gap-1 items-center`}
-          style={tw`m-1 flex-1`}
+          contentContainerStyle={tw`flex-row px-1 pb-2 flex-wrap gap-1 items-center`}
+          style={tw`p-1 pt-0 flex-1`}
           showsVerticalScrollIndicator={false}
         >
           {getFoodList(space, compartmentNum).map((food: Food) => (
