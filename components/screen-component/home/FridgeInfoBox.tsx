@@ -15,7 +15,7 @@ export default function FridgeInfoBox({ asset, name, foodLength }: Props) {
   return (
     <Box bgColor='bg-amber-300'>
       <Text
-        fontSize={16}
+        fontSize={17}
         style={tw.style(`text-blue-600`, FontGmarketSansBold)}
       >
         {name}

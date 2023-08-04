@@ -17,7 +17,6 @@
     "dayjs": "^1.11.7",
     "expo": "~48.0.15",
     "expo-asset": "~8.9.1",
-    "expo-dev-client": "~2.2.1",
     "expo-device": "~5.2.1",
     "expo-font": "~11.1.1",
     "expo-splash-screen": "^0.18.2",

@@ -1,5 +1,5 @@
 import { FoodLocation } from '../../../constant/fridgeInfo';
-import { FormStep } from '../../../constant/formInfo';
+import { FormLabel, FormStep, foodForm } from '../../../constant/formInfo';
 import RNModal from '../../common/modal/Modal';
 import useAddFood from '../../../hooks/useAddFood';
 import Form from '../../common/form/Form';
@@ -29,13 +29,7 @@ export default function AddFoodModal({
       {foodLocation && (
         <Form
           editableName={true}
-          items={[
-            '이름',
-            '카테고리',
-            '구매날짜',
-            '유통기한',
-            '자주 먹는 식품인가요?',
-          ]}
+          items={foodForm as FormLabel[]}
           food={newFood}
           changeInfo={addFoodInfo}
           formSteps={formSteps}

@@ -21,6 +21,7 @@ export default function FoodCategoryModal({
 }: Props) {
   return (
     <RNModal
+      style='justify-center mx-4'
       bgColor='bg-white'
       modalVisible={categoryOpen}
       setModalVisible={setCategoryOpen}

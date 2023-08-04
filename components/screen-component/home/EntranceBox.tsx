@@ -12,6 +12,7 @@ import MoreOpenBtn from '../../common/buttons/MoreOpenBtn';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 import SeeMoreBtn from '../../common/buttons/SeeMoreBtn';
+import { scaleH } from '../../../util';
 
 export type EntranceTitle =
   | '유통기한 주의 식료품'
@@ -42,10 +43,10 @@ export default function EntranceBox({ info, foods }: Props) {
   return (
     <Box bgColor={bgColor}>
       <Title title={title} iconName={iconName} />
-      <Text style={tw`text-white mt-3`}>{desc}</Text>
+      <Text style={tw`text-white mt-[${scaleH(6)}px]`}>{desc}</Text>
 
       {foods.length !== 0 ? (
-        <View style={tw`flex-1 mt-[${16}px] mb-[${20}px]`}>
+        <View style={tw`flex-1 mt-[${scaleH(14)}px] mb-[${scaleH(16)}px]`}>
           <View style={tw`flex-row gap-1.5 flex-wrap items-center`}>
             {foldedFoods.map((food) =>
               title === '장봐야할 식료품' ? (

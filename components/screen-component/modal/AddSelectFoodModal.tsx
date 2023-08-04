@@ -1,7 +1,10 @@
-import { useRoute } from '@react-navigation/native';
-import { FormStep } from '../../../constant/formInfo';
-import RNModal from '../../common/modal/Modal';
+import {
+  FormLabel,
+  FormStep,
+  shoppingListForm,
+} from '../../../constant/formInfo';
 import Form from '../../common/form/Form';
+import RNModal from '../../common/modal/Modal';
 import useAddSelectFood from '../../../hooks/useAddSelectFood';
 import SubmitBtn from '../../common/form/SubmitBtn';
 
@@ -17,7 +20,6 @@ export default function AddSelectFoodModal({
   formSteps,
 }: Props) {
   const { selectedFood, onChange, onSubmit } = useAddSelectFood();
-  const route = useRoute();
 
   return (
     <RNModal
@@ -27,14 +29,7 @@ export default function AddSelectFoodModal({
     >
       <Form
         editableName={false}
-        items={[
-          route.name !== 'FavoriteFoods' && '이름',
-          '카테고리',
-          '냉장고 위치 선택',
-          '구매날짜',
-          '유통기한',
-          route.name !== 'FavoriteFoods' && '자주 먹는 식품인가요?',
-        ]}
+        items={shoppingListForm as FormLabel[]}
         food={selectedFood}
         changeInfo={onChange}
         formSteps={formSteps}

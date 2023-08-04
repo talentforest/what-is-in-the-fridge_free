@@ -13,6 +13,7 @@ import FavoriteItem from './FavoriteItem';
 import StepIndicator from './StepIndicator';
 import ArrowBtn from '../buttons/ArrowBtn';
 import tw from 'twrnc';
+import FormSectionContainer from './FormSectionContainer';
 
 interface Props {
   items: FormLabel[];
@@ -89,7 +90,7 @@ export default function Form({
 
   return (
     <View style={tw`mt-[${scaleH(14)}px]`}>
-      <View style={tw`overflow-hidden`}>
+      <View style={tw`overflow-hidden mb-4`}>
         <Animated.View
           style={{
             width: FORM_WIDTH,
@@ -99,22 +100,21 @@ export default function Form({
           {...panResponder.panHandlers}
         >
           <View style={tw`flex-row flex-1`}>
-            <View style={tw`w-full px-1 gap-2`}>
-              {items.includes('이름') && (
+            <FormSectionContainer>
+              {items.includes('식료품 이름') && (
                 <FormItemContainer label='이름'>
                   <NameItem
                     name={food.name}
                     changeInfo={changeInfo}
                     editable={editableName || false}
                   />
-                  {/* {!!!editableName && (
+                  {!!!editableName && (
                     <Text style={tw`pt-2 text-amber-600`} fontSize={12}>
                       이름은 변경할 수 없습니다.
                     </Text>
-                  )} */}
+                  )}
                 </FormItemContainer>
               )}
-
               {items.includes('카테고리') && (
                 <FormItemContainer label='카테고리'>
                   <CategoryItem
@@ -123,23 +123,17 @@ export default function Form({
                   />
                 </FormItemContainer>
               )}
-              {items.includes('자주 먹는 식품인가요?') && (
-                <FormItemContainer label='자주 먹는 식품인가요?'>
+              {items.includes('자주 먹는 식품') && (
+                <FormItemContainer label='자주 먹는 식품'>
                   <FavoriteItem
                     favorite={food.favorite}
                     changeInfo={changeInfo}
                   />
                 </FormItemContainer>
               )}
-            </View>
-            {items.includes('냉장고 위치 선택') && (
-              <View style={tw`w-full px-1`}>
-                <FormItemContainer label='냉장고 위치 선택'>
-                  <SpaceItem food={food} changeInfo={changeInfo} />
-                </FormItemContainer>
-              </View>
-            )}
-            <View style={tw`w-full px-1`}>
+            </FormSectionContainer>
+
+            <FormSectionContainer>
               {items.includes('구매날짜') && (
                 <FormItemContainer label='구매날짜'>
                   <DateItem date={food.purchaseDate} changeInfo={changeInfo} />
@@ -154,7 +148,15 @@ export default function Form({
                   />
                 </FormItemContainer>
               )}
-            </View>
+            </FormSectionContainer>
+
+            {items.includes('냉장고 위치 선택') && (
+              <FormSectionContainer>
+                <FormItemContainer label='냉장고 위치 선택'>
+                  <SpaceItem food={food} changeInfo={changeInfo} />
+                </FormItemContainer>
+              </FormSectionContainer>
+            )}
           </View>
         </Animated.View>
       </View>

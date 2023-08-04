@@ -10,11 +10,11 @@ import TableContainer from '../components/common/table/TableContainer';
 import TableHeader from '../components/common/table/TableHeader';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
-import {
-  BannerAd,
-  BannerAdSize,
-  TestIds,
-} from 'react-native-google-mobile-ads';
+// import {
+//   BannerAd,
+//   BannerAdSize,
+//   TestIds,
+// } from 'react-native-google-mobile-ads';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
@@ -66,10 +66,12 @@ export default function FavoriteFoods() {
           />
 
           {/* 필터 */}
-          <TableFilters
-            currentFilter={currentFilter}
-            changeFilter={changeFilter}
-          />
+          {favoriteFoods.length !== 0 && (
+            <TableFilters
+              currentFilter={currentFilter}
+              changeFilter={changeFilter}
+            />
+          )}
 
           {/* 자주 먹는 식료품 목록 */}
           <TableBody
@@ -77,7 +79,7 @@ export default function FavoriteFoods() {
             list={getTableList(currentFilter)}
             onCheckPress={onCheckPress}
             existInList={existInList}
-            noneItemNoti='자주 먹는 식료품이 아직 없습니다.'
+            noneItemNoti='자주 먹는 식료품이 아직 없습니다.???'
           />
 
           {/* 식료품 선택 개수와 버튼 */}
@@ -89,13 +91,13 @@ export default function FavoriteFoods() {
           />
         </TableContainer>
       </Container>
-      <BannerAd
+      {/* <BannerAd
         unitId={TestIds.BANNER}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
         requestOptions={{
           requestNonPersonalizedAdsOnly: true,
         }}
-      />
+      /> */}
     </SafeBottomAreaView>
   );
 }
