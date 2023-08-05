@@ -1,11 +1,13 @@
 import { useFonts } from 'expo-font';
 import { fonts } from '../constant/fonts';
 import { SafeBottomAreaView } from '../components/native-component';
-import { Alert } from 'react-native';
-import { addItemsToShoppingList } from '../redux/slice/shoppingList';
+import { useSelector } from '../redux/hook';
 import { useDispatch } from 'react-redux';
+import { Food } from '../constant/foods';
+import { setAllFoods } from '../redux/slice/allFoodsSlice';
+import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 
-import useDeleteTableItem from '../hooks/useDeleteTableItem';
+import useHandleTableItem from '../hooks/useHandleTableItem';
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useTableItemFilter, {
   FavoriteFoodsFilter,
@@ -24,6 +26,7 @@ import TableFooter from '../components/common/table/TableFooter';
 // } from 'react-native-google-mobile-ads';
 
 export default function FavoriteFoods() {
+  const { allFoods } = useSelector((state) => state.allFoods);
   const [fontsLoaded] = useFonts(fonts);
   const dispatch = useDispatch();
 
@@ -42,23 +45,30 @@ export default function FavoriteFoods() {
     onEntireBoxPress,
   } = useHandleCheckList();
 
-  const { onDeletePress } = useDeleteTableItem(checkedList, setCheckedList);
-
-  const onAddAlert = () => {
-    const foodList = checkedList.map((food) => food.name).join(', ');
-    const onPress = () => {
-      setCheckedList([]);
-    };
-    Alert.alert('장보기 목록 추가', `${foodList} 식료품이 추가되었습니다.`, [
-      { text: '확인', onPress, style: 'default' },
-    ]);
+  const changeFavStateInList = () => {
+    return allFoods.map((food) => {
+      const isFavoriteFood = checkedList.some(
+        (item) => item.name === food.name
+      );
+      return isFavoriteFood ? { ...food, favorite: false } : food;
+    });
   };
 
-  const addShoppingListPress = () => {
-    if (checkedList.length === 0) return;
-    dispatch(addItemsToShoppingList(checkedList));
-    onAddAlert();
+  const deleteAlertGuide = {
+    title: '자주 먹는 식료품 해제',
+    desc: `총 ${checkedList.length}개의 식료품을 자주 먹는 식료품에서 해제하시겠습니까?`,
+    defaultBtnText: '해제',
+    onPress: (filteredArr: Food[]) => {
+      dispatch(setAllFoods(changeFavStateInList()));
+      dispatch(setFavoriteList(filteredArr));
+    },
   };
+
+  const { onDeletePress, onAddShoppingListPress } = useHandleTableItem({
+    deleteAlertGuide,
+    checkedList,
+    setCheckedList,
+  });
 
   if (!fontsLoaded) return null;
 
@@ -93,8 +103,8 @@ export default function FavoriteFoods() {
           {/* 식료품 선택 개수와 버튼 */}
           <TableFooter
             list={checkedList}
-            onAddPress={addShoppingListPress}
-            onPress={() => onDeletePress(favoriteTableList)}
+            onAddPress={onAddShoppingListPress}
+            onDeletePress={() => onDeletePress(favoriteTableList)}
             buttons={['delete-favorite', 'add-shopping-list']}
           />
         </TableContainer>

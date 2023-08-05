@@ -15,14 +15,14 @@ type Button = 'delete-favorite' | 'add-shopping-list' | 'delete';
 interface Props {
   list: Food[];
   onAddPress?: () => void;
-  onPress: () => void;
+  onDeletePress: () => void;
   buttons: Button[];
 }
 
 export default function TableFooter({
   list,
   onAddPress,
-  onPress,
+  onDeletePress,
   buttons,
 }: Props) {
   return (
@@ -53,7 +53,7 @@ export default function TableFooter({
         {/* 자주먹는 식품 해제 버튼 */}
         {buttons.includes('delete-favorite') && (
           <TouchableOpacity
-            onPress={onPress}
+            onPress={onDeletePress}
             disabled={!list.length}
             style={tw`p-1.5`}
           >
@@ -69,7 +69,7 @@ export default function TableFooter({
         {/* 삭제 버튼 */}
         {buttons.includes('delete') && (
           <TouchableOpacity
-            onPress={onPress}
+            onPress={onDeletePress}
             disabled={!list.length}
             style={tw`p-1.5`}
           >

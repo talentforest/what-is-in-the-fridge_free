@@ -1,8 +1,11 @@
 import { SafeBottomAreaView } from '../components/native-component';
+import { useDispatch } from '../redux/hook';
+import { setAllFoods } from '../redux/slice/allFoodsSlice';
+import { Food } from '../constant/foods';
 
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useTableItemFilter from '../hooks/useTableItemFilter';
-import useDeleteTableItem from '../hooks/useDeleteTableItem';
+import useHandleTableItem from '../hooks/useHandleTableItem';
 
 import Container from '../components/common/layout/Container';
 import ExpiredState from '../components/screen-component/expired-foods/ExpiredState';
@@ -18,6 +21,8 @@ import TableFilters from '../components/common/table/TableFilters';
 // } from 'react-native-google-mobile-ads';
 
 export default function ExpiredFoods() {
+  const dispatch = useDispatch();
+
   const {
     currentFilter,
     changeFilter,
@@ -27,13 +32,22 @@ export default function ExpiredFoods() {
 
   const {
     checkedList,
-    setCheckedList,
     onEntireBoxPress,
     onCheckBoxPress,
-    isCheckedItem,
+    isCheckedItem, //
   } = useHandleCheckList();
 
-  const { onDeletePress } = useDeleteTableItem(checkedList, setCheckedList);
+  const deleteAlertGuide = {
+    title: '유통기한 주의 식료품 삭제',
+    desc: `총 ${checkedList.length}개의 식료품을 냉장고에서 삭제하시겠습니까?`,
+    defaultBtnText: '삭제',
+    onPress: (filteredArr: Food[]) => dispatch(setAllFoods(filteredArr)),
+  };
+
+  const { onDeletePress } = useHandleTableItem({
+    deleteAlertGuide,
+    checkedList,
+  });
 
   return (
     <SafeBottomAreaView>
@@ -72,7 +86,7 @@ export default function ExpiredFoods() {
           {/* 식료품 선택 개수와 버튼 */}
           <TableFooter
             list={checkedList}
-            onPress={() => onDeletePress(expiredTableList)}
+            onDeletePress={() => onDeletePress(expiredTableList)}
             buttons={['delete']}
           />
         </TableContainer>
