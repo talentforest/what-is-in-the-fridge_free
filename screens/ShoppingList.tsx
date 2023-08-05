@@ -6,10 +6,13 @@ import { useSelector } from '../redux/hook';
 import { Food, initialFoodInfo } from '../constant/foods';
 import { FormStep } from '../constant/formInfo';
 import UUIDGenerator from 'react-native-uuid';
+
 import useFavoriteFoods from '../hooks/useFavoriteFoods';
 import useCheckFood from '../hooks/useCheckFood';
 import useHandleCheckList from '../hooks/useHandleCheckList';
+import useDeleteTableItem from '../hooks/useDeleteTableItem';
 import useToggleModal from '../hooks/useToggleModal';
+
 import AddSelectFoodModal from '../components/screen-component/modal/AddSelectFoodModal';
 import Container from '../components/common/layout/Container';
 import TableContainer from '../components/common/table/TableContainer';
@@ -17,29 +20,49 @@ import TableHeader from '../components/common/table/TableHeader';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
 import TextInputRoundedBox from '../components/common/boxes/TextInputRoundedBox';
+import { Alert } from 'react-native';
 
 export default function ShoppingList() {
+  const { allFoods } = useSelector((state) => state.allFoods);
   const { shoppingList } = useSelector((state) => state.shoppingList);
   const [keyword, setKeyword] = useState('');
+
   const myUuid = UUIDGenerator.v4();
   const dispatch = useDispatch();
 
   const { modalVisible, setModalVisible, onModalPress } = useToggleModal();
 
-  const totalLength = shoppingList.length;
   const {
-    entireCheck,
-    checkList,
-    onDeletePress,
-    onEntirePress,
-    onExistFoodPress,
-    onCheckPress,
-    existInList,
-  } = useHandleCheckList(totalLength);
+    checkedList,
+    setCheckedList,
+    onEntireBoxPress,
+    onCheckBoxPress,
+    isCheckedItem,
+  } = useHandleCheckList();
+
+  const { onDeletePress } = useDeleteTableItem(checkedList, setCheckedList);
 
   const { checkFavorite } = useFavoriteFoods();
 
   const { checkExistFood } = useCheckFood();
+
+  const onExistFoodPress = (food: Food, onModalPress: (food: Food) => void) => {
+    const existFood = allFoods.find((item) => item.name === food.name);
+    const onPress = () => {
+      if (existFood) {
+        onModalPress(food);
+      }
+      return;
+    };
+    return Alert.alert(
+      `기존 식료품 삭제 알림`,
+      `기존의 "${food.name}" 식료품을 삭제하고 새로 추가하시겠습니까?`,
+      [
+        { text: '취소', style: 'destructive' },
+        { text: '삭제 후 추가', onPress, style: 'default' },
+      ]
+    );
+  };
 
   const addToFridgePress = (food: Food) => {
     const favorite = checkFavorite(food);
@@ -68,22 +91,20 @@ export default function ShoppingList() {
           <TableHeader
             title='장봐야할 식료품'
             listLength={shoppingList.length}
-            entireChecked={entireCheck}
-            onEntirePress={() => onEntirePress(shoppingList)}
+            entireChecked={checkedList.length === shoppingList.length}
+            onEntirePress={() => onEntireBoxPress(shoppingList)}
             columnTitle='추가'
           />
 
           <TableBody
-            existListItem={!!shoppingList.length}
             list={shoppingList}
-            onCheckPress={onCheckPress}
-            existInList={existInList}
-            noneItemNoti='장봐야할 식료품이 없습니다.'
+            onCheckBoxPress={onCheckBoxPress}
+            isCheckedItem={isCheckedItem}
             addToFridgePress={addToFridgePress}
           />
 
           <TableFooter
-            list={checkList}
+            list={checkedList}
             onPress={() => onDeletePress(shoppingList)}
             buttons={['delete']}
           />

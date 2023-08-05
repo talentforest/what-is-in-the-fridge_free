@@ -13,15 +13,15 @@ import IndicatorExist from '../IndicatorExist';
 
 interface Props {
   list: Food[];
-  onCheckPress: (food: Food) => void;
-  existInList: (id: string) => Food | undefined;
+  onCheckBoxPress: (food: Food) => void;
+  isCheckedItem: (id: string) => Food | undefined;
   addToFridgePress?: (food: Food) => void;
 }
 
 export default function TableBody({
   list,
-  onCheckPress,
-  existInList,
+  onCheckBoxPress,
+  isCheckedItem,
   addToFridgePress,
 }: Props) {
   const route = useRoute();
@@ -36,8 +36,8 @@ export default function TableBody({
             <TableItem
               key={item.name}
               food={item}
-              onCheckPress={onCheckPress}
-              existInList={existInList}
+              onCheckBoxPress={onCheckBoxPress}
+              isCheckedItem={isCheckedItem}
             >
               {/* 유통기한 주의 식료품 정보 */}
               {route.name === 'ExpiredFoods' && (

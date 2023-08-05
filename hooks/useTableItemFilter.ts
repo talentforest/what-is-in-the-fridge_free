@@ -42,9 +42,13 @@ export default function useTableItemFilter() {
     currentFilter as FavoriteFoodsFilter
   );
 
+  const changeFilter = (currentFilter: AllFilter) => {
+    setCurrentFilter(currentFilter);
+  };
+
   return {
     currentFilter,
-    setCurrentFilter,
+    changeFilter,
     allFavoriteFoodsFilters,
     favoriteTableList,
     allExpiredFoodsFilters,
