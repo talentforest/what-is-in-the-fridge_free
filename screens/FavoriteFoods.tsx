@@ -1,15 +1,16 @@
 import { useFonts } from 'expo-font';
 import { fonts } from '../constant/fonts';
 import { SafeBottomAreaView } from '../components/native-component';
-import { useState } from 'react';
-import TableFilters, { Filter } from '../components/common/table/TableFilters';
+import TableFilters from '../components/common/table/TableFilters';
 import useHandleCheckList from '../hooks/useHandleCheckList';
-import useFavoriteFoods from '../hooks/useFavoriteFoods';
 import Container from '../components/common/layout/Container';
 import TableContainer from '../components/common/table/TableContainer';
 import TableHeader from '../components/common/table/TableHeader';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
+import useTableItemFilter, {
+  FavoriteFoodsFilter,
+} from '../hooks/useTableItemFilter';
 // import {
 //   BannerAd,
 //   BannerAdSize,
@@ -18,21 +19,14 @@ import TableFooter from '../components/common/table/TableFooter';
 
 export default function FavoriteFoods() {
   const [fontsLoaded] = useFonts(fonts);
-  const [currentFilter, setCurrentFilter] = useState<Filter>('전체');
 
   const {
-    favoriteFoods,
-    nonExistFavoriteFoods,
-    existFavoriteFoods, //
-  } = useFavoriteFoods();
+    currentFilter,
+    setCurrentFilter,
+    allFavoriteFoodsFilters,
+    favoriteTableList, //
+  } = useTableItemFilter();
 
-  const getTableList = (filter: Filter) => {
-    if (filter === '냉장고에 있음') return [...existFavoriteFoods];
-    if (filter === '냉장고에 없음') return [...nonExistFavoriteFoods];
-    return [...nonExistFavoriteFoods, ...existFavoriteFoods];
-  };
-
-  const totalLength = getTableList(currentFilter).length;
   const {
     entireCheck,
     setEntireCheck,
@@ -43,9 +37,9 @@ export default function FavoriteFoods() {
     onEntirePress,
     onDeletePress,
     addShoppingListPress,
-  } = useHandleCheckList(totalLength);
+  } = useHandleCheckList(favoriteTableList.length);
 
-  const changeFilter = (filter: Filter) => {
+  const changeFilter = (filter: FavoriteFoodsFilter) => {
     setCheckList([]);
     setCurrentFilter(filter);
     setEntireCheck(false);
@@ -59,15 +53,16 @@ export default function FavoriteFoods() {
         <TableContainer>
           <TableHeader
             title='자주 먹는 식료품'
-            listLength={getTableList(currentFilter).length}
+            listLength={favoriteTableList.length}
             entireChecked={entireCheck}
-            onEntirePress={() => onEntirePress(favoriteFoods)}
+            onEntirePress={() => onEntirePress(favoriteTableList)}
             columnTitle={currentFilter}
           />
 
           {/* 필터 */}
-          {favoriteFoods.length !== 0 && (
+          {favoriteTableList.length !== 0 && (
             <TableFilters
+              allFilters={allFavoriteFoodsFilters}
               currentFilter={currentFilter}
               changeFilter={changeFilter}
             />
@@ -75,18 +70,16 @@ export default function FavoriteFoods() {
 
           {/* 자주 먹는 식료품 목록 */}
           <TableBody
-            existListItem={!!favoriteFoods.length}
-            list={getTableList(currentFilter)}
+            list={favoriteTableList}
             onCheckPress={onCheckPress}
             existInList={existInList}
-            noneItemNoti='자주 먹는 식료품이 아직 없습니다.???'
           />
 
           {/* 식료품 선택 개수와 버튼 */}
           <TableFooter
             list={checkList}
             onAddPress={addShoppingListPress}
-            onPress={() => onDeletePress(favoriteFoods)}
+            onPress={() => onDeletePress(favoriteTableList)}
             buttons={['delete-favorite', 'add-shopping-list']}
           />
         </TableContainer>

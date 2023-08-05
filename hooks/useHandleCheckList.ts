@@ -9,11 +9,11 @@ import {
   setShoppingList,
 } from '../redux/slice/shoppingList';
 import { useRoute } from '@react-navigation/native';
-import { SpaceType } from '../constant/fridgeInfo';
+import { ExpiredFoodsFilter } from './useTableItemFilter';
 
 export default function useHandleCheckList(
   totalLength: number,
-  tab?: SpaceType
+  currentFilter?: ExpiredFoodsFilter
 ) {
   const route = useRoute();
   const [entireCheck, setEntireCheck] = useState(false);
@@ -83,7 +83,7 @@ export default function useHandleCheckList(
         route.name === 'FavoriteFoods'
           ? `${checkList.length}개의 식료품을 자주 먹는 식료품에서 해제하시겠습니까?`
           : route.name === 'ExpiredFoods'
-          ? `${tab}에서 ${checkList.length}개의 식료품을 삭제하시겠습니까?`
+          ? `${currentFilter}에서 ${checkList.length}개의 식료품을 삭제하시겠습니까?`
           : route.name === 'ShoppingList'
           ? `장보기 목록에서 ${checkList.length}개의 식료품을 삭제하시겠습니까?`
           : ''
