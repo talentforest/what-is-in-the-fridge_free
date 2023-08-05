@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../../native-component';
 import { DEEP_INDIGO, INACTIVE_COLOR } from '../../../constant/colors';
-import { Filter } from './TableFilters';
 import { scaleH } from '../../../util';
+import { FavoriteFoodsFilter } from '../../../hooks/useTableItemFilter';
 import CheckBox from '../boxes/CheckBox';
 import tw from 'twrnc';
 
@@ -11,7 +11,7 @@ interface Props {
   listLength: number;
   entireChecked: boolean;
   onEntirePress: () => void;
-  columnTitle: '추가' | '유통기한순' | Filter;
+  columnTitle: '추가' | '유통기한순' | FavoriteFoodsFilter;
 }
 
 export default function TableHeader({
@@ -24,7 +24,7 @@ export default function TableHeader({
   return (
     <View
       style={tw`h-[${scaleH(46)}px]
-      -mx-4 px-4 gap-1 border-b-2 border-slate-300 flex-row items-center justify-between`}
+      -mx-2 px-4 gap-1 border-b-2 border-slate-300 flex-row items-center justify-between`}
     >
       <TouchableOpacity onPress={onEntirePress}>
         <CheckBox

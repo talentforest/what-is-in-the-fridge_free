@@ -1,5 +1,6 @@
 import { FlatList, ListRenderItem } from 'react-native';
 import { Food } from '../../../constant/foods';
+import tw from 'twrnc';
 
 interface Props {
   list: Food[];
@@ -13,6 +14,7 @@ export default function TableList({ list, renderItem }: Props) {
       showsVerticalScrollIndicator={false}
       data={list}
       renderItem={renderItem}
+      contentContainerStyle={tw`px-2`}
     />
   );
 }
