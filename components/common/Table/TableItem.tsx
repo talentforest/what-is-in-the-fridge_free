@@ -9,30 +9,30 @@ import CheckBox from '../boxes/CheckBox';
 
 interface Props {
   food: Food;
-  onCheckPress: (food: Food) => void;
-  existInList: (id: string) => Food | undefined;
+  onCheckBoxPress: (food: Food) => void;
+  isCheckedItem: (id: string) => Food | undefined;
   children?: ReactNode;
   disabled?: boolean;
 }
 
 export default function TableItem({
   food,
-  onCheckPress,
-  existInList,
+  onCheckBoxPress,
+  isCheckedItem,
   children,
   disabled,
 }: Props) {
   return (
     <TouchableOpacity
       disabled={disabled}
-      onPress={() => onCheckPress(food)}
+      onPress={() => onCheckBoxPress(food)}
       style={tw`flex-row gap-0 border-b border-slate-300 items-center justify-between 
       h-[${scaleH(48)}px]`}
     >
-      <CheckBox checked={!!existInList(food.id)} activeColor={BLUE} />
+      <CheckBox checked={!!isCheckedItem(food.id)} activeColor={BLUE} />
       <Text
         style={tw`flex-1 p-1 pr-0 ${
-          existInList(food.id) ? 'text-blue-600' : 'text-slate-700'
+          isCheckedItem(food.id) ? 'text-blue-600' : 'text-slate-700'
         }`}
       >
         {cutLetter(food.name, 28)}

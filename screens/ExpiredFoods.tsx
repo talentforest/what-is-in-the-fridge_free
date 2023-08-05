@@ -1,16 +1,16 @@
 import { SafeBottomAreaView } from '../components/native-component';
-import { SpaceType } from '../constant/fridgeInfo';
+
 import useHandleCheckList from '../hooks/useHandleCheckList';
-import ExpiredState from '../components/screen-component/expired-foods/ExpiredState';
+import useTableItemFilter from '../hooks/useTableItemFilter';
+import useDeleteTableItem from '../hooks/useDeleteTableItem';
+
 import Container from '../components/common/layout/Container';
+import ExpiredState from '../components/screen-component/expired-foods/ExpiredState';
 import TableContainer from '../components/common/table/TableContainer';
 import TableHeader from '../components/common/table/TableHeader';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
 import TableFilters from '../components/common/table/TableFilters';
-import useTableItemFilter, {
-  ExpiredFoodsFilter,
-} from '../hooks/useTableItemFilter';
 // import {
 //   BannerAd,
 //   BannerAdSize,
@@ -20,30 +20,20 @@ import useTableItemFilter, {
 export default function ExpiredFoods() {
   const {
     currentFilter,
-    setCurrentFilter,
+    changeFilter,
     allExpiredFoodsFilters,
     expiredTableList,
   } = useTableItemFilter();
 
   const {
-    entireCheck,
-    setEntireCheck,
-    checkList,
-    setCheckList,
-    onEntirePress,
-    onDeletePress,
-    onCheckPress,
-    existInList,
-  } = useHandleCheckList(
-    expiredTableList.length,
-    currentFilter as ExpiredFoodsFilter
-  );
+    checkedList,
+    setCheckedList,
+    onEntireBoxPress,
+    onCheckBoxPress,
+    isCheckedItem,
+  } = useHandleCheckList();
 
-  const changeFilter = (filter: SpaceType) => {
-    setCurrentFilter(filter);
-    setEntireCheck(false);
-    setCheckList([]);
-  };
+  const { onDeletePress } = useDeleteTableItem(checkedList, setCheckedList);
 
   return (
     <SafeBottomAreaView>
@@ -53,8 +43,8 @@ export default function ExpiredFoods() {
           <TableHeader
             title={`유통기한 주의 식료품`}
             listLength={expiredTableList.length}
-            entireChecked={entireCheck}
-            onEntirePress={() => onEntirePress(expiredTableList)}
+            entireChecked={checkedList.length === expiredTableList.length}
+            onEntirePress={() => onEntireBoxPress(expiredTableList)}
             columnTitle='유통기한순'
           />
 
@@ -70,8 +60,8 @@ export default function ExpiredFoods() {
           {/* 식료품 리스트 */}
           <TableBody
             list={expiredTableList}
-            onCheckPress={onCheckPress}
-            existInList={existInList}
+            onCheckBoxPress={onCheckBoxPress}
+            isCheckedItem={isCheckedItem}
           />
 
           {/* 냉장고 상태 문구 */}
@@ -81,7 +71,7 @@ export default function ExpiredFoods() {
 
           {/* 식료품 선택 개수와 버튼 */}
           <TableFooter
-            list={checkList}
+            list={checkedList}
             onPress={() => onDeletePress(expiredTableList)}
             buttons={['delete']}
           />
