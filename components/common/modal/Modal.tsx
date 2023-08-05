@@ -11,6 +11,8 @@ interface Props {
   children: ReactNode;
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
+  animationIn?: 'fadeIn' | 'slideInUp';
+  animationOut?: 'fadeOut' | 'slideOutDown';
 }
 
 export default function RNModal({
@@ -20,6 +22,8 @@ export default function RNModal({
   children,
   modalVisible,
   setModalVisible,
+  animationIn = 'slideInUp',
+  animationOut = 'slideOutDown',
 }: Props) {
   const MODAL_HEIGHT = Dimensions.get('screen').height * 0.85;
 
@@ -27,13 +31,26 @@ export default function RNModal({
 
   return (
     <Modal
+      swipeDirection={'down'}
+      onSwipeComplete={closeModal}
+      animationIn={animationIn}
+      animationOut={animationOut}
       statusBarTranslucent={true}
       onBackdropPress={closeModal}
       isVisible={modalVisible}
       style={tw.style(`m-0 justify-end`, style)}
+      propagateSwipe={true}
+      hideModalContentWhileAnimating={true}
     >
       <SafeAreaView style={tw`justify-end`}>
-        <View style={tw`${bgColor} p-4 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}>
+        <View
+          style={tw`${bgColor} p-4 pt-2 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}
+        >
+          {animationIn === 'slideInUp' && (
+            <View
+              style={tw`mb-5 bg-slate-400 w-12 self-center h-2 rounded-2xl`}
+            />
+          )}
           {title && (
             <Header
               title={title}

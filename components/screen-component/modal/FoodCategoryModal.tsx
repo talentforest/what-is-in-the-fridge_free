@@ -25,6 +25,8 @@ export default function FoodCategoryModal({
       bgColor='bg-white'
       modalVisible={categoryOpen}
       setModalVisible={setCategoryOpen}
+      animationIn='fadeIn'
+      animationOut='fadeOut'
     >
       <View style={tw`p-4 gap-5`}>
         <Text
