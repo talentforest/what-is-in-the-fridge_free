@@ -58,7 +58,7 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
         isDarkModeEnabled={false}
       />
 
-      <View style={tw`mt-2 flex-row gap-1 flex-wrap justify-end items-center`}>
+      <View style={tw`mt-2 flex-row gap-1 flex-wrap items-center`}>
         {addDateBtns.map((btn) => (
           <TouchableOpacity
             key={btn.label}
