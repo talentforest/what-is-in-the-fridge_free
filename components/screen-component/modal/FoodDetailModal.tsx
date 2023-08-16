@@ -1,12 +1,15 @@
 import { View } from 'react-native';
+import { Text } from '../../native-component';
 import { Food } from '../../../constant/foods';
 import { FormLabel, FormStep, foodForm } from '../../../constant/formInfo';
+import { FontGmarketSansBold } from '../../../constant/fonts';
 import InfoBox from '../../common/modal/InfoBox';
+import FavoriteTagBox from '../../common/boxes/FavoriteTagBox';
 import SubmitBtn from '../../common/form/SubmitBtn';
+import RNModal from '../../common/modal/Modal';
+import Form from '../../common/form/Form';
 import useEditFood from '../../../hooks/useEditFood';
 import useDeleteFood from '../../../hooks/useDeleteFood';
-import Form from '../../common/form/Form';
-import RNModal from '../../common/modal/Modal';
 import tw from 'twrnc';
 
 interface Props {
@@ -53,12 +56,33 @@ export default function FoodDetailModal({
         </View>
       ) : (
         <>
-          <View style={tw`my-3`}>
-            <InfoBox label='식료품 이름' info={editedFood.name} />
-            <InfoBox label='카테고리' info={editedFood.category} />
-            <InfoBox label='구매날짜' info={editedFood.purchaseDate} />
-            <InfoBox label='유통기한' info={editedFood.expiredDate} />
-            <InfoBox label='자주 먹는 식품' favorite={editedFood.favorite} />
+          <View style={tw`my-3 px-2`}>
+            <View style={tw`items-center gap-3 mb-2 py-2`}>
+              <View>
+                <Text
+                  style={tw.style(`text-stone-700`, FontGmarketSansBold)}
+                  fontSize={16}
+                >
+                  {editedFood.name}
+                </Text>
+              </View>
+              {editedFood.favorite && <FavoriteTagBox />}
+            </View>
+            <InfoBox
+              iconName='dots-grid'
+              label='카테고리'
+              info={editedFood.category}
+            />
+            <InfoBox
+              iconName='calendar-month'
+              label='구매날짜'
+              info={editedFood.purchaseDate}
+            />
+            <InfoBox
+              iconName='calendar-month'
+              label='유통기한'
+              info={editedFood.expiredDate}
+            />
           </View>
           <SubmitBtn
             btnName='식료품 정보 수정하기'

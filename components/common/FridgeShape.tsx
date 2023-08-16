@@ -31,27 +31,19 @@ export default function FridgeShape() {
     return space.includes('냉동') ? 'blue' : 'yellow';
   };
 
-  const borderColorByRoute = (space: Space) => {
-    return routeFridgeSetting
-      ? `border-${spaceColor(space)}-500`
-      : 'border-slate-300';
-  };
+  const freezerPosition = freezer === 'top' ? '' : 'flex-col-reverse';
 
   return (
     <View style={tw`flex-row flex-1`}>
       {['안쪽', '문쪽'].map((side) => (
-        <View
-          key={side}
-          style={tw`${freezer === 'top' ? '' : 'flex-col-reverse'} flex-1`}
-        >
+        <View key={side} style={tw`${freezerPosition} flex-1`}>
           {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (
             <TouchableOpacity
               key={space}
               disabled={!routeFridgeSetting ? false : true}
               onPress={() => navigation.navigate('Compartments', { space })}
-              style={tw`justify-center bg-neutral-300 border-2  
-              ${spaceHeight(space)} ${doorRadius(space)} 
-              ${borderColorByRoute(space)}`}
+              style={tw`justify-center bg-neutral-300 border-2 border-slate-300  
+              ${spaceHeight(space)} ${doorRadius(space)}`}
             >
               {!routeFridgeSetting && (
                 <>
@@ -68,7 +60,7 @@ export default function FridgeShape() {
                   absolute z-10 w-full h-full justify-center`}
                 >
                   <View
-                    style={tw`absolute border w-full h-full opacity-20 
+                    style={tw`absolute w-full h-full opacity-30
                     bg-${spaceColor(space)}-400 ${doorRadius(space)}`}
                   />
                   <Text
@@ -82,7 +74,7 @@ export default function FridgeShape() {
                 </View>
               )}
               <View
-                style={tw`flex-1 gap-[${scaleH(1.5)}]
+                style={tw`flex-1 gap-[${scaleH(5)}px]
                 p-[${scaleH(!routeFridgeSetting ? 8 : 4)}]`}
               >
                 {getCompartments(compartments[space]).map(

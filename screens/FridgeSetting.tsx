@@ -29,7 +29,7 @@ export default function FridgeSetting() {
     <SafeBottomAreaView>
       <Container>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <SelectContainter title='1. 나의 냉장고 타입'>
+          <SelectContainter title='나의 냉장고 타입'>
             {['일반형 냉장고'].map((type) => (
               <CheckBoxItem
                 key={type}
@@ -42,7 +42,7 @@ export default function FridgeSetting() {
               현재 일반형 냉장고만 지원됩니다.
             </Text>
           </SelectContainter>
-          <SelectContainter title='2. 냉동실 위치'>
+          <SelectContainter title='냉동실 위치'>
             <View style={tw`flex-row gap-5`}>
               {['상단', '하단'].map((name) => (
                 <CheckBoxItem
@@ -56,9 +56,9 @@ export default function FridgeSetting() {
               ))}
             </View>
           </SelectContainter>
-          <SelectContainter title='3. 각 공간의 칸 개수'>
+          <SelectContainter title='각 공간의 칸 개수'>
             {(['냉동실', '냉장실'] as SpaceType[]).map((spaceType) => (
-              <View key={spaceType} style={tw`flex-row gap-1.5`}>
+              <View key={spaceType} style={tw`flex-row gap-2`}>
                 {[`${spaceType} 안쪽`, `${spaceType} 문쪽`].map((name) => (
                   <CompartmentsSettingBox key={name} name={name as Space} />
                 ))}

@@ -2,15 +2,16 @@ import { useFonts } from 'expo-font';
 import { View } from 'react-native';
 import { fonts } from '../constant/fonts';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from '../redux/hook';
 import { getCompartments, scaleH } from '../util';
 import { Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/native-component';
 import Compartment from '../components/screen-component/compartments/Compartment';
-import tw from 'twrnc';
 import Container from '../components/common/layout/Container';
+import tw from 'twrnc';
+import HeaderBtn from '../components/common/buttons/HeaderBtn';
 // import {
 //   BannerAd,
 //   BannerAdSize,
@@ -29,7 +30,9 @@ export default function Compartments({ route }: RouteParams) {
   const navigation = useNavigation();
 
   useEffect(() => {
-    navigation.setOptions({ title: space });
+    navigation.setOptions({
+      title: space,
+    });
   }, []);
 
   const compartments = getCompartments(fridgeInfo.compartments[space]);

@@ -1,9 +1,3 @@
-interface FoodCategory {
-  id: number;
-  category: Category;
-  description?: string;
-}
-
 export type Category =
   | '신선식품류'
   | '간편 · 즉석식품류'
@@ -13,6 +7,11 @@ export type Category =
   | '디저트 식품류'
   | '생수 · 음료수 · 커피 · 주류'
   | '기타식품류';
+
+export interface FoodCategory {
+  id: number;
+  category: Category;
+}
 
 export const foodCategories: FoodCategory[] = [
   {

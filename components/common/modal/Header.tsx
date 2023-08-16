@@ -1,8 +1,8 @@
 import { Pressable, View } from 'react-native';
 import { Text } from '../../native-component';
 import { INDIGO } from '../../../constant/colors';
-import tw from 'twrnc';
 import Icon from '../../native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
   title: string;
@@ -11,7 +11,7 @@ interface Props {
 
 export default function Header({ title, setModalVisible }: Props) {
   return (
-    <View style={tw`flex-row w-full items-center justify-between`}>
+    <View style={tw`flex-row w-full items-center justify-between px-2`}>
       <Text fontSize={18}>{title}</Text>
       <Pressable onPress={() => setModalVisible(false)} style={tw`p-1`}>
         <Icon

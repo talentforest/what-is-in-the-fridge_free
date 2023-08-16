@@ -14,7 +14,9 @@ export default function CountBtn({ type, onPress, active }: Props) {
   const COLOR = type === 'minus' ? ORANGE_RED : DEEP_BLUE;
   const COLOR_STRING = type === 'minus' ? 'orange' : 'blue';
   const SIZE = `h-${scaleH(6.5)} w-${scaleH(6.5)}`;
-  const ACTIVE_STYLE = active ? `border border-${COLOR_STRING}-400` : '';
+  const ACTIVE_STYLE = active
+    ? `border border-${COLOR_STRING}-400 bg-${COLOR_STRING}-100`
+    : '';
 
   return (
     <TouchableOpacity

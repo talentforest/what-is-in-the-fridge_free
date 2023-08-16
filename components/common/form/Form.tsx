@@ -46,9 +46,10 @@ export default function Form({
   }, [currentStep]);
 
   const animatedForm = (stepId: number) => {
-    Animated.spring(stepTranslateX, {
+    Animated.timing(stepTranslateX, {
       toValue: -FORM_WIDTH * stepId,
       useNativeDriver: true,
+      duration: 200,
     }).start();
   };
 
@@ -89,12 +90,12 @@ export default function Form({
   ).current;
 
   return (
-    <View style={tw`mt-[${scaleH(14)}px]`}>
-      <View style={tw`overflow-hidden mb-4`}>
+    <View style={tw`mt-[${scaleH(10)}px]`}>
+      <View style={tw`overflow-hidden pb-0`}>
         <Animated.View
           style={{
             width: FORM_WIDTH,
-            height: scaleH(300),
+            height: scaleH(350),
             transform: [{ translateX: stepTranslateX }],
           }}
           {...panResponder.panHandlers}
@@ -102,7 +103,7 @@ export default function Form({
           <View style={tw`flex-row flex-1`}>
             <FormSectionContainer>
               {items.includes('식료품 이름') && (
-                <FormItemContainer label='이름'>
+                <FormItemContainer label='식료품 이름'>
                   <NameItem
                     name={food.name}
                     changeInfo={changeInfo}
@@ -110,7 +111,7 @@ export default function Form({
                   />
                   {!!!editableName && (
                     <Text style={tw`pt-2 text-amber-600`} fontSize={12}>
-                      이름은 변경할 수 없습니다.
+                      이름은 수정할 수 없습니다.
                     </Text>
                   )}
                 </FormItemContainer>
@@ -126,6 +127,7 @@ export default function Form({
               {items.includes('자주 먹는 식품') && (
                 <FormItemContainer label='자주 먹는 식품'>
                   <FavoriteItem
+                    name={food.name}
                     favorite={food.favorite}
                     changeInfo={changeInfo}
                   />
@@ -160,7 +162,9 @@ export default function Form({
           </View>
         </Animated.View>
       </View>
-      <View style={tw`items-center flex-row justify-between`}>
+
+      {/* 단계 */}
+      <View style={tw`items-center flex-row justify-between mb-2`}>
         <ArrowBtn
           type='previous'
           moveStep={() => moveStep('prev', currentStep.id)}
