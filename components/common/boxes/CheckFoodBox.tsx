@@ -2,7 +2,7 @@ import { Food } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
 import { scaleH } from '../../../util';
 import { useState } from 'react';
-import { BLUE, DEEP_YELLOW, GRAY } from '../../../constant/colors';
+import { BLUE, DEEP_YELLOW } from '../../../constant/colors';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 

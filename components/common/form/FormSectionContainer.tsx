@@ -7,5 +7,5 @@ export default function FormSectionContainer({
 }: {
   children: ReactNode;
 }) {
-  return <View style={tw`w-full gap-8 px-2`}>{children}</View>;
+  return <View style={tw`w-full gap-7 px-2`}>{children}</View>;
 }

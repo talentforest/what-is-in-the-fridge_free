@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 import { Text } from '../../native-component';
-import { scaleH } from '../../../util';
+import { scaleH, findMatchNameFoods } from '../../../util';
 import { useSelector } from '../../../redux/hook';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Food } from '../../../constant/foods';
@@ -22,13 +22,7 @@ export default function SearchFoodModal({
   const [keyword, setKeyword] = useState('');
   const { allFoods } = useSelector((state) => state.allFoods);
 
-  const getSearchedFoods = (char: string) => {
-    return allFoods.filter((food) =>
-      food.name
-        .replaceAll(' ', '') //
-        .includes(char)
-    );
-  };
+  const searchedFoods = findMatchNameFoods(allFoods, keyword);
 
   const onSubmitEditing = () => {
     if (keyword === '') return;
@@ -57,9 +51,7 @@ export default function SearchFoodModal({
           <View style={tw`flex-row gap-2 w-[35%]`}>
             <Text style={tw`text-indigo-600`}>식료품</Text>
             <Text>|</Text>
-            <Text>
-              {!!keyword.length ? getSearchedFoods(keyword).length : 0}개
-            </Text>
+            <Text>{!!keyword.length ? searchedFoods?.length : 0}개</Text>
           </View>
           <Text style={tw`flex-1 text-indigo-600`}>위치</Text>
           <Text style={tw`text-indigo-600`}>이동</Text>
@@ -71,8 +63,8 @@ export default function SearchFoodModal({
           showsVerticalScrollIndicator={false}
         >
           {!!keyword.length &&
-            (getSearchedFoods(keyword).length ? (
-              getSearchedFoods(keyword).map((food: Food) => (
+            (searchedFoods?.length ? (
+              searchedFoods.map((food: Food) => (
                 <SearchedItem
                   key={food.id}
                   food={food}

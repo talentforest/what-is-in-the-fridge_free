@@ -42,7 +42,7 @@ export function TextInput({ style, onPress, ...props }: Props) {
       ) : (
         <Input
           style={tw.style(
-            `h-[${scaleH(42)}px] 
+            `h-[${scaleH(40)}px] 
             border border-slate-400 p-2 rounded-lg bg-white 
             text-[${responsiveFontSize(14)}px]`,
             FontGmarketSansRegular,

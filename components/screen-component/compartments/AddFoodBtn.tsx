@@ -24,7 +24,7 @@ export default function AddFoodBtn({ foodLocation, onPress }: Props) {
 
   return (
     <>
-      <TouchableOpacity onPress={onPressFc} style={tw`px-2 py-1`}>
+      <TouchableOpacity onPress={onPressFc} style={tw`px-2 pt-1`}>
         <Icon
           type='MaterialCommunityIcons'
           name='plus'

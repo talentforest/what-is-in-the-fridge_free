@@ -16,7 +16,7 @@ export default function ArrowBtn({ type, moveStep, active }: Props) {
       <TouchableOpacity
         onPress={moveStep}
         disabled={!active}
-        style={tw`flex-row items-center p-2`}
+        style={tw`flex-row items-center px-2`}
       >
         {type === 'previous' && (
           <Icon

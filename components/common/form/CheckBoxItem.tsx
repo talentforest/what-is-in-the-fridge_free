@@ -19,7 +19,7 @@ export default function CheckBoxItem({
   return (
     <TouchableOpacity
       disabled={disabled}
-      style={tw`flex-row items-center gap-1 z-30`}
+      style={tw`flex-row items-center gap-2 z-30`}
       onPress={onPress}
     >
       <CheckBox checked={checked} activeColor={INDIGO} />

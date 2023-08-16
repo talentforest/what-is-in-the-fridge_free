@@ -31,9 +31,11 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
 
   return (
     <View>
-      <View
+      {/* 날짜 Input */}
+      <TouchableOpacity
+        onPress={() => setDatePickerVisible(true)}
         style={tw`h-[${scaleH(44)}px] 
-        border border-slate-400 bg-white rounded-lg flex-row items-center justify-between px-2`}
+        border border-indigo-500 bg-white rounded-lg flex-row items-center justify-between px-2`}
       >
         <TextInput
           value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
@@ -41,10 +43,10 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
           pointerEvents='none'
           style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
         />
-        <TouchableOpacity onPress={() => setDatePickerVisible(true)}>
-          <Icon type='AntDesign' name='calendar' size={18} color={INDIGO} />
-        </TouchableOpacity>
-      </View>
+        <Icon type='AntDesign' name='calendar' size={18} color={INDIGO} />
+      </TouchableOpacity>
+
+      {/* 캘린더 픽커 모달 */}
       <DateTimePickerModal
         isVisible={datePickerVisible}
         mode='date'
@@ -54,10 +56,11 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
         date={new Date(date)}
         onConfirm={onConfirm}
         onCancel={() => setDatePickerVisible(false)}
-        textColor='#000'
         isDarkModeEnabled={false}
+        textColor='#000'
       />
 
+      {/* 날짜 더하기 버튼들 */}
       <View style={tw`mt-2 flex-row gap-1 flex-wrap items-center`}>
         {addDateBtns.map((btn) => (
           <TouchableOpacity

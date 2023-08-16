@@ -1,5 +1,5 @@
-import { ScrollView, View } from 'react-native';
-import { useState } from 'react';
+import { Animated, ScrollView, View } from 'react-native';
+import { useRef, useState } from 'react';
 import { Food, initialFoodInfo } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
 import { FoodLocation } from '../../../constant/fridgeInfo';
@@ -35,9 +35,10 @@ export default function Compartment({ foodLocation }: Props) {
           </Text>
           <AddFoodBtn foodLocation={foodLocation} />
         </View>
+
         {/* 식료품 리스트 */}
         <ScrollView
-          contentContainerStyle={tw`flex-row px-1 pb-2 flex-wrap gap-1 items-center`}
+          contentContainerStyle={tw`flex-row px-1 pt-1 pb-2 flex-wrap gap-1 items-center`}
           style={tw`p-1 pt-0 flex-1`}
           showsVerticalScrollIndicator={false}
         >

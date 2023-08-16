@@ -11,7 +11,9 @@ interface Props {
 
 export default function StepIndicator({ formSteps, currentStepId }: Props) {
   const activeStyle = (stepId: number) => {
-    return currentStepId === stepId ? 'bg-blue-500 border-blue-300 border' : '';
+    return currentStepId === stepId
+      ? 'bg-indigo-500 border-blue-300 border'
+      : '';
   };
 
   const activeTextStyle = (stepId: number) => {

@@ -18,7 +18,7 @@ interface Props {
 export default function RNModal({
   style,
   title,
-  bgColor = 'bg-blue-50',
+  bgColor = 'bg-stone-100',
   children,
   modalVisible,
   setModalVisible,
