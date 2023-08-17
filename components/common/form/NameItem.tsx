@@ -77,7 +77,9 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
                 size={14}
                 color={INDIGO}
               />
-              <Text style={tw`text-indigo-500`}>{food.name}</Text>
+              <Text style={tw`text-indigo-500`} fontSize={12}>
+                {food.name}
+              </Text>
             </TouchableOpacity>
           ))}
           {matchedFoods.length > 3 && (

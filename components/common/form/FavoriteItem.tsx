@@ -20,10 +20,10 @@ export default function FavoriteItem({ name, favorite, changeInfo }: Props) {
   const isFavoriteFood = favoriteFoods.find((food) => food.name === name);
   const currFavState = isFavoriteFood ? isFavoriteFood?.favorite : favorite;
 
+  const height = useRef(new Animated.Value(currFavState ? 30 : 0)).current;
   const translateX = useRef(
     new Animated.Value(currFavState ? 0 : MOVED_TRANSLATE_X)
   ).current;
-  const height = useRef(new Animated.Value(currFavState ? 30 : 0)).current;
 
   const animatedBtn = (translateXValue: number) => {
     Animated.spring(translateX, {
@@ -81,7 +81,7 @@ export default function FavoriteItem({ name, favorite, changeInfo }: Props) {
         {['맞아요', '아니에요'].map((btnNm) => (
           <ToggleBtn
             key={btnNm}
-            check={btnNm === '맞아요' ? favorite : !favorite}
+            check={btnNm === '맞아요' ? currFavState : !currFavState}
             onPress={() => onTogglePress(btnNm === '맞아요' ? true : false)}
             btnName={btnNm}
           />
