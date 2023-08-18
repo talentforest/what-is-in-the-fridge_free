@@ -7,15 +7,20 @@ import tw from 'twrnc';
 interface Props {
   iconName: string;
   onPress: () => void;
+  type?: 'MaterialCommunityIcons' | 'AntDesign' | 'Ionicons' | 'Feather';
 }
 
-export default function HeaderBtn({ iconName, onPress }: Props) {
+export default function HeaderBtn({
+  iconName,
+  onPress,
+  type = 'Ionicons',
+}: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={tw`px-[${scaleH(10)}px] py-[${scaleH(4)}px]`}
     >
-      <Icon name={iconName} type='Ionicons' size={22} color={DEEP_GRAY} />
+      <Icon name={iconName} type={type} size={22} color={DEEP_GRAY} />
     </TouchableOpacity>
   );
 }

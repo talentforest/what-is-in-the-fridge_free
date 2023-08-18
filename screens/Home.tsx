@@ -1,8 +1,8 @@
 import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
-import { Platform, ScrollView, StatusBar } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useSelector } from '../redux/hook';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { statusBarHeight } from '../constant/statusBarHeight';
 import { HEADER_BGCOLOR } from '../constant/colors';
 import EntranceBox from '../components/screen-component/home/EntranceBox';
 import useExpiredFood from '../hooks/useExpiredFoods';
@@ -22,9 +22,6 @@ const Home = () => {
   });
 
   if (!fontsLoaded || !isLoaded) return null;
-
-  const statusBarHeight =
-    Platform.OS === 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
 
   return (
     <ScrollView

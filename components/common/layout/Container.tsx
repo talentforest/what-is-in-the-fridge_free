@@ -9,7 +9,7 @@ export default function Container({ children }: { children: ReactNode }) {
 
   return (
     <View
-      style={tw`flex-1 p-[${scaleH(14)}px] ${
+      style={tw`flex-1 p-[${scaleH(14)}] ${
         route.name === 'Setting' ? 'bg-white' : 'bg-blue-50'
       }`}
     >
