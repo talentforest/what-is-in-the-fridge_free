@@ -8,7 +8,6 @@ import useTableItemFilter from '../hooks/useTableItemFilter';
 import useHandleTableItem from '../hooks/useHandleTableItem';
 
 import Container from '../components/common/layout/Container';
-import ExpiredState from '../components/screen-component/expired-foods/ExpiredState';
 import TableContainer from '../components/common/table/TableContainer';
 import TableHeader from '../components/common/table/TableHeader';
 import TableBody from '../components/common/table/TableBody';
@@ -28,6 +27,7 @@ export default function ExpiredFoods() {
     changeFilter,
     allExpiredFoodsFilters,
     expiredTableList,
+    getExpiredTableList,
   } = useTableItemFilter();
 
   const {
@@ -56,7 +56,6 @@ export default function ExpiredFoods() {
         <TableContainer>
           <TableHeader
             title={`유통기한 주의 식료품`}
-            listLength={expiredTableList.length}
             entireChecked={checkedList.length === expiredTableList.length}
             onEntirePress={() => onEntireBoxPress(expiredTableList)}
             columnTitle='유통기한순'
@@ -68,6 +67,7 @@ export default function ExpiredFoods() {
               allFilters={allExpiredFoodsFilters}
               currentFilter={currentFilter}
               changeFilter={changeFilter}
+              getTableList={getExpiredTableList}
             />
           )}
 
@@ -77,11 +77,6 @@ export default function ExpiredFoods() {
             onCheckBoxPress={onCheckBoxPress}
             isCheckedItem={isCheckedItem}
           />
-
-          {/* 냉장고 상태 문구 */}
-          {!!expiredTableList.length && (
-            <ExpiredState length={expiredTableList.length} />
-          )}
 
           {/* 식료품 선택 개수와 버튼 */}
           <TableFooter

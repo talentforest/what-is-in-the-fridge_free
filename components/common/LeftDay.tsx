@@ -21,7 +21,7 @@ function LeftDay({ expiredDate }: Props) {
   return (
     <Text
       style={tw`${getColor} ml-1`}
-      fontSize={route.name === 'ExpiredFoods' ? 14 : 12}
+      fontSize={route.name === 'ExpiredFoods' ? 13 : 12}
     >
       {getRelativeTime(expiredDate)}
     </Text>

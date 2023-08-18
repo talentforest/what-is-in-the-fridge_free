@@ -22,7 +22,7 @@ export default function MyFridge() {
             onPress={() => setModalVisible((prev) => !prev)}
           />
           <HeaderBtn
-            iconName={'settings'}
+            iconName={'settings-sharp'}
             onPress={() => navigation.navigate('FridgeSetting')}
           />
         </View>

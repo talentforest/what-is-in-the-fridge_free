@@ -3,6 +3,7 @@ import { Text } from '../../native-component';
 import { scaleH } from '../../../util';
 import { ReactNode } from 'react';
 import tw from 'twrnc';
+import Icon from '../../native-component/Icon';
 
 type FridgeSettingTitle =
   | '나의 냉장고 타입'
@@ -18,7 +19,16 @@ interface Props {
 export default function SelectContainter({ title, children }: Props) {
   return (
     <View style={tw`mb-[${scaleH(26)}px]`}>
-      <Text style={tw`text-slate-600 pb-2`}>{title}</Text>
+      <Text
+        style={tw`${
+          title === '냉장고 결과' ? 'text-indigo-600' : 'text-slate-600'
+        } pb-2`}
+      >
+        {title === '냉장고 결과' && (
+          <Icon name='fridge' type='MaterialCommunityIcons' size={14} />
+        )}{' '}
+        {title}
+      </Text>
       <View
         style={tw`gap-2 rounded-lg ${
           title === '각 공간의 칸 개수'

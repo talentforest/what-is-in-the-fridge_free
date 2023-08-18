@@ -14,6 +14,7 @@ export default function TableList({ list, renderItem }: Props) {
       showsVerticalScrollIndicator={false}
       data={list}
       renderItem={renderItem}
+      style={tw`flex-1 bg-stone-100 mt-3`}
       contentContainerStyle={tw`px-2`}
     />
   );
