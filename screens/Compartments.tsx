@@ -27,10 +27,10 @@ interface RouteParams {
 export default function Compartments({ route }: RouteParams) {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { space } = route.params as { space: Space };
-  const [moveMode, setMoveMode] = useState(false);
   const [compartmentNumToDrop, setCompartmentNumToDrop] =
     useState<CompartmentNumToDrop>('동일칸');
 
+  const [moveMode, setMoveMode] = useState(false);
   const [fontsLoaded] = useFonts(fonts);
   const navigation = useNavigation();
 
@@ -39,9 +39,7 @@ export default function Compartments({ route }: RouteParams) {
       title: space,
       headerRight: () => (
         <HeaderBtn
-          iconName={
-            moveMode ? 'check-underline-circle-outline' : 'archive-edit-outline'
-          }
+          iconName={moveMode ? 'check' : 'drag'}
           onPress={() => setMoveMode((prev) => !prev)}
           type='MaterialCommunityIcons'
         />
@@ -51,22 +49,21 @@ export default function Compartments({ route }: RouteParams) {
 
   const compartments = getCompartments(fridgeInfo.compartments[space]);
 
-  const height = space.includes('냉동') ? 'h-4/5' : 'flex-1';
-
   if (!fontsLoaded) return null;
 
   return (
     <SafeBottomAreaView>
       <Container>
         <View
-          style={tw`p-[${scaleH(10)}] gap-[${scaleH(2)}] ${height}
+          style={tw`p-[${scaleH(10)}] gap-[${scaleH(2)}] flex-1
           border border-slate-400 w-full m-auto self-center justify-center rounded-lg bg-neutral-200`}
         >
           {compartments.map((compartment) => (
             <Compartment
               key={compartment.compartmentNum}
-              foodLocation={{ ...compartment, space }}
               moveMode={moveMode}
+              setMoveMode={setMoveMode}
+              foodLocation={{ ...compartment, space }}
               compartmentNumToDrop={compartmentNumToDrop}
               setCompartmentNumToDrop={setCompartmentNumToDrop}
             />

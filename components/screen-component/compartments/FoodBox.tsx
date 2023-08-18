@@ -24,7 +24,7 @@ export default function FoodBox({ food }: Props) {
   return (
     <View
       key={food.id}
-      style={tw`rounded-full border border-indigo-300 gap-1 justify-center items-center flex-row
+      style={tw`rounded-full gap-1 justify-center items-center flex-row
       ${bgColor} h-[${scaleH(28)}px] px-[${scaleH(9)}px py-[${scaleH(3)}px]`}
     >
       <Text fontSize={14} style={tw`text-center text-slate-600 py-0.5`}>

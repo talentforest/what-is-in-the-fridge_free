@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TouchableOpacity } from '../../native-component';
 import { FoodLocation } from '../../../constant/fridgeInfo';
-import { INDIGO } from '../../../constant/colors';
+import { INDIGO, LIGHT_GRAY } from '../../../constant/colors';
 import { FormStep } from '../../../constant/formInfo';
 import AddFoodModal from '../modal/AddFoodModal';
 import Icon from '../../native-component/Icon';
@@ -10,9 +10,10 @@ import tw from 'twrnc';
 interface Props {
   foodLocation?: FoodLocation;
   onPress?: () => void;
+  moveMode: boolean;
 }
 
-export default function AddFoodBtn({ foodLocation, onPress }: Props) {
+export default function AddFoodBtn({ foodLocation, onPress, moveMode }: Props) {
   const [modal, setModal] = useState(false);
 
   const onPressFc = () => {
@@ -24,12 +25,16 @@ export default function AddFoodBtn({ foodLocation, onPress }: Props) {
 
   return (
     <>
-      <TouchableOpacity onPress={onPressFc} style={tw`px-2 pt-1`}>
+      <TouchableOpacity
+        onPress={onPressFc}
+        style={tw`px-2`}
+        disabled={moveMode}
+      >
         <Icon
           type='MaterialCommunityIcons'
           name='plus'
-          size={25}
-          color={INDIGO}
+          size={24}
+          color={moveMode ? LIGHT_GRAY : INDIGO}
         />
       </TouchableOpacity>
       {modal && foodLocation && (
