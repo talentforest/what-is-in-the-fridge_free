@@ -1,10 +1,4 @@
-import {
-  Animated,
-  Easing,
-  GestureResponderEvent,
-  PanResponder,
-  PanResponderGestureState,
-} from 'react-native';
+import { Animated, Easing, PanResponder } from 'react-native';
 import { INDIGO } from '../../../constant/colors';
 import { Food } from '../../../constant/foods';
 import { useEffect, useRef } from 'react';
@@ -21,6 +15,9 @@ interface Props {
   moveMode: boolean;
   setCompartmentNumToDrop: (numToDrop: CompartmentNumToDrop) => void;
   compartmentHeight: number;
+  setSelectedFood: (food: Food) => void;
+  setIsDragging: (isDragging: boolean) => void;
+  setDragPosition: ({ x, y }: { x: number; y: number }) => void;
 }
 
 export default function DraggableFoodBox({
@@ -28,18 +25,17 @@ export default function DraggableFoodBox({
   moveMode,
   setCompartmentNumToDrop,
   compartmentHeight,
+  setSelectedFood,
+  setIsDragging,
+  setDragPosition,
 }: Props) {
   const dispatch = useDispatch();
+
   const rotate = useRef(new Animated.Value(0)).current;
+  const opacity = useRef(new Animated.Value(1)).current;
+
   const headerHeight = useHeaderHeight();
   const startHeight = +(headerHeight + scaleH(10) + scaleH(14)).toFixed(0);
-
-  const animatedReturnPosition = () => {
-    Animated.spring(pan, {
-      toValue: { x: 0, y: 0 },
-      useNativeDriver: true,
-    }).start();
-  };
 
   const animatedRotate = () => {
     Animated.loop(
@@ -72,19 +68,18 @@ export default function DraggableFoodBox({
     ).start();
   };
 
-  const animatedDrag = (
-    event: GestureResponderEvent,
-    gestureState: PanResponderGestureState
-  ) => {
-    Animated.event([null, { dx: pan.x, dy: pan.y }], {
-      useNativeDriver: false,
-    })(event, gestureState);
-  };
-
   const rotateData = rotate.interpolate({
     inputRange: [-1, 0, 1],
     outputRange: ['-2deg', '0deg', '2deg'],
   });
+
+  const animatedOpacity = (opacityValue: number) => {
+    Animated.timing(opacity, {
+      duration: 200,
+      toValue: opacityValue,
+      useNativeDriver: true,
+    }).start();
+  };
 
   useEffect(() => {
     if (moveMode) {
@@ -116,14 +111,32 @@ export default function DraggableFoodBox({
   };
 
   const pan = useRef(new Animated.ValueXY()).current;
+  const animatedReturnPosition = () => {
+    Animated.spring(pan, {
+      toValue: { x: 0, y: 0 },
+      useNativeDriver: true,
+    }).start();
+  };
+
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onStartShouldSetPanResponderCapture: () => true,
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: (event, gestureState) => {
-        animatedDrag(event, gestureState);
-
+      onPanResponderGrant: (_, gestureState) => {
+        setIsDragging(true);
+        animatedOpacity(0.5);
+        setSelectedFood(food);
+        setDragPosition({
+          x: gestureState.moveX - 40,
+          y: gestureState.moveY - 480,
+        });
+      },
+      onPanResponderMove: (_, gestureState) => {
+        setDragPosition({
+          x: gestureState.moveX - 40,
+          y: gestureState.moveY - 480,
+        });
         const compartmentNumToDrop = getCompartmentNum(gestureState.moveY);
         const moveCompartment = compartmentNumToDrop !== food.compartmentNum;
         setCompartmentNumToDrop(
@@ -145,6 +158,8 @@ export default function DraggableFoodBox({
         }
 
         setCompartmentNumToDrop('동일칸');
+        setIsDragging(false);
+        animatedOpacity(1);
       },
     })
   ).current;
@@ -157,7 +172,8 @@ export default function DraggableFoodBox({
           { translateX: pan.x },
           { translateY: pan.y },
         ],
-        borderWidth: 1,
+        opacity,
+        borderWidth: 2,
         borderColor: INDIGO,
         borderRadius: 50,
       }}
