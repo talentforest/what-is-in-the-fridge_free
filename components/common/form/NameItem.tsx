@@ -68,7 +68,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
           {matchedFoods.slice(0, 4).map((food) => (
             <TouchableOpacity
               key={food.id}
-              style={tw`border border-indigo-400 flex-row items-center bg-amber-200 px-3 py-1 gap-1 rounded-full`}
+              style={tw`max-w-full border border-indigo-400 flex-row items-center bg-amber-200 px-3 py-1 gap-1 rounded-full`}
               onPress={() => changeInfo({ name: food.name })}
             >
               <Icon
@@ -77,7 +77,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
                 size={14}
                 color={INDIGO}
               />
-              <Text style={tw`text-indigo-500`} fontSize={12}>
+              <Text style={tw`text-indigo-500 max-w-[96%]`} fontSize={12}>
                 {food.name}
               </Text>
             </TouchableOpacity>

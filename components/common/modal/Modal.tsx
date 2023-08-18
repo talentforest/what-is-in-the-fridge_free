@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Dimensions, SafeAreaView, StyleProp, View } from 'react-native';
+import { Text } from '../../native-component';
 import Modal from 'react-native-modal';
-import Header from './Header';
 import tw from 'twrnc';
 
 interface Props {
@@ -52,12 +52,9 @@ export default function RNModal({
             />
           )}
           {title && (
-            <Header
-              title={title}
-              setModalVisible={() => {
-                setModalVisible(!modalVisible);
-              }}
-            />
+            <Text style={tw`px-2 mb-2`} fontSize={18}>
+              {title}
+            </Text>
           )}
           {children}
         </View>

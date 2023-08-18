@@ -18,7 +18,7 @@ export default function IndicatorExist({ food, size }: Props) {
   return (
     <Text
       style={tw`${existFoodColor(food)}`}
-      fontSize={size === 'sm' ? 12 : 14}
+      fontSize={size === 'sm' ? 12 : 13}
     >
       {!!checkExistFood(food) ? '있음' : '없음'}
     </Text>

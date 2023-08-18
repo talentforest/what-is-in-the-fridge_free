@@ -69,7 +69,6 @@ export default function ShoppingList() {
         <TableContainer>
           <TableHeader
             title='장봐야할 식료품'
-            listLength={shoppingList.length}
             entireChecked={checkedList.length === shoppingList.length}
             onEntirePress={() => onEntireBoxPress(shoppingList)}
             columnTitle='추가'

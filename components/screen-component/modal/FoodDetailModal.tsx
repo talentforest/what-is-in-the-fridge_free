@@ -11,6 +11,7 @@ import Form from '../../common/form/Form';
 import useEditFood from '../../../hooks/useEditFood';
 import useDeleteFood from '../../../hooks/useDeleteFood';
 import tw from 'twrnc';
+import Icon from '../../native-component/Icon';
 
 interface Props {
   modalVisible: boolean;
@@ -56,11 +57,11 @@ export default function FoodDetailModal({
         </View>
       ) : (
         <>
-          <View style={tw`my-3 px-2`}>
-            <View style={tw`items-center gap-3 mb-2 py-2`}>
-              <View>
+          <View style={tw`mb-3 px-2`}>
+            <View style={tw`items-center gap-3 my-2 py-2`}>
+              <View style={tw`border-t border-b border-indigo-400 p-2`}>
                 <Text
-                  style={tw.style(`text-stone-700`, FontGmarketSansBold)}
+                  style={tw.style(`text-stone-800`, FontGmarketSansBold)}
                   fontSize={16}
                 >
                   {editedFood.name}

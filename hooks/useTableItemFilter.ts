@@ -53,5 +53,7 @@ export default function useTableItemFilter() {
     favoriteTableList,
     allExpiredFoodsFilters,
     expiredTableList,
+    getExpiredTableList,
+    getFavoriteTableList,
   };
 }

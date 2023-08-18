@@ -10,6 +10,7 @@ import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import useHandleTableItem from '../hooks/useHandleTableItem';
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useTableItemFilter, {
+  AllFilter,
   FavoriteFoodsFilter,
 } from '../hooks/useTableItemFilter';
 
@@ -34,7 +35,8 @@ export default function FavoriteFoods() {
     currentFilter,
     changeFilter,
     allFavoriteFoodsFilters,
-    favoriteTableList, //
+    favoriteTableList,
+    getFavoriteTableList,
   } = useTableItemFilter();
 
   const {
@@ -78,7 +80,6 @@ export default function FavoriteFoods() {
         <TableContainer>
           <TableHeader
             title='자주 먹는 식료품'
-            listLength={favoriteTableList.length}
             entireChecked={checkedList.length === favoriteTableList.length}
             onEntirePress={() => onEntireBoxPress(favoriteTableList)}
             columnTitle={currentFilter as FavoriteFoodsFilter}
@@ -90,6 +91,7 @@ export default function FavoriteFoods() {
               allFilters={allFavoriteFoodsFilters}
               currentFilter={currentFilter}
               changeFilter={changeFilter}
+              getTableList={getFavoriteTableList}
             />
           )}
 
