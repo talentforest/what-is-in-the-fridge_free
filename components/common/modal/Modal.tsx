@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Dimensions, SafeAreaView, StyleProp, View } from 'react-native';
-import { Text } from '../../native-component';
 import Modal from 'react-native-modal';
+import SwipeHeader from './SwipeHeader';
 import tw from 'twrnc';
 
 interface Props {
@@ -43,20 +43,9 @@ export default function RNModal({
       hideModalContentWhileAnimating={true}
     >
       <SafeAreaView style={tw`justify-end`}>
-        <View
-          style={tw`${bgColor} p-4 pt-2 rounded-2xl max-h-[${MODAL_HEIGHT}px]`}
-        >
-          {animationIn === 'slideInUp' && (
-            <View
-              style={tw`mb-5 bg-slate-400 w-12 self-center h-2 rounded-2xl`}
-            />
-          )}
-          {title && (
-            <Text style={tw`px-2 mb-2`} fontSize={18}>
-              {title}
-            </Text>
-          )}
-          {children}
+        <View style={tw`${bgColor} rounded-2xl max-h-[${MODAL_HEIGHT}px]`}>
+          {animationIn === 'slideInUp' && <SwipeHeader title={title} />}
+          <View style={tw`p-4`}>{children}</View>
         </View>
       </SafeAreaView>
     </Modal>

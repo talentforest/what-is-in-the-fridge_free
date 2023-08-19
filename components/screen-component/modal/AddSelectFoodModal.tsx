@@ -23,12 +23,12 @@ export default function AddSelectFoodModal({
 
   return (
     <RNModal
-      title='식료품 추가'
+      title='장보기 목록 식료품 추가'
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
       <Form
-        editableName={false}
+        title='장보기 목록 식료품 추가'
         items={shoppingListForm as FormLabel[]}
         food={selectedFood}
         changeInfo={onChange}

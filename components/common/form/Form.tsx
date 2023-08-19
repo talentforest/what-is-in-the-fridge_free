@@ -16,6 +16,7 @@ import tw from 'twrnc';
 import FormSectionContainer from './FormSectionContainer';
 
 interface Props {
+  title: '장보기 목록 식료품 추가' | '새로운 식료품 추가' | '식료품 정보 수정';
   items: FormLabel[];
   food: Food;
   changeInfo: (newInfo: { [key: string]: string | boolean }) => void;
@@ -31,6 +32,7 @@ const initialStep = {
 };
 
 export default function Form({
+  title,
   items,
   changeInfo,
   food,
@@ -90,7 +92,7 @@ export default function Form({
   ).current;
 
   return (
-    <View style={tw`mt-[${scaleH(10)}px]`}>
+    <View style={tw`mt-[${scaleH(5)}px]`}>
       <View style={tw`overflow-hidden pb-0`}>
         <Animated.View
           style={{
@@ -128,9 +130,14 @@ export default function Form({
                 <FormItemContainer label='자주 먹는 식품'>
                   <FavoriteItem
                     name={food.name}
-                    favorite={food.favorite}
+                    favoriteState={food.favorite}
                     changeInfo={changeInfo}
+                    disabled={title !== '식료품 정보 수정'}
                   />
+                  {/* 안되어야 하는 조건
+                      1. 자주 먹는 식품일 경우
+                      2. 
+                  */}
                 </FormItemContainer>
               )}
             </FormSectionContainer>
