@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { View, Animated } from 'react-native';
-import { INDIGO } from '../../../constant/colors';
+import { INDIGO, LIGHT_INDIGO } from '../../../constant/colors';
 import { scaleH } from '../../../util';
 import MessageBox from '../boxes/MessageBox';
 import useFavoriteFoods from '../../../hooks/useFavoriteFoods';
@@ -9,16 +9,27 @@ import tw from 'twrnc';
 
 interface Props {
   name: string;
-  favorite: boolean;
+  favoriteState: boolean;
   changeInfo: (newInfo: { [key: string]: boolean }) => void;
+  disabled: boolean;
 }
 
 const MOVED_TRANSLATE_X = 88;
 
-export default function FavoriteItem({ name, favorite, changeInfo }: Props) {
+export default function FavoriteItem({
+  name,
+  favoriteState,
+  changeInfo,
+  disabled,
+}: Props) {
   const { favoriteFoods } = useFavoriteFoods();
+
+  // 식료품 이름을 적었는데 자주 먹는 식료품 이름일 경우
   const isFavoriteFood = favoriteFoods.find((food) => food.name === name);
-  const currFavState = isFavoriteFood ? isFavoriteFood?.favorite : favorite;
+  const currFavState =
+    isFavoriteFood && disabled
+      ? isFavoriteFood?.favorite // 기존 자주 먹는 식료품 상태
+      : favoriteState; // 새로운 식료품 상태
 
   const height = useRef(new Animated.Value(currFavState ? 30 : 0)).current;
   const translateX = useRef(
@@ -65,7 +76,7 @@ export default function FavoriteItem({ name, favorite, changeInfo }: Props) {
     <View style={tw`mt-1 gap-1`}>
       <View
         style={tw`h-[${scaleH(40)}px] 
-        flex-row items-center border border-indigo-500 p-1 rounded-full bg-white self-start`}
+        flex-row items-center border border-indigo-500 p-1 rounded-lg bg-white self-start`}
       >
         <Animated.View
           style={{
@@ -74,8 +85,8 @@ export default function FavoriteItem({ name, favorite, changeInfo }: Props) {
             position: 'absolute',
             left: 4,
             height: '100%',
-            borderRadius: 100,
-            backgroundColor: INDIGO,
+            borderRadius: 10,
+            backgroundColor: isFavoriteFood && disabled ? LIGHT_INDIGO : INDIGO,
           }}
         />
         {['맞아요', '아니에요'].map((btnNm) => (
@@ -84,6 +95,7 @@ export default function FavoriteItem({ name, favorite, changeInfo }: Props) {
             check={btnNm === '맞아요' ? currFavState : !currFavState}
             onPress={() => onTogglePress(btnNm === '맞아요' ? true : false)}
             btnName={btnNm}
+            disabled={isFavoriteFood?.favorite && disabled}
           />
         ))}
       </View>
@@ -97,11 +109,12 @@ export default function FavoriteItem({ name, favorite, changeInfo }: Props) {
       >
         <MessageBox
           message={
-            isFavoriteFood
-              ? '이미 자주 먹는 식료품 목록에 있습니다.'
+            isFavoriteFood && disabled
+              ? '이미 자주 먹는 식료품에 등록되어 있어 변경할 수 없어요.'
+              : isFavoriteFood
+              ? '이미 자주 먹는 식료품에 등록되어 있어요.'
               : '자주 먹는 식료품 목록에 추가됩니다.'
           }
-          color='text-blue-600'
         />
       </Animated.View>
     </View>

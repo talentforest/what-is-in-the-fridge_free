@@ -45,6 +45,7 @@ export default function FoodDetailModal({
       {editing ? (
         <View>
           <Form
+            title='식료품 정보 수정'
             food={editedFood}
             changeInfo={editFoodInfo}
             items={foodForm as FormLabel[]}

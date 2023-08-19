@@ -22,12 +22,13 @@ export default function AddFoodModal({
 
   return (
     <RNModal
-      title='식료품 추가'
+      title='새로운 식료품 추가'
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
       {foodLocation && (
         <Form
+          title='새로운 식료품 추가'
           editableName={true}
           items={foodForm as FormLabel[]}
           food={newFood}
