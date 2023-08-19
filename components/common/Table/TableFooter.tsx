@@ -28,18 +28,18 @@ export default function TableFooter({
   return (
     <View
       style={tw`h-[${scaleH(40)}px]
-      flex-row items-center justify-between gap-2 pl-2`}
+      flex-row items-center justify-between pl-3 pr-1`}
     >
       <Text style={tw`${!!list.length ? 'text-indigo-500' : 'text-slate-500'}`}>
         {list.length}개의 식료품 선택
       </Text>
-      <View style={tw`flex-row items-center gap-2`}>
+      <View style={tw`flex-row items-center gap-1.5`}>
         {/* 장보기 목록 추가 버튼 */}
         {buttons.includes('add-shopping-list') && onAddPress && (
           <TouchableOpacity
             onPress={onAddPress}
             disabled={!list.length}
-            style={tw`p-1`}
+            style={tw`p-2`}
           >
             <Icon
               type='MaterialCommunityIcons'
@@ -55,7 +55,7 @@ export default function TableFooter({
           <TouchableOpacity
             onPress={onDeletePress}
             disabled={!list.length}
-            style={tw`p-1.5`}
+            style={tw`p-2`}
           >
             <Icon
               type='MaterialCommunityIcons'
@@ -71,7 +71,7 @@ export default function TableFooter({
           <TouchableOpacity
             onPress={onDeletePress}
             disabled={!list.length}
-            style={tw`p-1.5`}
+            style={tw`p-2`}
           >
             <Icon
               type='MaterialCommunityIcons'

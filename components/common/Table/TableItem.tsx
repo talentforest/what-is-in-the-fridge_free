@@ -26,8 +26,7 @@ export default function TableItem({
     <TouchableOpacity
       disabled={disabled}
       onPress={() => onCheckBoxPress(food)}
-      style={tw`flex-row gap-0 border-b border-slate-300 items-center justify-between 
-      h-[${scaleH(48)}px]`}
+      style={tw`flex-row items-center justify-between h-[${scaleH(45)}px]`}
     >
       <CheckBox checked={!!isCheckedItem(food.id)} activeColor={BLUE} />
       <Text

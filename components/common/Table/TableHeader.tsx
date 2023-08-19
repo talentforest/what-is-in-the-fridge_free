@@ -4,6 +4,7 @@ import { DEEP_INDIGO, INACTIVE_COLOR } from '../../../constant/colors';
 import { FavoriteFoodsFilter } from '../../../hooks/useTableItemFilter';
 import CheckBox from '../boxes/CheckBox';
 import tw from 'twrnc';
+import { useSelector } from '../../../redux/hook';
 
 interface Props {
   title: string;
@@ -18,20 +19,26 @@ export default function TableHeader({
   onEntirePress,
   columnTitle,
 }: Props) {
+  const { shoppingList } = useSelector((state) => state.shoppingList);
+
   return (
-    <View
-      style={tw`
-      -mx-2 px-4 pt-3 gap-1 border-slate-300 rounded-t-lg flex-row items-center justify-between`}
-    >
+    <View style={tw`gap-1 flex-row items-center justify-between`}>
       <TouchableOpacity onPress={onEntirePress}>
         <CheckBox
           checked={entireChecked}
           activeColor={entireChecked ? DEEP_INDIGO : INACTIVE_COLOR}
         />
       </TouchableOpacity>
-      <Text style={tw`text-slate-800 flex-1`}>{title}</Text>
-      <View style={tw`justify-end flex-row items-center gap-0.5 rounded-full`}>
-        <Text style={tw`text-slate-500`}>{columnTitle}</Text>
+      <Text style={tw`text-slate-800`}>{title}</Text>
+      {title === '장봐야할 식료품' && (
+        <Text style={tw`text-slate-500`}>{shoppingList.length}개</Text>
+      )}
+      <View
+        style={tw`flex-1 justify-end flex-row items-center gap-0.5 rounded-full`}
+      >
+        <Text style={tw`text-slate-500`} fontSize={13}>
+          {columnTitle}
+        </Text>
       </View>
     </View>
   );

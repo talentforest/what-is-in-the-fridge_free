@@ -1,3 +1,4 @@
+import { View } from 'react-native';
 import { SafeBottomAreaView } from '../components/native-component';
 import { useDispatch } from '../redux/hook';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
@@ -13,6 +14,7 @@ import TableHeader from '../components/common/table/TableHeader';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
 import TableFilters from '../components/common/table/TableFilters';
+import tw from 'twrnc';
 // import {
 //   BannerAd,
 //   BannerAdSize,
@@ -32,21 +34,24 @@ export default function ExpiredFoods() {
 
   const {
     checkedList,
+    setCheckedList,
     onEntireBoxPress,
     onCheckBoxPress,
-    isCheckedItem, //
+    isCheckedItem,
+    checkedFoodNameList,
   } = useHandleCheckList();
 
   const deleteAlertGuide = {
-    title: '유통기한 주의 식료품 삭제',
-    desc: `총 ${checkedList.length}개의 식료품을 냉장고에서 삭제하시겠습니까?`,
-    defaultBtnText: '삭제',
+    title: '유통기한 주의 식료품 제거',
+    desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 냉장고에서 제거하시겠습니까?`,
+    defaultBtnText: '제거',
     onPress: (filteredArr: Food[]) => dispatch(setAllFoods(filteredArr)),
   };
 
   const { onDeletePress } = useHandleTableItem({
     deleteAlertGuide,
     checkedList,
+    setCheckedList,
   });
 
   return (
@@ -54,22 +59,27 @@ export default function ExpiredFoods() {
       <Container>
         {/* 전체 표 */}
         <TableContainer>
-          <TableHeader
-            title={`유통기한 주의 식료품`}
-            entireChecked={checkedList.length === expiredTableList.length}
-            onEntirePress={() => onEntireBoxPress(expiredTableList)}
-            columnTitle='유통기한순'
-          />
-
-          {/* 필터 */}
-          {!!expiredTableList && (
-            <TableFilters
-              allFilters={allExpiredFoodsFilters}
-              currentFilter={currentFilter}
-              changeFilter={changeFilter}
-              getTableList={getExpiredTableList}
+          <View style={tw`p-3`}>
+            <TableHeader
+              title={`유통기한 주의 식료품`}
+              entireChecked={
+                checkedList.length === expiredTableList.length &&
+                !!checkedList.length
+              }
+              onEntirePress={() => onEntireBoxPress(expiredTableList)}
+              columnTitle='유통기한순'
             />
-          )}
+
+            {/* 필터 */}
+            {!!expiredTableList && (
+              <TableFilters
+                allFilters={allExpiredFoodsFilters}
+                currentFilter={currentFilter}
+                changeFilter={changeFilter}
+                getTableList={getExpiredTableList}
+              />
+            )}
+          </View>
 
           {/* 식료품 리스트 */}
           <TableBody

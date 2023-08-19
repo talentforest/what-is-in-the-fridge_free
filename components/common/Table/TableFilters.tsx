@@ -30,9 +30,7 @@ export default function TableFilters({
   };
 
   return (
-    <View
-      style={tw`border-b-2 border-slate-300 flex-row flex-wrap -mx-2 p-2 gap-1`}
-    >
+    <View style={tw`mt-2 flex-row flex-wrap gap-1`}>
       {allFilters.map((filter) => (
         <TouchableOpacity
           onPress={() => changeFilter(filter)}
