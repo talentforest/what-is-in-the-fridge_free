@@ -1,4 +1,4 @@
-import { FlatList, ListRenderItem } from 'react-native';
+import { FlatList, ListRenderItem, View } from 'react-native';
 import { Food } from '../../../constant/foods';
 import tw from 'twrnc';
 
@@ -14,8 +14,11 @@ export default function TableList({ list, renderItem }: Props) {
       showsVerticalScrollIndicator={false}
       data={list}
       renderItem={renderItem}
-      style={tw`flex-1 bg-stone-100 mt-3`}
-      contentContainerStyle={tw`px-2`}
+      style={tw`flex-1 bg-stone-100 border-t-2 border-b-2 border-slate-300`}
+      contentContainerStyle={tw`px-3 pb-3`}
+      ItemSeparatorComponent={() => (
+        <View style={tw`border-t border-slate-300`} />
+      )}
     />
   );
 }

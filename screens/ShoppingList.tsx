@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   addToShoppingList,
@@ -8,6 +8,8 @@ import { KeyboardAvoidingView } from '../components/native-component';
 import { useSelector } from '../redux/hook';
 import { Food, initialFoodInfo } from '../constant/foods';
 import { FormStep } from '../constant/formInfo';
+import { useFocusEffect } from '@react-navigation/native';
+import { View } from 'react-native';
 import UUIDGenerator from 'react-native-uuid';
 
 import useHandleCheckList from '../hooks/useHandleCheckList';
@@ -22,6 +24,8 @@ import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
 import TextInputRoundedBox from '../components/common/boxes/TextInputRoundedBox';
 
+import tw from 'twrnc';
+
 export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
   const [keyword, setKeyword] = useState('');
@@ -33,14 +37,22 @@ export default function ShoppingList() {
 
   const {
     checkedList,
+    setCheckedList,
     onEntireBoxPress,
     onCheckBoxPress,
-    isCheckedItem, //
+    isCheckedItem,
+    checkedFoodNameList,
   } = useHandleCheckList();
+
+  useFocusEffect(
+    useCallback(() => {
+      setCheckedList([]);
+    }, [])
+  );
 
   const deleteAlertGuide = {
     title: '식료품 삭제',
-    desc: `총 ${checkedList.length}개의 식료품을 목록에서 삭제하시겠습니까?`,
+    desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 장보기 목록에서 삭제하시겠습니까?`,
     defaultBtnText: '삭제',
     onPress: (filteredArr: Food[]) => dispatch(setShoppingList(filteredArr)),
   };
@@ -48,6 +60,7 @@ export default function ShoppingList() {
   const { onDeletePress, onAddToFridgePress } = useHandleTableItem({
     deleteAlertGuide,
     checkedList,
+    setCheckedList,
     setModalVisible,
   });
 
@@ -67,12 +80,17 @@ export default function ShoppingList() {
       <Container>
         {/* 장보기 목록 */}
         <TableContainer>
-          <TableHeader
-            title='장봐야할 식료품'
-            entireChecked={checkedList.length === shoppingList.length}
-            onEntirePress={() => onEntireBoxPress(shoppingList)}
-            columnTitle='추가'
-          />
+          <View style={tw`p-3`}>
+            <TableHeader
+              title='장봐야할 식료품'
+              entireChecked={
+                checkedList.length === shoppingList.length &&
+                !!checkedList.length
+              }
+              onEntirePress={() => onEntireBoxPress(shoppingList)}
+              columnTitle='추가'
+            />
+          </View>
 
           <TableBody
             list={shoppingList}

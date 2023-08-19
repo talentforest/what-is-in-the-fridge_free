@@ -67,9 +67,13 @@ export default function TableBody({
           )}
         />
       ) : (
-        <Text style={tw`text-slate-500 text-center mt-22 flex-1`}>
-          식료품이 없습니다.
-        </Text>
+        <View
+          style={tw`bg-stone-100 border-t-2 border-b-2 border-slate-300 flex-1`}
+        >
+          <Text style={tw`text-slate-500 text-center mt-22 flex-1`}>
+            식료품이 없습니다.
+          </Text>
+        </View>
       )}
     </>
   );
