@@ -57,7 +57,6 @@ export default function useHandleTableItem({
   const onAddShoppingListPress = () => {
     if (checkedList.length === 0) return;
     dispatch(addItemsToShoppingList(checkedList));
-
     const foodNameList = checkedList.map((food) => food.name).join(', ');
     if (setCheckedList) {
       return Alert.alert(
