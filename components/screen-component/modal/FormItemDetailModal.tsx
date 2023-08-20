@@ -36,25 +36,33 @@ export default function FormItemDetailModal({
     >
       <View style={tw`mt-3 p-2`}>
         <Text style={tw.style('text-indigo-500', FontGmarketSansBold)}>
-          {title}
+          {title}{' '}
+          {title === '자주 먹는 식료품에서 선택' && (
+            <Text style={tw`text-slate-600 mt-3`} fontSize={12}>
+              (가나다 순)
+            </Text>
+          )}
         </Text>
-        {title === '자주 먹는 식료품에서 선택' && (
-          <Text style={tw`text-slate-500 mt-3`} fontSize={12}>
-            - 가나다 순
-          </Text>
-        )}
         <ScrollView
           style={tw`max-h-100 mt-3`}
           contentContainerStyle={tw`gap-4.5 py-2`}
         >
           {title === '자주 먹는 식료품에서 선택' &&
-            sortedAllFavFoods.map((name: string) => (
-              <CheckBoxItem
-                key={name}
-                onPress={() => onCheckBoxPress(name)}
-                checked={name === currentChecked}
-                title={name}
-              />
+            (sortedAllFavFoods.length !== 0 ? (
+              sortedAllFavFoods.map((name: string) => (
+                <CheckBoxItem
+                  key={name}
+                  onPress={() => onCheckBoxPress(name)}
+                  checked={name === currentChecked}
+                  title={name}
+                />
+              ))
+            ) : (
+              <View style={tw`pt-3 pb-6 items-center`}>
+                <Text style={tw`text-slate-600`}>
+                  아직 자주 먹는 식료품이 없습니다.
+                </Text>
+              </View>
             ))}
           {title === '카테고리 선택' &&
             foodCategories.map(({ category }) => (

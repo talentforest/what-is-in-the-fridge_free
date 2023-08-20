@@ -1,5 +1,5 @@
 import { Platform, StatusBar } from 'react-native';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { getStatusBarHeight } from 'react-native-safearea-height';
 
 export const PlatformIOS = Platform.OS === 'ios';
 
