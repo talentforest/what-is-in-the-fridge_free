@@ -15,12 +15,12 @@ const shoppingListSlice = createSlice({
     },
     addItemsToShoppingList: (state, action: { payload: Food[] }) => {
       state.shoppingList = deduplicate([
-        ...state.shoppingList,
         ...action.payload,
+        ...state.shoppingList,
       ]);
     },
     addToShoppingList: (state, action: { payload: Food }) => {
-      state.shoppingList = deduplicate([...state.shoppingList, action.payload]);
+      state.shoppingList = deduplicate([action.payload, ...state.shoppingList]);
     },
     removeFromShoppingList: (state, action: { payload: { name: string } }) => {
       state.shoppingList = state.shoppingList.filter(

@@ -1,6 +1,7 @@
 import { FlatList, ListRenderItem, View } from 'react-native';
 import { Food } from '../../../constant/foods';
 import tw from 'twrnc';
+import { useRef } from 'react';
 
 interface Props {
   list: Food[];
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export default function TableList({ list, renderItem }: Props) {
+  const flatListRef = useRef<any>();
+
   return (
     <FlatList
       keyExtractor={(item) => item.id}
