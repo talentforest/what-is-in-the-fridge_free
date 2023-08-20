@@ -76,7 +76,7 @@ export default function FavoriteItem({
     <View style={tw`mt-1 gap-1`}>
       <View
         style={tw`h-[${scaleH(40)}px] 
-        flex-row items-center border border-indigo-500 p-1 rounded-lg bg-white self-start`}
+        flex-row items-center border border-indigo-500 p-1 rounded-full bg-white self-start`}
       >
         <Animated.View
           style={{
@@ -85,7 +85,7 @@ export default function FavoriteItem({
             position: 'absolute',
             left: 4,
             height: '100%',
-            borderRadius: 10,
+            borderRadius: 100,
             backgroundColor: isFavoriteFood && disabled ? LIGHT_INDIGO : INDIGO,
           }}
         />
