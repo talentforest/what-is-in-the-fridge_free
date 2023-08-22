@@ -9,8 +9,9 @@ import {
   HEADER_BGCOLOR,
   TAB_BG_COLOR,
 } from '../constant/colors';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions } from 'react-native';
 import { responsiveFontSize } from '../util';
+import { PlatformIOS } from '../constant/statusBarHeight';
 import Home from '../screens/Home';
 import ShoppingList from '../screens/ShoppingList';
 import MyFridge from '../screens/MyFridge';
@@ -23,32 +24,32 @@ export type RootTabParamList = {
 };
 
 const Tab = createBottomTabNavigator();
+
 const DEVICE_HEIGHT = Dimensions.get('screen').height;
-const PLATFORM_TAB_HEIGHT = Platform.OS === 'android' ? 65 : 100;
+const PLATFORM_TAB_HEIGHT = PlatformIOS ? 100 : DEVICE_HEIGHT / 12;
+const TAB_HEIGHT =
+  DEVICE_HEIGHT < 700 ? DEVICE_HEIGHT / 10 : PLATFORM_TAB_HEIGHT;
 
 const tabBarOptions = {
   tabBarStyle: {
     backgroundColor: TAB_BG_COLOR,
-    height: DEVICE_HEIGHT < 700 ? DEVICE_HEIGHT / 10 : PLATFORM_TAB_HEIGHT,
+    height: TAB_HEIGHT,
   },
-  tabBarItemStyle: {
-    margin: 5,
-    paddingTop: 10,
-    gap: 10,
-  },
+  tabBarItemStyle: {},
   tabBarActiveTintColor: DEEP_YELLOW,
   tabBarInactiveTintColor: '#fff',
   tabBarIconStyle: {
     flex: 1,
   },
   tabBarLabelStyle: {
-    flex: 1,
+    paddingBottom: 12,
     fontSize: responsiveFontSize(10),
     ...FontGmarketSansRegular,
   },
 };
 
 const headerOptions: BottomTabNavigationOptions = {
+  tabBarHideOnKeyboard: PlatformIOS ? false : true,
   headerShown: true,
   headerTintColor: DEEP_GRAY,
   headerShadowVisible: false,
@@ -56,7 +57,7 @@ const headerOptions: BottomTabNavigationOptions = {
     backgroundColor: HEADER_BGCOLOR,
   },
   headerTitleStyle: {
-    fontSize: responsiveFontSize(18),
+    fontSize: responsiveFontSize(16),
     ...FontGmarketSansBold,
   },
   headerTitleAlign: 'left',
@@ -102,6 +103,6 @@ export default function MyTabs() {
 
 export function TabIcon({ name, color }: { name: string; color: string }) {
   return (
-    <Icon type='MaterialCommunityIcons' name={name} color={color} size={18} />
+    <Icon type='MaterialCommunityIcons' name={name} color={color} size={16} />
   );
 }
