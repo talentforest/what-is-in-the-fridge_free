@@ -34,7 +34,7 @@ const options: NativeStackNavigationOptions = {
   headerShadowVisible: false,
   headerStyle: { backgroundColor: HEADER_BGCOLOR },
   headerTitleStyle: {
-    fontSize: responsiveFontSize(17),
+    fontSize: responsiveFontSize(16),
     ...FontGmarketSansBold,
   },
   headerTitleAlign: 'center',

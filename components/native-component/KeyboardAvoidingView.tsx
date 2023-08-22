@@ -8,25 +8,15 @@ interface Props {
 }
 
 export function KeyboardAvoidingView({ children }: Props) {
+  const iosOffset = 40 + (statusBarHeight || 0);
+
   return (
-    <>
-      {PlatformIOS ? (
-        <RNKeyboardAvoidingView
-          behavior='padding'
-          style={tw`flex-1 bg-blue-50`}
-          keyboardVerticalOffset={40 + (statusBarHeight || 0)}
-        >
-          {children}
-        </RNKeyboardAvoidingView>
-      ) : (
-        <RNKeyboardAvoidingView
-          behavior='height'
-          style={tw`flex-1 bg-blue-50 border`}
-          keyboardVerticalOffset={-200}
-        >
-          {children}
-        </RNKeyboardAvoidingView>
-      )}
-    </>
+    <RNKeyboardAvoidingView
+      behavior={PlatformIOS ? 'padding' : 'height'}
+      keyboardVerticalOffset={PlatformIOS ? iosOffset : 0}
+      style={tw`flex-1 bg-blue-50`}
+    >
+      {children}
+    </RNKeyboardAvoidingView>
   );
 }
