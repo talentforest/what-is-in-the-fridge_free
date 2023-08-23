@@ -1,4 +1,4 @@
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions } from 'react-native';
 
 const { width: DeviceWidth } = Dimensions.get('screen');
 
@@ -13,7 +13,5 @@ export const responsiveFontSize = (size: number) => {
   const ratio = windowWidth / baseWidth;
   const responsiveSize = Math.round(size * ratio);
 
-  return Platform.OS === 'ios'
-    ? responsiveSize
-    : Math.round(responsiveSize / 1.1);
+  return responsiveSize;
 };

@@ -7,11 +7,13 @@ import { useSelector } from '../redux/hook';
 import { getCompartments, scaleH } from '../util';
 import { CompartmentNum, Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
-import { SafeBottomAreaView } from '../components/native-component';
+import { SafeBottomAreaView, Text } from '../components/native-component';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import Container from '../components/common/layout/Container';
 import HeaderBtn from '../components/common/buttons/HeaderBtn';
 import tw from 'twrnc';
+import HeaderTitle from '../components/common/HeaderTitle';
+
 // import {
 //   BannerAd,
 //   BannerAdSize,
@@ -36,7 +38,7 @@ export default function Compartments({ route }: RouteParams) {
 
   useEffect(() => {
     navigation.setOptions({
-      title: space,
+      headerTitle: () => <HeaderTitle title={space} />,
       headerRight: () => (
         <HeaderBtn
           iconName={moveMode ? 'check' : 'drag'}

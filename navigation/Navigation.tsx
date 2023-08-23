@@ -3,9 +3,7 @@ import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
-import { FontGmarketSansBold } from '../constant/fonts';
 import { DEEP_GRAY, HEADER_BGCOLOR } from '../constant/colors';
-import { responsiveFontSize } from '../util';
 import MyTabs, { RootTabParamList } from './MyTabs';
 import React from 'react';
 import Compartments from '../screens/Compartments';
@@ -13,6 +11,7 @@ import FavoriteFoods from '../screens/FavoriteFoods';
 import ExpiredFoods from '../screens/ExpiredFoods';
 import BackBtn from '../components/common/buttons/BackBtn';
 import FridgeSetting from '../screens/FridgeSetting';
+import HeaderTitle from '../components/common/HeaderTitle';
 
 export type RootStackParamList = {
   MyTabs: undefined;
@@ -33,12 +32,9 @@ const options: NativeStackNavigationOptions = {
   headerTintColor: DEEP_GRAY,
   headerShadowVisible: false,
   headerStyle: { backgroundColor: HEADER_BGCOLOR },
-  headerTitleStyle: {
-    fontSize: responsiveFontSize(16),
-    ...FontGmarketSansBold,
-  },
   headerTitleAlign: 'center',
   headerLeft: () => <BackBtn />,
+  headerBackVisible: false, // android
 };
 
 const Navigation = () => {
@@ -52,24 +48,31 @@ const Navigation = () => {
       <Stack.Screen
         name='Compartments'
         component={Compartments}
-        options={{
-          ...options,
-        }}
+        options={options}
       />
       <Stack.Screen
         name='FavoriteFoods'
         component={FavoriteFoods}
-        options={{ ...options, title: '자주 먹는 식료품 관리' }}
+        options={{
+          ...options,
+          headerTitle: () => <HeaderTitle title='자주 먹는 식료품 관리' />,
+        }}
       />
       <Stack.Screen
         name='ExpiredFoods'
         component={ExpiredFoods}
-        options={{ ...options, title: '유통기한 주의 식료품 관리' }}
+        options={{
+          ...options,
+          headerTitle: () => <HeaderTitle title='유통기한 주의 식료품 관리' />,
+        }}
       />
       <Stack.Screen
         name='FridgeSetting'
         component={FridgeSetting}
-        options={{ ...options, title: '나의 냉장고 설정' }}
+        options={{
+          ...options,
+          headerTitle: () => <HeaderTitle title='나의 냉장고 설정' />,
+        }}
       />
     </Stack.Navigator>
   );
