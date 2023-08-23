@@ -68,7 +68,12 @@ export default function Form({
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: (_, { dx, dy }) => {
+        return dx > 2 || dx < -2 || dy > 2 || dy < -2;
+      },
+      onMoveShouldSetPanResponderCapture: (_, { dx, dy }) => {
+        return dx > 2 || dx < -2 || dy > 2 || dy < -2;
+      },
       onPanResponderGrant: () => {
         stepTranslateX.setValue(-FORM_WIDTH * (currentStepRef.current.id - 1));
       },
