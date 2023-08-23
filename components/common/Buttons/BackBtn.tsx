@@ -12,7 +12,7 @@ export default function BackBtn() {
         navigation.goBack();
       }}
     >
-      <Icon type='Feather' name='chevron-left' size={24} color={GRAY} />
+      <Icon type='Feather' name='chevron-left' size={20} color={GRAY} />
     </TouchableOpacity>
   );
 }

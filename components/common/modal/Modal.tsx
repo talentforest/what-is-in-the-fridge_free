@@ -5,17 +5,19 @@ import SwipeHeader from './SwipeHeader';
 import tw from 'twrnc';
 
 interface Props {
-  style?: StyleProp<any>;
-  title?: string;
-  bgColor?: string;
-  children: ReactNode;
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
+  children: ReactNode;
+  title?: string;
+  swipe?: boolean;
+  style?: StyleProp<any>;
+  bgColor?: string;
   animationIn?: 'fadeIn' | 'slideInUp';
   animationOut?: 'fadeOut' | 'slideOutDown';
 }
 
 export default function RNModal({
+  swipe,
   style,
   title,
   bgColor = 'bg-stone-100',
@@ -31,20 +33,21 @@ export default function RNModal({
 
   return (
     <Modal
-      swipeDirection={'down'}
+      swipeDirection={swipe ? ['down'] : undefined}
       onSwipeComplete={closeModal}
+      propagateSwipe={true}
       animationIn={animationIn}
       animationOut={animationOut}
       statusBarTranslucent={true}
       onBackdropPress={closeModal}
       isVisible={modalVisible}
       style={tw.style(`m-0 justify-end`, style)}
-      propagateSwipe={true}
-      hideModalContentWhileAnimating={true}
     >
       <SafeAreaView style={tw`justify-end`}>
         <View style={tw`${bgColor} rounded-2xl max-h-[${MODAL_HEIGHT}px]`}>
-          {animationIn === 'slideInUp' && <SwipeHeader title={title} />}
+          {animationIn === 'slideInUp' && (
+            <SwipeHeader title={title} closeModal={closeModal} />
+          )}
           <View style={tw`p-4`}>{children}</View>
         </View>
       </SafeAreaView>

@@ -6,6 +6,7 @@ import MessageBox from '../boxes/MessageBox';
 import useFavoriteFoods from '../../../hooks/useFavoriteFoods';
 import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
+import { PlatformIOS } from '../../../constant/statusBarHeight';
 
 interface Props {
   name: string;

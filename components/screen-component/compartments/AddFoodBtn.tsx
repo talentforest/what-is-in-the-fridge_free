@@ -27,13 +27,13 @@ export default function AddFoodBtn({ foodLocation, onPress, moveMode }: Props) {
     <>
       <TouchableOpacity
         onPress={onPressFc}
-        style={tw`px-2`}
+        style={tw`pl-2`}
         disabled={moveMode}
       >
         <Icon
           type='MaterialCommunityIcons'
           name='plus'
-          size={24}
+          size={22}
           color={moveMode ? LIGHT_GRAY : INDIGO}
         />
       </TouchableOpacity>

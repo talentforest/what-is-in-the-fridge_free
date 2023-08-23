@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   addToShoppingList,
@@ -25,6 +25,7 @@ import TableFooter from '../components/common/table/TableFooter';
 import TextInputRoundedBox from '../components/common/boxes/TextInputRoundedBox';
 
 import tw from 'twrnc';
+import { scaleH } from '../util';
 
 export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
@@ -80,7 +81,7 @@ export default function ShoppingList() {
       <Container>
         {/* 장보기 목록 */}
         <TableContainer>
-          <View style={tw`p-3`}>
+          <View style={tw`px-3 py-2 min-h-[${scaleH(40)}px] justify-center`}>
             <TableHeader
               title='장봐야할 식료품'
               entireChecked={

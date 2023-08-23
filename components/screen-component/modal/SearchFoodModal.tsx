@@ -31,6 +31,7 @@ export default function SearchFoodModal({
 
   return (
     <RNModal
+      swipe={true}
       title='나의 식료품 찾기'
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}

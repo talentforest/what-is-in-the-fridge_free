@@ -21,6 +21,7 @@ import TableFilters from '../components/common/table/TableFilters';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
 import tw from 'twrnc';
+import { scaleH } from '../util';
 // import {
 //   BannerAd,
 //   BannerAdSize,
@@ -80,7 +81,7 @@ export default function FavoriteFoods() {
     <SafeBottomAreaView>
       <Container>
         <TableContainer>
-          <View style={tw`p-3`}>
+          <View style={tw`px-3 py-2 min-h-[${scaleH(40)}px] justify-center`}>
             <TableHeader
               title='자주 먹는 식료품'
               entireChecked={

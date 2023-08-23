@@ -37,6 +37,7 @@ export default function FoodDetailModal({
 
   return (
     <RNModal
+      swipe={editing ? false : true}
       title={editing ? '식료품 정보 수정' : '식료품 상세 정보'}
       bgColor={editing ? 'bg-blue-50' : 'bg-white'}
       setModalVisible={setModalVisible}
