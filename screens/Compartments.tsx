@@ -7,7 +7,7 @@ import { useSelector } from '../redux/hook';
 import { getCompartments, scaleH } from '../util';
 import { CompartmentNum, Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
-import { SafeBottomAreaView, Text } from '../components/native-component';
+import { SafeBottomAreaView } from '../components/native-component';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import Container from '../components/common/layout/Container';
 import HeaderBtn from '../components/common/buttons/HeaderBtn';

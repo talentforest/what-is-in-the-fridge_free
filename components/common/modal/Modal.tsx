@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Dimensions, SafeAreaView, StyleProp, View } from 'react-native';
+import { PlatformIOS } from '../../../constant/statusBarHeight';
 import Modal from 'react-native-modal';
 import SwipeHeader from './SwipeHeader';
 import tw from 'twrnc';
@@ -7,9 +8,8 @@ import tw from 'twrnc';
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
-  children: ReactNode;
   title?: string;
-  swipe?: boolean;
+  children: ReactNode;
   style?: StyleProp<any>;
   bgColor?: string;
   animationIn?: 'fadeIn' | 'slideInUp';
@@ -17,7 +17,6 @@ interface Props {
 }
 
 export default function RNModal({
-  swipe,
   style,
   title,
   bgColor = 'bg-stone-100',
@@ -33,18 +32,24 @@ export default function RNModal({
 
   return (
     <Modal
-      swipeDirection={swipe ? ['down'] : undefined}
+      isVisible={modalVisible}
+      onBackdropPress={closeModal}
+      swipeDirection={['down']}
       onSwipeComplete={closeModal}
       propagateSwipe={true}
       animationIn={animationIn}
       animationOut={animationOut}
       statusBarTranslucent={true}
-      onBackdropPress={closeModal}
-      isVisible={modalVisible}
       style={tw.style(`m-0 justify-end`, style)}
     >
       <SafeAreaView style={tw`justify-end`}>
-        <View style={tw`${bgColor} rounded-2xl max-h-[${MODAL_HEIGHT}px]`}>
+        <View
+          style={tw`${bgColor} ${
+            PlatformIOS || animationIn === 'fadeIn'
+              ? 'rounded-2xl'
+              : 'rounded-t-2xl'
+          } max-h-[${MODAL_HEIGHT}px]`}
+        >
           {animationIn === 'slideInUp' && (
             <SwipeHeader title={title} closeModal={closeModal} />
           )}
