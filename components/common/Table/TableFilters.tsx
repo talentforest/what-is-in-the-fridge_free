@@ -11,6 +11,7 @@ interface Props {
   currentFilter: AllFilter;
   changeFilter: (filter: any) => void;
   getTableList?: (filter: any) => Food[];
+  setCheckedList: (foods: Food[]) => void;
 }
 
 export default function TableFilters({
@@ -18,6 +19,7 @@ export default function TableFilters({
   currentFilter,
   changeFilter,
   getTableList,
+  setCheckedList,
 }: Props) {
   const activeBoxStyle = (filter: AllFilter) => {
     return filter === currentFilter
@@ -33,7 +35,10 @@ export default function TableFilters({
     <View style={tw`mt-2 flex-row flex-wrap gap-1`}>
       {allFilters.map((filter) => (
         <TouchableOpacity
-          onPress={() => changeFilter(filter)}
+          onPress={() => {
+            changeFilter(filter);
+            setCheckedList([]);
+          }}
           key={filter}
           style={tw`flex-row items-center gap-0.5 border py-1 px-2.5 rounded-full 
           ${activeBoxStyle(filter)}`}

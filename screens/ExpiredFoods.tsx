@@ -78,6 +78,7 @@ export default function ExpiredFoods() {
                 currentFilter={currentFilter}
                 changeFilter={changeFilter}
                 getTableList={getExpiredTableList}
+                setCheckedList={setCheckedList}
               />
             )}
           </View>
