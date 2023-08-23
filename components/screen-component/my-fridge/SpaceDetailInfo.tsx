@@ -29,7 +29,7 @@ export default function SpaceDetailInfo({ space }: { space: Space }) {
   };
 
   return (
-    <View style={tw`gap-4 flex-1`}>
+    <View style={tw`gap-3 flex-1`}>
       {spaceInfo.map(({ name, foodList, activeColor }) => (
         <View key={name} style={tw`flex-row items-center justify-between`}>
           <Text style={tw`${getColor(foodList(space).length, activeColor)}`}>

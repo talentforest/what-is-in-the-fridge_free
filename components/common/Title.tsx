@@ -20,7 +20,7 @@ export default function Title({ title, iconName }: Props) {
           color={'#fff'}
         />
       )}
-      <Text fontSize={17} style={tw.style(`text-white`, FontGmarketSansBold)}>
+      <Text fontSize={16} style={tw.style(`text-white`, FontGmarketSansBold)}>
         {title}
       </Text>
     </View>

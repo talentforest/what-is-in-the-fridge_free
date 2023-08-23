@@ -20,7 +20,7 @@ export default function FridgeSpace({ space }: { space: Space }) {
 
       {/* 들어가기 버튼 */}
       <View
-        style={tw`flex-row items-center self-end border border-slate-300 px-3.5 py-1.5 rounded-full bg-amber-300`}
+        style={tw`flex-row items-center self-end border border-slate-300 pl-3.5 pr-1.5 py-1 rounded-full bg-amber-300`}
       >
         <Text
           fontSize={12}
@@ -28,7 +28,12 @@ export default function FridgeSpace({ space }: { space: Space }) {
         >
           들어가기
         </Text>
-        <Icon name='enter' type='Ionicons' size={16} color={BLUE} />
+        <Icon
+          name='chevron-right'
+          type='MaterialCommunityIcons'
+          size={16}
+          color={BLUE}
+        />
       </View>
     </View>
   );

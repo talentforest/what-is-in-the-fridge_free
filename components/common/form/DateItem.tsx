@@ -43,7 +43,7 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
           pointerEvents='none'
           style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
         />
-        <Icon type='AntDesign' name='calendar' size={18} color={INDIGO} />
+        <Icon type='AntDesign' name='calendar' size={16} color={INDIGO} />
       </TouchableOpacity>
 
       {/* 캘린더 픽커 모달 */}

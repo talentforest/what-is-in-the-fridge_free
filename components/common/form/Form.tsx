@@ -134,10 +134,6 @@ export default function Form({
                     changeInfo={changeInfo}
                     disabled={title !== '식료품 정보 수정'}
                   />
-                  {/* 안되어야 하는 조건
-                      1. 자주 먹는 식품일 경우
-                      2. 
-                  */}
                 </FormItemContainer>
               )}
             </FormSectionContainer>

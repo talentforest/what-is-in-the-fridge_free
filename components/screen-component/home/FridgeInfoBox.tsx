@@ -15,7 +15,7 @@ export default function FridgeInfoBox({ asset, name, foodLength }: Props) {
   return (
     <Box bgColor='bg-amber-300'>
       <Text
-        fontSize={17}
+        fontSize={16}
         style={tw.style(`text-blue-600`, FontGmarketSansBold)}
       >
         {name}
@@ -29,14 +29,18 @@ export default function FridgeInfoBox({ asset, name, foodLength }: Props) {
         )}
 
         <View style={tw`flex-row items-end gap-0.5 h-full`}>
-          <Text style={tw`text-slate-600 mb-0.5`}>총 : </Text>
+          <Text style={tw`text-slate-600 mb-0.5`} fontSize={16}>
+            총 :{' '}
+          </Text>
           <Text
-            fontSize={30}
+            fontSize={26}
             style={tw.style(`text-blue-600 pt-4`, FontGmarketSansBold)}
           >
             {foodLength}
           </Text>
-          <Text style={tw`text-white mb-0.5`}>개</Text>
+          <Text style={tw`text-slate-600 mb-0.5`} fontSize={16}>
+            개
+          </Text>
         </View>
       </View>
     </Box>

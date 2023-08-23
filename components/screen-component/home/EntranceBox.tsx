@@ -3,7 +3,7 @@ import { Text } from '../../native-component';
 import { Food } from '../../../constant/foods';
 import { RouteName } from '../../../navigation/Navigation';
 import { useState } from 'react';
-import { LIGHT_YELLOW } from '../../../constant/colors';
+import { LIGHT_YELLOW, YELLOW } from '../../../constant/colors';
 import { scaleH } from '../../../util';
 import FoodTag from '../../common/boxes/FoodBox';
 import Title from '../../common/Title';
@@ -43,7 +43,9 @@ export default function EntranceBox({ info, foods }: Props) {
   return (
     <Box bgColor={bgColor}>
       <Title title={title} iconName={iconName} />
-      <Text style={tw`text-white mt-[${scaleH(6)}px]`}>{desc}</Text>
+      <Text style={tw`text-white mt-[${scaleH(6)}px]`} fontSize={13}>
+        {desc}
+      </Text>
 
       {foods.length !== 0 ? (
         <View style={tw`flex-1 mt-[${scaleH(14)}px] mb-1`}>
@@ -106,10 +108,10 @@ export default function EntranceBox({ info, foods }: Props) {
             <Icon
               name='information'
               type='MaterialCommunityIcons'
-              size={16}
-              color={LIGHT_YELLOW}
+              size={13}
+              color={YELLOW}
             />
-            <Text fontSize={14} style={tw`text-amber-300`}>
+            <Text fontSize={13} style={tw`text-[${YELLOW}]`}>
               카트에 넣은 식료품을 터치하세요.
             </Text>
           </View>

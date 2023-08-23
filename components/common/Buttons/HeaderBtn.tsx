@@ -20,7 +20,7 @@ export default function HeaderBtn({
       onPress={onPress}
       style={tw`px-[${scaleH(10)}px] py-[${scaleH(4)}px]`}
     >
-      <Icon name={iconName} type={type} size={22} color={DEEP_GRAY} />
+      <Icon name={iconName} type={type} size={18} color={DEEP_GRAY} />
     </TouchableOpacity>
   );
 }

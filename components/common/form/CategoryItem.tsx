@@ -23,18 +23,20 @@ export default function CategoryItem({ fixedCategory, changeInfo }: Props) {
   return (
     <>
       <TouchableOpacity
-        onPress={() => setCategoryOpen((prev) => !prev)}
-        style={tw`h-[${scaleH(44)}px] 
+        onPress={() => {
+          setCategoryOpen((prev) => !prev);
+        }}
+        style={tw`h-[${scaleH(44)}px]
         border border-indigo-500 px-2 bg-white rounded-lg items-center flex-row gap-2 justify-between`}
       >
         <View style={tw`flex-row items-center gap-1.5`}>
-          <Icon name='check-circle' type='MaterialCommunityIcons' size={18} />
+          <Icon name='check-circle' type='MaterialCommunityIcons' size={16} />
           <Text style={tw`text-slate-900 border-0`}>{fixedCategory}</Text>
         </View>
         <Icon
           name='unfold-more-horizontal'
           type='MaterialCommunityIcons'
-          size={24}
+          size={18}
         />
       </TouchableOpacity>
       {categoryOpen && (

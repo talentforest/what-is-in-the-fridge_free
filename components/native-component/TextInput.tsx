@@ -24,22 +24,23 @@ export function TextInput({ style, onPress, ...props }: Props) {
   return (
     <>
       {Platform.OS === 'android' ? (
-        <TouchableOpacity
-          style={tw`flex-1 h-[${scaleH(44)}px]`}
-          onPress={onTouchPress}
-        >
-          <Input
-            style={tw.style(
-              `h-full border border-slate-400 px-2 
+        // <TouchableOpacity
+        //   style={tw`flex-1 h-[${scaleH(44)}px]`}
+        //   onPress={onTouchPress}
+        // >
+        <Input
+          style={tw.style(
+            `h-full border border-slate-400 px-2 
               text-[${responsiveFontSize(14)}px]`,
-              FontGmarketSansRegular,
-              style
-            )}
-            {...props}
-            placeholderTextColor={LIGHT_GRAY}
-          />
-        </TouchableOpacity>
+            FontGmarketSansRegular,
+            style
+          )}
+          placeholderTextColor={LIGHT_GRAY}
+          allowFontScaling={false}
+          {...props}
+        />
       ) : (
+        // </TouchableOpacity>
         <Input
           style={tw.style(
             `h-[${scaleH(40)}px] 
@@ -49,6 +50,7 @@ export function TextInput({ style, onPress, ...props }: Props) {
             style
           )}
           placeholderTextColor={LIGHT_GRAY}
+          allowFontScaling={false}
           {...props}
         />
       )}
