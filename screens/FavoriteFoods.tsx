@@ -99,6 +99,7 @@ export default function FavoriteFoods() {
                 currentFilter={currentFilter}
                 changeFilter={changeFilter}
                 getTableList={getFavoriteTableList}
+                setCheckedList={setCheckedList}
               />
             )}
           </View>
