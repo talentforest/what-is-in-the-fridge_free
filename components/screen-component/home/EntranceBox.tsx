@@ -46,7 +46,7 @@ export default function EntranceBox({ info, foods }: Props) {
       <Text style={tw`text-white mt-[${scaleH(6)}px]`} fontSize={13}>
         {desc}
       </Text>
-      <View style={tw`min-h-30 mt-[${scaleH(14)}px]`}>
+      <View style={tw`min-h-26 mt-[${scaleH(14)}px]`}>
         {foods.length !== 0 ? (
           <View style={tw`flex-row gap-1.5 flex-wrap items-center`}>
             {foldedFoods.map((food) =>

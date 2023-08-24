@@ -16,7 +16,7 @@ export default function Title({ title, iconName }: Props) {
         <Icon
           type='MaterialCommunityIcons'
           name={iconName}
-          size={20}
+          size={18}
           color={'#fff'}
         />
       )}

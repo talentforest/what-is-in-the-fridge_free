@@ -27,6 +27,8 @@ export default function RNModal({
   animationOut = 'slideOutDown',
 }: Props) {
   const MODAL_HEIGHT = Dimensions.get('screen').height * 0.85;
+  const MODAL_BORDER_RADIUS =
+    PlatformIOS || animationIn === 'fadeIn' ? 'rounded-2xl' : 'rounded-t-2xl';
 
   const closeModal = () => setModalVisible(false);
 
@@ -44,11 +46,7 @@ export default function RNModal({
     >
       <SafeAreaView style={tw`justify-end`}>
         <View
-          style={tw`${bgColor} ${
-            PlatformIOS || animationIn === 'fadeIn'
-              ? 'rounded-2xl'
-              : 'rounded-t-2xl'
-          } max-h-[${MODAL_HEIGHT}px]`}
+          style={tw`${bgColor} ${MODAL_BORDER_RADIUS} max-h-[${MODAL_HEIGHT}px]`}
         >
           {animationIn === 'slideInUp' && (
             <SwipeHeader title={title} closeModal={closeModal} />
