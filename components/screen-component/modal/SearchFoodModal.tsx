@@ -72,14 +72,17 @@ export default function SearchFoodModal({
                 />
               ))
             ) : (
-              <Text style={tw`text-slate-500 text-center pt-20`}>
+              <Text style={tw`text-slate-500 text-center pt-20 px-4 border`}>
                 해당 식료품은 냉장고에 없습니다.
               </Text>
             ))}
           {keyword.length === 0 && (
-            <Text style={tw`text-slate-500 text-center pt-20`}>
-              냉장고에 찾으시는 식료품이 있는지 확인해 보세요.
-            </Text>
+            <View style={tw`text-slate-500 text-center pt-20 px-4 gap-1`}>
+              <Text style={tw`text-slate-500 text-center`}>
+                냉장고에 찾으시는 식료품이 있는지
+              </Text>
+              <Text style={tw`text-slate-500 text-center`}>확인해 보세요.</Text>
+            </View>
           )}
         </ScrollView>
       </View>

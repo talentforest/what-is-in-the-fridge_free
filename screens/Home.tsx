@@ -2,8 +2,7 @@ import { fonts } from '../constant/fonts';
 import { useFonts } from 'expo-font';
 import { ScrollView } from 'react-native';
 import { useSelector } from '../redux/hook';
-import { statusBarHeight } from '../constant/statusBarHeight';
-import { HEADER_BGCOLOR } from '../constant/colors';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import EntranceBox from '../components/screen-component/home/EntranceBox';
 import useExpiredFood from '../hooks/useExpiredFoods';
 import FridgeInfo from '../components/screen-component/home/FridgeInfo';
@@ -11,7 +10,6 @@ import LogoTitle from '../components/screen-component/home/LogoTitle';
 import useImageLoad from '../hooks/useImageLoad';
 import Container from '../components/common/layout/Container';
 import tw from 'twrnc';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Home = () => {
   const { allExpiredFoods } = useExpiredFood();

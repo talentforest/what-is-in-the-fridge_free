@@ -28,7 +28,7 @@ export default function FridgeShape() {
   };
 
   const spaceColor = (space: Space) => {
-    return space.includes('냉동') ? 'blue' : 'yellow';
+    return space.includes('냉동') ? 'blue' : 'stone';
   };
 
   const freezerPosition = freezer === 'top' ? '' : 'flex-col-reverse';
@@ -61,15 +61,25 @@ export default function FridgeShape() {
                 >
                   <View
                     style={tw`absolute w-full h-full opacity-30
-                    bg-${spaceColor(space)}-400 ${doorRadius(space)}`}
+                    bg-${spaceColor(space)}-200 ${doorRadius(space)}`}
                   />
                   <Text
                     style={tw.style(
                       `text-center text-${spaceColor(space)}-600`,
                       FontGmarketSansBold
                     )}
+                    fontSize={13}
                   >
-                    {space}
+                    {space.slice(0, 3)}
+                  </Text>
+                  <Text
+                    style={tw.style(
+                      `text-center text-${spaceColor(space)}-600`,
+                      FontGmarketSansBold
+                    )}
+                    fontSize={13}
+                  >
+                    {space.slice(3)}
                   </Text>
                 </View>
               )}

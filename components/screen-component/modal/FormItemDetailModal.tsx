@@ -45,7 +45,7 @@ export default function FormItemDetailModal({
         </Text>
         <ScrollView
           style={tw`max-h-100 mt-3`}
-          contentContainerStyle={tw`gap-4.5 py-2`}
+          contentContainerStyle={tw`gap-1 py-2`}
         >
           {title === '자주 먹는 식료품에서 선택' &&
             (sortedAllFavFoods.length !== 0 ? (

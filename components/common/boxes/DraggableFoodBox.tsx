@@ -70,7 +70,7 @@ export default function DraggableFoodBox({
 
   const rotateData = rotate.interpolate({
     inputRange: [-1, 0, 1],
-    outputRange: ['-2deg', '0deg', '2deg'],
+    outputRange: ['-3deg', '0deg', '3deg'],
   });
 
   const animatedOpacity = (opacityValue: number) => {

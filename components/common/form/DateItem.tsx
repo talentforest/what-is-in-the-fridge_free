@@ -18,15 +18,16 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   const onConfirm = (date: Date) => {
-    changeDate(date);
     setDatePickerVisible(false);
+    changeDate(date);
   };
 
   const changeDate = (date: Date) => {
-    if (expiredInfo) {
-      return changeInfo({ expiredDate: getFormattedDate(date) });
-    }
-    return changeInfo({ purchaseDate: getFormattedDate(date) });
+    return changeInfo(
+      expiredInfo
+        ? { expiredDate: getFormattedDate(date) }
+        : { purchaseDate: getFormattedDate(date) }
+    );
   };
 
   return (
