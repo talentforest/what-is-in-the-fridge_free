@@ -56,8 +56,6 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
         date={new Date(date)}
         onConfirm={onConfirm}
         onCancel={() => setDatePickerVisible(false)}
-        isDarkModeEnabled={false}
-        textColor='#000'
       />
 
       {/* 날짜 더하기 버튼들 */}
