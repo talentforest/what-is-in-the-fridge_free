@@ -10,7 +10,7 @@ interface Props {
   title: string;
   entireChecked: boolean;
   onEntirePress: () => void;
-  columnTitle: '추가' | '유통기한순' | FavoriteFoodsFilter;
+  columnTitle: '추가' | '유통기한순' | '냉장고 유무';
 }
 
 export default function TableHeader({

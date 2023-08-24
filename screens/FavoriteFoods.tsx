@@ -7,12 +7,11 @@ import { useDispatch } from 'react-redux';
 import { Food } from '../constant/foods';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
+import { scaleH } from '../util';
 
 import useHandleTableItem from '../hooks/useHandleTableItem';
 import useHandleCheckList from '../hooks/useHandleCheckList';
-import useTableItemFilter, {
-  FavoriteFoodsFilter,
-} from '../hooks/useTableItemFilter';
+import useTableItemFilter from '../hooks/useTableItemFilter';
 
 import Container from '../components/common/layout/Container';
 import TableContainer from '../components/common/table/TableContainer';
@@ -21,7 +20,6 @@ import TableFilters from '../components/common/table/TableFilters';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
 import tw from 'twrnc';
-import { scaleH } from '../util';
 // import {
 //   BannerAd,
 //   BannerAdSize,
@@ -30,6 +28,8 @@ import { scaleH } from '../util';
 
 export default function FavoriteFoods() {
   const { allFoods } = useSelector((state) => state.allFoods);
+  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+
   const [fontsLoaded] = useFonts(fonts);
   const dispatch = useDispatch();
 
@@ -89,19 +89,17 @@ export default function FavoriteFoods() {
                 !!checkedList.length
               }
               onEntirePress={() => onEntireBoxPress(favoriteTableList)}
-              columnTitle={currentFilter as FavoriteFoodsFilter}
+              columnTitle='냉장고 유무'
             />
 
             {/* 필터 */}
-            {favoriteTableList.length !== 0 && (
-              <TableFilters
-                allFilters={allFavoriteFoodsFilters}
-                currentFilter={currentFilter}
-                changeFilter={changeFilter}
-                getTableList={getFavoriteTableList}
-                setCheckedList={setCheckedList}
-              />
-            )}
+            <TableFilters
+              allFilters={allFavoriteFoodsFilters}
+              currentFilter={currentFilter}
+              changeFilter={changeFilter}
+              getTableList={getFavoriteTableList}
+              setCheckedList={setCheckedList}
+            />
           </View>
           {/* 자주 먹는 식료품 목록 */}
           <TableBody
@@ -114,9 +112,7 @@ export default function FavoriteFoods() {
           <TableFooter
             list={checkedList}
             onAddPress={onAddShoppingListPress}
-            onDeletePress={() => {
-              onDeletePress(favoriteTableList);
-            }}
+            onDeletePress={() => onDeletePress(favoriteFoods)}
             buttons={['delete-favorite', 'add-shopping-list']}
           />
         </TableContainer>

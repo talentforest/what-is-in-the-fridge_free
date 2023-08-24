@@ -3,6 +3,7 @@ import { SafeBottomAreaView } from '../components/native-component';
 import { useDispatch } from '../redux/hook';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { Food } from '../constant/foods';
+import { scaleH } from '../util';
 
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useTableItemFilter from '../hooks/useTableItemFilter';
@@ -15,7 +16,7 @@ import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
 import TableFilters from '../components/common/table/TableFilters';
 import tw from 'twrnc';
-import { scaleH } from '../util';
+import useExpiredFoods from '../hooks/useExpiredFoods';
 // import {
 //   BannerAd,
 //   BannerAdSize,
@@ -23,6 +24,8 @@ import { scaleH } from '../util';
 // } from 'react-native-google-mobile-ads';
 
 export default function ExpiredFoods() {
+  const { allExpiredFoods } = useExpiredFoods();
+
   const dispatch = useDispatch();
 
   const {
@@ -72,15 +75,13 @@ export default function ExpiredFoods() {
             />
 
             {/* 필터 */}
-            {!!expiredTableList && (
-              <TableFilters
-                allFilters={allExpiredFoodsFilters}
-                currentFilter={currentFilter}
-                changeFilter={changeFilter}
-                getTableList={getExpiredTableList}
-                setCheckedList={setCheckedList}
-              />
-            )}
+            <TableFilters
+              allFilters={allExpiredFoodsFilters}
+              currentFilter={currentFilter}
+              changeFilter={changeFilter}
+              getTableList={getExpiredTableList}
+              setCheckedList={setCheckedList}
+            />
           </View>
 
           {/* 식료품 리스트 */}
@@ -93,7 +94,7 @@ export default function ExpiredFoods() {
           {/* 식료품 선택 개수와 버튼 */}
           <TableFooter
             list={checkedList}
-            onDeletePress={() => onDeletePress(expiredTableList)}
+            onDeletePress={() => onDeletePress(allExpiredFoods)}
             buttons={['delete']}
           />
         </TableContainer>

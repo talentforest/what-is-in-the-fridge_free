@@ -46,9 +46,8 @@ export default function EntranceBox({ info, foods }: Props) {
       <Text style={tw`text-white mt-[${scaleH(6)}px]`} fontSize={13}>
         {desc}
       </Text>
-
-      {foods.length !== 0 ? (
-        <View style={tw`flex-1 mt-[${scaleH(14)}px] mb-1`}>
+      <View style={tw`min-h-30 mt-[${scaleH(14)}px]`}>
+        {foods.length !== 0 ? (
           <View style={tw`flex-row gap-1.5 flex-wrap items-center`}>
             {foldedFoods.map((food) =>
               title === '장봐야할 식료품' ? (
@@ -94,14 +93,13 @@ export default function EntranceBox({ info, foods }: Props) {
                 </View>
               ))}
           </View>
-        </View>
-      ) : (
-        <Text fontSize={14} style={tw`text-${color}-200 text-center py-8`}>
-          아직 식료품이 없어요
-        </Text>
-      )}
-
-      <View style={tw`items-center justify-between flex-row-reverse mt-6`}>
+        ) : (
+          <Text fontSize={14} style={tw`text-${color}-200 text-center pt-10`}>
+            아직 식료품이 없어요
+          </Text>
+        )}
+      </View>
+      <View style={tw`items-center justify-between flex-row-reverse mt-4`}>
         <SeeMoreBtn route={route} />
         {title === '장봐야할 식료품' && !!foods.length && (
           <View style={tw`flex-row items-center gap-0.5`}>

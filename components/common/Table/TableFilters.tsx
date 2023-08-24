@@ -32,7 +32,7 @@ export default function TableFilters({
   };
 
   return (
-    <View style={tw`mt-2 flex-row flex-wrap gap-1`}>
+    <View style={tw`mt-3 flex-row flex-wrap gap-1`}>
       {allFilters.map((filter) => (
         <TouchableOpacity
           onPress={() => {
@@ -51,7 +51,7 @@ export default function TableFilters({
               color={filter === currentFilter ? DEEP_YELLOW : LIGHT_GRAY}
             />
           )}
-          <Text style={tw`${activeTextColor(filter)}`} fontSize={12}>
+          <Text style={tw`${activeTextColor(filter)}`} fontSize={11}>
             {filter} {getTableList && getTableList(filter).length}
           </Text>
         </TouchableOpacity>
