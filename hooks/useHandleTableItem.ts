@@ -35,6 +35,7 @@ export default function useHandleTableItem({
     const filteredCheckItem = allTableItems.filter(
       (food) => !checkedList.some((checkFood) => checkFood.id === food.id)
     );
+
     return Alert.alert(title, desc, [
       {
         text: '취소',

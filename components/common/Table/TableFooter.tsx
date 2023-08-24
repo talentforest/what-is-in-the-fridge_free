@@ -44,7 +44,7 @@ export default function TableFooter({
             <Icon
               type='MaterialCommunityIcons'
               name='basket-plus'
-              size={22}
+              size={18}
               color={list.length ? DEEP_INDIGO : LIGHT_GRAY}
             />
           </TouchableOpacity>
@@ -60,7 +60,7 @@ export default function TableFooter({
             <Icon
               type='MaterialCommunityIcons'
               name='tag-minus'
-              size={22}
+              size={18}
               color={list.length ? DEEP_YELLOW : LIGHT_GRAY}
             />
           </TouchableOpacity>
@@ -76,7 +76,7 @@ export default function TableFooter({
             <Icon
               type='MaterialCommunityIcons'
               name='trash-can'
-              size={22}
+              size={20}
               color={list.length ? ORANGE_RED : LIGHT_GRAY}
             />
           </TouchableOpacity>
