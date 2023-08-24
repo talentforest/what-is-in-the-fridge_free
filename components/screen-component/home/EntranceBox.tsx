@@ -3,7 +3,7 @@ import { Text } from '../../native-component';
 import { Food } from '../../../constant/foods';
 import { RouteName } from '../../../navigation/Navigation';
 import { useState } from 'react';
-import { LIGHT_YELLOW, YELLOW } from '../../../constant/colors';
+import { YELLOW } from '../../../constant/colors';
 import { scaleH } from '../../../util';
 import FoodTag from '../../common/boxes/FoodBox';
 import Title from '../../common/Title';

@@ -29,10 +29,11 @@ interface RouteParams {
 export default function Compartments({ route }: RouteParams) {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { space } = route.params as { space: Space };
+
   const [compartmentNumToDrop, setCompartmentNumToDrop] =
     useState<CompartmentNumToDrop>('동일칸');
-
   const [moveMode, setMoveMode] = useState(false);
+
   const [fontsLoaded] = useFonts(fonts);
   const navigation = useNavigation();
 
@@ -64,7 +65,6 @@ export default function Compartments({ route }: RouteParams) {
             <Compartment
               key={compartment.compartmentNum}
               moveMode={moveMode}
-              setMoveMode={setMoveMode}
               foodLocation={{ ...compartment, space }}
               compartmentNumToDrop={compartmentNumToDrop}
               setCompartmentNumToDrop={setCompartmentNumToDrop}

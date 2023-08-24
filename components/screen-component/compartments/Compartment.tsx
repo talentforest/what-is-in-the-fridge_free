@@ -19,7 +19,6 @@ import tw from 'twrnc';
 interface Props {
   foodLocation: FoodLocation;
   moveMode: boolean;
-  setMoveMode: (moveMode: boolean) => void;
   compartmentNumToDrop: CompartmentNumToDrop;
   setCompartmentNumToDrop: (compartmentNum: CompartmentNumToDrop) => void;
 }
@@ -27,7 +26,6 @@ interface Props {
 export default function Compartment({
   foodLocation,
   moveMode,
-  setMoveMode,
   compartmentNumToDrop,
   setCompartmentNumToDrop,
 }: Props) {
