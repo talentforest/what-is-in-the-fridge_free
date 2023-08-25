@@ -34,7 +34,7 @@ export default function FormItemDetailModal({
       animationIn='fadeIn'
       animationOut='fadeOut'
     >
-      <View style={tw`mt-3 p-2`}>
+      <View style={tw`mt-3 p-4 px-6`}>
         <Text style={tw.style('text-indigo-500', FontGmarketSansBold)}>
           {title}{' '}
           {title === '자주 먹는 식료품에서 선택' && (

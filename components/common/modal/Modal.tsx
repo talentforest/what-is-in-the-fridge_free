@@ -46,12 +46,12 @@ export default function RNModal({
     >
       <SafeAreaView style={tw`justify-end`}>
         <View
-          style={tw`${bgColor} ${MODAL_BORDER_RADIUS} max-h-[${MODAL_HEIGHT}px]`}
+          style={tw`${bgColor} ${MODAL_BORDER_RADIUS} max-h-[${MODAL_HEIGHT}px] pb-4`}
         >
           {animationIn === 'slideInUp' && (
             <SwipeHeader title={title} closeModal={closeModal} />
           )}
-          <View style={tw`p-4`}>{children}</View>
+          {children}
         </View>
       </SafeAreaView>
     </Modal>
