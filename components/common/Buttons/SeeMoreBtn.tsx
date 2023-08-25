@@ -6,12 +6,12 @@ import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 
 export default function SeeMoreBtn({ route }: { route: RouteName }) {
-  const navigate = useNavigation<NavigateProp>();
+  const navigation = useNavigation<NavigateProp>();
 
   return (
     <TouchableOpacity
-      onPress={() => navigate.navigate(route)}
-      style={tw`flex-row items-center self-end`}
+      onPress={() => navigation.navigate(route)}
+      style={tw`flex-row items-center self-end py-3 pl-6 -mb-3`}
     >
       <Text fontSize={14} style={tw.style(`text-white`, FontGmarketSansBold)}>
         더보기

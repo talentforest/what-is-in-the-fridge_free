@@ -1,6 +1,4 @@
-import { useFonts } from 'expo-font';
 import { View } from 'react-native';
-import { fonts } from '../constant/fonts';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useSelector } from '../redux/hook';
@@ -10,9 +8,9 @@ import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/native-component';
 import Compartment from '../components/screen-component/compartments/Compartment';
 import Container from '../components/common/layout/Container';
+import HeaderTitle from '../components/common/HeaderTitle';
 import HeaderBtn from '../components/common/buttons/HeaderBtn';
 import tw from 'twrnc';
-import HeaderTitle from '../components/common/HeaderTitle';
 
 // import {
 //   BannerAd,
@@ -34,7 +32,6 @@ export default function Compartments({ route }: RouteParams) {
     useState<CompartmentNumToDrop>('동일칸');
   const [moveMode, setMoveMode] = useState(false);
 
-  const [fontsLoaded] = useFonts(fonts);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -51,8 +48,6 @@ export default function Compartments({ route }: RouteParams) {
   }, [moveMode]);
 
   const compartments = getCompartments(fridgeInfo.compartments[space]);
-
-  if (!fontsLoaded) return null;
 
   return (
     <SafeBottomAreaView>

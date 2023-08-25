@@ -1,6 +1,4 @@
 import { View } from 'react-native';
-import { useFonts } from 'expo-font';
-import { fonts } from '../constant/fonts';
 import { SafeBottomAreaView } from '../components/native-component';
 import { useSelector } from '../redux/hook';
 import { useDispatch } from 'react-redux';
@@ -30,7 +28,6 @@ export default function FavoriteFoods() {
   const { allFoods } = useSelector((state) => state.allFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
 
-  const [fontsLoaded] = useFonts(fonts);
   const dispatch = useDispatch();
 
   const {
@@ -74,8 +71,6 @@ export default function FavoriteFoods() {
     checkedList,
     setCheckedList,
   });
-
-  if (!fontsLoaded) return null;
 
   return (
     <SafeBottomAreaView>

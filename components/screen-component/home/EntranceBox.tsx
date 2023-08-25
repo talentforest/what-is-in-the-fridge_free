@@ -8,16 +8,15 @@ import { scaleH } from '../../../util';
 import FoodTag from '../../common/boxes/FoodBox';
 import Title from '../../common/Title';
 import Box from '../../common/layout/Box';
-import CheckFoodBox from '../../common/boxes/CheckFoodBox';
 import MoreOpenBtn from '../../common/buttons/MoreOpenBtn';
 import Icon from '../../native-component/Icon';
-import tw from 'twrnc';
 import SeeMoreBtn from '../../common/buttons/SeeMoreBtn';
+import tw from 'twrnc';
 
 export type EntranceTitle =
   | '유통기한 주의 식료품'
   | '자주 먹는 식료품'
-  | '장봐야할 식료품';
+  | '장보기 목록 식료품';
 
 interface Props {
   foods: Food[];
@@ -46,32 +45,26 @@ export default function EntranceBox({ info, foods }: Props) {
       <Text style={tw`text-white mt-[${scaleH(6)}px]`} fontSize={13}>
         {desc}
       </Text>
-      <View style={tw`min-h-26 mt-[${scaleH(14)}px]`}>
+      <View style={tw`min-h-28 mt-[${scaleH(14)}px] mb-3`}>
         {foods.length !== 0 ? (
-          <View style={tw`flex-row gap-1.5 flex-wrap items-center`}>
-            {foldedFoods.map((food) =>
-              title === '장봐야할 식료품' ? (
-                <CheckFoodBox key={food.id} food={food} />
-              ) : (
-                <FoodTag
-                  key={food.id}
-                  food={food}
-                  expiredDate={title === '유통기한 주의 식료품'}
-                  color={title === '유통기한 주의 식료품' ? 'slate' : 'indigo'}
-                />
-              )
-            )}
+          <View style={tw`flex-row gap-1 flex-wrap items-center`}>
+            {foldedFoods.map((food) => (
+              <FoodTag
+                key={food.id}
+                food={food}
+                checkExistence={title === '자주 먹는 식료품'}
+                expiredDate={title === '유통기한 주의 식료품'}
+              />
+            ))}
 
-            {/* 더보기 indicator */}
+            {/* 장봐야할 식료품 더보기 indicator */}
             {foods.length > FOLDED_MAX_NUM &&
-              (title === '장봐야할 식료품' ? (
+              (title === '장보기 목록 식료품' ? (
                 <>
                   {isOpen &&
                     foods
                       .slice(FOLDED_MAX_NUM)
-                      .map((food) => (
-                        <CheckFoodBox key={food.id} food={food} />
-                      ))}
+                      .map((food) => <FoodTag key={food.id} food={food} />)}
                   <MoreOpenBtn isOpen={isOpen} setIsOpen={setIsOpen} />
                 </>
               ) : (
@@ -99,10 +92,12 @@ export default function EntranceBox({ info, foods }: Props) {
           </Text>
         )}
       </View>
-      <View style={tw`items-center justify-between flex-row-reverse mt-4`}>
+
+      {/* 박스 하단 */}
+      <View style={tw`items-center justify-between flex-row-reverse`}>
         <SeeMoreBtn route={route} />
-        {title === '장봐야할 식료품' && !!foods.length && (
-          <View style={tw`flex-row items-center gap-0.5`}>
+        {title === '장보기 목록 식료품' && !!foods.length && (
+          <View style={tw`flex-row items-center gap-0.5 pt-3`}>
             <Icon
               name='information'
               type='MaterialCommunityIcons'
