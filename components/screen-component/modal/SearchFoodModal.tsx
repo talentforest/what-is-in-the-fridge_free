@@ -72,7 +72,7 @@ export default function SearchFoodModal({
                 />
               ))
             ) : (
-              <Text style={tw`text-slate-500 text-center pt-20 px-4 border`}>
+              <Text style={tw`text-slate-500 text-center pt-20 px-4`}>
                 해당 식료품은 냉장고에 없습니다.
               </Text>
             ))}

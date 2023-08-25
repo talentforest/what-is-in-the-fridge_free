@@ -1,7 +1,8 @@
 import { Text as RNText, TextProps, TextStyle } from 'react-native';
-import { FontGmarketSansRegular } from '../../constant/fonts';
+import { FontGmarketSansRegular, fonts } from '../../constant/fonts';
 import { responsiveFontSize } from '../../util';
 import tw from 'twrnc';
+import { useFonts } from 'expo-font';
 
 interface Props extends TextProps {
   style?: TextStyle;
@@ -9,6 +10,10 @@ interface Props extends TextProps {
 }
 
 export function Text({ style, fontSize, ...props }: Props) {
+  const [fontsLoaded] = useFonts(fonts);
+
+  if (!fontsLoaded) return null;
+
   return (
     <RNText
       allowFontScaling={false}
