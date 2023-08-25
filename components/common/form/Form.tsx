@@ -1,4 +1,11 @@
-import { Animated, Dimensions, PanResponder, View } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  Keyboard,
+  PanResponder,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import { Food } from '../../../constant/foods';
 import { useEffect, useRef, useState } from 'react';
 import { FormStep, FormLabel, FormStepName } from '../../../constant/formInfo';
@@ -25,7 +32,7 @@ interface Props {
 }
 
 const DRAG_DISTANCE = 60;
-const FORM_WIDTH = Dimensions.get('screen').width - 34;
+const FORM_WIDTH = Dimensions.get('screen').width;
 const initialStep = {
   id: 1,
   name: '식품 정보' as FormStepName,
@@ -97,82 +104,88 @@ export default function Form({
   ).current;
 
   return (
-    <View style={tw`mt-[${scaleH(5)}px]`}>
+    <View>
       <View style={tw`overflow-hidden pb-0`}>
         <Animated.View
           style={{
             width: FORM_WIDTH,
             height: scaleH(350),
             transform: [{ translateX: stepTranslateX }],
+            // borderWidth: 1,
           }}
           {...panResponder.panHandlers}
         >
-          <View style={tw`flex-row flex-1`}>
-            <FormSectionContainer>
-              {items.includes('식료품 이름') && (
-                <FormItemContainer label='식료품 이름'>
-                  <NameItem
-                    name={food.name}
-                    changeInfo={changeInfo}
-                    editable={editableName || false}
-                  />
-                  {!!!editableName && (
-                    <Text style={tw`pt-2 text-amber-600`} fontSize={12}>
-                      이름은 수정할 수 없습니다.
-                    </Text>
-                  )}
-                </FormItemContainer>
-              )}
-              {items.includes('카테고리') && (
-                <FormItemContainer label='카테고리'>
-                  <CategoryItem
-                    fixedCategory={food.category}
-                    changeInfo={changeInfo}
-                  />
-                </FormItemContainer>
-              )}
-              {items.includes('자주 먹는 식품') && (
-                <FormItemContainer label='자주 먹는 식품'>
-                  <FavoriteItem
-                    name={food.name}
-                    favoriteState={food.favorite}
-                    changeInfo={changeInfo}
-                    disabled={title !== '식료품 정보 수정'}
-                  />
-                </FormItemContainer>
-              )}
-            </FormSectionContainer>
-
-            <FormSectionContainer>
-              {items.includes('구매날짜') && (
-                <FormItemContainer label='구매날짜'>
-                  <DateItem date={food.purchaseDate} changeInfo={changeInfo} />
-                </FormItemContainer>
-              )}
-              {items.includes('유통기한') && (
-                <FormItemContainer label='유통기한'>
-                  <DateItem
-                    expiredInfo
-                    date={food.expiredDate}
-                    changeInfo={changeInfo}
-                  />
-                </FormItemContainer>
-              )}
-            </FormSectionContainer>
-
-            {items.includes('냉장고 위치 선택') && (
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View style={tw`flex-row flex-1`}>
               <FormSectionContainer>
-                <FormItemContainer label='냉장고 위치 선택'>
-                  <SpaceItem food={food} changeInfo={changeInfo} />
-                </FormItemContainer>
+                {items.includes('식료품 이름') && (
+                  <FormItemContainer label='식료품 이름'>
+                    <NameItem
+                      name={food.name}
+                      changeInfo={changeInfo}
+                      editable={editableName || false}
+                    />
+                    {!!!editableName && (
+                      <Text style={tw`pt-2 text-amber-600`} fontSize={12}>
+                        이름은 수정할 수 없습니다.
+                      </Text>
+                    )}
+                  </FormItemContainer>
+                )}
+                {items.includes('카테고리') && (
+                  <FormItemContainer label='카테고리'>
+                    <CategoryItem
+                      fixedCategory={food.category}
+                      changeInfo={changeInfo}
+                    />
+                  </FormItemContainer>
+                )}
+                {items.includes('자주 먹는 식품') && (
+                  <FormItemContainer label='자주 먹는 식품'>
+                    <FavoriteItem
+                      name={food.name}
+                      favoriteState={food.favorite}
+                      changeInfo={changeInfo}
+                      disabled={title !== '식료품 정보 수정'}
+                    />
+                  </FormItemContainer>
+                )}
               </FormSectionContainer>
-            )}
-          </View>
+
+              <FormSectionContainer>
+                {items.includes('구매날짜') && (
+                  <FormItemContainer label='구매날짜'>
+                    <DateItem
+                      date={food.purchaseDate}
+                      changeInfo={changeInfo}
+                    />
+                  </FormItemContainer>
+                )}
+                {items.includes('유통기한') && (
+                  <FormItemContainer label='유통기한'>
+                    <DateItem
+                      expiredInfo
+                      date={food.expiredDate}
+                      changeInfo={changeInfo}
+                    />
+                  </FormItemContainer>
+                )}
+              </FormSectionContainer>
+
+              {items.includes('냉장고 위치 선택') && (
+                <FormSectionContainer>
+                  <FormItemContainer label='냉장고 위치 선택'>
+                    <SpaceItem food={food} changeInfo={changeInfo} />
+                  </FormItemContainer>
+                </FormSectionContainer>
+              )}
+            </View>
+          </TouchableWithoutFeedback>
         </Animated.View>
       </View>
 
       {/* 단계 */}
-      <View style={tw`items-center flex-row justify-between mb-2`}>
+      <View style={tw`items-center flex-row justify-between m-4`}>
         <ArrowBtn
           type='previous'
           moveStep={() => moveStep('prev', currentStep.id)}

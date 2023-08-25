@@ -12,7 +12,7 @@ export default function SubmitBtn({ btnName, onPress }: Props) {
     <TouchableOpacity
       onPress={onPress}
       style={tw`py-[${scaleH(18)}px] 
-      w-full mt-1 flex-row items-center justify-center border border-slate-500 rounded-lg bg-indigo-500`}
+      mx-6 flex-row items-center justify-center border border-slate-500 rounded-lg bg-indigo-500`}
     >
       <Text style={tw`text-white text-center`}>{btnName}</Text>
     </TouchableOpacity>
