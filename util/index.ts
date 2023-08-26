@@ -1,4 +1,4 @@
-export * from './addDate';
+export * from './controlDate';
 export * from './cutLetter';
 export * from './deduplicate';
 export * from './getCompartments';
