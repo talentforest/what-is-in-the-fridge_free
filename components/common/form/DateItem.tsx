@@ -1,12 +1,14 @@
 import { View } from 'react-native';
-import { Text, TextInput, TouchableOpacity } from '../../native-component';
+import { TextInput, TouchableOpacity } from '../../native-component';
 import { getFormattedDate, scaleH } from '../../../util';
 import { useState } from 'react';
-import { addDateBtns } from '../../../constant/addDateBtns';
-import { INDIGO } from '../../../constant/colors';
+import { ControlDateBtns } from '../../../constant/ControlDateBtns';
+import { BLUE } from '../../../constant/colors';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import tw from 'twrnc';
 import Icon from '../../native-component/Icon';
+import FormLabel from './FormLabel';
+import ControlDateBtn from './ControlDateBtn';
+import tw from 'twrnc';
 
 interface Props {
   expiredInfo?: boolean;
@@ -33,10 +35,11 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
   return (
     <View>
       {/* 날짜 Input */}
+      <FormLabel label={expiredInfo ? '유통기한' : '구매날짜'} />
       <TouchableOpacity
         onPress={() => setDatePickerVisible(true)}
         style={tw`h-[${scaleH(44)}px] 
-        border border-indigo-500 bg-white rounded-lg flex-row items-center justify-between px-2`}
+        border border-blue-600 bg-white rounded-lg flex-row items-center justify-between px-2`}
       >
         <TextInput
           value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
@@ -44,7 +47,7 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
           pointerEvents='none'
           style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
         />
-        <Icon type='AntDesign' name='calendar' size={16} color={INDIGO} />
+        <Icon type='AntDesign' name='calendar' size={16} color={BLUE} />
       </TouchableOpacity>
 
       {/* 캘린더 픽커 모달 */}
@@ -60,15 +63,14 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
       />
 
       {/* 날짜 더하기 버튼들 */}
-      <View style={tw`mt-2 flex-row gap-1 flex-wrap items-center`}>
-        {addDateBtns.map((btn) => (
-          <TouchableOpacity
+      <View style={tw`mt-1 flex-row gap-1 flex-wrap items-center`}>
+        {ControlDateBtns.map((btn) => (
+          <ControlDateBtn
             key={btn.label}
-            onPress={() => changeDate(btn.func(new Date(date)))}
-            style={tw`justify-center bg-${btn.btnColor}-300 border border-slate-400 py-1 px-2 rounded-2xl`}
-          >
-            <Text fontSize={12}>+ {btn.label}</Text>
-          </TouchableOpacity>
+            btn={btn}
+            changeDate={changeDate}
+            date={date}
+          />
         ))}
       </View>
     </View>
