@@ -1,41 +1,48 @@
-import { View } from 'react-native';
-import { SafeBottomAreaView } from '../components/native-component';
+import { useState } from 'react';
+import {
+  KeyboardAvoidingView,
+  SafeBottomAreaView,
+  Text,
+} from '../components/native-component';
 import { useSelector } from '../redux/hook';
 import { useDispatch } from 'react-redux';
 import { Food } from '../constant/foods';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
-import { scaleH } from '../util';
+import { Category } from '../constant/foodCategories';
+import { categoryFilters, entireFilterObj, existAbsenceFilters } from '../util';
 
 import useHandleTableItem from '../hooks/useHandleTableItem';
 import useHandleCheckList from '../hooks/useHandleCheckList';
+import useFavoriteFoods from '../hooks/useFavoriteFoods';
 import useTableItemFilter from '../hooks/useTableItemFilter';
 
-import Container from '../components/common/layout/Container';
+import Container from '../components/common/Container';
 import TableContainer from '../components/common/table/TableContainer';
 import TableHeader from '../components/common/table/TableHeader';
 import TableFilters from '../components/common/table/TableFilters';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
+import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
+import FormItemDetailModal from '../components/screen-component/modal/FormItemDetailModal';
+import InputCategoryBtn from '../components/common/buttons/InputCategoryBtn';
 import tw from 'twrnc';
-// import {
-//   BannerAd,
-//   BannerAdSize,
-//   TestIds,
-// } from 'react-native-google-mobile-ads';
 
 export default function FavoriteFoods() {
+  const [inputValue, setInputValue] = useState('');
+  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [category, setCategory] = useState<Category | ''>('');
+
   const { allFoods } = useSelector((state) => state.allFoods);
-  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+
+  const { favoriteFoods, onSubmitFavoriteListItem } = useFavoriteFoods();
 
   const dispatch = useDispatch();
 
   const {
     currentFilter,
     changeFilter,
-    allFavoriteFoodsFilters,
-    favoriteTableList,
-    getFavoriteTableList,
+    getFavoriteTableList, //
   } = useTableItemFilter();
 
   const {
@@ -72,11 +79,30 @@ export default function FavoriteFoods() {
     setCheckedList,
   });
 
+  const onCategoryCheckBoxPress = (category: Category) => {
+    setCategory(category);
+    setCategoryOpen(false);
+  };
+
+  const favoriteTableList = getFavoriteTableList(currentFilter);
+
   return (
-    <SafeBottomAreaView>
-      <Container>
-        <TableContainer>
-          <View style={tw`px-3 py-2 min-h-[${scaleH(40)}px] justify-center`}>
+    <KeyboardAvoidingView>
+      <SafeBottomAreaView>
+        <Container>
+          {/* 필터 */}
+          <TableFilters
+            filterList={[
+              entireFilterObj,
+              ...existAbsenceFilters,
+              ...categoryFilters,
+            ]}
+            currentFilter={currentFilter}
+            changeFilter={changeFilter}
+            getTableList={getFavoriteTableList}
+            setCheckedList={setCheckedList}
+          />
+          <TableContainer color='indigo'>
             <TableHeader
               title='자주 먹는 식료품'
               entireChecked={
@@ -84,41 +110,65 @@ export default function FavoriteFoods() {
                 !!checkedList.length
               }
               onEntirePress={() => onEntireBoxPress(favoriteTableList)}
-              columnTitle='냉장고 유무'
+              color='indigo'
+            >
+              <Text style={tw`text-slate-600 w-9 text-center text-sm`}>
+                종류
+              </Text>
+              <Text style={tw`text-slate-600 text-sm`}>유무</Text>
+            </TableHeader>
+
+            {/* 자주 먹는 식료품 목록 */}
+            <TableBody
+              color='indigo'
+              list={favoriteTableList}
+              onCheckBoxPress={onCheckBoxPress}
+              isCheckedItem={isCheckedItem}
             />
 
-            {/* 필터 */}
-            <TableFilters
-              allFilters={allFavoriteFoodsFilters}
-              currentFilter={currentFilter}
-              changeFilter={changeFilter}
-              getTableList={getFavoriteTableList}
-              setCheckedList={setCheckedList}
+            {/* 식료품 선택 개수와 버튼 */}
+            <TableFooter
+              list={checkedList}
+              onAddPress={onAddShoppingListPress}
+              onDeletePress={() => onDeletePress(favoriteFoods)}
+              buttons={['delete-favorite', 'add-shopping-list']}
+              color='indigo'
             />
-          </View>
-          {/* 자주 먹는 식료품 목록 */}
-          <TableBody
-            list={favoriteTableList}
-            onCheckBoxPress={onCheckBoxPress}
-            isCheckedItem={isCheckedItem}
-          />
+          </TableContainer>
 
-          {/* 식료품 선택 개수와 버튼 */}
-          <TableFooter
-            list={checkedList}
-            onAddPress={onAddShoppingListPress}
-            onDeletePress={() => onDeletePress(favoriteFoods)}
-            buttons={['delete-favorite', 'add-shopping-list']}
-          />
-        </TableContainer>
-      </Container>
-      {/* <BannerAd
-        unitId={TestIds.BANNER}
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-        requestOptions={{
-          requestNonPersonalizedAdsOnly: true,
-        }}
-      /> */}
-    </SafeBottomAreaView>
+          {/* 인풋 */}
+          <TextInputRoundedBox
+            value={inputValue}
+            setValue={setInputValue}
+            iconName='plus'
+            placeholder='자주 먹는 식료품을 추가하세요.'
+            onSubmitEditing={() =>
+              onSubmitFavoriteListItem(
+                inputValue,
+                category,
+                setInputValue,
+                setCategory
+              )
+            }
+          >
+            <InputCategoryBtn
+              value={inputValue}
+              category={category}
+              setCategoryOpen={setCategoryOpen}
+            />
+          </TextInputRoundedBox>
+        </Container>
+      </SafeBottomAreaView>
+
+      {categoryOpen && (
+        <FormItemDetailModal
+          modalVisible={categoryOpen}
+          setModalVisible={setCategoryOpen}
+          title='카테고리 선택'
+          currentChecked={category}
+          onCheckBoxPress={onCategoryCheckBoxPress}
+        />
+      )}
+    </KeyboardAvoidingView>
   );
 }

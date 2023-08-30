@@ -1,27 +1,21 @@
-import { View } from 'react-native';
-import { SafeBottomAreaView } from '../components/native-component';
+import { SafeBottomAreaView, Text } from '../components/native-component';
 import { useDispatch } from '../redux/hook';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { Food } from '../constant/foods';
-import { scaleH } from '../util';
+import { entireFilterObj, expiredFilters, spaceFilters } from '../util';
 
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useTableItemFilter from '../hooks/useTableItemFilter';
 import useHandleTableItem from '../hooks/useHandleTableItem';
+import useExpiredFoods from '../hooks/useExpiredFoods';
 
-import Container from '../components/common/layout/Container';
+import Container from '../components/common/Container';
 import TableContainer from '../components/common/table/TableContainer';
 import TableHeader from '../components/common/table/TableHeader';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
 import TableFilters from '../components/common/table/TableFilters';
 import tw from 'twrnc';
-import useExpiredFoods from '../hooks/useExpiredFoods';
-// import {
-//   BannerAd,
-//   BannerAdSize,
-//   TestIds,
-// } from 'react-native-google-mobile-ads';
 
 export default function ExpiredFoods() {
   const { allExpiredFoods } = useExpiredFoods();
@@ -31,9 +25,7 @@ export default function ExpiredFoods() {
   const {
     currentFilter,
     changeFilter,
-    allExpiredFoodsFilters,
-    expiredTableList,
-    getExpiredTableList,
+    getExpiredTableList, //
   } = useTableItemFilter();
 
   const {
@@ -58,37 +50,40 @@ export default function ExpiredFoods() {
     setCheckedList,
   });
 
+  const expiredTableList = getExpiredTableList(currentFilter);
+
   return (
     <SafeBottomAreaView>
       <Container>
-        {/* 전체 표 */}
-        <TableContainer>
-          <View style={tw`px-3 py-2 min-h-[${scaleH(40)}px] justify-center`}>
-            <TableHeader
-              title={`유통기한 주의 식료품`}
-              entireChecked={
-                checkedList.length === expiredTableList.length &&
-                !!checkedList.length
-              }
-              onEntirePress={() => onEntireBoxPress(expiredTableList)}
-              columnTitle='유통기한순'
-            />
+        {/* 필터 */}
+        <TableFilters
+          filterList={[entireFilterObj, ...spaceFilters, ...expiredFilters]}
+          currentFilter={currentFilter}
+          changeFilter={changeFilter}
+          getTableList={getExpiredTableList}
+          setCheckedList={setCheckedList}
+        />
 
-            {/* 필터 */}
-            <TableFilters
-              allFilters={allExpiredFoodsFilters}
-              currentFilter={currentFilter}
-              changeFilter={changeFilter}
-              getTableList={getExpiredTableList}
-              setCheckedList={setCheckedList}
-            />
-          </View>
+        {/* 전체 표 */}
+        <TableContainer color='amber'>
+          <TableHeader
+            title={`유통기한 주의 식료품`}
+            entireChecked={
+              checkedList.length === expiredTableList.length &&
+              !!checkedList.length
+            }
+            onEntirePress={() => onEntireBoxPress(expiredTableList)}
+            color='amber'
+          >
+            <Text style={tw`text-slate-500 text-sm`}>유통기한순</Text>
+          </TableHeader>
 
           {/* 식료품 리스트 */}
           <TableBody
             list={expiredTableList}
             onCheckBoxPress={onCheckBoxPress}
             isCheckedItem={isCheckedItem}
+            color='amber'
           />
 
           {/* 식료품 선택 개수와 버튼 */}
@@ -96,16 +91,10 @@ export default function ExpiredFoods() {
             list={checkedList}
             onDeletePress={() => onDeletePress(allExpiredFoods)}
             buttons={['delete']}
+            color='amber'
           />
         </TableContainer>
       </Container>
-      {/* <BannerAd
-        unitId={TestIds.BANNER}
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-        requestOptions={{
-          requestNonPersonalizedAdsOnly: true,
-        }}
-      /> */}
     </SafeBottomAreaView>
   );
 }

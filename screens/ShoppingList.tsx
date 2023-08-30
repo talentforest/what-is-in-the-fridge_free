@@ -7,25 +7,22 @@ import {
 import { KeyboardAvoidingView } from '../components/native-component';
 import { useSelector } from '../redux/hook';
 import { Food, initialFoodInfo } from '../constant/foods';
-import { FormStep } from '../constant/formInfo';
 import { useFocusEffect } from '@react-navigation/native';
-import { View } from 'react-native';
-import UUIDGenerator from 'react-native-uuid';
+import { Keyboard } from 'react-native';
 
 import useHandleCheckList from '../hooks/useHandleCheckList';
 import useHandleTableItem from '../hooks/useHandleTableItem';
 import useToggleModal from '../hooks/useToggleModal';
 
 import AddSelectFoodModal from '../components/screen-component/modal/AddSelectFoodModal';
-import Container from '../components/common/layout/Container';
+import Container from '../components/common/Container';
 import TableContainer from '../components/common/table/TableContainer';
 import TableHeader from '../components/common/table/TableHeader';
 import TableBody from '../components/common/table/TableBody';
 import TableFooter from '../components/common/table/TableFooter';
-import TextInputRoundedBox from '../components/common/boxes/TextInputRoundedBox';
+import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 
-import tw from 'twrnc';
-import { scaleH } from '../util';
+import UUIDGenerator from 'react-native-uuid';
 
 export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
@@ -66,7 +63,9 @@ export default function ShoppingList() {
   });
 
   const onInputSubmit = () => {
-    if (keyword === '') return;
+    if (keyword === '') {
+      return Keyboard.dismiss();
+    }
     const food = {
       ...initialFoodInfo,
       id: myUuid as string,
@@ -74,26 +73,25 @@ export default function ShoppingList() {
     };
     dispatch(addToShoppingList(food));
     setKeyword('');
+    Keyboard.dismiss();
   };
 
   return (
     <KeyboardAvoidingView>
       <Container>
         {/* 장보기 목록 */}
-        <TableContainer>
-          <View style={tw`px-3 py-2 min-h-[${scaleH(40)}px] justify-center`}>
-            <TableHeader
-              title='장봐야할 식료품'
-              entireChecked={
-                checkedList.length === shoppingList.length &&
-                !!checkedList.length
-              }
-              onEntirePress={() => onEntireBoxPress(shoppingList)}
-              columnTitle='추가'
-            />
-          </View>
+        <TableContainer color='blue'>
+          <TableHeader
+            title='장봐야할 식료품'
+            entireChecked={
+              checkedList.length === shoppingList.length && !!checkedList.length
+            }
+            onEntirePress={() => onEntireBoxPress(shoppingList)}
+            color='blue'
+          />
 
           <TableBody
+            color='blue'
             list={shoppingList}
             onCheckBoxPress={onCheckBoxPress}
             isCheckedItem={isCheckedItem}
@@ -104,6 +102,7 @@ export default function ShoppingList() {
             list={checkedList}
             onDeletePress={() => onDeletePress(shoppingList)}
             buttons={['delete']}
+            color='blue'
           />
         </TableContainer>
 
@@ -120,13 +119,11 @@ export default function ShoppingList() {
         <AddSelectFoodModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          formSteps={
-            [
-              { id: 1, name: '식품 정보' },
-              { id: 2, name: '식품 위치' },
-              { id: 3, name: '식품 날짜' },
-            ] as FormStep[]
-          }
+          formSteps={[
+            { id: 1, name: '식품 정보' },
+            { id: 2, name: '식품 위치' },
+            { id: 3, name: '식품 날짜' },
+          ]}
         />
       )}
     </KeyboardAvoidingView>
