@@ -1,16 +1,15 @@
 import { View } from 'react-native';
-import { Text } from '../../native-component';
+import { Text, TouchableOpacity } from '../../native-component';
 import { Food } from '../../../constant/foods';
-import { RouteName } from '../../../navigation/Navigation';
+import { NavigateProp, RouteName } from '../../../navigation/Navigation';
+import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { YELLOW } from '../../../constant/colors';
-import { scaleH } from '../../../util';
-import FoodTag from '../../common/boxes/FoodBox';
-import Title from '../../common/Title';
-import Box from '../../common/layout/Box';
+import { FontGmarketSansBold } from '../../../constant/fonts';
+import { GRAY } from '../../../constant/colors';
+
+import FoodTagBox from './FoodTagBox';
 import MoreOpenBtn from '../../common/buttons/MoreOpenBtn';
 import Icon from '../../native-component/Icon';
-import SeeMoreBtn from '../../common/buttons/SeeMoreBtn';
 import tw from 'twrnc';
 
 export type EntranceTitle =
@@ -18,38 +17,62 @@ export type EntranceTitle =
   | '자주 먹는 식료품'
   | '장보기 목록 식료품';
 
+export type BoxColor = 'amber' | 'indigo' | 'slate' | 'blue';
+
 interface Props {
   foods: Food[];
   info: {
     title: EntranceTitle;
     desc: string;
     iconName: string;
-    bgColor: string;
     route: RouteName;
   };
+  color: BoxColor;
 }
 
-export default function EntranceBox({ info, foods }: Props) {
+export default function EntranceBox({ info, foods, color = 'slate' }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-
-  const { title, desc, iconName, bgColor, route } = info;
+  const navigation = useNavigation<NavigateProp>();
 
   const FOLDED_MAX_NUM = 8;
   const foldedFoods = foods.slice(0, FOLDED_MAX_NUM);
 
-  const color = bgColor.slice(3).slice(0, -4);
+  const { title, desc, iconName, route } = info;
 
   return (
-    <Box bgColor={bgColor}>
-      <Title title={title} iconName={iconName} />
-      <Text style={tw`text-white mt-[${scaleH(6)}px]`} fontSize={13}>
-        {desc}
-      </Text>
-      <View style={tw`min-h-28 mt-[${scaleH(14)}px] mb-3`}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate(route)}
+      style={tw`shadow-md bg-white flex-1 mb-3 border border-slate-500 rounded-xl`}
+    >
+      {/* 박스 헤더 */}
+      <View style={tw`rounded-t-xl bg-${color}-100`}>
+        <View style={tw`flex-row items-center gap-1 px-4 pt-2.5`}>
+          {iconName && (
+            <Icon
+              type='MaterialCommunityIcons'
+              name={iconName}
+              size={18}
+              color={color}
+            />
+          )}
+          <Text
+            style={tw.style(
+              `text-white text-lg text-${color}-600`,
+              FontGmarketSansBold
+            )}
+          >
+            {title}
+          </Text>
+        </View>
+        <Text style={tw`text-${color}-700 px-4 mb-2 text-sm`}>{desc}</Text>
+      </View>
+
+      {/* 태그 리스트 */}
+      <View style={tw`min-h-28 mb-2 p-3 border-t border-${color}-400`}>
         {foods.length !== 0 ? (
           <View style={tw`flex-row gap-1 flex-wrap items-center`}>
             {foldedFoods.map((food) => (
-              <FoodTag
+              <FoodTagBox
                 key={food.id}
                 food={food}
                 checkExistence={title === '자주 먹는 식료품'}
@@ -57,14 +80,14 @@ export default function EntranceBox({ info, foods }: Props) {
               />
             ))}
 
-            {/* 장봐야할 식료품 더보기 indicator */}
             {foods.length > FOLDED_MAX_NUM &&
               (title === '장보기 목록 식료품' ? (
                 <>
+                  {/* 장봐야할 식료품 펼치기 indicator */}
                   {isOpen &&
                     foods
                       .slice(FOLDED_MAX_NUM)
-                      .map((food) => <FoodTag key={food.id} food={food} />)}
+                      .map((food) => <FoodTagBox key={food.id} food={food} />)}
                   <MoreOpenBtn isOpen={isOpen} setIsOpen={setIsOpen} />
                 </>
               ) : (
@@ -87,29 +110,24 @@ export default function EntranceBox({ info, foods }: Props) {
               ))}
           </View>
         ) : (
-          <Text fontSize={14} style={tw`text-${color}-200 text-center pt-10`}>
+          <Text style={tw`text-${color}-500 text-center pt-10`}>
             아직 식료품이 없어요
           </Text>
         )}
       </View>
 
       {/* 박스 하단 */}
-      <View style={tw`items-center justify-between flex-row-reverse`}>
-        <SeeMoreBtn route={route} />
-        {title === '장보기 목록 식료품' && !!foods.length && (
-          <View style={tw`flex-row items-center gap-0.5 pt-3`}>
-            <Icon
-              name='information'
-              type='MaterialCommunityIcons'
-              size={13}
-              color={YELLOW}
-            />
-            <Text fontSize={13} style={tw`text-[${YELLOW}]`}>
-              카트에 넣은 식료품을 터치하세요.
-            </Text>
-          </View>
-        )}
+      <View style={tw`flex-row items-center self-end p-3 pt-1`}>
+        <Text style={tw.style(`text-slate-600 text-sm`, FontGmarketSansBold)}>
+          더보기
+        </Text>
+        <Icon
+          name='chevron-right'
+          type='MaterialCommunityIcons'
+          color={GRAY}
+          size={20}
+        />
       </View>
-    </Box>
+    </TouchableOpacity>
   );
 }
