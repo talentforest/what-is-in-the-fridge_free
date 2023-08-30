@@ -1,19 +1,20 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
 import { FontGmarketSansBold } from '../../../constant/fonts';
-import { ScrollView } from 'react-native-gesture-handler';
-import { foodCategories } from '../../../constant/foodCategories';
-import RNModal from '../../common/modal/Modal';
-import CheckBoxItem from '../../common/form/CheckBoxItem';
-import useFavoriteFoods from '../../../hooks/useFavoriteFoods';
+import { Category, foodCategories } from '../../../constant/foodCategories';
+
+import useImageLoad from '../../../hooks/useImageLoad';
+
+import Modal from '../../common/modal/Modal';
+import CategoryBox from '../../common/modal/CategoryBox';
 import tw from 'twrnc';
 
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
   title: '카테고리 선택' | '자주 먹는 식료품에서 선택';
-  currentChecked: string;
-  onCheckBoxPress: (name: string) => void;
+  currentChecked?: string;
+  onCheckBoxPress?: (category: Category) => void;
 }
 
 export default function FormItemDetailModal({
@@ -23,58 +24,53 @@ export default function FormItemDetailModal({
   currentChecked,
   onCheckBoxPress,
 }: Props) {
-  const { favoriteFoods } = useFavoriteFoods();
-  const sortedAllFavFoods = favoriteFoods.map((food) => food.name).sort();
+  const { isLoaded, assets } = useImageLoad({
+    images: [
+      require('../../../assets/category-fresh.png'),
+      require('../../../assets/category-meat-fish.png'),
+      require('../../../assets/category-instant.png'),
+      require('../../../assets/category-dessert.png'),
+      require('../../../assets/category-sidedish.png'),
+      require('../../../assets/category-egg-dairy.png'),
+      require('../../../assets/category-sauce.png'),
+      require('../../../assets/category-drink.png'),
+      require('../../../assets/category-bakery.png'),
+    ],
+  });
+
+  if (!isLoaded) return null;
+
   return (
-    <RNModal
-      bgColor='bg-white'
+    <Modal
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
       style={tw`justify-center mx-4`}
       animationIn='fadeIn'
       animationOut='fadeOut'
+      hasBackdrop
     >
-      <View style={tw`mt-3 p-4 px-6`}>
-        <Text style={tw.style('text-indigo-500', FontGmarketSansBold)}>
-          {title}{' '}
-          {title === '자주 먹는 식료품에서 선택' && (
-            <Text style={tw`text-slate-600 mt-3`} fontSize={12}>
-              (가나다 순)
-            </Text>
-          )}
+      <View style={tw`m-6 gap-3`}>
+        <Text style={tw.style('text-blue-600', FontGmarketSansBold)}>
+          {title}
         </Text>
-        <ScrollView
-          style={tw`max-h-100 mt-3`}
-          contentContainerStyle={tw`gap-1 py-2`}
-        >
-          {title === '자주 먹는 식료품에서 선택' &&
-            (sortedAllFavFoods.length !== 0 ? (
-              sortedAllFavFoods.map((name: string) => (
-                <CheckBoxItem
-                  key={name}
-                  onPress={() => onCheckBoxPress(name)}
-                  checked={name === currentChecked}
-                  title={name}
-                />
-              ))
-            ) : (
-              <View style={tw`pt-3 pb-6 items-center`}>
-                <Text style={tw`text-slate-600`}>
-                  아직 자주 먹는 식료품이 없습니다.
-                </Text>
-              </View>
-            ))}
-          {title === '카테고리 선택' &&
-            foodCategories.map(({ category }) => (
-              <CheckBoxItem
-                key={category}
-                onPress={() => onCheckBoxPress(category)}
-                checked={category === currentChecked}
-                title={category}
-              />
-            ))}
-        </ScrollView>
+
+        {onCheckBoxPress && (
+          <View style={tw`flex-row flex-wrap gap-1.5 justify-between`}>
+            {foodCategories.map(
+              ({ category }) =>
+                assets && (
+                  <CategoryBox
+                    key={category}
+                    checked={category === currentChecked}
+                    category={category}
+                    onCheckBoxPress={onCheckBoxPress}
+                    assets={assets}
+                  />
+                )
+            )}
+          </View>
+        )}
       </View>
-    </RNModal>
+    </Modal>
   );
 }

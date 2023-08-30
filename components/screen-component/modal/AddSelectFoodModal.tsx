@@ -1,12 +1,14 @@
 import {
-  FormLabel,
+  FormLabelType,
   FormStep,
   shoppingListForm,
 } from '../../../constant/formInfo';
-import Form from '../../common/form/Form';
-import RNModal from '../../common/modal/Modal';
+
 import useAddSelectFood from '../../../hooks/useAddSelectFood';
-import SubmitBtn from '../../common/form/SubmitBtn';
+
+import Modal from '../../common/modal/Modal';
+import Form from '../../common/form/Form';
+import SubmitBtn from '../../common/buttons/SubmitBtn';
 
 interface Props {
   modalVisible: boolean;
@@ -22,25 +24,22 @@ export default function AddSelectFoodModal({
   const { selectedFood, onChange, onSubmit } = useAddSelectFood();
 
   return (
-    <RNModal
+    <Modal
       title='장보기 목록 식료품 추가'
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
     >
       <Form
         title='장보기 목록 식료품 추가'
-        items={shoppingListForm as FormLabel[]}
+        items={shoppingListForm as FormLabelType[]}
         food={selectedFood}
         changeInfo={onChange}
         formSteps={formSteps}
       />
       <SubmitBtn
         btnName='식료품 정보 추가하기'
-        onPress={() => {
-          onSubmit();
-          setModalVisible(false);
-        }}
+        onPress={() => onSubmit(setModalVisible)}
       />
-    </RNModal>
+    </Modal>
   );
 }

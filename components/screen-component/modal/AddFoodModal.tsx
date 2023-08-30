@@ -1,9 +1,11 @@
 import { FoodLocation } from '../../../constant/fridgeInfo';
-import { FormLabel, FormStep, foodForm } from '../../../constant/formInfo';
-import RNModal from '../../common/modal/Modal';
+import { FormLabelType, FormStep, foodForm } from '../../../constant/formInfo';
+
 import useAddFood from '../../../hooks/useAddFood';
+
+import Modal from '../../common/modal/Modal';
 import Form from '../../common/form/Form';
-import SubmitBtn from '../../common/form/SubmitBtn';
+import SubmitBtn from '../../common/buttons/SubmitBtn';
 
 interface Props {
   modalVisible: boolean;
@@ -21,7 +23,7 @@ export default function AddFoodModal({
   const { newFood, addFoodInfo, onAddSubmit } = useAddFood({ foodLocation });
 
   return (
-    <RNModal
+    <Modal
       title='새로운 식료품 추가'
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
@@ -30,7 +32,7 @@ export default function AddFoodModal({
         <Form
           title='새로운 식료품 추가'
           editableName={true}
-          items={foodForm as FormLabel[]}
+          items={foodForm as FormLabelType[]}
           food={newFood}
           changeInfo={addFoodInfo}
           formSteps={formSteps}
@@ -42,6 +44,6 @@ export default function AddFoodModal({
           onAddSubmit(setModalVisible);
         }}
       />
-    </RNModal>
+    </Modal>
   );
 }

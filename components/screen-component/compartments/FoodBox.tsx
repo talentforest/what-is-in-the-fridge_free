@@ -1,39 +1,44 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
-import { cutLetter, scaleH } from '../../../util';
+import { Filter, cutLetter } from '../../../util';
 import { Food } from '../../../constant/foods';
+import {
+  INACTIVE_COLOR as DEFAULT_COLOR,
+  EXPIRED_COLOR,
+  LEFT_3_DAYS_COLOR,
+} from '../../common/table/TableFilters';
+
 import useExpiredFoods from '../../../hooks/useExpiredFoods';
 import tw from 'twrnc';
 
 interface Props {
   food: Food;
+  moveMode: boolean;
+  filter: Filter;
 }
 
-export default function FoodBox({ food }: Props) {
+export default function FoodBox({ food, moveMode, filter }: Props) {
   const { checkExpired, checkLeftThreeDays } = useExpiredFoods();
   const { expiredDate } = food;
 
-  const bgColor = checkExpired(expiredDate)
-    ? 'bg-red-100'
-    : checkLeftThreeDays(expiredDate)
-    ? 'bg-amber-100'
-    : 'bg-blue-50';
+  const activeColor = () => {
+    if (filter === '유통기한 지남' && checkExpired(expiredDate))
+      return EXPIRED_COLOR;
 
-  const textColor = checkExpired(expiredDate) ? 'bg-red-500' : 'bg-amber-500';
+    if (filter === '유통기한 3일 이내' && checkLeftThreeDays(expiredDate))
+      return LEFT_3_DAYS_COLOR;
+
+    return DEFAULT_COLOR;
+  };
 
   return (
     <View
       key={food.id}
-      style={tw`rounded-full gap-1 justify-center items-center flex-row
-      ${bgColor} h-[${scaleH(25)}px] px-[${scaleH(9)}px`}
+      style={tw`rounded-full justify-center items-center flex-row border ${activeColor()} h-7.5 px-3`}
     >
-      <Text fontSize={14} style={tw`text-center text-slate-600 py-0.5`}>
+      <Text style={tw`text-center ${activeColor()} text-sm`}>
         {cutLetter(food.name, 8)}
       </Text>
-
-      {(checkExpired(expiredDate) || checkLeftThreeDays(expiredDate)) && (
-        <View style={tw`h-2 w-2 rounded-full ${textColor}`} />
-      )}
     </View>
   );
 }

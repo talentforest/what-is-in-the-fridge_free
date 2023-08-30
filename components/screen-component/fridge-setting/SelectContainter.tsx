@@ -1,10 +1,10 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
-import { scaleH } from '../../../util';
 import { ReactNode } from 'react';
-import tw from 'twrnc';
+import { GRAY } from '../../../constant/colors';
+
 import Icon from '../../native-component/Icon';
-import { BLUE, GRAY } from '../../../constant/colors';
+import tw from 'twrnc';
 
 type FridgeSettingTitle =
   | '나의 냉장고 타입'
@@ -19,25 +19,17 @@ interface Props {
 
 export default function SelectContainter({ title, children }: Props) {
   return (
-    <View style={tw`mb-[${scaleH(26)}px]`}>
-      {title === '나의 냉장고 모습' ? (
-        <View
-          style={tw`border border-slate-300 bg-amber-200 mb-1 justify-center items-center py-2 rounded-lg`}
-        >
-          <Text style={tw`text-blue-600`}>{title}</Text>
-        </View>
-      ) : (
-        <View style={tw`flex-row items-center gap-1 pb-2`}>
-          <Icon name='settings-sharp' type='Ionicons' color={GRAY} size={14} />
-          <Text style={tw`text-slate-600`}>{title}</Text>
-        </View>
-      )}
+    <View style={tw`mb-8`}>
+      <View style={tw`flex-row items-center gap-1 pb-0.5`}>
+        <Icon name='settings-outline' type='Ionicons' color={GRAY} size={13} />
+        <Text style={tw`text-slate-600 text-sm`}>{title}</Text>
+      </View>
 
       <View
         style={tw`gap-2 rounded-lg ${
           title === '각 공간의 칸 개수'
             ? ''
-            : `p-[${scaleH(12)}px] bg-white border border-slate-300`
+            : `px-3.5 py-2 bg-white border border-slate-300`
         }`}
       >
         {children}
