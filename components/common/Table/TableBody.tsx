@@ -1,21 +1,25 @@
 import { Food } from '../../../constant/foods';
 import { Text, TouchableOpacity } from '../../native-component';
 import { useRoute } from '@react-navigation/native';
-import { View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { DEEP_GRAY, LIGHT_GRAY } from '../../../constant/colors';
+import { BoxColor } from '../../screen-component/home/EntranceBox';
+
 import useCheckFood from '../../../hooks/useCheckFood';
+
 import LeftDay from '../LeftDay';
-import TableList from './TableList';
 import TableItem from './TableItem';
 import Icon from '../../native-component/Icon';
-import tw from 'twrnc';
 import IndicatorExist from '../IndicatorExist';
+import CategoryImageIcon from '../CategoryImageIcon';
+import tw from 'twrnc';
 
 interface Props {
   list: Food[];
   onCheckBoxPress: (food: Food) => void;
   isCheckedItem: (id: string) => Food | undefined;
   addToFridgePress?: (food: Food) => void;
+  color: BoxColor;
 }
 
 export default function TableBody({
@@ -23,21 +27,32 @@ export default function TableBody({
   onCheckBoxPress,
   isCheckedItem,
   addToFridgePress,
+  color = 'slate',
 }: Props) {
   const route = useRoute();
-  const { checkExistFood } = useCheckFood();
+  const { findFoodInFridge } = useCheckFood();
 
   return (
     <>
       {!!list.length ? (
-        <TableList
-          list={list}
+        <FlatList
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          style={tw`flex-1 bg-white border-t border-b border-slate-500`}
+          contentContainerStyle={tw`px-3 pb-3`}
+          ItemSeparatorComponent={() => (
+            <View style={tw`border-t border-slate-300`} />
+          )}
+          data={list}
           renderItem={({ item }) => (
             <TableItem
               key={item.name}
               food={item}
               onCheckBoxPress={onCheckBoxPress}
               isCheckedItem={isCheckedItem}
+              exist={
+                !!(route.name === 'ShoppingList' && findFoodInFridge(item.name))
+              }
             >
               {/* 유통기한 주의 식료품 정보 */}
               {route.name === 'ExpiredFoods' && (
@@ -47,19 +62,32 @@ export default function TableBody({
               )}
 
               {/* 자주 먹는 식료품 정보 */}
-              {route.name === 'FavoriteFoods' && <IndicatorExist food={item} />}
+              {route.name === 'FavoriteFoods' && (
+                <>
+                  <View style={tw`w-9 justify-center items-center`}>
+                    <CategoryImageIcon
+                      kind='icon'
+                      category={item.category}
+                      size={18}
+                    />
+                  </View>
+                  <View>
+                    <IndicatorExist food={item} />
+                  </View>
+                </>
+              )}
 
               {/* 장보기 식료품 추가 버튼 */}
               {route.name === 'ShoppingList' && addToFridgePress && (
                 <TouchableOpacity
                   onPress={() => addToFridgePress(item)}
-                  style={tw`p-1.5`}
+                  style={tw`h-full justify-center px-3 -mx-3`}
                 >
                   <Icon
                     type='MaterialCommunityIcons'
                     name='plus'
-                    size={22}
-                    color={checkExistFood(item) ? LIGHT_GRAY : DEEP_GRAY}
+                    size={23}
+                    color={findFoodInFridge(item.name) ? LIGHT_GRAY : DEEP_GRAY}
                   />
                 </TouchableOpacity>
               )}
@@ -67,10 +95,8 @@ export default function TableBody({
           )}
         />
       ) : (
-        <View
-          style={tw`bg-stone-100 border-t-2 border-b-2 border-slate-300 flex-1`}
-        >
-          <Text style={tw`text-slate-500 text-center mt-22 flex-1`}>
+        <View style={tw`bg-white border-t border-b border-slate-500 flex-1`}>
+          <Text style={tw`text-sm text-${color}-500 text-center mt-22 flex-1`}>
             식료품이 없습니다.
           </Text>
         </View>
