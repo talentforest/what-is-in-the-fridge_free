@@ -1,6 +1,7 @@
 import { View } from 'react-native';
 import { DEEP_YELLOW, LIGHT_GRAY } from '../../../constant/colors';
 import { Text, TouchableOpacity } from '../../native-component';
+
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
 
@@ -16,7 +17,7 @@ export default function ArrowBtn({ type, moveStep, active }: Props) {
       <TouchableOpacity
         onPress={moveStep}
         disabled={!active}
-        style={tw`flex-row items-center px-2`}
+        style={tw`flex-row items-center p-2`}
       >
         {type === 'previous' && (
           <Icon
@@ -26,14 +27,14 @@ export default function ArrowBtn({ type, moveStep, active }: Props) {
             color={active ? DEEP_YELLOW : LIGHT_GRAY}
           />
         )}
-        <Text style={tw`${active ? 'text-indigo-600' : 'text-slate-400'}`}>
+        <Text style={tw`${active ? 'text-blue-600' : 'text-slate-400'}`}>
           {type === 'previous' ? '이전' : '다음'}
         </Text>
         {type === 'next' && (
           <Icon
             name='chevron-right'
             type='MaterialCommunityIcons'
-            size={18}
+            size={22}
             color={active ? DEEP_YELLOW : LIGHT_GRAY}
           />
         )}
