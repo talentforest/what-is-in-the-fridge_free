@@ -1,3 +1,4 @@
+import { ModalTitle } from '../modal/Modal';
 import {
   Animated,
   Dimensions,
@@ -8,10 +9,13 @@ import {
 } from 'react-native';
 import { Food } from '../../../constant/foods';
 import { useEffect, useRef, useState } from 'react';
-import { FormStep, FormLabel, FormStepName } from '../../../constant/formInfo';
-import { scaleH } from '../../../util';
-import { Text } from '../../native-component';
-import FormItemContainer from './FormItemContainer';
+import {
+  FormStep,
+  FormLabelType,
+  FormStepName,
+} from '../../../constant/formInfo';
+
+import FormSectionContainer from './FormSectionContainer';
 import CategoryItem from './CategoryItem';
 import SpaceItem from './SpaceItem';
 import DateItem from './DateItem';
@@ -20,11 +24,10 @@ import FavoriteItem from './FavoriteItem';
 import StepIndicator from './StepIndicator';
 import ArrowBtn from '../buttons/ArrowBtn';
 import tw from 'twrnc';
-import FormSectionContainer from './FormSectionContainer';
 
 interface Props {
-  title: '장보기 목록 식료품 추가' | '새로운 식료품 추가' | '식료품 정보 수정';
-  items: FormLabel[];
+  title: ModalTitle;
+  items: FormLabelType[];
   food: Food;
   changeInfo: (newInfo: { [key: string]: string | boolean }) => void;
   editableName?: boolean;
@@ -109,9 +112,8 @@ export default function Form({
         <Animated.View
           style={{
             width: FORM_WIDTH,
-            height: scaleH(350),
+            height: 360,
             transform: [{ translateX: stepTranslateX }],
-            // borderWidth: 1,
           }}
           {...panResponder.panHandlers}
         >
@@ -119,64 +121,47 @@ export default function Form({
             <View style={tw`flex-row flex-1`}>
               <FormSectionContainer>
                 {items.includes('식료품 이름') && (
-                  <FormItemContainer label='식료품 이름'>
-                    <NameItem
-                      name={food.name}
-                      changeInfo={changeInfo}
-                      editable={editableName || false}
-                    />
-                    {!!!editableName && (
-                      <Text style={tw`pt-2 text-amber-600`} fontSize={12}>
-                        이름은 수정할 수 없습니다.
-                      </Text>
-                    )}
-                  </FormItemContainer>
+                  <NameItem
+                    title={title}
+                    name={food.name}
+                    changeInfo={changeInfo}
+                    editable={editableName || false}
+                  />
                 )}
                 {items.includes('카테고리') && (
-                  <FormItemContainer label='카테고리'>
-                    <CategoryItem
-                      fixedCategory={food.category}
-                      changeInfo={changeInfo}
-                    />
-                  </FormItemContainer>
+                  <CategoryItem
+                    name={food.name}
+                    fixedCategory={food.category}
+                    changeInfo={changeInfo}
+                    disabled={title !== '식료품 정보 수정'}
+                  />
                 )}
                 {items.includes('자주 먹는 식품') && (
-                  <FormItemContainer label='자주 먹는 식품'>
-                    <FavoriteItem
-                      name={food.name}
-                      favoriteState={food.favorite}
-                      changeInfo={changeInfo}
-                      disabled={title !== '식료품 정보 수정'}
-                    />
-                  </FormItemContainer>
+                  <FavoriteItem
+                    name={food.name}
+                    favoriteState={food.favorite}
+                    changeInfo={changeInfo}
+                    disabled={title !== '식료품 정보 수정'}
+                  />
                 )}
               </FormSectionContainer>
 
               <FormSectionContainer>
                 {items.includes('구매날짜') && (
-                  <FormItemContainer label='구매날짜'>
-                    <DateItem
-                      date={food.purchaseDate}
-                      changeInfo={changeInfo}
-                    />
-                  </FormItemContainer>
+                  <DateItem date={food.purchaseDate} changeInfo={changeInfo} />
                 )}
                 {items.includes('유통기한') && (
-                  <FormItemContainer label='유통기한'>
-                    <DateItem
-                      expiredInfo
-                      date={food.expiredDate}
-                      changeInfo={changeInfo}
-                    />
-                  </FormItemContainer>
+                  <DateItem
+                    expiredInfo
+                    date={food.expiredDate}
+                    changeInfo={changeInfo}
+                  />
                 )}
               </FormSectionContainer>
 
               {items.includes('냉장고 위치 선택') && (
                 <FormSectionContainer>
-                  <FormItemContainer label='냉장고 위치 선택'>
-                    <SpaceItem food={food} changeInfo={changeInfo} />
-                  </FormItemContainer>
+                  <SpaceItem food={food} changeInfo={changeInfo} />
                 </FormSectionContainer>
               )}
             </View>
@@ -185,7 +170,7 @@ export default function Form({
       </View>
 
       {/* 단계 */}
-      <View style={tw`items-center flex-row justify-between m-4`}>
+      <View style={tw`items-center flex-row justify-between mx-4 my-2`}>
         <ArrowBtn
           type='previous'
           moveStep={() => moveStep('prev', currentStep.id)}

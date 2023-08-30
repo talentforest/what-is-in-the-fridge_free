@@ -11,9 +11,7 @@ interface Props {
 
 export default function StepIndicator({ formSteps, currentStepId }: Props) {
   const activeStyle = (stepId: number) => {
-    return currentStepId === stepId
-      ? 'bg-indigo-500 border-blue-300 border'
-      : '';
+    return currentStepId === stepId ? 'bg-blue-600 border-blue-300 border' : '';
   };
 
   const activeTextStyle = (stepId: number) => {
@@ -26,14 +24,13 @@ export default function StepIndicator({ formSteps, currentStepId }: Props) {
         <View
           key={step.id}
           style={tw`${activeStyle(step.id)}
-           w-5.5 h-5.5 text-center justify-center items-center rounded-full`}
+           w-6 h-6 text-center justify-center items-center rounded-full`}
         >
           <Text
             style={tw.style(
-              `${activeTextStyle(step.id)} pl-[1px] pt-[1px]`,
+              `${activeTextStyle(step.id)} pl-0.5 pt-0.5 text-xs`,
               FontGmarketSansBold
             )}
-            fontSize={10}
           >
             {step.id}
           </Text>

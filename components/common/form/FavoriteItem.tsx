@@ -1,12 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { View, Animated } from 'react-native';
-import { INDIGO, LIGHT_INDIGO } from '../../../constant/colors';
-import { scaleH } from '../../../util';
-import MessageBox from '../boxes/MessageBox';
+import { BLUE, LIGHT_BLUE } from '../../../constant/colors';
+
 import useFavoriteFoods from '../../../hooks/useFavoriteFoods';
+
+import FormLabel from './FormLabel';
+import Message from './Message';
 import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
-import { PlatformIOS } from '../../../constant/statusBarHeight';
 
 interface Props {
   name: string;
@@ -27,10 +28,10 @@ export default function FavoriteItem({
 
   // 식료품 이름을 적었는데 자주 먹는 식료품 이름일 경우
   const isFavoriteFood = favoriteFoods.find((food) => food.name === name);
-  const currFavState =
-    isFavoriteFood && disabled
-      ? isFavoriteFood?.favorite // 기존 자주 먹는 식료품 상태
-      : favoriteState; // 새로운 식료품 상태
+  const disabledFavoriteBtn = isFavoriteFood && disabled;
+  const currFavState = disabledFavoriteBtn
+    ? isFavoriteFood?.favorite // 기존 자주 먹는 식료품 상태
+    : favoriteState; // 새로운 식료품 상태
 
   const height = useRef(new Animated.Value(currFavState ? 30 : 0)).current;
   const translateX = useRef(
@@ -73,11 +74,14 @@ export default function FavoriteItem({
     }
   }, [name]);
 
+  const color = disabledFavoriteBtn ? 'border-slate-400' : 'border-blue-600';
+  const backgroundColor = disabledFavoriteBtn ? LIGHT_BLUE : BLUE;
+
   return (
-    <View style={tw`mt-1 gap-1`}>
+    <View>
+      <FormLabel label='자주 먹는 식품' />
       <View
-        style={tw`h-[${scaleH(40)}px] 
-        flex-row items-center border border-indigo-500 p-1 rounded-full bg-white self-start`}
+        style={tw`${color} h-11 flex-row items-center border p-1 rounded-full bg-white self-start`}
       >
         <Animated.View
           style={{
@@ -87,7 +91,7 @@ export default function FavoriteItem({
             left: 4,
             height: '100%',
             borderRadius: 100,
-            backgroundColor: isFavoriteFood && disabled ? LIGHT_INDIGO : INDIGO,
+            backgroundColor,
           }}
         />
         {['맞아요', '아니에요'].map((btnNm) => (
@@ -108,15 +112,12 @@ export default function FavoriteItem({
           opacity: interpolatedOpacity,
         }}
       >
-        <MessageBox
-          message={
-            isFavoriteFood && disabled
-              ? '이미 자주 먹는 식료품에 등록되어 있어 변경할 수 없어요.'
-              : isFavoriteFood
-              ? '이미 자주 먹는 식료품에 등록되어 있어요.'
-              : '자주 먹는 식료품 목록에 추가됩니다.'
-          }
-        />
+        {!isFavoriteFood && (
+          <Message
+            message='자주 먹는 식료품 목록에 추가됩니다.'
+            color='green'
+          />
+        )}
       </Animated.View>
     </View>
   );

@@ -1,13 +1,14 @@
 import { View } from 'react-native';
 import { TextInput, TouchableOpacity } from '../../native-component';
-import { getFormattedDate, scaleH } from '../../../util';
+import { getFormattedDate } from '../../../util';
 import { useState } from 'react';
-import { ControlDateBtns } from '../../../constant/ControlDateBtns';
 import { BLUE } from '../../../constant/colors';
+import { controlDateBtns } from '../../../constant/controlDateBtns';
+
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from '../../native-component/Icon';
 import FormLabel from './FormLabel';
-import ControlDateBtn from './ControlDateBtn';
+import ControlDateBtn from '../buttons/ControlDateBtn';
 import tw from 'twrnc';
 
 interface Props {
@@ -32,23 +33,36 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
     );
   };
 
+  const formattedDate = getFormattedDate(date, 'YYYY년 MM월 DD일');
+
   return (
     <View>
       {/* 날짜 Input */}
       <FormLabel label={expiredInfo ? '유통기한' : '구매날짜'} />
       <TouchableOpacity
         onPress={() => setDatePickerVisible(true)}
-        style={tw`h-[${scaleH(44)}px] 
-        border border-blue-600 bg-white rounded-lg flex-row items-center justify-between px-2`}
+        style={tw`h-12 border border-blue-600 bg-white rounded-lg flex-row items-center justify-between px-2`}
       >
         <TextInput
-          value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
+          value={formattedDate}
           editable={false}
           pointerEvents='none'
           style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
         />
         <Icon type='AntDesign' name='calendar' size={16} color={BLUE} />
       </TouchableOpacity>
+
+      {/* 날짜 더하기 버튼들 */}
+      <View style={tw`mt-1 flex-row gap-1.5 flex-wrap items-center`}>
+        {controlDateBtns.map((btn) => (
+          <ControlDateBtn
+            key={btn.label}
+            btn={btn}
+            changeDate={changeDate}
+            date={date}
+          />
+        ))}
+      </View>
 
       {/* 캘린더 픽커 모달 */}
       <DateTimePickerModal
@@ -60,19 +74,8 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
         date={new Date(date)}
         onConfirm={onConfirm}
         onCancel={() => setDatePickerVisible(false)}
+        minimumDate={expiredInfo ? new Date() : undefined}
       />
-
-      {/* 날짜 더하기 버튼들 */}
-      <View style={tw`mt-1 flex-row gap-1 flex-wrap items-center`}>
-        {ControlDateBtns.map((btn) => (
-          <ControlDateBtn
-            key={btn.label}
-            btn={btn}
-            changeDate={changeDate}
-            date={date}
-          />
-        ))}
-      </View>
     </View>
   );
 }
