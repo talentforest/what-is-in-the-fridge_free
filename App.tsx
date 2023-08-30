@@ -30,7 +30,7 @@ export default function App() {
         <SafeAreaProvider>
           <NavigationContainer>
             <Navigation />
-            <StatusBar />
+            <StatusBar style='dark' />
           </NavigationContainer>
         </SafeAreaProvider>
       </PersistGate>
