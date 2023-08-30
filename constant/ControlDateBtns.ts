@@ -12,7 +12,7 @@ export interface ControlDateBtnType {
   btnColor: 'amber' | 'teal' | 'red' | 'indigo';
 }
 
-export const ControlDateBtns: ControlDateBtnType[] = [
+export const controlDateBtns: ControlDateBtnType[] = [
   {
     label: '하루',
     calculateDate: controlDay,

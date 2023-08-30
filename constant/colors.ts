@@ -1,20 +1,13 @@
-export const YELLOW = '#fde68a';
 export const GREEN = '#06c119';
-export const TEAL = '#0d9488';
+export const LIGHT_BLUE = '#93c5fd';
 export const BLUE = '#2563eb';
-export const DEEP_BLUE = '#2e2ef3';
-export const DEEP_YELLOW = '#ffb404';
-export const LIGHT_YELLOW = '#ffeda3';
-export const LIGHT_INDIGO = '#b3a8fa';
-export const INDIGO = '#605dff';
-export const DEEP_INDIGO = '#4e45ff';
-export const INACTIVE_COLOR = '#aaa';
+export const DEEP_YELLOW = '#d97706';
+export const INDIGO = '#4f46e5';
 export const DEEP_GRAY = '#333';
 export const GRAY = '#555';
 export const LIGHT_GRAY = '#bbb';
+export const RED = '#dc2626';
 export const ORANGE_RED = '#ff6c47';
-export const ORANGE = '#ff9e43';
-export const CARROT_COLOR = '#faa97e';
 
-export const HEADER_BGCOLOR = '#dbecff';
+export const HEADER_BGCOLOR = '#edf7ff';
 export const TAB_BG_COLOR = '#648fff';
