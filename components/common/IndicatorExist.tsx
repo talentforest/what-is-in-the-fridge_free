@@ -1,26 +1,26 @@
 import { Food } from '../../constant/foods';
 import { Text } from '../native-component';
+
 import useCheckFood from '../../hooks/useCheckFood';
 import tw from 'twrnc';
 
 interface Props {
   food: Food;
-  size?: 'sm';
+  size?: 'xs';
 }
 
 export default function IndicatorExist({ food, size }: Props) {
-  const { checkExistFood } = useCheckFood();
+  const { findFoodInFridge } = useCheckFood();
 
   const existFoodColor = (food: Food) => {
-    return !!checkExistFood(food) ? 'text-blue-500' : 'text-red-500';
+    return !!findFoodInFridge(food.name) ? 'text-blue-600' : 'text-red-500';
   };
 
+  const fontSize = size === 'xs' ? 'text-[13px]' : 'text-sm';
+
   return (
-    <Text
-      style={tw`${existFoodColor(food)}`}
-      fontSize={size === 'sm' ? 12 : 13}
-    >
-      {!!checkExistFood(food) ? '있음' : '없음'}
+    <Text style={tw`${existFoodColor(food)} ${fontSize}`}>
+      {!!findFoodInFridge(food.name) ? '있음' : '없음'}
     </Text>
   );
 }

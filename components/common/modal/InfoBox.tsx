@@ -1,22 +1,19 @@
 import { View } from 'react-native';
 import { Text } from '../../native-component';
-import { FormLabel } from '../../../constant/formInfo';
-import { getFormattedDate } from '../../../util';
-import { GRAY, INDIGO } from '../../../constant/colors';
-import tw from 'twrnc';
-import LeftDay from '../LeftDay';
+import { FormLabelType } from '../../../constant/formInfo';
+import { GRAY } from '../../../constant/colors';
+import { ReactNode } from 'react';
+
 import Icon from '../../native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
-  label: FormLabel;
-  info: string;
-  favorite?: boolean;
+  label: FormLabelType;
   iconName: string;
+  children: ReactNode;
 }
 
-export default function InfoBox({ label, info, favorite, iconName }: Props) {
-  const dateItem = label === '구매날짜' || label === '유통기한';
-
+export default function InfoBox({ label, iconName, children }: Props) {
   return (
     <View
       style={tw`gap-1 py-4 flex-row items-start ${
@@ -24,31 +21,18 @@ export default function InfoBox({ label, info, favorite, iconName }: Props) {
       } border-slate-300`}
     >
       {/* 표 제목 */}
-      <View style={tw`flex-row gap-1 w-[31%] items-center`}>
-        <Icon type='MaterialCommunityIcons' name={iconName} color={GRAY} />
-        <Text style={tw`text-slate-500 `}>{label} :</Text>
+      <View style={tw`flex-row gap-1 mr-2 items-center`}>
+        <Icon
+          type='MaterialCommunityIcons'
+          name={iconName}
+          size={16}
+          color={GRAY}
+        />
+        <Text style={tw`text-slate-500 text-base`}>{label} :</Text>
       </View>
 
       {/* 표 내용 */}
-      <View style={tw`gap-1 flex-row items-end flex-wrap flex-1`}>
-        <Text style={tw`text-slate-800`}>
-          {dateItem ? getFormattedDate(info, 'YYYY년 MM월 DD일') : info}
-        </Text>
-        {label === '식료품 이름' && favorite && (
-          <View style={tw`flex-row items-center gap-0.5`}>
-            <Icon
-              type='MaterialCommunityIcons'
-              name='tag-heart'
-              color={INDIGO}
-              size={13}
-            />
-            <Text style={tw`text-indigo-500`} fontSize={12}>
-              자주 먹는 식품
-            </Text>
-          </View>
-        )}
-        {label === '유통기한' && <LeftDay expiredDate={info} />}
-      </View>
+      <View style={tw`flex-row items-center gap-0.5`}>{children}</View>
     </View>
   );
 }

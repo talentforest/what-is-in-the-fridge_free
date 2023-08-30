@@ -1,26 +1,28 @@
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { Text, TouchableOpacity } from '../native-component';
 import { useSelector } from '../../redux/hook';
 import { Space } from '../../constant/fridgeInfo';
-import { getCompartments, scaleH } from '../../util';
+import { getCompartments } from '../../util';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { NavigateProp } from '../../navigation/Navigation';
+
 import CompartmentBox from '../screen-component/fridge-setting/CompartmentBox';
-import FridgeSpace from '../screen-component/my-fridge/FridgeSpace';
+import FridgeSpaceInfo from '../screen-component/my-fridge/FridgeSpaceInfo';
 import tw from 'twrnc';
 
 export default function FridgeShape() {
-  const navigation = useNavigation<NavigateProp>();
   const route = useRoute();
   const routeFridgeSetting = route.name === 'FridgeSetting';
+  const navigation = useNavigation<NavigateProp>();
 
   const {
     fridgeInfo: { compartments, freezer },
   } = useSelector((state) => state.fridgeInfo);
 
   const doorRadius = (space: Space) => {
-    return space.includes('문쪽') ? 'rounded-r-lg' : 'rounded-l-lg';
+    const size = routeFridgeSetting ? 'md' : 'lg';
+    return space.includes('문쪽') ? `rounded-r-${size}` : `rounded-l-${size}`;
   };
 
   const spaceHeight = (space: Space) => {
@@ -40,63 +42,69 @@ export default function FridgeShape() {
           {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (
             <TouchableOpacity
               key={space}
-              disabled={!routeFridgeSetting ? false : true}
-              onPress={() => navigation.navigate('Compartments', { space })}
-              style={tw`justify-center bg-neutral-300 border-2 border-slate-300  
-              ${spaceHeight(space)} ${doorRadius(space)}`}
+              disabled={routeFridgeSetting ? true : false}
+              onPress={() => {
+                Keyboard.dismiss();
+                navigation.navigate('Compartments', { space });
+              }}
+              style={tw`${spaceHeight(space)}`}
             >
+              {/* 나의 냉장고 정보 */}
               {!routeFridgeSetting && (
-                <>
-                  <View
-                    style={tw`absolute z-10 w-full h-full opacity-80 bg-white 
-                    ${doorRadius(space)}`}
-                  />
-                  <FridgeSpace space={space} />
-                </>
-              )}
-              {routeFridgeSetting && (
                 <View
                   style={tw`${doorRadius(space)} 
-                  absolute z-10 w-full h-full justify-center`}
+                  p-1.8 bg-stone-200 border border-stone-400`}
                 >
-                  <View
-                    style={tw`absolute w-full h-full opacity-30
-                    bg-${spaceColor(space)}-200 ${doorRadius(space)}`}
+                  <FridgeSpaceInfo
+                    space={space}
+                    compartmentsLength={
+                      getCompartments(compartments[space]).length
+                    }
                   />
-                  <Text
-                    style={tw.style(
-                      `text-center text-${spaceColor(space)}-600`,
-                      FontGmarketSansBold
-                    )}
-                    fontSize={13}
-                  >
-                    {space.slice(0, 3)}
-                  </Text>
-                  <Text
-                    style={tw.style(
-                      `text-center text-${spaceColor(space)}-600`,
-                      FontGmarketSansBold
-                    )}
-                    fontSize={13}
-                  >
-                    {space.slice(3)}
-                  </Text>
                 </View>
               )}
-              <View
-                style={tw`flex-1 gap-[${scaleH(5)}px]
-                p-[${scaleH(!routeFridgeSetting ? 8 : 4)}]`}
-              >
-                {getCompartments(compartments[space]).map(
-                  ({ compartmentNum }) => (
-                    <CompartmentBox
-                      key={compartmentNum}
-                      space={space}
-                      compartmentNum={compartmentNum}
-                    />
-                  )
-                )}
-              </View>
+
+              {/* 냉장고 설정 */}
+              {routeFridgeSetting && (
+                <View
+                  style={tw`border border-slate-400 bg-slate-300 
+                  ${doorRadius(space)} justify-center`}
+                >
+                  <View
+                    style={tw`absolute w-full h-full
+                    ${doorRadius(space)} bg-white opacity-70`}
+                  />
+                  <View style={tw`absolute z-10 w-full`}>
+                    <Text
+                      style={tw.style(
+                        `text-center text-${spaceColor(space)}-600 text-sm`,
+                        FontGmarketSansBold
+                      )}
+                    >
+                      {space.slice(0, 3)}
+                    </Text>
+                    <Text
+                      style={tw.style(
+                        `text-center text-${spaceColor(space)}-600 text-sm`,
+                        FontGmarketSansBold
+                      )}
+                    >
+                      {space.slice(3)}
+                    </Text>
+                  </View>
+                  <View style={tw`h-full gap-1 p-1`}>
+                    {getCompartments(compartments[space]).map(
+                      ({ compartmentNum }) => (
+                        <CompartmentBox
+                          key={compartmentNum}
+                          space={space}
+                          compartmentNum={compartmentNum}
+                        />
+                      )
+                    )}
+                  </View>
+                </View>
+              )}
             </TouchableOpacity>
           ))}
         </View>
