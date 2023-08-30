@@ -18,7 +18,7 @@ export default function useExpiredFoods() {
     (food) => getLeftDays(food.expiredDate) < 4
   );
 
-  const filterExpiredFoods = (
+  const filterExpiredFoodsBySpace = (
     space: '냉동실' | '냉장실' | Space,
     compartmentNum?: CompartmentNum
   ) => {
@@ -52,7 +52,7 @@ export default function useExpiredFoods() {
 
   return {
     allExpiredFoods,
-    filterExpiredFoods,
+    filterExpiredFoodsBySpace,
     getLeftDays,
     checkExpired,
     checkLeftThreeDays,

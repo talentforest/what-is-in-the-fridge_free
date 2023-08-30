@@ -6,8 +6,8 @@ export default function useCheckFood() {
   const { allFoods } = useSelector((state) => state.allFoods);
   const { shoppingList } = useSelector((state) => state.shoppingList);
 
-  const checkExistFood = (food: Food) => {
-    return allFoods.find((existFood) => existFood.name === food.name);
+  const findFoodInFridge = (name: string) => {
+    return allFoods.find((food) => food.name === name);
   };
 
   const checkExistShoppingList = (food: Food) => {
@@ -22,7 +22,7 @@ export default function useCheckFood() {
   };
 
   return {
-    checkExistFood,
+    findFoodInFridge,
     alertExistFood,
     checkExistShoppingList,
   };

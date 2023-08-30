@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import { useDispatch } from '../redux/hook';
 import { addItemsToShoppingList } from '../redux/slice/shoppingList';
 import { select } from '../redux/slice/selectedFoodSlice';
+
 import useFavoriteFoods from './useFavoriteFoods';
 import useCheckFood from './useCheckFood';
 
@@ -26,8 +27,8 @@ export default function useHandleTableItem({
   setCheckedList,
   setModalVisible,
 }: Props) {
-  const { checkFavorite } = useFavoriteFoods();
-  const { checkExistFood } = useCheckFood();
+  const { findFavoriteListItem } = useFavoriteFoods();
+  const { findFoodInFridge } = useCheckFood();
   const dispatch = useDispatch();
 
   const onDeletePress = (allTableItems: Food[]) => {
@@ -80,10 +81,10 @@ export default function useHandleTableItem({
   };
 
   const onAddToFridgePress = (food: Food) => {
-    const favorite = checkFavorite(food);
+    const favorite = !!findFavoriteListItem(food.name);
     const selectedFoodInfo = { ...food, favorite } as Food;
 
-    if (checkExistFood(selectedFoodInfo)) {
+    if (findFoodInFridge(selectedFoodInfo.name)) {
       return Alert.alert(
         `기존 식료품 삭제 알림`,
         `이미 냉장고에 ${selectedFoodInfo.name} 식료품이 있습니다. 기존 식료품을 삭제하고 새로 추가하시겠습니까?`,
