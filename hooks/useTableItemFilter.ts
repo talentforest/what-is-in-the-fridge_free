@@ -1,58 +1,54 @@
 import { useState } from 'react';
+import { Filter } from '../util/filters';
+import { Food } from '../constant/foods';
+
 import useFavoriteFoods from './useFavoriteFoods';
 import useExpiredFoods from './useExpiredFoods';
 
-export type FavoriteFoodsFilter = '전체' | '냉장고에 있음' | '냉장고에 없음';
-export type ExpiredFoodsFilter = '전체' | '냉장실' | '냉동실';
-export type AllFilter = FavoriteFoodsFilter | ExpiredFoodsFilter;
-
 export default function useTableItemFilter() {
-  const [currentFilter, setCurrentFilter] = useState<AllFilter>('전체');
+  const [currentFilter, setCurrentFilter] = useState<Filter>('전체');
 
-  const { allExpiredFoods, filterExpiredFoods } = useExpiredFoods();
-  const { nonExistFavoriteFoods, existFavoriteFoods } = useFavoriteFoods();
-
-  const allExpiredFoodsFilters: ExpiredFoodsFilter[] = [
-    '전체',
-    '냉장실',
-    '냉동실',
-  ];
-  const allFavoriteFoodsFilters: FavoriteFoodsFilter[] = [
-    '전체',
-    '냉장고에 없음',
-    '냉장고에 있음',
-  ];
-
-  const getExpiredTableList = (currentFilter: ExpiredFoodsFilter) => {
-    if (currentFilter === '전체') return allExpiredFoods;
-    return filterExpiredFoods(currentFilter);
-  };
-
-  const getFavoriteTableList = (filter: FavoriteFoodsFilter) => {
-    if (filter === '냉장고에 있음') return [...existFavoriteFoods];
-    if (filter === '냉장고에 없음') return [...nonExistFavoriteFoods];
-    return [...nonExistFavoriteFoods, ...existFavoriteFoods];
-  };
-
-  const expiredTableList = getExpiredTableList(
-    currentFilter as ExpiredFoodsFilter
-  );
-
-  const favoriteTableList = getFavoriteTableList(
-    currentFilter as FavoriteFoodsFilter
-  );
-
-  const changeFilter = (currentFilter: AllFilter) => {
+  const changeFilter = (currentFilter: Filter) => {
     setCurrentFilter(currentFilter);
+  };
+
+  const {
+    allExpiredFoods,
+    filterExpiredFoodsBySpace,
+    checkExpired,
+    checkLeftThreeDays,
+  } = useExpiredFoods();
+
+  const { favoriteFoods, nonExistFavoriteFoods, existFavoriteFoods } =
+    useFavoriteFoods();
+
+  const getExpiredTableList = (currentFilter: Filter, list?: Food[]) => {
+    if (currentFilter === '냉동실' || currentFilter === '냉장실')
+      return filterExpiredFoodsBySpace(currentFilter);
+
+    const expiredList = list || allExpiredFoods;
+
+    if (currentFilter === '유통기한 지남')
+      return expiredList.filter((food) => checkExpired(food.expiredDate));
+
+    if (currentFilter === '유통기한 3일 이내')
+      return expiredList.filter((food) => checkLeftThreeDays(food.expiredDate));
+
+    return expiredList;
+  };
+
+  const getFavoriteTableList = (currentFilter: Filter) => {
+    if (currentFilter === '냉장고에 있음') return existFavoriteFoods;
+    if (currentFilter === '냉장고에 없음') return nonExistFavoriteFoods;
+    if (currentFilter === '전체')
+      return [...nonExistFavoriteFoods, ...existFavoriteFoods];
+
+    return favoriteFoods.filter((food) => food.category === currentFilter);
   };
 
   return {
     currentFilter,
     changeFilter,
-    allFavoriteFoodsFilters,
-    favoriteTableList,
-    allExpiredFoodsFilters,
-    expiredTableList,
     getExpiredTableList,
     getFavoriteTableList,
   };
