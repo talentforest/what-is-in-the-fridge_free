@@ -1,26 +1,100 @@
-import { Food } from '../constant/foods';
-import { useSelector } from '../redux/hook';
+import { Alert, Keyboard } from 'react-native';
+import { useDispatch, useSelector } from '../redux/hook';
+import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
+import { setAllFoods } from '../redux/slice/allFoodsSlice';
+import { initialFoodInfo } from '../constant/foods';
+import { Category } from '../constant/foodCategories';
+
 import useCheckFood from './useCheckFood';
+import UUIDGenerator from 'react-native-uuid';
 
 export default function useFavoriteFoods() {
+  const { allFoods } = useSelector((state) => state.allFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
-  const { checkExistFood } = useCheckFood();
+  const { findFoodInFridge } = useCheckFood();
+
+  const dispatch = useDispatch();
+  const myUuid = UUIDGenerator.v4();
 
   const existFavoriteFoods = favoriteFoods.filter(
-    (food) => !!checkExistFood(food)
+    (food) => !!findFoodInFridge(food.name)
   );
 
   const nonExistFavoriteFoods = favoriteFoods.filter(
-    (food) => !checkExistFood(food)
+    (food) => !findFoodInFridge(food.name)
   );
 
-  const checkFavorite = (food: Food) =>
-    !!favoriteFoods.find((favoriteFood) => favoriteFood.name === food.name);
+  const findFavoriteListItem = (name: string) => {
+    return favoriteFoods.find((food) => food.name === name);
+  };
+
+  const onSubmitFavoriteListItem = (
+    inputValue: string,
+    category: Category | '',
+    setInputValue: (value: string) => void,
+    setCategory: (category: Category | '') => void
+  ) => {
+    if (inputValue === '') return Keyboard.dismiss();
+
+    if (category === '')
+      return Alert.alert(
+        '카테고리 설정 알림',
+        '식료품의 카테고리를 설정해주세요.'
+      );
+    // 자주 먹는 식료품 이미 있다면 알림
+    if (findFavoriteListItem(inputValue)) {
+      return Alert.alert(
+        '자주 먹는 식료품 존재 알림',
+        '이미 자주 먹는 식료품으로 존재하고 있습니다.',
+        [
+          {
+            text: '확인',
+            onPress: () => {
+              setInputValue('');
+              setCategory('');
+            },
+            style: 'default',
+          },
+        ]
+      );
+    }
+
+    // 자주 먹는 식료품은 아닌데 냉장고에 있는 경우 -> 냉장고에 이미 있는 식료품을 찾아서 자주 먹는 식료품으로 변경
+    const existFood = findFoodInFridge(inputValue);
+    if (existFood) {
+      // 카테고리도 같이 바꾸기
+      const changedFoodList = allFoods.map((food) =>
+        existFood.name === food.name
+          ? { ...existFood, favorite: true, category }
+          : food
+      );
+      dispatch(addFavorite({ ...existFood, favorite: true, category }));
+      dispatch(setAllFoods(changedFoodList));
+    }
+
+    // 냉장고에도 없는 아예 새로운 식료품을 새로 자주 먹는 식료품으로 추가할 때 -> 추가하기만
+    if (!existFood) {
+      dispatch(
+        addFavorite({
+          ...initialFoodInfo,
+          id: myUuid as string,
+          name: inputValue,
+          favorite: true,
+          category,
+        })
+      );
+    }
+
+    setCategory('');
+    setInputValue('');
+    Keyboard.dismiss();
+  };
 
   return {
     existFavoriteFoods,
     nonExistFavoriteFoods,
     favoriteFoods,
-    checkFavorite,
+    findFavoriteListItem,
+    onSubmitFavoriteListItem,
   };
 }

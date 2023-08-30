@@ -7,6 +7,8 @@ import {
   editFavorite,
   removeFavorite,
 } from '../redux/slice/favoriteFoodsSlice';
+import { Alert } from 'react-native';
+import { getFormattedDate } from '../util';
 
 export default function useEditFood({ food }: { food: Food }) {
   const [editedFood, setEditedFood] = useState(food);
@@ -18,6 +20,16 @@ export default function useEditFood({ food }: { food: Food }) {
   };
 
   const onEditSumbit = (foodId: string) => {
+    const { expiredDate, purchaseDate } = editedFood;
+    if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
+      return Alert.alert(
+        '날짜 수정 알림',
+        '유통기한이 구매일보다 이전일 수 없습니다.'
+      );
+    }
+
+    // 수정일 경우에는 유통기한이 오늘보다 이전일 경우도 있을 것 같음.
+
     if (editedFood.favorite) {
       dispatch(editFavorite(editedFood));
       dispatch(addFavorite(editedFood));

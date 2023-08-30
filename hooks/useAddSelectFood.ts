@@ -5,11 +5,12 @@ import { addFood, removeFood } from '../redux/slice/allFoodsSlice';
 import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
+
 import useCheckFood from './useCheckFood';
 import UUIDGenerator from 'react-native-uuid';
 
 export default function useAddSelectFood() {
-  const { checkExistFood, alertExistFood } = useCheckFood();
+  const { findFoodInFridge, alertExistFood } = useCheckFood();
   const { selectedFood } = useSelector((state) => state.selectedFood);
   const route = useRoute();
 
@@ -20,10 +21,18 @@ export default function useAddSelectFood() {
     dispatch(select({ ...selectedFood, ...info }));
   };
 
-  const onSubmit = () => {
+  const onSubmit = (setModalVisible: (visible: boolean) => void) => {
     const selectedFoodWithId = { ...selectedFood, id: myUuid as string };
 
-    const existFood = checkExistFood(selectedFoodWithId);
+    const { expiredDate, purchaseDate } = selectedFoodWithId;
+    if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
+      return Alert.alert(
+        '날짜 수정 알림',
+        '유통기한이 구매일보다 이전일 수 없습니다.'
+      );
+    }
+
+    const existFood = findFoodInFridge(selectedFoodWithId.name);
     if (existFood) {
       if (route.name !== 'ShoppingList') return alertExistFood(existFood);
       dispatch(removeFood({ id: existFood.id, space: existFood.space }));
@@ -41,6 +50,8 @@ export default function useAddSelectFood() {
       `${selectedFoodWithId.name}`,
       `${selectedFoodWithId.space} ${selectedFoodWithId.compartmentNum}에 추가되었습니다.`
     );
+
+    setModalVisible(false);
   };
 
   return {
