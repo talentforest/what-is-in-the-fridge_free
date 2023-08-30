@@ -4,9 +4,10 @@ import { useFonts } from 'expo-font';
 import { fonts } from '../constant/fonts';
 import { Text } from '../components/native-component';
 import { Persistor } from 'redux-persist';
+
+import useImageLoad from '../hooks/useImageLoad';
 import * as SplashScreen from 'expo-splash-screen';
 import tw from 'twrnc';
-import useImageLoad from '../hooks/useImageLoad';
 
 interface Props {
   appIsReady: boolean;
@@ -56,9 +57,7 @@ export default function Splash({
           style={{ width: 200, height: 200 }}
         />
       )}
-      <Text fontSize={22} style={tw`mt-12`}>
-        냉장고에 뭐가 있지?
-      </Text>
+      <Text style={tw`mt-12 text-xl`}>냉장고에 뭐가 있지?</Text>
     </View>
   );
 }

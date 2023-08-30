@@ -2,21 +2,19 @@ import { View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useSelector } from '../redux/hook';
-import { getCompartments, scaleH } from '../util';
+import { entireFilterObj, expiredFilters, getCompartments } from '../util';
 import { CompartmentNum, Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/native-component';
-import Compartment from '../components/screen-component/compartments/Compartment';
-import Container from '../components/common/layout/Container';
-import HeaderTitle from '../components/common/HeaderTitle';
-import HeaderBtn from '../components/common/buttons/HeaderBtn';
-import tw from 'twrnc';
 
-// import {
-//   BannerAd,
-//   BannerAdSize,
-//   TestIds,
-// } from 'react-native-google-mobile-ads';
+import useTableItemFilter from '../hooks/useTableItemFilter';
+import useExpiredFoods from '../hooks/useExpiredFoods';
+
+import Compartment from '../components/screen-component/compartments/Compartment';
+import Container from '../components/common/Container';
+import HeaderBtn from '../components/common/buttons/HeaderBtn';
+import TableFilters from '../components/common/table/TableFilters';
+import tw from 'twrnc';
 
 export type CompartmentNumToDrop = CompartmentNum | '동일칸';
 
@@ -33,15 +31,22 @@ export default function Compartments({ route }: RouteParams) {
   const [moveMode, setMoveMode] = useState(false);
 
   const navigation = useNavigation();
+  const {
+    currentFilter,
+    changeFilter,
+    getExpiredTableList, //
+  } = useTableItemFilter();
+  const { filterExpiredFoodsBySpace } = useExpiredFoods();
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: () => <HeaderTitle title={space} />,
+      title: space,
       headerRight: () => (
         <HeaderBtn
           iconName={moveMode ? 'check' : 'drag'}
           onPress={() => setMoveMode((prev) => !prev)}
           type='MaterialCommunityIcons'
+          size={24}
         />
       ),
     });
@@ -49,16 +54,25 @@ export default function Compartments({ route }: RouteParams) {
 
   const compartments = getCompartments(fridgeInfo.compartments[space]);
 
+  const expiredFoods = filterExpiredFoodsBySpace(space);
+
   return (
     <SafeBottomAreaView>
       <Container>
+        <TableFilters
+          filterList={[entireFilterObj, ...expiredFilters]}
+          currentFilter={currentFilter}
+          changeFilter={changeFilter}
+          getTableList={getExpiredTableList}
+          list={expiredFoods}
+        />
         <View
-          style={tw`p-[${scaleH(10)}] gap-[${scaleH(2)}] flex-1
-          border border-slate-400 w-full m-auto self-center justify-center rounded-lg bg-neutral-200`}
+          style={tw`p-2.5 gap-2.5 flex-1 border border-slate-500 w-full m-auto self-center justify-center rounded-lg bg-neutral-300`}
         >
           {compartments.map((compartment) => (
             <Compartment
               key={compartment.compartmentNum}
+              currentFilter={currentFilter}
               moveMode={moveMode}
               foodLocation={{ ...compartment, space }}
               compartmentNumToDrop={compartmentNumToDrop}
@@ -67,13 +81,6 @@ export default function Compartments({ route }: RouteParams) {
           ))}
         </View>
       </Container>
-      {/* <BannerAd
-        unitId={TestIds.BANNER}
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-        requestOptions={{
-          requestNonPersonalizedAdsOnly: true,
-        }}
-      /> */}
     </SafeBottomAreaView>
   );
 }
