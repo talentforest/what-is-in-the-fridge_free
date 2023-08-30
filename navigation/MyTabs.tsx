@@ -3,20 +3,13 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import {
-  DEEP_GRAY,
-  DEEP_YELLOW,
-  HEADER_BGCOLOR,
-  TAB_BG_COLOR,
-} from '../constant/colors';
-import { Dimensions } from 'react-native';
-import { responsiveFontSize } from '../util';
+import { DEEP_GRAY, HEADER_BGCOLOR, TAB_BG_COLOR } from '../constant/colors';
 import { PlatformIOS } from '../constant/statusBarHeight';
+
 import Home from '../screens/Home';
 import ShoppingList from '../screens/ShoppingList';
 import MyFridge from '../screens/MyFridge';
 import Icon from '../components/native-component/Icon';
-import HeaderTitle from '../components/common/HeaderTitle';
 
 export type RootTabParamList = {
   Home: undefined;
@@ -26,26 +19,21 @@ export type RootTabParamList = {
 
 const Tab = createBottomTabNavigator();
 
-const DEVICE_HEIGHT = Dimensions.get('screen').height;
-const PLATFORM_TAB_HEIGHT = PlatformIOS ? 100 : DEVICE_HEIGHT / 12.5;
-const TAB_HEIGHT =
-  DEVICE_HEIGHT < 700 ? DEVICE_HEIGHT / 10 : PLATFORM_TAB_HEIGHT;
-
 const tabBarOptions = {
   allowFontScaling: false,
   tabBarStyle: {
     backgroundColor: TAB_BG_COLOR,
-    height: TAB_HEIGHT,
+    height: 90,
   },
   tabBarItemStyle: {},
-  tabBarActiveTintColor: DEEP_YELLOW,
+  tabBarActiveTintColor: '#ffcc00',
   tabBarInactiveTintColor: '#fff',
   tabBarIconStyle: {
     flex: 1,
   },
   tabBarLabelStyle: {
-    paddingBottom: 14,
-    fontSize: responsiveFontSize(11),
+    paddingBottom: 3,
+    fontSize: 11,
     ...FontGmarketSansRegular,
   },
 };
@@ -58,6 +46,10 @@ const headerOptions: BottomTabNavigationOptions = {
   headerShadowVisible: false,
   headerStyle: {
     backgroundColor: HEADER_BGCOLOR,
+  },
+  headerTitleStyle: {
+    fontSize: 18,
+    ...FontGmarketSansRegular,
   },
   headerTitleAlign: 'left',
 };
@@ -81,7 +73,7 @@ export default function MyTabs() {
         options={{
           tabBarIcon: ({ color }) => <TabIcon name='fridge' color={color} />,
           tabBarLabel: '나의 냉장고',
-          headerTitle: () => <HeaderTitle title='나의 냉장고' />,
+          title: '나의 냉장고',
           ...headerOptions,
         }}
       />
@@ -93,7 +85,7 @@ export default function MyTabs() {
             <TabIcon name='format-list-bulleted' color={color} />
           ),
           tabBarLabel: '장보기 목록',
-          headerTitle: () => <HeaderTitle title='장보기 목록' />,
+          title: '장보기 목록',
           ...headerOptions,
         }}
       />
@@ -103,6 +95,11 @@ export default function MyTabs() {
 
 export function TabIcon({ name, color }: { name: string; color: string }) {
   return (
-    <Icon type='MaterialCommunityIcons' name={name} color={color} size={16} />
+    <Icon
+      type={name === 'home' ? 'Ionicons' : 'MaterialCommunityIcons'}
+      name={name}
+      color={color}
+      size={16}
+    />
   );
 }
