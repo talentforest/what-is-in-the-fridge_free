@@ -1,9 +1,9 @@
+import { BLUE, DEEP_YELLOW, INDIGO } from '../../constant/colors';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AIcon from 'react-native-vector-icons/AntDesign';
 import IIcon from 'react-native-vector-icons/Ionicons';
 import FIcon from 'react-native-vector-icons/Feather';
-import { INDIGO } from '../../constant/colors';
-import { responsiveFontSize } from '../../util';
+import tw from 'twrnc';
 
 interface IconProps {
   type: 'MaterialCommunityIcons' | 'AntDesign' | 'Ionicons' | 'Feather';
@@ -16,21 +16,30 @@ export default function Icon({
   type,
   name,
   size = 16,
-  color = INDIGO,
+  color = BLUE,
 }: IconProps) {
+  const iconColor =
+    color === 'amber'
+      ? DEEP_YELLOW
+      : color === 'blue'
+      ? BLUE
+      : color === 'indigo'
+      ? INDIGO
+      : color;
+
   return (
     <>
       {type === 'MaterialCommunityIcons' && (
-        <MIcon name={name} size={responsiveFontSize(size)} color={color} />
+        <MIcon style={tw`mb-0.3`} name={name} size={size} color={iconColor} />
       )}
       {type === 'AntDesign' && (
-        <AIcon name={name} size={responsiveFontSize(size)} color={color} />
+        <AIcon style={tw`mb-0.4`} name={name} size={size} color={iconColor} />
       )}
       {type === 'Ionicons' && (
-        <IIcon name={name} size={responsiveFontSize(size)} color={color} />
+        <IIcon name={name} size={size} color={iconColor} />
       )}
       {type === 'Feather' && (
-        <FIcon name={name} size={responsiveFontSize(size)} color={color} />
+        <FIcon name={name} size={size} color={iconColor} />
       )}
     </>
   );
