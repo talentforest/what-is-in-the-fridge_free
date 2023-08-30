@@ -15,8 +15,8 @@ const favoriteFoodsSlice = createSlice({
     },
     addFavorite: (state, action: { payload: Food }) => {
       state.favoriteFoods = deduplicate([
-        ...state.favoriteFoods,
         action.payload,
+        ...state.favoriteFoods,
       ]);
     },
     removeFavorite: (state, action: { payload: { name: string } }) => {
