@@ -32,15 +32,14 @@ export default function useFavoriteFoods() {
     inputValue: string,
     category: Category | '',
     setInputValue: (value: string) => void,
-    setCategory: (category: Category | '') => void
+    setCategory: (category: Category | '') => void,
+    setShowCaution: (caution: boolean) => void
   ) => {
     if (inputValue === '') return Keyboard.dismiss();
 
-    if (category === '')
-      return Alert.alert(
-        '카테고리 설정 알림',
-        '식료품의 카테고리를 설정해주세요.'
-      );
+    // 카테고리를 설정하지 않았을 때
+    if (category === '') return setShowCaution(true);
+
     // 자주 먹는 식료품 이미 있다면 알림
     if (findFavoriteListItem(inputValue)) {
       return Alert.alert(
@@ -87,7 +86,6 @@ export default function useFavoriteFoods() {
 
     setCategory('');
     setInputValue('');
-    Keyboard.dismiss();
   };
 
   return {
