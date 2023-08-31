@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { BLUE, DEEP_GRAY, LIGHT_GRAY } from '../../../constant/colors';
+import { BLUE, LIGHT_GRAY } from '../../../constant/colors';
 import { Category } from '../../../constant/foodCategories';
 import { Text, TouchableOpacity } from '../../native-component';
 
@@ -10,25 +10,16 @@ import tw from 'twrnc';
 interface Props {
   category: Category | '';
   setCategoryOpen: (open: boolean) => void;
-  value: string;
 }
 
-export default function InputCategoryBtn({
-  category,
-  setCategoryOpen,
-  value,
-}: Props) {
-  const textColor = value.length ? DEEP_GRAY : LIGHT_GRAY;
-
+export default function InputCategoryBtn({ category, setCategoryOpen }: Props) {
   return (
     <TouchableOpacity
       onPress={() => setCategoryOpen(true)}
       style={tw`h-full border-r border-slate-500 flex-row items-center justify-center pl-1 pr-1.5`}
     >
       {category === '' ? (
-        <Text style={tw`text-center text-[${textColor}] max-w-19`}>
-          카테고리
-        </Text>
+        <Text style={tw`text-center text-slate-400 max-w-19`}>카테고리</Text>
       ) : (
         <View style={tw`p-2`}>
           <CategoryImageIcon
