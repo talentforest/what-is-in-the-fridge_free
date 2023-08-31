@@ -3,7 +3,6 @@ import { KeyboardAvoidingView as RNKeyboardAvoidingView } from 'react-native';
 import { PlatformIOS, statusBarHeight } from '../../constant/statusBarHeight';
 import { useRoute } from '@react-navigation/native';
 import { BG_COLOR } from '../common/Container';
-
 import tw from 'twrnc';
 
 interface Props {
