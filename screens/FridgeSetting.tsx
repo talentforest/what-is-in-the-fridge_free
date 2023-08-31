@@ -1,12 +1,15 @@
 import { ScrollView, View } from 'react-native';
-import { SafeBottomAreaView, Text } from '../components/native-component';
+import {
+  SafeBottomAreaView,
+  Text,
+} from '../components/common/native-component';
 import { useDispatch, useSelector } from '../redux/hook';
 import { Space, SpaceType } from '../constant/fridgeInfo';
 import { changeSetting } from '../redux/slice/fridgeInfoSlice';
 
 import FridgeShape from '../components/common/FridgeShape';
-import SelectContainter from '../components/screen-component/fridge-setting/SelectContainter';
-import CompartmentsSettingBox from '../components/screen-component/fridge-setting/CompartmentsSettingBox';
+import SelectContainter from '../screen-component/fridge-setting/SelectContainter';
+import CompartmentsSettingBox from '../screen-component/fridge-setting/CompartmentsSettingBox';
 import Container from '../components/common/Container';
 import CheckBoxItem from '../components/common/CheckBoxItem';
 import tw from 'twrnc';
@@ -71,8 +74,8 @@ export default function FridgeSetting() {
           <SelectContainter title='각 공간의 칸 개수'>
             {(['냉동실', '냉장실'] as SpaceType[]).map((spaceType) => (
               <View key={spaceType} style={tw`flex-row gap-2`}>
-                {[`${spaceType} 안쪽`, `${spaceType} 문쪽`].map((name) => (
-                  <CompartmentsSettingBox key={name} name={name as Space} />
+                {[`${spaceType} 안쪽`, `${spaceType} 문쪽`].map((space) => (
+                  <CompartmentsSettingBox key={space} space={space as Space} />
                 ))}
               </View>
             ))}

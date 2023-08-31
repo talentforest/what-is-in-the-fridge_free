@@ -1,8 +1,6 @@
-import { getRelativeTime } from '../../util';
-import { Text } from '../native-component';
+import { expired, getRelativeTime, leftThreeDays } from '../../util';
+import { Text } from './native-component';
 import { useRoute } from '@react-navigation/native';
-
-import useExpiredFoods from '../../hooks/useExpiredFoods';
 import tw from 'twrnc';
 
 interface Props {
@@ -11,11 +9,10 @@ interface Props {
 
 function LeftDay({ expiredDate }: Props) {
   const route = useRoute();
-  const { checkExpired, checkLeftThreeDays } = useExpiredFoods();
 
-  const getColor = checkExpired(expiredDate)
+  const getColor = expired(expiredDate)
     ? 'text-red-600'
-    : checkLeftThreeDays(expiredDate)
+    : leftThreeDays(expiredDate)
     ? 'text-amber-700'
     : 'text-green-600';
 

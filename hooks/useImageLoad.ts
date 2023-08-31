@@ -5,7 +5,7 @@ interface Props {
   images: number[];
 }
 
-export default function useImageLoad({ images }: Props) {
+export const useImageLoad = ({ images }: Props) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [assets, error] = useAssets(images);
 
@@ -19,4 +19,4 @@ export default function useImageLoad({ images }: Props) {
     isLoaded,
     assets,
   };
-}
+};

@@ -3,32 +3,33 @@ import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
   Text,
-} from '../components/native-component';
-import { useSelector } from '../redux/hook';
-import { useDispatch } from 'react-redux';
-import { Food } from '../constant/foods';
-import { setAllFoods } from '../redux/slice/allFoodsSlice';
-import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
+} from '../components/common/native-component';
 import { Category } from '../constant/foodCategories';
-import { categoryFilters, entireFilterObj, existAbsenceFilters } from '../util';
+import {
+  Filter,
+  categoryFilters,
+  entireFilterObj,
+  existAbsenceFilters,
+} from '../util';
 import { Animated, View } from 'react-native';
-
-import useHandleTableItem from '../hooks/useHandleTableItem';
-import useHandleCheckList from '../hooks/useHandleCheckList';
-import useFavoriteFoods from '../hooks/useFavoriteFoods';
-import useTableItemFilter from '../hooks/useTableItemFilter';
-import useSlideAnimation from '../hooks/animation/useSlideAnimation';
+import {
+  useHandleTableItem,
+  useSlideAnimation,
+  useHandleCheckList,
+  useSubmitFavoriteFoods,
+  useGetFoodList,
+} from '../hooks';
 
 import Container from '../components/common/Container';
-import TableContainer from '../components/common/table/TableContainer';
-import TableHeader from '../components/common/table/TableHeader';
-import TableFilters from '../components/common/table/TableFilters';
-import TableBody from '../components/common/table/TableBody';
-import TableFooter from '../components/common/table/TableFooter';
+import TableContainer from '../components/table/TableContainer';
+import TableHeader from '../components/table/TableHeader';
+import TableFilters from '../components/table/TableFilters';
+import TableBody from '../components/table/TableBody';
+import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
-import FormItemDetailModal from '../components/screen-component/modal/FormItemDetailModal';
-import InputCategoryBtn from '../components/common/buttons/InputCategoryBtn';
-import Message from '../components/common/form/Message';
+import FormItemDetailModal from '../screen-component/modal/FormItemDetailModal';
+import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
+import Message from '../components/form/Message';
 import tw from 'twrnc';
 
 export default function FavoriteFoods() {
@@ -36,18 +37,10 @@ export default function FavoriteFoods() {
   const [showCaution, setShowCaution] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState<Category | ''>('');
+  const [currentFilter, setCurrentFilter] = useState<Filter>('전체');
 
-  const { allFoods } = useSelector((state) => state.allFoods);
-
-  const dispatch = useDispatch();
-
-  const { favoriteFoods, onSubmitFavoriteListItem } = useFavoriteFoods();
-
-  const {
-    currentFilter,
-    changeFilter,
-    getFavoriteTableList, //
-  } = useTableItemFilter();
+  const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
+  const { onSubmitFavoriteListItem } = useSubmitFavoriteFoods();
 
   const {
     checkedList,
@@ -55,7 +48,6 @@ export default function FavoriteFoods() {
     onCheckBoxPress,
     isCheckedItem,
     onEntireBoxPress,
-    checkedFoodNameList,
   } = useHandleCheckList();
 
   const { height, interpolatedOpacity } = useSlideAnimation({
@@ -64,30 +56,20 @@ export default function FavoriteFoods() {
     active: showCaution,
   });
 
-  const changeFavStateInList = () => {
-    return allFoods.map((food) => {
-      const isFavoriteFood = checkedList.some(
-        (item) => item.name === food.name
-      );
-      return isFavoriteFood ? { ...food, favorite: false } : food;
-    });
-  };
-
-  const deleteAlertGuide = {
-    title: '자주 먹는 식료품 해제',
-    desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 자주 먹는 식료품에서 해제하시겠습니까?`,
-    defaultBtnText: '해제',
-    onPress: (filteredArr: Food[]) => {
-      dispatch(setAllFoods(changeFavStateInList()));
-      dispatch(setFavoriteList(filteredArr));
-    },
-  };
-
   const { onDeletePress, onAddShoppingListPress } = useHandleTableItem({
-    deleteAlertGuide,
     checkedList,
     setCheckedList,
   });
+
+  useEffect(() => {
+    if (inputValue == '') {
+      setShowCaution(false);
+    }
+  }, [inputValue]);
+
+  const changeFilter = (currentFilter: Filter) => {
+    setCurrentFilter(currentFilter);
+  };
 
   const onCategoryCheckBoxPress = (category: Category) => {
     setCategory(category);
@@ -104,13 +86,7 @@ export default function FavoriteFoods() {
     );
   };
 
-  const favoriteTableList = getFavoriteTableList(currentFilter);
-
-  useEffect(() => {
-    if (inputValue == '') {
-      setShowCaution(false);
-    }
-  }, [inputValue]);
+  const filteredList = getFilteredFoodList(currentFilter, favoriteFoods);
 
   return (
     <KeyboardAvoidingView>
@@ -125,18 +101,19 @@ export default function FavoriteFoods() {
             ]}
             currentFilter={currentFilter}
             changeFilter={changeFilter}
-            getTableList={getFavoriteTableList}
+            getTableList={getFilteredFoodList}
             setCheckedList={setCheckedList}
+            list={favoriteFoods}
           />
 
           <TableContainer color='indigo'>
             <TableHeader
               title='자주 먹는 식료품'
               entireChecked={
-                checkedList.length === favoriteTableList.length &&
+                checkedList.length === filteredList.length &&
                 !!checkedList.length
               }
-              onEntirePress={() => onEntireBoxPress(favoriteTableList)}
+              onEntirePress={() => onEntireBoxPress(filteredList)}
               color='indigo'
             >
               <Text style={tw`text-slate-600 w-9 text-center text-sm`}>
@@ -147,8 +124,9 @@ export default function FavoriteFoods() {
 
             {/* 자주 먹는 식료품 목록 */}
             <TableBody
+              title='자주 먹는 식료품'
               color='indigo'
-              list={favoriteTableList}
+              list={filteredList}
               onCheckBoxPress={onCheckBoxPress}
               isCheckedItem={isCheckedItem}
             />

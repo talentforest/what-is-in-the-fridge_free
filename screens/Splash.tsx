@@ -2,10 +2,9 @@ import { useCallback, useEffect } from 'react';
 import { Image, ImageSourcePropType, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import { fonts } from '../constant/fonts';
-import { Text } from '../components/native-component';
+import { Text } from '../components/common/native-component';
 import { Persistor } from 'redux-persist';
-
-import useImageLoad from '../hooks/useImageLoad';
+import { useImageLoad } from '../hooks';
 import * as SplashScreen from 'expo-splash-screen';
 import tw from 'twrnc';
 

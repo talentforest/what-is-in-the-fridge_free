@@ -7,11 +7,7 @@ interface Props {
   active: boolean;
 }
 
-export default function useSlideAnimation({
-  initialValue,
-  toValue,
-  active,
-}: Props) {
+export const useSlideAnimation = ({ initialValue, toValue, active }: Props) => {
   const height = useRef(new Animated.Value(initialValue)).current;
 
   const animatedSlide = (toValue: number) => {
@@ -39,4 +35,4 @@ export default function useSlideAnimation({
     height,
     interpolatedOpacity,
   };
-}
+};

@@ -2,18 +2,21 @@ import { View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useSelector } from '../redux/hook';
-import { entireFilterObj, expiredFilters, getCompartments } from '../util';
+import {
+  Filter,
+  entireFilterObj,
+  expiredFilters,
+  getCompartments,
+} from '../util';
 import { CompartmentNum, Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
-import { SafeBottomAreaView } from '../components/native-component';
+import { SafeBottomAreaView } from '../components/common/native-component';
+import { useGetFoodList } from '../hooks';
 
-import useTableItemFilter from '../hooks/useTableItemFilter';
-import useExpiredFoods from '../hooks/useExpiredFoods';
-
-import Compartment from '../components/screen-component/compartments/Compartment';
+import Compartment from '../screen-component/compartments/Compartment';
 import Container from '../components/common/Container';
-import HeaderBtn from '../components/common/buttons/HeaderBtn';
-import TableFilters from '../components/common/table/TableFilters';
+import HeaderBtn from '../components/buttons/HeaderBtn';
+import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
 
 export type CompartmentNumToDrop = CompartmentNum | '동일칸';
@@ -23,20 +26,16 @@ interface RouteParams {
 }
 
 export default function Compartments({ route }: RouteParams) {
-  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
-  const { space } = route.params as { space: Space };
-
+  const [currentFilter, setCurrentFilter] = useState<Filter>('전체');
   const [compartmentNumToDrop, setCompartmentNumToDrop] =
     useState<CompartmentNumToDrop>('동일칸');
   const [moveMode, setMoveMode] = useState(false);
 
+  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
+  const { space } = route.params as { space: Space };
+
   const navigation = useNavigation();
-  const {
-    currentFilter,
-    changeFilter,
-    getExpiredTableList, //
-  } = useTableItemFilter();
-  const { filterExpiredFoodsBySpace } = useExpiredFoods();
+  const { getFoodList, getFilteredFoodList } = useGetFoodList();
 
   useEffect(() => {
     navigation.setOptions({
@@ -54,7 +53,9 @@ export default function Compartments({ route }: RouteParams) {
 
   const compartments = getCompartments(fridgeInfo.compartments[space]);
 
-  const expiredFoods = filterExpiredFoodsBySpace(space);
+  const changeFilter = (currentFilter: Filter) => {
+    setCurrentFilter(currentFilter);
+  };
 
   return (
     <SafeBottomAreaView>
@@ -63,8 +64,8 @@ export default function Compartments({ route }: RouteParams) {
           filterList={[entireFilterObj, ...expiredFilters]}
           currentFilter={currentFilter}
           changeFilter={changeFilter}
-          getTableList={getExpiredTableList}
-          list={expiredFoods}
+          getTableList={getFilteredFoodList}
+          list={getFoodList('expiredFoods', space)}
         />
         <View
           style={tw`p-2.5 gap-2.5 flex-1 border border-slate-500 w-full m-auto self-center justify-center rounded-lg bg-neutral-300`}

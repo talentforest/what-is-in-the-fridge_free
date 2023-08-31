@@ -1,5 +1,5 @@
 import { GRAY } from '../../constant/colors';
-import Icon from '../native-component/Icon';
+import Icon from './native-component/Icon';
 
 interface Props {
   checked: boolean;

@@ -1,19 +1,19 @@
 import { ScrollView, View } from 'react-native';
-import { Text } from '../components/native-component';
+import { Text } from '../components/common/native-component';
 import { useSelector } from '../redux/hook';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Cafe24Ssurround } from '../constant/fonts';
+import { useGetFoodList } from '../hooks';
 
-import useExpiredFood from '../hooks/useExpiredFoods';
-
-import EntranceBox from '../components/screen-component/home/EntranceBox';
+import EntranceBox from '../screen-component/home/EntranceBox';
 import Container, { BG_COLOR } from '../components/common/Container';
 import tw from 'twrnc';
 
 const Home = () => {
-  const { allExpiredFoods } = useExpiredFood();
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { shoppingList } = useSelector((state) => state.shoppingList);
+
+  const { allExpiredFoodList } = useGetFoodList();
 
   return (
     <SafeAreaView edges={['top']} style={tw`${BG_COLOR}`}>
@@ -42,7 +42,7 @@ const Home = () => {
           />
 
           <EntranceBox
-            foods={allExpiredFoods}
+            foods={allExpiredFoodList}
             info={{
               title: '유통기한 주의 식료품',
               desc: '유통기한 주의 식료품을 한눈에 파악할 수 있어요.',

@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity } from '../native-component';
+import { Text, TouchableOpacity } from './native-component';
 import { BLUE } from '../../constant/colors';
 import CheckBox from './CheckBox';
 import tw from 'twrnc';

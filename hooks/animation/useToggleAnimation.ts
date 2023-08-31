@@ -7,11 +7,11 @@ interface Props {
   active: boolean;
 }
 
-export default function useToggleAnimation({
+export const useToggleAnimation = ({
   initialValue,
   toValue,
   active,
-}: Props) {
+}: Props) => {
   const translateX = useRef(new Animated.Value(initialValue)).current;
 
   const animatedToggle = (toValue: number) => {
@@ -33,4 +33,4 @@ export default function useToggleAnimation({
     translateX,
     animatedToggle,
   };
-}
+};

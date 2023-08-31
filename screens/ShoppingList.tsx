@@ -1,37 +1,29 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  addToShoppingList,
-  setShoppingList,
-} from '../redux/slice/shoppingList';
-import { KeyboardAvoidingView } from '../components/native-component';
+import { addToShoppingList } from '../redux/slice/shoppingList';
+import { KeyboardAvoidingView } from '../components/common/native-component';
 import { useSelector } from '../redux/hook';
-import { Food, initialFoodInfo } from '../constant/foods';
+import { initialFoodInfo } from '../constant/foods';
 import { useFocusEffect } from '@react-navigation/native';
 import { Keyboard } from 'react-native';
+import { useHandleCheckList, useHandleTableItem } from '../hooks';
 
-import useHandleCheckList from '../hooks/useHandleCheckList';
-import useHandleTableItem from '../hooks/useHandleTableItem';
-import useToggleModal from '../hooks/useToggleModal';
-
-import AddSelectFoodModal from '../components/screen-component/modal/AddSelectFoodModal';
+import AddSelectFoodModal from '../screen-component/modal/AddSelectFoodModal';
 import Container from '../components/common/Container';
-import TableContainer from '../components/common/table/TableContainer';
-import TableHeader from '../components/common/table/TableHeader';
-import TableBody from '../components/common/table/TableBody';
-import TableFooter from '../components/common/table/TableFooter';
+import TableContainer from '../components/table/TableContainer';
+import TableHeader from '../components/table/TableHeader';
+import TableBody from '../components/table/TableBody';
+import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
-
 import UUIDGenerator from 'react-native-uuid';
 
 export default function ShoppingList() {
+  const [modalVisible, setModalVisible] = useState(false);
   const { shoppingList } = useSelector((state) => state.shoppingList);
   const [keyword, setKeyword] = useState('');
 
   const myUuid = UUIDGenerator.v4();
   const dispatch = useDispatch();
-
-  const { modalVisible, setModalVisible } = useToggleModal();
 
   const {
     checkedList,
@@ -39,7 +31,6 @@ export default function ShoppingList() {
     onEntireBoxPress,
     onCheckBoxPress,
     isCheckedItem,
-    checkedFoodNameList,
   } = useHandleCheckList();
 
   useFocusEffect(
@@ -48,15 +39,7 @@ export default function ShoppingList() {
     }, [])
   );
 
-  const deleteAlertGuide = {
-    title: '식료품 삭제',
-    desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 장보기 목록에서 삭제하시겠습니까?`,
-    defaultBtnText: '삭제',
-    onPress: (filteredArr: Food[]) => dispatch(setShoppingList(filteredArr)),
-  };
-
   const { onDeletePress, onAddToFridgePress } = useHandleTableItem({
-    deleteAlertGuide,
     checkedList,
     setCheckedList,
     setModalVisible,
@@ -90,6 +73,7 @@ export default function ShoppingList() {
           />
 
           <TableBody
+            title='장보기 목록 식료품'
             color='blue'
             list={shoppingList}
             onCheckBoxPress={onCheckBoxPress}
@@ -118,6 +102,7 @@ export default function ShoppingList() {
           <AddSelectFoodModal
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
+            setCheckedList={setCheckedList}
             formSteps={[
               { id: 1, name: '식품 정보' },
               { id: 2, name: '식품 위치' },

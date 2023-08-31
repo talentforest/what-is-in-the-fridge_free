@@ -1,9 +1,9 @@
 import { View } from 'react-native';
-import { TextInput, TouchableOpacity } from '../native-component';
+import { TextInput, TouchableOpacity } from './native-component';
 import { DEEP_GRAY, LIGHT_GRAY } from '../../constant/colors';
 import { ReactNode } from 'react';
 
-import Icon from '../native-component/Icon';
+import Icon from './native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
