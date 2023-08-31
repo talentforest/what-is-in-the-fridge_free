@@ -10,3 +10,4 @@ export * from './filters';
 // 날짜 관련 함수
 export * from './controlDate';
 export * from './getDate';
+export * from './getLeftDays';

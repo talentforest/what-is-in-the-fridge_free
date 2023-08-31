@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { Food } from '../constant/foods';
 
-export default function useHandleCheckList() {
+export const useHandleCheckList = () => {
   const [checkedList, setCheckedList] = useState<Food[]>([]);
-
-  const checkedFoodNameList = checkedList.map((food) => food.name).join(', ');
 
   const onEntireBoxPress = (list: Food[]) => {
     const allChecked = checkedList.length === list.length;
@@ -28,6 +26,5 @@ export default function useHandleCheckList() {
     onCheckBoxPress,
     onEntireBoxPress,
     isCheckedItem,
-    checkedFoodNameList,
   };
-}
+};

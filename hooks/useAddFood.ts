@@ -1,25 +1,21 @@
-import { useDispatch } from '../redux/hook';
+import { useDispatch, useSelector } from '../redux/hook';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { Food, FoodInfo, initialFoodInfo } from '../constant/foods';
 import { useState } from 'react';
 import { addFood } from '../redux/slice/allFoodsSlice';
 import { FoodLocation } from '../constant/fridgeInfo';
 import { Alert } from 'react-native';
-
-import useCheckFood from './useCheckFood';
-import useFavoriteFoods from './useFavoriteFoods';
-
 import UUIDGenerator from 'react-native-uuid';
 
 interface Props {
   foodLocation: FoodLocation;
 }
 
-export default function useAddFood({ foodLocation }: Props) {
+export const useAddFood = ({ foodLocation }: Props) => {
   const [newFood, setNewFood] = useState<Food>(initialFoodInfo);
 
-  const { findFoodInFridge, alertExistFood } = useCheckFood();
-  const { findFavoriteListItem } = useFavoriteFoods();
+  const { allFoods } = useSelector((state) => state.allFoods);
+  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const dispatch = useDispatch();
 
   const { space, compartmentNum } = foodLocation;
@@ -27,10 +23,17 @@ export default function useAddFood({ foodLocation }: Props) {
 
   const addFoodInfo = (info: FoodInfo) => setNewFood({ ...newFood, ...info });
 
+  const alertExistFood = (food: Food) => {
+    return Alert.alert(
+      `${food.name}`,
+      `${food.space} ${food.compartmentNum}에 이미 식료품이 있습니다.`
+    );
+  };
+
   const onAddSubmit = (setModalVisible: (visible: boolean) => void) => {
     const { name, category, favorite } = newFood;
 
-    const existFood = findFoodInFridge(name);
+    const existFood = allFoods.find((food) => food.name === name);
     if (existFood) return alertExistFood(existFood);
     if (name === '')
       return Alert.alert(
@@ -45,7 +48,7 @@ export default function useAddFood({ foodLocation }: Props) {
       );
     }
 
-    const favoriteListItem = findFavoriteListItem(name);
+    const favoriteListItem = favoriteFoods.find((food) => food.name === name);
     const foodToAdd = {
       ...newFood,
       id: favoriteListItem ? favoriteListItem.id : (myUuid as string),
@@ -68,4 +71,4 @@ export default function useAddFood({ foodLocation }: Props) {
     addFoodInfo,
     onAddSubmit,
   };
-}
+};

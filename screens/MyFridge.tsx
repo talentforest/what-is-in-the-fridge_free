@@ -1,21 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Dimensions, View } from 'react-native';
 import { NavigateProp } from '../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';
-import { TextInput } from '../components/native-component';
-
-import useToggleModal from '../hooks/useToggleModal';
+import { TextInput } from '../components/common/native-component';
 
 import Container from '../components/common/Container';
 import FridgeShape from '../components/common/FridgeShape';
-import SearchFoodModal from '../components/screen-component/modal/SearchFoodModal';
-import HeaderBtn from '../components/common/buttons/HeaderBtn';
-import Icon from '../components/native-component/Icon';
+import SearchFoodModal from '../screen-component/modal/SearchFoodModal';
+import HeaderBtn from '../components/buttons/HeaderBtn';
+import Icon from '../components/common/native-component/Icon';
 import tw from 'twrnc';
 
 export default function MyFridge() {
   const navigation = useNavigation<NavigateProp>();
-  const { modalVisible, setModalVisible } = useToggleModal();
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({

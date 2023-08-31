@@ -5,26 +5,34 @@ import { addFood, removeFood } from '../redux/slice/allFoodsSlice';
 import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
-
-import useCheckFood from './useCheckFood';
+import { Food } from '../constant/foods';
 import UUIDGenerator from 'react-native-uuid';
 
-export default function useAddSelectFood() {
-  const { findFoodInFridge, alertExistFood } = useCheckFood();
+export const useAddSelectFood = () => {
+  const { allFoods } = useSelector((state) => state.allFoods);
   const { selectedFood } = useSelector((state) => state.selectedFood);
+  const dispatch = useDispatch();
   const route = useRoute();
 
-  const dispatch = useDispatch();
   const myUuid = UUIDGenerator.v4();
 
   const onChange = (info: { [key: string]: string | boolean }) => {
     dispatch(select({ ...selectedFood, ...info }));
   };
 
-  const onSubmit = (setModalVisible: (visible: boolean) => void) => {
-    const selectedFoodWithId = { ...selectedFood, id: myUuid as string };
+  const alertExistFood = (food: Food) => {
+    return Alert.alert(
+      `${food.name}`,
+      `${food.space} ${food.compartmentNum}에 이미 식료품이 있습니다.`
+    );
+  };
 
-    const { expiredDate, purchaseDate } = selectedFoodWithId;
+  const onSubmit = (
+    setModalVisible: (visible: boolean) => void,
+    setCheckedList: (checkedList: Food[]) => void
+  ) => {
+    const foodWithNewId = { ...selectedFood, id: myUuid as string };
+    const { expiredDate, purchaseDate } = foodWithNewId;
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
       return Alert.alert(
         '날짜 수정 알림',
@@ -32,26 +40,27 @@ export default function useAddSelectFood() {
       );
     }
 
-    const existFood = findFoodInFridge(selectedFoodWithId.name);
+    const existFood = allFoods.find((food) => food.name === foodWithNewId.name);
     if (existFood) {
       if (route.name !== 'ShoppingList') return alertExistFood(existFood);
       dispatch(removeFood({ id: existFood.id, space: existFood.space }));
     }
 
     if (selectedFood.favorite) {
-      dispatch(addFavorite(selectedFoodWithId));
+      dispatch(addFavorite(foodWithNewId));
     } else {
-      dispatch(removeFavorite(selectedFoodWithId));
+      dispatch(removeFavorite(foodWithNewId));
     }
-    dispatch(addFood(selectedFoodWithId));
-    dispatch(removeFromShoppingList({ name: selectedFoodWithId.name }));
+    dispatch(addFood(foodWithNewId));
+    dispatch(removeFromShoppingList({ name: foodWithNewId.name }));
 
     Alert.alert(
-      `${selectedFoodWithId.name}`,
-      `${selectedFoodWithId.space} ${selectedFoodWithId.compartmentNum}에 추가되었습니다.`
+      `${foodWithNewId.name}`,
+      `${foodWithNewId.space} ${foodWithNewId.compartmentNum}에 추가되었습니다.`
     );
 
     setModalVisible(false);
+    setCheckedList([]);
   };
 
   return {
@@ -59,4 +68,4 @@ export default function useAddSelectFood() {
     onChange,
     onSubmit,
   };
-}
+};

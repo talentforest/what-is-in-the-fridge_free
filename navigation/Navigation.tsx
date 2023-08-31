@@ -11,7 +11,7 @@ import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
 import ExpiredFoods from '../screens/ExpiredFoods';
 import FridgeSetting from '../screens/FridgeSetting';
-import HeaderBtn from '../components/common/buttons/HeaderBtn';
+import HeaderBtn from '../components/buttons/HeaderBtn';
 
 export type RootStackParamList = {
   MyTabs: undefined;

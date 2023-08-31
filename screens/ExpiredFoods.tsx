@@ -1,32 +1,27 @@
-import { SafeBottomAreaView, Text } from '../components/native-component';
-import { useDispatch } from '../redux/hook';
-import { setAllFoods } from '../redux/slice/allFoodsSlice';
-import { Food } from '../constant/foods';
-import { entireFilterObj, expiredFilters, spaceFilters } from '../util';
-
-import useHandleCheckList from '../hooks/useHandleCheckList';
-import useTableItemFilter from '../hooks/useTableItemFilter';
-import useHandleTableItem from '../hooks/useHandleTableItem';
-import useExpiredFoods from '../hooks/useExpiredFoods';
+import {
+  SafeBottomAreaView,
+  Text,
+} from '../components/common/native-component';
+import { useState } from 'react';
+import { Filter, entireFilterObj, expiredFilters, spaceFilters } from '../util';
+import {
+  useHandleCheckList,
+  useHandleTableItem,
+  useGetFoodList,
+} from '../hooks/';
 
 import Container from '../components/common/Container';
-import TableContainer from '../components/common/table/TableContainer';
-import TableHeader from '../components/common/table/TableHeader';
-import TableBody from '../components/common/table/TableBody';
-import TableFooter from '../components/common/table/TableFooter';
-import TableFilters from '../components/common/table/TableFilters';
+import TableContainer from '../components/table/TableContainer';
+import TableHeader from '../components/table/TableHeader';
+import TableBody from '../components/table/TableBody';
+import TableFooter from '../components/table/TableFooter';
+import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
 
 export default function ExpiredFoods() {
-  const { allExpiredFoods } = useExpiredFoods();
+  const [currentFilter, setCurrentFilter] = useState<Filter>('전체');
 
-  const dispatch = useDispatch();
-
-  const {
-    currentFilter,
-    changeFilter,
-    getExpiredTableList, //
-  } = useTableItemFilter();
+  const { getFilteredFoodList, allExpiredFoodList } = useGetFoodList();
 
   const {
     checkedList,
@@ -34,23 +29,18 @@ export default function ExpiredFoods() {
     onEntireBoxPress,
     onCheckBoxPress,
     isCheckedItem,
-    checkedFoodNameList,
   } = useHandleCheckList();
 
-  const deleteAlertGuide = {
-    title: '유통기한 주의 식료품 제거',
-    desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 냉장고에서 제거하시겠습니까?`,
-    defaultBtnText: '제거',
-    onPress: (filteredArr: Food[]) => dispatch(setAllFoods(filteredArr)),
-  };
-
   const { onDeletePress } = useHandleTableItem({
-    deleteAlertGuide,
     checkedList,
     setCheckedList,
   });
 
-  const expiredTableList = getExpiredTableList(currentFilter);
+  const filteredList = getFilteredFoodList(currentFilter, allExpiredFoodList);
+
+  const changeFilter = (currentFilter: Filter) => {
+    setCurrentFilter(currentFilter);
+  };
 
   return (
     <SafeBottomAreaView>
@@ -60,8 +50,9 @@ export default function ExpiredFoods() {
           filterList={[entireFilterObj, ...spaceFilters, ...expiredFilters]}
           currentFilter={currentFilter}
           changeFilter={changeFilter}
-          getTableList={getExpiredTableList}
+          getTableList={getFilteredFoodList}
           setCheckedList={setCheckedList}
+          list={allExpiredFoodList}
         />
 
         {/* 전체 표 */}
@@ -69,10 +60,9 @@ export default function ExpiredFoods() {
           <TableHeader
             title={`유통기한 주의 식료품`}
             entireChecked={
-              checkedList.length === expiredTableList.length &&
-              !!checkedList.length
+              checkedList.length === filteredList.length && !!checkedList.length
             }
-            onEntirePress={() => onEntireBoxPress(expiredTableList)}
+            onEntirePress={() => onEntireBoxPress(filteredList)}
             color='amber'
           >
             <Text style={tw`text-slate-500 text-sm`}>유통기한순</Text>
@@ -80,7 +70,8 @@ export default function ExpiredFoods() {
 
           {/* 식료품 리스트 */}
           <TableBody
-            list={expiredTableList}
+            title='유통기한 주의 식료품'
+            list={filteredList}
             onCheckBoxPress={onCheckBoxPress}
             isCheckedItem={isCheckedItem}
             color='amber'
@@ -89,7 +80,7 @@ export default function ExpiredFoods() {
           {/* 식료품 선택 개수와 버튼 */}
           <TableFooter
             list={checkedList}
-            onDeletePress={() => onDeletePress(allExpiredFoods)}
+            onDeletePress={() => onDeletePress(allExpiredFoodList)}
             buttons={['delete']}
             color='amber'
           />

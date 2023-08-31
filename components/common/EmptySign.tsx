@@ -1,5 +1,5 @@
-import { Text } from '../native-component';
-import { BoxColor } from '../screen-component/home/EntranceBox';
+import { Text } from './native-component';
+import { BoxColor } from '../../screen-component/home/EntranceBox';
 import tw from 'twrnc';
 
 interface Props {

@@ -9,7 +9,7 @@ import { PlatformIOS } from '../constant/statusBarHeight';
 import Home from '../screens/Home';
 import ShoppingList from '../screens/ShoppingList';
 import MyFridge from '../screens/MyFridge';
-import Icon from '../components/native-component/Icon';
+import Icon from '../components/common/native-component/Icon';
 
 export type RootTabParamList = {
   Home: undefined;

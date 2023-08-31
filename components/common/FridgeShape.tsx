@@ -1,5 +1,5 @@
 import { Keyboard, View } from 'react-native';
-import { Text, TouchableOpacity } from '../native-component';
+import { Text, TouchableOpacity } from './native-component';
 import { useSelector } from '../../redux/hook';
 import { Space } from '../../constant/fridgeInfo';
 import { getCompartments } from '../../util';
@@ -7,8 +7,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { NavigateProp } from '../../navigation/Navigation';
 
-import CompartmentBox from '../screen-component/fridge-setting/CompartmentBox';
-import FridgeSpaceInfo from '../screen-component/my-fridge/FridgeSpaceInfo';
+import CompartmentBox from '../../screen-component/fridge-setting/CompartmentBox';
+import FridgeSpaceInfo from '../../screen-component/my-fridge/FridgeSpaceInfo';
 import tw from 'twrnc';
 
 export default function FridgeShape() {

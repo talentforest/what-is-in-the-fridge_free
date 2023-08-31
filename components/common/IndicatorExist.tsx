@@ -1,7 +1,6 @@
 import { Food } from '../../constant/foods';
-import { Text } from '../native-component';
-
-import useCheckFood from '../../hooks/useCheckFood';
+import { Text } from './native-component';
+import { useFindFood } from '../../hooks';
 import tw from 'twrnc';
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
 }
 
 export default function IndicatorExist({ food, size }: Props) {
-  const { findFoodInFridge } = useCheckFood();
+  const { findFoodInFridge } = useFindFood();
 
   const existFoodColor = (food: Food) => {
     return !!findFoodInFridge(food.name) ? 'text-blue-600' : 'text-red-500';

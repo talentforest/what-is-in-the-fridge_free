@@ -9,7 +9,7 @@ interface Props {
   setModalVisible: (visible: boolean) => void;
 }
 
-export default function useDeleteFood({ space, setModalVisible }: Props) {
+export const useDeleteFood = ({ space, setModalVisible }: Props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NavigateProp>();
 
@@ -22,4 +22,4 @@ export default function useDeleteFood({ space, setModalVisible }: Props) {
   return {
     deleteFood,
   };
-}
+};
