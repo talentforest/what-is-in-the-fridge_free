@@ -16,6 +16,7 @@ import AddFoodBtn from '../../common/buttons/AddFoodBtn';
 import DraggableFoodBox from './DraggableFoodBox';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
+import EmptySign from '../../common/EmptySign';
 
 interface Props {
   currentFilter: Filter;
@@ -73,7 +74,7 @@ export default function Compartment({
         {/* 칸 정보 */}
         <View style={tw`flex-row justify-between items-center pl-2.5 h-8`}>
           <View style={tw`flex-row items-center gap-2`}>
-            <Text style={tw`${titleColor}`}>
+            <Text style={tw`${titleColor} text-sm`}>
               {compartmentNum}칸 | 식료품 총{' '}
               {getFoodList(space, compartmentNum).length}개
             </Text>
@@ -82,43 +83,49 @@ export default function Compartment({
         </View>
 
         {/* 식료품 리스트 */}
-        <ScrollView
-          scrollEnabled={!moveMode}
-          style={tw`p-1 pt-0 flex-1`}
-          contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-2 flex-wrap gap-0.5 items-center`}
-          showsVerticalScrollIndicator={false}
-        >
-          {getFoodList(space, compartmentNum).map((food: Food) =>
-            !moveMode ? (
-              <TouchableOpacity
-                key={food.id}
-                onPress={() => {
-                  setSelectedFood(food);
-                  setModalVisible(true);
-                }}
-                style={tw`rounded-full`}
-              >
-                <FoodBox
+        {!!getFoodList(space, compartmentNum).length ? (
+          <ScrollView
+            scrollEnabled={!moveMode}
+            style={tw`p-1 pt-0 flex-1`}
+            contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-2 flex-wrap gap-0.5 items-center`}
+            showsVerticalScrollIndicator={false}
+          >
+            {getFoodList(space, compartmentNum).map((food: Food) =>
+              !moveMode ? (
+                <TouchableOpacity
+                  key={food.id}
+                  onPress={() => {
+                    setSelectedFood(food);
+                    setModalVisible(true);
+                  }}
+                  style={tw`rounded-full`}
+                >
+                  <FoodBox
+                    food={food}
+                    moveMode={moveMode}
+                    filter={currentFilter}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <DraggableFoodBox
+                  key={food.id}
                   food={food}
-                  moveMode={moveMode}
                   filter={currentFilter}
+                  moveMode={moveMode}
+                  setCompartmentNumToDrop={setCompartmentNumToDrop}
+                  compartmentHeight={compartmentHeight}
+                  setSelectedFood={setSelectedFood}
+                  setIsDragging={setIsDragging}
+                  setDragPosition={setDragPosition}
                 />
-              </TouchableOpacity>
-            ) : (
-              <DraggableFoodBox
-                key={food.id}
-                food={food}
-                filter={currentFilter}
-                moveMode={moveMode}
-                setCompartmentNumToDrop={setCompartmentNumToDrop}
-                compartmentHeight={compartmentHeight}
-                setSelectedFood={setSelectedFood}
-                setIsDragging={setIsDragging}
-                setDragPosition={setDragPosition}
-              />
-            )
-          )}
-        </ScrollView>
+              )
+            )}
+          </ScrollView>
+        ) : (
+          <View style={tw`flex-1 flex-row items-center pb-10 justify-center`}>
+            <EmptySign message='식료품이 아직 없어요.' color='slate' />
+          </View>
+        )}
 
         {compartmentNumToDrop === compartmentNum && (
           <Animated.View

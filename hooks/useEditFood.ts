@@ -24,7 +24,7 @@ export default function useEditFood({ food }: { food: Food }) {
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
       return Alert.alert(
         '날짜 수정 알림',
-        '유통기한이 구매일보다 이전일 수 없습니다.'
+        '유통기한이 구매일보다 이전일 수 없어요.'
       );
     }
 
