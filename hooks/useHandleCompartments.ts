@@ -27,7 +27,7 @@ export default function useHandleCompartments({ name }: Props) {
     if (existFoodInLastCompartment.length !== 0)
       return Alert.alert(
         '식료품 존재 안내',
-        `${fridgeInfo.compartments[name]}번 칸에 식료품이 있어 삭제할 수 없습니다.`
+        `${fridgeInfo.compartments[name]}번 칸에 식료품이 있어 삭제할 수 없어요.`
       );
     dispatch(minusCompartment(name));
   };

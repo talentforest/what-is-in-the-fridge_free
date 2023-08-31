@@ -10,6 +10,7 @@ import Modal from '../../common/modal/Modal';
 import TextInputRoundedBox from '../../common/TextInputRoundedBox';
 import TableSearchedItem from '../../common/table/TableSearchedItem';
 import tw from 'twrnc';
+import EmptySign from '../../common/EmptySign';
 
 interface Props {
   modalVisible: boolean;
@@ -75,15 +76,19 @@ export default function SearchFoodModal({
                   />
                 ))
               ) : (
-                <Text style={tw`text-slate-500 text-center pt-12 px-4`}>
-                  해당 식료품은 냉장고에 없습니다.
-                </Text>
+                <View style={tw`pt-12 px-4 gap-1`}>
+                  <EmptySign
+                    message='해당 식료품은 냉장고에 없어요.'
+                    color='slate'
+                  />
+                </View>
               ))}
             {keyword.length === 0 && (
-              <View style={tw`text-slate-500 pt-12 px-4 gap-1`}>
-                <Text style={tw`text-slate-500 text-center text-sm`}>
-                  냉장고에 찾으시는 식료품이 있는지 확인해 보세요.
-                </Text>
+              <View style={tw`pt-12 px-4 gap-1`}>
+                <EmptySign
+                  message='냉장고에 찾으시는 식료품이 있는지 확인해 보세요.'
+                  color='slate'
+                />
               </View>
             )}
           </ScrollView>

@@ -13,6 +13,7 @@ import Icon from '../../native-component/Icon';
 import IndicatorExist from '../IndicatorExist';
 import CategoryImageIcon from '../CategoryImageIcon';
 import tw from 'twrnc';
+import EmptySign from '../EmptySign';
 
 interface Props {
   list: Food[];
@@ -31,6 +32,15 @@ export default function TableBody({
 }: Props) {
   const route = useRoute();
   const { findFoodInFridge } = useCheckFood();
+
+  const currentPosition =
+    route.name === 'ShoppingList'
+      ? '장보기 목록 식료품'
+      : route.name === 'FavoriteFoods'
+      ? '자주 먹는 식료품'
+      : route.name === 'ExpiredFoods'
+      ? '유통기한 주의 식료품'
+      : '식료품';
 
   return (
     <>
@@ -95,10 +105,10 @@ export default function TableBody({
           )}
         />
       ) : (
-        <View style={tw`bg-white border-t border-b border-slate-500 flex-1`}>
-          <Text style={tw`text-sm text-${color}-500 text-center mt-22 flex-1`}>
-            식료품이 없습니다.
-          </Text>
+        <View
+          style={tw` pt-20 bg-white border-t border-b border-slate-500 flex-1`}
+        >
+          <EmptySign message={`${currentPosition}이 없어요.`} color={color} />
         </View>
       )}
     </>

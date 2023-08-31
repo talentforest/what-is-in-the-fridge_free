@@ -11,6 +11,7 @@ import FoodTagBox from './FoodTagBox';
 import MoreOpenBtn from '../../common/buttons/MoreOpenBtn';
 import Icon from '../../native-component/Icon';
 import tw from 'twrnc';
+import EmptySign from '../../common/EmptySign';
 
 export type EntranceTitle =
   | '유통기한 주의 식료품'
@@ -110,9 +111,9 @@ export default function EntranceBox({ info, foods, color = 'slate' }: Props) {
               ))}
           </View>
         ) : (
-          <Text style={tw`text-${color}-500 text-center pt-10`}>
-            아직 식료품이 없어요
-          </Text>
+          <View style={tw`items-center justify-center flex-1`}>
+            <EmptySign message='아직 식료품이 없어요.' color={color} />
+          </View>
         )}
       </View>
 
