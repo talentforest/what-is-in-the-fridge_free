@@ -48,6 +48,7 @@ export default function SearchFoodModal({
           iconName='search'
           placeholder='식료품의 이름을 작성해주세요.'
           onSubmitEditing={onSubmitEditing}
+          iconActive={keyword !== ''}
           autoFocus
         />
         <View style={tw`px-2 pt-2`}>

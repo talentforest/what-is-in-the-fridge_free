@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
 import { View, Animated } from 'react-native';
 import { BLUE, LIGHT_BLUE } from '../../../constant/colors';
 
 import useFavoriteFoods from '../../../hooks/useFavoriteFoods';
+import useSlideAnimation from '../../../hooks/animation/useSlideAnimation';
+import useToggleAnimation from '../../../hooks/animation/useToggleAnimation';
 
 import FormLabel from './FormLabel';
 import Message from './Message';
@@ -33,46 +34,22 @@ export default function FavoriteItem({
     ? isFavoriteFood?.favorite // 기존 자주 먹는 식료품 상태
     : favoriteState; // 새로운 식료품 상태
 
-  const height = useRef(new Animated.Value(currFavState ? 30 : 0)).current;
-  const translateX = useRef(
-    new Animated.Value(currFavState ? 0 : MOVED_TRANSLATE_X)
-  ).current;
+  const { height, interpolatedOpacity } = useSlideAnimation({
+    initialValue: currFavState ? 30 : 0,
+    toValue: 30,
+    active: currFavState,
+  });
 
-  const animatedBtn = (translateXValue: number) => {
-    Animated.spring(translateX, {
-      toValue: translateXValue,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const animatedGuide = (heightValue: number) => {
-    Animated.timing(height, {
-      toValue: heightValue,
-      useNativeDriver: false,
-      duration: 300,
-    }).start();
-  };
-
-  const interpolatedOpacity = height.interpolate({
-    inputRange: [0, 30],
-    outputRange: [0, 1],
+  const { translateX, animatedToggle } = useToggleAnimation({
+    initialValue: currFavState ? 0 : MOVED_TRANSLATE_X,
+    toValue: currFavState ? 0 : MOVED_TRANSLATE_X,
+    active: currFavState,
   });
 
   const onTogglePress = (favorite: boolean) => {
     changeInfo({ favorite });
-    animatedBtn(favorite ? 0 : MOVED_TRANSLATE_X);
-    animatedGuide(favorite ? 30 : 0);
+    animatedToggle(favorite ? 0 : MOVED_TRANSLATE_X);
   };
-
-  useEffect(() => {
-    if (currFavState) {
-      animatedBtn(0);
-      animatedGuide(30);
-    } else {
-      animatedBtn(MOVED_TRANSLATE_X);
-      animatedGuide(0);
-    }
-  }, [name]);
 
   const color = disabledFavoriteBtn ? 'border-slate-400' : 'border-blue-600';
   const backgroundColor = disabledFavoriteBtn ? LIGHT_BLUE : BLUE;
