@@ -31,7 +31,7 @@ export default function FoodBox({ food, moveMode, filter }: Props) {
   return (
     <View
       key={food.id}
-      style={tw`rounded-full justify-center items-center flex-row border ${activeColor()} h-7.5 px-3`}
+      style={tw`${activeColor()} rounded-full justify-center items-center flex-row border h-7.5 px-3`}
     >
       <Text style={tw`text-center ${activeColor()} text-sm`}>
         {cutLetter(food.name, 8)}

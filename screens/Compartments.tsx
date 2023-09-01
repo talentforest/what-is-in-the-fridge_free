@@ -15,7 +15,6 @@ import { useGetFoodList } from '../hooks';
 
 import Compartment from '../screen-component/compartments/Compartment';
 import Container from '../components/common/Container';
-import HeaderBtn from '../components/buttons/HeaderBtn';
 import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
 
@@ -40,22 +39,12 @@ export default function Compartments({ route }: RouteParams) {
   useEffect(() => {
     navigation.setOptions({
       title: space,
-      headerRight: () => (
-        <HeaderBtn
-          iconName={moveMode ? 'check' : 'drag'}
-          onPress={() => setMoveMode((prev) => !prev)}
-          type='MaterialCommunityIcons'
-          size={24}
-        />
-      ),
     });
   }, [moveMode]);
 
   const compartments = getCompartments(fridgeInfo.compartments[space]);
 
-  const changeFilter = (currentFilter: Filter) => {
-    setCurrentFilter(currentFilter);
-  };
+  const changeFilter = (filter: Filter) => setCurrentFilter(filter);
 
   return (
     <SafeBottomAreaView>
@@ -75,6 +64,7 @@ export default function Compartments({ route }: RouteParams) {
               key={compartment.compartmentNum}
               currentFilter={currentFilter}
               moveMode={moveMode}
+              setMoveMode={setMoveMode}
               foodLocation={{ ...compartment, space }}
               compartmentNumToDrop={compartmentNumToDrop}
               setCompartmentNumToDrop={setCompartmentNumToDrop}
