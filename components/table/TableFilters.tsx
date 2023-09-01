@@ -1,48 +1,36 @@
+import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Text, TouchableOpacity } from '../common/native-component';
-import { BLUE, DEEP_YELLOW, LIGHT_GRAY, RED } from '../../constant/colors';
 import { Food } from '../../constant/foods';
 import { Filter, FilterObj } from '../../util';
 
-import Icon from '../common/native-component/Icon';
+import FilterTag from '../common/FilterTag';
+import Modal from '../modal/Modal';
 import tw from 'twrnc';
 
 interface Props {
   filterList: FilterObj[];
+  categoryFilters?: FilterObj[];
   currentFilter: Filter;
   changeFilter: (filter: any) => void;
-  getTableList?: (filter: Filter, list: Food[]) => Food[];
+  getTableList: (filter: Filter, list: Food[]) => Food[];
   list: Food[];
   setCheckedList?: (foods: Food[]) => void;
 }
 
-export const INACTIVE_COLOR = 'bg-white border-slate-600 text-slate-600';
-export const DEFAULT_COLOR = 'bg-blue-100 border-blue-600 text-blue-600';
-export const EXPIRED_COLOR = 'bg-red-50 border-red-400 text-red-600';
-export const LEFT_3_DAYS_COLOR = 'bg-amber-50 border-amber-400 text-amber-600';
-
 export default function TableFilters({
-  filterList,
   currentFilter,
+  filterList,
+  categoryFilters,
   changeFilter,
   getTableList,
   list,
   setCheckedList,
 }: Props) {
-  const ACTIVE_COLOR =
-    currentFilter === '유통기한 3일 이내'
-      ? LEFT_3_DAYS_COLOR
-      : currentFilter === '유통기한 지남'
-      ? EXPIRED_COLOR
-      : DEFAULT_COLOR;
+  const [modalVisible, setModalVisible] = useState(false);
 
   const onFilterPress = (filter: Filter) => {
     changeFilter(filter);
     if (setCheckedList) return setCheckedList([]);
-  };
-
-  const getColor = (filter: Filter) => {
-    return filter === currentFilter ? ACTIVE_COLOR : INACTIVE_COLOR;
   };
 
   return (
@@ -54,37 +42,50 @@ export default function TableFilters({
         showsHorizontalScrollIndicator={false}
       >
         {filterList.map(({ filter, icon }) => (
-          <TouchableOpacity
+          <FilterTag
             key={filter}
-            onPress={() => onFilterPress(filter)}
-            style={tw`flex-row items-center border px-2.5 py-1 gap-1 rounded-full 
-            ${getColor(filter)}`}
-          >
-            {filter !== '전체' && (
-              <View style={tw`-mx-0.5`}>
-                <Icon
-                  type='MaterialCommunityIcons'
-                  name={icon}
-                  size={13}
-                  color={
-                    filter === currentFilter
-                      ? filter === '유통기한 3일 이내'
-                        ? DEEP_YELLOW
-                        : filter === '유통기한 지남'
-                        ? RED
-                        : BLUE
-                      : LIGHT_GRAY
-                  }
-                />
-              </View>
-            )}
-            <Text style={tw`text-xs ${getColor(filter)}`}>{filter}</Text>
-            <Text style={tw`text-xs ${getColor(filter)}`}>
-              {getTableList && getTableList(filter, list).length}
-            </Text>
-          </TouchableOpacity>
+            onFilterPress={() => onFilterPress(filter)}
+            filterObj={{ filter, icon }}
+            currentFilter={currentFilter}
+            length={getTableList(filter, list).length || 0}
+          />
         ))}
+
+        {categoryFilters && (
+          <FilterTag
+            onFilterPress={() => {
+              onFilterPress('신선식품류');
+              setModalVisible(true);
+            }}
+            filterObj={{ filter: '카테고리별', icon: 'filter' }}
+            currentFilter={currentFilter}
+            byCategoryActive={
+              !!categoryFilters.find(({ filter }) => filter === currentFilter)
+            }
+          />
+        )}
       </ScrollView>
+
+      {modalVisible && categoryFilters && (
+        <Modal
+          title='카테고리별로 보기'
+          setModalVisible={setModalVisible}
+          modalVisible={modalVisible}
+          hasBackdrop
+        >
+          <View style={tw`p-4 pb-10 flex-row flex-wrap gap-2`}>
+            {categoryFilters.map((filterObj) => (
+              <FilterTag
+                key={filterObj.filter}
+                onFilterPress={() => onFilterPress(filterObj.filter)}
+                filterObj={filterObj}
+                length={getTableList(filterObj.filter, list).length || 0}
+                currentFilter={currentFilter}
+              />
+            ))}
+          </View>
+        </Modal>
+      )}
     </View>
   );
 }

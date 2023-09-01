@@ -71,6 +71,7 @@ export default function ShoppingList() {
             }
             onEntirePress={() => onEntireBoxPress(shoppingList)}
             color='blue'
+            length={shoppingList.length}
           />
 
           <TableBody

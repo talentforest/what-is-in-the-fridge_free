@@ -67,6 +67,7 @@ export default function ExpiredFoods() {
             }
             onEntirePress={() => onEntireBoxPress(filteredList)}
             color='amber'
+            length={filteredList.length}
           >
             <Text style={tw`text-slate-500 text-sm`}>유통기한순</Text>
           </TableHeader>
