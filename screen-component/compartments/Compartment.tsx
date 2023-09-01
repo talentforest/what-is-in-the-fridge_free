@@ -1,10 +1,7 @@
 import { Animated, ScrollView, View } from 'react-native';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Food, initialFoodInfo } from '../../constant/foods';
-import {
-  Text,
-  TouchableOpacity,
-} from '../../components/common/native-component';
+import { Text } from '../../components/common/native-component';
 import { FoodLocation } from '../../constant/fridgeInfo';
 import { GRAY } from '../../constant/colors';
 import { CompartmentNumToDrop } from '../../screens/Compartments';
@@ -23,6 +20,7 @@ interface Props {
   currentFilter: Filter;
   foodLocation: FoodLocation;
   moveMode: boolean;
+  setMoveMode: (moveMode: boolean) => void;
   compartmentNumToDrop: CompartmentNumToDrop;
   setCompartmentNumToDrop: (compartmentNum: CompartmentNumToDrop) => void;
 }
@@ -31,6 +29,7 @@ export default function Compartment({
   currentFilter,
   foodLocation,
   moveMode,
+  setMoveMode,
   compartmentNumToDrop,
   setCompartmentNumToDrop,
 }: Props) {
@@ -39,20 +38,11 @@ export default function Compartment({
   const [isDragging, setIsDragging] = useState(false);
   const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
   const [selectedFood, setSelectedFood] = useState<Food>(initialFoodInfo);
-  const [compartmentHeight, setCompartmentHeight] = useState(0);
-
-  const onLayout = useCallback((event: any) => {
-    const { height } = event.nativeEvent.layout;
-    setCompartmentHeight(height);
-  }, []);
-
   const [modalVisible, setModalVisible] = useState(false);
+
   const { getFoodList } = useGetFoodList();
 
   const bgOpacity = useRef(new Animated.Value(0)).current;
-  const titleColor = getFoodList('allFoods', space, compartmentNum).length
-    ? 'text-blue-600'
-    : 'text-slate-500';
 
   useEffect(() => {
     if (compartmentNumToDrop === compartmentNum) {
@@ -66,11 +56,16 @@ export default function Compartment({
     }
   }, [compartmentNumToDrop]);
 
+  const titleColor = getFoodList('allFoods', space, compartmentNum).length
+    ? 'text-blue-600'
+    : 'text-slate-500';
+
   return (
     <>
       <View
-        onLayout={onLayout}
-        style={tw`flex-1 border border-slate-500 rounded-lg bg-stone-100`}
+        style={tw`flex-1 border border-slate-500 rounded-lg ${
+          moveMode ? 'bg-blue-50' : 'bg-stone-100'
+        } `}
       >
         {/* 칸 정보 */}
         <View style={tw`flex-row justify-between items-center pl-2.5 h-8`}>
@@ -91,33 +86,19 @@ export default function Compartment({
             contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-2 flex-wrap gap-0.5 items-center`}
             showsVerticalScrollIndicator={false}
           >
-            {getFoodList('allFoods', space, compartmentNum).map((food: Food) =>
-              !moveMode ? (
-                <TouchableOpacity
-                  key={food.id}
-                  onPress={() => {
-                    setSelectedFood(food);
-                    setModalVisible(true);
-                  }}
-                  style={tw`rounded-full`}
-                >
-                  <FoodBox
-                    food={food}
-                    moveMode={moveMode}
-                    filter={currentFilter}
-                  />
-                </TouchableOpacity>
-              ) : (
+            {getFoodList('allFoods', space, compartmentNum).map(
+              (food: Food) => (
                 <DraggableFoodBox
                   key={food.id}
                   food={food}
                   filter={currentFilter}
                   moveMode={moveMode}
                   setCompartmentNumToDrop={setCompartmentNumToDrop}
-                  compartmentHeight={compartmentHeight}
                   setSelectedFood={setSelectedFood}
                   setIsDragging={setIsDragging}
                   setDragPosition={setDragPosition}
+                  setMoveMode={setMoveMode}
+                  setModalVisible={setModalVisible}
                 />
               )
             )}
@@ -128,7 +109,8 @@ export default function Compartment({
           </View>
         )}
 
-        {compartmentNumToDrop === compartmentNum && (
+        {/* 이동시키는 칸 표시 생성 */}
+        {compartmentNumToDrop === compartmentNum && moveMode && (
           <Animated.View
             style={{
               opacity: bgOpacity,
@@ -153,7 +135,7 @@ export default function Compartment({
       </View>
 
       {/* 드래깅 시 생성되는 음식박스 */}
-      {isDragging && (
+      {isDragging && moveMode && (
         <Animated.View
           style={{
             zIndex: 100,

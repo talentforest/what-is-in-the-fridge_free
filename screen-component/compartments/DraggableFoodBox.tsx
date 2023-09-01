@@ -1,12 +1,16 @@
-import { Animated, Easing, PanResponder } from 'react-native';
+import { Animated, Dimensions, PanResponder } from 'react-native';
 import { Food } from '../../constant/foods';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { CompartmentNum } from '../../constant/fridgeInfo';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { Filter } from '../../util';
 import { useDispatch } from 'react-redux';
 import { editFood } from '../../redux/slice/allFoodsSlice';
 import { CompartmentNumToDrop } from '../../screens/Compartments';
+import { TouchableOpacity } from '../../components/common/native-component';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector } from '../../redux/hook';
+import { useShakingAnimation } from '../../hooks';
 
 import FoodBox from './FoodBox';
 
@@ -15,109 +19,77 @@ interface Props {
   filter: Filter;
   moveMode: boolean;
   setCompartmentNumToDrop: (numToDrop: CompartmentNumToDrop) => void;
-  compartmentHeight: number;
   setSelectedFood: (food: Food) => void;
   setIsDragging: (isDragging: boolean) => void;
   setDragPosition: ({ x, y }: { x: number; y: number }) => void;
+  setMoveMode: (mode: boolean) => void;
+  setModalVisible: (visible: boolean) => void;
 }
+
+const FILTER_HEIGHT = 48;
+const GAP = 10;
 
 export default function DraggableFoodBox({
   food,
   filter,
   moveMode,
   setCompartmentNumToDrop,
-  compartmentHeight,
   setSelectedFood,
   setIsDragging,
   setDragPosition,
+  setMoveMode,
+  setModalVisible,
 }: Props) {
-  const dispatch = useDispatch();
+  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
-  const rotate = useRef(new Animated.Value(0)).current;
+  const insets = useSafeAreaInsets();
+  const headerHeight = useHeaderHeight();
+  const bottomPadding = insets.bottom;
+  const startHeight = +(headerHeight + FILTER_HEIGHT).toFixed(0);
+  const maxCompartmentNum = fridgeInfo.compartments[food.space];
+  const compartmentHeight =
+    (Dimensions.get('screen').height -
+      (startHeight + GAP * (maxCompartmentNum + 1) + bottomPadding + 13)) /
+    maxCompartmentNum;
+
+  const dispatch = useDispatch();
+  const { rotate } = useShakingAnimation({ active: moveMode });
+
+  const pan = useRef(new Animated.ValueXY()).current;
   const opacity = useRef(new Animated.Value(1)).current;
 
-  const headerHeight = useHeaderHeight();
-  const startHeight = +(headerHeight + 7).toFixed(0);
-
-  const animatedRotate = () => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(rotate, {
-          toValue: -1,
-          duration: 100,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        }),
-        Animated.timing(rotate, {
-          toValue: 0,
-          duration: 100,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        }),
-        Animated.timing(rotate, {
-          toValue: 1,
-          duration: 100,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        }),
-        Animated.timing(rotate, {
-          toValue: 0,
-          duration: 100,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
-  };
-
-  const rotateData = rotate.interpolate({
-    inputRange: [-1, 0, 1],
-    outputRange: ['-3deg', '0deg', '3deg'],
-  });
-
-  const animatedOpacity = (opacityValue: number) => {
+  const animatedOpacity = (toValue: number) => {
     Animated.timing(opacity, {
       duration: 200,
-      toValue: opacityValue,
+      toValue,
       useNativeDriver: true,
     }).start();
   };
 
-  useEffect(() => {
-    if (moveMode) {
-      animatedRotate();
-    }
-  }, [moveMode]);
+  const getPositionY = (
+    compartmentHeight: number,
+    compartmentNum: CompartmentNum,
+    moveY: number
+  ) => {
+    const calNum = +compartmentNum.slice(0, 1);
+    const topHeight = startHeight + GAP + compartmentHeight * (calNum - 1);
+    const bottomHeight = startHeight + GAP + compartmentHeight * calNum;
 
-  const getTop = (compartmentNum: CompartmentNum) => {
-    const calNum = +compartmentNum.slice(0, 1) - 1;
-    return startHeight + compartmentHeight * calNum * calNum;
-  };
-
-  const getBottom = (compartmentNum: CompartmentNum) => {
-    const calNum = +compartmentNum.slice(0, 1) - 1;
-    return startHeight + compartmentHeight * (calNum + 1) + 4 * calNum;
+    return topHeight <= moveY && moveY <= bottomHeight;
   };
 
   const getCompartmentNum = (moveY: number) => {
-    if (getTop('1번') <= moveY && moveY <= getBottom('1번')) return '1번';
+    if (getPositionY(compartmentHeight, '1번', moveY)) return '1번';
 
-    if (getTop('2번') <= moveY && moveY <= getBottom('2번')) return '2번';
+    if (getPositionY(compartmentHeight, '2번', moveY)) return '2번';
 
-    if (getTop('3번') <= moveY && moveY <= getBottom('3번')) return '3번';
+    if (getPositionY(compartmentHeight, '3번', moveY)) return '3번';
 
-    if (getTop('4번') <= moveY && moveY <= getBottom('4번')) return '4번';
+    if (getPositionY(compartmentHeight, '4번', moveY)) return '4번';
 
-    if (getTop('5번') <= moveY && moveY <= getBottom('5번')) return '5번';
+    if (getPositionY(compartmentHeight, '5번', moveY)) return '5번';
+
     return food.compartmentNum;
-  };
-
-  const pan = useRef(new Animated.ValueXY()).current;
-  const animatedReturnPosition = () => {
-    Animated.spring(pan, {
-      toValue: { x: 0, y: 0 },
-      useNativeDriver: true,
-    }).start();
   };
 
   const panResponder = useRef(
@@ -155,31 +127,45 @@ export default function DraggableFoodBox({
               editedFood: { ...food, compartmentNum: compartmentNumToDrop },
             })
           );
-        } else {
-          animatedReturnPosition();
         }
-
         setCompartmentNumToDrop('동일칸');
         setIsDragging(false);
         animatedOpacity(1);
+        setMoveMode(false);
       },
     })
   ).current;
 
   return (
     <Animated.View
-      style={{
-        transform: [
-          { rotate: rotateData },
-          { translateX: pan.x },
-          { translateY: pan.y },
-        ],
-        opacity,
-        borderRadius: 50,
-      }}
-      {...panResponder.panHandlers}
+      style={
+        moveMode
+          ? {
+              transform: [
+                { rotate },
+                { translateX: pan.x },
+                { translateY: pan.y },
+              ],
+              opacity,
+              borderRadius: 50,
+            }
+          : null
+      }
+      {...(moveMode ? { ...panResponder.panHandlers } : null)}
     >
-      <FoodBox food={food} moveMode={moveMode} filter={filter} />
+      <TouchableOpacity
+        key={food.id}
+        onPress={() => {
+          setSelectedFood(food);
+          setModalVisible(true);
+          setMoveMode(false);
+        }}
+        onLongPress={() => {
+          if (!moveMode) return setMoveMode(true);
+        }}
+      >
+        <FoodBox food={food} moveMode={moveMode} filter={filter} />
+      </TouchableOpacity>
     </Animated.View>
   );
 }

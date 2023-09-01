@@ -32,9 +32,12 @@ export default function TableSearchedItem({ setModalVisible, food }: Props) {
     <View
       style={tw`gap-2 border-b border-slate-300 px-1 flex-row items-center`}
     >
-      <Text style={tw`w-[30%] text-slate-700`}>{cutLetter(name, 6)}</Text>
-      <Text style={tw`flex-1 text-slate-500`}>
-        <Text style={tw`${textColor(space)}`}>{space}</Text> {compartmentNum}칸
+      <Text style={tw`w-[40%] text-slate-700 text-sm`}>
+        {cutLetter(name, 9)}
+      </Text>
+      <Text style={tw`flex-1 text-slate-500 text-sm`}>
+        <Text style={tw`${textColor(space)} text-sm`}>{space}</Text>{' '}
+        {compartmentNum}칸
       </Text>
       <TouchableOpacity
         onPress={() => onNavigatePress(space)}
