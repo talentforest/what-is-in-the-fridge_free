@@ -6,7 +6,7 @@ import {
   INACTIVE_COLOR as DEFAULT_COLOR,
   EXPIRED_COLOR,
   LEFT_3_DAYS_COLOR,
-} from '../../components/table/TableFilters';
+} from '../../components/common/FilterTag';
 import tw from 'twrnc';
 
 interface Props {

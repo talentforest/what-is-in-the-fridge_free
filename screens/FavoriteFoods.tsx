@@ -96,11 +96,8 @@ export default function FavoriteFoods() {
         <Container>
           {/* 필터 */}
           <TableFilters
-            filterList={[
-              entireFilterObj,
-              ...existAbsenceFilters,
-              ...categoryFilters,
-            ]}
+            filterList={[entireFilterObj, ...existAbsenceFilters]}
+            categoryFilters={categoryFilters}
             currentFilter={currentFilter}
             changeFilter={changeFilter}
             getTableList={getFilteredFoodList}
@@ -117,9 +114,10 @@ export default function FavoriteFoods() {
               }
               onEntirePress={() => onEntireBoxPress(filteredList)}
               color='indigo'
+              length={filteredList.length}
             >
-              <Text style={tw`text-slate-600 w-9 text-center text-sm`}>
-                종류
+              <Text style={tw`text-slate-600 w-14 text-center text-sm`}>
+                카테고리
               </Text>
               <Text style={tw`text-slate-600 text-sm`}>유무</Text>
             </TableHeader>
@@ -173,13 +171,13 @@ export default function FavoriteFoods() {
               }}
             >
               {showCaution &&
+                inputValue !== '' &&
                 (findFavoriteListItem(inputValue) ? (
                   <Message
                     message='이미 자주 먹는 식료품이에요.'
                     color='orange'
                   />
                 ) : (
-                  inputValue !== '' &&
                   category === '' && (
                     <Message
                       message='카테고리를 설정해주세요.'

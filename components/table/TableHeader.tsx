@@ -14,6 +14,7 @@ interface Props {
   onEntirePress: () => void;
   children?: ReactNode;
   color: BoxColor;
+  length: number;
 }
 
 export default function TableHeader({
@@ -22,6 +23,7 @@ export default function TableHeader({
   onEntirePress,
   children,
   color,
+  length,
 }: Props) {
   const { shoppingList } = useSelector((state) => state.shoppingList);
 
@@ -39,11 +41,9 @@ export default function TableHeader({
 
         <View style={tw`flex-1 flex-row gap-1.5 items-center`}>
           <Text style={tw`text-${color}-700 text-sm`}>{title}</Text>
-          {title === '장봐야할 식료품' && (
-            <Text style={tw`text-${color}-700 flex-1`}>
-              {shoppingList.length}개
-            </Text>
-          )}
+          <Text style={tw`text-${color}-700 flex-1 text-xs self-end`}>
+            {length}개
+          </Text>
         </View>
       </View>
 

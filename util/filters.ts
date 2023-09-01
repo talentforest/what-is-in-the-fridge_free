@@ -8,6 +8,7 @@ export type Filter =
   | ExistAbsenceFilter
   | ExpiredFilter
   | Category
+  | '카테고리별'
   | '전체';
 export type FilterObj = { filter: Filter; icon: string };
 

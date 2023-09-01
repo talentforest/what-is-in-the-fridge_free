@@ -67,7 +67,7 @@ export default function TableBody({
               {/* 자주 먹는 식료품 정보 */}
               {route.name === 'FavoriteFoods' && (
                 <>
-                  <View style={tw`w-9 justify-center items-center`}>
+                  <View style={tw`w-14 justify-center items-center`}>
                     <CategoryImageIcon
                       kind='icon'
                       category={item.category}
