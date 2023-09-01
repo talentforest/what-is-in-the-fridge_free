@@ -9,6 +9,7 @@ import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
+import { AnimationState } from './animation/useSetAnimationState';
 
 interface Props {
   checkedList: Food[];
@@ -65,29 +66,39 @@ export const useHandleTableItem = ({
     };
   };
 
-  const onDeletePress = (allTableItems: Food[]) => {
+  const onDeletePress = (
+    allTableItems: Food[],
+    setAnimationState?: (state: AnimationState) => void,
+    animationState?: AnimationState
+  ) => {
     const { title, desc, defaultBtnText, onPress } = getDeleteAlert();
 
-    const filteredCheckItem = allTableItems.filter(
-      (food) => !checkedList.some((checkFood) => checkFood.id === food.id)
-    );
-    return Alert.alert(title, desc, [
-      {
-        text: '취소',
-        onPress: () => {
-          setCheckedList([]);
+    if (animationState === 'none' && setAnimationState) {
+      return Alert.alert(title, desc, [
+        {
+          text: '취소',
+          onPress: () => {
+            setCheckedList([]);
+          },
+          style: 'destructive',
         },
-        style: 'destructive',
-      },
-      {
-        text: defaultBtnText,
-        onPress: () => {
-          onPress(filteredCheckItem);
-          setCheckedList([]);
+        {
+          text: defaultBtnText,
+          onPress: () => {
+            return setAnimationState('slideup-out');
+          },
+          style: 'default',
         },
-        style: 'default',
-      },
-    ]);
+      ]);
+    }
+
+    if (animationState === 'slideup-out') {
+      const filteredCheckItem = allTableItems.filter(
+        (food) => !checkedList.some((checkFood) => checkFood.id === food.id)
+      );
+      onPress(filteredCheckItem);
+      setCheckedList([]);
+    }
   };
 
   const onAddShoppingListPress = () => {

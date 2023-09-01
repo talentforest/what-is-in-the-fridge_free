@@ -21,10 +21,6 @@ export const useSubmitFavoriteFoods = () => {
     (favoriteFood) => !allFoods.find((food) => food.name === favoriteFood.name)
   );
 
-  const findFavoriteListItem = (name: string) => {
-    return favoriteFoods.find((favoriteFood) => favoriteFood.name === name);
-  };
-
   const onSubmitFavoriteListItem = (
     inputValue: string,
     category: Category | '',
@@ -34,26 +30,10 @@ export const useSubmitFavoriteFoods = () => {
   ) => {
     if (inputValue === '') return Keyboard.dismiss();
 
+    const favoriteFood = favoriteFoods.find((food) => food.name === inputValue);
+    if (favoriteFood) return setShowCaution(true);
     // 카테고리를 설정하지 않았을 때
     if (category === '') return setShowCaution(true);
-
-    // 자주 먹는 식료품 이미 있다면 알림
-    if (findFavoriteListItem(inputValue)) {
-      return Alert.alert(
-        '자주 먹는 식료품 존재 알림',
-        '이미 자주 먹는 식료품으로 존재하고 있습니다.',
-        [
-          {
-            text: '확인',
-            onPress: () => {
-              setInputValue('');
-              setCategory('');
-            },
-            style: 'default',
-          },
-        ]
-      );
-    }
 
     // 자주 먹는 식료품은 아닌데 냉장고에 있는 경우 -> 냉장고에 이미 있는 식료품을 찾아서 자주 먹는 식료품으로 변경
     const existFood = allFoods.find((food) => food.name === inputValue);
@@ -88,7 +68,6 @@ export const useSubmitFavoriteFoods = () => {
   return {
     existFavoriteFoods,
     nonExistFavoriteFoods,
-    findFavoriteListItem,
     onSubmitFavoriteListItem,
   };
 };

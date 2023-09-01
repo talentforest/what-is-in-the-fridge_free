@@ -3,7 +3,7 @@ import { findMatchNameFoods } from '../../util';
 import { Text, TextInput, TouchableOpacity } from '../common/native-component';
 import { ModalTitle } from '../modal/Modal';
 import { BLUE } from '../../constant/colors';
-import { useSubmitFavoriteFoods, useGetFoodList } from '../../hooks';
+import { useGetFoodList, useFindFood } from '../../hooks';
 
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
@@ -19,7 +19,7 @@ interface Props {
 
 export default function NameItem({ name, changeInfo, editable, title }: Props) {
   const { favoriteFoods } = useGetFoodList();
-  const { findFavoriteListItem } = useSubmitFavoriteFoods();
+  const { findFavoriteListItem } = useFindFood();
 
   const onChangeText = (value: string) => changeInfo({ name: value });
 

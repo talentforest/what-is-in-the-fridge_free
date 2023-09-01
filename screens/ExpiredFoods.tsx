@@ -8,6 +8,7 @@ import {
   useHandleCheckList,
   useHandleTableItem,
   useGetFoodList,
+  useSetAnimationState,
 } from '../hooks/';
 
 import Container from '../components/common/Container';
@@ -27,8 +28,7 @@ export default function ExpiredFoods() {
     checkedList,
     setCheckedList,
     onEntireBoxPress,
-    onCheckBoxPress,
-    isCheckedItem,
+    onCheckBoxPress, //
   } = useHandleCheckList();
 
   const { onDeletePress } = useHandleTableItem({
@@ -41,6 +41,9 @@ export default function ExpiredFoods() {
   const changeFilter = (currentFilter: Filter) => {
     setCurrentFilter(currentFilter);
   };
+
+  const { animationState, setAnimationState, afterAnimation } =
+    useSetAnimationState();
 
   return (
     <SafeBottomAreaView>
@@ -71,16 +74,26 @@ export default function ExpiredFoods() {
           {/* 식료품 리스트 */}
           <TableBody
             title='유통기한 주의 식료품'
+            color='amber'
             list={filteredList}
             onCheckBoxPress={onCheckBoxPress}
-            isCheckedItem={isCheckedItem}
-            color='amber'
+            checkedList={checkedList}
+            animationState={animationState}
+            afterAnimation={() =>
+              afterAnimation(onDeletePress, allExpiredFoodList)
+            }
           />
 
           {/* 식료품 선택 개수와 버튼 */}
           <TableFooter
             list={checkedList}
-            onDeletePress={() => onDeletePress(allExpiredFoodList)}
+            onDeletePress={() =>
+              onDeletePress(
+                allExpiredFoodList,
+                setAnimationState,
+                animationState
+              )
+            }
             buttons={['delete']}
             color='amber'
           />
