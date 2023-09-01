@@ -9,8 +9,8 @@ import { Food } from '../../constant/foods';
 import Modal from '../../components/modal/Modal';
 import TextInputRoundedBox from '../../components/common/TextInputRoundedBox';
 import TableSearchedItem from '../../components/table/TableSearchedItem';
-import tw from 'twrnc';
 import EmptySign from '../../components/common/EmptySign';
+import tw from 'twrnc';
 
 interface Props {
   modalVisible: boolean;
@@ -55,14 +55,14 @@ export default function SearchFoodModal({
           <View
             style={tw`gap-2 border-b border-slate-400 py-3.5 px-1 flex-row items-center`}
           >
-            <View style={tw`flex-row gap-2 w-[30%]`}>
-              <Text style={tw`text-blue-600`}>식료품</Text>
-              <Text style={tw`text-slate-600`}>
+            <View style={tw`flex-row gap-2 w-[40%]`}>
+              <Text style={tw`text-blue-600 text-sm`}>식료품</Text>
+              <Text style={tw`text-slate-600 text-sm`}>
                 {!!keyword.length ? searchedFoods?.length : 0}개
               </Text>
             </View>
-            <Text style={tw`flex-1 text-blue-600`}>위치</Text>
-            <Text style={tw`text-blue-600`}>이동</Text>
+            <Text style={tw`flex-1 text-blue-600 text-sm`}>위치</Text>
+            <Text style={tw`text-blue-600 text-sm`}>이동</Text>
           </View>
 
           {/* 식료품 테이블 리스트 */}
