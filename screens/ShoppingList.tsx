@@ -6,7 +6,11 @@ import { useSelector } from '../redux/hook';
 import { initialFoodInfo } from '../constant/foods';
 import { useFocusEffect } from '@react-navigation/native';
 import { Keyboard } from 'react-native';
-import { useHandleCheckList, useHandleTableItem } from '../hooks';
+import {
+  useHandleCheckList,
+  useHandleTableItem,
+  useSetAnimationState,
+} from '../hooks';
 
 import AddSelectFoodModal from '../screen-component/modal/AddSelectFoodModal';
 import Container from '../components/common/Container';
@@ -19,19 +23,14 @@ import UUIDGenerator from 'react-native-uuid';
 
 export default function ShoppingList() {
   const [modalVisible, setModalVisible] = useState(false);
-  const { shoppingList } = useSelector((state) => state.shoppingList);
   const [keyword, setKeyword] = useState('');
-
+  const { shoppingList } = useSelector((state) => state.shoppingList);
   const myUuid = UUIDGenerator.v4();
+
   const dispatch = useDispatch();
 
-  const {
-    checkedList,
-    setCheckedList,
-    onEntireBoxPress,
-    onCheckBoxPress,
-    isCheckedItem,
-  } = useHandleCheckList();
+  const { checkedList, setCheckedList, onEntireBoxPress, onCheckBoxPress } =
+    useHandleCheckList();
 
   useFocusEffect(
     useCallback(() => {
@@ -39,16 +38,14 @@ export default function ShoppingList() {
     }, [])
   );
 
-  const { onDeletePress, onAddToFridgePress } = useHandleTableItem({
-    checkedList,
-    setCheckedList,
-    setModalVisible,
-  });
+  const {
+    onDeletePress,
+    onAddToFridgePress, //
+  } = useHandleTableItem({ checkedList, setCheckedList, setModalVisible });
 
   const onInputSubmit = () => {
-    if (keyword === '') {
-      return Keyboard.dismiss();
-    }
+    if (keyword === '') return Keyboard.dismiss();
+
     const food = {
       ...initialFoodInfo,
       id: myUuid as string,
@@ -56,7 +53,11 @@ export default function ShoppingList() {
     };
     dispatch(addToShoppingList(food));
     setKeyword('');
+    setAnimationState('slidedown-in');
   };
+
+  const { animationState, setAnimationState, afterAnimation } =
+    useSetAnimationState();
 
   return (
     <KeyboardAvoidingView>
@@ -77,13 +78,17 @@ export default function ShoppingList() {
             color='blue'
             list={shoppingList}
             onCheckBoxPress={onCheckBoxPress}
-            isCheckedItem={isCheckedItem}
             addToFridgePress={onAddToFridgePress}
+            checkedList={checkedList}
+            animationState={animationState}
+            afterAnimation={() => afterAnimation(onDeletePress, shoppingList)}
           />
 
           <TableFooter
             list={checkedList}
-            onDeletePress={() => onDeletePress(shoppingList)}
+            onDeletePress={() => {
+              onDeletePress(shoppingList, setAnimationState, animationState);
+            }}
             buttons={['delete']}
             color='blue'
           />

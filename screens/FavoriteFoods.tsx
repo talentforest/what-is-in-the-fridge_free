@@ -15,9 +15,11 @@ import { Animated, View } from 'react-native';
 import {
   useHandleTableItem,
   useSlideAnimation,
+  useSetAnimationState,
   useHandleCheckList,
   useSubmitFavoriteFoods,
   useGetFoodList,
+  useFindFood,
 } from '../hooks';
 
 import Container from '../components/common/Container';
@@ -39,22 +41,21 @@ export default function FavoriteFoods() {
   const [category, setCategory] = useState<Category | ''>('');
   const [currentFilter, setCurrentFilter] = useState<Filter>('전체');
 
+  const { findFavoriteListItem } = useFindFood();
   const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
   const { onSubmitFavoriteListItem } = useSubmitFavoriteFoods();
 
-  const {
-    checkedList,
-    setCheckedList,
-    onCheckBoxPress,
-    isCheckedItem,
-    onEntireBoxPress,
-  } = useHandleCheckList();
+  const { checkedList, setCheckedList, onCheckBoxPress, onEntireBoxPress } =
+    useHandleCheckList();
 
   const { height, interpolatedOpacity } = useSlideAnimation({
     initialValue: 0,
     toValue: 20,
     active: showCaution,
   });
+
+  const { animationState, setAnimationState, afterAnimation } =
+    useSetAnimationState();
 
   const { onDeletePress, onAddShoppingListPress } = useHandleTableItem({
     checkedList,
@@ -84,6 +85,7 @@ export default function FavoriteFoods() {
       setCategory,
       setShowCaution
     );
+    setAnimationState('slidedown-in');
   };
 
   const filteredList = getFilteredFoodList(currentFilter, favoriteFoods);
@@ -128,14 +130,20 @@ export default function FavoriteFoods() {
               color='indigo'
               list={filteredList}
               onCheckBoxPress={onCheckBoxPress}
-              isCheckedItem={isCheckedItem}
+              checkedList={checkedList}
+              animationState={animationState}
+              afterAnimation={() =>
+                afterAnimation(onDeletePress, favoriteFoods)
+              }
             />
 
             {/* 식료품 선택 개수와 버튼 */}
             <TableFooter
               list={checkedList}
               onAddPress={onAddShoppingListPress}
-              onDeletePress={() => onDeletePress(favoriteFoods)}
+              onDeletePress={() =>
+                onDeletePress(favoriteFoods, setAnimationState, animationState)
+              }
               buttons={['delete-favorite', 'add-shopping-list']}
               color='indigo'
             />
@@ -164,9 +172,21 @@ export default function FavoriteFoods() {
                 paddingLeft: 12,
               }}
             >
-              {inputValue !== '' && category === '' && showCaution && (
-                <Message message='카테고리를 설정해주세요.' color='orange' />
-              )}
+              {showCaution &&
+                (findFavoriteListItem(inputValue) ? (
+                  <Message
+                    message='이미 자주 먹는 식료품이에요.'
+                    color='orange'
+                  />
+                ) : (
+                  inputValue !== '' &&
+                  category === '' && (
+                    <Message
+                      message='카테고리를 설정해주세요.'
+                      color='orange'
+                    />
+                  )
+                ))}
             </Animated.View>
           </View>
           {categoryOpen && (

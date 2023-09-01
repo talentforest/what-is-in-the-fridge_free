@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { Category } from '../../constant/foodCategories';
 import { BLUE, LIGHT_GRAY } from '../../constant/colors';
-import { useSubmitFavoriteFoods } from '../../hooks';
+import { useFindFood } from '../../hooks';
 
 import FormItemDetailModal from '../../screen-component/modal/FormItemDetailModal';
 import FormLabel from './FormLabel';
@@ -26,7 +26,7 @@ export default function CategoryItem({
 }: Props) {
   const [categoryOpen, setCategoryOpen] = useState(false);
 
-  const { findFavoriteListItem } = useSubmitFavoriteFoods();
+  const { findFavoriteListItem } = useFindFood();
   const favoriteFoodItemCategory = findFavoriteListItem(name)?.category;
   const disabledCategory = favoriteFoodItemCategory && disabled;
 

@@ -5,9 +5,15 @@ interface Props {
   initialValue: number;
   toValue: number;
   active: boolean;
+  afterAnimation?: () => void;
 }
 
-export const useSlideAnimation = ({ initialValue, toValue, active }: Props) => {
+export const useSlideAnimation = ({
+  initialValue,
+  toValue,
+  active,
+  afterAnimation,
+}: Props) => {
   const height = useRef(new Animated.Value(initialValue)).current;
 
   const animatedSlide = (toValue: number) => {
@@ -15,24 +21,29 @@ export const useSlideAnimation = ({ initialValue, toValue, active }: Props) => {
       toValue,
       useNativeDriver: false,
       duration: 400,
-    }).start();
+    }).start(() => {
+      if (active && afterAnimation) {
+        afterAnimation();
+      }
+    });
   };
+
+  useEffect(() => {
+    if (active) {
+      animatedSlide(toValue);
+    } else {
+      animatedSlide(initialValue);
+    }
+  }, [active]);
 
   const interpolatedOpacity = height.interpolate({
     inputRange: [0, initialValue],
     outputRange: [0, 1],
   });
 
-  useEffect(() => {
-    if (active) {
-      animatedSlide(toValue);
-    } else {
-      animatedSlide(0);
-    }
-  }, [active]);
-
   return {
     height,
+    animatedSlide,
     interpolatedOpacity,
   };
 };
