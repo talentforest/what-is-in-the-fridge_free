@@ -1,6 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/common/native-component';
-import { Animated, Dimensions, Image, View } from 'react-native';
+import { Animated, Dimensions, Image, Platform, View } from 'react-native';
 import { useImageLoad, useSwiperAnimation } from '../hooks';
 import { onboardingSteps } from '../constant/onboardingInfo';
 import { useNavigation } from '@react-navigation/native';
@@ -17,6 +17,7 @@ import tw from 'twrnc';
 export default function OnBoarding() {
   const { onboarding } = useSelector((state) => state.onboarding);
   const navigation = useNavigation<NavigateProp>();
+  const dispatch = useDispatch();
 
   const { isLoaded, assets } = useImageLoad({
     images: [
@@ -41,8 +42,6 @@ export default function OnBoarding() {
   const getImgUri = (image: string) => {
     return assets?.find((asset) => `${asset.name}.png` === image)?.uri;
   };
-
-  const dispatch = useDispatch();
 
   const completeOnboarding = async () => {
     try {
@@ -103,17 +102,27 @@ export default function OnBoarding() {
                 {/* 이미지 */}
                 <View
                   style={tw.style(
-                    `w-full h-[${
+                    `h-[${
                       imgWidth * 2
-                    }px] overflow-hidden pt-6 items-center`,
+                    }px] overflow-hidden pt-6 items-center rounded-xl`,
                     {
-                      shadowColor: '#444',
-                      shadowOpacity: 100,
-                      shadowRadius: 18,
-                      shadowOffset: {
-                        height: 12,
-                        width: 0,
-                      },
+                      ...Platform.select({
+                        ios: {
+                          width: '100%',
+                          shadowColor: '#444',
+                          shadowOpacity: 1,
+                          shadowRadius: 18,
+                          shadowOffset: {
+                            height: 12,
+                            width: 0,
+                          },
+                        },
+                        android: {
+                          elevation: 100,
+                          borderTopRightRadius: 60,
+                          borderTopLeftRadius: 60,
+                        },
+                      }),
                     }
                   )}
                 >
