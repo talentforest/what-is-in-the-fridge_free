@@ -1,40 +1,33 @@
 import { View } from 'react-native';
 import { Text } from '../common/native-component';
 import { FontGmarketSansBold } from '../../constant/fonts';
-import { FormStep } from '../../constant/formInfo';
 import tw from 'twrnc';
 
 interface Props {
-  formSteps: FormStep[];
+  stepLength: number;
   currentStepId: number;
 }
 
-export default function StepIndicator({ formSteps, currentStepId }: Props) {
+export default function StepIndicator({ stepLength, currentStepId }: Props) {
   const activeStyle = (stepId: number) => {
-    return currentStepId === stepId ? 'bg-blue-600 border-blue-300 border' : '';
+    return currentStepId === stepId
+      ? 'bg-blue-700 w-3 h-3 '
+      : 'bg-blue-300 w-2.5 h-2.5 ';
   };
 
-  const activeTextStyle = (stepId: number) => {
-    return currentStepId === stepId ? 'text-white' : 'text-slate-500';
-  };
+  const stepNumLength = Array.from(
+    { length: stepLength },
+    (_, index) => index + 1
+  );
 
   return (
     <View style={tw`flex-row gap-3 justify-center items-center`}>
-      {formSteps.map((step) => (
+      {stepNumLength.map((step) => (
         <View
-          key={step.id}
-          style={tw`${activeStyle(step.id)}
-           w-6 h-6 text-center justify-center items-center rounded-full`}
-        >
-          <Text
-            style={tw.style(
-              `${activeTextStyle(step.id)} pl-0.5 pt-0.5 text-xs`,
-              FontGmarketSansBold
-            )}
-          >
-            {step.id}
-          </Text>
-        </View>
+          key={step}
+          style={tw`${activeStyle(step)}
+           text-center justify-center items-center rounded-full`}
+        />
       ))}
     </View>
   );

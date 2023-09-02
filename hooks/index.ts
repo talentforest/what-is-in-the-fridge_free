@@ -16,3 +16,4 @@ export * from './animation/useSetAnimationState';
 export * from './animation/useSlideAnimation';
 export * from './animation/useToggleAnimation';
 export * from './animation/useShakingAnimation';
+export * from './animation/useSwiperAnimation';

@@ -1,3 +1,4 @@
+import { useSelector } from '../redux/hook';
 import {
   NativeStackNavigationOptions,
   createNativeStackNavigator,
@@ -12,6 +13,7 @@ import FavoriteFoods from '../screens/FavoriteFoods';
 import ExpiredFoods from '../screens/ExpiredFoods';
 import FridgeSetting from '../screens/FridgeSetting';
 import HeaderBtn from '../components/buttons/HeaderBtn';
+import OnBoarding from '../screens/OnBoarding';
 
 export type RootStackParamList = {
   MyTabs: undefined;
@@ -52,8 +54,17 @@ const options: NativeStackNavigationOptions = {
 };
 
 const Navigation = () => {
+  const { onboarding } = useSelector((state) => state.onboarding);
+
   return (
     <Stack.Navigator>
+      {onboarding && (
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name='OnBoarding'
+          component={OnBoarding}
+        />
+      )}
       <Stack.Screen
         options={{ headerShown: false }}
         name='MyTabs'

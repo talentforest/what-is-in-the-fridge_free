@@ -43,8 +43,8 @@ export default function AddFoodBtn({ foodLocation, onPress, moveMode }: Props) {
           modalVisible={modal}
           setModalVisible={setModal}
           formSteps={[
-            { id: 1, name: '식품 정보' },
-            { id: 2, name: '식품 날짜' },
+            { step: 1, name: '식품 정보' },
+            { step: 2, name: '식품 날짜' },
           ]}
         />
       )}
