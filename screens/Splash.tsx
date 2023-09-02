@@ -47,7 +47,7 @@ export default function Splash({
 
   return (
     <View
-      style={tw`flex-1 items-center justify-center bg-indigo-400`}
+      style={tw`flex-1 items-center justify-center bg-blue-300`}
       onLayout={onLayoutRootView}
     >
       {assets && (

@@ -8,6 +8,7 @@ import { useGetFoodList } from '../hooks';
 import EntranceBox from '../screen-component/home/EntranceBox';
 import Container, { BG_COLOR } from '../components/common/Container';
 import tw from 'twrnc';
+import { PlatformIOS } from '../constant/statusBarHeight';
 
 const Home = () => {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
@@ -22,9 +23,16 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
       >
         <Container>
-          <View style={tw`flex-row items-center justify-between mb-3`}>
+          <View
+            style={tw`flex-row items-center justify-between ${
+              PlatformIOS ? 'mb-3' : 'mt-2 mb-4'
+            }`}
+          >
             <Text
-              style={tw.style(`text-stone-700 text-[22px]`, Cafe24Ssurround)}
+              style={tw.style(
+                `text-stone-700 ${PlatformIOS ? 'text-[22px]' : 'text-2xl'}`,
+                Cafe24Ssurround
+              )}
             >
               냉장고에 뭐가 있지?
             </Text>
