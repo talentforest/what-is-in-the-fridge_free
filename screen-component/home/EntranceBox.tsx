@@ -47,7 +47,7 @@ export default function EntranceBox({ info, foods, color = 'slate' }: Props) {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate(route)}
-      style={tw`shadow-md bg-white flex-1 mb-3 border border-slate-500 rounded-xl`}
+      style={tw`shadow-md bg-white flex-1 mb-5 border border-slate-500 rounded-xl`}
     >
       {/* 박스 헤더 */}
       <View style={tw`rounded-t-xl bg-${color}-100`}>
