@@ -7,6 +7,14 @@ export const useGetFoodList = () => {
   const { allFoods } = useSelector((state) => state.allFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
 
+  const orderExpirationDate = (list: Food[]) => {
+    return list.sort(
+      (food1, food2) =>
+        new Date(food1.expiredDate).getTime() -
+        new Date(food2.expiredDate).getTime()
+    );
+  };
+
   const matchFoodSpace = (
     food: Food,
     space: Space | SpaceType,
@@ -31,11 +39,7 @@ export const useGetFoodList = () => {
     const filteredFoods = foods.filter((food) =>
       matchFoodSpace(food, space, compartmentNum)
     );
-    return filteredFoods.sort(
-      (food1, food2) =>
-        new Date(food1.expiredDate).getTime() -
-        new Date(food2.expiredDate).getTime()
-    );
+    return orderExpirationDate(filteredFoods);
   };
 
   const findFoodInFridge = (name: string) => {
@@ -55,7 +59,7 @@ export const useGetFoodList = () => {
   );
 
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
-    if (filter === '전체') return foodList;
+    if (filter === '전체') return orderExpirationDate(foodList);
 
     if (filter === '냉장고에 있음') return favoriteFoodsInFridge;
 
@@ -64,13 +68,18 @@ export const useGetFoodList = () => {
     if (filter === '냉동실' || filter === '냉장실')
       return getFoodList('expiredFoods', filter);
 
-    if (filter === '유통기한 지남')
-      return foodList.filter((food) => expired(food.expiredDate));
+    if (filter === '유통기한 지남') {
+      const list = foodList.filter((food) => expired(food.expiredDate));
+      return orderExpirationDate(list);
+    }
 
-    if (filter === '유통기한 3일 이내')
-      return foodList.filter((food) => leftThreeDays(food.expiredDate));
+    if (filter === '유통기한 3일 이내') {
+      const list = foodList.filter((food) => leftThreeDays(food.expiredDate));
+      return orderExpirationDate(list);
+    }
 
-    return foodList.filter((food) => food.category === filter);
+    const listByCategory = foodList.filter((food) => food.category === filter);
+    return orderExpirationDate(listByCategory);
   };
 
   return {
