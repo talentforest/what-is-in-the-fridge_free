@@ -17,6 +17,7 @@ import shoppingListReducer from './slice/shoppingList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import selectedFoodReducer from './slice/selectedFoodSlice';
 import fridgeInfoReducer from './slice/fridgeInfoSlice';
+import toggleOnboardingReducer from './slice/onboardingSlice';
 
 const reducers = {
   allFoods: allFoodsReducer,
@@ -24,6 +25,7 @@ const reducers = {
   shoppingList: shoppingListReducer,
   selectedFood: selectedFoodReducer,
   fridgeInfo: fridgeInfoReducer,
+  onboarding: toggleOnboardingReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });
