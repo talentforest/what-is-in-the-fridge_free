@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, Platform, Pressable, View } from 'react-native';
 import { NavigateProp } from '../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from '../components/common/native-component';
 
 import Container from '../components/common/Container';
-import FridgeShape from '../components/common/FridgeShape';
+import Fridge from '../components/common/Fridge';
 import SearchFoodModal from '../screen-component/modal/SearchFoodModal';
 import HeaderBtn from '../components/buttons/HeaderBtn';
 import Icon from '../components/common/native-component/Icon';
@@ -29,25 +29,27 @@ export default function MyFridge() {
   }, []);
 
   const deviceHeight = Dimensions.get('screen').height;
-  const gap = deviceHeight < 700 ? 0 : deviceHeight < 1000 ? 4 : 8;
+  const gap = deviceHeight < 700 ? 2 : deviceHeight < 1000 ? 4 : 8;
 
   return (
     <Container>
       <View style={tw`-mt-3 flex-1 gap-${gap} items-center w-full h-full`}>
         <View style={tw`w-full mt-3`}>
-          <TextInput
-            editable={false}
-            style={tw`h-10 pl-8 w-full bg-white border-slate-600`}
-            placeholder='냉장고에 찾는 식료품이 있는지 검색해보세요.'
-            onPressIn={() => setModalVisible(true)}
-          />
+          <Pressable onPressOut={() => setModalVisible(true)}>
+            <TextInput
+              editable={false}
+              style={tw`h-10 pl-8 w-full bg-white border-slate-600`}
+              placeholder='냉장고에 찾는 식료품이 있는지 검색해보세요.'
+              onPressOut={() => setModalVisible(true)}
+            />
+          </Pressable>
           <View style={tw`absolute left-2.5 h-full justify-center`}>
             <Icon name='search' type='Ionicons' size={19} />
           </View>
         </View>
 
         <View style={tw`w-full flex-1 p-1`}>
-          <FridgeShape />
+          <Fridge />
         </View>
       </View>
 

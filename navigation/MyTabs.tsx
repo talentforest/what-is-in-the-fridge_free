@@ -23,7 +23,7 @@ const tabBarOptions = {
   allowFontScaling: false,
   tabBarStyle: {
     backgroundColor: TAB_BG_COLOR,
-    height: PlatformIOS ? 90 : 75,
+    height: PlatformIOS ? 60 : 75,
   },
   tabBarActiveTintColor: '#fadd80',
   tabBarInactiveTintColor: '#fff',
@@ -31,7 +31,7 @@ const tabBarOptions = {
     flex: 1,
   },
   tabBarLabelStyle: {
-    paddingBottom: PlatformIOS ? 3 : 15,
+    paddingBottom: PlatformIOS ? 10 : 15,
     fontSize: 11,
     ...FontGmarketSansRegular,
   },

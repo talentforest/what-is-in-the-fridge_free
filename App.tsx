@@ -10,6 +10,7 @@ import Navigation from './navigation/Navigation';
 import Splash from './screens/Splash';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
+import { SafeBottomAreaView } from './components/common/native-component';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -28,10 +29,12 @@ export default function App() {
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
-          <NavigationContainer>
-            <Navigation />
-            <StatusBar style='dark' />
-          </NavigationContainer>
+          <SafeBottomAreaView>
+            <NavigationContainer>
+              <Navigation />
+              <StatusBar style='dark' />
+            </NavigationContainer>
+          </SafeBottomAreaView>
         </SafeAreaProvider>
       </PersistGate>
     </ReduxProvider>

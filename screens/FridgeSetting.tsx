@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from '../redux/hook';
 import { Space, SpaceType } from '../constant/fridgeInfo';
 import { changeSetting } from '../redux/slice/fridgeInfoSlice';
 
-import FridgeShape from '../components/common/FridgeShape';
+import Fridge from '../components/common/Fridge';
 import SelectContainter from '../screen-component/fridge-setting/SelectContainter';
 import CompartmentsSettingBox from '../screen-component/fridge-setting/CompartmentsSettingBox';
 import Container from '../components/common/Container';
@@ -39,7 +39,7 @@ export default function FridgeSetting() {
               <Text style={tw`text-blue-700`}>나의 냉장고 모습</Text>
             </View>
             <View style={tw`flex-1 w-[45%] h-60 mx-auto my-3`}>
-              <FridgeShape />
+              <Fridge />
             </View>
           </View>
           <SelectContainter title='나의 냉장고 타입'>
