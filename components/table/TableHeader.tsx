@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { BLUE, GRAY } from '../../constant/colors';
-import { useSelector } from '../../redux/hook';
 import { BoxColor } from '../../screen-component/home/EntranceBox';
 
 import CheckBox from '../common/CheckBox';
@@ -25,8 +24,6 @@ export default function TableHeader({
   color,
   length,
 }: Props) {
-  const { shoppingList } = useSelector((state) => state.shoppingList);
-
   return (
     <View
       style={tw`px-3 py-2 h-10 gap-3 flex-row items-center justify-between`}
