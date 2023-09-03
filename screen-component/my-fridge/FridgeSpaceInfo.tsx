@@ -6,8 +6,8 @@ import { GRAY } from '../../constant/colors';
 import { useGetFoodList } from '../../hooks';
 
 import Icon from '../../components/common/native-component/Icon';
-import tw from 'twrnc';
 import SeeMoreBtn from '../../components/buttons/SeeMoreBtn';
+import tw from 'twrnc';
 
 interface Props {
   space: Space;
@@ -42,21 +42,21 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
       >
         <View style={tw`flex-row items-center gap-1`}>
           <Icon name='caretright' type='AntDesign' size={12} color={GRAY} />
-          <Text style={tw`text-slate-600 text-base`}>{space}</Text>
+          <Text style={tw`text-slate-600`}>{space}</Text>
         </View>
-        <Text style={tw`text-slate-600 text-base`}>{compartmentsLength}칸</Text>
+        <Text style={tw`text-slate-600`}>{compartmentsLength}칸</Text>
       </View>
 
       {/* 냉장고 공간 정보 */}
-      <View style={tw`gap-3 flex-1`}>
+      <View style={tw`gap-2 flex-1`}>
         {spaceInfo.map(({ name, foodList }) => (
           <View key={name} style={tw`flex-row items-center justify-between`}>
-            <Text style={tw`${getColor(foodList(space).length, name)}`}>
+            <Text style={tw`text-sm ${getColor(foodList(space).length, name)}`}>
               {name}
             </Text>
             <Text
               style={tw.style(
-                `${getColor(foodList(space).length, name)} `,
+                `text-sm ${getColor(foodList(space).length, name)} `,
                 FontGmarketSansBold
               )}
             >
