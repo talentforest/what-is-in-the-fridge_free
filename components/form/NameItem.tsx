@@ -1,9 +1,9 @@
-import { View } from 'react-native';
-import { findMatchNameFoods } from '../../util';
+import { Animated, View } from 'react-native';
+import { cutLetter, findMatchNameFoods } from '../../util';
 import { Text, TextInput, TouchableOpacity } from '../common/native-component';
 import { ModalTitle } from '../modal/Modal';
 import { BLUE } from '../../constant/colors';
-import { useGetFoodList, useFindFood } from '../../hooks';
+import { useGetFoodList, useFindFood, useSlideAnimation } from '../../hooks';
 
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
@@ -24,6 +24,11 @@ export default function NameItem({ name, changeInfo, editable, title }: Props) {
   const onChangeText = (value: string) => changeInfo({ name: value });
 
   const matchedFoods = findMatchNameFoods(favoriteFoods, name);
+  const { height } = useSlideAnimation({
+    initialValue: 0,
+    toValue: 31,
+    active: !!matchedFoods?.length,
+  });
 
   const editableStyle = !editable
     ? 'border-slate-400 bg-slate-200 text-slate-600'
@@ -47,9 +52,11 @@ export default function NameItem({ name, changeInfo, editable, title }: Props) {
           />
         </View>
       </View>
-      {title === '식료품 정보 수정' && !editable && (
-        <Message message='식료품 이름은 수정할 수 없어요.' color='orange' />
-      )}
+      {title !== '새로운 식료품 추가' &&
+        !editable &&
+        !findFavoriteListItem(name) && (
+          <Message message='식료품 이름은 수정할 수 없어요.' color='orange' />
+        )}
       {title !== '식료품 정보 수정' && findFavoriteListItem(name) && (
         <Message
           message='자주 먹는 식료품이므로 아래 정보가 자동으로 적용돼요.'
@@ -58,29 +65,42 @@ export default function NameItem({ name, changeInfo, editable, title }: Props) {
       )}
 
       {/* 자주 먹는 식료품 태그 목록 */}
-      {!findFavoriteListItem(name) && editable && !!matchedFoods?.length && (
-        <View style={tw`flex-row flex-wrap items-center mt-1 gap-1`}>
-          {matchedFoods.slice(0, 4).map((food) => (
-            <TouchableOpacity
-              key={food.id}
-              style={tw`max-w-full border border-blue-400 flex-row items-center bg-amber-200 px-2 py-1 gap-1 rounded-full`}
-              onPress={() => changeInfo({ name: food.name })}
+      {!findFavoriteListItem(name) && editable && (
+        <Animated.View
+          style={{
+            height: height,
+            overflow: 'hidden',
+          }}
+        >
+          {!!matchedFoods?.length && (
+            <View
+              style={tw.style(`flex-row flex-wrap items-center mt-1 gap-1`)}
             >
-              <Icon
-                name={food.name === name ? 'check' : 'plus'}
-                type='MaterialCommunityIcons'
-                size={14}
-                color={BLUE}
-              />
-              <Text style={tw`text-blue-600 max-w-[96%]`}>{food.name}</Text>
-            </TouchableOpacity>
-          ))}
-          {matchedFoods.length > 3 && (
-            <Text style={tw`ml-2 text-blue-600`}>
-              ...+{matchedFoods.slice(3).length}개
-            </Text>
+              {matchedFoods.slice(0, 2).map((food) => (
+                <TouchableOpacity
+                  key={food.id}
+                  style={tw`max-w-full h-6.5 border border-blue-400 flex-row items-center bg-amber-200 px-2 py-1 gap-1 rounded-full`}
+                  onPress={() => changeInfo({ name: food.name })}
+                >
+                  <Icon
+                    name={food.name === name ? 'check' : 'plus'}
+                    type='MaterialCommunityIcons'
+                    size={14}
+                    color={BLUE}
+                  />
+                  <Text style={tw`text-blue-600 max-w-[96%] text-[11px]`}>
+                    {cutLetter(food.name, 8)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+              {matchedFoods.length > 2 && (
+                <Text style={tw`ml-2 text-blue-600 text-xs`}>
+                  ...+{matchedFoods.length - 2}개
+                </Text>
+              )}
+            </View>
           )}
-        </View>
+        </Animated.View>
       )}
     </View>
   );
