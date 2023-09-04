@@ -52,7 +52,7 @@ export default function FridgeSetting() {
               />
             ))}
             <Text style={tw`text-slate-500 text-sm`}>
-              현재 일반형 냉장고만 지원됩니다.
+              현재 일반형 냉장고만 지원하고 있어요.
             </Text>
           </SelectContainter>
 

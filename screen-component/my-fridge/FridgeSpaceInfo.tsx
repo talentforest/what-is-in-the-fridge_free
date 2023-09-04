@@ -35,7 +35,7 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
   ];
 
   return (
-    <View style={tw`h-full p-2 bg-white rounded-lg`}>
+    <View style={tw`h-full p-1 py-2 bg-white rounded-lg`}>
       {/* 냉장고 공간 이름 */}
       <View
         style={tw`border-b border-slate-600 pb-2 mb-3 flex-row justify-between items-center gap-1`}
@@ -48,7 +48,7 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
       </View>
 
       {/* 냉장고 공간 정보 */}
-      <View style={tw`gap-2 flex-1`}>
+      <View style={tw`gap-1 flex-1`}>
         {spaceInfo.map(({ name, foodList }) => (
           <View key={name} style={tw`flex-row items-center justify-between`}>
             <Text style={tw`text-sm ${getColor(foodList(space).length, name)}`}>

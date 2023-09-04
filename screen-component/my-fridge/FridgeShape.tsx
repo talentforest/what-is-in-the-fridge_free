@@ -10,7 +10,7 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
 
   return (
     <View style={tw`flex-1 h-full ${PlatformIOS ? 'pb-2' : ''}`}>
-      <View style={tw`flex-row flex-1 mt-9`}>
+      <View style={tw`flex-row flex-1 ${PlatformIOS ? 'mt-9' : ''}`}>
         {/* 냉장고 왼쪽 옆부분 */}
         {PlatformIOS && (
           <View
@@ -25,7 +25,9 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
             )}
           />
         )}
+
         {children}
+
         {/* 냉장고 오른쪽 옆부분 */}
         {PlatformIOS && (
           <View

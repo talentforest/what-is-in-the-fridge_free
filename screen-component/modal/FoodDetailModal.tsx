@@ -100,14 +100,14 @@ export default function FoodDetailModal({
           </View>
 
           {/* 버튼 */}
-          <View style={tw`gap-1.5`}>
+          <View style={tw`gap-1.5 mx-6`}>
+            <SubmitBtn
+              btnName='다 먹었어요'
+              onPress={() => deleteFood(editedFood.id)}
+            />
             <SubmitBtn
               btnName='식료품 정보 수정하기'
               onPress={() => setEditing((prev) => !prev)}
-            />
-            <SubmitBtn
-              btnName='식료품 삭제'
-              onPress={() => deleteFood(editedFood.id)}
             />
           </View>
         </View>

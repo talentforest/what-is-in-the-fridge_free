@@ -4,11 +4,11 @@ import {
   shoppingListForm,
 } from '../../constant/formInfo';
 import { useAddSelectFood } from '../../hooks';
+import { Food } from '../../constant/foods';
 
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
-import { Food } from '../../constant/foods';
 
 interface Props {
   modalVisible: boolean;

@@ -53,7 +53,7 @@ export default function SearchFoodModal({
         />
         <View style={tw`px-2 pt-2`}>
           <View
-            style={tw`gap-2 border-b border-slate-400 py-3.5 px-1 flex-row items-center`}
+            style={tw`gap-2 border-b border-slate-400 py-2.5 px-1 flex-row items-center`}
           >
             <View style={tw`flex-row gap-2 w-[40%]`}>
               <Text style={tw`text-blue-600 text-sm`}>식료품</Text>

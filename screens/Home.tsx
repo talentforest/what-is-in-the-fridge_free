@@ -4,11 +4,11 @@ import { useSelector } from '../redux/hook';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Cafe24Ssurround } from '../constant/fonts';
 import { useGetFoodList } from '../hooks';
+import { PlatformIOS } from '../constant/statusBarHeight';
 
 import EntranceBox from '../screen-component/home/EntranceBox';
 import Container, { BG_COLOR } from '../components/common/Container';
 import tw from 'twrnc';
-import { PlatformIOS } from '../constant/statusBarHeight';
 
 const Home = () => {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);

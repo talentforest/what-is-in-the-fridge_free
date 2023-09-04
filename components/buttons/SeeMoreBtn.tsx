@@ -8,9 +8,12 @@ import tw from 'twrnc';
 
 export default function SeeMoreBtn() {
   return (
-    <View style={tw`flex-row items-center self-end`}>
+    <View style={tw`flex-row items-center self-end -mr-1 -mb-1`}>
       <Text
-        style={tw.style(`text-slate-500 text-sm pb-0.5`, FontGmarketSansBold)}
+        style={tw.style(
+          `text-slate-500 text-[13px] pb-0.5`,
+          FontGmarketSansBold
+        )}
       >
         더보기
       </Text>

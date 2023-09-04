@@ -91,10 +91,7 @@ export default function FavoriteItem({
         }}
       >
         {!isFavoriteFood && (
-          <Message
-            message='자주 먹는 식료품 목록에 추가됩니다.'
-            color='green'
-          />
+          <Message message='자주 먹는 식료품 목록에 추가돼요.' color='green' />
         )}
       </Animated.View>
     </View>

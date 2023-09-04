@@ -25,24 +25,21 @@ export default function TableHeader({
   length,
 }: Props) {
   return (
-    <View
-      style={tw`px-3 py-2 h-10 gap-3 flex-row items-center justify-between`}
-    >
-      <View style={tw`gap-1 flex-row items-center flex-1`}>
-        <TouchableOpacity onPress={onEntirePress}>
+    <View style={tw`pr-3 h-10 gap-3 flex-row items-center justify-between`}>
+      <TouchableOpacity style={tw`flex-1 py-2 pl-3`} onPress={onEntirePress}>
+        <View style={tw`gap-1 flex-row items-center flex-1`}>
           <CheckBox
             checked={entireChecked}
             activeColor={entireChecked ? BLUE : GRAY}
           />
-        </TouchableOpacity>
-
-        <View style={tw`flex-1 flex-row gap-1.5 items-center`}>
-          <Text style={tw`text-${color}-700 text-sm`}>{title}</Text>
-          <Text style={tw`text-${color}-700 flex-1 text-xs self-end`}>
-            {length}개
-          </Text>
+          <View style={tw`flex-1 flex-row gap-1.5 items-center`}>
+            <Text style={tw`text-${color}-700 text-sm`}>{title}</Text>
+            <Text style={tw`text-${color}-700 flex-1 text-xs self-end`}>
+              {length}개
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
 
       {children}
     </View>

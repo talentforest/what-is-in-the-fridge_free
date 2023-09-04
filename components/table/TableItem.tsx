@@ -63,11 +63,13 @@ export default function TableItem({
         opacity: interpolatedOpacity,
       }}
     >
-      <TouchableOpacity
-        onPress={() => onCheckBoxPress(initializedFood)}
+      <View
         style={tw`flex-row items-center gap-3 py-1 h-full border-b border-slate-300`}
       >
-        <View style={tw`flex-row items-center gap-1.5 flex-1`}>
+        <TouchableOpacity
+          onPress={() => onCheckBoxPress(initializedFood)}
+          style={tw`flex-row items-center gap-1.5 flex-1`}
+        >
           <CheckBox checked={!!isCheckedItem} activeColor={BLUE} />
           <View style={tw`flex-1 flex-row items-center gap-2`}>
             <Text
@@ -81,12 +83,17 @@ export default function TableItem({
             >
               {cutLetter(initializedFood.name, 34)}
             </Text>
-            {existItemTag && <RoundedTag name='있음' />}
+
+            {existItemTag && (
+              <View style={tw`w-11 items-center`}>
+                <RoundedTag name='있음' />
+              </View>
+            )}
           </View>
-        </View>
+        </TouchableOpacity>
 
         {children}
-      </TouchableOpacity>
+      </View>
     </Animated.View>
   );
 }
