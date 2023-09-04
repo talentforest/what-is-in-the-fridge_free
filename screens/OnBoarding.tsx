@@ -1,6 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/common/native-component';
-import { Animated, Dimensions, Image, Platform, View } from 'react-native';
+import { Animated, Image, Platform, View } from 'react-native';
 import { useImageLoad, useSwiperAnimation } from '../hooks';
 import { onboardingSteps } from '../constant/onboardingInfo';
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,7 @@ import { FontGmarketSansBold } from '../constant/fonts';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch, useSelector } from '../redux/hook';
 import { toggleOnboarding } from '../redux/slice/onboardingSlice';
+import { DEVICE_WIDTH } from '../util';
 
 import StepIndicator from '../components/form/StepIndicator';
 import SquareBtn from '../components/buttons/SquareBtn';
@@ -21,15 +22,14 @@ export default function OnBoarding() {
 
   const { isLoaded, assets } = useImageLoad({
     images: [
-      require('../assets/iphone13pro-1.png'),
-      require('../assets/iphone13pro-2.png'),
-      require('../assets/iphone13pro-3.png'),
+      require('../assets/onboading/iphone13pro-1.png'),
+      require('../assets/onboading/iphone13pro-2.png'),
+      require('../assets/onboading/iphone13pro-3.png'),
     ],
   });
 
   const {
     moveStep,
-    FORM_WIDTH,
     stepTranslateX,
     currentStep,
     panResponder, //
@@ -37,7 +37,7 @@ export default function OnBoarding() {
 
   const lastStep = onboardingSteps.length === currentStep.step;
 
-  const imgWidth = Dimensions.get('screen').width * 0.85;
+  const imgWidth = DEVICE_WIDTH * 0.85;
 
   const getImgUri = (image: string) => {
     return assets?.find((asset) => `${asset.name}.png` === image)?.uri;
@@ -71,7 +71,7 @@ export default function OnBoarding() {
         <Animated.View
           style={{
             flex: 1,
-            width: FORM_WIDTH,
+            width: DEVICE_WIDTH,
             transform: [{ translateX: stepTranslateX }],
           }}
           {...panResponder.panHandlers}

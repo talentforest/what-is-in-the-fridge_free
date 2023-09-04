@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import {
-  Dimensions,
   Keyboard,
   Platform,
   SafeAreaView,
@@ -9,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { SafeBottomAreaView } from '../common/native-component';
+import { DEVICE_HEIGHT } from '../../util';
 
 import RNModal from 'react-native-modal';
 import SwipeHeader from './SwipeHeader';
@@ -40,7 +40,7 @@ export default function Modal({
   animationOut = 'slideOutDown',
   hasBackdrop = false,
 }: Props) {
-  const MODAL_HEIGHT = Dimensions.get('screen').height * 0.85;
+  const MODAL_HEIGHT = DEVICE_HEIGHT * 0.85;
 
   const closeModal = () => setModalVisible(false);
 
