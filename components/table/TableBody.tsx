@@ -84,7 +84,7 @@ export default function TableBody({
               {route.name === 'ShoppingList' && addToFridgePress && (
                 <TouchableOpacity
                   onPress={() => addToFridgePress(item)}
-                  style={tw`h-full justify-center px-3 -mx-3`}
+                  style={tw`h-full justify-center px-3 pl-6 -mx-3`}
                 >
                   <Icon
                     type='MaterialCommunityIcons'

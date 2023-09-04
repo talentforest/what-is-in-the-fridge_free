@@ -108,7 +108,7 @@ export const useHandleTableItem = ({
     if (setCheckedList) {
       return Alert.alert(
         '장보기 목록 추가',
-        `총 ${checkedList.length}개의 식료품(${foodNameList})이 장보기 목록에 추가되었습니다.`,
+        `총 ${checkedList.length}개의 식료품(${foodNameList})이 장보기 목록에 추가되었어요.`,
         [
           {
             text: '확인',
@@ -135,7 +135,7 @@ export const useHandleTableItem = ({
     if (exist) {
       return Alert.alert(
         `기존 식료품 삭제 알림`,
-        `이미 냉장고에 ${selectedFoodInfo.name} 식료품이 있습니다. 기존 식료품을 삭제하고 새로 추가하시겠습니까?`,
+        `이미 냉장고에 ${selectedFoodInfo.name} 식료품이 존재해요. 기존 식료품을 삭제하고 새로 추가하시겠어요?`,
         [
           { text: '취소', style: 'destructive' },
           {

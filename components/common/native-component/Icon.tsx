@@ -30,7 +30,7 @@ export default function Icon({
   return (
     <>
       {type === 'MaterialCommunityIcons' && (
-        <MIcon style={tw`mb-0.3`} name={name} size={size} color={iconColor} />
+        <MIcon name={name} size={size} color={iconColor} />
       )}
       {type === 'AntDesign' && (
         <AIcon style={tw`mb-0.4`} name={name} size={size} color={iconColor} />

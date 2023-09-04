@@ -29,12 +29,10 @@ export default function App() {
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
-          <SafeBottomAreaView>
-            <NavigationContainer>
-              <Navigation />
-              <StatusBar style='dark' />
-            </NavigationContainer>
-          </SafeBottomAreaView>
+          <NavigationContainer>
+            <Navigation />
+            <StatusBar style='dark' />
+          </NavigationContainer>
         </SafeAreaProvider>
       </PersistGate>
     </ReduxProvider>

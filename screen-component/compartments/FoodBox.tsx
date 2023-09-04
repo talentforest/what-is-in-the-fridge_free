@@ -11,11 +11,10 @@ import tw from 'twrnc';
 
 interface Props {
   food: Food;
-  moveMode: boolean;
   filter: Filter;
 }
 
-export default function FoodBox({ food, moveMode, filter }: Props) {
+export default function FoodBox({ food, filter }: Props) {
   const { expiredDate } = food;
 
   const activeColor = () => {

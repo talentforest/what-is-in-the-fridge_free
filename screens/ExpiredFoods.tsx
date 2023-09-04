@@ -50,7 +50,7 @@ export default function ExpiredFoods() {
       <Container>
         {/* 필터 */}
         <TableFilters
-          filterList={[entireFilterObj, ...spaceFilters, ...expiredFilters]}
+          filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
           currentFilter={currentFilter}
           changeFilter={changeFilter}
           getTableList={getFilteredFoodList}
@@ -69,7 +69,7 @@ export default function ExpiredFoods() {
             color='amber'
             length={filteredList.length}
           >
-            <Text style={tw`text-slate-500 text-sm`}>유통기한순</Text>
+            <Text style={tw`text-slate-500 text-sm`}>오래된순</Text>
           </TableHeader>
 
           {/* 식료품 리스트 */}

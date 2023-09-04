@@ -23,7 +23,7 @@ export const useAddSelectFood = () => {
   const alertExistFood = (food: Food) => {
     return Alert.alert(
       `${food.name}`,
-      `${food.space} ${food.compartmentNum}에 이미 식료품이 있습니다.`
+      `${food.space} ${food.compartmentNum}에 이미 식료품이 있어요.`
     );
   };
 
@@ -56,7 +56,7 @@ export const useAddSelectFood = () => {
 
     Alert.alert(
       `${foodWithNewId.name}`,
-      `${foodWithNewId.space} ${foodWithNewId.compartmentNum}에 추가되었습니다.`
+      `${foodWithNewId.space} ${foodWithNewId.compartmentNum}에 추가되었어요.`
     );
 
     setModalVisible(false);

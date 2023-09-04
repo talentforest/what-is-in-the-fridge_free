@@ -26,7 +26,7 @@ export const useAddFood = ({ foodLocation }: Props) => {
   const alertExistFood = (food: Food) => {
     return Alert.alert(
       `${food.name}`,
-      `${food.space} ${food.compartmentNum}에 이미 식료품이 있습니다.`
+      `${food.space} ${food.compartmentNum}에 이미 식료품이 있어요.`
     );
   };
 
@@ -38,7 +38,7 @@ export const useAddFood = ({ foodLocation }: Props) => {
     if (name === '')
       return Alert.alert(
         '이름 작성 안내',
-        '식료품의 이름이 작성되지 않았습니다.'
+        '식료품의 이름이 작성되지 않았어요.'
       );
     const { expiredDate, purchaseDate } = newFood;
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {

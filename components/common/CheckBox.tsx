@@ -7,7 +7,7 @@ interface Props {
   size?: number;
 }
 
-export default function CheckBox({ checked, activeColor, size = 16 }: Props) {
+export default function CheckBox({ checked, activeColor, size = 18 }: Props) {
   return (
     <Icon
       type='Ionicons'

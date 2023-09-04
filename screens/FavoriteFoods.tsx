@@ -174,7 +174,7 @@ export default function FavoriteFoods() {
                 inputValue !== '' &&
                 (findFavoriteListItem(inputValue) ? (
                   <Message
-                    message='이미 자주 먹는 식료품이에요.'
+                    message='이미 목록에 있는 식료품이에요.'
                     color='orange'
                   />
                 ) : (
