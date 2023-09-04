@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { DEEP_GRAY, HEADER_BGCOLOR, TAB_BG_COLOR } from '../constant/colors';
 import { PlatformIOS } from '../constant/statusBarHeight';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Home from '../screens/Home';
 import ShoppingList from '../screens/ShoppingList';
@@ -21,10 +22,6 @@ const Tab = createBottomTabNavigator();
 
 const tabBarOptions = {
   allowFontScaling: false,
-  tabBarStyle: {
-    backgroundColor: TAB_BG_COLOR,
-    height: PlatformIOS ? 60 : 75,
-  },
   tabBarActiveTintColor: '#fadd80',
   tabBarInactiveTintColor: '#fff',
   tabBarIconStyle: {
@@ -54,16 +51,28 @@ const headerOptions: BottomTabNavigationOptions = {
 };
 
 export default function MyTabs() {
+  const insets = useSafeAreaInsets();
+  const bottomPadding = insets.bottom;
+
   return (
-    <Tab.Navigator initialRouteName='Home' screenOptions={{ ...tabBarOptions }}>
+    <Tab.Navigator
+      initialRouteName='Home'
+      screenOptions={{
+        ...tabBarOptions,
+        tabBarStyle: {
+          backgroundColor: TAB_BG_COLOR,
+          height: PlatformIOS ? 62 + bottomPadding : 70,
+        },
+      }}
+    >
       <Tab.Screen
         name='Home'
         component={Home}
         options={{
+          ...headerOptions,
           tabBarIcon: ({ color }) => <TabIcon name='home' color={color} />,
           tabBarLabel: '홈',
           headerShown: false,
-          tabBarAllowFontScaling: false,
         }}
       />
       <Tab.Screen
