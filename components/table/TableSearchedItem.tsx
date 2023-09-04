@@ -20,7 +20,7 @@ export default function TableSearchedItem({ setModalVisible, food }: Props) {
   const { name, space, compartmentNum } = food;
 
   const onNavigatePress = (space: Space) => {
-    navigation.navigate('Compartments', { space });
+    navigation.navigate('Compartments', { space, searchedName: name });
     setModalVisible(false);
   };
 
@@ -40,7 +40,7 @@ export default function TableSearchedItem({ setModalVisible, food }: Props) {
         {compartmentNum}칸
       </Text>
       <TouchableOpacity
-        onPress={() => onNavigatePress(space)}
+        onPress={() => onNavigatePress(space)} //
         style={tw`p-3 pr-1`}
       >
         <Icon type='MaterialCommunityIcons' name='arrow-top-right' size={18} />

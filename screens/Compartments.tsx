@@ -31,7 +31,10 @@ export default function Compartments({ route }: RouteParams) {
   const [moveMode, setMoveMode] = useState(false);
 
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
-  const { space } = route.params as { space: Space };
+  const { space, searchedName } = route.params as {
+    space: Space;
+    searchedName: 'string';
+  };
 
   const navigation = useNavigation();
   const { getFoodList, getFilteredFoodList } = useGetFoodList();
@@ -68,6 +71,7 @@ export default function Compartments({ route }: RouteParams) {
               foodLocation={{ ...compartment, space }}
               compartmentNumToDrop={compartmentNumToDrop}
               setCompartmentNumToDrop={setCompartmentNumToDrop}
+              searchedName={searchedName}
             />
           ))}
         </View>
