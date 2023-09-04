@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, PanResponder } from 'react-native';
+import { Animated, PanResponder } from 'react-native';
 import { OnboardingStep } from '../../constant/onboardingInfo';
 import { FormStep } from '../../constant/formInfo';
+import { DEVICE_WIDTH } from '../../util';
 
 const DRAG_DISTANCE = 60;
-const FORM_WIDTH = Dimensions.get('screen').width;
 
 interface Props {
   steps: OnboardingStep[] | FormStep[];
@@ -22,7 +22,7 @@ export const useSwiperAnimation = ({ steps }: Props) => {
 
   const animatedForm = (stepId: number) => {
     Animated.timing(stepTranslateX, {
-      toValue: -FORM_WIDTH * stepId,
+      toValue: -DEVICE_WIDTH * stepId,
       useNativeDriver: true,
       duration: 400,
     }).start();
@@ -49,12 +49,12 @@ export const useSwiperAnimation = ({ steps }: Props) => {
       },
       onPanResponderGrant: () => {
         stepTranslateX.setValue(
-          -FORM_WIDTH * (currentStepRef.current.step - 1)
+          -DEVICE_WIDTH * (currentStepRef.current.step - 1)
         );
       },
       onPanResponderMove: (_, { dx }) => {
         stepTranslateX.setValue(
-          -FORM_WIDTH * (currentStepRef.current.step - 1) + dx
+          -DEVICE_WIDTH * (currentStepRef.current.step - 1) + dx
         );
       },
       onPanResponderRelease: (_, { dx }) => {
@@ -72,7 +72,6 @@ export const useSwiperAnimation = ({ steps }: Props) => {
   ).current;
 
   return {
-    FORM_WIDTH,
     stepTranslateX,
     panResponder,
     moveStep,

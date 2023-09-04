@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Dimensions, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { NavigateProp } from '../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';
 import { TextInput } from '../components/common/native-component';
+import { DEVICE_HEIGHT } from '../util';
 
 import Container from '../components/common/Container';
 import Fridge from '../components/common/Fridge';
@@ -28,8 +29,7 @@ export default function MyFridge() {
     });
   }, []);
 
-  const deviceHeight = Dimensions.get('screen').height;
-  const gap = deviceHeight < 700 ? 2 : deviceHeight < 1000 ? 4 : 8;
+  const gap = DEVICE_HEIGHT < 700 ? 2 : DEVICE_HEIGHT < 1000 ? 4 : 8;
 
   return (
     <Container>

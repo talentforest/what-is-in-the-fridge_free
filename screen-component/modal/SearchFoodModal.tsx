@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Dimensions, View } from 'react-native';
+import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
-import { findMatchNameFoods } from '../../util';
+import { DEVICE_HEIGHT, findMatchNameFoods } from '../../util';
 import { useSelector } from '../../redux/hook';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Food } from '../../constant/foods';
@@ -31,7 +31,7 @@ export default function SearchFoodModal({
     setKeyword(keyword);
   };
 
-  const modalContentHeight = Dimensions.get('screen').height * 0.6;
+  const modalContentHeight = DEVICE_HEIGHT * 0.6;
 
   return (
     <Modal

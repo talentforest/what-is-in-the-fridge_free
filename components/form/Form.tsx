@@ -8,6 +8,7 @@ import {
 import { Food } from '../../constant/foods';
 import { FormLabelType, FormStep } from '../../constant/formInfo';
 import { useSwiperAnimation } from '../../hooks';
+import { DEVICE_WIDTH } from '../../util';
 
 import FormSectionContainer from './FormSectionContainer';
 import CategoryItem from './CategoryItem';
@@ -37,7 +38,6 @@ export default function Form({
 }: Props) {
   const {
     moveStep,
-    FORM_WIDTH,
     stepTranslateX,
     panResponder,
     currentStep, //
@@ -48,7 +48,7 @@ export default function Form({
       <View style={tw`overflow-hidden pb-0`}>
         <Animated.View
           style={{
-            width: FORM_WIDTH,
+            width: DEVICE_WIDTH,
             height: 320,
             transform: [{ translateX: stepTranslateX }],
           }}

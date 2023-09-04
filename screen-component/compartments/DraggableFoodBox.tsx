@@ -1,9 +1,9 @@
-import { Animated, Dimensions, PanResponder } from 'react-native';
+import { Animated, PanResponder } from 'react-native';
 import { Food } from '../../constant/foods';
 import { useRef } from 'react';
 import { CompartmentNum } from '../../constant/fridgeInfo';
 import { useHeaderHeight } from '@react-navigation/elements';
-import { Filter } from '../../util';
+import { DEVICE_HEIGHT, Filter } from '../../util';
 import { useDispatch } from 'react-redux';
 import { editFood } from '../../redux/slice/allFoodsSlice';
 import { CompartmentNumToDrop } from '../../screens/Compartments';
@@ -51,7 +51,7 @@ export default function DraggableFoodBox({
   const startHeight = +(headerHeight + FILTER_HEIGHT).toFixed(0);
   const maxCompartmentNum = fridgeInfo.compartments[food.space];
   const compartmentHeight =
-    (Dimensions.get('screen').height -
+    (DEVICE_HEIGHT -
       (startHeight + GAP * (maxCompartmentNum + 1) + bottomPadding + 13)) /
     maxCompartmentNum;
 

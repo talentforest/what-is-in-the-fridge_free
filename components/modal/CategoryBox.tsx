@@ -1,8 +1,9 @@
 import { Asset } from 'expo-asset';
-import { Dimensions, View } from 'react-native';
+import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { BLUE } from '../../constant/colors';
 import { Category } from '../../constant/foodCategories';
+import { DEVICE_WIDTH } from '../../util';
 
 import CategoryImageIcon from '../common/CategoryImageIcon';
 import CheckBox from '../common/CheckBox';
@@ -21,7 +22,7 @@ export default function CategoryBox({
   onCheckBoxPress,
   assets,
 }: Props) {
-  const width = (Dimensions.get('screen').width - 94) / 3;
+  const width = (DEVICE_WIDTH - 94) / 3;
 
   const checkedColor = checked
     ? 'bg-blue-200 text-slate-900'
