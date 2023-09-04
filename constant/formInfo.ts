@@ -1,6 +1,6 @@
 export type FormStepName = '식품 정보' | '식품 위치' | '식품 날짜';
 
-export type FormStep = { id: number; name: FormStepName };
+export type FormStep = { step: number; name: FormStepName };
 
 export type FormLabelType =
   | '냉장고 위치 선택'

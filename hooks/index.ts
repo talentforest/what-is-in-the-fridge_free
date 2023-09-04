@@ -16,3 +16,4 @@ export * from './animation/useSlideAnimation';
 export * from './animation/useToggleAnimation';
 export * from './animation/useShakingAnimation';
 export * from './animation/usePulseAnimation';
+export * from './animation/useSwiperAnimation';

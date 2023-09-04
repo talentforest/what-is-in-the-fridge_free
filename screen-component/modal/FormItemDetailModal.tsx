@@ -25,15 +25,15 @@ export default function FormItemDetailModal({
 }: Props) {
   const { isLoaded, assets } = useImageLoad({
     images: [
-      require('../../assets/category-fresh.png'),
-      require('../../assets/category-meat-fish.png'),
-      require('../../assets/category-instant.png'),
-      require('../../assets/category-dessert.png'),
-      require('../../assets/category-sidedish.png'),
-      require('../../assets/category-egg-dairy.png'),
-      require('../../assets/category-sauce.png'),
-      require('../../assets/category-drink.png'),
-      require('../../assets/category-bakery.png'),
+      require('../../assets/category/category-fresh.png'),
+      require('../../assets/category/category-meat-fish.png'),
+      require('../../assets/category/category-instant.png'),
+      require('../../assets/category/category-dessert.png'),
+      require('../../assets/category/category-sidedish.png'),
+      require('../../assets/category/category-egg-dairy.png'),
+      require('../../assets/category/category-sauce.png'),
+      require('../../assets/category/category-drink.png'),
+      require('../../assets/category/category-bakery.png'),
     ],
   });
 
