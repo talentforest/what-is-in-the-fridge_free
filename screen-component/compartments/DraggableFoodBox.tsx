@@ -10,7 +10,7 @@ import { CompartmentNumToDrop } from '../../screens/Compartments';
 import { TouchableOpacity } from '../../components/common/native-component';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from '../../redux/hook';
-import { useShakingAnimation } from '../../hooks';
+import { usePulseAnimation, useShakingAnimation } from '../../hooks';
 
 import FoodBox from './FoodBox';
 
@@ -24,6 +24,7 @@ interface Props {
   setDragPosition: ({ x, y }: { x: number; y: number }) => void;
   setMoveMode: (mode: boolean) => void;
   setModalVisible: (visible: boolean) => void;
+  searchedName: string;
 }
 
 const FILTER_HEIGHT = 48;
@@ -39,11 +40,13 @@ export default function DraggableFoodBox({
   setDragPosition,
   setMoveMode,
   setModalVisible,
+  searchedName,
 }: Props) {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
   const insets = useSafeAreaInsets();
   const headerHeight = useHeaderHeight();
+  const topPadding = insets.top;
   const bottomPadding = insets.bottom;
   const startHeight = +(headerHeight + FILTER_HEIGHT).toFixed(0);
   const maxCompartmentNum = fridgeInfo.compartments[food.space];
@@ -54,17 +57,11 @@ export default function DraggableFoodBox({
 
   const dispatch = useDispatch();
   const { rotate } = useShakingAnimation({ active: moveMode });
+  const { opacity, animateOpacity, translateY, bgColor } = usePulseAnimation({
+    active: searchedName === food.name,
+  });
 
   const pan = useRef(new Animated.ValueXY()).current;
-  const opacity = useRef(new Animated.Value(1)).current;
-
-  const animatedOpacity = (toValue: number) => {
-    Animated.timing(opacity, {
-      duration: 200,
-      toValue,
-      useNativeDriver: true,
-    }).start();
-  };
 
   const getPositionY = (
     compartmentHeight: number,
@@ -99,17 +96,17 @@ export default function DraggableFoodBox({
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: (_, gestureState) => {
         setIsDragging(true);
-        animatedOpacity(0.5);
+        animateOpacity(0.5);
         setSelectedFood(food);
         setDragPosition({
           x: gestureState.moveX - 50,
-          y: gestureState.moveY - 510,
+          y: gestureState.moveY - 440 + bottomPadding,
         });
       },
       onPanResponderMove: (_, gestureState) => {
         setDragPosition({
           x: gestureState.moveX - 50,
-          y: gestureState.moveY - 510,
+          y: gestureState.moveY - 400 + topPadding + bottomPadding,
         });
         const compartmentNumToDrop = getCompartmentNum(gestureState.moveY);
         const moveCompartment = compartmentNumToDrop !== food.compartmentNum;
@@ -130,27 +127,30 @@ export default function DraggableFoodBox({
         }
         setCompartmentNumToDrop('동일칸');
         setIsDragging(false);
-        animatedOpacity(1);
+        animateOpacity(1);
         setMoveMode(false);
       },
     })
   ).current;
 
+  const transformAnimation = {
+    transform: [{ rotate }, { translateX: pan.x }, { translateY: pan.y }],
+  };
+
   return (
     <Animated.View
-      style={
-        moveMode
-          ? {
+      style={{
+        opacity,
+        borderRadius: 100,
+        backgroundColor: searchedName === food.name ? bgColor : '#fff',
+        ...(moveMode
+          ? transformAnimation
+          : {
               transform: [
-                { rotate },
-                { translateX: pan.x },
-                { translateY: pan.y },
+                { translateY: searchedName === food.name ? translateY : 0 },
               ],
-              opacity,
-              borderRadius: 50,
-            }
-          : null
-      }
+            }),
+      }}
       {...(moveMode ? { ...panResponder.panHandlers } : null)}
     >
       <TouchableOpacity
@@ -164,7 +164,7 @@ export default function DraggableFoodBox({
           if (!moveMode) return setMoveMode(true);
         }}
       >
-        <FoodBox food={food} moveMode={moveMode} filter={filter} />
+        <FoodBox food={food} filter={filter} />
       </TouchableOpacity>
     </Animated.View>
   );
