@@ -20,6 +20,7 @@ import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import UUIDGenerator from 'react-native-uuid';
+import { formThreeSteps } from '../constant/formInfo';
 
 export default function ShoppingList() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -109,11 +110,7 @@ export default function ShoppingList() {
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             setCheckedList={setCheckedList}
-            formSteps={[
-              { id: 1, name: '식품 정보' },
-              { id: 2, name: '식품 위치' },
-              { id: 3, name: '식품 날짜' },
-            ]}
+            formSteps={formThreeSteps}
           />
         )}
       </Container>

@@ -6,6 +6,7 @@ import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import AddFoodModal from '../../screen-component/modal/AddFoodModal';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
+import { FormStep, formTwoSteps } from '../../constant/formInfo';
 
 interface Props {
   foodLocation?: FoodLocation;
@@ -42,10 +43,7 @@ export default function AddFoodBtn({ foodLocation, onPress, moveMode }: Props) {
           foodLocation={foodLocation}
           modalVisible={modal}
           setModalVisible={setModal}
-          formSteps={[
-            { id: 1, name: '식품 정보' },
-            { id: 2, name: '식품 날짜' },
-          ]}
+          formSteps={formTwoSteps}
         />
       )}
     </>
