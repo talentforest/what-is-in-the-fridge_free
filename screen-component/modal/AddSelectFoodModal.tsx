@@ -5,10 +5,12 @@ import {
 } from '../../constant/formInfo';
 import { useAddSelectFood } from '../../hooks';
 import { Food } from '../../constant/foods';
+import { View } from 'react-native';
 
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
+import tw from 'twrnc';
 
 interface Props {
   modalVisible: boolean;
@@ -38,8 +40,9 @@ export default function AddSelectFoodModal({
         changeInfo={onChange}
         formSteps={formSteps}
       />
+
       <SubmitBtn
-        btnName='식료품 정보 추가하기'
+        btnName='냉장고에 식료품 추가하기'
         onPress={() => onSubmit(setModalVisible, setCheckedList)}
       />
     </Modal>

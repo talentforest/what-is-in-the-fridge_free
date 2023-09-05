@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addToShoppingList } from '../redux/slice/shoppingList';
+import { addToShoppingList } from '../redux/slice/shoppingListSlice';
 import { KeyboardAvoidingView } from '../components/common/native-component';
 import { useSelector } from '../redux/hook';
 import { initialFoodInfo } from '../constant/foods';

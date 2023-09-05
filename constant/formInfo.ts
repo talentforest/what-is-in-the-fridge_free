@@ -21,12 +21,12 @@ export const foodForm = [
 export const shoppingListForm = [...foodForm, '냉장고 위치 선택'];
 
 export const formTwoSteps: FormStep[] = [
-  { id: 1, name: '식품 정보' },
-  { id: 2, name: '식품 날짜' },
+  { step: 1, name: '식품 정보' },
+  { step: 2, name: '식품 날짜' },
 ];
 
 export const formThreeSteps: FormStep[] = [
-  { id: 1, name: '식품 정보' },
-  { id: 2, name: '식품 위치' },
-  { id: 3, name: '식품 날짜' },
+  { step: 1, name: '식품 정보' },
+  { step: 2, name: '식품 날짜' },
+  { step: 3, name: '식품 위치' },
 ];

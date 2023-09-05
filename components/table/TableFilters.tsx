@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foods';
 import { Filter, FilterObj } from '../../util';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { changeFilter } from '../../redux/slice/filterSlice';
 
 import FilterTag from '../common/FilterTag';
 import Modal from '../modal/Modal';
@@ -10,26 +12,25 @@ import tw from 'twrnc';
 interface Props {
   filterList: FilterObj[];
   categoryFilters?: FilterObj[];
-  currentFilter: Filter;
-  changeFilter: (filter: any) => void;
+  foodList: Food[];
   getTableList: (filter: Filter, list: Food[]) => Food[];
-  list: Food[];
   setCheckedList?: (foods: Food[]) => void;
 }
 
 export default function TableFilters({
-  currentFilter,
   filterList,
   categoryFilters,
-  changeFilter,
   getTableList,
-  list,
+  foodList,
   setCheckedList,
 }: Props) {
+  const { currentFilter } = useSelector((state) => state.currentFilter);
   const [modalVisible, setModalVisible] = useState(false);
 
+  const dispatch = useDispatch();
+
   const onFilterPress = (filter: Filter) => {
-    changeFilter(filter);
+    dispatch(changeFilter(filter));
     if (setCheckedList) return setCheckedList([]);
   };
 
@@ -46,8 +47,7 @@ export default function TableFilters({
             key={filter}
             onFilterPress={() => onFilterPress(filter)}
             filterObj={{ filter, icon }}
-            currentFilter={currentFilter}
-            length={getTableList(filter, list).length || 0}
+            length={getTableList(filter, foodList).length || 0}
           />
         ))}
 
@@ -58,7 +58,6 @@ export default function TableFilters({
               setModalVisible(true);
             }}
             filterObj={{ filter: '카테고리별', icon: 'filter' }}
-            currentFilter={currentFilter}
             byCategoryActive={
               !!categoryFilters.find(({ filter }) => filter === currentFilter)
             }
@@ -79,8 +78,7 @@ export default function TableFilters({
                 key={filterObj.filter}
                 onFilterPress={() => onFilterPress(filterObj.filter)}
                 filterObj={filterObj}
-                length={getTableList(filterObj.filter, list).length || 0}
-                currentFilter={currentFilter}
+                length={getTableList(filterObj.filter, foodList).length || 0}
               />
             ))}
           </View>

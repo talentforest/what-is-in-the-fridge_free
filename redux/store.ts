@@ -13,11 +13,14 @@ import {
 } from 'redux-persist';
 import allFoodsReducer from './slice/allFoodsSlice';
 import favoriteFoodsReducer from './slice/favoriteFoodsSlice';
-import shoppingListReducer from './slice/shoppingList';
+import shoppingListReducer from './slice/shoppingListSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import selectedFoodReducer from './slice/selectedFoodSlice';
 import fridgeInfoReducer from './slice/fridgeInfoSlice';
 import toggleOnboardingReducer from './slice/onboardingSlice';
+import toggleDragModeReducer from './slice/dragModeSlice';
+import changeCompartmentNumReducer from './slice/compartmentNumToDropSlice';
+import changeFilterReducer from './slice/filterSlice';
 
 const reducers = {
   allFoods: allFoodsReducer,
@@ -26,6 +29,9 @@ const reducers = {
   selectedFood: selectedFoodReducer,
   fridgeInfo: fridgeInfoReducer,
   onboarding: toggleOnboardingReducer,
+  dragMode: toggleDragModeReducer,
+  compartmentNumToDrop: changeCompartmentNumReducer,
+  currentFilter: changeFilterReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

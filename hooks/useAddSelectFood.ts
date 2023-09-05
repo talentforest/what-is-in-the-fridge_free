@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
-import { removeFromShoppingList } from '../redux/slice/shoppingList';
+import { removeFromShoppingList } from '../redux/slice/shoppingListSlice';
 import { addFood, removeFood } from '../redux/slice/allFoodsSlice';
 import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';

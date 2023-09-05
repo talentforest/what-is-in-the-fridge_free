@@ -38,7 +38,7 @@ export default function AddFoodModal({
         />
       )}
       <SubmitBtn
-        btnName='식료품 정보 추가하기'
+        btnName='냉장고에 식료품 추가하기'
         onPress={() => {
           onAddSubmit(setModalVisible);
         }}

@@ -1,18 +1,21 @@
 import { View } from 'react-native';
-import { Text } from '../common/native-component';
-import { FontGmarketSansBold } from '../../constant/fonts';
 import tw from 'twrnc';
 
 interface Props {
   stepLength: number;
   currentStepId: number;
+  size?: number;
 }
 
-export default function StepIndicator({ stepLength, currentStepId }: Props) {
+export default function StepIndicator({
+  stepLength,
+  currentStepId,
+  size = 3,
+}: Props) {
   const activeStyle = (stepId: number) => {
     return currentStepId === stepId
-      ? 'bg-blue-700 w-3 h-3 '
-      : 'bg-blue-300 w-2.5 h-2.5 ';
+      ? `bg-blue-700 w-${size} h-${size}`
+      : `bg-blue-300 w-${size - 0.5} h-${size - 0.5}`;
   };
 
   const stepNumLength = Array.from(

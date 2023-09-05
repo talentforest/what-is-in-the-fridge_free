@@ -8,6 +8,8 @@ import {
 import { CompartmentNum } from '../../constant/fridgeInfo';
 import { Filter } from '../../util';
 import { formTwoSteps } from '../../constant/formInfo';
+import { select } from '../../redux/slice/selectedFoodSlice';
+import { useDispatch, useSelector } from '../../redux/hook';
 
 import EmptySign from '../../components/common/EmptySign';
 import Modal from '../../components/modal/Modal';
@@ -21,8 +23,6 @@ interface Props {
   foodList: Food[];
   expandCompartment: boolean;
   setExpandCompartment: (visible: boolean) => void;
-  selectedFood: Food;
-  setSelectedFood: (food: Food) => void;
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
   filter: Filter;
@@ -33,12 +33,13 @@ export default function ExpandedCompartmentModal({
   foodList,
   expandCompartment,
   setExpandCompartment,
-  selectedFood,
-  setSelectedFood,
   modalVisible,
   setModalVisible,
   filter,
 }: Props) {
+  const { selectedFood } = useSelector((state) => state.selectedFood);
+  const dispatch = useDispatch();
+
   return (
     <Modal
       title='크게 보기'
@@ -67,7 +68,7 @@ export default function ExpandedCompartmentModal({
             <TouchableOpacity
               key={food.id}
               onPress={() => {
-                setSelectedFood(food);
+                dispatch(select(food));
                 setModalVisible(true);
               }}
               style={tw`bg-white rounded-full`}
@@ -86,7 +87,6 @@ export default function ExpandedCompartmentModal({
         <FoodDetailModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          food={selectedFood}
           formSteps={formTwoSteps}
         />
       )}
