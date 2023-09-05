@@ -16,7 +16,7 @@ export function Text({ style, ...props }: Props) {
     <RNText
       allowFontScaling={false}
       style={tw.style(
-        `text-slate-800 text-[15px] py-0.5`,
+        `text-slate-800 text-base py-0.5`,
         FontGmarketSansRegular,
         style
       )}

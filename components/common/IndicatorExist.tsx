@@ -15,10 +15,8 @@ export default function IndicatorExist({ food, size }: Props) {
     return !!findFoodInFridge(food.name) ? 'text-blue-600' : 'text-red-500';
   };
 
-  const fontSize = size === 'xs' ? 'text-[13px]' : 'text-sm';
-
   return (
-    <Text style={tw`${existFoodColor(food)} ${fontSize}`}>
+    <Text style={tw`${existFoodColor(food)} text-sm`}>
       {!!findFoodInFridge(food.name) ? '있음' : '없음'}
     </Text>
   );

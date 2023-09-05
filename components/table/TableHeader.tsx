@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { BLUE, GRAY } from '../../constant/colors';
-import { BoxColor } from '../../screen-component/home/EntranceBox';
+import { BoxColor } from '../../screen-component/home/ShoppingListSection';
 
 import CheckBox from '../common/CheckBox';
 import tw from 'twrnc';

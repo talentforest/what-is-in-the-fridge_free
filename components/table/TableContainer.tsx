@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
-import { BoxColor } from '../../screen-component/home/EntranceBox';
+import { BoxColor } from '../../screen-component/home/ShoppingListSection';
 import { closeKeyboard } from '../../util';
 import tw from 'twrnc';
 

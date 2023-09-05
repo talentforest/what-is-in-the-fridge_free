@@ -8,11 +8,7 @@ export const useGetFoodList = () => {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
 
   const orderExpirationDate = (list: Food[]) => {
-    return list.sort(
-      (food1, food2) =>
-        new Date(food1.expiredDate).getTime() -
-        new Date(food2.expiredDate).getTime()
-    );
+    return list;
   };
 
   const matchFoodSpace = (

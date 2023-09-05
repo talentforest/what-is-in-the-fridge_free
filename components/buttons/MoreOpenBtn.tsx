@@ -12,7 +12,7 @@ export default function MoreOpenBtn({ isOpen, setIsOpen }: Props) {
   return (
     <TouchableOpacity
       onPress={() => setIsOpen((prev: any) => !prev)}
-      style={tw`w-8 h-8 pt-0.5 justify-center items-center border border-blue-500 bg-blue-200 rounded-full`}
+      style={tw`w-8 h-8 pt-0.5 justify-center items-center border border-blue-400 bg-blue-100 rounded-full`}
     >
       <Icon
         name={isOpen ? 'chevron-up' : 'chevron-down'}

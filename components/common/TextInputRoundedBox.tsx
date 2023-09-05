@@ -14,7 +14,7 @@ interface Props {
   onSubmitEditing: () => void;
   children?: ReactNode;
   autoFocus?: boolean;
-  iconActive: boolean;
+  disabled?: boolean;
 }
 
 export default function TextInputRoundedBox({
@@ -25,7 +25,7 @@ export default function TextInputRoundedBox({
   onSubmitEditing,
   children,
   autoFocus,
-  iconActive,
+  disabled,
 }: Props) {
   return (
     <View
@@ -44,6 +44,7 @@ export default function TextInputRoundedBox({
       />
 
       <TouchableOpacity
+        disabled={disabled}
         onPress={onSubmitEditing}
         style={tw`h-full items-center justify-center`}
       >
@@ -51,7 +52,7 @@ export default function TextInputRoundedBox({
           type={iconName === 'search' ? 'Ionicons' : 'MaterialCommunityIcons'}
           name={iconName}
           size={iconName === 'search' ? 21 : 23}
-          color={iconActive ? DEEP_GRAY : LIGHT_GRAY}
+          color={disabled ? LIGHT_GRAY : DEEP_GRAY}
         />
       </TouchableOpacity>
     </View>

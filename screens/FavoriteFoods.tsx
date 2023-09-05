@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from '../redux/hook';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
@@ -17,6 +17,7 @@ import {
   useGetFoodList,
   useFindFood,
 } from '../hooks';
+import { changeFilter } from '../redux/slice/filterSlice';
 
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
@@ -29,8 +30,6 @@ import FormItemDetailModal from '../screen-component/modal/FormItemDetailModal';
 import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
 import Message from '../components/form/Message';
 import tw from 'twrnc';
-import { useFocusEffect } from '@react-navigation/native';
-import { changeFilter } from '../redux/slice/filterSlice';
 
 export default function FavoriteFoods() {
   const { currentFilter } = useSelector((state) => state.currentFilter);
@@ -44,8 +43,12 @@ export default function FavoriteFoods() {
   const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
   const { onSubmitFavoriteListItem } = useSubmitFavoriteFoods();
 
-  const { checkedList, setCheckedList, onCheckBoxPress, onEntireBoxPress } =
-    useHandleCheckList();
+  const {
+    checkedList,
+    setCheckedList,
+    onCheckBoxPress,
+    onEntireBoxPress, //
+  } = useHandleCheckList();
 
   const { height, interpolatedOpacity } = useSlideAnimation({
     initialValue: 0,
@@ -65,7 +68,10 @@ export default function FavoriteFoods() {
     if (currentFilter !== '전체') {
       dispatch(changeFilter('전체'));
     }
-  }, []);
+    if (inputValue === '') {
+      setShowCaution(false);
+    }
+  }, [inputValue]);
 
   const onCategoryCheckBoxPress = (category: Category) => {
     setCategory(category);
@@ -148,7 +154,7 @@ export default function FavoriteFoods() {
               iconName='plus'
               placeholder='자주 먹는 식료품을 추가하세요.'
               onSubmitEditing={onSubmitEditing}
-              iconActive={inputValue !== '' && category !== ''}
+              disabled={inputValue === '' || category === ''}
             >
               <InputCategoryBtn
                 category={category}
@@ -156,7 +162,7 @@ export default function FavoriteFoods() {
               />
             </TextInputRoundedBox>
 
-            {inputValue !== '' && (
+            {
               <Animated.View
                 style={{
                   height,
@@ -179,7 +185,7 @@ export default function FavoriteFoods() {
                     )
                   ))}
               </Animated.View>
-            )}
+            }
           </View>
           {categoryOpen && (
             <FormItemDetailModal

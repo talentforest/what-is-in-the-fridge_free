@@ -6,7 +6,6 @@ import { GRAY } from '../../constant/colors';
 import { useGetFoodList } from '../../hooks';
 
 import Icon from '../../components/common/native-component/Icon';
-import SeeMoreBtn from '../../components/buttons/SeeMoreBtn';
 import tw from 'twrnc';
 
 interface Props {
@@ -65,7 +64,6 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
           </View>
         ))}
       </View>
-      <SeeMoreBtn />
     </View>
   );
 }
