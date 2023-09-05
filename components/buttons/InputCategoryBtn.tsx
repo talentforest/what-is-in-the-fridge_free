@@ -22,12 +22,7 @@ export default function InputCategoryBtn({ category, setCategoryOpen }: Props) {
         <Text style={tw`text-center text-slate-400 max-w-19`}>카테고리</Text>
       ) : (
         <View style={tw`p-2`}>
-          <CategoryImageIcon
-            kind='icon'
-            category={category}
-            size={20}
-            color={BLUE}
-          />
+          <CategoryImageIcon kind='icon' category={category} size={20} />
         </View>
       )}
       <Icon

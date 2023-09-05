@@ -9,7 +9,6 @@ interface Props {
   category: Category;
   size: number;
   assets?: Asset[];
-  color?: string;
 }
 
 export default function CategoryImageIcon({
@@ -17,7 +16,6 @@ export default function CategoryImageIcon({
   category,
   size,
   assets,
-  color,
 }: Props) {
   const findCategory = (category: Category) => {
     return foodCategories.find((item) => item.category === category);
@@ -28,6 +26,8 @@ export default function CategoryImageIcon({
     return assets?.find(({ name }) => `${name}.png` === imageName);
   };
 
+  const iconColor = findCategory(category)?.color;
+
   return (
     <>
       {kind === 'icon' && (
@@ -35,7 +35,7 @@ export default function CategoryImageIcon({
           name={findCategory(category)?.icon || ''}
           size={size}
           type='MaterialCommunityIcons'
-          color={color || GRAY}
+          color={iconColor || GRAY}
         />
       )}
 

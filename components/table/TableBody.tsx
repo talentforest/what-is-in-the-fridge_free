@@ -3,7 +3,7 @@ import { TouchableOpacity } from '../common/native-component';
 import { useRoute } from '@react-navigation/native';
 import { Animated, View } from 'react-native';
 import { DEEP_GRAY, LIGHT_GRAY } from '../../constant/colors';
-import { BoxColor } from '../../screen-component/home/EntranceBox';
+import { BoxColor } from '../../screen-component/home/ShoppingListSection';
 import { AnimationState, useFindFood } from '../../hooks/';
 
 import LeftDay from '../common/LeftDay';

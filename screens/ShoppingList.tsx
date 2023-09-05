@@ -103,7 +103,7 @@ export default function ShoppingList() {
           iconName='plus'
           placeholder='식료품 이름을 작성해주세요.'
           onSubmitEditing={onInputSubmit}
-          iconActive={keyword !== ''}
+          disabled={keyword !== ''}
         />
         {modalVisible && (
           <AddSelectFoodModal

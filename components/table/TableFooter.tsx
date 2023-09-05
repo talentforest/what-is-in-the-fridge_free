@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { Food } from '../../constant/foods';
-import { BoxColor } from '../../screen-component/home/EntranceBox';
+import { BoxColor } from '../../screen-component/home/ShoppingListSection';
 import {
   DEEP_YELLOW,
   INDIGO,
