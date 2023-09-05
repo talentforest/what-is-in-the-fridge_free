@@ -22,17 +22,11 @@ export default function FoodCard({ food }: Props) {
       key={food.id}
       onPress={() => navigation.navigate('FavoriteFoods')}
       style={tw.style(
-        `border border-blue-100 bg-white p-2.5 pb-2 items-center justify-center w-25 h-full rounded-xl`,
-        {
-          shadowColor: LIGHT_BLUE,
-          shadowOpacity: 0.5,
-          shadowOffset: { height: 2, width: 0 },
-          shadowRadius: 2,
-        }
+        `shadow-md border border-slate-100 bg-white p-2.5 pb-2 items-center justify-center w-25 h-full rounded-xl`
       )}
     >
       <CategoryImageIcon kind='icon' category={food.category} size={18} />
-      <View style={tw`flex-1 pt-1 justify-center`}>
+      <View style={tw`flex-1 pt-1 items-center justify-center`}>
         <Text
           style={tw.style(`text-center text-slate-800`, {
             lineHeight: 22,
