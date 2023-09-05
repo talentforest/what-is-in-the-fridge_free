@@ -21,10 +21,10 @@ export const useSwiperAnimation = ({ steps }: Props) => {
   }, [currentStep]);
 
   const animatedForm = (stepId: number) => {
-    Animated.timing(stepTranslateX, {
+    Animated.spring(stepTranslateX, {
       toValue: -DEVICE_WIDTH * stepId,
       useNativeDriver: true,
-      duration: 400,
+      // duration: 400,
     }).start();
   };
 

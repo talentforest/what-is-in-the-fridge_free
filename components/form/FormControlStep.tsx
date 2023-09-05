@@ -21,7 +21,11 @@ export default function FormControlStep({
         moveStep={() => moveStep('prev', currentStep)}
         active={currentStep > 1}
       />
-      <StepIndicator stepLength={stepLength} currentStepId={currentStep} />
+      <StepIndicator
+        size={2.5}
+        stepLength={stepLength}
+        currentStepId={currentStep}
+      />
       <ArrowBtn
         type='next'
         moveStep={() => moveStep('next', currentStep)}

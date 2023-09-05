@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
-import { Food } from '../../constant/foods';
+import { useSelector } from '../../redux/hook';
 import { FormLabelType, FormStep, foodForm } from '../../constant/formInfo';
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { getFormattedDate } from '../../util';
@@ -11,7 +11,6 @@ import FavoriteTagBox from '../../components/modal/FavoriteTagBox';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
-
 import CategoryImageIcon from '../../components/common/CategoryImageIcon';
 import LeftDay from '../../components/common/LeftDay';
 import tw from 'twrnc';
@@ -19,16 +18,15 @@ import tw from 'twrnc';
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
-  food: Food;
   formSteps: FormStep[];
 }
 
 export default function FoodDetailModal({
   modalVisible,
   setModalVisible,
-  food,
   formSteps,
 }: Props) {
+  const { selectedFood: food } = useSelector((state) => state.selectedFood);
   const { deleteFood } = useDeleteFood({ space: food.space, setModalVisible });
   const {
     editing,
@@ -55,6 +53,7 @@ export default function FoodDetailModal({
             items={foodForm as FormLabelType[]}
             formSteps={formSteps}
           />
+
           <SubmitBtn
             btnName='식료품 정보 수정 완료'
             onPress={() => onEditSumbit(food.id)}
@@ -100,12 +99,14 @@ export default function FoodDetailModal({
           </View>
 
           {/* 버튼 */}
-          <View style={tw`gap-1.5 mx-6`}>
+          <View style={tw`gap-1.5`}>
             <SubmitBtn
+              icon
               btnName='다 먹었어요'
               onPress={() => deleteFood(editedFood.id)}
             />
             <SubmitBtn
+              icon
               btnName='식료품 정보 수정하기'
               onPress={() => setEditing((prev) => !prev)}
             />

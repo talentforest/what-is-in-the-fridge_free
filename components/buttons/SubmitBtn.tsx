@@ -6,9 +6,10 @@ import tw from 'twrnc';
 interface Props {
   btnName: string;
   onPress: () => void;
+  icon?: boolean;
 }
 
-export default function SubmitBtn({ btnName, onPress }: Props) {
+export default function SubmitBtn({ btnName, onPress, icon }: Props) {
   const bgColor =
     btnName === '다 먹었어요'
       ? 'bg-blue-500 border-blue-400 text-white'
@@ -20,15 +21,17 @@ export default function SubmitBtn({ btnName, onPress }: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw`${bgColor} p-3.5 flex-row items-center justify-center border gap-1 rounded-lg`}
+      style={tw`${bgColor} mx-6 p-3.5 flex-row items-center justify-center border gap-1 rounded-lg`}
     >
       <Text style={tw`${bgColor} text-center text-base`}>{btnName}</Text>
-      <Icon
-        name={iconName}
-        type='MaterialCommunityIcons'
-        color={btnName === '식료품 정보 수정하기' ? GRAY : '#fff'}
-        size={18}
-      />
+      {icon && (
+        <Icon
+          name={iconName}
+          type='MaterialCommunityIcons'
+          color={btnName === '식료품 정보 수정하기' ? GRAY : '#fff'}
+          size={18}
+        />
+      )}
     </TouchableOpacity>
   );
 }

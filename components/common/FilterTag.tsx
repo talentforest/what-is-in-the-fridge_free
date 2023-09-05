@@ -1,3 +1,4 @@
+import { useSelector } from '../../redux/hook';
 import { Text, TouchableOpacity } from './native-component';
 import { View } from 'react-native';
 import { Filter, FilterObj } from '../../util';
@@ -20,7 +21,6 @@ export const LEFT_3_DAYS_COLOR = 'bg-amber-50 border-amber-400 text-amber-600';
 interface Props {
   onFilterPress: (filter: Filter) => void;
   filterObj: FilterObj;
-  currentFilter: Filter;
   length?: number;
   byCategoryActive?: boolean;
 }
@@ -29,9 +29,9 @@ export default function FilterTag({
   onFilterPress,
   filterObj,
   length,
-  currentFilter,
   byCategoryActive,
 }: Props) {
+  const { currentFilter } = useSelector((state) => state.currentFilter);
   const { filter, icon } = filterObj;
 
   const matchedFilter = filter === currentFilter;

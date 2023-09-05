@@ -1,16 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from '../redux/hook';
+import { useCallback, useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
   Text,
 } from '../components/common/native-component';
 import { Category } from '../constant/foodCategories';
-import {
-  Filter,
-  categoryFilters,
-  entireFilterObj,
-  existAbsenceFilters,
-} from '../util';
+import { categoryFilters, entireFilterObj, existAbsenceFilters } from '../util';
 import { Animated, View } from 'react-native';
 import {
   useHandleTableItem,
@@ -33,14 +29,17 @@ import FormItemDetailModal from '../screen-component/modal/FormItemDetailModal';
 import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
 import Message from '../components/form/Message';
 import tw from 'twrnc';
+import { useFocusEffect } from '@react-navigation/native';
+import { changeFilter } from '../redux/slice/filterSlice';
 
 export default function FavoriteFoods() {
+  const { currentFilter } = useSelector((state) => state.currentFilter);
   const [inputValue, setInputValue] = useState('');
   const [showCaution, setShowCaution] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState<Category | ''>('');
-  const [currentFilter, setCurrentFilter] = useState<Filter>('전체');
 
+  const dispatch = useDispatch();
   const { findFavoriteListItem } = useFindFood();
   const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
   const { onSubmitFavoriteListItem } = useSubmitFavoriteFoods();
@@ -63,14 +62,10 @@ export default function FavoriteFoods() {
   });
 
   useEffect(() => {
-    if (inputValue == '') {
-      setShowCaution(false);
+    if (currentFilter !== '전체') {
+      dispatch(changeFilter('전체'));
     }
-  }, [inputValue]);
-
-  const changeFilter = (currentFilter: Filter) => {
-    setCurrentFilter(currentFilter);
-  };
+  }, []);
 
   const onCategoryCheckBoxPress = (category: Category) => {
     setCategory(category);
@@ -98,11 +93,9 @@ export default function FavoriteFoods() {
           <TableFilters
             filterList={[entireFilterObj, ...existAbsenceFilters]}
             categoryFilters={categoryFilters}
-            currentFilter={currentFilter}
-            changeFilter={changeFilter}
             getTableList={getFilteredFoodList}
             setCheckedList={setCheckedList}
-            list={favoriteFoods}
+            foodList={favoriteFoods}
           />
 
           <TableContainer color='indigo'>
@@ -163,29 +156,30 @@ export default function FavoriteFoods() {
               />
             </TextInputRoundedBox>
 
-            <Animated.View
-              style={{
-                height,
-                opacity: interpolatedOpacity,
-                paddingLeft: 12,
-              }}
-            >
-              {showCaution &&
-                inputValue !== '' &&
-                (findFavoriteListItem(inputValue) ? (
-                  <Message
-                    message='이미 목록에 있는 식료품이에요.'
-                    color='orange'
-                  />
-                ) : (
-                  category === '' && (
+            {inputValue !== '' && (
+              <Animated.View
+                style={{
+                  height,
+                  opacity: interpolatedOpacity,
+                  paddingLeft: 12,
+                }}
+              >
+                {showCaution &&
+                  (findFavoriteListItem(inputValue) ? (
                     <Message
-                      message='카테고리를 설정해주세요.'
+                      message='이미 목록에 있는 식료품이에요.'
                       color='orange'
                     />
-                  )
-                ))}
-            </Animated.View>
+                  ) : (
+                    category === '' && (
+                      <Message
+                        message='카테고리를 설정해주세요.'
+                        color='orange'
+                      />
+                    )
+                  ))}
+              </Animated.View>
+            )}
           </View>
           {categoryOpen && (
             <FormItemDetailModal

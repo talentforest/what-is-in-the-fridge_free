@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from '../redux/hook';
 import {
   addItemsToShoppingList,
   setShoppingList,
-} from '../redux/slice/shoppingList';
+} from '../redux/slice/shoppingListSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';

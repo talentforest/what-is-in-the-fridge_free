@@ -9,6 +9,7 @@ export * from './useHandleCheckList';
 export * from './useHandleCompartments';
 export * from './useHandleTableItem';
 export * from './useImageLoad';
+export * from './useFindCompartmentNum';
 
 // 애니메이션
 export * from './animation/useSetAnimationState';
@@ -17,3 +18,4 @@ export * from './animation/useToggleAnimation';
 export * from './animation/useShakingAnimation';
 export * from './animation/usePulseAnimation';
 export * from './animation/useSwiperAnimation';
+export * from './animation/useDragFood';

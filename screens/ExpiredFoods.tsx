@@ -2,14 +2,14 @@ import {
   SafeBottomAreaView,
   Text,
 } from '../components/common/native-component';
-import { useState } from 'react';
-import { Filter, entireFilterObj, expiredFilters, spaceFilters } from '../util';
+import { entireFilterObj, expiredFilters, spaceFilters } from '../util';
 import {
   useHandleCheckList,
   useHandleTableItem,
   useGetFoodList,
   useSetAnimationState,
 } from '../hooks/';
+import { useDispatch, useSelector } from '../redux/hook';
 
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
@@ -18,9 +18,11 @@ import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
+import { useEffect } from 'react';
+import { changeFilter } from '../redux/slice/filterSlice';
 
 export default function ExpiredFoods() {
-  const [currentFilter, setCurrentFilter] = useState<Filter>('전체');
+  const { currentFilter } = useSelector((state) => state.currentFilter);
 
   const { getFilteredFoodList, allExpiredFoodList } = useGetFoodList();
 
@@ -38,12 +40,16 @@ export default function ExpiredFoods() {
 
   const filteredList = getFilteredFoodList(currentFilter, allExpiredFoodList);
 
-  const changeFilter = (currentFilter: Filter) => {
-    setCurrentFilter(currentFilter);
-  };
-
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (currentFilter !== '전체') {
+      dispatch(changeFilter('전체'));
+    }
+  }, []);
 
   return (
     <SafeBottomAreaView>
@@ -51,11 +57,9 @@ export default function ExpiredFoods() {
         {/* 필터 */}
         <TableFilters
           filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
-          currentFilter={currentFilter}
-          changeFilter={changeFilter}
           getTableList={getFilteredFoodList}
           setCheckedList={setCheckedList}
-          list={allExpiredFoodList}
+          foodList={allExpiredFoodList}
         />
 
         {/* 전체 표 */}

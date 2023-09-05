@@ -58,7 +58,6 @@ export const usePulseAnimation = ({ active }: { active: boolean }) => {
 
   return {
     opacity,
-    animateOpacity,
     translateY,
     bgColor,
   };
