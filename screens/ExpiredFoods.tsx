@@ -10,6 +10,8 @@ import {
   useSetAnimationState,
 } from '../hooks/';
 import { useDispatch, useSelector } from '../redux/hook';
+import { useEffect } from 'react';
+import { changeFilter } from '../redux/slice/filterSlice';
 
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
@@ -18,13 +20,11 @@ import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
-import { useEffect } from 'react';
-import { changeFilter } from '../redux/slice/filterSlice';
 
 export default function ExpiredFoods() {
   const { currentFilter } = useSelector((state) => state.currentFilter);
 
-  const { getFilteredFoodList, allExpiredFoodList } = useGetFoodList();
+  const { getFilteredFoodList, allExpiredFoods } = useGetFoodList();
 
   const {
     checkedList,
@@ -38,7 +38,7 @@ export default function ExpiredFoods() {
     setCheckedList,
   });
 
-  const filteredList = getFilteredFoodList(currentFilter, allExpiredFoodList);
+  const filteredList = getFilteredFoodList(currentFilter, allExpiredFoods);
 
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
@@ -59,7 +59,7 @@ export default function ExpiredFoods() {
           filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
           getTableList={getFilteredFoodList}
           setCheckedList={setCheckedList}
-          foodList={allExpiredFoodList}
+          foodList={allExpiredFoods}
         />
 
         {/* 전체 표 */}
@@ -85,7 +85,7 @@ export default function ExpiredFoods() {
             checkedList={checkedList}
             animationState={animationState}
             afterAnimation={() =>
-              afterAnimation(onDeletePress, allExpiredFoodList)
+              afterAnimation(onDeletePress, allExpiredFoods)
             }
           />
 
@@ -93,11 +93,7 @@ export default function ExpiredFoods() {
           <TableFooter
             list={checkedList}
             onDeletePress={() =>
-              onDeletePress(
-                allExpiredFoodList,
-                setAnimationState,
-                animationState
-              )
+              onDeletePress(allExpiredFoods, setAnimationState, animationState)
             }
             buttons={['delete']}
             color='amber'

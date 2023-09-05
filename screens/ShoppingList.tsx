@@ -11,6 +11,7 @@ import {
   useHandleTableItem,
   useSetAnimationState,
 } from '../hooks';
+import { formThreeSteps } from '../constant/formInfo';
 
 import AddSelectFoodModal from '../screen-component/modal/AddSelectFoodModal';
 import Container from '../components/common/Container';
@@ -20,7 +21,6 @@ import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import UUIDGenerator from 'react-native-uuid';
-import { formThreeSteps } from '../constant/formInfo';
 
 export default function ShoppingList() {
   const [modalVisible, setModalVisible] = useState(false);
