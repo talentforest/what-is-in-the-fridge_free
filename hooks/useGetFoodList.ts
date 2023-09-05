@@ -8,8 +8,17 @@ export const useGetFoodList = () => {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
 
   const orderExpirationDate = (list: Food[]) => {
-    return list;
+    const sortedList = list?.sort(
+      (food1, food2) =>
+        new Date(food1.expiredDate).getTime() -
+        new Date(food2.expiredDate).getTime()
+    );
+    return sortedList || list;
   };
+
+  const allExpiredFoods = orderExpirationDate(
+    allFoods.filter((food) => getLeftDays(food.expiredDate) < 4)
+  );
 
   const matchFoodSpace = (
     food: Food,
@@ -31,34 +40,26 @@ export const useGetFoodList = () => {
     space: SpaceType | Space,
     compartmentNum?: CompartmentNum
   ) => {
-    const foods = type === 'allFoods' ? allFoods : allExpiredFoodList;
-    const filteredFoods = foods.filter((food) =>
+    const foodList = type === 'allFoods' ? allFoods : allExpiredFoods;
+
+    const filteredFoods = foodList.filter((food) =>
       matchFoodSpace(food, space, compartmentNum)
     );
-    return orderExpirationDate(filteredFoods);
-  };
-
-  const findFoodInFridge = (name: string) => {
-    return allFoods.find((food) => food.name === name);
+    return filteredFoods;
   };
 
   const favoriteFoodsInFridge = favoriteFoods.filter(
-    (food) => !!findFoodInFridge(food.name)
+    (favoriteFood) => !!allFoods.find((food) => food.name === favoriteFood.name)
   );
 
   const favoriteFoodsNotInFridge = favoriteFoods.filter(
-    (food) => !findFoodInFridge(food.name)
-  );
-
-  const allExpiredFoodList = allFoods.filter(
-    (food) => getLeftDays(food.expiredDate) < 4
+    (favoriteFood) => !!allFoods.find((food) => food.name === favoriteFood.name)
   );
 
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
-    if (filter === '전체') return orderExpirationDate(foodList);
+    if (filter === '전체') return foodList;
 
     if (filter === '냉장고에 있음') return favoriteFoodsInFridge;
-
     if (filter === '냉장고에 없음') return favoriteFoodsNotInFridge;
 
     if (filter === '냉동실' || filter === '냉장실')
@@ -68,7 +69,6 @@ export const useGetFoodList = () => {
       const list = foodList.filter((food) => expired(food.expiredDate));
       return orderExpirationDate(list);
     }
-
     if (filter === '유통기한 3일 이내') {
       const list = foodList.filter((food) => leftThreeDays(food.expiredDate));
       return orderExpirationDate(list);
@@ -80,7 +80,7 @@ export const useGetFoodList = () => {
 
   return {
     allFoods,
-    allExpiredFoodList,
+    allExpiredFoods,
     favoriteFoods,
     getFoodList,
     getFilteredFoodList,

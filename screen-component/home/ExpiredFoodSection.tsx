@@ -40,7 +40,7 @@ export default function ExpiredFoodSection({ foodList }: Props) {
             {foodList.length > MAX_NUM && (
               <TouchableOpacity
                 onPress={() => navigation.navigate('ExpiredFoods')}
-                style={tw`flex-row items-center justify-center bg-blue-100 border border-blue-400 py-2 px-3 rounded-full`}
+                style={tw`mt-2 flex-row items-center justify-center bg-blue-100 border border-blue-400 py-2 px-3 rounded-full`}
               >
                 <Text style={tw`text-center text-sm text-blue-600`}>
                   더보기
