@@ -8,15 +8,15 @@ import tw from 'twrnc';
 export default function FavoriteTagBox() {
   return (
     <View
-      style={tw`flex-row items-center gap-1 border border-slate-300 rounded-lg bg-indigo-50 p-1 px-2`}
+      style={tw`flex-row items-center gap-1 border border-indigo-300 rounded-full bg-indigo-50 p-0.5 px-2.5`}
     >
       <Icon
         type='MaterialCommunityIcons'
         name='tag-heart'
-        size={14}
+        size={13}
         color={INDIGO}
       />
-      <Text style={tw`text-indigo-600 text-xs`}>자주 먹는 식품</Text>
+      <Text style={tw`text-indigo-800 text-[13px]`}>자주 먹는 식료품</Text>
     </View>
   );
 }

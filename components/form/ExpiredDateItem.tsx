@@ -12,12 +12,11 @@ import ControlDateBtn from '../buttons/ControlDateBtn';
 import tw from 'twrnc';
 
 interface Props {
-  expiredInfo?: boolean;
   date: string;
   changeInfo: (newInfo: { [key: string]: string }) => void;
 }
 
-export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
+export default function ExpiredDateItem({ date, changeInfo }: Props) {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   const onConfirm = (date: Date) => {
@@ -26,42 +25,40 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
   };
 
   const changeDate = (date: Date) => {
-    return changeInfo(
-      expiredInfo
-        ? { expiredDate: getFormattedDate(date) }
-        : { purchaseDate: getFormattedDate(date) }
-    );
+    return changeInfo({ expiredDate: getFormattedDate(date) });
   };
 
   const formattedDate = getFormattedDate(date, 'YYYY년 MM월 DD일');
 
   return (
     <View>
-      {/* 날짜 Input */}
-      <FormLabel label={expiredInfo ? '유통기한' : '구매날짜'} />
-      <TouchableOpacity
-        onPress={() => setDatePickerVisible(true)}
-        style={tw`h-12 border border-blue-600 bg-white rounded-lg flex-row items-center justify-between px-2`}
-      >
-        <TextInput
-          value={formattedDate}
-          editable={false}
-          pointerEvents='none'
-          style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
-        />
-        <Icon type='AntDesign' name='calendar' size={16} color={BLUE} />
-      </TouchableOpacity>
-
-      {/* 날짜 더하기 버튼들 */}
-      <View style={tw`mt-1 flex-row gap-1.5 flex-wrap items-center`}>
-        {controlDateBtns.map((btn) => (
-          <ControlDateBtn
-            key={btn.label}
-            btn={btn}
-            changeDate={changeDate}
-            date={date}
+      {/* 유통기한 */}
+      <View>
+        <FormLabel label='유통기한' />
+        <TouchableOpacity
+          onPress={() => setDatePickerVisible(true)}
+          style={tw`h-12 border border-blue-300 bg-white rounded-lg flex-row items-center justify-between px-2`}
+        >
+          <TextInput
+            value={formattedDate}
+            editable={false}
+            pointerEvents='none'
+            style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
           />
-        ))}
+          <Icon type='AntDesign' name='calendar' size={16} color={BLUE} />
+        </TouchableOpacity>
+
+        {/* 날짜 더하기 버튼들 */}
+        <View style={tw`mt-2 gap-1 flex-row flex-wrap items-start`}>
+          {controlDateBtns.map((btn) => (
+            <ControlDateBtn
+              key={btn.label}
+              btn={btn}
+              changeDate={changeDate}
+              date={date}
+            />
+          ))}
+        </View>
       </View>
 
       {/* 캘린더 픽커 모달 */}
@@ -74,7 +71,7 @@ export default function DateItem({ expiredInfo, date, changeInfo }: Props) {
         date={new Date(date)}
         onConfirm={onConfirm}
         onCancel={() => setDatePickerVisible(false)}
-        minimumDate={expiredInfo ? new Date() : undefined}
+        minimumDate={new Date()}
       />
     </View>
   );

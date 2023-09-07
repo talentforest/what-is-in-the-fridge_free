@@ -50,7 +50,7 @@ export const foodCategories: FoodCategory[] = [
     id: 5,
     category: '베이커리·잼',
     image: 'category-bakery.png',
-    icon: 'food-croissant',
+    icon: 'baguette',
     color: '#c65701',
   },
 

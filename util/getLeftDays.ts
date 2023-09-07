@@ -16,3 +16,11 @@ export const expired = (expiredDate: string) => {
 export const leftThreeDays = (expiredDate: string) => {
   return 0 <= getLeftDays(expiredDate) && getLeftDays(expiredDate) < 4;
 };
+
+export const getTextColorByLeftDay = (expiredDate: string) => {
+  return expired(expiredDate)
+    ? 'text-red-600'
+    : leftThreeDays(expiredDate)
+    ? 'text-amber-700'
+    : 'text-green-600';
+};

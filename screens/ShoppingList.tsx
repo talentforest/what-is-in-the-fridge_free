@@ -21,6 +21,7 @@ import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import UUIDGenerator from 'react-native-uuid';
+import SquareBtn from '../components/buttons/SquareBtn';
 
 export default function ShoppingList() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -60,24 +61,17 @@ export default function ShoppingList() {
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
 
+  const allChecked = checkedList.length === shoppingList.length;
+
   return (
     <KeyboardAvoidingView>
       <Container>
         {/* 장보기 목록 */}
-        <TableContainer color='blue'>
-          <TableHeader
-            title='장봐야할 식료품'
-            entireChecked={
-              checkedList.length === shoppingList.length && !!checkedList.length
-            }
-            onEntirePress={() => onEntireBoxPress(shoppingList)}
-            color='blue'
-            length={shoppingList.length}
-          />
+        <TableContainer>
+          <TableHeader title='식료품 목록' length={shoppingList.length} />
 
           <TableBody
             title='장보기 목록 식료품'
-            color='blue'
             list={shoppingList}
             onCheckBoxPress={onCheckBoxPress}
             addToFridgePress={onAddToFridgePress}
@@ -85,15 +79,28 @@ export default function ShoppingList() {
             animationState={animationState}
             afterAnimation={() => afterAnimation(onDeletePress, shoppingList)}
           />
-
           <TableFooter
             list={checkedList}
-            onDeletePress={() => {
-              onDeletePress(shoppingList, setAnimationState, animationState);
-            }}
-            buttons={['delete']}
-            color='blue'
-          />
+            entireChecked={allChecked && !!checkedList.length}
+            onEntirePress={() => onEntireBoxPress(shoppingList)}
+          >
+            <SquareBtn
+              name='장보기 목록에서 삭제'
+              icon='trash-can'
+              disabled={checkedList.length === 0}
+              onPress={() => {
+                onDeletePress(shoppingList, setAnimationState, animationState);
+              }}
+            />
+            <SquareBtn
+              name='냉장실 문쪽 한번에 추가'
+              icon='trash-can'
+              disabled={checkedList.length === 0}
+              onPress={() => {
+                onDeletePress(shoppingList, setAnimationState, animationState);
+              }}
+            />
+          </TableFooter>
         </TableContainer>
 
         {/* 키보드 인풋 */}
@@ -103,8 +110,9 @@ export default function ShoppingList() {
           iconName='plus'
           placeholder='식료품 이름을 작성해주세요.'
           onSubmitEditing={onInputSubmit}
-          disabled={keyword !== ''}
+          disabled={keyword === ''}
         />
+
         {modalVisible && (
           <AddSelectFoodModal
             modalVisible={modalVisible}

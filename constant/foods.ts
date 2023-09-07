@@ -21,7 +21,7 @@ export const initialFoodInfo: Food = {
   image: '',
   name: '',
   category: '신선식품류',
-  purchaseDate: getFormattedDate(new Date()),
+  purchaseDate: '',
   expiredDate: getFormattedDate(new Date()),
   favorite: false,
   space: '냉장실 안쪽',

@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
-import { DEEP_GRAY } from '../../constant/colors';
+import { BLUE, DEEP_GRAY, GRAY, LIGHT_GRAY } from '../../constant/colors';
 import { ControlDateBtnType } from '../../constant/controlDateBtns';
 
 import Icon from '../common/native-component/Icon';
@@ -9,55 +9,28 @@ import tw from 'twrnc';
 interface Props {
   btn: ControlDateBtnType;
   date: string;
-  changeDate: (date: Date) => void;
+  changeDate: (date: Date, type: '유통기한') => void;
 }
 
 export default function ControlDateBtn({ btn, changeDate, date }: Props) {
   return (
-    <View
-      key={btn.label}
-      style={tw`h-7 rounded-md flex-row items-center justify-center bg-${btn.btnColor}-200 border border-${btn.btnColor}-600`}
-    >
-      <OperatorBtn
-        btn={btn}
-        changeDate={changeDate}
-        date={date}
-        operator='add'
-      />
-      <View
-        style={tw`border-l border-r border-slate-600 px-1 h-full justify-center bg-${btn.btnColor}-100 border-${btn.btnColor}-600`}
-      >
-        <Text style={tw`text-stone-800 text-xs`}>{btn.label}</Text>
-      </View>
-      <OperatorBtn
-        btn={btn}
-        changeDate={changeDate}
-        date={date}
-        operator='minus'
-      />
-    </View>
-  );
-}
-
-interface BtnProps {
-  btn: ControlDateBtnType;
-  date: string;
-  changeDate: (date: Date) => void;
-  operator: 'add' | 'minus';
-}
-
-function OperatorBtn({ changeDate, btn, date, operator }: BtnProps) {
-  return (
     <TouchableOpacity
-      onPress={() => changeDate(btn.calculateDate(operator, new Date(date)))}
-      style={tw`px-2 h-full justify-center`}
+      onPress={() =>
+        changeDate(btn.calculateDate('add', new Date(date)), '유통기한')
+      }
+      key={btn.label}
+      style={tw`h-9 px-3 gap-0.5 rounded-3xl flex-row items-center justify-center bg-${btn.btnColor}-50 border border-${btn.btnColor}-500`}
     >
       <Icon
-        name={operator === 'add' ? 'plus' : 'minus'}
+        name={'plus'}
         type='MaterialCommunityIcons'
-        size={14}
-        color={DEEP_GRAY}
+        size={20}
+        color={btn.btnColor}
       />
+
+      <Text style={tw`text-white text-${btn.btnColor}-700 text-sm`}>
+        {btn.label}
+      </Text>
     </TouchableOpacity>
   );
 }

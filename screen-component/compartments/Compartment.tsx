@@ -59,45 +59,40 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
   return (
     <>
       <View
-        style={tw`flex-1 border border-slate-500 rounded-lg ${
-          dragMode ? 'bg-stone-100' : 'bg-blue-50'
+        style={tw`flex-1 border border-slate-400 rounded-lg ${
+          dragMode ? 'bg-amber-50' : 'bg-stone-50'
         } `}
       >
         {/* 칸 정보 */}
-        <View style={tw`flex-row justify-between items-center pl-2.5 h-8`}>
-          <View style={tw`flex-row items-center gap-2`}>
+        <View style={tw`flex-row justify-between items-center pl-2.5 h-7.5`}>
+          <TouchableOpacity
+            onPress={() => setExpandCompartment(true)}
+            style={tw`flex-row items-center gap-1 flex-1`}
+          >
+            <Icon
+              name='arrow-expand-all'
+              type='MaterialCommunityIcons'
+              size={14}
+              color={compartmentFoodList.length ? BLUE : LIGHT_GRAY}
+            />
             <Text
               style={tw`${
                 compartmentFoodList.length ? 'text-blue-600' : 'text-slate-500'
-              } text-sm`}
+              } text-[15px]`}
             >
               {compartmentNum}칸 | 식료품 총{' '}
               {getFoodList('allFoods', space, compartmentNum).length}개
             </Text>
-          </View>
-          <View style={tw`flex-row items-center`}>
-            <AddFoodBtn foodLocation={foodLocation} />
-            <TouchableOpacity
-              style={tw`h-full py-1 px-2`}
-              onPress={() => setExpandCompartment(true)}
-              disabled={dragMode}
-            >
-              <Icon
-                name='arrow-expand'
-                size={20}
-                type='MaterialCommunityIcons'
-                color={dragMode ? LIGHT_GRAY : BLUE}
-              />
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
+          <AddFoodBtn foodLocation={foodLocation} />
         </View>
 
         {/* 식료품 리스트 */}
         {!!compartmentFoodList.length ? (
           <ScrollView
             scrollEnabled={!dragMode}
-            style={tw`p-1 pt-0 flex-1`}
-            contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-2 flex-wrap gap-0.5 items-center`}
+            style={tw`px-1 flex-1`}
+            contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-2 flex-wrap gap-1 items-center`}
             showsVerticalScrollIndicator={false}
           >
             {compartmentFoodList.map((food: Food) => (
@@ -113,8 +108,8 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
             ))}
           </ScrollView>
         ) : (
-          <View style={tw`flex-1 flex-row items-center pb-10 justify-center`}>
-            <EmptySign message='식료품이 아직 없어요.' color='slate' />
+          <View style={tw`flex-1 flex-row items-center pb-5 justify-center`}>
+            <EmptySign message='식료품이 아직 없어요.' />
           </View>
         )}
 

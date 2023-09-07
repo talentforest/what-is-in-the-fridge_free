@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
-  Text,
 } from '../components/common/native-component';
 import { Category } from '../constant/foodCategories';
 import { categoryFilters, entireFilterObj, existAbsenceFilters } from '../util';
@@ -26,10 +25,10 @@ import TableFilters from '../components/table/TableFilters';
 import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
-import FormItemDetailModal from '../screen-component/modal/FormItemDetailModal';
+import CategoryModal from '../screen-component/modal/CategoryModal';
 import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
 import Message from '../components/form/Message';
-import tw from 'twrnc';
+import SquareBtn from '../components/buttons/SquareBtn';
 
 export default function FavoriteFoods() {
   const { currentFilter } = useSelector((state) => state.currentFilter);
@@ -91,40 +90,26 @@ export default function FavoriteFoods() {
 
   const filteredList = getFilteredFoodList(currentFilter, favoriteFoods);
 
+  const allChecked = checkedList.length === filteredList.length;
+
   return (
     <KeyboardAvoidingView>
       <SafeBottomAreaView>
         <Container>
-          {/* 필터 */}
-          <TableFilters
-            filterList={[entireFilterObj, ...existAbsenceFilters]}
-            categoryFilters={categoryFilters}
-            getTableList={getFilteredFoodList}
-            setCheckedList={setCheckedList}
-            foodList={favoriteFoods}
-          />
-
-          <TableContainer color='indigo'>
-            <TableHeader
-              title='자주 먹는 식료품'
-              entireChecked={
-                checkedList.length === filteredList.length &&
-                !!checkedList.length
-              }
-              onEntirePress={() => onEntireBoxPress(filteredList)}
-              color='indigo'
-              length={filteredList.length}
-            >
-              <Text style={tw`text-slate-600 w-14 text-center text-sm`}>
-                카테고리
-              </Text>
-              <Text style={tw`text-slate-600 text-sm`}>유무</Text>
-            </TableHeader>
+          <TableContainer>
+            {/* 필터 */}
+            <TableFilters
+              filterList={[entireFilterObj, ...existAbsenceFilters]}
+              categoryFilters={categoryFilters}
+              getTableList={getFilteredFoodList}
+              setCheckedList={setCheckedList}
+              foodList={favoriteFoods}
+            />
+            <TableHeader title='식료품 목록' columnTitle='냉장고' />
 
             {/* 자주 먹는 식료품 목록 */}
             <TableBody
               title='자주 먹는 식료품'
-              color='indigo'
               list={filteredList}
               onCheckBoxPress={onCheckBoxPress}
               checkedList={checkedList}
@@ -137,13 +122,28 @@ export default function FavoriteFoods() {
             {/* 식료품 선택 개수와 버튼 */}
             <TableFooter
               list={checkedList}
-              onAddPress={onAddShoppingListPress}
-              onDeletePress={() =>
-                onDeletePress(favoriteFoods, setAnimationState, animationState)
-              }
-              buttons={['delete-favorite', 'add-shopping-list']}
-              color='indigo'
-            />
+              entireChecked={allChecked && !!checkedList.length}
+              onEntirePress={() => onEntireBoxPress(filteredList)}
+            >
+              <SquareBtn
+                name='장보기 목록 추가'
+                icon='cart'
+                disabled={checkedList.length === 0}
+                onPress={onAddShoppingListPress}
+              />
+              <SquareBtn
+                name='자주 먹는 식료품 해제'
+                icon='tag-minus'
+                disabled={checkedList.length === 0}
+                onPress={() =>
+                  onDeletePress(
+                    favoriteFoods,
+                    setAnimationState,
+                    animationState
+                  )
+                }
+              />
+            </TableFooter>
           </TableContainer>
 
           {/* 인풋 */}
@@ -162,36 +162,34 @@ export default function FavoriteFoods() {
               />
             </TextInputRoundedBox>
 
-            {
-              <Animated.View
-                style={{
-                  height,
-                  opacity: interpolatedOpacity,
-                  paddingLeft: 12,
-                }}
-              >
-                {showCaution &&
-                  (findFavoriteListItem(inputValue) ? (
+            <Animated.View
+              style={{
+                height,
+                opacity: interpolatedOpacity,
+                paddingLeft: 12,
+              }}
+            >
+              {showCaution &&
+                (findFavoriteListItem(inputValue) ? (
+                  <Message
+                    message='이미 목록에 있는 식료품이에요.'
+                    color='orange'
+                  />
+                ) : (
+                  category === '' && (
                     <Message
-                      message='이미 목록에 있는 식료품이에요.'
+                      message='카테고리를 설정해주세요.'
                       color='orange'
                     />
-                  ) : (
-                    category === '' && (
-                      <Message
-                        message='카테고리를 설정해주세요.'
-                        color='orange'
-                      />
-                    )
-                  ))}
-              </Animated.View>
-            }
+                  )
+                ))}
+            </Animated.View>
           </View>
+
           {categoryOpen && (
-            <FormItemDetailModal
+            <CategoryModal
               modalVisible={categoryOpen}
               setModalVisible={setCategoryOpen}
-              title='카테고리 선택'
               currentChecked={category}
               onCheckBoxPress={onCategoryCheckBoxPress}
             />

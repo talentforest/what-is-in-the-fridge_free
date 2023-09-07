@@ -48,8 +48,10 @@ export default function MyFridge() {
           </View>
         </View>
 
-        <View style={tw`w-full flex-1 p-1 pb-3`}>
-          <Fridge />
+        <View style={tw`flex-1 items-center justify-center`}>
+          <View style={tw`max-h-[540px] flex-1 p-1 pb-3`}>
+            <Fridge />
+          </View>
         </View>
       </View>
 

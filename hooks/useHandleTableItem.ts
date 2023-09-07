@@ -10,6 +10,7 @@ import { useRoute } from '@react-navigation/native';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import { AnimationState } from './animation/useSetAnimationState';
+import { toggleShowBtn } from '../redux/slice/showBtnSlice';
 
 interface Props {
   checkedList: Food[];
@@ -77,15 +78,13 @@ export const useHandleTableItem = ({
       return Alert.alert(title, desc, [
         {
           text: '취소',
-          onPress: () => {
-            setCheckedList([]);
-          },
           style: 'destructive',
         },
         {
           text: defaultBtnText,
           onPress: () => {
-            return setAnimationState('slideup-out');
+            setAnimationState('slideup-out');
+            dispatch(toggleShowBtn(false));
           },
           style: 'default',
         },
@@ -97,8 +96,8 @@ export const useHandleTableItem = ({
         (food) => !checkedList.some((checkFood) => checkFood.id === food.id)
       );
       onPress(filteredCheckItem);
-      setCheckedList([]);
     }
+    setCheckedList([]);
   };
 
   const onAddShoppingListPress = () => {
@@ -112,7 +111,9 @@ export const useHandleTableItem = ({
         [
           {
             text: '확인',
-            onPress: () => setCheckedList([]),
+            onPress: () => {
+              setCheckedList([]);
+            },
             style: 'default',
           },
         ]
@@ -134,7 +135,7 @@ export const useHandleTableItem = ({
     const exist = allFoods.find((food) => food.name === selectedFoodInfo.name);
     if (exist) {
       return Alert.alert(
-        `기존 식료품 삭제 알림`,
+        `기존 식료품 삭제 안내`,
         `이미 냉장고에 ${selectedFoodInfo.name} 식료품이 존재해요. 기존 식료품을 삭제하고 새로 추가하시겠어요?`,
         [
           { text: '취소', style: 'destructive' },

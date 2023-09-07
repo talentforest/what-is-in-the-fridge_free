@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { Category, foodCategories } from '../../constant/foodCategories';
-import { useImageLoad } from '../../hooks/';
+import { useImageLoad } from '../../hooks';
 
 import Modal from '../../components/modal/Modal';
 import CategoryBox from '../../components/modal/CategoryBox';
@@ -11,15 +11,13 @@ import tw from 'twrnc';
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
-  title: '카테고리 선택' | '자주 먹는 식료품에서 선택';
   currentChecked?: string;
   onCheckBoxPress?: (category: Category) => void;
 }
 
-export default function FormItemDetailModal({
+export default function CategoryModal({
   modalVisible,
   setModalVisible,
-  title,
   currentChecked,
   onCheckBoxPress,
 }: Props) {
@@ -49,9 +47,7 @@ export default function FormItemDetailModal({
       hasBackdrop
     >
       <View style={tw`m-6 gap-3`}>
-        <Text style={tw.style('text-blue-600', FontGmarketSansBold)}>
-          {title}
-        </Text>
+        <Text style={tw.style('', FontGmarketSansBold)}>카테고리 선택</Text>
 
         {onCheckBoxPress && (
           <View style={tw`flex-row flex-wrap gap-1.5 justify-between`}>

@@ -82,6 +82,7 @@ export default function DraggableFoodBox({
           setModalVisible(true);
         }}
         onLongPress={() => {
+          dispatch(select(food));
           if (!dragMode) return dispatch(toggleDragMode(true));
         }}
       >

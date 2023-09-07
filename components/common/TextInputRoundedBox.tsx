@@ -29,7 +29,7 @@ export default function TextInputRoundedBox({
 }: Props) {
   return (
     <View
-      style={tw`h-11 mt-3 w-full border border-slate-500 rounded-full items-center flex-row bg-white pl-2.5 pr-3.5`}
+      style={tw`h-11 mt-1 w-full border border-slate-500 rounded-full items-center flex-row bg-white pl-2.5 pr-3.5`}
     >
       {children}
 

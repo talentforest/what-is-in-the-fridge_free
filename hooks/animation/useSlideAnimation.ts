@@ -20,7 +20,7 @@ export const useSlideAnimation = ({
     Animated.timing(height, {
       toValue,
       useNativeDriver: false,
-      duration: 400,
+      duration: 300,
     }).start(() => {
       if (active && afterAnimation) {
         afterAnimation();

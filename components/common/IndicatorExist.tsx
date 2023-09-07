@@ -1,23 +1,32 @@
-import { Food } from '../../constant/foods';
+import { View } from 'react-native';
 import { Text } from './native-component';
 import { useFindFood } from '../../hooks';
 import tw from 'twrnc';
 
 interface Props {
-  food: Food;
-  size?: 'xs';
+  name: string;
+  roundedBorder?: boolean;
 }
 
-export default function IndicatorExist({ food, size }: Props) {
+export default function IndicatorExist({ name, roundedBorder }: Props) {
   const { findFoodInFridge } = useFindFood();
 
-  const existFoodColor = (food: Food) => {
-    return !!findFoodInFridge(food.name) ? 'text-blue-600' : 'text-red-500';
+  const existFoodColor = (name: string) => {
+    return !!findFoodInFridge(name) ? 'text-blue-600' : 'text-red-500';
   };
 
+  const borderStyle =
+    'border border-blue-400 px-2 h-6.5 rounded-full items-center';
+
   return (
-    <Text style={tw`${existFoodColor(food)} text-sm`}>
-      {!!findFoodInFridge(food.name) ? '있음' : '없음'}
-    </Text>
+    <View style={tw`${roundedBorder ? borderStyle : ''}`}>
+      <Text
+        style={tw`${existFoodColor(name)}  ${
+          roundedBorder ? 'text-[13px] py-0' : 'text-[15px]'
+        }`}
+      >
+        {!!findFoodInFridge(name) ? '있음' : '없음'}
+      </Text>
+    </View>
   );
 }

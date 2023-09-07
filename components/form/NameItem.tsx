@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Animated, View } from 'react-native';
 import { cutLetter, findMatchNameFoods } from '../../util';
 import { Text, TextInput, TouchableOpacity } from '../common/native-component';
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export default function NameItem({ name, changeInfo, editable, title }: Props) {
+  const [showMsg, setShowMsg] = useState(false);
   const { favoriteFoods } = useGetFoodList();
   const { findFavoriteListItem } = useFindFood();
 
@@ -26,13 +28,13 @@ export default function NameItem({ name, changeInfo, editable, title }: Props) {
   const matchedFoods = findMatchNameFoods(favoriteFoods, name);
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 31,
-    active: !!matchedFoods?.length,
+    toValue: showMsg ? 20 : 31,
+    active: showMsg || !!matchedFoods?.length,
   });
 
   const editableStyle = !editable
     ? 'border-slate-400 bg-slate-200 text-slate-600'
-    : 'bg-white border-blue-600';
+    : 'bg-white border-blue-300';
 
   return (
     <View>
@@ -44,24 +46,23 @@ export default function NameItem({ name, changeInfo, editable, title }: Props) {
           <TextInput
             style={tw`${editableStyle} border-0 m-0.5 py-0.5 flex-1 rounded-lg`}
             editable={editable}
+            onPressOut={() => {
+              if (!editable) {
+                setShowMsg(true);
+              }
+            }}
             onChangeText={onChangeText}
             value={name}
             placeholder={`식료품 이름을 작성해주세요`}
             focusable={false}
-            pointerEvents={editable ? 'auto' : 'none'}
           />
         </View>
       </View>
-      {title !== '새로운 식료품 추가' &&
-        !editable &&
-        !findFavoriteListItem(name) && (
+
+      {showMsg && (
+        <Animated.View style={{ height, overflow: 'hidden' }}>
           <Message message='식료품 이름은 수정할 수 없어요.' color='orange' />
-        )}
-      {title !== '식료품 정보 수정' && findFavoriteListItem(name) && (
-        <Message
-          message='자주 먹는 식료품이므로 아래 정보가 자동으로 적용돼요.'
-          color='green'
-        />
+        </Animated.View>
       )}
 
       {/* 자주 먹는 식료품 태그 목록 */}
@@ -79,7 +80,7 @@ export default function NameItem({ name, changeInfo, editable, title }: Props) {
               {matchedFoods.slice(0, 2).map((food) => (
                 <TouchableOpacity
                   key={food.id}
-                  style={tw`max-w-full h-6.5 border border-blue-400 flex-row items-center bg-amber-200 px-2 py-1 gap-1 rounded-full`}
+                  style={tw`max-w-full h-6.5 border border-blue-400 flex-row items-center bg-amber-200 px-2 gap-1 rounded-full`}
                   onPress={() => changeInfo({ name: food.name })}
                 >
                   <Icon
@@ -88,7 +89,7 @@ export default function NameItem({ name, changeInfo, editable, title }: Props) {
                     size={14}
                     color={BLUE}
                   />
-                  <Text style={tw`text-blue-600 max-w-[96%] text-[11px]`}>
+                  <Text style={tw`text-blue-600 max-w-[96%] text-xs`}>
                     {cutLetter(food.name, 8)}
                   </Text>
                 </TouchableOpacity>

@@ -1,8 +1,4 @@
-import {
-  FormLabelType,
-  FormStep,
-  shoppingListForm,
-} from '../../constant/formInfo';
+import { FormStep } from '../../constant/formInfo';
 import { useAddSelectFood } from '../../hooks';
 import { Food } from '../../constant/foods';
 import { View } from 'react-native';
@@ -35,16 +31,19 @@ export default function AddSelectFoodModal({
     >
       <Form
         title='장보기 목록 식료품 추가'
-        items={shoppingListForm as FormLabelType[]}
         food={selectedFood}
         changeInfo={onChange}
         formSteps={formSteps}
       />
 
-      <SubmitBtn
-        btnName='냉장고에 식료품 추가하기'
-        onPress={() => onSubmit(setModalVisible, setCheckedList)}
-      />
+      <View style={tw`mx-6`}>
+        <SubmitBtn
+          btnName='냉장고에 식료품 추가하기'
+          onPress={() => onSubmit(setModalVisible, setCheckedList)}
+          iconName='plus'
+          color='blue'
+        />
+      </View>
     </Modal>
   );
 }

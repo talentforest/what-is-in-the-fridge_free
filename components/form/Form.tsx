@@ -6,23 +6,22 @@ import {
   View,
 } from 'react-native';
 import { Food } from '../../constant/foods';
-import { FormLabelType, FormStep } from '../../constant/formInfo';
+import { FormStep } from '../../constant/formInfo';
 import { useSwiperAnimation } from '../../hooks';
 import { DEVICE_WIDTH } from '../../util';
 
 import FormSectionContainer from './FormSectionContainer';
 import CategoryItem from './CategoryItem';
 import SpaceItem from './SpaceItem';
-import DateItem from './DateItem';
+import ExpiredDateItem from './ExpiredDateItem';
 import NameItem from './NameItem';
 import FavoriteItem from './FavoriteItem';
 import FormControlStep from './FormControlStep';
+import PurchaseDateItem from './PurchaseDateItem';
 import tw from 'twrnc';
-import { Text } from '../common/native-component';
 
 interface Props {
   title: ModalTitle;
-  items: FormLabelType[];
   food: Food;
   changeInfo: (newInfo: { [key: string]: string | boolean }) => void;
   editableName?: boolean;
@@ -31,7 +30,6 @@ interface Props {
 
 export default function Form({
   title,
-  items,
   changeInfo,
   food,
   editableName,
@@ -57,7 +55,6 @@ export default function Form({
         >
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={tw`flex-row flex-1`}>
-              {/* 이걸 맵으로 해야되는데 */}
               {formSteps.map(({ step, name }) => (
                 <View key={step} style={tw`w-full`}>
                   {name === '식품 정보' && (
@@ -75,6 +72,7 @@ export default function Form({
                         disabled={title !== '식료품 정보 수정'}
                       />
                       <FavoriteItem
+                        title={title}
                         name={food.name}
                         favoriteState={food.favorite}
                         changeInfo={changeInfo}
@@ -84,13 +82,12 @@ export default function Form({
                   )}
                   {name === '식품 날짜' && (
                     <FormSectionContainer>
-                      {/* <DateItem
-                        date={food.purchaseDate}
-                        changeInfo={changeInfo}
-                      /> */}
-                      <DateItem
-                        expiredInfo
+                      <ExpiredDateItem
                         date={food.expiredDate}
+                        changeInfo={changeInfo}
+                      />
+                      <PurchaseDateItem
+                        date={food.purchaseDate}
                         changeInfo={changeInfo}
                       />
                     </FormSectionContainer>

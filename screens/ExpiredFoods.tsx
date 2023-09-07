@@ -1,7 +1,4 @@
-import {
-  SafeBottomAreaView,
-  Text,
-} from '../components/common/native-component';
+import { SafeBottomAreaView } from '../components/common/native-component';
 import { entireFilterObj, expiredFilters, spaceFilters } from '../util';
 import {
   useHandleCheckList,
@@ -19,7 +16,7 @@ import TableHeader from '../components/table/TableHeader';
 import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TableFilters from '../components/table/TableFilters';
-import tw from 'twrnc';
+import SquareBtn from '../components/buttons/SquareBtn';
 
 export default function ExpiredFoods() {
   const { currentFilter } = useSelector((state) => state.currentFilter);
@@ -54,32 +51,19 @@ export default function ExpiredFoods() {
   return (
     <SafeBottomAreaView>
       <Container>
-        {/* 필터 */}
-        <TableFilters
-          filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
-          getTableList={getFilteredFoodList}
-          setCheckedList={setCheckedList}
-          foodList={allExpiredFoods}
-        />
-
         {/* 전체 표 */}
-        <TableContainer color='amber'>
-          <TableHeader
-            title={`유통기한 주의 식료품`}
-            entireChecked={
-              checkedList.length === filteredList.length && !!checkedList.length
-            }
-            onEntirePress={() => onEntireBoxPress(filteredList)}
-            color='amber'
-            length={filteredList.length}
-          >
-            <Text style={tw`text-slate-500 text-sm`}>오래된순</Text>
-          </TableHeader>
-
+        <TableContainer>
+          {/* 필터 */}
+          <TableFilters
+            filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
+            getTableList={getFilteredFoodList}
+            setCheckedList={setCheckedList}
+            foodList={allExpiredFoods}
+          />
+          <TableHeader title='식료품 목록' columnTitle='오래된순' />
           {/* 식료품 리스트 */}
           <TableBody
             title='유통기한 주의 식료품'
-            color='amber'
             list={filteredList}
             onCheckBoxPress={onCheckBoxPress}
             checkedList={checkedList}
@@ -92,12 +76,24 @@ export default function ExpiredFoods() {
           {/* 식료품 선택 개수와 버튼 */}
           <TableFooter
             list={checkedList}
-            onDeletePress={() =>
-              onDeletePress(allExpiredFoods, setAnimationState, animationState)
+            entireChecked={
+              checkedList.length === filteredList.length && !!checkedList.length
             }
-            buttons={['delete']}
-            color='amber'
-          />
+            onEntirePress={() => onEntireBoxPress(filteredList)}
+          >
+            <SquareBtn
+              name='냉장고에서 삭제'
+              onPress={() =>
+                onDeletePress(
+                  allExpiredFoods,
+                  setAnimationState,
+                  animationState
+                )
+              }
+              icon='trash-can'
+              disabled={checkedList.length === 0}
+            />
+          </TableFooter>
         </TableContainer>
       </Container>
     </SafeBottomAreaView>

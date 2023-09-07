@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { useSelector } from '../../redux/hook';
-import { FormLabelType, FormStep, foodForm } from '../../constant/formInfo';
+import { FormStep } from '../../constant/formInfo';
 import { FontGmarketSansBold } from '../../constant/fonts';
-import { getFormattedDate } from '../../util';
+import { getFormattedDate, getRelativeTime } from '../../util';
 import { useEditFood, useDeleteFood } from '../../hooks';
 
 import InfoBox from '../../components/modal/InfoBox';
@@ -12,7 +12,7 @@ import SubmitBtn from '../../components/buttons/SubmitBtn';
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
 import CategoryImageIcon from '../../components/common/CategoryImageIcon';
-import LeftDay from '../../components/common/LeftDay';
+import LeftDayInfoBox from '../../components/modal/LeftDayInfoBox';
 import tw from 'twrnc';
 
 interface Props {
@@ -50,32 +50,39 @@ export default function FoodDetailModal({
             title='식료품 정보 수정'
             food={editedFood}
             changeInfo={editFoodInfo}
-            items={foodForm as FormLabelType[]}
             formSteps={formSteps}
           />
-
-          <SubmitBtn
-            btnName='식료품 정보 수정 완료'
-            onPress={() => onEditSumbit(food.id)}
-          />
+          <View style={tw`mx-6`}>
+            <SubmitBtn
+              color='blue'
+              iconName='checkbox-marked-outline'
+              btnName='식료품 정보 수정 완료'
+              onPress={() => onEditSumbit(food.id)}
+            />
+          </View>
         </View>
       ) : (
-        <View>
-          <View style={tw`my-4 px-6`}>
-            <View style={tw`items-center gap-3 py-2`}>
-              <View style={tw`border-t border-b border-blue-500 p-2`}>
-                <Text
-                  style={tw.style(
-                    `text-stone-800 text-base text-center`,
-                    FontGmarketSansBold
-                  )}
-                >
-                  {name}
-                </Text>
-              </View>
-              {favorite && <FavoriteTagBox />}
-            </View>
+        <View style={tw`mt-6 px-6 gap-3`}>
+          <View
+            style={tw`self-center flex-row items-center border-t border-b border-blue-500 py-1.5 px-4`}
+          >
+            <Text
+              style={tw.style(
+                `text-stone-800 text-base text-center`,
+                FontGmarketSansBold
+              )}
+            >
+              {name}
+            </Text>
+          </View>
 
+          {favorite && (
+            <View style={tw`self-center mb-2`}>
+              <FavoriteTagBox />
+            </View>
+          )}
+
+          <View>
             <InfoBox iconName='dots-grid' label='카테고리'>
               <View style={tw`flex-row items-center gap-1`}>
                 <Text style={tw`text-base`}>{category}</Text>
@@ -83,32 +90,37 @@ export default function FoodDetailModal({
               </View>
             </InfoBox>
 
-            <InfoBox iconName='calendar-month' label='구매날짜'>
-              <Text style={tw`text-slate-800 text-base`}>
-                {getFormattedDate(purchaseDate, 'YYYY년 MM월 DD일')}
-              </Text>
-              <LeftDay expiredDate={purchaseDate} />
+            <InfoBox iconName='calendar-month' label='유통기한'>
+              <LeftDayInfoBox expiredDate={expiredDate} />
             </InfoBox>
 
-            <InfoBox iconName='calendar-month' label='유통기한'>
-              <Text style={tw`text-slate-800 text-base`}>
-                {getFormattedDate(expiredDate, 'YYYY년 MM월 DD일')}
-              </Text>
-              <LeftDay expiredDate={expiredDate} />
-            </InfoBox>
+            {purchaseDate !== '' && (
+              <InfoBox iconName='calendar-month' label='구매날짜'>
+                <View>
+                  <Text style={tw`text-slate-800 text-base`}>
+                    {getFormattedDate(purchaseDate, 'YYYY년 MM월 DD일')}
+                  </Text>
+                  <Text style={tw`text-[13px] -mt-1 text-blue-600`}>
+                    {getRelativeTime(purchaseDate)}
+                  </Text>
+                </View>
+              </InfoBox>
+            )}
           </View>
 
           {/* 버튼 */}
-          <View style={tw`gap-1.5`}>
+          <View style={tw`gap-2 mt-2`}>
             <SubmitBtn
-              icon
-              btnName='다 먹었어요'
-              onPress={() => deleteFood(editedFood.id)}
+              color='blue'
+              iconName='square-edit-outline'
+              btnName='식료품 정보 수정'
+              onPress={() => setEditing((prev) => !prev)}
             />
             <SubmitBtn
-              icon
-              btnName='식료품 정보 수정하기'
-              onPress={() => setEditing((prev) => !prev)}
+              color='amber'
+              iconName='fridge-off-outline'
+              btnName='냉장고에서 삭제'
+              onPress={() => deleteFood(editedFood.id)}
             />
           </View>
         </View>

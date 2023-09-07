@@ -15,8 +15,13 @@ export const useImageLoad = ({ images }: Props) => {
     }
   }, [assets, error]);
 
+  const getImgUri = (image: string) => {
+    return assets?.find((asset) => `${asset.name}.png` === image)?.uri;
+  };
+
   return {
     isLoaded,
     assets,
+    getImgUri,
   };
 };

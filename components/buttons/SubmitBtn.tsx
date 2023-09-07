@@ -1,37 +1,35 @@
 import { Text, TouchableOpacity } from '../common/native-component';
-import { GRAY } from '../../constant/colors';
+import { BLUE, ORANGE_RED } from '../../constant/colors';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
   btnName: string;
   onPress: () => void;
-  icon?: boolean;
+  iconName: string;
+  color: 'blue' | 'amber';
 }
 
-export default function SubmitBtn({ btnName, onPress, icon }: Props) {
-  const bgColor =
-    btnName === '다 먹었어요'
-      ? 'bg-blue-500 border-blue-400 text-white'
-      : 'bg-blue-200 border-blue-300 text-slate-700';
-
-  const iconName =
-    btnName === '다 먹었어요' ? 'check-circle-outline' : 'pencil-outline';
-
+export default function SubmitBtn({
+  btnName,
+  onPress,
+  iconName,
+  color,
+}: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw`${bgColor} mx-6 p-3.5 flex-row items-center justify-center border gap-1 rounded-lg`}
+      style={tw`bg-${color}-50 border-${color}-300 shadow-md py-3 flex-row items-center justify-center border gap-1.5 rounded-lg`}
     >
-      <Text style={tw`${bgColor} text-center text-base`}>{btnName}</Text>
-      {icon && (
+      {iconName && (
         <Icon
           name={iconName}
           type='MaterialCommunityIcons'
-          color={btnName === '식료품 정보 수정하기' ? GRAY : '#fff'}
-          size={18}
+          color={color}
+          size={20}
         />
       )}
+      <Text style={tw`text-${color}-700 text-center text-base`}>{btnName}</Text>
     </TouchableOpacity>
   );
 }

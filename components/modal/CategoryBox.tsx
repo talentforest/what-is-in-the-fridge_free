@@ -1,12 +1,12 @@
 import { Asset } from 'expo-asset';
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
-import { BLUE } from '../../constant/colors';
+import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import { Category } from '../../constant/foodCategories';
 import { DEVICE_WIDTH } from '../../util';
 
 import CategoryImageIcon from '../common/CategoryImageIcon';
-import CheckBox from '../common/CheckBox';
+import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
@@ -31,7 +31,7 @@ export default function CategoryBox({
   return (
     <TouchableOpacity
       onPress={() => onCheckBoxPress(category)}
-      style={tw`${checkedColor} w-[${width}px] h-34 rounded-lg justify-between items-center py-3 px-2`}
+      style={tw`border border-slate-300 ${checkedColor} w-[${width}px] h-32 rounded-lg justify-between items-center py-3 px-2`}
     >
       {assets && (
         <CategoryImageIcon
@@ -46,7 +46,12 @@ export default function CategoryBox({
         <Text style={tw`text-center text-xs ${checkedColor}`}>{category}</Text>
       </View>
 
-      <CheckBox checked={checked} activeColor={BLUE} size={18} />
+      <Icon
+        type='MaterialCommunityIcons'
+        name={checked ? 'check-circle-outline' : 'circle-outline'}
+        color={checked ? BLUE : LIGHT_GRAY}
+        size={20}
+      />
     </TouchableOpacity>
   );
 }

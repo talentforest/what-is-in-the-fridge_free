@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { DEEP_YELLOW, LIGHT_GRAY } from '../../constant/colors';
+import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import { Text, TouchableOpacity } from '../common/native-component';
 
 import Icon from '../common/native-component/Icon';
@@ -24,7 +24,7 @@ export default function ArrowBtn({ type, moveStep, active }: Props) {
             name='chevron-left'
             type='MaterialCommunityIcons'
             size={18}
-            color={active ? DEEP_YELLOW : LIGHT_GRAY}
+            color={active ? BLUE : LIGHT_GRAY}
           />
         )}
         <Text style={tw`${active ? 'text-blue-600' : 'text-slate-400'}`}>
@@ -35,7 +35,7 @@ export default function ArrowBtn({ type, moveStep, active }: Props) {
             name='chevron-right'
             type='MaterialCommunityIcons'
             size={22}
-            color={active ? DEEP_YELLOW : LIGHT_GRAY}
+            color={active ? BLUE : LIGHT_GRAY}
           />
         )}
       </TouchableOpacity>

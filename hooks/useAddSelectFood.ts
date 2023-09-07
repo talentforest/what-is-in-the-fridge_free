@@ -43,7 +43,7 @@ export const useAddSelectFood = () => {
     const existFood = allFoods.find((food) => food.name === foodWithNewId.name);
     if (existFood) {
       if (route.name !== 'ShoppingList') return alertExistFood(existFood);
-      dispatch(removeFood({ id: existFood.id, space: existFood.space }));
+      dispatch(removeFood({ id: existFood.id }));
     }
 
     if (selectedFood.favorite) {

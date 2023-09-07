@@ -5,7 +5,7 @@ import { Category } from '../../constant/foodCategories';
 import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import { useFindFood } from '../../hooks';
 
-import FormItemDetailModal from '../../screen-component/modal/FormItemDetailModal';
+import CategoryModal from '../../screen-component/modal/CategoryModal';
 import FormLabel from './FormLabel';
 import CategoryImageIcon from '../common/CategoryImageIcon';
 import Icon from '../common/native-component/Icon';
@@ -37,7 +37,7 @@ export default function CategoryItem({
     setCategoryOpen(false);
   };
 
-  const activeColor = 'border-blue-600 text-slate-900';
+  const activeColor = 'border-blue-300 text-slate-900';
   const inActiveColor = 'border-slate-400 text-slate-400';
   const color = disabledCategory ? inActiveColor : activeColor;
   const iconColor = disabledCategory ? LIGHT_GRAY : BLUE;
@@ -63,10 +63,9 @@ export default function CategoryItem({
       </TouchableOpacity>
 
       {categoryOpen && (
-        <FormItemDetailModal
+        <CategoryModal
           modalVisible={categoryOpen}
           setModalVisible={setCategoryOpen}
-          title='카테고리 선택'
           currentChecked={fixedCategory}
           onCheckBoxPress={onCheckBoxPress}
         />

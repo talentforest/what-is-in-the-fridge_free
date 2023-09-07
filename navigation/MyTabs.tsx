@@ -11,6 +11,7 @@ import Home from '../screens/Home';
 import ShoppingList from '../screens/ShoppingList';
 import MyFridge from '../screens/MyFridge';
 import Icon from '../components/common/native-component/Icon';
+import HeaderBtn from '../components/buttons/HeaderBtn';
 
 export type RootTabParamList = {
   Home: undefined;
@@ -40,6 +41,8 @@ const headerOptions: BottomTabNavigationOptions = {
   headerShown: true,
   headerTintColor: DEEP_GRAY,
   headerShadowVisible: false,
+  headerLeftContainerStyle: { paddingLeft: 14 },
+  headerRightContainerStyle: { paddingRight: 14 },
   headerStyle: {
     backgroundColor: HEADER_BGCOLOR,
   },
@@ -47,7 +50,7 @@ const headerOptions: BottomTabNavigationOptions = {
     fontSize: 18,
     ...FontGmarketSansRegular,
   },
-  headerTitleAlign: 'left',
+  headerTitleAlign: 'center',
 };
 
 export default function MyTabs() {
@@ -93,7 +96,8 @@ export default function MyTabs() {
             <TabIcon name='format-list-bulleted' color={color} />
           ),
           tabBarLabel: '장보기 목록',
-          title: '장보기 목록',
+          title: '장보기 식료품 관리',
+
           ...headerOptions,
         }}
       />

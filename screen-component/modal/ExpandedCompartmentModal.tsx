@@ -9,7 +9,7 @@ import { CompartmentNum } from '../../constant/fridgeInfo';
 import { Filter } from '../../util';
 import { formTwoSteps } from '../../constant/formInfo';
 import { select } from '../../redux/slice/selectedFoodSlice';
-import { useDispatch, useSelector } from '../../redux/hook';
+import { useDispatch } from '../../redux/hook';
 
 import EmptySign from '../../components/common/EmptySign';
 import Modal from '../../components/modal/Modal';
@@ -35,24 +35,21 @@ export default function ExpandedCompartmentModal({
   setExpandCompartment,
   modalVisible,
   setModalVisible,
-  filter,
 }: Props) {
-  const { selectedFood } = useSelector((state) => state.selectedFood);
   const dispatch = useDispatch();
 
   return (
     <Modal
-      title='크게 보기'
       modalVisible={expandCompartment}
       setModalVisible={setExpandCompartment}
       hasBackdrop
       animationIn='fadeIn'
       animationOut='fadeOut'
     >
-      <View style={tw`pt-3 px-5 pb-1.5 flex-row justify-between items-center`}>
-        <Text style={tw`text-lg`}>{compartmentNum}칸 크게 보기</Text>
+      <View style={tw`pt-3 px-5 pb-2 flex-row justify-between items-center`}>
+        <Text style={tw`text-lg`}>{compartmentNum}칸 식료품 크게 보기</Text>
         <TouchableOpacity
-          style={tw`-m-3 px-3 py-3`}
+          style={tw`-m-3 p-3`}
           onPress={() => setExpandCompartment(false)}
         >
           <Icon type='Ionicons' name='close' size={24} color={GRAY} />
@@ -60,8 +57,8 @@ export default function ExpandedCompartmentModal({
       </View>
       {!!foodList.length ? (
         <ScrollView
-          style={tw`px-3 h-90`}
-          contentContainerStyle={tw`flex-row p-2 border border-blue-300 rounded-lg bg-blue-50 flex-1 flex-wrap gap-1 items-center`}
+          style={tw`px-4 pb-1 h-95`}
+          contentContainerStyle={tw`flex-row p-2 bg-stone-100 border border-slate-100 rounded-xl flex-1 flex-wrap gap-1 items-center`}
           showsVerticalScrollIndicator={false}
         >
           {foodList.map((food: Food) => (
@@ -73,13 +70,15 @@ export default function ExpandedCompartmentModal({
               }}
               style={tw`bg-white rounded-full`}
             >
-              <FoodBox food={food} filter={filter} />
+              <FoodBox food={food} />
             </TouchableOpacity>
           ))}
         </ScrollView>
       ) : (
-        <View style={tw`h-50 flex-row items-center pb-10 justify-center`}>
-          <EmptySign message='식료품이 아직 없어요.' color='slate' />
+        <View
+          style={tw`h-50 bg-stone-100 mx-4 mb-1 border border-slate-100 rounded-xl flex-row items-center pb-10 justify-center`}
+        >
+          <EmptySign message='식료품이 아직 없어요.' />
         </View>
       )}
 

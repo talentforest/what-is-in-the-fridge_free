@@ -39,14 +39,13 @@ const Home = () => {
               냉장고에 뭐가 있지?
             </Text>
           </View>
-          <View style={tw`gap-8`}>
-            <View style={tw`border-t border-slate-300`} />
-            <ShoppingListSection foodList={shoppingList} />
-            <View style={tw`border-t border-slate-300`} />
-            <ExpiredFoodSection foodList={allExpiredFoods} />
-            <View style={tw`border-t border-slate-300`} />
-            <FavoriteFoodSection foodList={favoriteFoods} />
-          </View>
+
+          <View style={tw`border-t border-slate-300 mb-4`} />
+          <ShoppingListSection foodList={shoppingList} />
+          <View style={tw`border-t border-slate-300 mt-3 mb-6`} />
+          <ExpiredFoodSection foodList={allExpiredFoods} />
+          <View style={tw`border-t border-slate-300 mt-3 mb-6`} />
+          <FavoriteFoodSection foodList={favoriteFoods} />
         </Container>
       </ScrollView>
     </SafeAreaView>
