@@ -14,7 +14,7 @@ export const useDeleteFood = ({ space, setModalVisible }: Props) => {
   const navigation = useNavigation<NavigateProp>();
 
   const deleteFood = (foodId: string) => {
-    dispatch(removeFood({ id: foodId, space }));
+    dispatch(removeFood({ id: foodId }));
     navigation.navigate('Compartments', { space });
     setModalVisible(false);
   };

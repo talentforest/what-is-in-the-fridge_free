@@ -22,7 +22,7 @@ export default function FoodCard({ food }: Props) {
       key={food.id}
       onPress={() => navigation.navigate('FavoriteFoods')}
       style={tw.style(
-        `shadow-md border border-slate-100 bg-white p-2.5 pb-2 items-center justify-center w-25 h-full rounded-xl`
+        `shadow-md border border-slate-100 bg-white pt-2.5 px-0.5 pb-2 items-center justify-center w-23 h-full rounded-xl`
       )}
     >
       <CategoryImageIcon kind='icon' category={food.category} size={18} />
@@ -32,7 +32,7 @@ export default function FoodCard({ food }: Props) {
             lineHeight: 22,
           })}
         >
-          {cutLetter(food.name, 8)}
+          {cutLetter(food.name, 10)}
         </Text>
       </View>
       <IndicatorExist food={food} />

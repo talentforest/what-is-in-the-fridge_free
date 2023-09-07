@@ -21,6 +21,7 @@ import toggleOnboardingReducer from './slice/onboardingSlice';
 import toggleDragModeReducer from './slice/dragModeSlice';
 import changeCompartmentNumReducer from './slice/compartmentNumToDropSlice';
 import changeFilterReducer from './slice/filterSlice';
+import toggleShowBtnReducer from './slice/showBtnSlice';
 
 const reducers = {
   allFoods: allFoodsReducer,
@@ -32,6 +33,7 @@ const reducers = {
   dragMode: toggleDragModeReducer,
   compartmentNumToDrop: changeCompartmentNumReducer,
   currentFilter: changeFilterReducer,
+  showBtn: toggleShowBtnReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

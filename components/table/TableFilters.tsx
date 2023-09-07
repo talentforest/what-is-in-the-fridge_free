@@ -34,11 +34,15 @@ export default function TableFilters({
     if (setCheckedList) return setCheckedList([]);
   };
 
+  const isCatgegoryFilter = categoryFilters?.find(
+    ({ filter }) => filter === currentFilter
+  );
+
   return (
-    <View style={tw`-mx-4 -mt-4`}>
+    <View>
       <ScrollView
-        style={tw`border-slate-900 px-4 h-12`}
-        contentContainerStyle={tw`gap-1 pr-10 items-center`}
+        style={tw`h-12`}
+        contentContainerStyle={tw`gap-1 items-start`}
         horizontal
         showsHorizontalScrollIndicator={false}
       >
@@ -54,13 +58,13 @@ export default function TableFilters({
         {categoryFilters && (
           <FilterTag
             onFilterPress={() => {
-              onFilterPress('신선식품류');
+              if (!isCatgegoryFilter) {
+                onFilterPress('신선식품류');
+              }
               setModalVisible(true);
             }}
             filterObj={{ filter: '카테고리별', icon: 'filter' }}
-            byCategoryActive={
-              !!categoryFilters.find(({ filter }) => filter === currentFilter)
-            }
+            byCategoryActive={!!isCatgegoryFilter}
           />
         )}
       </ScrollView>

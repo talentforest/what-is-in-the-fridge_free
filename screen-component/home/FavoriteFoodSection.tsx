@@ -4,16 +4,14 @@ import {
   Text,
   TouchableOpacity,
 } from '../../components/common/native-component';
-import { GRAY } from '../../constant/colors';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
 
+import SectionContainer from './SectionContainer';
 import Icon from '../../components/common/native-component/Icon';
-import HeaderTitle from './HeaderTitle';
 import FoodCard from '../../components/common/FoodCard';
-import tw from 'twrnc';
-import MessageBox from './MessageBox';
 import EmptySign from '../../components/common/EmptySign';
+import tw from 'twrnc';
 
 interface Props {
   foodList: Food[];
@@ -23,10 +21,13 @@ const MAX_NUM = 5;
 
 export default function FavoriteFoodSection({ foodList }: Props) {
   const navigation = useNavigation<NavigateProp>();
-  return (
-    <View style={tw`flex-1`}>
-      <HeaderTitle title='자주 먹는 식료품' screen='FavoriteFoods' />
 
+  return (
+    <SectionContainer
+      title='자주 먹는 식료품'
+      message='장을 볼때 어떤 식료품이 없는지 참고할 수 있어요.'
+      screen='FavoriteFoods'
+    >
       {foodList.length ? (
         <ScrollView
           showsHorizontalScrollIndicator={false}
@@ -60,8 +61,6 @@ export default function FavoriteFoodSection({ foodList }: Props) {
           <EmptySign message='자주 먹는 식료품이 없습니다.' />
         </View>
       )}
-
-      <MessageBox desc='장을 볼때 어떤 식료품이 없는지 참고할 수 있어요.' />
-    </View>
+    </SectionContainer>
   );
 }

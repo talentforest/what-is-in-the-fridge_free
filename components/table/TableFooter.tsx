@@ -1,89 +1,79 @@
-import { View } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { Food } from '../../constant/foods';
-import { BoxColor } from '../../screen-component/home/ShoppingListSection';
-import {
-  DEEP_YELLOW,
-  INDIGO,
-  LIGHT_GRAY,
-  ORANGE_RED,
-} from '../../constant/colors';
+import { BLUE, GRAY } from '../../constant/colors';
+import { useSlideAnimation } from '../../hooks';
+import { useSelector } from '../../redux/hook';
+import { ReactNode } from 'react';
 
-import Icon from '../common/native-component/Icon';
+import CheckBox from '../common/CheckBox';
 import tw from 'twrnc';
 
-type Button = 'delete-favorite' | 'add-shopping-list' | 'delete';
 interface Props {
   list: Food[];
-  onAddPress?: () => void;
-  onDeletePress: () => void;
-  buttons: Button[];
-  color: BoxColor;
+  entireChecked: boolean;
+  onEntirePress: () => void;
+  children: ReactNode;
 }
 
 export default function TableFooter({
   list,
-  onAddPress,
-  onDeletePress,
-  buttons,
-  color,
+  entireChecked,
+  onEntirePress,
+  children,
 }: Props) {
-  const textColor = !!list.length ? `text-${color}-700` : 'text-slate-500';
+  const route = useRoute();
+  const { showBtn } = useSelector((state) => state.showBtn);
+
+  const { height } = useSlideAnimation({
+    initialValue: 0,
+    toValue: route.name === 'ExpiredFoods' ? 50 : 94,
+    active: !!list.length && showBtn,
+  });
 
   return (
-    <View style={tw`h-10 flex-row items-center justify-between pl-3 pr-1`}>
-      <Text style={tw`text-sm ${textColor}`}>
-        {list.length}개의 식료품 선택
-      </Text>
-      <View style={tw`flex-row items-center gap-2`}>
-        {/* 장보기 목록 추가 버튼 */}
-        {buttons.includes('add-shopping-list') && onAddPress && (
-          <TouchableOpacity
-            onPress={onAddPress}
-            disabled={!list.length}
-            style={tw`p-2`}
+    <View style={tw.style(`py-0.5 px-1 mb-2 bg-stone-100 border-slate-400`)}>
+      <View
+        style={tw.style(`border bg-stone-100 border-slate-300`, {
+          shadowColor: '#aaa',
+          shadowOffset: { height: -5, width: 0 },
+          shadowOpacity: 0.8,
+          shadowRadius: 6,
+        })}
+      />
+      <View style={tw`h-10 flex-row items-center justify-between`}>
+        {/* 전체 선택 */}
+        <TouchableOpacity
+          onPress={onEntirePress}
+          style={tw`justify-center h-full px-2 flex-row items-center gap-2`}
+        >
+          <CheckBox
+            checked={entireChecked}
+            activeColor={entireChecked ? BLUE : GRAY}
+          />
+          <Text
+            style={tw`${entireChecked ? 'text-blue-600' : 'text-slate-600'}`}
           >
-            <Icon
-              type='MaterialCommunityIcons'
-              name='basket-plus'
-              size={20}
-              color={list.length ? INDIGO : LIGHT_GRAY}
-            />
-          </TouchableOpacity>
-        )}
-
-        {/* 자주먹는 식품 해제 버튼 */}
-        {buttons.includes('delete-favorite') && (
-          <TouchableOpacity
-            onPress={onDeletePress}
-            disabled={!list.length}
-            style={tw`p-2`}
-          >
-            <Icon
-              type='MaterialCommunityIcons'
-              name='tag-minus'
-              size={20}
-              color={list.length ? DEEP_YELLOW : LIGHT_GRAY}
-            />
-          </TouchableOpacity>
-        )}
-
-        {/* 삭제 버튼 */}
-        {buttons.includes('delete') && (
-          <TouchableOpacity
-            onPress={onDeletePress}
-            disabled={!list.length}
-            style={tw`p-2.5`}
-          >
-            <Icon
-              type='MaterialCommunityIcons'
-              name='trash-can'
-              size={20}
-              color={list.length ? ORANGE_RED : LIGHT_GRAY}
-            />
-          </TouchableOpacity>
-        )}
+            전체 선택
+          </Text>
+        </TouchableOpacity>
+        <Text style={tw`text-sm text-slate-500 mr-1`}>
+          {list.length}개의 식료품 선택
+        </Text>
       </View>
+
+      <Animated.View
+        style={{
+          height,
+          overflow: 'hidden',
+          alignItems: 'flex-end',
+          gap: 4,
+          paddingTop: 1,
+        }}
+      >
+        {children}
+      </Animated.View>
     </View>
   );
 }

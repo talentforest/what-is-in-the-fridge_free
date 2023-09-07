@@ -8,7 +8,8 @@ export type FormLabelType =
   | '카테고리'
   | '구매날짜'
   | '유통기한'
-  | '자주 먹는 식품';
+  | '자주 먹는 식품'
+  | '추가사항';
 
 export const foodForm = [
   '식료품 이름',

@@ -1,10 +1,12 @@
 import { View, Animated } from 'react-native';
-import { BLUE, LIGHT_BLUE } from '../../constant/colors';
+import { LIGHT_BLUE } from '../../constant/colors';
 import {
   useSlideAnimation,
   useToggleAnimation,
   useGetFoodList,
+  useFindFood,
 } from '../../hooks';
+import { ModalTitle } from '../modal/Modal';
 
 import FormLabel from './FormLabel';
 import Message from './Message';
@@ -16,6 +18,7 @@ interface Props {
   favoriteState: boolean;
   changeInfo: (newInfo: { [key: string]: boolean }) => void;
   disabled: boolean;
+  title: ModalTitle;
 }
 
 const MOVED_TRANSLATE_X = 88;
@@ -25,8 +28,10 @@ export default function FavoriteItem({
   favoriteState,
   changeInfo,
   disabled,
+  title,
 }: Props) {
   const { favoriteFoods } = useGetFoodList();
+  const { findFavoriteListItem } = useFindFood();
 
   // 식료품 이름을 적었는데 자주 먹는 식료품 이름일 경우
   const isFavoriteFood = favoriteFoods.find((food) => food.name === name);
@@ -52,8 +57,8 @@ export default function FavoriteItem({
     animatedToggle(favorite ? 0 : MOVED_TRANSLATE_X);
   };
 
-  const color = disabledFavoriteBtn ? 'border-slate-400' : 'border-blue-600';
-  const backgroundColor = disabledFavoriteBtn ? LIGHT_BLUE : BLUE;
+  const color = disabledFavoriteBtn ? 'border-slate-400' : 'border-blue-300';
+  const backgroundColor = disabledFavoriteBtn ? LIGHT_BLUE : '#4070ff';
 
   return (
     <View>
@@ -82,6 +87,12 @@ export default function FavoriteItem({
           />
         ))}
       </View>
+      {title !== '식료품 정보 수정' && !!findFavoriteListItem(name) && (
+        <Message
+          message='자주 먹는 식료품이므로 위의 정보가 자동으로 적용돼요.'
+          color='green'
+        />
+      )}
 
       {/* 자주 먹는 식료품 추가 안내 문구 */}
       <Animated.View
@@ -90,9 +101,10 @@ export default function FavoriteItem({
           opacity: interpolatedOpacity,
         }}
       >
-        {!isFavoriteFood && (
-          <Message message='자주 먹는 식료품 목록에 추가돼요.' color='green' />
-        )}
+        <Message
+          message={!isFavoriteFood ? '자주 먹는 식료품 목록에 추가돼요.' : ''}
+          color='green'
+        />
       </Animated.View>
     </View>
   );

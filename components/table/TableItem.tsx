@@ -8,7 +8,8 @@ import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
 import { useRoute } from '@react-navigation/native';
 
 import CheckBox from '../common/CheckBox';
-import RoundedTag from '../common/RoundedTag';
+import CategoryImageIcon from '../common/CategoryImageIcon';
+import IndicatorExist from '../common/IndicatorExist';
 import tw from 'twrnc';
 
 interface Props {
@@ -36,8 +37,10 @@ export default function TableItem({
   const slideDownIn = animationState === 'slidedown-in';
   const slideUpOut = animationState === 'slideup-out';
 
-  const initialValue = isCheckedItem && slideUpOut ? 48 : slideDownIn ? 0 : 48;
-  const toValue = isCheckedItem && slideUpOut ? 0 : 48;
+  const ITEM_HEIGHT = 50;
+  const initialValue =
+    isCheckedItem && slideUpOut ? ITEM_HEIGHT : slideDownIn ? 0 : ITEM_HEIGHT;
+  const toValue = isCheckedItem && slideUpOut ? 0 : ITEM_HEIGHT;
 
   const { height, interpolatedOpacity } = useSlideAnimation({
     initialValue,
@@ -56,44 +59,41 @@ export default function TableItem({
     space,
   };
 
+  const existTagColor = existItemTag ? 'text-slate-400' : 'text-slate-800';
+  const textColor = isCheckedItem ? 'text-blue-600' : existTagColor;
+
   return (
     <Animated.View
       style={{
         height,
         opacity: interpolatedOpacity,
+        overflow: 'hidden',
       }}
     >
-      <View
-        style={tw`flex-row items-center gap-3 py-1 h-full border-b border-slate-300`}
+      <TouchableOpacity
+        onPress={() => onCheckBoxPress(initializedFood)}
+        style={tw`h-11 border border-slate-300 rounded-lg bg-white flex-row items-center gap-1 px-3`}
       >
-        <TouchableOpacity
-          onPress={() => onCheckBoxPress(initializedFood)}
-          style={tw`flex-row items-center gap-1.5 flex-1`}
-        >
-          <CheckBox checked={!!isCheckedItem} activeColor={BLUE} />
-          <View style={tw`flex-1 flex-row items-center gap-2`}>
-            <Text
-              style={tw`${existItemTag ? 'max-w-[90%]' : 'flex-1'} ${
-                isCheckedItem
-                  ? 'text-blue-600'
-                  : existItemTag
-                  ? 'text-slate-400'
-                  : 'text-slate-800'
-              }`}
-            >
-              {cutLetter(initializedFood.name, 34)}
-            </Text>
+        <CheckBox checked={!!isCheckedItem} activeColor={BLUE} />
 
-            {existItemTag && (
-              <View style={tw`w-11 items-center`}>
-                <RoundedTag name='있음' />
-              </View>
-            )}
-          </View>
-        </TouchableOpacity>
+        {route.name === 'FavoriteFoods' && (
+          <CategoryImageIcon kind='icon' category={category} size={17} />
+        )}
+
+        <View style={tw`flex-1 flex-row items-center gap-2`}>
+          <Text style={tw`${textColor}`}>
+            {cutLetter(initializedFood.name, 14)}
+          </Text>
+
+          {existItemTag && (
+            <View style={tw`flex-1 items-start`}>
+              <IndicatorExist name={food.name} roundedBorder />
+            </View>
+          )}
+        </View>
 
         {children}
-      </View>
+      </TouchableOpacity>
     </Animated.View>
   );
 }

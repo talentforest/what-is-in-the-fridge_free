@@ -16,12 +16,12 @@ interface Props {
 export default function InfoBox({ label, iconName, children }: Props) {
   return (
     <View
-      style={tw`gap-1 py-4 flex-row items-start ${
-        label === '유통기한' ? '' : 'border-b'
-      } border-slate-300`}
+      style={tw`gap-1 py-2.5 flex-row items-start border-slate-300 ${
+        label === '카테고리' ? '' : 'border-t'
+      }`}
     >
       {/* 표 제목 */}
-      <View style={tw`flex-row gap-1 mr-2 items-center`}>
+      <View style={tw`flex-row gap-1 mr-1 items-center`}>
         <Icon
           type='MaterialCommunityIcons'
           name={iconName}
@@ -32,7 +32,7 @@ export default function InfoBox({ label, iconName, children }: Props) {
       </View>
 
       {/* 표 내용 */}
-      <View style={tw`flex-row items-center gap-0.5`}>{children}</View>
+      <View>{children}</View>
     </View>
   );
 }

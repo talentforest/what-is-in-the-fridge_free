@@ -19,7 +19,7 @@ export default function FoodBox({ food }: Props) {
   const { currentFilter } = useSelector((state) => state.currentFilter);
 
   const activeColor = () => {
-    if (currentFilter === '유통기한 지남' && expired(expiredDate))
+    if (currentFilter === '유통기한 만료' && expired(expiredDate))
       return EXPIRED_COLOR;
 
     if (currentFilter === '유통기한 3일 이내' && leftThreeDays(expiredDate))
@@ -31,9 +31,9 @@ export default function FoodBox({ food }: Props) {
   return (
     <View
       key={food.id}
-      style={tw`${activeColor()} rounded-full justify-center items-center flex-row border h-7.5 px-3`}
+      style={tw`${activeColor()} rounded-lg justify-center items-center flex-row border h-8 px-2.5`}
     >
-      <Text style={tw`text-center ${activeColor()} text-sm`}>
+      <Text style={tw`text-center ${activeColor()} text-[15px]`}>
         {cutLetter(food.name, 8)}
       </Text>
     </View>

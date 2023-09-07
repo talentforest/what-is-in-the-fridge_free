@@ -9,7 +9,9 @@ import { NavigateProp } from '../../navigation/Navigation';
 
 import FridgeSpaceInfo from '../../screen-component/my-fridge/FridgeSpaceInfo';
 import FridgeInfo from '../../screen-component/fridge-setting/FridgeInfo';
-import FridgeShape from '../../screen-component/my-fridge/FridgeShape';
+import FridgeShape, {
+  FRIDGE_COLOR,
+} from '../../screen-component/my-fridge/FridgeShape';
 import tw from 'twrnc';
 
 export default function Fridge() {
@@ -30,8 +32,7 @@ export default function Fridge() {
   };
 
   const sideStyle = (side: SpaceSide) => {
-    const iosStyle =
-      side === '문쪽' ? 'w-[43%] bg-stone-300' : 'w-[45%] bg-stone-300';
+    const iosStyle = side === '문쪽' ? 'w-[43%]' : 'w-[45%]';
     return PlatformIOS ? iosStyle : 'flex-1';
   };
 
@@ -56,7 +57,8 @@ export default function Fridge() {
         <View
           key={side}
           style={tw.style(
-            `${freezerPosition} rounded-b-md ${sideStyle(side)}`,
+            `rounded-b-md  ${freezerPosition} ${FRIDGE_COLOR} 
+            ${sideStyle(side)}`,
             transformStyle(side)
           )}
         >

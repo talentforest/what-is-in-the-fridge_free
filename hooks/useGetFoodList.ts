@@ -53,7 +53,8 @@ export const useGetFoodList = () => {
   );
 
   const favoriteFoodsNotInFridge = favoriteFoods.filter(
-    (favoriteFood) => !!allFoods.find((food) => food.name === favoriteFood.name)
+    (favoriteFood) =>
+      !!!allFoods.find((food) => food.name === favoriteFood.name)
   );
 
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
@@ -65,7 +66,7 @@ export const useGetFoodList = () => {
     if (filter === '냉동실' || filter === '냉장실')
       return getFoodList('expiredFoods', filter);
 
-    if (filter === '유통기한 지남') {
+    if (filter === '유통기한 만료') {
       const list = foodList.filter((food) => expired(food.expiredDate));
       return orderExpirationDate(list);
     }

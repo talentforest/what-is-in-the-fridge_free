@@ -14,14 +14,9 @@ export interface ControlDateBtnType {
 
 export const controlDateBtns: ControlDateBtnType[] = [
   {
-    label: '하루',
-    calculateDate: controlDay,
-    btnColor: 'amber',
-  },
-  {
-    label: '일주일',
-    calculateDate: controlWeek,
-    btnColor: 'teal',
+    label: '일년',
+    calculateDate: controlYear,
+    btnColor: 'indigo',
   },
   {
     label: '한달',
@@ -29,8 +24,13 @@ export const controlDateBtns: ControlDateBtnType[] = [
     btnColor: 'red',
   },
   {
-    label: '일년',
-    calculateDate: controlYear,
-    btnColor: 'indigo',
+    label: '일주일',
+    calculateDate: controlWeek,
+    btnColor: 'teal',
+  },
+  {
+    label: '하루',
+    calculateDate: controlDay,
+    btnColor: 'amber',
   },
 ];

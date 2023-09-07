@@ -2,7 +2,7 @@ import { Category, foodCategories } from '../constant/foodCategories';
 
 export type SpaceFilter = '냉장실' | '냉동실';
 export type ExistAbsenceFilter = '냉장고에 있음' | '냉장고에 없음';
-export type ExpiredFilter = '유통기한 지남' | '유통기한 3일 이내';
+export type ExpiredFilter = '유통기한 만료' | '유통기한 3일 이내';
 export type Filter =
   | SpaceFilter
   | ExistAbsenceFilter
@@ -25,7 +25,7 @@ export const existAbsenceFilters: FilterObj[] = [
 ];
 
 export const expiredFilters: FilterObj[] = [
-  { filter: '유통기한 지남', icon: 'circle-medium' },
+  { filter: '유통기한 만료', icon: 'circle-medium' },
   { filter: '유통기한 3일 이내', icon: 'circle-medium' },
 ];
 

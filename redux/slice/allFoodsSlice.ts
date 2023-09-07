@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Food } from '../../constant/foods';
-import { Space } from '../../constant/fridgeInfo';
 
 export const initialState: { allFoods: Food[] } = {
   allFoods: [
@@ -20,7 +19,7 @@ export const initialState: { allFoods: Food[] } = {
       image: '🍞',
       name: '식빵',
       category: '신선식품류',
-      purchaseDate: '2022-12-20',
+      purchaseDate: '',
       expiredDate: '2022-12-20',
       favorite: false,
       space: '냉동실 안쪽',
@@ -39,7 +38,7 @@ const allFoodsSlice = createSlice({
     addFood: (state, action: { payload: Food }) => {
       state.allFoods = [...state.allFoods, action.payload];
     },
-    removeFood: (state, action: { payload: { id: string; space: Space } }) => {
+    removeFood: (state, action: { payload: { id: string } }) => {
       state.allFoods = state.allFoods.filter(
         (food) => food.id !== action.payload.id
       );

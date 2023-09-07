@@ -45,6 +45,12 @@ export default function Modal({
   const closeModal = () => setModalVisible(false);
 
   const centerStyle = animationIn === 'fadeIn' ? 'justify-center mx-4' : '';
+  const bgColor =
+    title === '식료품 상세 정보'
+      ? 'bg-white'
+      : animationIn === 'fadeIn'
+      ? 'bg-stone-200'
+      : 'bg-stone-100';
 
   return (
     <RNModal
@@ -63,10 +69,8 @@ export default function Modal({
       <SafeAreaView
         style={tw.style(
           `${
-            animationIn === 'fadeIn'
-              ? 'rounded-2xl, bg-blue-100'
-              : 'rounded-t-2xl bg-white'
-          } `,
+            animationIn === 'fadeIn' ? 'rounded-2xl' : `rounded-t-2xl`
+          } ${bgColor}`,
           Platform.select({
             ios: {
               shadowColor: '#333',

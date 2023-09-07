@@ -1,4 +1,4 @@
-import { Platform, View } from 'react-native';
+import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { GRAY } from '../../constant/colors';
 
@@ -12,9 +12,7 @@ interface Props {
 
 export default function SwipeHeader({ title, closeModal }: Props) {
   const headerColor =
-    title === '나의 식료품 찾기' || title === '크게 보기'
-      ? 'bg-stone-100'
-      : 'bg-blue-50';
+    title === '나의 식료품 찾기' ? 'bg-blue-100' : 'bg-stone-100';
 
   return (
     <View

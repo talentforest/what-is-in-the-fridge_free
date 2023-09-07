@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { PanResponder } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from '../../redux/hook';
-import { editFood } from '../../redux/slice/allFoodsSlice';
+import { addFood, removeFood } from '../../redux/slice/allFoodsSlice';
 import { Food } from '../../constant/foods';
 import { CompartmentNum } from '../../constant/fridgeInfo';
 import { select } from '../../redux/slice/selectedFoodSlice';
@@ -54,13 +54,10 @@ export const useDragFood = ({
       onPanResponderRelease: (_, { moveY }) => {
         const compartmentNumToDrop = findCompartmentNum(moveY);
         const moveCompartment = compartmentNumToDrop !== food.compartmentNum;
+
         if (moveCompartment) {
-          dispatch(
-            editFood({
-              foodId: food.id,
-              editedFood: { ...food, compartmentNum: compartmentNumToDrop },
-            })
-          );
+          dispatch(removeFood({ id: food.id }));
+          dispatch(addFood({ ...food, compartmentNum: compartmentNumToDrop }));
         }
         dispatch(changeCompartmentNum('동일칸'));
         setIsDragging(false);

@@ -7,12 +7,13 @@ import { Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/common/native-component';
 import { useGetFoodList } from '../hooks';
+import { changeFilter } from '../redux/slice/filterSlice';
+import { FRIDGE_COLOR } from '../screen-component/my-fridge/FridgeShape';
 
 import Compartment from '../screen-component/compartments/Compartment';
 import Container from '../components/common/Container';
 import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
-import { changeFilter } from '../redux/slice/filterSlice';
 
 type RouteParams = {
   space: Space;
@@ -53,7 +54,7 @@ export default function Compartments({ route }: Route) {
           foodList={getFoodList('expiredFoods', space)}
         />
         <View
-          style={tw`p-2.5 gap-2.5 flex-1 border border-slate-500 w-full m-auto self-center justify-center rounded-lg bg-neutral-300`}
+          style={tw`${FRIDGE_COLOR} p-2.5 gap-2.5 flex-1 border border-slate-500 w-full m-auto self-center justify-center rounded-lg`}
         >
           {compartments.map((compartment) => (
             <Compartment

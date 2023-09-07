@@ -12,15 +12,16 @@ import { toggleOnboarding } from '../redux/slice/onboardingSlice';
 import { DEVICE_WIDTH } from '../util';
 
 import StepIndicator from '../components/form/StepIndicator';
-import SquareBtn from '../components/buttons/SquareBtn';
+import OnBoardingBtn from '../components/buttons/OnBoardingBtn';
 import tw from 'twrnc';
 
 export default function OnBoarding() {
   const { onboarding } = useSelector((state) => state.onboarding);
+
   const navigation = useNavigation<NavigateProp>();
   const dispatch = useDispatch();
 
-  const { isLoaded, assets } = useImageLoad({
+  const { isLoaded, assets, getImgUri } = useImageLoad({
     images: [
       require('../assets/onboading/iphone13pro-1.png'),
       require('../assets/onboading/iphone13pro-2.png'),
@@ -34,14 +35,6 @@ export default function OnBoarding() {
     currentStep,
     panResponder, //
   } = useSwiperAnimation({ steps: onboardingSteps });
-
-  const lastStep = onboardingSteps.length === currentStep.step;
-
-  const imgWidth = DEVICE_WIDTH * 0.85;
-
-  const getImgUri = (image: string) => {
-    return assets?.find((asset) => `${asset.name}.png` === image)?.uri;
-  };
 
   const completeOnboarding = async () => {
     try {
@@ -57,6 +50,9 @@ export default function OnBoarding() {
   };
 
   if (!isLoaded) return null;
+
+  const imgWidth = DEVICE_WIDTH * 0.85;
+  const lastStep = onboardingSteps.length === currentStep.step;
 
   return (
     <SafeAreaView edges={['top']} style={tw`bg-blue-100 flex-1`}>
@@ -146,7 +142,7 @@ export default function OnBoarding() {
               `absolute bottom-0 w-full h-[30%] justify-end items-center pb-15 px-8`
             )}
           >
-            <SquareBtn
+            <OnBoardingBtn
               name={lastStep ? '들어가기' : '다음'}
               onPress={completeOnboarding}
             />
