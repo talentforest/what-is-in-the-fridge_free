@@ -1,8 +1,8 @@
-import { Alert, Keyboard } from 'react-native';
+import { Keyboard } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { setAllFoods } from '../redux/slice/allFoodsSlice';
-import { initialFoodInfo } from '../constant/foods';
+import { initialFood } from '../constant/foodInfo';
 import { Category } from '../constant/foodCategories';
 import UUIDGenerator from 'react-native-uuid';
 
@@ -52,7 +52,7 @@ export const useSubmitFavoriteFoods = () => {
     if (!existFood) {
       dispatch(
         addFavorite({
-          ...initialFoodInfo,
+          ...initialFood,
           id: myUuid as string,
           name: inputValue,
           favorite: true,

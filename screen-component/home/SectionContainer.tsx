@@ -1,18 +1,24 @@
 import { View } from 'react-native';
 import { ReactNode } from 'react';
-import { Text } from '../../components/common/native-component';
+import {
+  Text,
+  TouchableOpacity,
+} from '../../components/common/native-component';
 import { FontGmarketSansBold } from '../../constant/fonts';
-import { GRAY } from '../../constant/colors';
+import { NavigateProp } from '../../navigation/Navigation';
+import { useNavigation } from '@react-navigation/native';
 
 import ShowMoreBtn from '../../components/buttons/ShowMoreBtn';
-import Icon from '../../components/common/native-component/Icon';
+import EmptySign from '../../components/common/EmptySign';
+import MessageBox from '../../components/common/MessageBox';
 import tw from 'twrnc';
 
 interface Props {
-  title: '장보기 목록' | '유통기한 주의 식료품' | '자주 먹는 식료품';
+  title: '장보기 식료품' | '유통기한 주의 식료품' | '자주 먹는 식료품';
   message: string;
   screen: 'ExpiredFoods' | 'FavoriteFoods' | 'ShoppingList';
   children: ReactNode;
+  foodsLength: number;
 }
 
 export default function SectionContainer({
@@ -20,29 +26,32 @@ export default function SectionContainer({
   message,
   children,
   screen,
+  foodsLength,
 }: Props) {
+  const navigation = useNavigation<NavigateProp>();
+
   return (
-    <View>
-      <Text style={tw.style(`text-lg text-slate-700`, FontGmarketSansBold)}>
-        {title}
-      </Text>
-      <View style={tw`flex-row items-start gap-1 my-1`}>
-        <View style={tw`mt-1.4`}>
-          <Icon
-            type='MaterialCommunityIcons'
-            name='message-outline'
-            size={14}
-            color={GRAY}
-          />
-        </View>
-        <Text style={tw`text-sm text-slate-500 flex-1`}>{message}</Text>
-      </View>
-
-      {children}
-
-      <View style={tw`self-end h-11 items-end justify-end`}>
+    <View style={tw`border-t border-slate-300 pt-5`}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(screen)}
+        style={tw`flex-row justify-between`}
+      >
+        <Text style={tw.style(`text-lg text-slate-700`, FontGmarketSansBold)}>
+          {title}
+        </Text>
         <ShowMoreBtn screen={screen} />
-      </View>
+      </TouchableOpacity>
+      <MessageBox message={message} />
+
+      {foodsLength !== 0 && <View style={tw`mb-12 min-h-25`}>{children}</View>}
+
+      {foodsLength === 0 && (
+        <View
+          style={tw`shadow-lg items-center h-40 mt-2 mb-8 border border-slate-300 rounded-xl bg-white justify-center`}
+        >
+          <EmptySign message={`${title}이 없어요.`} />
+        </View>
+      )}
     </View>
   );
 }

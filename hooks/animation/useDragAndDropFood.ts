@@ -3,7 +3,7 @@ import { PanResponder } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch } from '../../redux/hook';
 import { addFood, removeFood } from '../../redux/slice/allFoodsSlice';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import { CompartmentNum } from '../../constant/fridgeInfo';
 import { select } from '../../redux/slice/selectedFoodSlice';
 import { toggleDragMode } from '../../redux/slice/dragModeSlice';
@@ -11,12 +11,12 @@ import { changeCompartmentNum } from '../../redux/slice/compartmentNumToDropSlic
 
 interface Props {
   food: Food;
-  setIsDragging: (isDraggin: boolean) => void;
+  setIsDragging: (isDragging: boolean) => void;
   setDragPosition: ({ x, y }: { x: number; y: number }) => void;
   findCompartmentNum: (moveY: number) => CompartmentNum;
 }
 
-export const useDragFood = ({
+export const useDragAndDropFood = ({
   food,
   setIsDragging,
   setDragPosition,

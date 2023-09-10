@@ -1,5 +1,4 @@
 import { Text, TouchableOpacity } from '../common/native-component';
-import { BLUE, ORANGE_RED } from '../../constant/colors';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 

@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import { getCompartments } from '../../util';
 import { useSelector } from '../../redux/hook';
 import { Space, SpaceSide, SpaceType } from '../../constant/fridgeInfo';

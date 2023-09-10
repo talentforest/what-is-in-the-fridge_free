@@ -2,23 +2,21 @@ import { useState } from 'react';
 import { Animated, View } from 'react-native';
 import { cutLetter, findMatchNameFoods } from '../../util';
 import { Text, TextInput, TouchableOpacity } from '../common/native-component';
-import { ModalTitle } from '../modal/Modal';
 import { BLUE } from '../../constant/colors';
 import { useGetFoodList, useFindFood, useSlideAnimation } from '../../hooks';
 
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
-import Message from './Message';
+import FormMessage from './FormMessage';
 import tw from 'twrnc';
 
 interface Props {
-  title: ModalTitle;
   name: string;
   changeInfo: (newInfo: { [key: string]: string }) => void;
   editable: boolean;
 }
 
-export default function NameItem({ name, changeInfo, editable, title }: Props) {
+export default function NameItem({ name, changeInfo, editable }: Props) {
   const [showMsg, setShowMsg] = useState(false);
   const { favoriteFoods } = useGetFoodList();
   const { findFavoriteListItem } = useFindFood();
@@ -28,8 +26,8 @@ export default function NameItem({ name, changeInfo, editable, title }: Props) {
   const matchedFoods = findMatchNameFoods(favoriteFoods, name);
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: showMsg ? 20 : 31,
-    active: showMsg || !!matchedFoods?.length,
+    toValue: 31,
+    active: !!matchedFoods?.length,
   });
 
   const editableStyle = !editable
@@ -44,7 +42,7 @@ export default function NameItem({ name, changeInfo, editable, title }: Props) {
           style={tw`${editableStyle} border flex-1 flex-row items-center rounded-lg h-12`}
         >
           <TextInput
-            style={tw`${editableStyle} border-0 m-0.5 py-0.5 flex-1 rounded-lg`}
+            style={tw`${editableStyle} border-0 m-0.5 flex-1 rounded-lg`}
             editable={editable}
             onPressOut={() => {
               if (!editable) {
@@ -60,9 +58,7 @@ export default function NameItem({ name, changeInfo, editable, title }: Props) {
       </View>
 
       {showMsg && (
-        <Animated.View style={{ height, overflow: 'hidden' }}>
-          <Message message='식료품 이름은 수정할 수 없어요.' color='orange' />
-        </Animated.View>
+        <FormMessage message='식료품 이름은 수정할 수 없어요.' color='orange' />
       )}
 
       {/* 자주 먹는 식료품 태그 목록 */}

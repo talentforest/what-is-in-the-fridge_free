@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from '../redux/hook';
 import { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
 } from '../components/common/native-component';
-import { Category } from '../constant/foodCategories';
-import { categoryFilters, entireFilterObj, existAbsenceFilters } from '../util';
+import { Category, foodCategories } from '../constant/foodCategories';
+import { entireFilterObj, existAbsenceFilters } from '../util';
 import { Animated, View } from 'react-native';
 import {
   useHandleTableItem,
@@ -15,8 +14,9 @@ import {
   useSubmitFavoriteFoods,
   useGetFoodList,
   useFindFood,
+  useHandleFilter,
 } from '../hooks';
-import { changeFilter } from '../redux/slice/filterSlice';
+import { Food } from '../constant/foodInfo';
 
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
@@ -27,17 +27,17 @@ import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import CategoryModal from '../screen-component/modal/CategoryModal';
 import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
-import Message from '../components/form/Message';
+import FormMessage from '../components/form/FormMessage';
 import SquareBtn from '../components/buttons/SquareBtn';
+import tw from 'twrnc';
 
 export default function FavoriteFoods() {
-  const { currentFilter } = useSelector((state) => state.currentFilter);
+  const { currentFilter, initializeFilter } = useHandleFilter();
   const [inputValue, setInputValue] = useState('');
   const [showCaution, setShowCaution] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState<Category | ''>('');
 
-  const dispatch = useDispatch();
   const { findFavoriteListItem } = useFindFood();
   const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
   const { onSubmitFavoriteListItem } = useSubmitFavoriteFoods();
@@ -59,14 +59,12 @@ export default function FavoriteFoods() {
     useSetAnimationState();
 
   const { onDeletePress, onAddShoppingListPress } = useHandleTableItem({
-    checkedList,
+    checkedList: checkedList as Food[],
     setCheckedList,
   });
 
   useEffect(() => {
-    if (currentFilter !== '전체') {
-      dispatch(changeFilter('전체'));
-    }
+    initializeFilter();
     if (inputValue === '') {
       setShowCaution(false);
     }
@@ -97,22 +95,27 @@ export default function FavoriteFoods() {
       <SafeBottomAreaView>
         <Container>
           <TableContainer>
+            <TableHeader
+              title='자주 먹는 식료품'
+              entireChecked={allChecked && !!checkedList.length}
+              onEntirePress={() => onEntireBoxPress(filteredList)}
+            />
+
             {/* 필터 */}
             <TableFilters
               filterList={[entireFilterObj, ...existAbsenceFilters]}
-              categoryFilters={categoryFilters}
+              categoryFilters={foodCategories}
               getTableList={getFilteredFoodList}
               setCheckedList={setCheckedList}
               foodList={favoriteFoods}
             />
-            <TableHeader title='식료품 목록' columnTitle='냉장고' />
 
             {/* 자주 먹는 식료품 목록 */}
             <TableBody
               title='자주 먹는 식료품'
               list={filteredList}
               onCheckBoxPress={onCheckBoxPress}
-              checkedList={checkedList}
+              checkedList={checkedList as Food[]}
               animationState={animationState}
               afterAnimation={() =>
                 afterAnimation(onDeletePress, favoriteFoods)
@@ -120,34 +123,31 @@ export default function FavoriteFoods() {
             />
 
             {/* 식료품 선택 개수와 버튼 */}
-            <TableFooter
-              list={checkedList}
-              entireChecked={allChecked && !!checkedList.length}
-              onEntirePress={() => onEntireBoxPress(filteredList)}
-            >
-              <SquareBtn
-                name='장보기 목록 추가'
-                icon='cart'
-                disabled={checkedList.length === 0}
-                onPress={onAddShoppingListPress}
-              />
-              <SquareBtn
-                name='자주 먹는 식료품 해제'
-                icon='tag-minus'
-                disabled={checkedList.length === 0}
-                onPress={() =>
-                  onDeletePress(
-                    favoriteFoods,
-                    setAnimationState,
-                    animationState
-                  )
-                }
-              />
-            </TableFooter>
+            <View>
+              <TableFooter list={checkedList as Food[]}>
+                <SquareBtn
+                  name='장보기 추가'
+                  icon='cart'
+                  disabled={checkedList.length === 0}
+                  onPress={onAddShoppingListPress}
+                />
+                <SquareBtn
+                  name='자주 먹는 식료품 해제'
+                  icon='tag-minus'
+                  disabled={checkedList.length === 0}
+                  onPress={() =>
+                    onDeletePress(
+                      favoriteFoods,
+                      setAnimationState,
+                      animationState
+                    )
+                  }
+                />
+              </TableFooter>
+            </View>
           </TableContainer>
 
-          {/* 인풋 */}
-          <View>
+          <View style={tw`mt-2`}>
             <TextInputRoundedBox
               value={inputValue}
               setValue={setInputValue}
@@ -171,13 +171,13 @@ export default function FavoriteFoods() {
             >
               {showCaution &&
                 (findFavoriteListItem(inputValue) ? (
-                  <Message
+                  <FormMessage
                     message='이미 목록에 있는 식료품이에요.'
                     color='orange'
                   />
                 ) : (
                   category === '' && (
-                    <Message
+                    <FormMessage
                       message='카테고리를 설정해주세요.'
                       color='orange'
                     />

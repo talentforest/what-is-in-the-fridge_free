@@ -16,7 +16,7 @@ export default function ShowMoreBtn({ screen }: Props) {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate(screen)}
-      style={tw`flex-row items-center h-full pl-4`}
+      style={tw`flex-row items-center`}
     >
       <Text style={tw.style(`text-slate-600 text-[13px]`)}>더보기</Text>
       <Icon

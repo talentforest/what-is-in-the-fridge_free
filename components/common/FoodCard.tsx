@@ -1,10 +1,9 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from './native-component';
 import { cutLetter } from '../../util';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
-import { LIGHT_BLUE } from '../../constant/colors';
 
 import IndicatorExist from './IndicatorExist';
 import CategoryImageIcon from './CategoryImageIcon';
@@ -22,20 +21,16 @@ export default function FoodCard({ food }: Props) {
       key={food.id}
       onPress={() => navigation.navigate('FavoriteFoods')}
       style={tw.style(
-        `shadow-md border border-slate-100 bg-white pt-2.5 px-0.5 pb-2 items-center justify-center w-23 h-full rounded-xl`
+        `shadow-md border border-slate-100 bg-white pt-2.5 px-1.1 pb-2 items-center justify-center w-23 h-full rounded-lg`
       )}
     >
       <CategoryImageIcon kind='icon' category={food.category} size={18} />
-      <View style={tw`flex-1 pt-1 items-center justify-center`}>
-        <Text
-          style={tw.style(`text-center text-slate-800`, {
-            lineHeight: 22,
-          })}
-        >
+      <View style={tw`flex-1 items-center justify-center`}>
+        <Text style={tw.style(`text-center text-slate-800`)}>
           {cutLetter(food.name, 10)}
         </Text>
       </View>
-      <IndicatorExist food={food} />
+      <IndicatorExist name={food.name} />
     </TouchableOpacity>
   );
 }

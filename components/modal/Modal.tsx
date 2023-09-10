@@ -17,7 +17,8 @@ import tw from 'twrnc';
 export type ModalTitle =
   | '장보기 목록 식료품 추가'
   | '새로운 식료품 추가'
-  | '식료품 정보 수정';
+  | '식료품 정보 수정'
+  | '펜트리 식료품 추가';
 
 interface Props {
   modalVisible: boolean;
@@ -48,6 +49,8 @@ export default function Modal({
   const bgColor =
     title === '식료품 상세 정보'
       ? 'bg-white'
+      : title === '펜트리 식료품 추가'
+      ? 'bg-stone-100'
       : animationIn === 'fadeIn'
       ? 'bg-stone-200'
       : 'bg-stone-100';
@@ -74,7 +77,7 @@ export default function Modal({
           Platform.select({
             ios: {
               shadowColor: '#333',
-              shadowOpacity: 0.6,
+              shadowOpacity: 0.4,
               shadowOffset: { height: -3, width: 0 },
               shadowRadius: 14,
             },
@@ -85,9 +88,9 @@ export default function Modal({
         )}
       >
         <SafeBottomAreaView
-          style={tw`justify-end pb-4 ${
-            animationIn === 'fadeIn' ? '' : 'border border-b-0'
-          }  rounded-t-2xl border-gray-500 max-h-[${MODAL_HEIGHT}px] `}
+          style={tw`justify-end ${
+            animationIn === 'fadeIn' ? '' : 'border border-b-0 pb-4'
+          }  rounded-t-2xl border-slate-300 max-h-[${MODAL_HEIGHT}px] `}
         >
           {animationIn !== 'fadeIn' && (
             <SwipeHeader title={title} closeModal={closeModal} />

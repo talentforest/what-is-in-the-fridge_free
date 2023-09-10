@@ -2,7 +2,7 @@ import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { cutLetter } from '../../util';
 import { BLUE } from '../../constant/colors';
-import { Food, initialFoodInfo } from '../../constant/foods';
+import { Food, PantryFood, initialFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
 import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
 import { useRoute } from '@react-navigation/native';
@@ -14,8 +14,8 @@ import tw from 'twrnc';
 
 interface Props {
   children?: ReactNode;
-  food: Food;
-  onCheckBoxPress: (food: Food) => void;
+  food: Food | PantryFood;
+  onCheckBoxPress: (food: Food | PantryFood) => void;
   isCheckedItem: boolean;
   animationState: AnimationState;
   afterAnimation: () => void;
@@ -51,7 +51,7 @@ export default function TableItem({
 
   const { id, name, favorite, category, space } = food;
   const initializedFood = {
-    ...initialFoodInfo,
+    ...initialFood,
     id,
     name,
     favorite,
@@ -72,18 +72,20 @@ export default function TableItem({
     >
       <TouchableOpacity
         onPress={() => onCheckBoxPress(initializedFood)}
-        style={tw`h-11 border border-slate-300 rounded-lg bg-white flex-row items-center gap-1 px-3`}
+        style={tw`shadow-md h-11 border ${
+          isCheckedItem ? 'border-blue-500' : 'border-slate-200'
+        } bg-white flex-row items-center gap-1.5 px-3`}
       >
         <CheckBox checked={!!isCheckedItem} activeColor={BLUE} />
 
-        {route.name === 'FavoriteFoods' && (
-          <CategoryImageIcon kind='icon' category={category} size={17} />
-        )}
-
-        <View style={tw`flex-1 flex-row items-center gap-2`}>
+        <View style={tw`flex-1 flex-row items-center gap-1`}>
           <Text style={tw`${textColor}`}>
-            {cutLetter(initializedFood.name, 14)}
+            {cutLetter(initializedFood.name, 18)}
           </Text>
+
+          {route.name === 'FavoriteFoods' && (
+            <CategoryImageIcon kind='icon' category={category} size={16} />
+          )}
 
           {existItemTag && (
             <View style={tw`flex-1 items-start`}>

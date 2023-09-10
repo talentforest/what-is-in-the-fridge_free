@@ -10,27 +10,27 @@ import { RED } from '../../constant/colors';
 
 import Icon from './native-component/Icon';
 import tw from 'twrnc';
-import { useRoute } from '@react-navigation/native';
 
 interface Props {
   expiredDate: string;
-  size: number;
+  relative?: boolean;
   mark?: boolean;
+  size?: number;
 }
 
-function LeftDay({ expiredDate, size = 14, mark }: Props) {
-  const route = useRoute();
+function LeftDay({ expiredDate, size = 14, relative, mark }: Props) {
   const textColor = getTextColorByLeftDay(expiredDate);
 
-  const relativeDate = getDiffDate(expiredDate);
+  const diffDate = getDiffDate(expiredDate);
+  const relativeDate = getRelativeTime(expiredDate);
 
   return (
     <View>
-      {relativeDate === '오늘' ? (
+      {diffDate === '오늘' ? (
         <Text style={tw`text-slate-600 text-[${size}px] ${textColor}`}>
-          {relativeDate}
+          {diffDate}
         </Text>
-      ) : relativeDate < 0 ? (
+      ) : diffDate < 0 ? (
         <View style={tw`flex-row items-center`}>
           {mark && (
             <Icon
@@ -41,12 +41,12 @@ function LeftDay({ expiredDate, size = 14, mark }: Props) {
             />
           )}
           <Text style={tw`${textColor} text-[${size}px]`}>
-            {Math.abs(relativeDate)}일
+            {relative ? `${relativeDate}` : `${Math.abs(diffDate)}일`}
           </Text>
         </View>
       ) : (
         <View style={tw`flex-row items-center`}>
-          {route.name === 'ExpiredFoods' && mark && (
+          {mark && (
             <Icon
               name='plus'
               type='MaterialCommunityIcons'
@@ -55,7 +55,7 @@ function LeftDay({ expiredDate, size = 14, mark }: Props) {
             />
           )}
           <Text style={tw`${textColor} text-[${size}px]`}>
-            {relativeDate + 1}일
+            {relative ? `${relativeDate}` : `${diffDate + 1}일`}
           </Text>
         </View>
       )}

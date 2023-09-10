@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Food } from '../../constant/foods';
+import { Food, PantryFood } from '../../constant/foodInfo';
 import { deduplicate } from '../../util/deduplicate';
 
-export const initialState: { favoriteFoods: Food[] } = {
+export const initialState: { favoriteFoods: (Food | PantryFood)[] } = {
   favoriteFoods: [],
 };
 
@@ -10,10 +10,10 @@ const favoriteFoodsSlice = createSlice({
   name: 'favoriteFoods',
   initialState,
   reducers: {
-    setFavoriteList: (state, action: { payload: Food[] }) => {
+    setFavoriteList: (state, action: { payload: (Food | PantryFood)[] }) => {
       state.favoriteFoods = deduplicate(action.payload);
     },
-    addFavorite: (state, action: { payload: Food }) => {
+    addFavorite: (state, action: { payload: Food | PantryFood }) => {
       state.favoriteFoods = deduplicate([
         ...state.favoriteFoods,
         action.payload,
@@ -24,7 +24,7 @@ const favoriteFoodsSlice = createSlice({
         (item) => item.name !== action.payload.name
       );
     },
-    editFavorite: (state, action: { payload: Food }) => {
+    editFavorite: (state, action: { payload: Food | PantryFood }) => {
       state.favoriteFoods = state.favoriteFoods.map((item) => {
         return item.id === action.payload.id ? action.payload : item;
       });

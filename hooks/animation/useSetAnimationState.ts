@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Food } from '../../constant/foods';
+import { Food, PantryFood } from '../../constant/foodInfo';
 
 export type AnimationState = 'none' | 'slidedown-in' | 'slideup-out';
 
@@ -8,11 +8,11 @@ export const useSetAnimationState = () => {
 
   const afterAnimation = (
     onDeletePress: (
-      allTableItems: Food[],
+      allTableItems: (Food | PantryFood)[],
       setAnimationState?: (state: AnimationState) => void,
       animationState?: AnimationState
     ) => void,
-    foodList: Food[]
+    foodList: (Food | PantryFood)[]
   ) => {
     if (animationState === 'slideup-out') {
       onDeletePress(foodList, setAnimationState, animationState);

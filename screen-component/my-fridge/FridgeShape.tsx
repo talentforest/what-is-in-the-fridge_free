@@ -2,10 +2,9 @@ import { Platform, View } from 'react-native';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 import { ReactNode } from 'react';
 import { useRoute } from '@react-navigation/native';
-
 import tw from 'twrnc';
 
-export const FRIDGE_COLOR = 'bg-stone-200';
+export const FRIDGE_COLOR = 'bg-stone-300 border-stone-400';
 
 export default function FridgeShape({ children }: { children: ReactNode }) {
   const route = useRoute();
@@ -18,7 +17,7 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
         {PlatformIOS && (
           <View
             style={tw.style(
-              `${FRIDGE_COLOR} rounded-bl-md w-[9%] border-slate-400 border-t border-l border-b`,
+              `${FRIDGE_COLOR} rounded-bl-md w-[9%] border-t border-l border-b`,
               {
                 transform: [
                   { skewY: '45deg' },
@@ -35,7 +34,7 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
         {PlatformIOS && (
           <View
             style={tw.style(
-              `w-[3%] h-full ${FRIDGE_COLOR}  border-slate-400 border-r border-t border-b rounded-r-md`,
+              `w-[3%] h-full ${FRIDGE_COLOR} border-r border-t border-b rounded-r-md`,
               {
                 transform: [
                   { skewY: '-33deg' },
@@ -58,7 +57,7 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
             style={tw.style(
               `${
                 routeMyFridge ? 'left-3.8 top-0' : 'left-1.5 top-4.5'
-              } rounded-t-md absolute w-[44%] h-full border-slate-500 border border-b-0 border-l ${FRIDGE_COLOR}`,
+              } rounded-t-md absolute w-[44%] h-full border border-b-0 border-l ${FRIDGE_COLOR}`,
               Platform.select({
                 ios: {
                   transform: [{ skewX: '45deg' }],
@@ -73,7 +72,7 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
                 routeMyFridge
                   ? '-right-2.5 -bottom-2.5 h-[20%]'
                   : '-bottom-5.5 -right-1 h-[23%]'
-              } rounded-tl-md absolute  w-[52%]  border ${FRIDGE_COLOR} border-slate-400`,
+              } rounded-tl-md absolute  w-[52%] border ${FRIDGE_COLOR}`,
               Platform.select({
                 ios: {
                   transform: [{ skewX: '-60deg' }, { skewY: '6deg' }],

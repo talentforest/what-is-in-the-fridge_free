@@ -4,7 +4,7 @@ import { Text } from '../../components/common/native-component';
 import { DEVICE_HEIGHT, findMatchNameFoods } from '../../util';
 import { useSelector } from '../../redux/hook';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 
 import Modal from '../../components/modal/Modal';
 import TextInputRoundedBox from '../../components/common/TextInputRoundedBox';
