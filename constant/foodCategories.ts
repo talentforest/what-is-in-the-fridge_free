@@ -1,11 +1,14 @@
 export type Category =
   | '신선식품류'
-  | '정육·수산'
+  | '정육·수산·계란'
   | '간편·즉석식품류'
-  | '계란·유제품류'
+  | '라면·면류'
+  | '유제품류'
   | '간식류'
   | '국·반찬류'
-  | '소스·조미료·오일·장류'
+  | '양념·장류·소스·오일'
+  | '견과·잡곡류·가루'
+  | '햄·통조림'
   | '생수·음료수·커피·주류'
   | '베이커리·잼';
 
@@ -27,27 +30,48 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 2,
+    category: '정육·수산·계란',
+    image: 'category-meat-fish.png',
+    icon: 'food-steak',
+    color: '#d54e42',
+  },
+  {
+    id: 3,
     category: '간편·즉석식품류',
     image: 'category-instant.png',
     icon: 'food-takeout-box',
     color: '#888',
   },
   {
-    id: 3,
-    category: '정육·수산',
-    image: 'category-meat-fish.png',
-    icon: 'food-steak',
-    color: '#d54e42',
-  },
-  {
     id: 4,
-    category: '간식류',
-    image: 'category-dessert.png',
-    icon: 'ice-cream',
-    color: '#ff66b8',
+    category: '라면·면류',
+    image: 'category-instant.png',
+    icon: 'noodles',
+    color: '#ff7b00',
   },
   {
     id: 5,
+    category: '국·반찬류',
+    image: 'category-sidedish.png',
+    icon: 'pot-steam',
+    color: '#9f7928',
+  },
+  {
+    id: 6,
+    category: '유제품류',
+    image: 'category-egg-dairy.png',
+    icon: 'cheese',
+    color: '#ffb668',
+  },
+  {
+    id: 7,
+    category: '간식류',
+    image: 'category-dessert.png',
+    icon: 'cookie',
+    color: '#7f4f2e',
+  },
+  {
+    id: 8,
     category: '베이커리·잼',
     image: 'category-bakery.png',
     icon: 'baguette',
@@ -55,32 +79,32 @@ export const foodCategories: FoodCategory[] = [
   },
 
   {
-    id: 6,
-    category: '계란·유제품류',
-    image: 'category-egg-dairy.png',
-    icon: 'egg',
-    color: '#ffb668',
+    id: 9,
+    category: '생수·음료수·커피·주류',
+    image: 'category-drink.png',
+    icon: 'cup-water',
+    color: '#3a6ae9',
+  },
+
+  {
+    id: 10,
+    category: '견과·잡곡류·가루',
+    image: 'category-sauce.png',
+    icon: 'peanut',
+    color: '#bd8773',
   },
   {
-    id: 7,
-    category: '국·반찬류',
-    image: 'category-sidedish.png',
-    icon: 'pot-steam',
-    color: '#9f7928',
-  },
-  {
-    id: 8,
-    category: '소스·조미료·오일·장류',
+    id: 11,
+    category: '양념·장류·소스·오일',
     image: 'category-sauce.png',
     icon: 'soy-sauce',
     color: '#6b5fff',
   },
-
   {
-    id: 9,
-    category: '생수·음료수·커피·주류',
-    image: 'category-drink.png',
-    icon: 'cup',
-    color: '#3a6ae9',
+    id: 12,
+    category: '햄·통조림',
+    image: 'category-sauce.png',
+    icon: 'database',
+    color: '#ffad09',
   },
 ];
