@@ -14,6 +14,7 @@ import ExpiredFoods from '../screens/ExpiredFoods';
 import FridgeSetting from '../screens/FridgeSetting';
 import HeaderBtn from '../components/buttons/HeaderBtn';
 import OnBoarding from '../screens/OnBoarding';
+import ShoppingList from '../screens/ShoppingList';
 
 export type RootStackParamList = {
   MyTabs: undefined;
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   Compartments: undefined | object;
   FavoriteFoods: undefined;
   ExpiredFoods: undefined;
+  ShoppingList: undefined;
   FridgeSetting: undefined;
 };
 
@@ -89,6 +91,14 @@ const Navigation = () => {
         options={{
           ...options,
           title: '유통기한 주의 식료품 관리',
+        }}
+      />
+      <Stack.Screen
+        name='ShoppingList'
+        component={ShoppingList}
+        options={{
+          ...options,
+          title: '장보기 목록 관리',
         }}
       />
       <Stack.Screen

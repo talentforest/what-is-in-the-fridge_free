@@ -7,16 +7,15 @@ import { DEEP_GRAY, HEADER_BGCOLOR, TAB_BG_COLOR } from '../constant/colors';
 import { PlatformIOS } from '../constant/statusBarHeight';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import Home from '../screens/Home';
-import ShoppingList from '../screens/ShoppingList';
-import MyFridge from '../screens/MyFridge';
 import Icon from '../components/common/native-component/Icon';
-import HeaderBtn from '../components/buttons/HeaderBtn';
+import Home from '../screens/Home';
+import MyFridge from '../screens/MyFridge';
+import PantryFoods from '../screens/PantryFoods';
 
 export type RootTabParamList = {
   Home: undefined;
   MyFridge: undefined;
-  ShoppingList: undefined;
+  PantryFoods: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -89,14 +88,14 @@ export default function MyTabs() {
         }}
       />
       <Tab.Screen
-        name='ShoppingList'
-        component={ShoppingList}
+        name='PantryFoods'
+        component={PantryFoods}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabIcon name='format-list-bulleted' color={color} />
+            <TabIcon name='inbox-multiple' color={color} />
           ),
-          tabBarLabel: '장보기 목록',
-          title: '장보기 식료품 관리',
+          tabBarLabel: '나의 펜트리',
+          title: '나의 펜트리',
 
           ...headerOptions,
         }}
