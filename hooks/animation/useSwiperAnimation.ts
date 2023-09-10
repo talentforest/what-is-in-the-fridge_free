@@ -3,6 +3,7 @@ import { Animated, PanResponder } from 'react-native';
 import { OnboardingStep } from '../../constant/onboardingInfo';
 import { FormStep } from '../../constant/formInfo';
 import { DEVICE_WIDTH } from '../../util';
+import { useRoute } from '@react-navigation/native';
 
 const DRAG_DISTANCE = 60;
 
@@ -16,15 +17,18 @@ export const useSwiperAnimation = ({ steps }: Props) => {
   const currentStepRef = useRef(steps[0]);
   const stepTranslateX = useRef(new Animated.Value(0)).current;
 
+  const route = useRoute();
+  const formWidth =
+    route.name === 'Compartments' ? -DEVICE_WIDTH : -DEVICE_WIDTH + 32;
+
   useEffect(() => {
     currentStepRef.current = currentStep;
   }, [currentStep]);
 
   const animatedForm = (stepId: number) => {
     Animated.spring(stepTranslateX, {
-      toValue: -DEVICE_WIDTH * stepId,
+      toValue: formWidth * stepId,
       useNativeDriver: true,
-      // duration: 400,
     }).start();
   };
 

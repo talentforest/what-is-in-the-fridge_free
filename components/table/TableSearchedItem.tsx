@@ -4,7 +4,7 @@ import { cutLetter } from '../../util';
 import { Space } from '../../constant/fridgeInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';

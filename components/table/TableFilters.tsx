@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Food } from '../../constant/foods';
+import { Food, PantryFood } from '../../constant/foodInfo';
 import { Filter, FilterObj } from '../../util';
-import { useDispatch, useSelector } from '../../redux/hook';
-import { changeFilter } from '../../redux/slice/filterSlice';
+import { BLUE, DEEP_YELLOW, RED } from '../../constant/colors';
+import { FoodCategory } from '../../constant/foodCategories';
+import { useHandleFilter } from '../../hooks';
 
 import FilterTag from '../common/FilterTag';
 import Modal from '../modal/Modal';
@@ -11,10 +12,13 @@ import tw from 'twrnc';
 
 interface Props {
   filterList: FilterObj[];
-  categoryFilters?: FilterObj[];
-  foodList: Food[];
-  getTableList: (filter: Filter, list: Food[]) => Food[];
-  setCheckedList?: (foods: Food[]) => void;
+  categoryFilters?: FoodCategory[];
+  foodList: (Food | PantryFood)[];
+  getTableList: (
+    filter: Filter,
+    list: (Food | PantryFood)[]
+  ) => (Food | PantryFood)[];
+  setCheckedList?: (foods: (Food | PantryFood)[]) => void;
 }
 
 export default function TableFilters({
@@ -24,65 +28,67 @@ export default function TableFilters({
   foodList,
   setCheckedList,
 }: Props) {
-  const { currentFilter } = useSelector((state) => state.currentFilter);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const dispatch = useDispatch();
-
-  const onFilterPress = (filter: Filter) => {
-    dispatch(changeFilter(filter));
-    if (setCheckedList) return setCheckedList([]);
-  };
-
-  const isCatgegoryFilter = categoryFilters?.find(
-    ({ filter }) => filter === currentFilter
-  );
+  const { currentFilter, onFilterPress, isCategoryFilter } = useHandleFilter();
 
   return (
     <View>
       <ScrollView
-        style={tw`h-12`}
-        contentContainerStyle={tw`gap-1 items-start`}
+        style={tw`h-12 -mt-2 pt-1 px-0.5`}
+        contentContainerStyle={tw`gap-1 items-start pr-2`}
         horizontal
         showsHorizontalScrollIndicator={false}
       >
         {filterList.map(({ filter, icon }) => (
           <FilterTag
             key={filter}
-            onFilterPress={() => onFilterPress(filter)}
             filterObj={{ filter, icon }}
+            iconColor={
+              filter === '유통기한 3일 이내'
+                ? DEEP_YELLOW
+                : filter === '유통기한 만료'
+                ? RED
+                : BLUE
+            }
+            active={filter === currentFilter}
+            onFilterPress={() => onFilterPress(filter, setCheckedList)}
             length={getTableList(filter, foodList).length || 0}
           />
         ))}
 
         {categoryFilters && (
           <FilterTag
+            filterObj={{ filter: '카테고리', icon: 'filter' }}
+            iconColor={BLUE}
+            active={!!isCategoryFilter}
             onFilterPress={() => {
-              if (!isCatgegoryFilter) {
-                onFilterPress('신선식품류');
+              if (!isCategoryFilter) {
+                onFilterPress('신선식품류', setCheckedList);
               }
               setModalVisible(true);
             }}
-            filterObj={{ filter: '카테고리별', icon: 'filter' }}
-            byCategoryActive={!!isCatgegoryFilter}
+            length={getTableList(currentFilter, foodList).length || 0}
           />
         )}
       </ScrollView>
 
       {modalVisible && categoryFilters && (
         <Modal
-          title='카테고리별로 보기'
+          title='카테고리별 필터링'
           setModalVisible={setModalVisible}
           modalVisible={modalVisible}
           hasBackdrop
         >
-          <View style={tw`p-4 pb-10 flex-row flex-wrap gap-2`}>
-            {categoryFilters.map((filterObj) => (
+          <View style={tw`p-4 pb-2 flex-row flex-wrap gap-1`}>
+            {categoryFilters.map(({ category, color, icon }) => (
               <FilterTag
-                key={filterObj.filter}
-                onFilterPress={() => onFilterPress(filterObj.filter)}
-                filterObj={filterObj}
-                length={getTableList(filterObj.filter, foodList).length || 0}
+                key={category}
+                filterObj={{ filter: category, icon }}
+                iconColor={color}
+                active={category === currentFilter}
+                onFilterPress={() => onFilterPress(category)}
+                length={getTableList(category, foodList).length || 0}
               />
             ))}
           </View>

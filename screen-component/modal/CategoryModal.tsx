@@ -46,11 +46,11 @@ export default function CategoryModal({
       animationOut='fadeOut'
       hasBackdrop
     >
-      <View style={tw`m-6 gap-3`}>
+      <View style={tw`mx-5 my-6 gap-3`}>
         <Text style={tw.style('', FontGmarketSansBold)}>카테고리 선택</Text>
 
         {onCheckBoxPress && (
-          <View style={tw`flex-row flex-wrap gap-1.5 justify-between`}>
+          <View style={tw`flex-row flex-wrap gap-2 justify-between`}>
             {foodCategories.map(
               ({ category }) =>
                 assets && (

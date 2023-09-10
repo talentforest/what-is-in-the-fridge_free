@@ -1,25 +1,41 @@
 import { View } from 'react-native';
-import { Text } from '../common/native-component';
+import { Text, TouchableOpacity } from '../common/native-component';
 import { FontGmarketSansBold } from '../../constant/fonts';
+import { BLUE } from '../../constant/colors';
+import { useRoute } from '@react-navigation/native';
+import CheckBox from '../common/CheckBox';
 import tw from 'twrnc';
 
 interface Props {
   title: string;
   length?: number;
-  columnTitle?: string;
+  entireChecked: boolean;
+  onEntirePress: () => void;
 }
 
-export default function TableHeader({ title, length, columnTitle }: Props) {
+export default function TableHeader({
+  title,
+  length,
+  entireChecked,
+  onEntirePress,
+}: Props) {
+  const route = useRoute();
   return (
-    <View style={tw`flex-row items-center justify-between mb-2 h-8 mr-2 gap-4`}>
-      <Text style={tw.style(`text-slate-700 text-[17px]`, FontGmarketSansBold)}>
-        {title}
-      </Text>
-      {!!columnTitle && (
-        <Text style={tw`text-slate-700 text-[15px]`}>{columnTitle}</Text>
-      )}
-      {!!length && (
-        <Text style={tw`text-slate-700 mr-3 flex-1`}>{length}개</Text>
+    <View style={tw`flex-row items-center justify-between mb-2 h-8 mr-2 gap-2`}>
+      <TouchableOpacity
+        onPress={onEntirePress}
+        style={tw`flex-row items-center gap-2 pl-3`}
+      >
+        <CheckBox
+          checked={entireChecked}
+          activeColor={route.name === 'PantryFoods' ? 'amber' : BLUE}
+        />
+        <Text style={tw.style(`text-slate-700`, FontGmarketSansBold)}>
+          {title}
+        </Text>
+      </TouchableOpacity>
+      {length !== undefined && (
+        <Text style={tw`text-slate-600 text-sm flex-1`}>{length}개</Text>
       )}
     </View>
   );

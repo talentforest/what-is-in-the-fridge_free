@@ -9,7 +9,7 @@ import {
 import { ModalTitle } from '../modal/Modal';
 
 import FormLabel from './FormLabel';
-import Message from './Message';
+import FormMessage from './FormMessage';
 import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
 
@@ -17,7 +17,7 @@ interface Props {
   name: string;
   favoriteState: boolean;
   changeInfo: (newInfo: { [key: string]: boolean }) => void;
-  disabled: boolean;
+  disabled?: boolean;
   title: ModalTitle;
 }
 
@@ -62,7 +62,7 @@ export default function FavoriteItem({
 
   return (
     <View>
-      <FormLabel label='자주 먹는 식품' />
+      <FormLabel label='자주 먹는 식료품' />
       <View
         style={tw`${color} h-11 flex-row items-center border p-1 rounded-full bg-white self-start`}
       >
@@ -88,7 +88,7 @@ export default function FavoriteItem({
         ))}
       </View>
       {title !== '식료품 정보 수정' && !!findFavoriteListItem(name) && (
-        <Message
+        <FormMessage
           message='자주 먹는 식료품이므로 위의 정보가 자동으로 적용돼요.'
           color='green'
         />
@@ -101,7 +101,7 @@ export default function FavoriteItem({
           opacity: interpolatedOpacity,
         }}
       >
-        <Message
+        <FormMessage
           message={!isFavoriteFood ? '자주 먹는 식료품 목록에 추가돼요.' : ''}
           color='green'
         />

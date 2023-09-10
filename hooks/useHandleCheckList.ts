@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { Food } from '../constant/foods';
 import { useDispatch } from '../redux/hook';
 import { toggleShowBtn } from '../redux/slice/showBtnSlice';
+import { Food, PantryFood } from '../constant/foodInfo';
 
 export const useHandleCheckList = () => {
-  const [checkedList, setCheckedList] = useState<Food[]>([]);
+  const [checkedList, setCheckedList] = useState<(Food | PantryFood)[]>([]);
 
   const dispatch = useDispatch();
 
-  const onEntireBoxPress = (list: Food[]) => {
+  const onEntireBoxPress = (list: (Food | PantryFood)[]) => {
     const allChecked = checkedList.length === list.length;
     dispatch(toggleShowBtn(true));
     return setCheckedList(allChecked ? [] : list);
@@ -18,7 +18,7 @@ export const useHandleCheckList = () => {
     return checkedList.find((food) => food.id === id);
   };
 
-  const onCheckBoxPress = (food: Food) => {
+  const onCheckBoxPress = (food: Food | PantryFood) => {
     const clearItemInList = checkedList.filter((item) => item.id !== food.id);
     if (checkedList.length === 0) {
       dispatch(toggleShowBtn(true));

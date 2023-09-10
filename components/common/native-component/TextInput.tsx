@@ -11,7 +11,8 @@ export function TextInput({ style, ...props }: Props) {
   return (
     <Input
       style={tw.style(
-        `text-[15px] h-10 border border-slate-400 p-2 rounded-lg bg-white`,
+        `text-base h-10 border border-slate-200 px-2 rounded-lg bg-white`,
+        { lineHeight: 0 },
         FontGmarketSansRegular,
         style
       )}

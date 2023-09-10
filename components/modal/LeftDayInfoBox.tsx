@@ -4,7 +4,6 @@ import {
   expired,
   getDiffDate,
   getFormattedDate,
-  getRelativeTime,
   getTextColorByLeftDay,
   leftThreeDays,
 } from '../../util';
@@ -20,7 +19,10 @@ interface Props {
 export default function LeftDayInfoBox({ expiredDate }: Props) {
   const textColor = getTextColorByLeftDay(expiredDate);
 
-  const attentionDate = expired(expiredDate) || leftThreeDays(expiredDate);
+  const attentionExpiredDate =
+    expired(expiredDate) || leftThreeDays(expiredDate);
+
+  const relativeDate = getDiffDate(expiredDate);
 
   return (
     <View>
@@ -28,7 +30,7 @@ export default function LeftDayInfoBox({ expiredDate }: Props) {
         {getFormattedDate(expiredDate, 'YYYY년 MM월 DD일')}
       </Text>
       <View style={tw`self-start gap-0.5 -mt-1 flex-row items-center`}>
-        {attentionDate && (
+        {attentionExpiredDate && (
           <>
             <Text style={tw`${textColor} text-[13px]`}>
               {expired(expiredDate)
@@ -58,11 +60,8 @@ export default function LeftDayInfoBox({ expiredDate }: Props) {
           </>
         )}
 
-        {!attentionDate && (
-          <Text style={tw`text-[13px] text-green-600`}>
-            {getRelativeTime(expiredDate)}
-          </Text>
-          // <Text style={tw`text-green-600 text-[13px]`}> 남음</Text>
+        {!attentionExpiredDate && (
+          <LeftDay expiredDate={expiredDate} relative size={13} />
         )}
       </View>
     </View>

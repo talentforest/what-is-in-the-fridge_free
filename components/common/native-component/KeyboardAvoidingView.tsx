@@ -14,7 +14,7 @@ interface Props {
 
 export function KeyboardAvoidingView({ children }: Props) {
   const route = useRoute();
-  const tabOffset = route.name === 'ShoppingList' ? 40 : 5;
+  const tabOffset = 5;
   const iosOffset = tabOffset + (statusBarHeight || 0);
 
   return (

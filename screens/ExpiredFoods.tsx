@@ -5,10 +5,10 @@ import {
   useHandleTableItem,
   useGetFoodList,
   useSetAnimationState,
+  useHandleFilter,
 } from '../hooks/';
-import { useDispatch, useSelector } from '../redux/hook';
 import { useEffect } from 'react';
-import { changeFilter } from '../redux/slice/filterSlice';
+import { View } from 'react-native';
 
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
@@ -17,9 +17,10 @@ import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TableFilters from '../components/table/TableFilters';
 import SquareBtn from '../components/buttons/SquareBtn';
+import tw from 'twrnc';
 
 export default function ExpiredFoods() {
-  const { currentFilter } = useSelector((state) => state.currentFilter);
+  const { currentFilter, initializeFilter } = useHandleFilter();
 
   const { getFilteredFoodList, allExpiredFoods } = useGetFoodList();
 
@@ -40,28 +41,29 @@ export default function ExpiredFoods() {
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    if (currentFilter !== '전체') {
-      dispatch(changeFilter('전체'));
-    }
+    initializeFilter();
   }, []);
+
+  const allChecked = checkedList.length === filteredList.length;
 
   return (
     <SafeBottomAreaView>
       <Container>
-        {/* 전체 표 */}
         <TableContainer>
-          {/* 필터 */}
+          <TableHeader
+            title='유통기한 주의 식료품'
+            entireChecked={allChecked && !!checkedList.length}
+            onEntirePress={() => onEntireBoxPress(filteredList)}
+          />
+
           <TableFilters
             filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
             getTableList={getFilteredFoodList}
             setCheckedList={setCheckedList}
             foodList={allExpiredFoods}
           />
-          <TableHeader title='식료품 목록' columnTitle='오래된순' />
-          {/* 식료품 리스트 */}
+
           <TableBody
             title='유통기한 주의 식료품'
             list={filteredList}
@@ -73,27 +75,22 @@ export default function ExpiredFoods() {
             }
           />
 
-          {/* 식료품 선택 개수와 버튼 */}
-          <TableFooter
-            list={checkedList}
-            entireChecked={
-              checkedList.length === filteredList.length && !!checkedList.length
-            }
-            onEntirePress={() => onEntireBoxPress(filteredList)}
-          >
-            <SquareBtn
-              name='냉장고에서 삭제'
-              onPress={() =>
-                onDeletePress(
-                  allExpiredFoods,
-                  setAnimationState,
-                  animationState
-                )
-              }
-              icon='trash-can'
-              disabled={checkedList.length === 0}
-            />
-          </TableFooter>
+          <View style={tw`-mb-3`}>
+            <TableFooter list={checkedList}>
+              <SquareBtn
+                name='냉장고에서 삭제'
+                onPress={() =>
+                  onDeletePress(
+                    allExpiredFoods,
+                    setAnimationState,
+                    animationState
+                  )
+                }
+                icon='trash-can'
+                disabled={checkedList.length === 0}
+              />
+            </TableFooter>
+          </View>
         </TableContainer>
       </Container>
     </SafeBottomAreaView>

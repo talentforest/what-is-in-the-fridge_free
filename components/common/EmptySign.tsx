@@ -1,3 +1,4 @@
+import { View } from 'react-native';
 import { Text } from './native-component';
 import tw from 'twrnc';
 
@@ -6,5 +7,18 @@ interface Props {
 }
 
 export default function EmptySign({ message }: Props) {
-  return <Text style={tw`text-sm text-slate-400 text-center`}>{message}</Text>;
+  const splittedMessage = message.split(', ');
+
+  return (
+    <View style={tw``}>
+      <Text style={tw`text-sm text-slate-400 text-center`}>
+        {splittedMessage[0]}
+      </Text>
+      {message[1] && (
+        <Text style={tw`text-sm text-slate-400 text-center`}>
+          {splittedMessage[1]}
+        </Text>
+      )}
+    </View>
+  );
 }

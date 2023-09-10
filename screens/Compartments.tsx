@@ -54,7 +54,7 @@ export default function Compartments({ route }: Route) {
           foodList={getFoodList('expiredFoods', space)}
         />
         <View
-          style={tw`${FRIDGE_COLOR} p-2.5 gap-2.5 flex-1 border border-slate-500 w-full m-auto self-center justify-center rounded-lg`}
+          style={tw`${FRIDGE_COLOR} shadow-xl p-2.5 gap-2.5 flex-1 border border-slate-300 w-full m-auto self-center justify-center rounded-lg`}
         >
           {compartments.map((compartment) => (
             <Compartment

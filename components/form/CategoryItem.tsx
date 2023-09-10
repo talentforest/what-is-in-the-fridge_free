@@ -15,7 +15,7 @@ interface Props {
   name: string;
   fixedCategory: Category;
   changeInfo: (newInfo: { [key: string]: string }) => void;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 export default function CategoryItem({
@@ -51,7 +51,7 @@ export default function CategoryItem({
         style={tw`h-12 border ${color} px-3 bg-white rounded-lg items-center flex-row gap-2 justify-between`}
       >
         <View style={tw`flex-row items-center gap-2`}>
-          <CategoryImageIcon kind='icon' category={category} size={16} />
+          <CategoryImageIcon kind='icon' category={category} size={18} />
           <Text style={tw`${color} border-0`}>{category}</Text>
         </View>
         <Icon

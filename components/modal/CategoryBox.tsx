@@ -1,13 +1,12 @@
 import { Asset } from 'expo-asset';
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
-import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import { Category } from '../../constant/foodCategories';
 import { DEVICE_WIDTH } from '../../util';
 
 import CategoryImageIcon from '../common/CategoryImageIcon';
-import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
+import Icon from '../common/native-component/Icon';
 
 interface Props {
   checked: boolean;
@@ -22,36 +21,51 @@ export default function CategoryBox({
   onCheckBoxPress,
   assets,
 }: Props) {
-  const width = (DEVICE_WIDTH - 94) / 3;
+  const width = (DEVICE_WIDTH - 80) / 2;
 
   const checkedColor = checked
-    ? 'bg-blue-200 text-slate-900'
-    : 'bg-stone-100 text-slate-500';
+    ? 'bg-blue-200 border-blue-300'
+    : 'bg-stone-100 border-slate-300';
 
   return (
     <TouchableOpacity
       onPress={() => onCheckBoxPress(category)}
-      style={tw`border border-slate-300 ${checkedColor} w-[${width}px] h-32 rounded-lg justify-between items-center py-3 px-2`}
+      style={tw`shadow-md flex-row h-14 gap-1.5 border ${checkedColor} w-[${width}px] rounded-lg justify-between items-center 
+      pr-2 pl-${checked ? '5.5' : '3'}`}
     >
-      {assets && (
-        <CategoryImageIcon
-          kind='image'
-          assets={assets}
-          category={category}
-          size={40}
-        />
+      {checked && (
+        <View style={tw`absolute -top-2 left-0.5`}>
+          <Icon
+            name='check-underline-circle'
+            type='MaterialCommunityIcons'
+            size={22}
+          />
+        </View>
       )}
 
-      <View style={tw`flex-1 items-center justify-center`}>
-        <Text style={tw`text-center text-xs ${checkedColor}`}>{category}</Text>
-      </View>
+      <View style={tw`flex-row items-center justify-center flex-1 gap-2`}>
+        {assets && (
+          <CategoryImageIcon
+            kind='image'
+            assets={assets}
+            category={category}
+            size={24}
+          />
+        )}
 
-      <Icon
-        type='MaterialCommunityIcons'
-        name={checked ? 'check-circle-outline' : 'circle-outline'}
-        color={checked ? BLUE : LIGHT_GRAY}
-        size={20}
-      />
+        <Text
+          style={tw.style(
+            `text-[14px] flex-1 py-0 ${
+              checked ? 'text-blue-600' : 'text-slate-600'
+            }`,
+            {
+              lineHeight: 20,
+            }
+          )}
+        >
+          {category}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 }
