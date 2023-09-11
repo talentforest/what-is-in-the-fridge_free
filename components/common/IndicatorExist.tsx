@@ -9,11 +9,11 @@ interface Props {
 }
 
 export default function IndicatorExist({ name, roundedBorder }: Props) {
-  const { findFoodInFridge } = useFindFood();
+  const { findFoodInFridge, findFoodInPantry } = useFindFood();
 
-  const existFoodColor = (name: string) => {
-    return !!findFoodInFridge(name) ? 'text-blue-600' : 'text-red-500';
-  };
+  const existFood = !!findFoodInPantry(name) || !!findFoodInFridge(name);
+
+  const existFoodColor = existFood ? 'text-blue-600' : 'text-red-500';
 
   const borderStyle =
     'border border-blue-400 px-2 h-6.5 rounded-full items-center';
@@ -21,11 +21,11 @@ export default function IndicatorExist({ name, roundedBorder }: Props) {
   return (
     <View style={tw`${roundedBorder ? borderStyle : ''}`}>
       <Text
-        style={tw`${existFoodColor(name)}  ${
+        style={tw`${existFoodColor}  ${
           roundedBorder ? 'text-[13px] py-0' : 'text-[15px]'
         }`}
       >
-        {!!findFoodInFridge(name) ? '있음' : '없음'}
+        {existFood ? '있음' : '없음'}
       </Text>
     </View>
   );

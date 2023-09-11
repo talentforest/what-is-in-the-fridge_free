@@ -36,6 +36,7 @@ export const useGetFoodList = () => {
   ) => {
     if (space === '냉동실') return food.space.includes('냉동실');
     if (space === '냉장실') return food.space.includes('냉장실');
+
     if (compartmentNum) {
       const matchSpace = food.space === space;
       const matchCompartment = food.compartmentNum === compartmentNum;
@@ -57,23 +58,19 @@ export const useGetFoodList = () => {
     return filteredFoods;
   };
 
-  const favoriteFoodsInFridge = favoriteFoods.filter(
+  const favoriteFoodsNotExist = favoriteFoods.filter(
     (favoriteFood) =>
-      !!fridgeFoods.find((food) => food.name === favoriteFood.name)
-  );
-
-  const favoriteFoodsNotInFridge = favoriteFoods.filter(
-    (favoriteFood) =>
-      !!!fridgeFoods.find((food) => food.name === favoriteFood.name)
+      !!![...fridgeFoods, ...pantryFoods].find(
+        (food) => food.name === favoriteFood.name
+      )
   );
 
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
     if (filter === '전체') return foodList;
 
-    if (filter === '냉장고에 있음') return favoriteFoodsInFridge;
-    if (filter === '냉장고에 없음') return favoriteFoodsNotInFridge;
+    if (filter === '없는 식료품') return favoriteFoodsNotExist;
 
-    if (filter === '냉동실' || filter === '냉장실')
+    if (filter === '냉동실' || filter === '냉장실' || filter === '팬트리')
       return getFoodList('expiredFoods', filter);
 
     if (filter === '유통기한 만료') {
