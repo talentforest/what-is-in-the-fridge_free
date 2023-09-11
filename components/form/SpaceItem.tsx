@@ -34,7 +34,7 @@ export default function SpaceItem({ food, changeInfo }: Props) {
 
   const checkFoodLengthLimit = () => {
     const space = `${spaceType} ${spaceSide}` as Space;
-    const foodLength = getFoodList('allFoods', space).length;
+    const foodLength = getFoodList('fridgeFoods', space).length;
     return foodLength >= 15;
   };
 

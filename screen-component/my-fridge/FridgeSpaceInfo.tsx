@@ -25,7 +25,7 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
   const spaceInfo = [
     {
       name: '총 식료품',
-      foodList: (space: Space) => getFoodList('allFoods', space),
+      foodList: (space: Space) => getFoodList('fridgeFoods', space),
     },
     {
       name: '유통기한 주의',

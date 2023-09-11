@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from '../redux/hook';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { Food, FoodInfo } from '../constant/foodInfo';
 import { useState } from 'react';
-import { addFood } from '../redux/slice/allFoodsSlice';
+import { addFridgeFood } from '../redux/slice/fridgeFoodsSlice';
 import { FoodLocation } from '../constant/fridgeInfo';
 import { Alert } from 'react-native';
 import { addToPantry } from '../redux/slice/pantryFoodsSlice';
@@ -16,7 +16,7 @@ interface Props {
 export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
   const [newFood, setNewFood] = useState<Food>(initialFoodInfo);
 
-  const { allFoods } = useSelector((state) => state.allFoods);
+  const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
 
@@ -39,7 +39,7 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
   const onAddSubmit = (setModalVisible: (visible: boolean) => void) => {
     const { name, category, favorite } = newFood;
 
-    const foodList: Food[] = foodLocation ? allFoods : pantryFoods;
+    const foodList: Food[] = foodLocation ? fridgeFoods : pantryFoods;
 
     const existFood = foodList.find((food) => food.name === name);
     if (existFood) return alertExistFood(existFood);
@@ -78,7 +78,9 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
       dispatch(addFavorite(foodObj));
     }
 
-    dispatch(foodLocation ? addFood(foodObj as Food) : addToPantry(foodObj));
+    dispatch(
+      foodLocation ? addFridgeFood(foodObj as Food) : addToPantry(foodObj)
+    );
     setModalVisible(false);
   };
 

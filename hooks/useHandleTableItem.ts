@@ -7,7 +7,7 @@ import {
 } from '../redux/slice/shoppingListSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
-import { setAllFoods } from '../redux/slice/allFoodsSlice';
+import { setAllFridgeFoods } from '../redux/slice/fridgeFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import { AnimationState } from './animation/useSetAnimationState';
 import { toggleShowBtn } from '../redux/slice/showBtnSlice';
@@ -24,13 +24,13 @@ export const useHandleTableItem = ({
   setCheckedList,
   setModalVisible,
 }: Props) => {
-  const { allFoods } = useSelector((state) => state.allFoods);
+  const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const dispatch = useDispatch();
   const route = useRoute();
 
   const changeFavStateInList = () => {
-    return allFoods.map((food) => {
+    return fridgeFoods.map((food) => {
       const isFavoriteFood = checkedList.some(
         (item) => item.name === food.name
       );
@@ -46,7 +46,8 @@ export const useHandleTableItem = ({
         title: '유통기한 주의 식료품 제거',
         desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 냉장고에서 제거하시겠습니까?`,
         defaultBtnText: '제거',
-        onPress: (filteredArr: Food[]) => dispatch(setAllFoods(filteredArr)),
+        onPress: (filteredArr: Food[]) =>
+          dispatch(setAllFridgeFoods(filteredArr)),
       };
     }
     if (route.name === 'FavoriteFoods') {
@@ -55,7 +56,7 @@ export const useHandleTableItem = ({
         desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 자주 먹는 식료품에서 해제하시겠습니까?`,
         defaultBtnText: '해제',
         onPress: (filteredArr: Food[]) => {
-          dispatch(setAllFoods(changeFavStateInList()));
+          dispatch(setAllFridgeFoods(changeFavStateInList()));
           dispatch(setFavoriteList(filteredArr as Food[]));
         },
       };
@@ -144,7 +145,9 @@ export const useHandleTableItem = ({
     );
     const selectedFoodInfo = { ...food, favorite } as Food;
 
-    const exist = allFoods.find((food) => food.name === selectedFoodInfo.name);
+    const exist = fridgeFoods.find(
+      (food) => food.name === selectedFoodInfo.name
+    );
     if (exist) {
       return Alert.alert(
         `기존 식료품 삭제 안내`,

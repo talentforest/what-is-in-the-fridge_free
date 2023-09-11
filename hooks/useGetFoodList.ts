@@ -4,7 +4,7 @@ import { useSelector } from '../redux/hook';
 import { Filter, expired, getLeftDays, leftThreeDays } from '../util';
 
 export const useGetFoodList = () => {
-  const { allFoods } = useSelector((state) => state.allFoods);
+  const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
 
   const orderExpirationDate = (list: Food[]) => {
@@ -16,8 +16,8 @@ export const useGetFoodList = () => {
     return sortedList || list;
   };
 
-  const allExpiredFoods = orderExpirationDate(
-    allFoods.filter((food) => getLeftDays(food.expiredDate) < 4)
+  const allExpiredFridgeFoods = orderExpirationDate(
+    fridgeFoods.filter((food) => getLeftDays(food.expiredDate) < 4)
   );
 
   const matchFoodSpace = (
@@ -36,11 +36,12 @@ export const useGetFoodList = () => {
   };
 
   const getFoodList = (
-    type: 'allFoods' | 'expiredFoods',
+    type: 'fridgeFoods' | 'expiredFoods',
     space: SpaceType | Space,
     compartmentNum?: CompartmentNum
   ) => {
-    const foodList = type === 'allFoods' ? allFoods : allExpiredFoods;
+    const foodList =
+      type === 'fridgeFoods' ? fridgeFoods : allExpiredFridgeFoods;
 
     const filteredFoods = foodList.filter((food) =>
       matchFoodSpace(food as Food, space, compartmentNum)
@@ -49,12 +50,13 @@ export const useGetFoodList = () => {
   };
 
   const favoriteFoodsInFridge = favoriteFoods.filter(
-    (favoriteFood) => !!allFoods.find((food) => food.name === favoriteFood.name)
+    (favoriteFood) =>
+      !!fridgeFoods.find((food) => food.name === favoriteFood.name)
   );
 
   const favoriteFoodsNotInFridge = favoriteFoods.filter(
     (favoriteFood) =>
-      !!!allFoods.find((food) => food.name === favoriteFood.name)
+      !!!fridgeFoods.find((food) => food.name === favoriteFood.name)
   );
 
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
@@ -85,8 +87,8 @@ export const useGetFoodList = () => {
   };
 
   return {
-    allFoods,
-    allExpiredFoods,
+    fridgeFoods,
+    allExpiredFridgeFoods,
     favoriteFoods,
     getFoodList,
     getFilteredFoodList,

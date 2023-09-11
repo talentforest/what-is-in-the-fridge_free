@@ -47,7 +47,7 @@ export default function Compartment({
 
   const { getFoodList } = useGetFoodList();
   const compartmentFoodList = getFoodList(
-    'allFoods',
+    'fridgeFoods',
     space,
     compartmentNum
   ) as Food[];
@@ -91,7 +91,7 @@ export default function Compartment({
               } text-[15px]`}
             >
               {compartmentNum}칸 | 식료품 총{' '}
-              {getFoodList('allFoods', space, compartmentNum).length}개
+              {getFoodList('fridgeFoods', space, compartmentNum).length}개
             </Text>
           </TouchableOpacity>
           <AddFoodBtn

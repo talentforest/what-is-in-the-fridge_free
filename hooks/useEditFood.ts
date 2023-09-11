@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Food, FoodInfo } from '../constant/foodInfo';
 import { useDispatch } from '../redux/hook';
-import { editFood } from '../redux/slice/allFoodsSlice';
+import { editFridgeFood } from '../redux/slice/fridgeFoodsSlice';
 import {
   addFavorite,
   editFavorite,
@@ -32,7 +32,7 @@ export const useEditFood = ({ food }: { food: Food }) => {
     } else {
       dispatch(removeFavorite({ name: editedFood.name }));
     }
-    dispatch(editFood({ foodId, editedFood }));
+    dispatch(editFridgeFood({ foodId, editedFood }));
     setEditing(false);
   };
 

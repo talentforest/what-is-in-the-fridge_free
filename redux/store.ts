@@ -11,7 +11,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import allFoodsReducer from './slice/allFoodsSlice';
+import fridgeFoodsReducer from './slice/fridgeFoodsSlice';
 import favoriteFoodsReducer from './slice/favoriteFoodsSlice';
 import shoppingListReducer from './slice/shoppingListSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -25,7 +25,7 @@ import toggleShowBtnReducer from './slice/showBtnSlice';
 import pantryFoodsReducer from './slice/pantryFoodsSlice';
 
 const reducers = {
-  allFoods: allFoodsReducer,
+  fridgeFoods: fridgeFoodsReducer,
   favoriteFoods: favoriteFoodsReducer,
   shoppingList: shoppingListReducer,
   selectedFood: selectedFoodReducer,

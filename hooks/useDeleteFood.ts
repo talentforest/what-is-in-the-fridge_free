@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from '../redux/hook';
 import { NavigateProp } from '../navigation/Navigation';
 import { Space } from '../constant/fridgeInfo';
-import { removeFood } from '../redux/slice/allFoodsSlice';
+import { removeFridgeFood } from '../redux/slice/fridgeFoodsSlice';
 
 interface Props {
   space: Space;
@@ -14,7 +14,7 @@ export const useDeleteFood = ({ space, setModalVisible }: Props) => {
   const navigation = useNavigation<NavigateProp>();
 
   const deleteFood = (foodId: string) => {
-    dispatch(removeFood({ id: foodId }));
+    dispatch(removeFridgeFood({ id: foodId }));
     navigation.navigate('Compartments', { space });
     setModalVisible(false);
   };
