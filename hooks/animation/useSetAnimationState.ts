@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 
 export type AnimationState = 'none' | 'slidedown-in' | 'slideup-out';
 

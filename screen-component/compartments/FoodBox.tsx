@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { cutLetter, expired, leftThreeDays } from '../../util';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import {
   INACTIVE_COLOR as DEFAULT_COLOR,
   EXPIRED_COLOR,
@@ -33,7 +33,7 @@ export default function FoodBox({ food }: Props) {
       key={food.id}
       style={tw`${activeColor()} rounded-lg justify-center items-center flex-row border h-8 px-2.5`}
     >
-      <Text style={tw`text-center ${activeColor()} text-[15px]`}>
+      <Text style={tw`text-center ${activeColor()}`}>
         {cutLetter(food.name, 8)}
       </Text>
     </View>

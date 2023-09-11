@@ -22,6 +22,7 @@ import toggleDragModeReducer from './slice/dragModeSlice';
 import changeCompartmentNumReducer from './slice/compartmentNumToDropSlice';
 import changeFilterReducer from './slice/filterSlice';
 import toggleShowBtnReducer from './slice/showBtnSlice';
+import pantryFoodsReducer from './slice/pantryFoodsSlice';
 
 const reducers = {
   allFoods: allFoodsReducer,
@@ -34,6 +35,7 @@ const reducers = {
   compartmentNumToDrop: changeCompartmentNumReducer,
   currentFilter: changeFilterReducer,
   showBtn: toggleShowBtnReducer,
+  pantryFoods: pantryFoodsReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

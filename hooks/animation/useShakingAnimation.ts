@@ -1,16 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Easing } from 'react-native';
-import { useDispatch } from '../../redux/hook';
-import { toggleDragMode } from '../../redux/slice/dragModeSlice';
 
 interface Props {
   active: boolean;
-  isDragging: boolean;
 }
 
-export const useShakingAnimation = ({ active, isDragging }: Props) => {
+export const useShakingAnimation = ({ active }: Props) => {
   const rotateValue = useRef(new Animated.Value(0)).current;
-  const dispatch = useDispatch();
 
   const rotate = rotateValue.interpolate({
     inputRange: [-1, 0, 1],

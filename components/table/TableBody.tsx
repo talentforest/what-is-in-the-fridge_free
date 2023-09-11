@@ -1,4 +1,4 @@
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import { TouchableOpacity } from '../common/native-component';
 import { useRoute } from '@react-navigation/native';
 import { FlatList, View } from 'react-native';
@@ -47,7 +47,6 @@ export default function TableBody({
             data={list}
             renderItem={({ item }) => (
               <TableItem
-                key={item.name}
                 food={item}
                 onCheckBoxPress={onCheckBoxPress}
                 isCheckedItem={
@@ -69,7 +68,7 @@ export default function TableBody({
                 {/* 장보기 식료품 추가 버튼 */}
                 {route.name === 'ShoppingList' && addToFridgePress && (
                   <TouchableOpacity
-                    onPress={() => addToFridgePress(item)}
+                    onPress={() => addToFridgePress(item as Food)}
                     style={tw`h-full justify-center px-3 -mx-3`}
                   >
                     <Icon
@@ -87,7 +86,7 @@ export default function TableBody({
           />
         </View>
       ) : (
-        <View style={tw`pt-10 flex-1`}>
+        <View style={tw`pt-24 flex-1 border-t -mx-4 border-slate-300`}>
           <EmptySign message={`${title}이 없어요.`} />
         </View>
       )}

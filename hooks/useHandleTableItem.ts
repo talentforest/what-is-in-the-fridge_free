@@ -1,4 +1,4 @@
-import { Food } from '../constant/foods';
+import { Food } from '../constant/foodInfo';
 import { Alert } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import {
@@ -11,6 +11,7 @@ import { setAllFoods } from '../redux/slice/allFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import { AnimationState } from './animation/useSetAnimationState';
 import { toggleShowBtn } from '../redux/slice/showBtnSlice';
+import { setPantry } from '../redux/slice/pantryFoodsSlice';
 
 interface Props {
   checkedList: Food[];
@@ -55,8 +56,16 @@ export const useHandleTableItem = ({
         defaultBtnText: '해제',
         onPress: (filteredArr: Food[]) => {
           dispatch(setAllFoods(changeFavStateInList()));
-          dispatch(setFavoriteList(filteredArr));
+          dispatch(setFavoriteList(filteredArr as Food[]));
         },
+      };
+    }
+    if (route.name === 'PantryFoods') {
+      return {
+        title: '팬트리 식료품 삭제',
+        desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 팬트리 목록에서 삭제하시겠습니까?`,
+        defaultBtnText: '삭제',
+        onPress: (filteredArr: Food[]) => dispatch(setPantry(filteredArr)),
       };
     }
     return {
@@ -95,18 +104,21 @@ export const useHandleTableItem = ({
       const filteredCheckItem = allTableItems.filter(
         (food) => !checkedList.some((checkFood) => checkFood.id === food.id)
       );
-      onPress(filteredCheckItem);
+
+      onPress(filteredCheckItem as any);
     }
     setCheckedList([]);
   };
 
   const onAddShoppingListPress = () => {
     if (checkedList.length === 0) return;
+
     dispatch(addItemsToShoppingList(checkedList));
+
     const foodNameList = checkedList.map((food) => food.name).join(', ');
     if (setCheckedList) {
       return Alert.alert(
-        '장보기 목록 추가',
+        '장보기 목록에 추가',
         `총 ${checkedList.length}개의 식료품(${foodNameList})이 장보기 목록에 추가되었어요.`,
         [
           {

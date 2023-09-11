@@ -1,40 +1,34 @@
-import { useSelector } from '../../redux/hook';
 import { Text, TouchableOpacity } from './native-component';
 import { View } from 'react-native';
 import { Filter, FilterObj } from '../../util';
-import {
-  BLUE,
-  DEEP_YELLOW,
-  GRAY,
-  LIGHT_GRAY,
-  RED,
-} from '../../constant/colors';
+import { GRAY, LIGHT_GRAY } from '../../constant/colors';
+import { useHandleFilter } from '../../hooks';
 
 import Icon from './native-component/Icon';
 import tw from 'twrnc';
 
-export const INACTIVE_COLOR = 'border-slate-500 text-slate-600';
-export const DEFAULT_COLOR = 'bg-blue-100 border-blue-600 text-blue-600';
-export const EXPIRED_COLOR = 'bg-red-50 border-red-400 text-red-600';
-export const LEFT_3_DAYS_COLOR = 'bg-amber-50 border-amber-400 text-amber-600';
+export const INACTIVE_COLOR = 'border-slate-200 text-slate-600';
+export const DEFAULT_COLOR = 'bg-blue-100 border-blue-200 text-blue-600';
+export const EXPIRED_COLOR = 'bg-red-50 border-red-200 text-red-600';
+export const LEFT_3_DAYS_COLOR = 'bg-amber-50 border-amber-200 text-amber-600';
 
 interface Props {
   onFilterPress: (filter: Filter) => void;
   filterObj: FilterObj;
+  active: boolean;
+  iconColor: string;
   length?: number;
-  byCategoryActive?: boolean;
 }
 
 export default function FilterTag({
   onFilterPress,
   filterObj,
   length,
-  byCategoryActive,
+  iconColor,
+  active,
 }: Props) {
-  const { currentFilter } = useSelector((state) => state.currentFilter);
+  const { currentFilter, isCategoryFilter } = useHandleFilter();
   const { filter, icon } = filterObj;
-
-  const matchedFilter = filter === currentFilter;
 
   const ACTIVE_COLOR =
     currentFilter === '유통기한 3일 이내'
@@ -43,43 +37,44 @@ export default function FilterTag({
       ? EXPIRED_COLOR
       : DEFAULT_COLOR;
 
-  const color =
-    matchedFilter || byCategoryActive ? ACTIVE_COLOR : INACTIVE_COLOR;
+  const color = active ? ACTIVE_COLOR : INACTIVE_COLOR;
 
   return (
     <TouchableOpacity
       onPress={() => onFilterPress(filter)}
-      style={tw`bg-white flex-row items-center border px-2.5 py-0.5 gap-1 rounded-full ${color}`}
+      style={tw`shadow-md bg-white flex-row items-center border px-2.5 py-1 gap-1.5 rounded-full ${color}`}
     >
-      <View style={tw`-mx-0.5`}>
-        {icon !== '' && (
+      {icon !== '' && (
+        <View style={tw`-mx-0.5`}>
           <Icon
             type='MaterialCommunityIcons'
             name={icon}
-            size={13}
-            color={
-              matchedFilter || byCategoryActive
-                ? filter === '유통기한 3일 이내'
-                  ? DEEP_YELLOW
-                  : filter === '유통기한 만료'
-                  ? RED
-                  : BLUE
-                : LIGHT_GRAY
-            }
+            size={14}
+            color={active ? iconColor : LIGHT_GRAY}
           />
-        )}
-      </View>
-      <Text style={tw`text-[14px] ${color}`}>{filter}</Text>
-      {filter !== '카테고리별' && (
+        </View>
+      )}
+
+      <Text style={tw`text-sm ${color}`}>{filter}</Text>
+      {filter !== '카테고리' && (
         <Text style={tw`text-sm ${color}`}>{`${length}`}개</Text>
       )}
-      {filter === '카테고리별' && (
-        <Icon
-          name='chevron-down'
-          type='Ionicons'
-          size={13}
-          color={byCategoryActive ? BLUE : GRAY}
-        />
+
+      {filter === '카테고리' && (
+        <>
+          {isCategoryFilter && (
+            <>
+              <Text style={tw`text-sm ${color}`}>: {currentFilter}</Text>
+              <Text style={tw`text-sm ${color}`}>{`${length}`}개</Text>
+            </>
+          )}
+          <Icon
+            name='chevron-down'
+            type='Ionicons'
+            size={13}
+            color={active ? iconColor : GRAY}
+          />
+        </>
       )}
     </TouchableOpacity>
   );

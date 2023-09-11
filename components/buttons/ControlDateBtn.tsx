@@ -1,6 +1,4 @@
-import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
-import { BLUE, DEEP_GRAY, GRAY, LIGHT_GRAY } from '../../constant/colors';
 import { ControlDateBtnType } from '../../constant/controlDateBtns';
 
 import Icon from '../common/native-component/Icon';
@@ -19,12 +17,12 @@ export default function ControlDateBtn({ btn, changeDate, date }: Props) {
         changeDate(btn.calculateDate('add', new Date(date)), '유통기한')
       }
       key={btn.label}
-      style={tw`h-9 px-3 gap-0.5 rounded-3xl flex-row items-center justify-center bg-${btn.btnColor}-50 border border-${btn.btnColor}-500`}
+      style={tw`shadow-md h-9 px-2 gap-0.5 rounded-3xl flex-row items-center justify-center bg-${btn.btnColor}-50 border border-${btn.btnColor}-200`}
     >
       <Icon
-        name={'plus'}
+        name='plus'
         type='MaterialCommunityIcons'
-        size={20}
+        size={18}
         color={btn.btnColor}
       />
 

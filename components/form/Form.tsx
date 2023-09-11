@@ -5,10 +5,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import { FormStep } from '../../constant/formInfo';
 import { useSwiperAnimation } from '../../hooks';
-import { DEVICE_WIDTH } from '../../util';
 
 import FormSectionContainer from './FormSectionContainer';
 import CategoryItem from './CategoryItem';
@@ -44,11 +43,10 @@ export default function Form({
 
   return (
     <View>
-      <View style={tw`overflow-hidden pb-0`}>
+      <View style={tw`overflow-hidden`}>
         <Animated.View
           style={{
-            width: DEVICE_WIDTH,
-            height: 320,
+            height: 310,
             transform: [{ translateX: stepTranslateX }],
           }}
           {...panResponder.panHandlers}
@@ -60,7 +58,6 @@ export default function Form({
                   {name === '식품 정보' && (
                     <FormSectionContainer>
                       <NameItem
-                        title={title}
                         name={food.name}
                         changeInfo={changeInfo}
                         editable={editableName || false}

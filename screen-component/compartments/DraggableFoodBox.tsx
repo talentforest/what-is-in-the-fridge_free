@@ -1,9 +1,8 @@
 import { Animated } from 'react-native';
-import { Food } from '../../constant/foods';
-import { useRef } from 'react';
+import { Food } from '../../constant/foodInfo';
 import { TouchableOpacity } from '../../components/common/native-component';
 import {
-  useDragFood,
+  useDragAndDropFood,
   usePulseAnimation,
   useShakingAnimation,
 } from '../../hooks';
@@ -23,6 +22,13 @@ interface Props {
   searchedName: string;
 }
 
+export const shadowStyle = {
+  shadowColor: '#333',
+  shadowOffset: { height: 1, width: 0 },
+  shadowOpacity: 0.3,
+  shadowRadius: 2,
+};
+
 export default function DraggableFoodBox({
   food,
   isDragging,
@@ -35,19 +41,17 @@ export default function DraggableFoodBox({
   const { selectedFood } = useSelector((state) => state.selectedFood);
   const dispatch = useDispatch();
 
-  const pan = useRef(new Animated.ValueXY()).current;
-
   const {
     opacity,
     translateY,
     bgColor, //
   } = usePulseAnimation({ active: searchedName === food.name });
 
-  const { rotate } = useShakingAnimation({ active: dragMode, isDragging });
+  const { rotate } = useShakingAnimation({ active: dragMode });
 
   const { findCompartmentNum } = useFindCompartmentNum({ food });
 
-  const { panResponder } = useDragFood({
+  const { panResponder } = useDragAndDropFood({
     food,
     setIsDragging,
     setDragPosition,
@@ -59,7 +63,7 @@ export default function DraggableFoodBox({
   const transformAnimation = dragMode
     ? {
         opacity: draggingFoodBox ? 0.3 : 1,
-        transform: [{ rotate }, { translateX: pan.x }, { translateY: pan.y }],
+        transform: [{ rotate }],
       }
     : {
         opacity,
@@ -69,8 +73,9 @@ export default function DraggableFoodBox({
   return (
     <Animated.View
       style={{
-        borderRadius: 100,
+        borderRadius: 8,
         backgroundColor: searchedFoodBox ? bgColor : '#fff',
+        ...shadowStyle,
         ...transformAnimation,
       }}
       {...(dragMode ? { ...panResponder.panHandlers } : null)}

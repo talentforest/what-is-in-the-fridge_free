@@ -19,25 +19,31 @@ interface Props {
 export default function ExpiredDateItem({ date, changeInfo }: Props) {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
+  const today = new Date();
+  const expiredDate = date === '' ? today : new Date(date);
+  const formattedDate = getFormattedDate(expiredDate, 'YYYY년 MM월 DD일');
+
   const onConfirm = (date: Date) => {
     setDatePickerVisible(false);
     changeDate(date);
   };
 
-  const changeDate = (date: Date) => {
-    return changeInfo({ expiredDate: getFormattedDate(date) });
+  const changeDate = (date: Date | string) => {
+    return changeInfo({
+      expiredDate: date === '' ? '' : getFormattedDate(date),
+    });
   };
-
-  const formattedDate = getFormattedDate(date, 'YYYY년 MM월 DD일');
 
   return (
     <View>
-      {/* 유통기한 */}
-      <View>
+      <View style={tw`mb-2`}>
         <FormLabel label='유통기한' />
+
+        {/* 유통기한 */}
+
         <TouchableOpacity
           onPress={() => setDatePickerVisible(true)}
-          style={tw`h-12 border border-blue-300 bg-white rounded-lg flex-row items-center justify-between px-2`}
+          style={tw`h-11 shadow-md border border-blue-300 bg-white rounded-lg flex-row items-center justify-between px-2`}
         >
           <TextInput
             value={formattedDate}
@@ -68,7 +74,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
         locale='ko_KO'
         cancelTextIOS='취소'
         confirmTextIOS='확인'
-        date={new Date(date)}
+        date={expiredDate}
         onConfirm={onConfirm}
         onCancel={() => setDatePickerVisible(false)}
         minimumDate={new Date()}

@@ -1,4 +1,4 @@
-import { Food } from '../constant/foods';
+import { Food } from '../constant/foodInfo';
 
 export const findMatchNameFoods = (foodList: Food[], name: string) => {
   if (name.length === 0) return;

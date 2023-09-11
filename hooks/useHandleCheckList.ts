@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Food } from '../constant/foods';
 import { useDispatch } from '../redux/hook';
 import { toggleShowBtn } from '../redux/slice/showBtnSlice';
+import { Food } from '../constant/foodInfo';
 
 export const useHandleCheckList = () => {
   const [checkedList, setCheckedList] = useState<Food[]>([]);

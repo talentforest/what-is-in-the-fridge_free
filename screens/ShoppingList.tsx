@@ -1,11 +1,13 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addToShoppingList } from '../redux/slice/shoppingListSlice';
-import { KeyboardAvoidingView } from '../components/common/native-component';
+import {
+  KeyboardAvoidingView,
+  SafeBottomAreaView,
+} from '../components/common/native-component';
 import { useSelector } from '../redux/hook';
-import { initialFoodInfo } from '../constant/foods';
-import { useFocusEffect } from '@react-navigation/native';
-import { Keyboard } from 'react-native';
+import { initialFood } from '../constant/foodInfo';
+import { Keyboard, View } from 'react-native';
 import {
   useHandleCheckList,
   useHandleTableItem,
@@ -22,6 +24,7 @@ import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import UUIDGenerator from 'react-native-uuid';
 import SquareBtn from '../components/buttons/SquareBtn';
+import tw from 'twrnc';
 
 export default function ShoppingList() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,12 +37,6 @@ export default function ShoppingList() {
   const { checkedList, setCheckedList, onEntireBoxPress, onCheckBoxPress } =
     useHandleCheckList();
 
-  useFocusEffect(
-    useCallback(() => {
-      setCheckedList([]);
-    }, [])
-  );
-
   const {
     onDeletePress,
     onAddToFridgePress, //
@@ -49,7 +46,7 @@ export default function ShoppingList() {
     if (keyword === '') return Keyboard.dismiss();
 
     const food = {
-      ...initialFoodInfo,
+      ...initialFood,
       id: myUuid as string,
       name: keyword,
     };
@@ -65,63 +62,62 @@ export default function ShoppingList() {
 
   return (
     <KeyboardAvoidingView>
-      <Container>
-        {/* 장보기 목록 */}
-        <TableContainer>
-          <TableHeader title='식료품 목록' length={shoppingList.length} />
-
-          <TableBody
-            title='장보기 목록 식료품'
-            list={shoppingList}
-            onCheckBoxPress={onCheckBoxPress}
-            addToFridgePress={onAddToFridgePress}
-            checkedList={checkedList}
-            animationState={animationState}
-            afterAnimation={() => afterAnimation(onDeletePress, shoppingList)}
-          />
-          <TableFooter
-            list={checkedList}
-            entireChecked={allChecked && !!checkedList.length}
-            onEntirePress={() => onEntireBoxPress(shoppingList)}
-          >
-            <SquareBtn
-              name='장보기 목록에서 삭제'
-              icon='trash-can'
-              disabled={checkedList.length === 0}
-              onPress={() => {
-                onDeletePress(shoppingList, setAnimationState, animationState);
-              }}
+      <SafeBottomAreaView>
+        <Container>
+          <TableContainer>
+            <TableHeader
+              title='장보기 식료품'
+              length={shoppingList.length}
+              entireChecked={allChecked && !!checkedList.length}
+              onEntirePress={() => onEntireBoxPress(shoppingList)}
             />
-            <SquareBtn
-              name='냉장실 문쪽 한번에 추가'
-              icon='trash-can'
-              disabled={checkedList.length === 0}
-              onPress={() => {
-                onDeletePress(shoppingList, setAnimationState, animationState);
-              }}
+
+            <TableBody
+              title='장보기 목록 식료품'
+              list={shoppingList}
+              onCheckBoxPress={onCheckBoxPress}
+              addToFridgePress={onAddToFridgePress}
+              checkedList={checkedList}
+              animationState={animationState}
+              afterAnimation={() => afterAnimation(onDeletePress, shoppingList)}
             />
-          </TableFooter>
-        </TableContainer>
+            <View style={tw`mb-2`}>
+              <TableFooter list={checkedList}>
+                <SquareBtn
+                  name='장보기 목록에서 삭제'
+                  icon='trash-can'
+                  disabled={checkedList.length === 0}
+                  onPress={() => {
+                    onDeletePress(
+                      shoppingList,
+                      setAnimationState,
+                      animationState
+                    );
+                  }}
+                />
+              </TableFooter>
+            </View>
+          </TableContainer>
 
-        {/* 키보드 인풋 */}
-        <TextInputRoundedBox
-          value={keyword}
-          setValue={setKeyword}
-          iconName='plus'
-          placeholder='식료품 이름을 작성해주세요.'
-          onSubmitEditing={onInputSubmit}
-          disabled={keyword === ''}
-        />
-
-        {modalVisible && (
-          <AddSelectFoodModal
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-            setCheckedList={setCheckedList}
-            formSteps={formThreeSteps}
+          <TextInputRoundedBox
+            value={keyword}
+            setValue={setKeyword}
+            iconName='plus'
+            placeholder='식료품 이름을 작성해주세요.'
+            onSubmitEditing={onInputSubmit}
+            disabled={keyword === ''}
           />
-        )}
-      </Container>
+
+          {modalVisible && (
+            <AddSelectFoodModal
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              setCheckedList={setCheckedList}
+              formSteps={formThreeSteps}
+            />
+          )}
+        </Container>
+      </SafeBottomAreaView>
     </KeyboardAvoidingView>
   );
 }

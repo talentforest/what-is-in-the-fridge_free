@@ -76,7 +76,7 @@ export default function Fridge() {
               {!routeFridgeSetting && (
                 <View
                   style={tw`${doorRadius(space)} 
-                  p-1.8 bg-stone-200 border border-stone-400`}
+                  p-1.8 ${FRIDGE_COLOR} border`}
                 >
                   <FridgeSpaceInfo
                     space={space}

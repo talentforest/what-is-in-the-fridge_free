@@ -52,7 +52,7 @@ export default function FoodDetailModal({
             changeInfo={editFoodInfo}
             formSteps={formSteps}
           />
-          <View style={tw`mx-6`}>
+          <View style={tw`mx-6 mt-2`}>
             <SubmitBtn
               color='blue'
               iconName='checkbox-marked-outline'
@@ -119,7 +119,7 @@ export default function FoodDetailModal({
             <SubmitBtn
               color='amber'
               iconName='fridge-off-outline'
-              btnName='냉장고에서 삭제'
+              btnName={`${food.compartmentNum}칸에서 식료품 삭제`}
               onPress={() => deleteFood(editedFood.id)}
             />
           </View>

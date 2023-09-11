@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import { cutLetter } from '../../util';
 import { Text } from './native-component';
 import tw from 'twrnc';
