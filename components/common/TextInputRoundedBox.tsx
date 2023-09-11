@@ -29,7 +29,7 @@ export default function TextInputRoundedBox({
 }: Props) {
   return (
     <View
-      style={tw`h-11 mt-1 w-full border border-slate-500 rounded-full items-center flex-row bg-white pl-2.5 pr-3.5`}
+      style={tw`h-11 mt-1 w-full shadow-lg border border-slate-300 rounded-full items-center flex-row bg-white pl-2.5 pr-3.5`}
     >
       {children}
 
@@ -38,7 +38,7 @@ export default function TextInputRoundedBox({
         onChangeText={setValue}
         placeholder={placeholder}
         blurOnSubmit={false}
-        style={tw`flex-1 border-0 my-0.5`}
+        style={tw`flex-1 border-0 my-0.5 items-center justify-center`}
         onSubmitEditing={onSubmitEditing}
         autoFocus={autoFocus}
       />

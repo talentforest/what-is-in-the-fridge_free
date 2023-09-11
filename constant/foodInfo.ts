@@ -8,22 +8,33 @@ export interface Food {
   id: string;
   image: string;
   name: string;
+  space: Space | '팬트리';
   category: Category;
   purchaseDate: string;
   expiredDate: string;
   favorite: boolean;
-  space: Space;
-  compartmentNum: CompartmentNum;
+  compartmentNum?: CompartmentNum;
 }
 
-export const initialFoodInfo: Food = {
-  id: '0',
-  image: '',
+export const initialFood: Food = {
+  id: 'food_initial',
   name: '',
   category: '신선식품류',
+  favorite: false,
   purchaseDate: '',
   expiredDate: getFormattedDate(new Date()),
-  favorite: false,
   space: '냉장실 안쪽',
   compartmentNum: '1번',
+  image: '',
+};
+
+export const initialPantryFood: Food = {
+  id: 'pantryFood_initial',
+  category: '간식류',
+  name: '',
+  favorite: false,
+  expiredDate: getFormattedDate(new Date()),
+  purchaseDate: '',
+  space: '팬트리',
+  image: '',
 };

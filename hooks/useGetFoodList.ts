@@ -1,4 +1,4 @@
-import { Food } from '../constant/foods';
+import { Food } from '../constant/foodInfo';
 import { CompartmentNum, Space, SpaceType } from '../constant/fridgeInfo';
 import { useSelector } from '../redux/hook';
 import { Filter, expired, getLeftDays, leftThreeDays } from '../util';
@@ -43,7 +43,7 @@ export const useGetFoodList = () => {
     const foodList = type === 'allFoods' ? allFoods : allExpiredFoods;
 
     const filteredFoods = foodList.filter((food) =>
-      matchFoodSpace(food, space, compartmentNum)
+      matchFoodSpace(food as Food, space, compartmentNum)
     );
     return filteredFoods;
   };
@@ -72,6 +72,11 @@ export const useGetFoodList = () => {
     }
     if (filter === '유통기한 3일 이내') {
       const list = foodList.filter((food) => leftThreeDays(food.expiredDate));
+      return orderExpirationDate(list);
+    }
+
+    if (filter === '자주 먹는 식료품') {
+      const list = foodList.filter((food) => !!food.favorite);
       return orderExpirationDate(list);
     }
 

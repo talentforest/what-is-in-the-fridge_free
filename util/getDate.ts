@@ -24,13 +24,13 @@ export const getRelativeTime = (date: string) => {
   if (today === formatDate) return '오늘';
   if (tomorrow === formatDate) return '내일';
 
-  // const time = getDiffDate(date) < 0 ? dayjs(date).add(1, 'day') : date;
   return dayjs(date).fromNow();
 };
 
 export const getFormattedDate = (
   date: string | Date,
-  format = 'YYYY-MM-DD'
+  format?: 'YYYY-MM-DD' | 'YYYY년 MM월 DD일'
 ) => {
-  return dayjs(date).format(format);
+  if (!format) return dayjs(date).format('YYYY-MM-DD');
+  return dayjs(date).format('YYYY년 MM월 DD일');
 };

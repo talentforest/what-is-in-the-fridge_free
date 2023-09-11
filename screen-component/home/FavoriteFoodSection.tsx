@@ -1,5 +1,5 @@
 import { ScrollView, View } from 'react-native';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import {
   Text,
   TouchableOpacity,
@@ -27,6 +27,7 @@ export default function FavoriteFoodSection({ foodList }: Props) {
       title='자주 먹는 식료품'
       message='장을 볼때 어떤 식료품이 없는지 참고할 수 있어요.'
       screen='FavoriteFoods'
+      foodsLength={foodList.length}
     >
       {foodList.length ? (
         <ScrollView
@@ -56,9 +57,9 @@ export default function FavoriteFoodSection({ foodList }: Props) {
         </ScrollView>
       ) : (
         <View
-          style={tw`items-center my-2 h-40 border border-slate-300 rounded-xl bg-white justify-center flex-1`}
+          style={tw`shadow-lg items-center my-2 h-40 border border-slate-300 rounded-xl bg-white justify-center flex-1`}
         >
-          <EmptySign message='자주 먹는 식료품이 없습니다.' />
+          <EmptySign message='자주 먹는 식료품이 없어요.' />
         </View>
       )}
     </SectionContainer>

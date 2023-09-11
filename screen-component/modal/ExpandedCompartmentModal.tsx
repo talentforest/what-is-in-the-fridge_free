@@ -1,5 +1,5 @@
 import { ScrollView, View } from 'react-native';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import { GRAY } from '../../constant/colors';
 import {
   Text,
@@ -10,6 +10,7 @@ import { Filter } from '../../util';
 import { formTwoSteps } from '../../constant/formInfo';
 import { select } from '../../redux/slice/selectedFoodSlice';
 import { useDispatch } from '../../redux/hook';
+import { shadowStyle } from '../compartments/DraggableFoodBox';
 
 import EmptySign from '../../components/common/EmptySign';
 import Modal from '../../components/modal/Modal';
@@ -47,7 +48,7 @@ export default function ExpandedCompartmentModal({
       animationOut='fadeOut'
     >
       <View style={tw`pt-3 px-5 pb-2 flex-row justify-between items-center`}>
-        <Text style={tw`text-lg`}>{compartmentNum}칸 식료품 크게 보기</Text>
+        <Text style={tw`text-lg`}>{compartmentNum}칸</Text>
         <TouchableOpacity
           style={tw`-m-3 p-3`}
           onPress={() => setExpandCompartment(false)}
@@ -68,7 +69,7 @@ export default function ExpandedCompartmentModal({
                 dispatch(select(food));
                 setModalVisible(true);
               }}
-              style={tw`bg-white rounded-full`}
+              style={tw.style(`bg-white rounded-lg`, shadowStyle)}
             >
               <FoodBox food={food} />
             </TouchableOpacity>

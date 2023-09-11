@@ -19,7 +19,7 @@ const Home = () => {
   const { allExpiredFoods } = useGetFoodList();
 
   return (
-    <SafeAreaView edges={['top', 'bottom']} style={tw`${BG_COLOR}`}>
+    <SafeAreaView edges={['top']} style={tw`${BG_COLOR}`}>
       <ScrollView
         contentContainerStyle={tw`pb-10 ${BG_COLOR}`}
         showsVerticalScrollIndicator={false}
@@ -40,11 +40,10 @@ const Home = () => {
             </Text>
           </View>
 
-          <View style={tw`border-t border-slate-300 mb-4`} />
           <ShoppingListSection foodList={shoppingList} />
-          <View style={tw`border-t border-slate-300 mt-3 mb-6`} />
+
           <ExpiredFoodSection foodList={allExpiredFoods} />
-          <View style={tw`border-t border-slate-300 mt-3 mb-6`} />
+
           <FavoriteFoodSection foodList={favoriteFoods} />
         </Container>
       </ScrollView>

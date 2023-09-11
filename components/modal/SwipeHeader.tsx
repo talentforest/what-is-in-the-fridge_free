@@ -17,7 +17,7 @@ export default function SwipeHeader({ title, closeModal }: Props) {
   return (
     <View
       style={tw.style(
-        `${headerColor} rounded-t-2xl border-b border-slate-400 px-6 py-3`
+        `${headerColor} rounded-t-2xl border-b border-slate-300 px-6 py-3`
       )}
     >
       <View style={tw`mb-5 bg-slate-400 w-15 self-center h-2 rounded-2xl`} />

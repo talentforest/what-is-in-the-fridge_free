@@ -3,7 +3,7 @@ import { useSelector } from '../redux/hook';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { CompartmentNum } from '../constant/fridgeInfo';
 import { DEVICE_HEIGHT } from '../util';
-import { Food } from '../constant/foods';
+import { Food } from '../constant/foodInfo';
 
 const FILTER_HEIGHT = 48;
 const GAP = 10;

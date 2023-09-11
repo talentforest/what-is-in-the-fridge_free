@@ -5,7 +5,7 @@ import { addFood, removeFood } from '../redux/slice/allFoodsSlice';
 import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
-import { Food } from '../constant/foods';
+import { Food } from '../constant/foodInfo';
 import UUIDGenerator from 'react-native-uuid';
 
 export const useAddSelectFood = () => {

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import { deduplicate } from '../../util/deduplicate';
 
 export const initialState: { favoriteFoods: Food[] } = {

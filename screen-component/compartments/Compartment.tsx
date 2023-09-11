@@ -1,6 +1,6 @@
 import { Animated, ScrollView, View } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 import {
   Text,
   TouchableOpacity,
@@ -40,7 +40,11 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
   const [expandCompartment, setExpandCompartment] = useState(false);
 
   const { getFoodList } = useGetFoodList();
-  const compartmentFoodList = getFoodList('allFoods', space, compartmentNum);
+  const compartmentFoodList = getFoodList(
+    'allFoods',
+    space,
+    compartmentNum
+  ) as Food[];
 
   const bgOpacity = useRef(new Animated.Value(0)).current;
 
@@ -59,7 +63,7 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
   return (
     <>
       <View
-        style={tw`flex-1 border border-slate-400 rounded-lg ${
+        style={tw`flex-1 border border-slate-300 rounded-lg ${
           dragMode ? 'bg-amber-50' : 'bg-stone-50'
         } `}
       >
@@ -92,7 +96,7 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
           <ScrollView
             scrollEnabled={!dragMode}
             style={tw`px-1 flex-1`}
-            contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-2 flex-wrap gap-1 items-center`}
+            contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-2 flex-wrap gap-1.3 items-center`}
             showsVerticalScrollIndicator={false}
           >
             {compartmentFoodList.map((food: Food) => (

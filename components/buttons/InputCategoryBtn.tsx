@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { BLUE, LIGHT_GRAY } from '../../constant/colors';
+import { LIGHT_GRAY } from '../../constant/colors';
 import { Category } from '../../constant/foodCategories';
 import { Text, TouchableOpacity } from '../common/native-component';
 
@@ -16,10 +16,12 @@ export default function InputCategoryBtn({ category, setCategoryOpen }: Props) {
   return (
     <TouchableOpacity
       onPress={() => setCategoryOpen(true)}
-      style={tw`h-full border-r border-slate-500 flex-row items-center justify-center pl-1 pr-1.5`}
+      style={tw`h-full border-r border-slate-300 flex-row items-center justify-center pl-1 pr-1.5`}
     >
       {category === '' ? (
-        <Text style={tw`text-center text-slate-400 max-w-19`}>카테고리</Text>
+        <Text style={tw`text-center text-slate-400 max-w-19 text-[15px]`}>
+          카테고리
+        </Text>
       ) : (
         <View style={tw`p-2`}>
           <CategoryImageIcon kind='icon' category={category} size={20} />

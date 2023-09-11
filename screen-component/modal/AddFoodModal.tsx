@@ -1,7 +1,8 @@
+import { View } from 'react-native';
 import { FoodLocation } from '../../constant/fridgeInfo';
 import { FormStep } from '../../constant/formInfo';
 import { useAddFood } from '../../hooks';
-import { View } from 'react-native';
+import { initialFood } from '../../constant/foodInfo';
 
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
@@ -21,28 +22,34 @@ export default function AddFoodModal({
   setModalVisible,
   formSteps,
 }: Props) {
-  const { newFood, addFoodInfo, onAddSubmit } = useAddFood({ foodLocation });
+  const { newFood, changeFoodInfo, onAddSubmit } = useAddFood({
+    initialFoodInfo: initialFood,
+    foodLocation,
+  });
 
   return (
     <Modal
       title='새로운 식료품 추가'
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
+      hasBackdrop
     >
-      {foodLocation && (
-        <Form
-          title='새로운 식료품 추가'
-          editableName={true}
-          food={newFood}
-          changeInfo={addFoodInfo}
-          formSteps={formSteps}
-        />
-      )}
+      <View style={tw`pt-2`}>
+        {foodLocation && (
+          <Form
+            title='새로운 식료품 추가'
+            editableName={true}
+            food={newFood}
+            changeInfo={changeFoodInfo}
+            formSteps={formSteps}
+          />
+        )}
+      </View>
       <View style={tw`mx-6`}>
         <SubmitBtn
           iconName='plus'
           color='blue'
-          btnName='냉장고에 식료품 추가'
+          btnName={`${foodLocation.compartmentNum}칸에 식료품 추가`}
           onPress={() => {
             onAddSubmit(setModalVisible);
           }}

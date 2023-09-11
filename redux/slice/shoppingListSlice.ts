@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { deduplicate } from '../../util/deduplicate';
-import { Food } from '../../constant/foods';
+import { Food } from '../../constant/foodInfo';
 
 export const initialState: { shoppingList: Food[] } = {
   shoppingList: [],

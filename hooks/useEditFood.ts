@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Food, FoodInfo } from '../constant/foods';
+import { Food, FoodInfo } from '../constant/foodInfo';
 import { useDispatch } from '../redux/hook';
 import { editFood } from '../redux/slice/allFoodsSlice';
 import {
