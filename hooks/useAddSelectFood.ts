@@ -31,8 +31,6 @@ export const useAddSelectFood = () => {
     );
   };
 
-  console.log(selectedFood.compartmentNum);
-
   const onSubmit = (
     setModalVisible: (visible: boolean) => void,
     setCheckedList: (checkedList: Food[]) => void
