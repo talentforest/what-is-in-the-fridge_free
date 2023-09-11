@@ -12,7 +12,7 @@ export const initialState: { pantryFoods: Food[] } = {
       category: '간편·즉석식품류',
       purchaseDate: '',
       expiredDate: getFormattedDate(new Date()),
-      favorite: true,
+      favorite: false,
       space: '팬트리',
     },
     {

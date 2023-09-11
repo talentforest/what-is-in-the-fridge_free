@@ -1,13 +1,13 @@
 import { Category, foodCategories } from '../constant/foodCategories';
 
-export type SpaceFilter = '냉장실' | '냉동실';
-export type ExistAbsenceFilter = '냉장고에 있음' | '냉장고에 없음';
+export type SpaceFilter = '냉장실' | '냉동실' | '팬트리';
+export type AbsenceFilter = '없는 식료품';
 export type ExpiredFilter = '유통기한 만료' | '유통기한 3일 이내';
 export type FavoriteFilter = '자주 먹는 식료품';
 
 export type Filter =
   | SpaceFilter
-  | ExistAbsenceFilter
+  | AbsenceFilter
   | ExpiredFilter
   | Category
   | FavoriteFilter
@@ -25,11 +25,11 @@ export const favoriteFilterObj: FilterObj = {
 export const spaceFilters: FilterObj[] = [
   { filter: '냉장실', icon: 'fridge' },
   { filter: '냉동실', icon: 'fridge' },
+  { filter: '팬트리', icon: 'inbox-multiple' },
 ];
 
 export const existAbsenceFilters: FilterObj[] = [
-  { filter: '냉장고에 없음', icon: 'fridge-off-outline' },
-  { filter: '냉장고에 있음', icon: 'fridge-outline' },
+  { filter: '없는 식료품', icon: 'food-off-outline' },
 ];
 
 export const expiredFilters: FilterObj[] = [

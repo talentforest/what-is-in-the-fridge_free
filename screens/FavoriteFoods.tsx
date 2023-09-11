@@ -32,13 +32,13 @@ import SquareBtn from '../components/buttons/SquareBtn';
 import tw from 'twrnc';
 
 export default function FavoriteFoods() {
-  const { currentFilter, initializeFilter } = useHandleFilter();
   const [inputValue, setInputValue] = useState('');
   const [showCaution, setShowCaution] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState<Category | ''>('');
 
   const { findFavoriteListItem } = useFindFood();
+  const { currentFilter, initializeFilter } = useHandleFilter();
   const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
   const { onSubmitFavoriteListItem } = useSubmitFavoriteFoods();
 
