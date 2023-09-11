@@ -2,7 +2,7 @@ import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { cutLetter } from '../../util';
 import { BLUE } from '../../constant/colors';
-import { Food, PantryFood, initialFood } from '../../constant/foodInfo';
+import { Food, initialFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
 import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
 import { useRoute } from '@react-navigation/native';
@@ -14,8 +14,8 @@ import tw from 'twrnc';
 
 interface Props {
   children?: ReactNode;
-  food: Food | PantryFood;
-  onCheckBoxPress: (food: Food | PantryFood) => void;
+  food: Food;
+  onCheckBoxPress: (food: Food) => void;
   isCheckedItem: boolean;
   animationState: AnimationState;
   afterAnimation: () => void;

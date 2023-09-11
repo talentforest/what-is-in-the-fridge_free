@@ -18,7 +18,7 @@ export type ModalTitle =
   | '장보기 목록 식료품 추가'
   | '새로운 식료품 추가'
   | '식료품 정보 수정'
-  | '펜트리 식료품 추가';
+  | '팬트리 식료품 추가';
 
 interface Props {
   modalVisible: boolean;
@@ -49,7 +49,7 @@ export default function Modal({
   const bgColor =
     title === '식료품 상세 정보'
       ? 'bg-white'
-      : title === '펜트리 식료품 추가'
+      : title === '팬트리 식료품 추가'
       ? 'bg-stone-100'
       : animationIn === 'fadeIn'
       ? 'bg-stone-200'

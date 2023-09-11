@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from '../redux/hook';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
-import { Food, FoodInfo, PantryFood } from '../constant/foodInfo';
+import { Food, FoodInfo } from '../constant/foodInfo';
 import { useState } from 'react';
 import { addFood } from '../redux/slice/allFoodsSlice';
 import { FoodLocation } from '../constant/fridgeInfo';
@@ -9,12 +9,12 @@ import { addToPantry } from '../redux/slice/pantryFoodsSlice';
 import UUIDGenerator from 'react-native-uuid';
 
 interface Props {
-  initialFoodInfo: Food | PantryFood;
+  initialFoodInfo: Food;
   foodLocation?: FoodLocation;
 }
 
 export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
-  const [newFood, setNewFood] = useState<Food | PantryFood>(initialFoodInfo);
+  const [newFood, setNewFood] = useState<Food>(initialFoodInfo);
 
   const { allFoods } = useSelector((state) => state.allFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
@@ -26,7 +26,7 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
   const changeFoodInfo = (info: FoodInfo) =>
     setNewFood({ ...newFood, ...info });
 
-  const alertExistFood = (food: Food | PantryFood) => {
+  const alertExistFood = (food: Food) => {
     if (foodLocation) {
       return Alert.alert(
         `${food.name}`,
@@ -39,9 +39,7 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
   const onAddSubmit = (setModalVisible: (visible: boolean) => void) => {
     const { name, category, favorite } = newFood;
 
-    const foodList: (Food | PantryFood)[] = foodLocation
-      ? allFoods
-      : pantryFoods;
+    const foodList: Food[] = foodLocation ? allFoods : pantryFoods;
 
     const existFood = foodList.find((food) => food.name === name);
     if (existFood) return alertExistFood(existFood);
@@ -68,24 +66,19 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
       favorite: favoriteListItem ? favoriteListItem.favorite : favorite,
     };
 
-    const foodObj: Food | PantryFood = foodLocation
-      ? ({
+    const foodObj: Food = foodLocation
+      ? {
           ...foodToAdd,
           space: foodLocation.space,
           compartmentNum: foodLocation.compartmentNum,
-        } as Food)
-      : ({ ...foodToAdd, space: '펜트리' } as PantryFood);
+        }
+      : { ...foodToAdd, space: '팬트리' };
 
     if (!favoriteListItem && foodToAdd.favorite) {
       dispatch(addFavorite(foodObj));
     }
 
-    dispatch(
-      foodLocation
-        ? addFood(foodObj as Food)
-        : addToPantry(foodObj as PantryFood)
-    );
-
+    dispatch(foodLocation ? addFood(foodObj as Food) : addToPantry(foodObj));
     setModalVisible(false);
   };
 

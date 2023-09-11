@@ -30,7 +30,7 @@ export default function AddPantryFoodModal({
 
   return (
     <Modal
-      title='펜트리 식료품 추가'
+      title='팬트리 식료품 추가'
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
       hasBackdrop
@@ -40,7 +40,7 @@ export default function AddPantryFoodModal({
       <View style={tw`py-6`}>
         <View style={tw`mb-1 px-6 flex-row justify-between items-center`}>
           <Text style={tw.style('text-[17px]', FontGmarketSansBold)}>
-            펜트리 식료품 추가
+            팬트리 식료품 추가
           </Text>
           <TouchableOpacity
             style={tw`p-2`}
@@ -51,7 +51,7 @@ export default function AddPantryFoodModal({
         </View>
 
         <Form
-          title='펜트리 식료품 추가'
+          title='팬트리 식료품 추가'
           editableName={true}
           food={newFood}
           changeInfo={changeFoodInfo}
@@ -62,7 +62,7 @@ export default function AddPantryFoodModal({
           <SubmitBtn
             iconName='plus'
             color='amber'
-            btnName='펜트리에 추가'
+            btnName='팬트리에 추가'
             onPress={() => onAddSubmit(setModalVisible)}
           />
         </View>

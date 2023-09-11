@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Food, PantryFood } from '../../constant/foodInfo';
+import { Food } from '../../constant/foodInfo';
 import { Filter, FilterObj } from '../../util';
 import { BLUE, DEEP_YELLOW, RED } from '../../constant/colors';
 import { FoodCategory } from '../../constant/foodCategories';
@@ -13,12 +13,9 @@ import tw from 'twrnc';
 interface Props {
   filterList: FilterObj[];
   categoryFilters?: FoodCategory[];
-  foodList: (Food | PantryFood)[];
-  getTableList: (
-    filter: Filter,
-    list: (Food | PantryFood)[]
-  ) => (Food | PantryFood)[];
-  setCheckedList?: (foods: (Food | PantryFood)[]) => void;
+  foodList: Food[];
+  getTableList: (filter: Filter, list: Food[]) => Food[];
+  setCheckedList?: (foods: Food[]) => void;
 }
 
 export default function TableFilters({

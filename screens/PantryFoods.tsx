@@ -15,7 +15,6 @@ import {
 } from '../hooks';
 import { foodCategories } from '../constant/foodCategories';
 import { entireFilterObj, favoriteFilterObj } from '../util';
-import { PantryFood } from '../constant/foodInfo';
 
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
@@ -76,7 +75,7 @@ export default function PantryFoods() {
       <Container>
         <TableContainer>
           <TableHeader
-            title='펜트리 식료품'
+            title='팬트리 식료품'
             length={filteredList.length}
             entireChecked={allChecked && !!checkedList.length}
             onEntirePress={() => onEntireBoxPress(pantryFoods)}
@@ -101,7 +100,7 @@ export default function PantryFoods() {
                 renderItem={({ item }) => (
                   <PantryListBox
                     key={item.id}
-                    food={item as PantryFood}
+                    food={item}
                     onCheckBoxPress={onCheckBoxPress}
                     isCheckedItem={
                       !!checkedList.find((food) => food.id === item.id)
@@ -124,7 +123,7 @@ export default function PantryFoods() {
                     currentFilter === '전체'
                       ? ''
                       : `${currentFilter} 카테고리의, `
-                  } 펜트리 식료품이 없어요.`}
+                  } 팬트리 식료품이 없어요.`}
                 />
               </View>
             )}
@@ -145,7 +144,7 @@ export default function PantryFoods() {
               onPress={onAddShoppingListPress}
             />
             <SquareBtn
-              name='펜트리에서 삭제'
+              name='팬트리에서 삭제'
               icon='trash-can'
               disabled={checkedList.length === 0}
               onPress={() => {

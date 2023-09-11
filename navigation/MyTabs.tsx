@@ -94,8 +94,8 @@ export default function MyTabs() {
           tabBarIcon: ({ color }) => (
             <TabIcon name='inbox-multiple' color={color} />
           ),
-          tabBarLabel: '나의 펜트리',
-          title: '나의 펜트리',
+          tabBarLabel: '나의 팬트리',
+          title: '나의 팬트리',
 
           ...headerOptions,
         }}

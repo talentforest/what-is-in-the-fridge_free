@@ -119,7 +119,7 @@ export default function FoodDetailModal({
             <SubmitBtn
               color='amber'
               iconName='fridge-off-outline'
-              btnName='냉장고에서 삭제'
+              btnName={`${food.compartmentNum}칸에서 식료품 삭제`}
               onPress={() => deleteFood(editedFood.id)}
             />
           </View>

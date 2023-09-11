@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { deduplicate } from '../../util/deduplicate';
-import { Food, PantryFood } from '../../constant/foodInfo';
+import { Food } from '../../constant/foodInfo';
 
-export const initialState: { shoppingList: (Food | PantryFood)[] } = {
+export const initialState: { shoppingList: Food[] } = {
   shoppingList: [],
 };
 
@@ -13,16 +13,13 @@ const shoppingListSlice = createSlice({
     setShoppingList: (state, action: { payload: Food[] }) => {
       state.shoppingList = deduplicate([...action.payload]);
     },
-    addItemsToShoppingList: (
-      state,
-      action: { payload: (Food | PantryFood)[] }
-    ) => {
+    addItemsToShoppingList: (state, action: { payload: Food[] }) => {
       state.shoppingList = deduplicate([
         ...state.shoppingList,
         ...action.payload,
       ]);
     },
-    addToShoppingList: (state, action: { payload: Food | PantryFood }) => {
+    addToShoppingList: (state, action: { payload: Food }) => {
       state.shoppingList = deduplicate([...state.shoppingList, action.payload]);
     },
     removeFromShoppingList: (state, action: { payload: { name: string } }) => {

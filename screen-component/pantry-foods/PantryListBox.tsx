@@ -4,21 +4,20 @@ import {
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
-import { PantryFood } from '../../constant/foodInfo';
 import { cutLetter } from '../../util';
 import { AnimationState, useDragBox, useSlideAnimation } from '../../hooks';
+import { Food } from '../../constant/foodInfo';
 
 import CheckBox from '../../components/common/CheckBox';
 import Icon from '../../components/common/native-component/Icon';
-import DragLeftBtn from '../../components/buttons/DragLeftBtn';
 import PantryFoodInfo from './PantryFoodInfo';
 import CategoryImageIcon from '../../components/common/CategoryImageIcon';
 import tw from 'twrnc';
 
 interface Props {
-  food: PantryFood;
+  food: Food;
   isCheckedItem: boolean;
-  onCheckBoxPress: (food: PantryFood) => void;
+  onCheckBoxPress: (food: Food) => void;
   animationState: AnimationState;
   afterAnimation: () => void;
 }
