@@ -19,7 +19,7 @@ export const useSwiperAnimation = ({ steps }: Props) => {
 
   const route = useRoute();
   const formWidth =
-    route.name === 'Compartments' ? -DEVICE_WIDTH : -DEVICE_WIDTH + 32;
+    route.name !== 'PantryFoods' ? -DEVICE_WIDTH : -DEVICE_WIDTH + 32;
 
   useEffect(() => {
     currentStepRef.current = currentStep;
