@@ -11,11 +11,11 @@ export function TextInput({ style, ...props }: Props) {
   return (
     <Input
       style={tw.style(
-        `text-base h-10 border border-slate-200 px-2 rounded-lg bg-white`,
-        { lineHeight: 0 },
+        `text-[16px] h-10 border border-slate-200 px-2 rounded-lg bg-white`,
         FontGmarketSansRegular,
         style
       )}
+      numberOfLines={1}
       placeholderTextColor={LIGHT_GRAY}
       allowFontScaling={false}
       returnKeyType='done'
