@@ -1,4 +1,4 @@
-import { Food, PantryFood } from '../constant/foodInfo';
+import { Food } from '../constant/foodInfo';
 import { Alert } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import {
@@ -14,8 +14,8 @@ import { toggleShowBtn } from '../redux/slice/showBtnSlice';
 import { setPantry } from '../redux/slice/pantryFoodsSlice';
 
 interface Props {
-  checkedList: (Food | PantryFood)[];
-  setCheckedList: (checkedList: (Food | PantryFood)[]) => void;
+  checkedList: Food[];
+  setCheckedList: (checkedList: Food[]) => void;
   setModalVisible?: (modalVisible: boolean) => void;
 }
 
@@ -63,10 +63,9 @@ export const useHandleTableItem = ({
     if (route.name === 'PantryFoods') {
       return {
         title: '팬트리 식료품 삭제',
-        desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 펜트리 목록에서 삭제하시겠습니까?`,
+        desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 팬트리 목록에서 삭제하시겠습니까?`,
         defaultBtnText: '삭제',
-        onPress: (filteredArr: PantryFood[]) =>
-          dispatch(setPantry(filteredArr as PantryFood[])),
+        onPress: (filteredArr: Food[]) => dispatch(setPantry(filteredArr)),
       };
     }
     return {
@@ -78,7 +77,7 @@ export const useHandleTableItem = ({
   };
 
   const onDeletePress = (
-    allTableItems: (Food | PantryFood)[],
+    allTableItems: Food[],
     setAnimationState?: (state: AnimationState) => void,
     animationState?: AnimationState
   ) => {

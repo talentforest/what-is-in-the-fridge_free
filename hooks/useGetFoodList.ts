@@ -1,4 +1,4 @@
-import { Food, PantryFood } from '../constant/foodInfo';
+import { Food } from '../constant/foodInfo';
 import { CompartmentNum, Space, SpaceType } from '../constant/fridgeInfo';
 import { useSelector } from '../redux/hook';
 import { Filter, expired, getLeftDays, leftThreeDays } from '../util';
@@ -7,7 +7,7 @@ export const useGetFoodList = () => {
   const { allFoods } = useSelector((state) => state.allFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
 
-  const orderExpirationDate = (list: (Food | PantryFood)[]) => {
+  const orderExpirationDate = (list: Food[]) => {
     const sortedList = list?.sort(
       (food1, food2) =>
         new Date(food1.expiredDate).getTime() -
@@ -57,10 +57,7 @@ export const useGetFoodList = () => {
       !!!allFoods.find((food) => food.name === favoriteFood.name)
   );
 
-  const getFilteredFoodList = (
-    filter: Filter,
-    foodList: (Food | PantryFood)[]
-  ) => {
+  const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
     if (filter === '전체') return foodList;
 
     if (filter === '냉장고에 있음') return favoriteFoodsInFridge;

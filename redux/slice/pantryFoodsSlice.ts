@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { deduplicate } from '../../util/deduplicate';
-import { PantryFood } from '../../constant/foodInfo';
 import { getFormattedDate } from '../../util';
+import { Food } from '../../constant/foodInfo';
 
-export const initialState: { pantryFoods: PantryFood[] } = {
+export const initialState: { pantryFoods: Food[] } = {
   pantryFoods: [
     {
       id: 'pantryFood_1',
@@ -13,7 +13,7 @@ export const initialState: { pantryFoods: PantryFood[] } = {
       purchaseDate: '',
       expiredDate: getFormattedDate(new Date()),
       favorite: true,
-      space: '펜트리',
+      space: '팬트리',
     },
     {
       id: 'pantryFood_2',
@@ -23,7 +23,7 @@ export const initialState: { pantryFoods: PantryFood[] } = {
       purchaseDate: '2023-04-02',
       expiredDate: getFormattedDate(new Date()),
       favorite: false,
-      space: '펜트리',
+      space: '팬트리',
     },
   ],
 };
@@ -32,10 +32,10 @@ const pantryFoodsSlice = createSlice({
   name: 'pantryFoods',
   initialState,
   reducers: {
-    setPantry: (state, action: { payload: PantryFood[] }) => {
+    setPantry: (state, action: { payload: Food[] }) => {
       state.pantryFoods = deduplicate([...action.payload]);
     },
-    addToPantry: (state, action: { payload: PantryFood }) => {
+    addToPantry: (state, action: { payload: Food }) => {
       state.pantryFoods = deduplicate([...state.pantryFoods, action.payload]);
     },
     removeFromPantry: (state, action: { payload: { name: string } }) => {
@@ -45,7 +45,7 @@ const pantryFoodsSlice = createSlice({
     },
     editPantryFood: (
       state,
-      action: { payload: { foodId: string; editedFood: PantryFood } }
+      action: { payload: { foodId: string; editedFood: Food } }
     ) => {
       state.pantryFoods = state.pantryFoods.map((food) => {
         const { foodId, editedFood } = action.payload;

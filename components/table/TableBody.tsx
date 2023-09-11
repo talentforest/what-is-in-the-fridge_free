@@ -1,4 +1,4 @@
-import { Food, PantryFood } from '../../constant/foodInfo';
+import { Food } from '../../constant/foodInfo';
 import { TouchableOpacity } from '../common/native-component';
 import { useRoute } from '@react-navigation/native';
 import { FlatList, View } from 'react-native';
@@ -13,11 +13,11 @@ import EmptySign from '../common/EmptySign';
 import tw from 'twrnc';
 
 interface Props {
-  list: (Food | PantryFood)[];
-  onCheckBoxPress: (food: Food | PantryFood) => void;
+  list: Food[];
+  onCheckBoxPress: (food: Food) => void;
   addToFridgePress?: (food: Food) => void;
   title: '장보기 목록 식료품' | '자주 먹는 식료품' | '유통기한 주의 식료품';
-  checkedList: (Food | PantryFood)[];
+  checkedList: Food[];
   animationState: AnimationState;
   afterAnimation: () => void;
 }

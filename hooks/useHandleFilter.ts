@@ -1,5 +1,5 @@
 import { foodCategories } from '../constant/foodCategories';
-import { Food, PantryFood } from '../constant/foodInfo';
+import { Food } from '../constant/foodInfo';
 import { useDispatch, useSelector } from '../redux/hook';
 import { changeFilter } from '../redux/slice/filterSlice';
 import { Filter } from '../util';
@@ -17,7 +17,7 @@ export const useHandleFilter = () => {
 
   const onFilterPress = (
     filter: Filter,
-    setCheckedList?: (foods: (Food | PantryFood)[]) => void
+    setCheckedList?: (foods: Food[]) => void
   ) => {
     dispatch(changeFilter(filter));
     if (setCheckedList) return setCheckedList([]);

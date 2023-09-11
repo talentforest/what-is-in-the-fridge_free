@@ -1,13 +1,13 @@
 import { Animated, View } from 'react-native';
 import { Text } from '../common/native-component';
-import { Food, PantryFood } from '../../constant/foodInfo';
+import { Food } from '../../constant/foodInfo';
 import { useSlideAnimation } from '../../hooks';
 import { useSelector } from '../../redux/hook';
 import { ReactNode } from 'react';
 import tw from 'twrnc';
 
 interface Props {
-  list: (Food | PantryFood)[];
+  list: Food[];
   children: ReactNode;
 }
 
