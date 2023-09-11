@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   KeyboardAvoidingView,
   TouchableOpacity,
@@ -51,14 +51,12 @@ export default function PantryFoods() {
   useFocusEffect(
     useCallback(() => {
       initializeFilter();
-      setCheckedList([]);
+      return () => {
+        initializeFilter();
+        setCheckedList([]);
+      };
     }, [])
   );
-
-  useEffect(() => {
-    initializeFilter();
-    setCheckedList([]);
-  }, []);
 
   const {
     animationState,
