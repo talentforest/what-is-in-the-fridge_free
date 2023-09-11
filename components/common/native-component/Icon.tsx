@@ -1,8 +1,10 @@
 import {
   BLUE,
   DEEP_YELLOW,
+  GRAY,
   INDIGO,
   ORANGE_RED,
+  RED,
 } from '../../../constant/colors';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AIcon from 'react-native-vector-icons/AntDesign';
@@ -32,6 +34,10 @@ export default function Icon({
       ? INDIGO
       : color === 'orange'
       ? ORANGE_RED
+      : color === 'gray'
+      ? GRAY
+      : color === 'red'
+      ? RED
       : color;
 
   return (

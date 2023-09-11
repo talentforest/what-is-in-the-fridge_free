@@ -23,7 +23,7 @@ export default function CheckBoxItem({
       onPress={onPress}
     >
       <CheckBox checked={checked} activeColor={BLUE} />
-      <Text style={tw`${checked ? 'text-slate-900' : 'text-slate-500'}`}>
+      <Text style={tw`${checked ? 'text-blue-700' : 'text-slate-500'}`}>
         {title}
       </Text>
     </TouchableOpacity>

@@ -51,7 +51,7 @@ export default function Compartments({ route }: Route) {
         <TableFilters
           filterList={[entireFilterObj, ...expiredFilters]}
           getTableList={getFilteredFoodList}
-          foodList={getFoodList('expiredFoods', space)}
+          foodList={getFoodList('allFoods', space)}
         />
         <View
           style={tw`${FRIDGE_COLOR} shadow-xl p-2.5 gap-2.5 flex-1 border border-slate-300 w-full m-auto self-center justify-center rounded-lg`}
@@ -61,6 +61,7 @@ export default function Compartments({ route }: Route) {
               key={compartment.compartmentNum}
               foodLocation={{ ...compartment, space }}
               searchedName={searchedName}
+              foodLengthBySpace={getFoodList('allFoods', space).length}
             />
           ))}
         </View>

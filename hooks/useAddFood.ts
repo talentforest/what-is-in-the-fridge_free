@@ -46,7 +46,7 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
 
     if (name === '')
       return Alert.alert(
-        '이름 작성 안내',
+        '식료품 이름 미작성',
         '식료품의 이름이 작성되지 않았어요.'
       );
 
