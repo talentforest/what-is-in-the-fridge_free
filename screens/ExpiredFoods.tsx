@@ -22,7 +22,7 @@ import tw from 'twrnc';
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
 
-  const { getFilteredFoodList, allExpiredFridgeFoods } = useGetFoodList();
+  const { getFilteredFoodList, allExpiredFoods } = useGetFoodList();
 
   const {
     checkedList,
@@ -36,10 +36,7 @@ export default function ExpiredFoods() {
     setCheckedList,
   });
 
-  const filteredList = getFilteredFoodList(
-    currentFilter,
-    allExpiredFridgeFoods
-  );
+  const filteredList = getFilteredFoodList(currentFilter, allExpiredFoods());
 
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
@@ -64,7 +61,7 @@ export default function ExpiredFoods() {
             filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
             getTableList={getFilteredFoodList}
             setCheckedList={setCheckedList}
-            foodList={allExpiredFridgeFoods}
+            foodList={allExpiredFoods()}
           />
 
           <TableBody
@@ -74,7 +71,7 @@ export default function ExpiredFoods() {
             checkedList={checkedList}
             animationState={animationState}
             afterAnimation={() =>
-              afterAnimation(onDeletePress, allExpiredFridgeFoods)
+              afterAnimation(onDeletePress, allExpiredFoods())
             }
           />
 
@@ -84,7 +81,7 @@ export default function ExpiredFoods() {
                 name='냉장고에서 삭제'
                 onPress={() =>
                   onDeletePress(
-                    allExpiredFridgeFoods,
+                    allExpiredFoods(),
                     setAnimationState,
                     animationState
                   )
