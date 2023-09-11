@@ -1,12 +1,13 @@
 import { Alert } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import { removeFromShoppingList } from '../redux/slice/shoppingListSlice';
-import { addFood, removeFood } from '../redux/slice/allFoodsSlice';
+import { addFood, editFood, removeFood } from '../redux/slice/allFoodsSlice';
 import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
 import { Food } from '../constant/foodInfo';
 import UUIDGenerator from 'react-native-uuid';
+import { addToPantry } from '../redux/slice/pantryFoodsSlice';
 
 export const useAddSelectFood = () => {
   const { allFoods } = useSelector((state) => state.allFoods);
@@ -26,6 +27,8 @@ export const useAddSelectFood = () => {
       `${food.space} ${food.compartmentNum}에 이미 식료품이 있어요.`
     );
   };
+
+  console.log(selectedFood.compartmentNum);
 
   const onSubmit = (
     setModalVisible: (visible: boolean) => void,
@@ -51,13 +54,19 @@ export const useAddSelectFood = () => {
     } else {
       dispatch(removeFavorite(foodWithNewId));
     }
-    dispatch(addFood(foodWithNewId));
+
+    if (selectedFood.compartmentNum) {
+      dispatch(addFood(foodWithNewId));
+    } else {
+      dispatch(addToPantry(foodWithNewId));
+    }
     dispatch(removeFromShoppingList({ name: foodWithNewId.name }));
 
-    Alert.alert(
-      `${foodWithNewId.name}`,
-      `${foodWithNewId.space} ${foodWithNewId.compartmentNum}에 추가되었어요.`
-    );
+    const position = foodWithNewId.compartmentNum
+      ? `${foodWithNewId.space} ${foodWithNewId.compartmentNum}`
+      : `${foodWithNewId.space}`;
+
+    Alert.alert(`${foodWithNewId.name}`, `${position}에 추가되었어요.`);
 
     setModalVisible(false);
     setCheckedList([]);
