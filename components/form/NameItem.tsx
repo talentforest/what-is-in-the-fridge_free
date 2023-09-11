@@ -26,35 +26,34 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
   const matchedFoods = findMatchNameFoods(favoriteFoods, name);
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 31,
+    toValue: 36,
     active: !!matchedFoods?.length,
   });
 
   const editableStyle = !editable
-    ? 'border-slate-400 bg-slate-200 text-slate-600'
-    : 'bg-white border-blue-300';
+    ? 'border-slate-300 bg-slate-200 text-slate-600'
+    : 'bg-white border-blue-200';
 
   return (
     <View>
       <FormLabel label='식료품 이름' />
-      <View style={tw`flex-row gap-1`}>
-        <View
-          style={tw`${editableStyle} border flex-1 flex-row items-center rounded-lg h-12`}
-        >
-          <TextInput
-            style={tw`${editableStyle} border-0 m-0.5 flex-1 rounded-lg`}
-            editable={editable}
-            onPressOut={() => {
-              if (!editable) {
-                setShowMsg(true);
-              }
-            }}
-            onChangeText={onChangeText}
-            value={name}
-            placeholder={`식료품 이름을 작성해주세요`}
-            focusable={false}
-          />
-        </View>
+
+      <View
+        style={tw`${editableStyle} h-11  shadow-md border flex-row items-center rounded-lg`}
+      >
+        <TextInput
+          style={tw`${editableStyle} border-0 m-0.5 flex-1 rounded-lg`}
+          editable={editable}
+          onPressOut={() => {
+            if (!editable) {
+              setShowMsg(true);
+            }
+          }}
+          onChangeText={onChangeText}
+          value={name}
+          placeholder={`식료품 이름을 작성해주세요`}
+          focusable={false}
+        />
       </View>
 
       {showMsg && (
@@ -71,22 +70,24 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
         >
           {!!matchedFoods?.length && (
             <View
-              style={tw.style(`flex-row flex-wrap items-center mt-1 gap-1`)}
+              style={tw.style(
+                `flex-row flex-wrap items-center mt-1 gap-1 px-0.5`
+              )}
             >
               {matchedFoods.slice(0, 2).map((food) => (
                 <TouchableOpacity
                   key={food.id}
-                  style={tw`max-w-full h-6.5 border border-blue-400 flex-row items-center bg-amber-200 px-2 gap-1 rounded-full`}
+                  style={tw`max-w-full h-6.5 shadow-md border border-slate-300 flex-row items-center bg-amber-200 px-2 gap-1 rounded-full`}
                   onPress={() => changeInfo({ name: food.name })}
                 >
                   <Icon
                     name={food.name === name ? 'check' : 'plus'}
                     type='MaterialCommunityIcons'
-                    size={14}
+                    size={16}
                     color={BLUE}
                   />
-                  <Text style={tw`text-blue-600 max-w-[96%] text-xs`}>
-                    {cutLetter(food.name, 8)}
+                  <Text style={tw`text-slate-600 text-xs`}>
+                    {cutLetter(food.name, 12)}
                   </Text>
                 </TouchableOpacity>
               ))}

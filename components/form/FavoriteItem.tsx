@@ -57,14 +57,22 @@ export default function FavoriteItem({
     animatedToggle(favorite ? 0 : MOVED_TRANSLATE_X);
   };
 
-  const color = disabledFavoriteBtn ? 'border-slate-400' : 'border-blue-300';
+  const color = disabledFavoriteBtn ? 'border-slate-300' : 'border-blue-200';
   const backgroundColor = disabledFavoriteBtn ? LIGHT_BLUE : '#4070ff';
 
   return (
     <View>
       <FormLabel label='자주 먹는 식료품' />
       <View
-        style={tw`${color} h-11 flex-row items-center border p-1 rounded-full bg-white self-start`}
+        style={tw.style(
+          `${color} h-10.5 flex-row items-center border p-1 rounded-full bg-white self-start`,
+          {
+            shadowColor: '#aaa',
+            shadowOpacity: 0.3,
+            shadowRadius: 3,
+            shadowOffset: { height: 2, width: 0 },
+          }
+        )}
       >
         <Animated.View
           style={{
