@@ -37,8 +37,8 @@ export default function CategoryItem({
     setCategoryOpen(false);
   };
 
-  const activeColor = 'border-blue-300 text-slate-900';
-  const inActiveColor = 'border-slate-400 text-slate-400';
+  const activeColor = 'border-blue-200 text-slate-900';
+  const inActiveColor = 'border-slate-300 text-slate-400';
   const color = disabledCategory ? inActiveColor : activeColor;
   const iconColor = disabledCategory ? LIGHT_GRAY : BLUE;
 
@@ -48,7 +48,7 @@ export default function CategoryItem({
       <TouchableOpacity
         onPress={() => setCategoryOpen((prev) => !prev)}
         disabled={disabledCategory}
-        style={tw`h-12 border ${color} px-3 bg-white rounded-lg items-center flex-row gap-2 justify-between`}
+        style={tw`h-11 shadow-md border ${color} px-3 bg-white rounded-lg items-center flex-row gap-2 justify-between`}
       >
         <View style={tw`flex-row items-center gap-2`}>
           <CategoryImageIcon kind='icon' category={category} size={18} />
