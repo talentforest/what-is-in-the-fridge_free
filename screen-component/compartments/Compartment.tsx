@@ -70,6 +70,7 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
         {/* 칸 정보 */}
         <View style={tw`flex-row justify-between items-center pl-2.5 h-7.5`}>
           <TouchableOpacity
+            disabled={!compartmentFoodList.length}
             onPress={() => setExpandCompartment(true)}
             style={tw`flex-row items-center gap-1 flex-1`}
           >
@@ -170,7 +171,6 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
           setExpandCompartment={setExpandCompartment}
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          filter={currentFilter}
         />
       )}
 
