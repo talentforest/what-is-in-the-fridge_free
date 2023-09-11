@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { CompartmentNum } from '../../constant/fridgeInfo';
-import { Filter } from '../../util';
 import { formTwoSteps } from '../../constant/formInfo';
 import { select } from '../../redux/slice/selectedFoodSlice';
 import { useDispatch } from '../../redux/hook';
@@ -18,6 +17,7 @@ import Icon from '../../components/common/native-component/Icon';
 import FoodBox from '../compartments/FoodBox';
 import FoodDetailModal from './FoodDetailModal';
 import tw from 'twrnc';
+import { DEVICE_HEIGHT } from '../../util';
 
 interface Props {
   compartmentNum: CompartmentNum;
@@ -26,7 +26,6 @@ interface Props {
   setExpandCompartment: (visible: boolean) => void;
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
-  filter: Filter;
 }
 
 export default function ExpandedCompartmentModal({
@@ -58,7 +57,7 @@ export default function ExpandedCompartmentModal({
       </View>
       {!!foodList.length ? (
         <ScrollView
-          style={tw`px-4 pb-1 h-95`}
+          style={tw`mb-4 px-4 pb-1 h-[${DEVICE_HEIGHT * 0.5}px]`}
           contentContainerStyle={tw`flex-row p-2 bg-stone-100 border border-slate-100 rounded-xl flex-1 flex-wrap gap-1 items-center`}
           showsVerticalScrollIndicator={false}
         >
