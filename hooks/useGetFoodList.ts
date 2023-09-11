@@ -6,6 +6,7 @@ import { Filter, expired, getLeftDays, leftThreeDays } from '../util';
 export const useGetFoodList = () => {
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+  const { pantryFoods } = useSelector((state) => state.pantryFoods);
 
   const orderExpirationDate = (list: Food[]) => {
     const sortedList = list?.sort(
@@ -16,9 +17,17 @@ export const useGetFoodList = () => {
     return sortedList || list;
   };
 
-  const allExpiredFridgeFoods = orderExpirationDate(
-    fridgeFoods.filter((food) => getLeftDays(food.expiredDate) < 4)
-  );
+  const allExpiredFoods = (type?: 'fridge' | 'pantry') => {
+    const expiredFridgeFoods = fridgeFoods.filter(
+      (food) => getLeftDays(food.expiredDate) < 4
+    );
+    const expiredPantryFoods = pantryFoods.filter(
+      (food) => getLeftDays(food.expiredDate) < 4
+    );
+    if (type === 'fridge') return orderExpirationDate(expiredFridgeFoods);
+    if (type === 'pantry') return orderExpirationDate(expiredPantryFoods);
+    return [...expiredFridgeFoods, ...expiredPantryFoods];
+  };
 
   const matchFoodSpace = (
     food: Food,
@@ -40,8 +49,7 @@ export const useGetFoodList = () => {
     space: SpaceType | Space,
     compartmentNum?: CompartmentNum
   ) => {
-    const foodList =
-      type === 'fridgeFoods' ? fridgeFoods : allExpiredFridgeFoods;
+    const foodList = type === 'fridgeFoods' ? fridgeFoods : allExpiredFoods();
 
     const filteredFoods = foodList.filter((food) =>
       matchFoodSpace(food as Food, space, compartmentNum)
@@ -88,7 +96,7 @@ export const useGetFoodList = () => {
 
   return {
     fridgeFoods,
-    allExpiredFridgeFoods,
+    allExpiredFoods,
     favoriteFoods,
     getFoodList,
     getFilteredFoodList,
