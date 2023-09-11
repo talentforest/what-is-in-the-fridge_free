@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Food } from '../../constant/foodInfo';
 
-export const initialState: { allFoods: Food[] } = {
-  allFoods: [
+export const initialState: { fridgeFoods: Food[] } = {
+  fridgeFoods: [
     {
       id: 'fridge1',
       image: '🍎',
@@ -28,26 +28,26 @@ export const initialState: { allFoods: Food[] } = {
   ],
 };
 
-const allFoodsSlice = createSlice({
-  name: 'allFoods',
+const fridgeFoodsSlice = createSlice({
+  name: 'fridgeFoods',
   initialState,
   reducers: {
-    setAllFoods: (state, action: { payload: Food[] }) => {
-      state.allFoods = action.payload;
+    setAllFridgeFoods: (state, action: { payload: Food[] }) => {
+      state.fridgeFoods = action.payload;
     },
-    addFood: (state, action: { payload: Food }) => {
-      state.allFoods = [...state.allFoods, action.payload];
+    addFridgeFood: (state, action: { payload: Food }) => {
+      state.fridgeFoods = [...state.fridgeFoods, action.payload];
     },
-    removeFood: (state, action: { payload: { id: string } }) => {
-      state.allFoods = state.allFoods.filter(
+    removeFridgeFood: (state, action: { payload: { id: string } }) => {
+      state.fridgeFoods = state.fridgeFoods.filter(
         (food) => food.id !== action.payload.id
       );
     },
-    editFood: (
+    editFridgeFood: (
       state,
       action: { payload: { foodId: string; editedFood: Food } }
     ) => {
-      state.allFoods = state.allFoods.map((food) => {
+      state.fridgeFoods = state.fridgeFoods.map((food) => {
         const { foodId, editedFood } = action.payload;
         return food.id === foodId ? editedFood : food;
       });
@@ -55,9 +55,13 @@ const allFoodsSlice = createSlice({
   },
 });
 
-const { reducer: allFoodsReducer } = allFoodsSlice;
+const { reducer: fridgeFoodsReducer } = fridgeFoodsSlice;
 
-export const { setAllFoods, addFood, removeFood, editFood } =
-  allFoodsSlice.actions;
+export const {
+  setAllFridgeFoods,
+  addFridgeFood,
+  removeFridgeFood,
+  editFridgeFood,
+} = fridgeFoodsSlice.actions;
 
-export default allFoodsReducer;
+export default fridgeFoodsReducer;

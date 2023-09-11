@@ -22,9 +22,9 @@ export default function SearchFoodModal({
   setModalVisible,
 }: Props) {
   const [keyword, setKeyword] = useState('');
-  const { allFoods } = useSelector((state) => state.allFoods);
+  const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
 
-  const searchedFoods = findMatchNameFoods(allFoods, keyword);
+  const searchedFoods = findMatchNameFoods(fridgeFoods, keyword);
 
   const onSubmitEditing = () => {
     if (keyword === '') return;
@@ -78,18 +78,12 @@ export default function SearchFoodModal({
                 ))
               ) : (
                 <View style={tw`pt-12 px-4 gap-1`}>
-                  <EmptySign
-                    message='해당 식료품은 냉장고에 없어요.'
-                    color='slate'
-                  />
+                  <EmptySign message='해당 식료품은 냉장고에 없어요.' />
                 </View>
               ))}
             {keyword.length === 0 && (
               <View style={tw`pt-12 px-4 gap-1`}>
-                <EmptySign
-                  message='냉장고에 찾으시는 식료품이 있는지 확인해 보세요.'
-                  color='slate'
-                />
+                <EmptySign message='냉장고에 찾으시는 식료품이 있는지 확인해 보세요.' />
               </View>
             )}
           </ScrollView>

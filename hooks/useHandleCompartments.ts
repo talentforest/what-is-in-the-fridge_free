@@ -12,13 +12,13 @@ interface Props {
 
 export const useHandleCompartments = ({ space }: Props) => {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
-  const { allFoods } = useSelector((state) => state.allFoods);
+  const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const dispatch = useDispatch();
 
   const MAX_COMPARTMENTS_NUM = space.includes('냉동실') ? 3 : 5;
 
   const lastCompartment = fridgeInfo.compartments[space];
-  const existFoodInLastCompartment = allFoods
+  const existFoodInLastCompartment = fridgeFoods
     .filter((food) => food.space === space)
     .filter((food) => +food.compartmentNum.slice(0, 1) === lastCompartment);
 

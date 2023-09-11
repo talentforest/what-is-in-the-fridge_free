@@ -1,16 +1,19 @@
 import { Alert } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import { removeFromShoppingList } from '../redux/slice/shoppingListSlice';
-import { addFood, editFood, removeFood } from '../redux/slice/allFoodsSlice';
+import {
+  addFridgeFood,
+  removeFridgeFood,
+} from '../redux/slice/fridgeFoodsSlice';
 import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
+import { addToPantry } from '../redux/slice/pantryFoodsSlice';
 import { Food } from '../constant/foodInfo';
 import UUIDGenerator from 'react-native-uuid';
-import { addToPantry } from '../redux/slice/pantryFoodsSlice';
 
 export const useAddSelectFood = () => {
-  const { allFoods } = useSelector((state) => state.allFoods);
+  const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { selectedFood } = useSelector((state) => state.selectedFood);
   const dispatch = useDispatch();
   const route = useRoute();
@@ -43,10 +46,12 @@ export const useAddSelectFood = () => {
       );
     }
 
-    const existFood = allFoods.find((food) => food.name === foodWithNewId.name);
+    const existFood = fridgeFoods.find(
+      (food) => food.name === foodWithNewId.name
+    );
     if (existFood) {
       if (route.name !== 'ShoppingList') return alertExistFood(existFood);
-      dispatch(removeFood({ id: existFood.id }));
+      dispatch(removeFridgeFood({ id: existFood.id }));
     }
 
     if (selectedFood.favorite) {
@@ -56,7 +61,7 @@ export const useAddSelectFood = () => {
     }
 
     if (selectedFood.compartmentNum) {
-      dispatch(addFood(foodWithNewId));
+      dispatch(addFridgeFood(foodWithNewId));
     } else {
       dispatch(addToPantry(foodWithNewId));
     }

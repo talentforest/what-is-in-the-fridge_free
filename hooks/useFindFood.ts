@@ -1,11 +1,11 @@
 import { useSelector } from '../redux/hook';
 
 export const useFindFood = () => {
-  const { allFoods } = useSelector((state) => state.allFoods);
+  const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
 
   const findFoodInFridge = (name: string) => {
-    return allFoods.find((food) => food.name === name);
+    return fridgeFoods.find((food) => food.name === name);
   };
 
   const findFavoriteListItem = (name: string) => {

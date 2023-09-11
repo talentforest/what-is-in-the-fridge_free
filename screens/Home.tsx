@@ -16,7 +16,7 @@ const Home = () => {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { shoppingList } = useSelector((state) => state.shoppingList);
 
-  const { allExpiredFoods } = useGetFoodList();
+  const { allExpiredFridgeFoods } = useGetFoodList();
 
   return (
     <SafeAreaView edges={['top']} style={tw`${BG_COLOR}`}>
@@ -42,7 +42,7 @@ const Home = () => {
 
           <ShoppingListSection foodList={shoppingList} />
 
-          <ExpiredFoodSection foodList={allExpiredFoods} />
+          <ExpiredFoodSection foodList={allExpiredFridgeFoods} />
 
           <FavoriteFoodSection foodList={favoriteFoods} />
         </Container>
