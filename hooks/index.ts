@@ -21,3 +21,4 @@ export * from './animation/usePulseAnimation';
 export * from './animation/useSwiperAnimation';
 export * from './animation/useDragAndDropFood';
 export * from './animation/useDragBox';
+export * from './animation/useOpacityAnimation';

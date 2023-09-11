@@ -1,5 +1,5 @@
 import { Animated, ScrollView, View } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Food } from '../../constant/foodInfo';
 import {
   Text,
@@ -7,9 +7,10 @@ import {
 } from '../../components/common/native-component';
 import { FoodLocation } from '../../constant/fridgeInfo';
 import { BLUE, GRAY, LIGHT_GRAY } from '../../constant/colors';
-import { useGetFoodList } from '../../hooks';
+import { useGetFoodList, useOpacityAnimation } from '../../hooks';
 import { formTwoSteps } from '../../constant/formInfo';
-import { useSelector } from '../../redux/hook';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { toggleDragMode } from '../../redux/slice/dragModeSlice';
 
 import FoodDetailModal from '../modal/FoodDetailModal';
 import ExpandedCompartmentModal from '../modal/ExpandedCompartmentModal';
@@ -46,19 +47,18 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
     compartmentNum
   ) as Food[];
 
-  const bgOpacity = useRef(new Animated.Value(0)).current;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (compartmentNumToDrop === compartmentNum) {
-      Animated.timing(bgOpacity, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      bgOpacity.setValue(0);
+    if (dragMode) {
+      dispatch(toggleDragMode(false));
     }
-  }, [compartmentNumToDrop]);
+  }, []);
+
+  const { bgOpacity } = useOpacityAnimation({
+    initialValue: 0,
+    active: compartmentNumToDrop === compartmentNum,
+  });
 
   return (
     <>
@@ -148,6 +148,7 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
           style={{
             backgroundColor: 'fff',
             zIndex: 100,
+            borderRadius: 8,
             position: 'absolute',
             transform: [
               { translateX: dragPosition.x },
@@ -155,7 +156,7 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
             ],
           }}
         >
-          <View style={tw`absolute top-0 rounded-full bg-white`}>
+          <View style={tw`absolute top-0 rounded-lg bg-white`}>
             <FoodBox food={selectedFood} />
           </View>
         </Animated.View>
