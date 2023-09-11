@@ -3,7 +3,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from '../components/common/native-component';
-import { FlatList, View } from 'react-native';
+import { Alert, FlatList, View } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { useFocusEffect } from '@react-navigation/native';
 import {
@@ -15,6 +15,7 @@ import {
 } from '../hooks';
 import { foodCategories } from '../constant/foodCategories';
 import { entireFilterObj, favoriteFilterObj } from '../util';
+import { MAX_LIST_LENGTH, alertExcess } from '../components/buttons/AddFoodBtn';
 
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
@@ -127,7 +128,13 @@ export default function PantryFoods() {
             )}
 
             <TouchableOpacity
-              onPress={() => setModalVisible(true)}
+              onPress={() => {
+                if (pantryFoods.length === MAX_LIST_LENGTH) {
+                  Alert.alert(alertExcess.title, alertExcess.msg);
+                } else {
+                  setModalVisible(true);
+                }
+              }}
               style={tw`absolute -bottom-0 right-2 self-end h-18 w-18 items-center justify-center shadow-md bg-blue-100 rounded-full`}
             >
               <Icon type='MaterialCommunityIcons' name='plus' size={30} />

@@ -26,7 +26,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
   const matchedFoods = findMatchNameFoods(favoriteFoods, name);
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 36,
+    toValue: 32,
     active: !!matchedFoods?.length,
   });
 
@@ -83,7 +83,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
                   <Icon
                     name={food.name === name ? 'check' : 'plus'}
                     type='MaterialCommunityIcons'
-                    size={16}
+                    size={17}
                     color={BLUE}
                   />
                   <Text style={tw`text-slate-600 text-xs`}>

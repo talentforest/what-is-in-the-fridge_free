@@ -24,13 +24,18 @@ import tw from 'twrnc';
 interface Props {
   foodLocation: FoodLocation;
   searchedName: string;
+  foodLengthBySpace: number;
 }
 
-export default function Compartment({ foodLocation, searchedName }: Props) {
+export default function Compartment({
+  foodLocation,
+  searchedName,
+  foodLengthBySpace,
+}: Props) {
   const { compartmentNumToDrop } = useSelector(
     (state) => state.compartmentNumToDrop
   );
-  const { currentFilter } = useSelector((state) => state.currentFilter);
+
   const { dragMode } = useSelector((state) => state.dragMode);
   const { selectedFood } = useSelector((state) => state.selectedFood);
   const { space, compartmentNum } = foodLocation;
@@ -89,7 +94,10 @@ export default function Compartment({ foodLocation, searchedName }: Props) {
               {getFoodList('allFoods', space, compartmentNum).length}개
             </Text>
           </TouchableOpacity>
-          <AddFoodBtn foodLocation={foodLocation} />
+          <AddFoodBtn
+            foodLocation={foodLocation}
+            foodLengthBySpace={foodLengthBySpace}
+          />
         </View>
 
         {/* 식료품 리스트 */}

@@ -5,13 +5,17 @@ import { useSelector } from '../../redux/hook';
 import { Text, TouchableOpacity } from '../common/native-component';
 import {
   CompartmentNum,
+  Space,
   SpaceSide,
   SpaceType,
 } from '../../constant/fridgeInfo';
+import { useGetFoodList, useSlideAnimation } from '../../hooks';
+import { Animated } from 'react-native';
 
 import CheckBoxItem from '../common/CheckBoxItem';
 import FormLabel from './FormLabel';
 import tw from 'twrnc';
+import MessageBox from '../common/MessageBox';
 
 interface Props {
   food: Food;
@@ -23,8 +27,22 @@ type TabType = '팬트리' | '냉장고';
 export default function SpaceItem({ food, changeInfo }: Props) {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
+  const { getFoodList } = useGetFoodList();
+
   const spaceType = food.space.slice(0, 3);
   const spaceSide = food.space.slice(4, 6);
+
+  const checkFoodLengthLimit = () => {
+    const space = `${spaceType} ${spaceSide}` as Space;
+    const foodLength = getFoodList('allFoods', space).length;
+    return foodLength >= 15;
+  };
+
+  const { height } = useSlideAnimation({
+    initialValue: 0,
+    toValue: 30,
+    active: checkFoodLengthLimit(),
+  });
 
   const maxCompartmentsNum = fridgeInfo.compartments[food.space];
   const compartments = getCompartments(maxCompartmentsNum);
@@ -35,6 +53,7 @@ export default function SpaceItem({ food, changeInfo }: Props) {
 
   const onFridgeSpaceSidePress = (spaceSide: SpaceSide) => {
     changeInfo({ space: `${spaceType} ${spaceSide}` });
+    checkFoodLengthLimit();
   };
 
   const onCompartmentNumPress = (compartmentNum: CompartmentNum) => {
@@ -117,6 +136,13 @@ export default function SpaceItem({ food, changeInfo }: Props) {
           onPress={() => onTabPress('팬트리')}
         />
       )}
+
+      <Animated.View style={{ height, marginTop: 4 }}>
+        <MessageBox
+          message='해당 공간은 식료품 개수 한도에 도달했습니다.'
+          color='red'
+        />
+      </Animated.View>
     </View>
   );
 }
