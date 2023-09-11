@@ -4,7 +4,6 @@ import { getFormattedDate } from '../../util';
 import { useEffect, useState } from 'react';
 import { BLUE, GRAY, LIGHT_GRAY } from '../../constant/colors';
 import { useSlideAnimation } from '../../hooks';
-import { useRoute } from '@react-navigation/native';
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from '../common/native-component/Icon';
@@ -20,7 +19,6 @@ interface Props {
 export default function PurchaseDateItem({ date, changeInfo }: Props) {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [purchaseOpen, setPurchaseOpen] = useState(false);
-  const route = useRoute();
 
   const today = new Date();
   const purchaseDate = date === '' ? today : new Date(date);
@@ -28,7 +26,7 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 54,
+    toValue: 52,
     active: purchaseOpen,
   });
 
@@ -86,11 +84,12 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
           style={{
             height,
             overflow: 'hidden',
+            marginHorizontal: -4,
           }}
         >
           <TouchableOpacity
             onPress={() => setDatePickerVisible(true)}
-            style={tw`h-12 border border-blue-300 bg-white rounded-lg flex-row items-center justify-between px-2`}
+            style={tw`h-11 mx-1 shadow-md px-2 border border-blue-300 bg-white rounded-lg flex-row items-center justify-between`}
           >
             <TextInput
               value={formattedDate}
@@ -103,15 +102,11 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
         </Animated.View>
       </View>
 
-      {route.name !== 'PantryFoods' && (
-        <View
-          style={tw`${
-            !purchaseOpen ? 'border-t border-slate-300 pt-1' : '-mt-1'
-          }`}
-        >
-          <MessageBox message='유통기한이 없는 식료품인 경우 추가 정보로 작성할 수 있어요' />
-        </View>
-      )}
+      <View
+        style={tw`${!purchaseOpen ? 'border-t border-slate-300 pt-1' : ''}`}
+      >
+        <MessageBox message='유통기한이 없는 식료품(예: 신선식품류)인 경우 추가 정보로 작성할 수 있어요' />
+      </View>
 
       {/* 캘린더 픽커 모달 */}
       <DateTimePickerModal

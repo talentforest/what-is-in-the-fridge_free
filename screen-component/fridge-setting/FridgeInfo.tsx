@@ -3,19 +3,16 @@ import { Text } from '../../components/common/native-component';
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { Space } from '../../constant/fridgeInfo';
 import { getCompartments } from '../../util';
-import CompartmentBox from './CompartmentBox';
-import tw from 'twrnc';
-import Icon from '../../components/common/native-component/Icon';
+import { MaxCompartmentsNumObj } from '../../redux/slice/fridgeInfoSlice';
 import { GRAY } from '../../constant/colors';
+
+import CompartmentBox from './CompartmentBox';
+import Icon from '../../components/common/native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
   space: Space;
-  compartments: {
-    '냉동실 문쪽': number;
-    '냉동실 안쪽': number;
-    '냉장실 문쪽': number;
-    '냉장실 안쪽': number;
-  };
+  compartments: MaxCompartmentsNumObj;
 }
 
 export default function FridgeInfo({ space, compartments }: Props) {
