@@ -18,8 +18,6 @@ import TableFooter from '../components/table/TableFooter';
 import TableFilters from '../components/table/TableFilters';
 import SquareBtn from '../components/buttons/SquareBtn';
 import tw from 'twrnc';
-import { useDispatch } from '../redux/hook';
-import { removeFromPantry } from '../redux/slice/pantryFoodsSlice';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -48,21 +46,6 @@ export default function ExpiredFoods() {
   }, []);
 
   const allChecked = checkedList.length === filteredList.length;
-
-  const dispatch = useDispatch();
-
-  const onDelete = () => {
-    // 여기서 어떻게 하지?
-    filteredList.filter((filteredFood) => {
-      if (filteredFood.space === '팬트리') {
-        return dispatch(removeFromPantry({ name: filteredFood.name }));
-      }
-
-      return !checkedList.some(
-        (checkedFood) => checkedFood.id === filteredFood.id
-      );
-    });
-  };
 
   return (
     <SafeBottomAreaView>
@@ -95,7 +78,7 @@ export default function ExpiredFoods() {
           <View style={tw`-mb-3`}>
             <TableFooter list={checkedList}>
               <SquareBtn
-                name='식료품 삭제'
+                name='유통기한 주의 식료품 삭제'
                 onPress={() =>
                   onDeletePress(
                     allExpiredFoods(),

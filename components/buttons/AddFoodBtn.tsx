@@ -5,6 +5,7 @@ import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import { formTwoSteps } from '../../constant/formInfo';
 import { useSelector } from '../../redux/hook';
 import { Alert } from 'react-native';
+import { alertPhrase } from '../../constant/alertPhrase';
 
 import AddFoodModal from '../../screen-component/modal/AddFoodModal';
 import Icon from '../common/native-component/Icon';
@@ -17,18 +18,17 @@ interface Props {
 
 export const MAX_LIST_LENGTH = 15;
 
-export const alertExcess = {
-  title: '식료품 개수 초과 알림',
-  msg: '식료품은 이 공간에서 15개보다 더 많을 수 없습니다.',
-};
-
 export default function AddFoodBtn({ foodLocation, foodLengthBySpace }: Props) {
   const { dragMode } = useSelector((state) => state.dragMode);
   const [modal, setModal] = useState(false);
 
+  const {
+    excess: { title, msg },
+  } = alertPhrase;
+
   const onPress = () => {
     if (foodLengthBySpace === MAX_LIST_LENGTH) {
-      return Alert.alert(alertExcess.title, alertExcess.msg);
+      return Alert.alert(title, msg);
     } else {
       setModal(true);
     }
