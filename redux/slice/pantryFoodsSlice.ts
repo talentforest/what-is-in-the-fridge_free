@@ -61,6 +61,7 @@ export const {
   setPantry,
   addToPantry,
   removeFromPantry, //
+  editPantryFood,
 } = pantryFoodsSlice.actions;
 
 export default pantryFoodsReducer;
