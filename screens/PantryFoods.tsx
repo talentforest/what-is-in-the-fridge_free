@@ -66,7 +66,6 @@ export default function PantryFoods() {
   } = useSetAnimationState();
 
   const allChecked = checkedList.length === pantryFoods.length;
-
   const filteredList = getFilteredFoodList(currentFilter, pantryFoods);
 
   return (

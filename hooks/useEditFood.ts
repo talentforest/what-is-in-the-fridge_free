@@ -8,6 +8,7 @@ import {
   removeFavorite,
 } from '../redux/slice/favoriteFoodsSlice';
 import { Alert } from 'react-native';
+import { editPantryFood } from '../redux/slice/pantryFoodsSlice';
 
 export const useEditFood = ({ food }: { food: Food }) => {
   const [editedFood, setEditedFood] = useState(food);
@@ -18,7 +19,10 @@ export const useEditFood = ({ food }: { food: Food }) => {
     return setEditedFood({ ...editedFood, ...newInfo });
   };
 
-  const onEditSumbit = (foodId: string) => {
+  const onEditSumbit = (
+    foodId: string,
+    setModalVisible: (modalVisible: boolean) => void
+  ) => {
     const { expiredDate, purchaseDate } = editedFood;
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
       return Alert.alert(
@@ -32,8 +36,13 @@ export const useEditFood = ({ food }: { food: Food }) => {
     } else {
       dispatch(removeFavorite({ name: editedFood.name }));
     }
-    dispatch(editFridgeFood({ foodId, editedFood }));
-    setEditing(false);
+    if (food.compartmentNum) {
+      dispatch(editFridgeFood({ foodId, editedFood }));
+      setEditing(false);
+    } else {
+      dispatch(editPantryFood({ foodId, editedFood }));
+      setModalVisible(false);
+    }
   };
 
   return {

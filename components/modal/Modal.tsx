@@ -18,7 +18,8 @@ export type ModalTitle =
   | '장보기 목록 식료품 추가'
   | '새로운 식료품 추가'
   | '식료품 정보 수정'
-  | '팬트리 식료품 추가';
+  | '팬트리 식료품 추가'
+  | '팬트리 식료품 수정';
 
 interface Props {
   modalVisible: boolean;

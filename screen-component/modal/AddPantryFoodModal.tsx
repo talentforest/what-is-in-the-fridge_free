@@ -3,10 +3,10 @@ import {
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { View } from 'react-native';
-import { initialPantryFood } from '../../constant/foodInfo';
+import { Food, initialPantryFood } from '../../constant/foodInfo';
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { formTwoSteps } from '../../constant/formInfo';
-import { useAddFood } from '../../hooks';
+import { useAddFood, useEditFood } from '../../hooks';
 import { GRAY } from '../../constant/colors';
 
 import Modal from '../../components/modal/Modal';
@@ -18,19 +18,25 @@ import Icon from '../../components/common/native-component/Icon';
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
+  foodToEdit?: Food;
 }
 
 export default function AddPantryFoodModal({
   modalVisible,
   setModalVisible,
+  foodToEdit,
 }: Props) {
   const { newFood, changeFoodInfo, onAddSubmit } = useAddFood({
     initialFoodInfo: initialPantryFood,
   });
 
+  const { editedFood, editFoodInfo, onEditSumbit } = useEditFood({
+    food: foodToEdit ? foodToEdit : initialPantryFood,
+  });
+
   return (
     <Modal
-      title='팬트리 식료품 추가'
+      title={foodToEdit ? '팬트리 식료품 수정' : '팬트리 식료품 추가'}
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
       hasBackdrop
@@ -40,10 +46,10 @@ export default function AddPantryFoodModal({
       <View style={tw`py-6`}>
         <View style={tw`mb-1 px-6 flex-row justify-between items-center`}>
           <Text style={tw.style('text-[17px]', FontGmarketSansBold)}>
-            팬트리 식료품 추가
+            {foodToEdit ? '팬트리 식료품 수정' : '팬트리 식료품 추가'}
           </Text>
           <TouchableOpacity
-            style={tw`p-2`}
+            style={tw`p-2 -mx-2`}
             onPress={() => setModalVisible(false)}
           >
             <Icon name='close' type='Ionicons' size={21} color={GRAY} />
@@ -51,10 +57,10 @@ export default function AddPantryFoodModal({
         </View>
 
         <Form
-          title='팬트리 식료품 추가'
-          editableName={true}
-          food={newFood}
-          changeInfo={changeFoodInfo}
+          title={foodToEdit ? '팬트리 식료품 수정' : '팬트리 식료품 추가'}
+          editableName={foodToEdit ? false : true}
+          food={foodToEdit ? editedFood : newFood}
+          changeInfo={foodToEdit ? editFoodInfo : changeFoodInfo}
           formSteps={formTwoSteps}
         />
 
@@ -62,8 +68,12 @@ export default function AddPantryFoodModal({
           <SubmitBtn
             iconName='plus'
             color='amber'
-            btnName='팬트리에 추가'
-            onPress={() => onAddSubmit(setModalVisible)}
+            btnName={foodToEdit ? '팬트리 식료품 수정' : '팬트리에 추가'}
+            onPress={
+              foodToEdit
+                ? () => onEditSumbit(foodToEdit.id, setModalVisible)
+                : () => onAddSubmit(setModalVisible)
+            }
           />
         </View>
       </View>

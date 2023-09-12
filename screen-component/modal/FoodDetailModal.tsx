@@ -62,7 +62,7 @@ export default function FoodDetailModal({
           </View>
         </View>
       ) : (
-        <View style={tw`mt-6 px-6 gap-3`}>
+        <View style={tw`mt-6 px-6 gap-2`}>
           <View
             style={tw`self-center flex-row items-center border-t border-b border-blue-500 py-1.5 px-4`}
           >
@@ -109,7 +109,7 @@ export default function FoodDetailModal({
           </View>
 
           {/* 버튼 */}
-          <View style={tw`gap-2 mt-2`}>
+          <View style={tw`gap-2`}>
             <SubmitBtn
               color='blue'
               iconName='square-edit-outline'

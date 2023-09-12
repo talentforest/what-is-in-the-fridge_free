@@ -7,11 +7,13 @@ import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
 import { cutLetter } from '../../util';
 import { AnimationState, useDragBox, useSlideAnimation } from '../../hooks';
 import { Food } from '../../constant/foodInfo';
+import { useState } from 'react';
 
 import CheckBox from '../../components/common/CheckBox';
 import Icon from '../../components/common/native-component/Icon';
 import PantryFoodInfo from './PantryFoodInfo';
 import CategoryImageIcon from '../../components/common/CategoryImageIcon';
+import AddPantryFoodModal from '../modal/AddPantryFoodModal';
 import tw from 'twrnc';
 
 interface Props {
@@ -29,6 +31,7 @@ export default function PantryListBox({
   animationState,
   afterAnimation,
 }: Props) {
+  const [openEditModal, setOpenEditModal] = useState(false);
   const { name, favorite, category, expiredDate, purchaseDate } = food;
 
   const slideDownIn = animationState === 'slidedown-in';
@@ -87,12 +90,20 @@ export default function PantryListBox({
               <View
                 style={tw`${
                   isNotAllInfo ? '' : 'border-b border-slate-300 mb-1 pb-1'
-                } flex-row items-center flex-wrap gap-1`}
+                } flex-row items-center flex-wrap gap-1.5`}
               >
-                <Text style={tw`${textColor}`}>
+                <Text style={tw`mr-1 ${textColor}`}>
                   {cutLetter(name, MAX_LENGTH)}
                 </Text>
                 <CategoryImageIcon kind='icon' size={18} category={category} />
+                <View style={tw`pt-0.5 ml-0.5`}>
+                  <Icon
+                    name='tag-heart'
+                    type='MaterialCommunityIcons'
+                    size={17}
+                    color={favorite ? INDIGO : LIGHT_GRAY}
+                  />
+                </View>
               </View>
 
               {expiredDate !== '' && (
@@ -102,19 +113,29 @@ export default function PantryListBox({
               {purchaseDate !== '' && (
                 <PantryFoodInfo title='구매날짜' date={purchaseDate} />
               )}
-            </View>
-
-            <View style={tw`pt-1.5`}>
-              <Icon
-                name='tag-heart'
-                type='MaterialCommunityIcons'
-                size={17}
-                color={favorite ? INDIGO : LIGHT_GRAY}
-              />
+              <TouchableOpacity
+                onPress={() => setOpenEditModal(true)}
+                style={tw`absolute right-0 bottom-0 mb-1 self-end p-2 -m-2`}
+              >
+                <Icon
+                  name='pencil'
+                  type='MaterialCommunityIcons'
+                  size={17}
+                  color={LIGHT_GRAY}
+                />
+              </TouchableOpacity>
             </View>
           </TouchableOpacity>
         </View>
       </Animated.View>
+
+      {openEditModal && (
+        <AddPantryFoodModal
+          modalVisible={openEditModal}
+          setModalVisible={setOpenEditModal}
+          foodToEdit={food}
+        />
+      )}
     </View>
   );
 }

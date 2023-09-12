@@ -10,6 +10,7 @@ import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
 import MessageBox from '../common/MessageBox';
 import tw from 'twrnc';
+import { useRoute } from '@react-navigation/native';
 
 interface Props {
   date: string;
@@ -23,6 +24,8 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
   const today = new Date();
   const purchaseDate = date === '' ? today : new Date(date);
   const formattedDate = getFormattedDate(purchaseDate, 'YYYY년 MM월 DD일');
+
+  const route = useRoute();
 
   const { height } = useSlideAnimation({
     initialValue: 0,
@@ -61,14 +64,11 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
       <View style={tw`mb-1`}>
         <View style={tw`flex-row items-center gap-1 justify-between`}>
           <FormLabel label='구매날짜' />
-          <TouchableOpacity
-            onPress={onPress}
-            style={tw`flex-row items-center gap-1`}
-          >
+          <TouchableOpacity onPress={onPress} style={tw`flex-row items-center`}>
             <Icon
               name={purchaseOpen ? 'chevron-up' : 'add'}
               type='Ionicons'
-              size={20}
+              size={18}
               color={purchaseOpen ? LIGHT_GRAY : GRAY}
             />
             <Text
@@ -102,11 +102,13 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
         </Animated.View>
       </View>
 
-      <View
-        style={tw`${!purchaseOpen ? 'border-t border-slate-300 pt-1' : ''}`}
-      >
-        <MessageBox message='유통기한이 없는 식료품(예: 신선식품류)인 경우 추가 정보로 작성할 수 있어요' />
-      </View>
+      {route.name !== 'PantryFoods' && (
+        <View
+          style={tw`${!purchaseOpen ? 'border-t border-slate-300 pt-1' : ''}`}
+        >
+          <MessageBox message='유통기한이 없는 식료품(예: 신선식품류)인 경우 추가 정보로 작성할 수 있어요' />
+        </View>
+      )}
 
       {/* 캘린더 픽커 모달 */}
       <DateTimePickerModal
