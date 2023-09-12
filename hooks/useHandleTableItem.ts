@@ -11,7 +11,7 @@ import { setAllFridgeFoods } from '../redux/slice/fridgeFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import { AnimationState } from './animation/useSetAnimationState';
 import { toggleShowBtn } from '../redux/slice/showBtnSlice';
-import { setPantry } from '../redux/slice/pantryFoodsSlice';
+import { removeFromPantry, setPantry } from '../redux/slice/pantryFoodsSlice';
 
 interface Props {
   checkedList: Food[];
@@ -43,9 +43,9 @@ export const useHandleTableItem = ({
   const getDeleteAlert = () => {
     if (route.name === 'ExpiredFoods') {
       return {
-        title: '유통기한 주의 식료품 제거',
-        desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 냉장고에서 제거하시겠습니까?`,
-        defaultBtnText: '제거',
+        title: '유통기한 주의 식료품 삭제',
+        desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 삭제하시겠습니까? 냉장고나 팬트리에서 삭제됩니다.`,
+        defaultBtnText: '삭제',
         onPress: (filteredArr: Food[]) =>
           dispatch(setAllFridgeFoods(filteredArr)),
       };
@@ -102,11 +102,15 @@ export const useHandleTableItem = ({
     }
 
     if (animationState === 'slideup-out') {
-      const filteredCheckItem = allTableItems.filter(
-        (food) => !checkedList.some((checkFood) => checkFood.id === food.id)
-      );
-
-      onPress(filteredCheckItem as any);
+      const filteredCheckItem = allTableItems.filter((foodItem) => {
+        if (foodItem.space === '팬트리') {
+          dispatch(removeFromPantry({ name: foodItem.name }));
+        }
+        return !checkedList.some(
+          (checkedFood) => checkedFood.id === foodItem.id
+        );
+      });
+      onPress(filteredCheckItem);
     }
     setCheckedList([]);
   };
