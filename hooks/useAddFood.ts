@@ -6,6 +6,7 @@ import { addFridgeFood } from '../redux/slice/fridgeFoodsSlice';
 import { FoodLocation } from '../constant/fridgeInfo';
 import { Alert } from 'react-native';
 import { addToPantry } from '../redux/slice/pantryFoodsSlice';
+import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
 import UUIDGenerator from 'react-native-uuid';
 
 interface Props {
@@ -27,16 +28,14 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
     setNewFood({ ...newFood, ...info });
 
   const alertExistFood = (food: Food) => {
-    if (foodLocation) {
-      return Alert.alert(
-        `${food.name}`,
-        `${food.space} ${(food as Food).compartmentNum}에 이미 식료품이 있어요.`
-      );
-    }
-    return Alert.alert(`${food.name}`, '이미 목록에 있어요.');
+    const { exist, existInList } = alertPhraseWithFood(food);
+
+    const guide = foodLocation ? exist : existInList;
+    return Alert.alert(guide.title, guide.msg);
   };
 
   const onAddSubmit = (setModalVisible: (visible: boolean) => void) => {
+    const { noName, wrongDate } = alertPhrase;
     const { name, category, favorite } = newFood;
 
     const foodList: Food[] = foodLocation ? fridgeFoods : pantryFoods;
@@ -44,18 +43,11 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
     const existFood = foodList.find((food) => food.name === name);
     if (existFood) return alertExistFood(existFood);
 
-    if (name === '')
-      return Alert.alert(
-        '식료품 이름 미작성',
-        '식료품의 이름이 작성되지 않았어요.'
-      );
+    if (name === '') return Alert.alert(noName.title, noName.msg);
 
     const { expiredDate, purchaseDate } = newFood;
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
-      return Alert.alert(
-        '날짜 수정 알림',
-        '유통기한이 구매일보다 이전일 수 없어요.'
-      );
+      return Alert.alert(wrongDate.title, wrongDate.msg);
     }
 
     const favoriteListItem = favoriteFoods.find((food) => food.name === name);

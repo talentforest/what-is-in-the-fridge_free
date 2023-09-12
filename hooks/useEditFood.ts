@@ -9,6 +9,7 @@ import {
 } from '../redux/slice/favoriteFoodsSlice';
 import { Alert } from 'react-native';
 import { editPantryFood } from '../redux/slice/pantryFoodsSlice';
+import { alertPhrase } from '../constant/alertPhrase';
 
 export const useEditFood = ({ food }: { food: Food }) => {
   const [editedFood, setEditedFood] = useState(food);
@@ -24,11 +25,9 @@ export const useEditFood = ({ food }: { food: Food }) => {
     setModalVisible: (modalVisible: boolean) => void
   ) => {
     const { expiredDate, purchaseDate } = editedFood;
+    const { wrongDate } = alertPhrase;
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
-      return Alert.alert(
-        '날짜 수정 알림',
-        '유통기한이 구매일보다 이전일 수 없어요.'
-      );
+      return Alert.alert(wrongDate.title, wrongDate.msg);
     }
     if (editedFood.favorite) {
       dispatch(editFavorite(editedFood));

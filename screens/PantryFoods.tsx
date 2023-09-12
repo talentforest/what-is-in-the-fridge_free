@@ -15,7 +15,7 @@ import {
 } from '../hooks';
 import { foodCategories } from '../constant/foodCategories';
 import { entireFilterObj, favoriteFilterObj } from '../util';
-import { MAX_LIST_LENGTH, alertExcess } from '../components/buttons/AddFoodBtn';
+import { MAX_LIST_LENGTH } from '../components/buttons/AddFoodBtn';
 
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
@@ -28,6 +28,7 @@ import Icon from '../components/common/native-component/Icon';
 import TableFilters from '../components/table/TableFilters';
 import EmptySign from '../components/common/EmptySign';
 import tw from 'twrnc';
+import { alertPhrase } from '../constant/alertPhrase';
 
 export default function PantryFoods() {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
@@ -43,7 +44,7 @@ export default function PantryFoods() {
     onEntireBoxPress, //
   } = useHandleCheckList();
 
-  const { onDeletePress, onAddShoppingListPress } = useHandleTableItem({
+  const { onDeletePress } = useHandleTableItem({
     checkedList,
     setCheckedList,
     setModalVisible,
@@ -129,7 +130,7 @@ export default function PantryFoods() {
             <TouchableOpacity
               onPress={() => {
                 if (pantryFoods.length === MAX_LIST_LENGTH) {
-                  Alert.alert(alertExcess.title, alertExcess.msg);
+                  Alert.alert(alertPhrase.excess.title, alertPhrase.excess.msg);
                 } else {
                   setModalVisible(true);
                 }
@@ -141,12 +142,6 @@ export default function PantryFoods() {
           </View>
 
           <TableFooter list={checkedList}>
-            <SquareBtn
-              name='장보기 추가'
-              icon='cart'
-              disabled={checkedList.length === 0}
-              onPress={onAddShoppingListPress}
-            />
             <SquareBtn
               name='팬트리에서 삭제'
               icon='trash-can'

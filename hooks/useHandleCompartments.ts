@@ -4,7 +4,8 @@ import {
   minusCompartment,
   plusCompartment,
 } from '../redux/slice/fridgeInfoSlice';
-import { Space } from '../constant/fridgeInfo';
+import { CompartmentNum, Space } from '../constant/fridgeInfo';
+import { alertPhraseDeleteCompartment } from '../constant/alertPhrase';
 
 interface Props {
   space: Space;
@@ -24,11 +25,13 @@ export const useHandleCompartments = ({ space }: Props) => {
 
   const onMinusPress = () => {
     if (fridgeInfo.compartments[space] <= 1) return;
+    const guide = alertPhraseDeleteCompartment(
+      `${fridgeInfo.compartments[space]}칸` as CompartmentNum
+    );
+
     if (existFoodInLastCompartment.length !== 0)
-      return Alert.alert(
-        '식료품 존재 안내',
-        `${fridgeInfo.compartments[space]}번 칸에 식료품이 있어 삭제할 수 없어요.`
-      );
+      return Alert.alert(guide.title, guide.msg);
+
     dispatch(minusCompartment(space));
   };
 
