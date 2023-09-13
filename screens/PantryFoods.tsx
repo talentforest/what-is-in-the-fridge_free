@@ -52,10 +52,9 @@ export default function PantryFoods() {
 
   useFocusEffect(
     useCallback(() => {
-      initializeFilter();
       return () => {
+        setCheckedList([]); // unfocus시 빈배열
         initializeFilter();
-        setCheckedList([]);
       };
     }, [])
   );
