@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { Filter, FilterObj } from '../../util';
@@ -27,7 +27,14 @@ export default function TableFilters({
 }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { currentFilter, onFilterPress, isCategoryFilter } = useHandleFilter();
+  const { currentFilter, onFilterPress, initializeFilter, isCategoryFilter } =
+    useHandleFilter();
+
+  useEffect(() => {
+    return () => {
+      initializeFilter();
+    };
+  }, []);
 
   return (
     <View>
