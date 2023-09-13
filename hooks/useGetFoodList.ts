@@ -84,7 +84,7 @@ export const useGetFoodList = () => {
 
     if (filter === '자주 먹는 식료품') {
       const list = foodList.filter((food) =>
-        favoriteFoods.find((favFood) => food.name !== favFood.name)
+        favoriteFoods.find((favFood) => food.name === favFood.name)
       );
       return orderExpirationDate(list);
     }
