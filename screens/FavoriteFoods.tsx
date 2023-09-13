@@ -37,7 +37,7 @@ export default function FavoriteFoods() {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState<Category | ''>('');
 
-  const { findFavoriteListItem } = useFindFood();
+  const { isFavoriteItem } = useFindFood();
   const { currentFilter, initializeFilter } = useHandleFilter();
   const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
   const { onSubmitFavoriteListItem } = useSubmitFavoriteFoods();
@@ -58,8 +58,8 @@ export default function FavoriteFoods() {
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
 
-  const { onDeletePress, onAddShoppingListPress } = useHandleTableItem({
-    checkedList: checkedList as Food[],
+  const { onAddShoppingListPress, onDeleteFoodPress } = useHandleTableItem({
+    checkedList: checkedList,
     setCheckedList,
   });
 
@@ -101,7 +101,6 @@ export default function FavoriteFoods() {
               onEntirePress={() => onEntireBoxPress(filteredList)}
             />
 
-            {/* 필터 */}
             <TableFilters
               filterList={[entireFilterObj, ...existAbsenceFilters]}
               categoryFilters={foodCategories}
@@ -110,7 +109,6 @@ export default function FavoriteFoods() {
               foodList={favoriteFoods}
             />
 
-            {/* 자주 먹는 식료품 목록 */}
             <TableBody
               title='자주 먹는 식료품'
               list={filteredList}
@@ -118,33 +116,30 @@ export default function FavoriteFoods() {
               checkedList={checkedList as Food[]}
               animationState={animationState}
               afterAnimation={() =>
-                afterAnimation(onDeletePress, favoriteFoods)
+                afterAnimation(onDeleteFoodPress, favoriteFoods)
               }
             />
 
-            {/* 식료품 선택 개수와 버튼 */}
-            <View>
-              <TableFooter list={checkedList as Food[]}>
-                <SquareBtn
-                  name='장보기 추가'
-                  icon='cart'
-                  disabled={checkedList.length === 0}
-                  onPress={onAddShoppingListPress}
-                />
-                <SquareBtn
-                  name='자주 먹는 식료품 해제'
-                  icon='tag-minus'
-                  disabled={checkedList.length === 0}
-                  onPress={() =>
-                    onDeletePress(
-                      favoriteFoods,
-                      setAnimationState,
-                      animationState
-                    )
-                  }
-                />
-              </TableFooter>
-            </View>
+            <TableFooter list={checkedList as Food[]}>
+              <SquareBtn
+                name='장보기 추가'
+                icon='cart'
+                disabled={checkedList.length === 0}
+                onPress={onAddShoppingListPress}
+              />
+              <SquareBtn
+                name='자주 먹는 식료품 해제'
+                icon='tag-minus'
+                disabled={checkedList.length === 0}
+                onPress={() =>
+                  onDeleteFoodPress(
+                    setAnimationState,
+                    animationState,
+                    favoriteFoods
+                  )
+                }
+              />
+            </TableFooter>
           </TableContainer>
 
           <View style={tw`mt-2`}>
@@ -170,7 +165,7 @@ export default function FavoriteFoods() {
               }}
             >
               {showCaution &&
-                (findFavoriteListItem(inputValue) ? (
+                (isFavoriteItem(inputValue) ? (
                   <FormMessage
                     message='이미 목록에 있는 식료품이에요.'
                     color='orange'

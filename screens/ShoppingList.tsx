@@ -15,7 +15,7 @@ import {
 } from '../hooks';
 import { formThreeSteps } from '../constant/formInfo';
 
-import AddSelectFoodModal from '../screen-component/modal/AddSelectFoodModal';
+import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
 import TableHeader from '../components/table/TableHeader';
@@ -38,7 +38,7 @@ export default function ShoppingList() {
     useHandleCheckList();
 
   const {
-    onDeletePress,
+    onDeleteFoodPress,
     onAddToFridgePress, //
   } = useHandleTableItem({ checkedList, setCheckedList, setModalVisible });
 
@@ -79,7 +79,9 @@ export default function ShoppingList() {
               addToFridgePress={onAddToFridgePress}
               checkedList={checkedList}
               animationState={animationState}
-              afterAnimation={() => afterAnimation(onDeletePress, shoppingList)}
+              afterAnimation={() =>
+                afterAnimation(onDeleteFoodPress, shoppingList)
+              }
             />
             <View style={tw`mb-2`}>
               <TableFooter list={checkedList}>
@@ -88,10 +90,10 @@ export default function ShoppingList() {
                   icon='trash-can'
                   disabled={checkedList.length === 0}
                   onPress={() => {
-                    onDeletePress(
-                      shoppingList,
+                    onDeleteFoodPress(
                       setAnimationState,
-                      animationState
+                      animationState,
+                      shoppingList
                     );
                   }}
                 />
@@ -109,7 +111,7 @@ export default function ShoppingList() {
           />
 
           {modalVisible && (
-            <AddSelectFoodModal
+            <AddShoppingListFoodModal
               modalVisible={modalVisible}
               setModalVisible={setModalVisible}
               setCheckedList={setCheckedList}

@@ -11,7 +11,11 @@ import { setAllFridgeFoods } from '../redux/slice/fridgeFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import { AnimationState } from './animation/useSetAnimationState';
 import { toggleShowBtn } from '../redux/slice/showBtnSlice';
-import { removeFromPantry, setPantry } from '../redux/slice/pantryFoodsSlice';
+import { setPantry } from '../redux/slice/pantryFoodsSlice';
+import {
+  alertPhraseWithCheckList,
+  alertPhraseWithFood,
+} from '../constant/alertPhrase';
 
 interface Props {
   checkedList: Food[];
@@ -25,92 +29,91 @@ export const useHandleTableItem = ({
   setModalVisible,
 }: Props) => {
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
-  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+  const { pantryFoods } = useSelector((state) => state.pantryFoods);
+
   const dispatch = useDispatch();
   const route = useRoute();
 
-  const changeFavStateInList = () => {
-    return fridgeFoods.map((food) => {
-      const isFavoriteFood = checkedList.some(
-        (item) => item.name === food.name
-      );
-      return isFavoriteFood ? { ...food, favorite: false } : food;
-    });
-  };
+  const {
+    deleteExpiredFoods,
+    unSettingFavoriteFoods,
+    deletePantryFoods,
+    deleteFromShoppingList,
+    addToShoppingList,
+  } = alertPhraseWithCheckList(checkedList);
 
-  const checkedFoodNameList = checkedList.map((food) => food.name).join(', ');
-
-  const getDeleteAlert = () => {
-    if (route.name === 'ExpiredFoods') {
-      return {
-        title: '유통기한 주의 식료품 삭제',
-        desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 삭제하시겠습니까? 냉장고나 팬트리에서 삭제됩니다.`,
-        defaultBtnText: '삭제',
-        onPress: (filteredArr: Food[]) =>
-          dispatch(setAllFridgeFoods(filteredArr)),
-      };
-    }
-    if (route.name === 'FavoriteFoods') {
-      return {
-        title: '자주 먹는 식료품 해제',
-        desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 자주 먹는 식료품에서 해제하시겠습니까?`,
-        defaultBtnText: '해제',
-        onPress: (filteredArr: Food[]) => {
-          dispatch(setAllFridgeFoods(changeFavStateInList()));
-          dispatch(setFavoriteList(filteredArr as Food[]));
-        },
-      };
-    }
-    if (route.name === 'PantryFoods') {
-      return {
-        title: '팬트리 식료품 삭제',
-        desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 팬트리 목록에서 삭제하시겠습니까?`,
-        defaultBtnText: '삭제',
-        onPress: (filteredArr: Food[]) => dispatch(setPantry(filteredArr)),
-      };
-    }
-    return {
-      title: '식료품 삭제',
-      desc: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 장보기 목록에서 삭제하시겠습니까?`,
-      defaultBtnText: '삭제',
-      onPress: (filteredArr: Food[]) => dispatch(setShoppingList(filteredArr)),
-    };
-  };
-
-  const onDeletePress = (
-    allTableItems: Food[],
-    setAnimationState?: (state: AnimationState) => void,
-    animationState?: AnimationState
+  const alertPress = (
+    alertPhrase: { title: string; msg: string },
+    setAnimationState: (state: AnimationState) => void
   ) => {
-    const { title, desc, defaultBtnText, onPress } = getDeleteAlert();
+    const { title, msg } = alertPhrase;
+    const onPress = () => {
+      setAnimationState('slideup-out');
+      dispatch(toggleShowBtn(false));
+    };
+    return Alert.alert(title, msg, [
+      { text: '취소', style: 'destructive' },
+      { text: '삭제', onPress, style: 'default' }, // 확인 누르면 애니메이션 상태 전환
+    ]);
+  };
 
-    if (animationState === 'none' && setAnimationState) {
-      return Alert.alert(title, desc, [
-        {
-          text: '취소',
-          style: 'destructive',
-        },
-        {
-          text: defaultBtnText,
-          onPress: () => {
-            setAnimationState('slideup-out');
-            dispatch(toggleShowBtn(false));
-          },
-          style: 'default',
-        },
-      ]);
-    }
+  const onDeleteExpiredFoodPress = (
+    setAnimationState: (state: AnimationState) => void,
+    animationState: AnimationState
+  ) => {
+    if (animationState === 'none')
+      return alertPress(deleteExpiredFoods, setAnimationState); // 확인 누르면 애니메이션 상태 전환
 
     if (animationState === 'slideup-out') {
-      const filteredCheckItem = allTableItems.filter((foodItem) => {
-        if (foodItem.space === '팬트리') {
-          dispatch(removeFromPantry({ name: foodItem.name }));
-        }
-        return !checkedList.some(
-          (checkedFood) => checkedFood.id === foodItem.id
-        );
-      });
-      onPress(filteredCheckItem);
+      const findFridgeFoodInCheckList = (fridgeFood: Food) => {
+        return checkedList
+          .filter((checkedFood) => checkedFood.space !== '팬트리')
+          .find((checkedfood) => checkedfood.name === fridgeFood.name);
+      };
+
+      const findPantryFoodInCheckList = (pantryFood: Food) => {
+        return checkedList
+          .filter((checkedFood) => checkedFood.space === '팬트리')
+          .find((checkedfood) => checkedfood.name === pantryFood.name);
+      };
+
+      const filteredFridge = fridgeFoods.filter(
+        (fridgeFood) => !findFridgeFoodInCheckList(fridgeFood)
+      );
+
+      const filteredPantry = pantryFoods.filter(
+        (pantryFood) => !findPantryFoodInCheckList(pantryFood)
+      );
+
+      dispatch(setPantry(filteredPantry));
+      dispatch(setAllFridgeFoods(filteredFridge));
+    }
+    setCheckedList([]);
+  };
+
+  const getInfoByRoute = (route: string) => {
+    return route === 'PantryFoods'
+      ? { phrase: deletePantryFoods, fn: setPantry }
+      : route === 'ShoppingList'
+      ? { phrase: deleteFromShoppingList, fn: setShoppingList }
+      : { phrase: unSettingFavoriteFoods, fn: setFavoriteList };
+  };
+
+  // 팬트리 | 쇼핑리스트 | 자주 먹는 식료품 - 아이템 삭제
+  const onDeleteFoodPress = (
+    setAnimationState: (state: AnimationState) => void,
+    animationState: AnimationState,
+    allTableItems: Food[]
+  ) => {
+    const { name } = route;
+    if (animationState === 'none')
+      return alertPress(getInfoByRoute(name).phrase, setAnimationState); // 확인 누르면 애니메이션 상태 전환
+
+    if (animationState === 'slideup-out' && allTableItems) {
+      const filteredCheckItem = allTableItems.filter(
+        (food) => !checkedList.find((checkedFood) => checkedFood.id === food.id)
+      );
+      dispatch(getInfoByRoute(name).fn(filteredCheckItem));
     }
     setCheckedList([]);
   };
@@ -120,57 +123,49 @@ export const useHandleTableItem = ({
 
     dispatch(addItemsToShoppingList(checkedList));
 
-    const foodNameList = checkedList.map((food) => food.name).join(', ');
+    const { title, msg } = addToShoppingList;
     if (setCheckedList) {
-      return Alert.alert(
-        '장보기 목록에 추가',
-        `총 ${checkedList.length}개의 식료품(${foodNameList})이 장보기 목록에 추가되었어요.`,
-        [
-          {
-            text: '확인',
-            onPress: () => {
-              setCheckedList([]);
-            },
-            style: 'default',
+      return Alert.alert(title, msg, [
+        {
+          text: '확인',
+          onPress: () => {
+            setCheckedList([]);
           },
-        ]
-      );
+          style: 'default',
+        },
+      ]);
     }
   };
 
-  const openAddFoodModal = (food: Food) => {
-    dispatch(select(food));
+  const onAddToFridgePress = (selectedFood: Food) => {
+    const existFood = [...fridgeFoods, ...pantryFoods].find(
+      (food) => food.name === selectedFood.name
+    );
+
+    const {
+      deleteExistFood: { title, msg },
+    } = alertPhraseWithFood(existFood || selectedFood);
+
+    if (existFood) {
+      return Alert.alert(title, msg, [
+        { text: '취소', style: 'destructive' },
+        {
+          text: '삭제 후 다시 추가',
+          onPress: () => {
+            dispatch(select(existFood));
+            setModalVisible && setModalVisible(true);
+          },
+          style: 'default',
+        },
+      ]);
+    }
+    dispatch(select(selectedFood));
     setModalVisible && setModalVisible(true);
   };
 
-  const onAddToFridgePress = (food: Food) => {
-    const favorite = !!favoriteFoods.find(
-      (favoriteFood) => favoriteFood.name === food.name
-    );
-    const selectedFoodInfo = { ...food, favorite } as Food;
-
-    const exist = fridgeFoods.find(
-      (food) => food.name === selectedFoodInfo.name
-    );
-    if (exist) {
-      return Alert.alert(
-        `기존 식료품 삭제 안내`,
-        `이미 냉장고에 ${selectedFoodInfo.name} 식료품이 존재해요. 기존 식료품을 삭제하고 새로 추가하시겠어요?`,
-        [
-          { text: '취소', style: 'destructive' },
-          {
-            text: '삭제 후 추가',
-            onPress: () => openAddFoodModal(selectedFoodInfo),
-            style: 'default',
-          },
-        ]
-      );
-    }
-    return openAddFoodModal(selectedFoodInfo);
-  };
-
   return {
-    onDeletePress,
+    onDeleteFoodPress,
+    onDeleteExpiredFoodPress,
     onAddShoppingListPress,
     onAddToFridgePress,
   };

@@ -15,6 +15,7 @@ import {
 } from '../hooks';
 import { foodCategories } from '../constant/foodCategories';
 import { entireFilterObj, favoriteFilterObj } from '../util';
+import { alertPhrase } from '../constant/alertPhrase';
 import { MAX_LIST_LENGTH } from '../components/buttons/AddFoodBtn';
 
 import Container from '../components/common/Container';
@@ -28,7 +29,6 @@ import Icon from '../components/common/native-component/Icon';
 import TableFilters from '../components/table/TableFilters';
 import EmptySign from '../components/common/EmptySign';
 import tw from 'twrnc';
-import { alertPhrase } from '../constant/alertPhrase';
 
 export default function PantryFoods() {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
@@ -44,7 +44,7 @@ export default function PantryFoods() {
     onEntireBoxPress, //
   } = useHandleCheckList();
 
-  const { onDeletePress } = useHandleTableItem({
+  const { onDeleteFoodPress } = useHandleTableItem({
     checkedList,
     setCheckedList,
     setModalVisible,
@@ -106,7 +106,7 @@ export default function PantryFoods() {
                     }
                     animationState={animationState}
                     afterAnimation={() =>
-                      afterAnimation(onDeletePress, pantryFoods)
+                      afterAnimation(onDeleteFoodPress, pantryFoods)
                     }
                   />
                 )}
@@ -147,7 +147,11 @@ export default function PantryFoods() {
               icon='trash-can'
               disabled={checkedList.length === 0}
               onPress={() => {
-                onDeletePress(pantryFoods, setAnimationState, animationState);
+                onDeleteFoodPress(
+                  setAnimationState,
+                  animationState,
+                  pantryFoods
+                );
               }}
             />
           </TableFooter>
