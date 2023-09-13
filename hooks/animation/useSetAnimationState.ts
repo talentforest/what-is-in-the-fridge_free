@@ -3,19 +3,18 @@ import { Food } from '../../constant/foodInfo';
 
 export type AnimationState = 'none' | 'slidedown-in' | 'slideup-out';
 
+export type onPressType = (
+  setAnimationState: (state: AnimationState) => void,
+  animationState: AnimationState,
+  allTableItems: Food[]
+) => void;
+
 export const useSetAnimationState = () => {
   const [animationState, setAnimationState] = useState<AnimationState>('none');
 
-  const afterAnimation = (
-    onDeletePress: (
-      allTableItems: Food[],
-      setAnimationState?: (state: AnimationState) => void,
-      animationState?: AnimationState
-    ) => void,
-    foodList: Food[]
-  ) => {
+  const afterAnimation = (onPress: onPressType, foodList: Food[]) => {
     if (animationState === 'slideup-out') {
-      onDeletePress(foodList, setAnimationState, animationState);
+      onPress(setAnimationState, animationState, foodList);
       setAnimationState('none');
     }
     if (animationState === 'slidedown-in') {

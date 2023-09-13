@@ -31,7 +31,7 @@ export default function ExpiredFoods() {
     onCheckBoxPress, //
   } = useHandleCheckList();
 
-  const { onDeletePress } = useHandleTableItem({
+  const { onDeleteExpiredFoodPress } = useHandleTableItem({
     checkedList,
     setCheckedList,
   });
@@ -71,7 +71,7 @@ export default function ExpiredFoods() {
             checkedList={checkedList}
             animationState={animationState}
             afterAnimation={() =>
-              afterAnimation(onDeletePress, allExpiredFoods())
+              afterAnimation(onDeleteExpiredFoodPress, allExpiredFoods())
             }
           />
 
@@ -80,11 +80,7 @@ export default function ExpiredFoods() {
               <SquareBtn
                 name='유통기한 주의 식료품 삭제'
                 onPress={() =>
-                  onDeletePress(
-                    allExpiredFoods(),
-                    setAnimationState,
-                    animationState
-                  )
+                  onDeleteExpiredFoodPress(setAnimationState, animationState)
                 }
                 icon='trash-can'
                 disabled={checkedList.length === 0}

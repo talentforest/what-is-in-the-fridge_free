@@ -66,14 +66,12 @@ export default function Form({
                         name={food.name}
                         fixedCategory={food.category}
                         changeInfo={changeInfo}
-                        disabled={title !== '식료품 정보 수정'}
+                        disabled={!title.includes('수정')}
                       />
                       <FavoriteItem
                         title={title}
-                        name={food.name}
-                        favoriteState={food.favorite}
-                        changeInfo={changeInfo}
-                        disabled={title !== '식료품 정보 수정'}
+                        food={food}
+                        disabled={!title.includes('수정')}
                       />
                     </FormSectionContainer>
                   )}
