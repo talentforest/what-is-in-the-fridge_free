@@ -33,7 +33,7 @@ export default function TableBody({
 }: Props) {
   const route = useRoute();
 
-  const { findFoodInFridge } = useFindFood();
+  const { findFood } = useFindFood();
 
   return (
     <>
@@ -68,16 +68,14 @@ export default function TableBody({
                 {/* 장보기 식료품 추가 버튼 */}
                 {route.name === 'ShoppingList' && addToFridgePress && (
                   <TouchableOpacity
-                    onPress={() => addToFridgePress(item as Food)}
+                    onPress={() => addToFridgePress(item)}
                     style={tw`h-full justify-center px-3 -mx-3`}
                   >
                     <Icon
                       type='MaterialCommunityIcons'
                       name='plus'
                       size={23}
-                      color={
-                        findFoodInFridge(item.name) ? LIGHT_GRAY : DEEP_GRAY
-                      }
+                      color={findFood(item.name) ? LIGHT_GRAY : DEEP_GRAY}
                     />
                   </TouchableOpacity>
                 )}

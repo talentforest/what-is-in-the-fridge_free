@@ -26,8 +26,8 @@ export default function CategoryItem({
 }: Props) {
   const [categoryOpen, setCategoryOpen] = useState(false);
 
-  const { findFavoriteListItem } = useFindFood();
-  const favoriteFoodItemCategory = findFavoriteListItem(name)?.category;
+  const { isFavoriteItem } = useFindFood();
+  const favoriteFoodItemCategory = isFavoriteItem(name)?.category;
   const disabledCategory = favoriteFoodItemCategory && disabled;
 
   const category = disabledCategory ? favoriteFoodItemCategory : fixedCategory;

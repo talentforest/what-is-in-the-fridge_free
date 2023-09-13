@@ -12,8 +12,8 @@ import { GRAY } from '../../constant/colors';
 import Modal from '../../components/modal/Modal';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import Form from '../../components/form/Form';
-import tw from 'twrnc';
 import Icon from '../../components/common/native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
   modalVisible: boolean;

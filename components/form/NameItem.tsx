@@ -19,7 +19,7 @@ interface Props {
 export default function NameItem({ name, changeInfo, editable }: Props) {
   const [showMsg, setShowMsg] = useState(false);
   const { favoriteFoods } = useGetFoodList();
-  const { findFavoriteListItem } = useFindFood();
+  const { isFavoriteItem } = useFindFood();
 
   const onChangeText = (value: string) => changeInfo({ name: value });
 
@@ -61,7 +61,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
       )}
 
       {/* 자주 먹는 식료품 태그 목록 */}
-      {!findFavoriteListItem(name) && editable && (
+      {!isFavoriteItem(name) && editable && (
         <Animated.View
           style={{
             height: height,

@@ -4,7 +4,7 @@ import { useSelector } from '../../redux/hook';
 import { FormStep } from '../../constant/formInfo';
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { getFormattedDate, getRelativeTime } from '../../util';
-import { useEditFood, useDeleteFood } from '../../hooks';
+import { useEditFood, useDeleteFridgeFood, useFindFood } from '../../hooks';
 
 import InfoBox from '../../components/modal/InfoBox';
 import FavoriteTagBox from '../../components/modal/FavoriteTagBox';
@@ -27,7 +27,12 @@ export default function FoodDetailModal({
   formSteps,
 }: Props) {
   const { selectedFood: food } = useSelector((state) => state.selectedFood);
-  const { deleteFood } = useDeleteFood({ space: food.space, setModalVisible });
+
+  const { deleteFood } = useDeleteFridgeFood({
+    space: food.space,
+    setModalVisible,
+  });
+
   const {
     editing,
     setEditing,
@@ -36,7 +41,9 @@ export default function FoodDetailModal({
     onEditSumbit, //
   } = useEditFood({ food });
 
-  const { name, category, favorite, expiredDate, purchaseDate } = editedFood;
+  const { isFavoriteItem } = useFindFood();
+
+  const { name, category, expiredDate, purchaseDate } = editedFood;
 
   return (
     <Modal
@@ -76,7 +83,7 @@ export default function FoodDetailModal({
             </Text>
           </View>
 
-          {favorite && (
+          {!!isFavoriteItem(food.name) && (
             <View style={tw`self-center mb-2`}>
               <FavoriteTagBox />
             </View>
@@ -108,7 +115,6 @@ export default function FoodDetailModal({
             )}
           </View>
 
-          {/* 버튼 */}
           <View style={tw`gap-2`}>
             <SubmitBtn
               color='blue'

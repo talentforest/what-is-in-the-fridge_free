@@ -13,13 +13,18 @@ export const useFindFood = () => {
     return pantryFoods.find((food) => food.name === name);
   };
 
-  const findFavoriteListItem = (name: string) => {
+  const findFood = (name: string) => {
+    return [...pantryFoods, ...fridgeFoods].find((food) => food.name === name);
+  };
+
+  const isFavoriteItem = (name: string) => {
     return favoriteFoods.find((favoriteFood) => favoriteFood.name === name);
   };
 
   return {
     findFoodInFridge,
     findFoodInPantry,
-    findFavoriteListItem,
+    findFood,
+    isFavoriteItem,
   };
 };

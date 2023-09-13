@@ -9,7 +9,7 @@ interface Props {
   setModalVisible: (visible: boolean) => void;
 }
 
-export const useDeleteFood = ({ space, setModalVisible }: Props) => {
+export const useDeleteFridgeFood = ({ space, setModalVisible }: Props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation<NavigateProp>();
 
