@@ -5,23 +5,19 @@ export const initialState: { fridgeFoods: Food[] } = {
   fridgeFoods: [
     {
       id: 'fridge1',
-      image: '🍎',
       name: '사과',
       category: '신선식품류',
       purchaseDate: '2023-12-31',
       expiredDate: '2023-12-20',
-      favorite: false,
       space: '냉장실 안쪽',
       compartmentNum: '1번',
     },
     {
       id: 'freezer1',
-      image: '🍞',
       name: '식빵',
       category: '신선식품류',
       purchaseDate: '',
       expiredDate: '2022-12-20',
-      favorite: false,
       space: '냉동실 안쪽',
       compartmentNum: '1번',
     },

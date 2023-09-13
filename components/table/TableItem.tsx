@@ -29,10 +29,10 @@ export default function TableItem({
   animationState,
   afterAnimation,
 }: Props) {
-  const { findFoodInFridge } = useFindFood();
+  const { findFood } = useFindFood();
   const route = useRoute();
   const shoppingListRoute = route.name === 'ShoppingList';
-  const existItemTag = shoppingListRoute && findFoodInFridge(food.name);
+  const existItemTag = shoppingListRoute && findFood(food.name);
 
   const slideDownIn = animationState === 'slidedown-in';
   const slideUpOut = animationState === 'slideup-out';
@@ -49,12 +49,11 @@ export default function TableItem({
     afterAnimation,
   });
 
-  const { id, name, favorite, category, space } = food;
+  const { id, name, category, space } = food;
   const initializedFood = {
     ...initialFood,
     id,
     name,
-    favorite,
     category,
     space,
   };

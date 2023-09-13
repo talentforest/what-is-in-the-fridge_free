@@ -21,7 +21,10 @@ export const useHandleCompartments = ({ space }: Props) => {
   const lastCompartment = fridgeInfo.compartments[space];
   const existFoodInLastCompartment = fridgeFoods
     .filter((food) => food.space === space)
-    .filter((food) => +food.compartmentNum.slice(0, 1) === lastCompartment);
+    .filter((food) => {
+      if (food.compartmentNum)
+        return +food.compartmentNum.slice(0, 1) === lastCompartment;
+    });
 
   const onMinusPress = () => {
     if (fridgeInfo.compartments[space] <= 1) return;

@@ -1,5 +1,5 @@
 import { FormStep } from '../../constant/formInfo';
-import { useAddSelectFood } from '../../hooks';
+import { useAddShoppingListFood } from '../../hooks';
 import { Food } from '../../constant/foodInfo';
 import { View } from 'react-native';
 
@@ -15,13 +15,13 @@ interface Props {
   setCheckedList: (checkedList: Food[]) => void;
 }
 
-export default function AddSelectFoodModal({
+export default function AddShoppingListFoodModal({
   modalVisible,
   setModalVisible,
   formSteps,
   setCheckedList,
 }: Props) {
-  const { selectedFood, onChange, onSubmit } = useAddSelectFood();
+  const { selectedFood, onChange, onSubmit } = useAddShoppingListFood();
 
   return (
     <Modal

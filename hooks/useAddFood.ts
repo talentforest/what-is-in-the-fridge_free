@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from '../redux/hook';
-import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { Food, FoodInfo } from '../constant/foodInfo';
 import { useState } from 'react';
 import { addFridgeFood } from '../redux/slice/fridgeFoodsSlice';
@@ -27,51 +26,40 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
   const changeFoodInfo = (info: FoodInfo) =>
     setNewFood({ ...newFood, ...info });
 
-  const alertExistFood = (food: Food) => {
-    const { exist, existInList } = alertPhraseWithFood(food);
-
-    const guide = foodLocation ? exist : existInList;
-    return Alert.alert(guide.title, guide.msg);
-  };
-
   const onAddSubmit = (setModalVisible: (visible: boolean) => void) => {
+    const { name, category, expiredDate, purchaseDate } = newFood;
     const { noName, wrongDate } = alertPhrase;
-    const { name, category, favorite } = newFood;
-
-    const foodList: Food[] = foodLocation ? fridgeFoods : pantryFoods;
-
-    const existFood = foodList.find((food) => food.name === name);
-    if (existFood) return alertExistFood(existFood);
 
     if (name === '') return Alert.alert(noName.title, noName.msg);
 
-    const { expiredDate, purchaseDate } = newFood;
+    const foodList: Food[] = foodLocation ? fridgeFoods : pantryFoods;
+    const existFood = foodList.find((food) => food.name === name);
+
+    if (existFood) {
+      const { exist, existInList } = alertPhraseWithFood(existFood);
+      const guide = foodLocation ? exist : existInList;
+      return Alert.alert(guide.title, guide.msg);
+    }
+
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
       return Alert.alert(wrongDate.title, wrongDate.msg);
     }
 
-    const favoriteListItem = favoriteFoods.find((food) => food.name === name);
+    const isFavoriteItem = favoriteFoods.find((food) => food.name === name);
     const foodToAdd = {
       ...newFood,
-      id: favoriteListItem ? favoriteListItem.id : (myUuid as string),
-      category: favoriteListItem ? favoriteListItem.category : category,
-      favorite: favoriteListItem ? favoriteListItem.favorite : favorite,
+      id: isFavoriteItem ? isFavoriteItem.id : (myUuid as string),
+      category: isFavoriteItem ? isFavoriteItem.category : category,
+      space: foodLocation ? foodLocation.space : '팬트리',
     };
 
-    const foodObj: Food = foodLocation
-      ? {
-          ...foodToAdd,
-          space: foodLocation.space,
-          compartmentNum: foodLocation.compartmentNum,
-        }
-      : { ...foodToAdd, space: '팬트리' };
-
-    if (!favoriteListItem && foodToAdd.favorite) {
-      dispatch(addFavorite(foodObj));
-    }
-
     dispatch(
-      foodLocation ? addFridgeFood(foodObj as Food) : addToPantry(foodObj)
+      foodLocation
+        ? addFridgeFood({
+            ...foodToAdd,
+            compartmentNum: foodLocation.compartmentNum,
+          })
+        : addToPantry(foodToAdd)
     );
     setModalVisible(false);
   };

@@ -5,7 +5,12 @@ import {
 } from '../../components/common/native-component';
 import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
 import { cutLetter } from '../../util';
-import { AnimationState, useDragBox, useSlideAnimation } from '../../hooks';
+import {
+  AnimationState,
+  useDragBox,
+  useFindFood,
+  useSlideAnimation,
+} from '../../hooks';
 import { Food } from '../../constant/foodInfo';
 import { useState } from 'react';
 
@@ -32,7 +37,9 @@ export default function PantryListBox({
   afterAnimation,
 }: Props) {
   const [openEditModal, setOpenEditModal] = useState(false);
-  const { name, favorite, category, expiredDate, purchaseDate } = food;
+  const { name, category, expiredDate, purchaseDate } = food;
+
+  const { isFavoriteItem } = useFindFood();
 
   const slideDownIn = animationState === 'slidedown-in';
   const slideUpOut = animationState === 'slideup-out';
@@ -101,7 +108,7 @@ export default function PantryListBox({
                     name='tag-heart'
                     type='MaterialCommunityIcons'
                     size={17}
-                    color={favorite ? INDIGO : LIGHT_GRAY}
+                    color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
                   />
                 </View>
               </View>

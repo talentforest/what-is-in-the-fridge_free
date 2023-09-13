@@ -1,12 +1,13 @@
 import { View, Animated } from 'react-native';
 import { LIGHT_BLUE } from '../../constant/colors';
-import {
-  useSlideAnimation,
-  useToggleAnimation,
-  useGetFoodList,
-  useFindFood,
-} from '../../hooks';
+import { useToggleAnimation, useFindFood } from '../../hooks';
 import { ModalTitle } from '../modal/Modal';
+import { useDispatch } from '../../redux/hook';
+import {
+  addFavorite,
+  removeFavorite,
+} from '../../redux/slice/favoriteFoodsSlice';
+import { Food } from '../../constant/foodInfo';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
@@ -14,49 +15,32 @@ import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
 
 interface Props {
-  name: string;
-  favoriteState: boolean;
-  changeInfo: (newInfo: { [key: string]: boolean }) => void;
-  disabled?: boolean;
+  food: Food;
   title: ModalTitle;
+  disabled?: boolean;
 }
 
 const MOVED_TRANSLATE_X = 88;
 
-export default function FavoriteItem({
-  name,
-  favoriteState,
-  changeInfo,
-  disabled,
-  title,
-}: Props) {
-  const { favoriteFoods } = useGetFoodList();
-  const { findFavoriteListItem } = useFindFood();
+export default function FavoriteItem({ food, title, disabled }: Props) {
+  const { isFavoriteItem } = useFindFood();
+  const { name } = food;
 
-  // 식료품 이름을 적었는데 자주 먹는 식료품 이름일 경우
-  const isFavoriteFood = favoriteFoods.find((food) => food.name === name);
-  const disabledFavoriteBtn = isFavoriteFood && disabled;
-  const currFavState = disabledFavoriteBtn
-    ? isFavoriteFood?.favorite // 기존 자주 먹는 식료품 상태
-    : favoriteState; // 새로운 식료품 상태
-
-  const { height, interpolatedOpacity } = useSlideAnimation({
-    initialValue: currFavState ? 30 : 0,
-    toValue: 30,
-    active: currFavState,
+  const { translateX } = useToggleAnimation({
+    initialValue: 0,
+    toValue: MOVED_TRANSLATE_X,
+    active: !!isFavoriteItem(name),
   });
 
-  const { translateX, animatedToggle } = useToggleAnimation({
-    initialValue: currFavState ? 0 : MOVED_TRANSLATE_X,
-    toValue: currFavState ? 0 : MOVED_TRANSLATE_X,
-    active: currFavState,
-  });
+  const dispatch = useDispatch();
 
-  const onTogglePress = (favorite: boolean) => {
-    changeInfo({ favorite });
-    animatedToggle(favorite ? 0 : MOVED_TRANSLATE_X);
+  const onTogglePress = (btnName: string) => {
+    if (btnName === '맞아요') return dispatch(addFavorite(food));
+    if (btnName === '아니에요') return dispatch(removeFavorite({ name }));
   };
 
+  // 식료품 정보 수정 제외, 자주 먹는 식품이라면 수정 불가능하도록
+  const disabledFavoriteBtn = isFavoriteItem(name) && disabled;
   const color = disabledFavoriteBtn ? 'border-slate-300' : 'border-blue-200';
   const backgroundColor = disabledFavoriteBtn ? LIGHT_BLUE : '#4070ff';
 
@@ -85,35 +69,35 @@ export default function FavoriteItem({
             backgroundColor,
           }}
         />
+
         {['맞아요', '아니에요'].map((btnNm) => (
           <ToggleBtn
             key={btnNm}
-            check={btnNm === '맞아요' ? currFavState : !currFavState}
-            onPress={() => onTogglePress(btnNm === '맞아요' ? true : false)}
             btnName={btnNm}
-            disabled={isFavoriteFood?.favorite && disabled}
+            check={
+              btnNm === '맞아요'
+                ? !!isFavoriteItem(name)
+                : !!!isFavoriteItem(name)
+            }
+            onPress={() => onTogglePress(btnNm)}
+            disabled={!!isFavoriteItem(name) && disabled}
           />
         ))}
       </View>
-      {title !== '식료품 정보 수정' && !!findFavoriteListItem(name) && (
+
+      {title !== '식료품 정보 수정' && !!isFavoriteItem(name) && (
         <FormMessage
           message='자주 먹는 식료품이므로 위의 정보가 자동으로 적용돼요.'
           color='green'
         />
       )}
 
-      {/* 자주 먹는 식료품 추가 안내 문구 */}
-      <Animated.View
-        style={{
-          height,
-          opacity: interpolatedOpacity,
-        }}
-      >
+      {title === '식료품 정보 수정' && !!isFavoriteItem(name) && (
         <FormMessage
-          message={!isFavoriteFood ? '자주 먹는 식료품 목록에 추가돼요.' : ''}
+          message={'자주 먹는 식료품 목록에 추가돼요.'}
           color='green'
         />
-      </Animated.View>
+      )}
     </View>
   );
 }
