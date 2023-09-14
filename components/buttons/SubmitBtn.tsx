@@ -5,7 +5,7 @@ import tw from 'twrnc';
 interface Props {
   btnName: string;
   onPress: () => void;
-  iconName: string;
+  iconName?: string;
   color: 'blue' | 'amber';
 }
 
@@ -18,7 +18,7 @@ export default function SubmitBtn({
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw`bg-${color}-50 border-${color}-300 shadow-md py-3 flex-row items-center justify-center border gap-1.5 rounded-lg`}
+      style={tw`bg-${color}-50 border-${color}-300 shadow-md py-2.5 flex-row items-center justify-center border gap-1.5 rounded-lg`}
     >
       {iconName && (
         <Icon

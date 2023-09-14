@@ -6,6 +6,7 @@ import { FoodLocation } from '../constant/fridgeInfo';
 import { Alert } from 'react-native';
 import { addToPantry } from '../redux/slice/pantryFoodsSlice';
 import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
+import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import UUIDGenerator from 'react-native-uuid';
 
 interface Props {
@@ -19,6 +20,7 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
+  const { isFavorite } = useSelector((state) => state.isFavorite);
 
   const dispatch = useDispatch();
   const myUuid = UUIDGenerator.v4();
@@ -28,12 +30,12 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
 
   const onAddSubmit = (setModalVisible: (visible: boolean) => void) => {
     const { name, category, expiredDate, purchaseDate } = newFood;
+
     const { noName, wrongDate } = alertPhrase;
+    const foodList = foodLocation ? fridgeFoods : pantryFoods;
+    const existFood = foodList.find((food) => food.name === name);
 
     if (name === '') return Alert.alert(noName.title, noName.msg);
-
-    const foodList: Food[] = foodLocation ? fridgeFoods : pantryFoods;
-    const existFood = foodList.find((food) => food.name === name);
 
     if (existFood) {
       const { exist, existInList } = alertPhraseWithFood(existFood);
@@ -46,12 +48,17 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
     }
 
     const isFavoriteItem = favoriteFoods.find((food) => food.name === name);
+
     const foodToAdd = {
       ...newFood,
       id: isFavoriteItem ? isFavoriteItem.id : (myUuid as string),
       category: isFavoriteItem ? isFavoriteItem.category : category,
       space: foodLocation ? foodLocation.space : '팬트리',
     };
+
+    if (isFavorite) {
+      dispatch(addFavorite(foodToAdd));
+    }
 
     dispatch(
       foodLocation

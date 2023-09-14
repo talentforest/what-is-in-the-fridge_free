@@ -26,7 +26,7 @@ export const formTwoSteps: FormStep[] = [
 ];
 
 export const formThreeSteps: FormStep[] = [
-  { step: 1, name: '식품 정보' },
-  { step: 2, name: '식품 날짜' },
-  { step: 3, name: '식품 위치' },
+  { step: 1, name: '식품 위치' },
+  { step: 2, name: '식품 정보' },
+  { step: 3, name: '식품 날짜' },
 ];

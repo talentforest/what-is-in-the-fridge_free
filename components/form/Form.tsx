@@ -46,7 +46,7 @@ export default function Form({
       <View style={tw`overflow-hidden`}>
         <Animated.View
           style={{
-            height: 310,
+            height: 315,
             transform: [{ translateX: stepTranslateX }],
           }}
           {...panResponder.panHandlers}
@@ -66,13 +66,14 @@ export default function Form({
                         name={food.name}
                         fixedCategory={food.category}
                         changeInfo={changeInfo}
-                        disabled={!title.includes('수정')}
-                      />
-                      <FavoriteItem
                         title={title}
-                        food={food}
-                        disabled={!title.includes('수정')}
                       />
+                      <FavoriteItem food={food} title={title} />
+                    </FormSectionContainer>
+                  )}
+                  {name === '식품 위치' && (
+                    <FormSectionContainer>
+                      <SpaceItem food={food} changeInfo={changeInfo} />
                     </FormSectionContainer>
                   )}
                   {name === '식품 날짜' && (
@@ -85,11 +86,6 @@ export default function Form({
                         date={food.purchaseDate}
                         changeInfo={changeInfo}
                       />
-                    </FormSectionContainer>
-                  )}
-                  {name === '식품 위치' && (
-                    <FormSectionContainer>
-                      <SpaceItem food={food} changeInfo={changeInfo} />
                     </FormSectionContainer>
                   )}
                 </View>

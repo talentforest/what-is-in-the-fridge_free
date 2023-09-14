@@ -22,7 +22,7 @@ export default function AddShoppingListFoodModal({
   setCheckedList,
 }: Props) {
   const { selectedFood, onChange, onSubmit } = useAddShoppingListFood();
-
+  console.log(selectedFood);
   return (
     <Modal
       title='장보기 목록 식료품 추가'
@@ -40,7 +40,6 @@ export default function AddShoppingListFoodModal({
         <SubmitBtn
           btnName='식료품 추가하기'
           onPress={() => onSubmit(setModalVisible, setCheckedList)}
-          iconName='plus'
           color='blue'
         />
       </View>

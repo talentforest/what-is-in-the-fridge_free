@@ -31,7 +31,7 @@ export default function SectionContainer({
   const navigation = useNavigation<NavigateProp>();
 
   return (
-    <View style={tw`border-t border-slate-300 pt-5`}>
+    <View style={tw`border-t border-slate-300 pt-7`}>
       <TouchableOpacity
         onPress={() => navigation.navigate(screen)}
         style={tw`flex-row justify-between`}
@@ -43,11 +43,11 @@ export default function SectionContainer({
       </TouchableOpacity>
       <MessageBox message={message} />
 
-      {foodsLength !== 0 && <View style={tw`mb-12 min-h-25`}>{children}</View>}
+      {foodsLength !== 0 && <View style={tw`mb-18 min-h-25`}>{children}</View>}
 
       {foodsLength === 0 && (
         <View
-          style={tw`shadow-lg items-center h-40 mt-2 mb-8 border border-slate-300 rounded-xl bg-white justify-center`}
+          style={tw`shadow-lg items-center h-40 mt-2 mb-12 border border-slate-300 rounded-xl bg-white justify-center`}
         >
           <EmptySign message={`${title}이 없어요.`} />
         </View>

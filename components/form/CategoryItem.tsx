@@ -10,25 +10,26 @@ import FormLabel from './FormLabel';
 import CategoryImageIcon from '../common/CategoryImageIcon';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
+import { ModalTitle } from '../modal/Modal';
 
 interface Props {
   name: string;
   fixedCategory: Category;
   changeInfo: (newInfo: { [key: string]: string }) => void;
-  disabled?: boolean;
+  title: ModalTitle;
 }
 
 export default function CategoryItem({
   name,
   fixedCategory,
   changeInfo,
-  disabled,
+  title,
 }: Props) {
   const [categoryOpen, setCategoryOpen] = useState(false);
 
   const { isFavoriteItem } = useFindFood();
   const favoriteFoodItemCategory = isFavoriteItem(name)?.category;
-  const disabledCategory = favoriteFoodItemCategory && disabled;
+  const disabledCategory = favoriteFoodItemCategory && !title.includes('수정');
 
   const category = disabledCategory ? favoriteFoodItemCategory : fixedCategory;
 
