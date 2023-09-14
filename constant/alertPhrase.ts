@@ -29,7 +29,7 @@ type AlertPhraseFn = (food: Food) => {
 export const alertPhrase: AlertPhraseObj = {
   excess: {
     title: '식료품 개수 초과 알림',
-    msg: '식료품은 이 공간에서 15개보다 더 많을 수 없어요.',
+    msg: '공간당 최대 15개의 식료품을 넣을 수 있습니다.',
   },
   noName: {
     title: '식료품 이름 미작성',

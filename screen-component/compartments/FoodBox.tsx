@@ -34,7 +34,7 @@ export default function FoodBox({ food }: Props) {
       style={tw`${activeColor()} rounded-lg justify-center items-center flex-row border h-8 px-2.5`}
     >
       <Text style={tw`text-center ${activeColor()}`}>
-        {cutLetter(food.name, 8)}
+        {cutLetter(food.name, 7)}
       </Text>
     </View>
   );

@@ -46,15 +46,14 @@ export default function Form({
       <View style={tw`overflow-hidden`}>
         <Animated.View
           style={{
-            height: 315,
             transform: [{ translateX: stepTranslateX }],
           }}
           {...panResponder.panHandlers}
         >
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={tw`flex-row flex-1`}>
+            <View style={tw`flex-row`}>
               {formSteps.map(({ step, name }) => (
-                <View key={step} style={tw`w-full`}>
+                <View key={step} style={tw`w-full pb-4`}>
                   {name === '식품 정보' && (
                     <FormSectionContainer>
                       <NameItem

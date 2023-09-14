@@ -50,6 +50,7 @@ export default function FoodDetailModal({
       title={editing ? '식료품 정보 수정' : '식료품 상세 정보'}
       setModalVisible={setModalVisible}
       modalVisible={modalVisible}
+      hasBackdrop
     >
       {editing ? (
         <View>
@@ -118,13 +119,13 @@ export default function FoodDetailModal({
           <View style={tw`gap-2`}>
             <SubmitBtn
               color='blue'
-              iconName='square-edit-outline'
+              iconName='pencil'
               btnName='식료품 정보 수정'
               onPress={() => setEditing((prev) => !prev)}
             />
             <SubmitBtn
               color='amber'
-              iconName='fridge-off-outline'
+              iconName='trash-can'
               btnName={`${food.compartmentNum}칸에서 식료품 삭제`}
               onPress={() => deleteFood(editedFood.id)}
             />
