@@ -22,7 +22,7 @@ export default function AddShoppingListFoodModal({
   setCheckedList,
 }: Props) {
   const { selectedFood, onChange, onSubmit } = useAddShoppingListFood();
-  console.log(selectedFood);
+
   return (
     <Modal
       title='장보기 목록 식료품 추가'

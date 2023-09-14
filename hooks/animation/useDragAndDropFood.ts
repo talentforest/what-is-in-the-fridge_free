@@ -11,18 +11,19 @@ import { CompartmentNum } from '../../constant/fridgeInfo';
 import { select } from '../../redux/slice/selectedFoodSlice';
 import { toggleDragMode } from '../../redux/slice/dragModeSlice';
 import { changeCompartmentNum } from '../../redux/slice/compartmentNumToDropSlice';
+import { Animated } from 'react-native';
 
 interface Props {
   food: Food;
   setIsDragging: (isDragging: boolean) => void;
-  setDragPosition: ({ x, y }: { x: number; y: number }) => void;
-  findCompartmentNum: (moveY: number) => CompartmentNum;
+  dragPosition: Animated.ValueXY;
+  findCompartmentNum: (moveY: number) => CompartmentNum | null;
 }
 
 export const useDragAndDropFood = ({
   food,
   setIsDragging,
-  setDragPosition,
+  dragPosition,
   findCompartmentNum,
 }: Props) => {
   const insets = useSafeAreaInsets();
@@ -36,23 +37,26 @@ export const useDragAndDropFood = ({
       onPanResponderGrant: (_, gestureState) => {
         setIsDragging(true);
         dispatch(select(food));
-        setDragPosition({
+        dragPosition.setValue({
           x: gestureState.moveX - 50,
           y: gestureState.moveY - 400 - insets.bottom - insets.top,
         });
       },
       onPanResponderMove: (_, gestureState) => {
-        setDragPosition({
+        dragPosition.setValue({
           x: gestureState.moveX - 50,
           y: gestureState.moveY - 400 - insets.bottom - insets.top,
         });
+
         const compartmentNumToDrop = findCompartmentNum(gestureState.moveY);
         const moveCompartment = compartmentNumToDrop !== food.compartmentNum;
-        dispatch(
-          changeCompartmentNum(
-            moveCompartment ? compartmentNumToDrop : '동일칸'
-          )
-        );
+        if (moveCompartment !== null && compartmentNumToDrop !== null) {
+          dispatch(
+            changeCompartmentNum(
+              moveCompartment ? compartmentNumToDrop : '동일칸'
+            )
+          );
+        }
       },
       onPanResponderRelease: (_, { moveY }) => {
         const compartmentNumToDrop = findCompartmentNum(moveY);
@@ -61,7 +65,11 @@ export const useDragAndDropFood = ({
         if (moveCompartment) {
           dispatch(removeFridgeFood({ id: food.id }));
           dispatch(
-            addFridgeFood({ ...food, compartmentNum: compartmentNumToDrop })
+            addFridgeFood(
+              compartmentNumToDrop !== null
+                ? { ...food, compartmentNum: compartmentNumToDrop }
+                : food
+            )
           );
         }
         dispatch(changeCompartmentNum('동일칸'));
