@@ -19,7 +19,7 @@ export const useSwiperAnimation = ({ steps }: Props) => {
 
   const route = useRoute();
   const formWidth =
-    route.name !== 'PantryFoods' ? -DEVICE_WIDTH : -DEVICE_WIDTH + 32;
+    route.name === 'PantryFoods' ? -DEVICE_WIDTH + 32 : -DEVICE_WIDTH;
 
   useEffect(() => {
     currentStepRef.current = currentStep;
@@ -52,13 +52,11 @@ export const useSwiperAnimation = ({ steps }: Props) => {
         return dx > 2 || dx < -2 || dy > 2 || dy < -2;
       },
       onPanResponderGrant: () => {
-        stepTranslateX.setValue(
-          -DEVICE_WIDTH * (currentStepRef.current.step - 1)
-        );
+        stepTranslateX.setValue(formWidth * (currentStepRef.current.step - 1));
       },
       onPanResponderMove: (_, { dx }) => {
         stepTranslateX.setValue(
-          -DEVICE_WIDTH * (currentStepRef.current.step - 1) + dx
+          formWidth * (currentStepRef.current.step - 1) + dx
         );
       },
       onPanResponderRelease: (_, { dx }) => {
