@@ -52,6 +52,7 @@ export default function PantryFoods() {
 
   useFocusEffect(
     useCallback(() => {
+      initializeFilter();
       return () => {
         setCheckedList([]); // unfocus시 빈배열
         initializeFilter();
@@ -87,13 +88,13 @@ export default function PantryFoods() {
             foodList={pantryFoods}
           />
 
-          <View style={tw`flex-1 mb-4 -mx-2`}>
+          <View style={tw`flex-1 -mx-2 -mb-2`}>
             {!!filteredList.length && (
               <FlatList
                 keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false}
                 style={tw`flex-1 w-full`}
-                contentContainerStyle={tw`pb-20`}
+                contentContainerStyle={tw`pb-28`}
                 data={filteredList}
                 renderItem={({ item }) => (
                   <PantryListBox
@@ -134,7 +135,7 @@ export default function PantryFoods() {
                   setModalVisible(true);
                 }
               }}
-              style={tw`absolute -bottom-0 right-2 self-end h-18 w-18 items-center justify-center shadow-md bg-blue-100 rounded-full`}
+              style={tw`absolute bottom-5 right-2 self-end h-18 w-18 items-center justify-center shadow-md bg-blue-100 rounded-full`}
             >
               <Icon type='MaterialCommunityIcons' name='plus' size={30} />
             </TouchableOpacity>

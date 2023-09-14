@@ -34,7 +34,7 @@ export default function AddFoodModal({
       modalVisible={modalVisible}
       hasBackdrop
     >
-      <View style={tw`pt-2`}>
+      <View>
         {foodLocation && (
           <Form
             title='새로운 식료품 추가'

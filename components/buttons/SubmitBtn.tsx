@@ -25,7 +25,7 @@ export default function SubmitBtn({
           name={iconName}
           type='MaterialCommunityIcons'
           color={color}
-          size={20}
+          size={17}
         />
       )}
       <Text style={tw`text-${color}-700 text-center text-base`}>{btnName}</Text>

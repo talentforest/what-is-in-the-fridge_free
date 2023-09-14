@@ -68,7 +68,7 @@ export default function PantryListBox({
   const textColor = isCheckedItem ? 'text-amber-600' : 'text-slate-800';
 
   return (
-    <View style={tw`shadow-md px-2`}>
+    <View>
       {/* <DragLeftBtn height={ITEM_HEIGHT} /> */}
 
       <Animated.View
@@ -77,17 +77,19 @@ export default function PantryListBox({
           opacity: interpolatedOpacity,
           overflow: 'hidden',
           transform: [{ translateX }],
+          paddingHorizontal: 8,
         }}
         // {...panResponder.panHandlers}
       >
         <View
-          style={tw`flex-row items-center border h-[${ITEM_HEIGHT - 8}px] ${
+          style={tw`shadow-lg flex-row items-center border bg-white
+          h-[${ITEM_HEIGHT - 8}px] ${
             isCheckedItem ? 'border-amber-600' : 'border-slate-300'
-          } bg-white`}
+          }`}
         >
           <TouchableOpacity
             onPress={() => onCheckBoxPress(food)}
-            style={tw`gap-2 pr-3 pl-3 flex-row`}
+            style={tw`gap-2 px-3 py-2 flex-row shadow-lg`}
           >
             <View style={tw`pt-1.2`}>
               <CheckBox checked={!!isCheckedItem} activeColor='amber' />

@@ -40,7 +40,7 @@ export default function SearchFoodModal({
       setModalVisible={setModalVisible}
       hasBackdrop={true}
     >
-      <View style={tw`pb-3 pt-1 px-4 h-[${modalContentHeight}px]`}>
+      <View style={tw`py-3 px-4 h-[${modalContentHeight}px]`}>
         {/* 식료품 찾기 테이블 헤더 */}
         <TextInputRoundedBox
           value={keyword}
