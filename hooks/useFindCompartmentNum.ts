@@ -18,12 +18,12 @@ export const useFindCompartmentNum = ({ food }: { food: Food }) => {
     headerHeight +
     FILTER_HEIGHT
   ).toFixed(0);
+
   const maxCompartmentNum = fridgeInfo.compartments[food.space];
   const compartmentGaps = GAP * (maxCompartmentNum + 1);
   const heightExcludeCompartment =
     compartmentTopMostHeight + compartmentGaps + 13;
   const compartmentsHeight = DEVICE_HEIGHT - heightExcludeCompartment;
-
   const compartmentHeight = compartmentsHeight / maxCompartmentNum;
 
   const getPositionY = (
@@ -51,7 +51,8 @@ export const useFindCompartmentNum = ({ food }: { food: Food }) => {
 
     if (getPositionY(compartmentHeight, '5번', moveY)) return '5번';
 
-    return food.compartmentNum;
+    if (food.compartmentNum) return food.compartmentNum;
+    return null;
   };
 
   return {

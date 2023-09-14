@@ -1,5 +1,5 @@
 import { Animated, ScrollView, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Food } from '../../constant/foodInfo';
 import {
   Text,
@@ -14,11 +14,11 @@ import { toggleDragMode } from '../../redux/slice/dragModeSlice';
 
 import FoodDetailModal from '../modal/FoodDetailModal';
 import ExpandedCompartmentModal from '../modal/ExpandedCompartmentModal';
-import FoodBox from './FoodBox';
 import AddFoodBtn from '../../components/buttons/AddFoodBtn';
 import DraggableFoodBox from './DraggableFoodBox';
 import Icon from '../../components/common/native-component/Icon';
 import EmptySign from '../../components/common/EmptySign';
+import DragGeneratedFoodBox from './DragGeneratedFoodBox';
 import tw from 'twrnc';
 
 interface Props {
@@ -32,25 +32,21 @@ export default function Compartment({
   searchedName,
   foodLengthBySpace,
 }: Props) {
+  const { dragMode } = useSelector((state) => state.dragMode);
+  const { selectedFood } = useSelector((state) => state.selectedFood);
+  const { space, compartmentNum } = foodLocation;
   const { compartmentNumToDrop } = useSelector(
     (state) => state.compartmentNumToDrop
   );
 
-  const { dragMode } = useSelector((state) => state.dragMode);
-  const { selectedFood } = useSelector((state) => state.selectedFood);
-  const { space, compartmentNum } = foodLocation;
-
   const [isDragging, setIsDragging] = useState(false);
-  const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
   const [modalVisible, setModalVisible] = useState(false);
   const [expandCompartment, setExpandCompartment] = useState(false);
 
   const { getFoodList } = useGetFoodList();
-  const compartmentFoodList = getFoodList(
-    'fridgeFoods',
-    space,
-    compartmentNum
-  ) as Food[];
+  const compartmentFoodList = getFoodList('fridgeFoods', space, compartmentNum);
+
+  const dragPosition = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
   const dispatch = useDispatch();
 
@@ -77,7 +73,7 @@ export default function Compartment({
           <TouchableOpacity
             disabled={!compartmentFoodList.length}
             onPress={() => setExpandCompartment(true)}
-            style={tw`flex-row items-center gap-1 flex-1`}
+            style={tw`flex-row items-center gap-1`}
           >
             <Icon
               name='arrow-expand-all'
@@ -112,10 +108,9 @@ export default function Compartment({
               <DraggableFoodBox
                 key={food.id}
                 food={food}
-                isDragging={isDragging}
                 setIsDragging={setIsDragging}
-                setDragPosition={setDragPosition}
                 setModalVisible={setModalVisible}
+                dragPosition={dragPosition}
                 searchedName={searchedName}
               />
             ))}
@@ -153,22 +148,7 @@ export default function Compartment({
 
       {/* 드래깅 시 생성되는 음식박스 */}
       {isDragging && dragMode && (
-        <Animated.View
-          style={{
-            backgroundColor: 'fff',
-            zIndex: 100,
-            borderRadius: 8,
-            position: 'absolute',
-            transform: [
-              { translateX: dragPosition.x },
-              { translateY: dragPosition.y },
-            ],
-          }}
-        >
-          <View style={tw`absolute top-0 rounded-lg bg-white`}>
-            <FoodBox food={selectedFood} />
-          </View>
-        </Animated.View>
+        <DragGeneratedFoodBox food={selectedFood} dragPosition={dragPosition} />
       )}
 
       {expandCompartment && (

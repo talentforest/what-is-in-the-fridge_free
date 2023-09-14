@@ -15,9 +15,8 @@ import FoodBox from './FoodBox';
 
 interface Props {
   food: Food;
-  isDragging: boolean;
   setIsDragging: (isDragging: boolean) => void;
-  setDragPosition: ({ x, y }: { x: number; y: number }) => void;
+  dragPosition: Animated.ValueXY;
   setModalVisible: (visible: boolean) => void;
   searchedName: string;
 }
@@ -31,9 +30,8 @@ export const shadowStyle = {
 
 export default function DraggableFoodBox({
   food,
-  isDragging,
   setIsDragging,
-  setDragPosition,
+  dragPosition,
   setModalVisible,
   searchedName,
 }: Props) {
@@ -54,7 +52,7 @@ export default function DraggableFoodBox({
   const { panResponder } = useDragAndDropFood({
     food,
     setIsDragging,
-    setDragPosition,
+    dragPosition,
     findCompartmentNum,
   });
 
@@ -83,6 +81,7 @@ export default function DraggableFoodBox({
       <TouchableOpacity
         key={food.id}
         onPress={() => {
+          if (dragMode) return dispatch(toggleDragMode(false));
           dispatch(select(food));
           setModalVisible(true);
         }}
