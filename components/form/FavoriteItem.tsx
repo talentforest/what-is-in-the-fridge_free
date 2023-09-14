@@ -1,46 +1,52 @@
 import { View, Animated } from 'react-native';
 import { LIGHT_BLUE } from '../../constant/colors';
 import { useToggleAnimation, useFindFood } from '../../hooks';
-import { ModalTitle } from '../modal/Modal';
-import { useDispatch } from '../../redux/hook';
-import {
-  addFavorite,
-  removeFavorite,
-} from '../../redux/slice/favoriteFoodsSlice';
 import { Food } from '../../constant/foodInfo';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { toggleFavorite } from '../../redux/slice/isFavoriteSlice';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
 import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
+import { ModalTitle } from '../modal/Modal';
 
 interface Props {
   food: Food;
   title: ModalTitle;
-  disabled?: boolean;
 }
 
 const MOVED_TRANSLATE_X = 88;
 
-export default function FavoriteItem({ food, title, disabled }: Props) {
+export default function FavoriteItem({ food, title }: Props) {
+  const { isFavorite } = useSelector((state) => state.isFavorite);
   const { isFavoriteItem } = useFindFood();
   const { name } = food;
 
   const { translateX } = useToggleAnimation({
     initialValue: 0,
     toValue: MOVED_TRANSLATE_X,
-    active: !!isFavoriteItem(name),
+    active: isFavorite,
   });
 
   const dispatch = useDispatch();
 
   const onTogglePress = (btnName: string) => {
-    if (btnName === '맞아요') return dispatch(addFavorite(food));
-    if (btnName === '아니에요') return dispatch(removeFavorite({ name }));
+    if (btnName === '맞아요') return dispatch(toggleFavorite(true));
+    if (btnName === '아니에요') return dispatch(toggleFavorite(false));
   };
 
-  // 식료품 정보 수정 제외, 자주 먹는 식품이라면 수정 불가능하도록
-  const disabledFavoriteBtn = isFavoriteItem(name) && disabled;
+  useEffect(() => {
+    if (isFavoriteItem(name)) {
+      dispatch(toggleFavorite(true));
+    } else {
+      dispatch(toggleFavorite(false));
+    }
+  }, [name]);
+
+  // 식료품에 대한 정보 "수정"에서만 자주 먹는 식료품 설정을 변경할 수 있다.
+  const disabledFavoriteBtn = isFavoriteItem(name) && !title.includes('수정');
   const color = disabledFavoriteBtn ? 'border-slate-300' : 'border-blue-200';
   const backgroundColor = disabledFavoriteBtn ? LIGHT_BLUE : '#4070ff';
 
@@ -74,25 +80,21 @@ export default function FavoriteItem({ food, title, disabled }: Props) {
           <ToggleBtn
             key={btnNm}
             btnName={btnNm}
-            check={
-              btnNm === '맞아요'
-                ? !!isFavoriteItem(name)
-                : !!!isFavoriteItem(name)
-            }
+            check={btnNm === '맞아요' ? isFavorite : !isFavorite}
             onPress={() => onTogglePress(btnNm)}
-            disabled={!!isFavoriteItem(name) && disabled}
+            disabled={disabledFavoriteBtn}
           />
         ))}
       </View>
 
-      {title !== '식료품 정보 수정' && !!isFavoriteItem(name) && (
+      {!title.includes('수정') && !!isFavoriteItem(name) && (
         <FormMessage
           message='자주 먹는 식료품이므로 위의 정보가 자동으로 적용돼요.'
           color='green'
         />
       )}
 
-      {title === '식료품 정보 수정' && !!isFavoriteItem(name) && (
+      {isFavorite && !isFavoriteItem(name) && (
         <FormMessage
           message={'자주 먹는 식료품 목록에 추가돼요.'}
           color='green'

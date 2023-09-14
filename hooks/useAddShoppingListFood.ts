@@ -7,19 +7,19 @@ import {
 } from '../redux/slice/fridgeFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
-import { addToPantry } from '../redux/slice/pantryFoodsSlice';
+import { addToPantry, removeFromPantry } from '../redux/slice/pantryFoodsSlice';
 import { Food } from '../constant/foodInfo';
 import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
-import UUIDGenerator from 'react-native-uuid';
+import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
 
 export const useAddShoppingListFood = () => {
+  const { pantryFoods } = useSelector((state) => state.pantryFoods);
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { selectedFood } = useSelector((state) => state.selectedFood);
+  const { isFavorite } = useSelector((state) => state.isFavorite);
 
   const dispatch = useDispatch();
   const route = useRoute();
-
-  const myUuid = UUIDGenerator.v4();
 
   const onChange = (info: { [key: string]: string | boolean }) => {
     dispatch(select({ ...selectedFood, ...info }));
@@ -29,30 +29,43 @@ export const useAddShoppingListFood = () => {
     setModalVisible: (visible: boolean) => void,
     setCheckedList: (checkedList: Food[]) => void
   ) => {
-    const newIdFood = { ...selectedFood, id: myUuid as string };
-
-    const existFood = fridgeFoods.find((food) => food.name === newIdFood.name);
+    // 기존 식료품 삭제
+    const existFood = [...fridgeFoods, ...pantryFoods].find(
+      (food) => food.name === selectedFood.name
+    );
     if (existFood) {
       if (route.name !== 'ShoppingList') {
         const { exist } = alertPhraseWithFood(existFood);
         return Alert.alert(exist.title, exist.msg);
       }
-      dispatch(removeFridgeFood({ id: existFood.id }));
+      existFood.space === '팬트리'
+        ? dispatch(removeFromPantry({ name: existFood.name }))
+        : dispatch(removeFridgeFood({ id: existFood.id }));
     }
 
+    const { expiredDate, purchaseDate, space } = selectedFood;
+
     const { wrongDate } = alertPhrase;
-    const { expiredDate, purchaseDate, compartmentNum, space } = newIdFood;
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
       return Alert.alert(wrongDate.title, wrongDate.msg);
     }
 
-    dispatch(
-      compartmentNum ? addFridgeFood(newIdFood) : addToPantry(newIdFood)
-    );
-    dispatch(removeFromShoppingList({ name: newIdFood.name }));
+    isFavorite
+      ? dispatch(addFavorite(selectedFood))
+      : dispatch(removeFavorite(selectedFood));
 
-    const position = compartmentNum ? `${space} ${compartmentNum}` : `${space}`;
-    const { successAdd } = alertPhraseWithFood(newIdFood);
+    dispatch(
+      selectedFood.compartmentNum
+        ? addFridgeFood(selectedFood)
+        : addToPantry(selectedFood)
+    );
+    dispatch(removeFromShoppingList({ name: selectedFood.name }));
+
+    const position = selectedFood.compartmentNum
+      ? `${space} ${selectedFood.compartmentNum}`
+      : `${space}`;
+
+    const { successAdd } = alertPhraseWithFood(selectedFood);
     Alert.alert(successAdd.title, `${position}에 추가되었어요.`);
 
     setModalVisible(false);

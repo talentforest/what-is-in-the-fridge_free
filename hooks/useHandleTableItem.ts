@@ -152,13 +152,14 @@ export const useHandleTableItem = ({
         {
           text: '삭제 후 다시 추가',
           onPress: () => {
-            dispatch(select(existFood));
+            dispatch(select(selectedFood));
             setModalVisible && setModalVisible(true);
           },
           style: 'default',
         },
       ]);
     }
+
     dispatch(select(selectedFood));
     setModalVisible && setModalVisible(true);
   };
