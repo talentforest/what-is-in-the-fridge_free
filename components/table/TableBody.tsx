@@ -4,11 +4,11 @@ import { useRoute } from '@react-navigation/native';
 import { FlatList, View } from 'react-native';
 import { DEEP_GRAY, LIGHT_GRAY } from '../../constant/colors';
 import { AnimationState, useFindFood } from '../../hooks/';
+import { useSelector } from '../../redux/hook';
 
 import LeftDay from '../common/LeftDay';
 import TableItem from './TableItem';
 import Icon from '../common/native-component/Icon';
-import IndicatorExist from '../common/IndicatorExist';
 import EmptySign from '../common/EmptySign';
 import tw from 'twrnc';
 
@@ -16,7 +16,6 @@ interface Props {
   list: Food[];
   onCheckBoxPress: (food: Food) => void;
   addToFridgePress?: (food: Food) => void;
-  title: '장보기 목록 식료품' | '자주 먹는 식료품' | '유통기한 주의 식료품';
   checkedList: Food[];
   animationState: AnimationState;
   afterAnimation: () => void;
@@ -26,12 +25,15 @@ export default function TableBody({
   list,
   onCheckBoxPress,
   addToFridgePress,
-  title,
   checkedList,
   animationState,
   afterAnimation,
 }: Props) {
+  const { currentFilter } = useSelector((state) => state.currentFilter);
+
   const route = useRoute();
+  const routeExpiredFoods = route.name === 'ExpiredFoods';
+  const title = routeExpiredFoods ? '유통기한 주의 식료품' : '장보기 식료품';
 
   const { findFood } = useFindFood();
 
@@ -60,11 +62,6 @@ export default function TableBody({
                   <LeftDay expiredDate={item.expiredDate} size={15} mark />
                 )}
 
-                {/* 자주 먹는 식료품 정보 */}
-                {route.name === 'FavoriteFoods' && (
-                  <IndicatorExist name={item.name} />
-                )}
-
                 {/* 장보기 식료품 추가 버튼 */}
                 {route.name === 'ShoppingList' && addToFridgePress && (
                   <TouchableOpacity
@@ -85,7 +82,9 @@ export default function TableBody({
         </View>
       ) : (
         <View style={tw`pt-24 flex-1 border-t -mx-4 border-slate-300`}>
-          <EmptySign message={`${title}이 없어요.`} />
+          <EmptySign
+            message={`${currentFilter} 카테고리에, ${title}이 없어요.`}
+          />
         </View>
       )}
     </>

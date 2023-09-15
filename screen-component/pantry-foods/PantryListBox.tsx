@@ -5,19 +5,13 @@ import {
 } from '../../components/common/native-component';
 import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
 import { cutLetter } from '../../util';
-import {
-  AnimationState,
-  useDragBox,
-  useFindFood,
-  useSlideAnimation,
-} from '../../hooks';
+import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
 import { Food } from '../../constant/foodInfo';
 import { useState } from 'react';
 
 import CheckBox from '../../components/common/CheckBox';
 import Icon from '../../components/common/native-component/Icon';
 import PantryFoodInfo from './PantryFoodInfo';
-import CategoryImageIcon from '../../components/common/CategoryImageIcon';
 import AddPantryFoodModal from '../modal/AddPantryFoodModal';
 import tw from 'twrnc';
 
@@ -37,7 +31,7 @@ export default function PantryListBox({
   afterAnimation,
 }: Props) {
   const [openEditModal, setOpenEditModal] = useState(false);
-  const { name, category, expiredDate, purchaseDate } = food;
+  const { name, expiredDate, purchaseDate } = food;
 
   const { isFavoriteItem } = useFindFood();
 
@@ -76,7 +70,7 @@ export default function PantryListBox({
         }}
       >
         <View
-          style={tw`shadow-lg flex-row items-center border bg-white
+          style={tw`shadow-md flex-row items-center border bg-white
           h-[${ITEM_HEIGHT - 8}px] ${
             isCheckedItem ? 'border-amber-600' : 'border-slate-300'
           }`}
@@ -98,7 +92,6 @@ export default function PantryListBox({
                 <Text style={tw`mr-1 ${textColor}`}>
                   {cutLetter(name, MAX_LENGTH)}
                 </Text>
-                <CategoryImageIcon kind='icon' size={18} category={category} />
                 <View style={tw`pt-0.5 ml-0.5`}>
                   <Icon
                     name='tag-heart'

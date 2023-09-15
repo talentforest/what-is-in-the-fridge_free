@@ -3,7 +3,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from '../components/common/native-component';
-import { Alert, FlatList, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { useFocusEffect } from '@react-navigation/native';
 import {
@@ -21,13 +21,12 @@ import { MAX_LIST_LENGTH } from '../components/buttons/AddFoodBtn';
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
 import TableHeader from '../components/table/TableHeader';
-import PantryListBox from '../screen-component/pantry-foods/PantryListBox';
 import AddPantryFoodModal from '../screen-component/modal/AddPantryFoodModal';
 import TableFooter from '../components/table/TableFooter';
-import SquareBtn from '../components/buttons/SquareBtn';
+import SquareBtn from '../components/buttons/SquareIconBtn';
 import Icon from '../components/common/native-component/Icon';
+import TableCategorizedBody from '../components/table/TableCategorizedBody';
 import TableFilters from '../components/table/TableFilters';
-import EmptySign from '../components/common/EmptySign';
 import tw from 'twrnc';
 
 export default function PantryFoods() {
@@ -67,19 +66,13 @@ export default function PantryFoods() {
   } = useSetAnimationState();
 
   const allChecked = checkedList.length === pantryFoods.length;
+
   const filteredList = getFilteredFoodList(currentFilter, pantryFoods);
 
   return (
     <KeyboardAvoidingView>
       <Container>
         <TableContainer>
-          <TableHeader
-            title='팬트리 식료품'
-            length={filteredList.length}
-            entireChecked={allChecked && !!checkedList.length}
-            onEntirePress={() => onEntireBoxPress(pantryFoods)}
-          />
-
           <TableFilters
             filterList={[entireFilterObj, favoriteFilterObj]}
             categoryFilters={foodCategories}
@@ -88,44 +81,17 @@ export default function PantryFoods() {
             foodList={pantryFoods}
           />
 
-          <View style={tw`flex-1 -mx-2 -mb-2`}>
-            {!!filteredList.length && (
-              <FlatList
-                keyExtractor={(item) => item.id}
-                showsVerticalScrollIndicator={false}
-                style={tw`flex-1 w-full`}
-                contentContainerStyle={tw`pb-28`}
-                data={filteredList}
-                renderItem={({ item }) => (
-                  <PantryListBox
-                    key={item.id}
-                    food={item}
-                    onCheckBoxPress={onCheckBoxPress}
-                    isCheckedItem={
-                      !!checkedList.find((food) => food.id === item.id)
-                    }
-                    animationState={animationState}
-                    afterAnimation={() =>
-                      afterAnimation(onDeleteFoodPress, pantryFoods)
-                    }
-                  />
-                )}
-              />
-            )}
+          <TableHeader title='팬트리 식료품' length={filteredList.length} />
 
-            {!filteredList.length && (
-              <View
-                style={tw`flex-1 -mx-2 pt-20 px-8 border-t border-slate-300`}
-              >
-                <EmptySign
-                  message={`${
-                    currentFilter === '전체'
-                      ? ''
-                      : `${currentFilter} 카테고리의, `
-                  } 팬트리 식료품이 없어요.`}
-                />
-              </View>
-            )}
+          <View style={tw`flex-1 -mb-2`}>
+            <TableCategorizedBody
+              onCheckBoxPress={onCheckBoxPress}
+              checkedList={checkedList}
+              animationState={animationState}
+              afterAnimation={() =>
+                afterAnimation(onDeleteFoodPress, pantryFoods)
+              }
+            />
 
             <TouchableOpacity
               onPress={() => {
@@ -141,9 +107,12 @@ export default function PantryFoods() {
             </TouchableOpacity>
           </View>
 
-          <TableFooter list={checkedList}>
+          <TableFooter
+            list={checkedList}
+            entireChecked={allChecked && !!checkedList.length}
+            onEntirePress={() => onEntireBoxPress(filteredList)}
+          >
             <SquareBtn
-              name='팬트리에서 삭제'
               icon='trash-can'
               disabled={checkedList.length === 0}
               onPress={() => {

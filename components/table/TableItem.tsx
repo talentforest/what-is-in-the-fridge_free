@@ -8,7 +8,6 @@ import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
 import { useRoute } from '@react-navigation/native';
 
 import CheckBox from '../common/CheckBox';
-import CategoryImageIcon from '../common/CategoryImageIcon';
 import IndicatorExist from '../common/IndicatorExist';
 import tw from 'twrnc';
 
@@ -67,6 +66,7 @@ export default function TableItem({
         height,
         opacity: interpolatedOpacity,
         overflow: 'hidden',
+        paddingHorizontal: 8,
       }}
     >
       <TouchableOpacity
@@ -81,10 +81,6 @@ export default function TableItem({
           <Text style={tw`${textColor}`}>
             {cutLetter(initializedFood.name, 18)}
           </Text>
-
-          {route.name === 'FavoriteFoods' && (
-            <CategoryImageIcon kind='icon' category={category} size={16} />
-          )}
 
           {existItemTag && (
             <View style={tw`flex-1 items-start`}>
