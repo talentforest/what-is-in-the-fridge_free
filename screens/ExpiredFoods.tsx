@@ -12,11 +12,10 @@ import { View } from 'react-native';
 
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
-import TableHeader from '../components/table/TableHeader';
 import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TableFilters from '../components/table/TableFilters';
-import SquareBtn from '../components/buttons/SquareBtn';
+import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import tw from 'twrnc';
 
 export default function ExpiredFoods() {
@@ -51,12 +50,6 @@ export default function ExpiredFoods() {
     <SafeBottomAreaView>
       <Container>
         <TableContainer>
-          <TableHeader
-            title='유통기한 주의 식료품'
-            entireChecked={allChecked && !!checkedList.length}
-            onEntirePress={() => onEntireBoxPress(filteredList)}
-          />
-
           <TableFilters
             filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
             getTableList={getFilteredFoodList}
@@ -65,7 +58,6 @@ export default function ExpiredFoods() {
           />
 
           <TableBody
-            title='유통기한 주의 식료품'
             list={filteredList}
             onCheckBoxPress={onCheckBoxPress}
             checkedList={checkedList}
@@ -76,9 +68,12 @@ export default function ExpiredFoods() {
           />
 
           <View style={tw`-mb-3`}>
-            <TableFooter list={checkedList}>
-              <SquareBtn
-                name='유통기한 주의 식료품 삭제'
+            <TableFooter
+              list={checkedList}
+              entireChecked={allChecked && !!checkedList.length}
+              onEntirePress={() => onEntireBoxPress(filteredList)}
+            >
+              <SquareIconBtn
                 onPress={() =>
                   onDeleteExpiredFoodPress(setAnimationState, animationState)
                 }

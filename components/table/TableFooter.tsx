@@ -4,19 +4,27 @@ import { Food } from '../../constant/foodInfo';
 import { useSlideAnimation } from '../../hooks';
 import { useSelector } from '../../redux/hook';
 import { ReactNode } from 'react';
+import CheckBoxItem from '../common/CheckBoxItem';
 import tw from 'twrnc';
 
 interface Props {
   list: Food[];
   children: ReactNode;
+  entireChecked: boolean;
+  onEntirePress: () => void;
 }
 
-export default function TableFooter({ list, children }: Props) {
+export default function TableFooter({
+  list,
+  children,
+  entireChecked,
+  onEntirePress,
+}: Props) {
   const { showBtn } = useSelector((state) => state.showBtn);
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 95,
+    toValue: 52,
     active: !!list.length && showBtn,
   });
 
@@ -30,16 +38,23 @@ export default function TableFooter({ list, children }: Props) {
       >
         <View
           style={tw.style(
-            `w-full px-5 gap-2 pt-2 items-start border-t border-slate-300`
+            `flex-row justify-between items-center w-full pl-6.5 pr-5 gap-1 pt-1 border-t border-slate-500`
           )}
         >
-          <View style={tw`flex-row items-center justify-between`}>
-            <Text style={tw`text-[15px] text-blue-700 mr-1`}>
-              {list.length}개의 식료품 선택
-            </Text>
+          <View style={tw`flex-row items-center gap-2`}>
+            <CheckBoxItem
+              onPress={onEntirePress}
+              checked={entireChecked}
+              title='전체 선택'
+            />
+            {!entireChecked && (
+              <Text style={tw`text-[14px] text-blue-700 mt-0.4`}>
+                {list.length}개의 식료품 선택
+              </Text>
+            )}
           </View>
 
-          <View style={tw`gap-1 items-start flex-row`}>{children}</View>
+          <View style={tw`flex-row justify-between`}>{children}</View>
         </View>
       </Animated.View>
     </View>
