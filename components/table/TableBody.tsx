@@ -40,11 +40,10 @@ export default function TableBody({
   return (
     <>
       {!!list.length ? (
-        <View style={tw`flex-1`}>
+        <View style={tw`flex-1 -mx-2`}>
           <FlatList
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
-            style={tw`h-[${54 * list.length}px] `}
             contentContainerStyle={tw`pb-5`}
             data={list}
             renderItem={({ item }) => (

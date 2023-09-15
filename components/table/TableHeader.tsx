@@ -10,12 +10,12 @@ interface Props {
 
 export default function TableHeader({ title, length }: Props) {
   return (
-    <View style={tw`flex-row items-center justify-between mb-2 h-8 mr-2 gap-2`}>
+    <View style={tw`flex-row items-center mb-2 h-8 mr-2 gap-2`}>
       <Text style={tw.style(`text-slate-700`, FontGmarketSansBold)}>
         {title}
       </Text>
       {length !== undefined && (
-        <Text style={tw`text-slate-600 text-sm flex-1`}>{length}개</Text>
+        <Text style={tw`text-slate-800 flex-1`}>{length}개</Text>
       )}
     </View>
   );

@@ -31,16 +31,13 @@ export default function SearchFoodModal({
     setKeyword(keyword);
   };
 
-  const modalContentHeight = DEVICE_HEIGHT * 0.6;
-
   return (
     <Modal
       title='나의 식료품 찾기'
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
-      hasBackdrop={true}
     >
-      <View style={tw`py-3 px-4 h-[${modalContentHeight}px]`}>
+      <View style={tw`py-3 px-4 h-[400px]`}>
         {/* 식료품 찾기 테이블 헤더 */}
         <TextInputRoundedBox
           value={keyword}
@@ -82,7 +79,7 @@ export default function SearchFoodModal({
                 </View>
               ))}
             {keyword.length === 0 && (
-              <View style={tw`pt-12 px-4 gap-1`}>
+              <View style={tw`pt-12 px-10 gap-1`}>
                 <EmptySign message='냉장고에 찾으시는 식료품이 있는지 확인해 보세요.' />
               </View>
             )}
