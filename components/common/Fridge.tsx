@@ -57,7 +57,7 @@ export default function Fridge() {
         <View
           key={side}
           style={tw.style(
-            `rounded-b-md  ${freezerPosition} ${FRIDGE_COLOR} 
+            `rounded-b-md  ${freezerPosition} ${FRIDGE_COLOR}
             ${sideStyle(side)}`,
             transformStyle(side)
           )}
