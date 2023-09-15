@@ -63,23 +63,17 @@ export default function PantryListBox({
     afterAnimation,
   });
 
-  const { translateX, panResponder } = useDragBox();
-
   const textColor = isCheckedItem ? 'text-amber-600' : 'text-slate-800';
 
   return (
     <View>
-      {/* <DragLeftBtn height={ITEM_HEIGHT} /> */}
-
       <Animated.View
         style={{
           height,
           opacity: interpolatedOpacity,
           overflow: 'hidden',
-          transform: [{ translateX }],
           paddingHorizontal: 8,
         }}
-        // {...panResponder.panHandlers}
       >
         <View
           style={tw`shadow-lg flex-row items-center border bg-white
@@ -89,7 +83,7 @@ export default function PantryListBox({
         >
           <TouchableOpacity
             onPress={() => onCheckBoxPress(food)}
-            style={tw`gap-2 px-3 py-2 flex-row shadow-lg`}
+            style={tw`gap-2 px-3 py-2 flex-row`}
           >
             <View style={tw`pt-1.2`}>
               <CheckBox checked={!!isCheckedItem} activeColor='amber' />

@@ -33,7 +33,7 @@ export default function FavoriteFoodSection({ foodList }: Props) {
         <ScrollView
           showsHorizontalScrollIndicator={false}
           horizontal
-          style={tw`h-35 -mx-4 shadow-lg`}
+          style={tw`h-35 -mx-4`}
           contentContainerStyle={tw`gap-2 px-4 py-3 pt-2`}
         >
           {foodList.slice(0, MAX_NUM).map((food) => (

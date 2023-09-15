@@ -35,13 +35,10 @@ export default function MyFridge() {
     <Container>
       <View style={tw`flex-1 gap-${gap} items-center w-full h-full`}>
         <View style={tw`w-full `}>
-          <Pressable
-            onPressOut={() => setModalVisible(true)}
-            style={tw`shadow-md`}
-          >
+          <Pressable onPressOut={() => setModalVisible(true)}>
             <TextInput
               editable={false}
-              style={tw`h-11 pl-9`}
+              style={tw`h-11 pl-9 shadow-md`}
               placeholder='냉장고에 식료품이 있는지 검색해보세요.'
               onPressOut={() => setModalVisible(true)}
             />
@@ -52,7 +49,7 @@ export default function MyFridge() {
         </View>
 
         <View style={tw`flex-1 items-center justify-center`}>
-          <View style={tw`max-h-[540px] flex-1 p-1 pb-3 shadow-lg`}>
+          <View style={tw`max-h-[540px] flex-1 p-1 pb-3`}>
             <Fridge />
           </View>
         </View>

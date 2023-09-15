@@ -17,7 +17,7 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
         {PlatformIOS && (
           <View
             style={tw.style(
-              `${FRIDGE_COLOR} rounded-bl-md w-[9%] border-t border-l border-b`,
+              `${FRIDGE_COLOR} shadow-lg rounded-bl-md w-[9%] border-t border-l border-b`,
               {
                 transform: [
                   { skewY: '45deg' },
@@ -34,7 +34,7 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
         {PlatformIOS && (
           <View
             style={tw.style(
-              `w-[3%] h-full ${FRIDGE_COLOR} border-r border-t border-b rounded-r-md`,
+              `w-[3%] h-full ${FRIDGE_COLOR} shadow-lg border-r border-t border-b rounded-r-md`,
               {
                 transform: [
                   { skewY: '-33deg' },
@@ -57,7 +57,7 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
             style={tw.style(
               `${
                 routeMyFridge ? 'left-3.8 top-0' : 'left-1.5 top-4.5'
-              } rounded-t-md absolute w-[44%] h-full border border-b-0 border-l ${FRIDGE_COLOR}`,
+              } rounded-t-md absolute w-[44%] h-full border border-b-0 border-l ${FRIDGE_COLOR} shadow-lg`,
               Platform.select({
                 ios: {
                   transform: [{ skewX: '45deg' }],
@@ -72,7 +72,7 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
                 routeMyFridge
                   ? '-right-2.5 -bottom-2.5 h-[20%]'
                   : '-bottom-5.5 -right-1 h-[23%]'
-              } rounded-tl-md absolute  w-[52%] border ${FRIDGE_COLOR}`,
+              } rounded-tl-md absolute  w-[52%] border ${FRIDGE_COLOR} shadow-lg`,
               Platform.select({
                 ios: {
                   transform: [{ skewX: '-60deg' }, { skewY: '6deg' }],
