@@ -99,7 +99,8 @@ export default function Compartment({
         {/* 식료품 리스트 */}
         {!!compartmentFoodList.length ? (
           <ScrollView
-            scrollEnabled={!dragMode}
+            disableScrollViewPanResponder
+            scrollEnabled={!dragMode && !isDragging}
             style={tw`px-1 flex-1`}
             contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-2 flex-wrap gap-1.3 items-center`}
             showsVerticalScrollIndicator={false}
@@ -132,7 +133,7 @@ export default function Compartment({
             }}
           >
             <View
-              style={tw`gap-2 border bg-blue-200 border-blue-300 rounded-lg items-center flex-1 justify-center`}
+              style={tw`gap-2 border bg-amber-100 border-amber-400 rounded-lg items-center flex-1 justify-center`}
             >
               <Icon
                 type='MaterialCommunityIcons'
