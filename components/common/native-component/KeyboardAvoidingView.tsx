@@ -4,7 +4,6 @@ import {
   PlatformIOS,
   statusBarHeight,
 } from '../../../constant/statusBarHeight';
-import { useRoute } from '@react-navigation/native';
 import { BG_COLOR } from '../Container';
 import tw from 'twrnc';
 
@@ -13,7 +12,6 @@ interface Props {
 }
 
 export function KeyboardAvoidingView({ children }: Props) {
-  const route = useRoute();
   const tabOffset = 5;
   const iosOffset = tabOffset + (statusBarHeight || 0);
 
