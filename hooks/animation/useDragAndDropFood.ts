@@ -44,12 +44,13 @@ export const useDragAndDropFood = ({
       },
       onPanResponderMove: (_, gestureState) => {
         dragPosition.setValue({
-          x: gestureState.moveX - 50,
+          x: gestureState.moveX - 30,
           y: gestureState.moveY - 400 - insets.bottom - insets.top,
         });
 
         const compartmentNumToDrop = findCompartmentNum(gestureState.moveY);
         const moveCompartment = compartmentNumToDrop !== food.compartmentNum;
+
         if (moveCompartment !== null && compartmentNumToDrop !== null) {
           dispatch(
             changeCompartmentNum(
@@ -58,7 +59,7 @@ export const useDragAndDropFood = ({
           );
         }
       },
-      onPanResponderRelease: (_, { moveY }) => {
+      onPanResponderRelease: (_, { moveX, moveY }) => {
         const compartmentNumToDrop = findCompartmentNum(moveY);
         const moveCompartment = compartmentNumToDrop !== food.compartmentNum;
 
@@ -72,9 +73,11 @@ export const useDragAndDropFood = ({
             )
           );
         }
+
+        dragPosition.setValue({ x: moveX, y: moveY });
+        dispatch(toggleDragMode(false));
         dispatch(changeCompartmentNum('동일칸'));
         setIsDragging(false);
-        dispatch(toggleDragMode(false));
       },
     })
   ).current;
