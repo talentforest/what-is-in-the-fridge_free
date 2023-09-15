@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import {
   Keyboard,
+  KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   StyleProp,
@@ -9,6 +10,7 @@ import {
 } from 'react-native';
 import { SafeBottomAreaView } from '../common/native-component';
 import { DEVICE_HEIGHT } from '../../util';
+import { PlatformIOS } from '../../constant/statusBarHeight';
 
 import RNModal from 'react-native-modal';
 import SwipeHeader from './SwipeHeader';
@@ -70,37 +72,42 @@ export default function Modal({
       hasBackdrop={hasBackdrop}
       backdropOpacity={0.6}
     >
-      <SafeAreaView
-        style={tw.style(
-          `${
-            animationIn === 'fadeIn' ? 'rounded-2xl' : `rounded-t-2xl`
-          } ${bgColor}`,
-          Platform.select({
-            ios: {
-              shadowColor: '#333',
-              shadowOpacity: 0.4,
-              shadowOffset: { height: -3, width: 0 },
-              shadowRadius: 14,
-            },
-            android: {
-              elevation: 50,
-            },
-          })
-        )}
+      <KeyboardAvoidingView
+        behavior={PlatformIOS ? 'padding' : 'height'}
+        keyboardVerticalOffset={PlatformIOS ? -125 : 0}
       >
-        <SafeBottomAreaView
-          style={tw`justify-end ${
-            animationIn === 'fadeIn' ? '' : 'border border-b-0 pb-4'
-          }  rounded-t-2xl border-slate-300 max-h-[${MODAL_HEIGHT}px] `}
-        >
-          {animationIn !== 'fadeIn' && (
-            <SwipeHeader title={title} closeModal={closeModal} />
+        <SafeAreaView
+          style={tw.style(
+            `${
+              animationIn === 'fadeIn' ? 'rounded-2xl' : `rounded-t-2xl`
+            } ${bgColor}`,
+            Platform.select({
+              ios: {
+                shadowColor: '#333',
+                shadowOpacity: 0.4,
+                shadowOffset: { height: -3, width: 0 },
+                shadowRadius: 14,
+              },
+              android: {
+                elevation: 50,
+              },
+            })
           )}
-          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View>{children}</View>
-          </TouchableWithoutFeedback>
-        </SafeBottomAreaView>
-      </SafeAreaView>
+        >
+          <SafeBottomAreaView
+            style={tw`justify-end ${
+              animationIn === 'fadeIn' ? '' : 'border border-b-0 pb-4'
+            }  rounded-t-2xl border-slate-300 max-h-[${MODAL_HEIGHT}px] `}
+          >
+            {animationIn !== 'fadeIn' && (
+              <SwipeHeader title={title} closeModal={closeModal} />
+            )}
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+              <View>{children}</View>
+            </TouchableWithoutFeedback>
+          </SafeBottomAreaView>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     </RNModal>
   );
 }

@@ -34,17 +34,16 @@ export default function AddFoodModal({
       modalVisible={modalVisible}
       hasBackdrop
     >
-      <View>
-        {foodLocation && (
-          <Form
-            title='새로운 식료품 추가'
-            editableName={true}
-            food={newFood}
-            changeInfo={changeFoodInfo}
-            formSteps={formSteps}
-          />
-        )}
-      </View>
+      {foodLocation && (
+        <Form
+          title='새로운 식료품 추가'
+          editableName={true}
+          food={newFood}
+          changeInfo={changeFoodInfo}
+          formSteps={formSteps}
+        />
+      )}
+
       <View style={tw`mx-6`}>
         <SubmitBtn
           color='blue'

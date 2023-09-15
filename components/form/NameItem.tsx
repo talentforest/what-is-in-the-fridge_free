@@ -30,7 +30,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
   const atLeastOneLongWord = matchedFoods?.find((food) => food.name.length > 8);
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: atLeastOneLongWord ? 80 : 42,
+    toValue: atLeastOneLongWord && (matchedFoods || []).length >= 3 ? 80 : 42,
     active: !!matchedFoods?.length,
   });
 
@@ -70,7 +70,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
           style={{
             height: height,
             overflow: 'hidden',
-            // borderWidth: 1,
+            marginBottom: !!matchedFoods?.length ? -15 : 0,
           }}
         >
           {!!matchedFoods?.length && (
