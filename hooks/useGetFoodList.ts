@@ -1,3 +1,5 @@
+import { useRoute } from '@react-navigation/native';
+import { Category, foodCategories } from '../constant/foodCategories';
 import { Food } from '../constant/foodInfo';
 import { CompartmentNum, Space, SpaceType } from '../constant/fridgeInfo';
 import { useSelector } from '../redux/hook';
@@ -7,6 +9,7 @@ export const useGetFoodList = () => {
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
+  const { currentFilter } = useSelector((state) => state.currentFilter);
 
   const orderExpirationDate = (list: Food[]) => {
     const sortedList = list?.sort(
@@ -58,20 +61,25 @@ export const useGetFoodList = () => {
     return filteredFoods;
   };
 
-  const favoriteFoodsNotExist = favoriteFoods.filter(
-    (favoriteFood) =>
-      !!![...fridgeFoods, ...pantryFoods].find(
-        (food) => food.name === favoriteFood.name
-      )
-  );
-
+  // Table 필터의 개수를 나타내주는 함수이기도 하다.
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
     if (filter === '전체') return foodList;
 
-    if (filter === '없는 식료품') return favoriteFoodsNotExist;
-
     if (filter === '냉동실' || filter === '냉장실' || filter === '팬트리')
       return getFoodList('expiredFoods', filter);
+
+    if (filter === '없는 식료품') {
+      const allFoods = [...fridgeFoods, ...pantryFoods];
+      return foodList.filter(
+        (food) => !!!allFoods.find((allFood) => allFood.name === food.name)
+      );
+    }
+
+    if (filter === '자주 먹는 식료품') {
+      return foodList.filter((food) =>
+        favoriteFoods.find((favFood) => food.name === favFood.name)
+      );
+    }
 
     if (filter === '유통기한 만료') {
       const list = foodList.filter((food) => expired(food.expiredDate));
@@ -82,22 +90,60 @@ export const useGetFoodList = () => {
       return orderExpirationDate(list);
     }
 
-    if (filter === '자주 먹는 식료품') {
-      const list = foodList.filter((food) =>
-        favoriteFoods.find((favFood) => food.name === favFood.name)
-      );
-      return orderExpirationDate(list);
-    }
-
     const listByCategory = foodList.filter((food) => food.category === filter);
     return orderExpirationDate(listByCategory);
   };
 
+  const route = useRoute();
+  const routeFavoriteFoods = route.name === 'FavoriteFoods';
+  const foodList = routeFavoriteFoods ? favoriteFoods : pantryFoods;
+
+  const changeListByCategoryFilter = (categoryList: Category[]) => {
+    const filter = foodCategories.some(
+      ({ category }) => currentFilter === category
+    );
+    return filter
+      ? categoryList.filter((category) => category === currentFilter)
+      : categoryList;
+  };
+
+  const getExistCategoryList = () => {
+    const uniqueCategory = foodList
+      .map((item) => item.category)
+      .filter((value, index, self) => self.indexOf(value) === index);
+
+    return changeListByCategoryFilter(uniqueCategory);
+  };
+
+  const getFilteredSortByCategoryList = (category: Category) => {
+    const sortByCategory = foodList.filter(
+      (food) => food.category === category
+    );
+
+    if (currentFilter === '없는 식료품') {
+      const allFoods = [...fridgeFoods, ...pantryFoods];
+      return sortByCategory.filter(
+        (food) => !!!allFoods.find((allFood) => allFood.name === food.name)
+      );
+    }
+
+    if (currentFilter === '자주 먹는 식료품') {
+      return sortByCategory.filter((food) =>
+        favoriteFoods.find((favFood) => food.name === favFood.name)
+      );
+    }
+
+    return sortByCategory;
+  };
+
   return {
     fridgeFoods,
-    allExpiredFoods,
     favoriteFoods,
+    pantryFoods,
+    allExpiredFoods,
     getFoodList,
     getFilteredFoodList,
+    getExistCategoryList,
+    getFilteredSortByCategoryList,
   };
 };

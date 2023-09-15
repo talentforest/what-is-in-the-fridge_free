@@ -16,19 +16,17 @@ import {
   useFindFood,
   useHandleFilter,
 } from '../hooks';
-import { Food } from '../constant/foodInfo';
 
 import Container from '../components/common/Container';
+import TableCategorizedBody from '../components/table/TableCategorizedBody';
 import TableContainer from '../components/table/TableContainer';
-import TableHeader from '../components/table/TableHeader';
 import TableFilters from '../components/table/TableFilters';
-import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import CategoryModal from '../screen-component/modal/CategoryModal';
 import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
 import FormMessage from '../components/form/FormMessage';
-import SquareBtn from '../components/buttons/SquareBtn';
+import SquareBtn from '../components/buttons/SquareIconBtn';
 import tw from 'twrnc';
 
 export default function FavoriteFoods() {
@@ -95,12 +93,6 @@ export default function FavoriteFoods() {
       <SafeBottomAreaView>
         <Container>
           <TableContainer>
-            <TableHeader
-              title='자주 먹는 식료품'
-              entireChecked={allChecked && !!checkedList.length}
-              onEntirePress={() => onEntireBoxPress(filteredList)}
-            />
-
             <TableFilters
               filterList={[entireFilterObj, ...existAbsenceFilters]}
               categoryFilters={foodCategories}
@@ -109,26 +101,21 @@ export default function FavoriteFoods() {
               foodList={favoriteFoods}
             />
 
-            <TableBody
-              title='자주 먹는 식료품'
-              list={filteredList}
+            <TableCategorizedBody
               onCheckBoxPress={onCheckBoxPress}
-              checkedList={checkedList as Food[]}
+              checkedList={checkedList}
               animationState={animationState}
               afterAnimation={() =>
                 afterAnimation(onDeleteFoodPress, favoriteFoods)
               }
             />
 
-            <TableFooter list={checkedList as Food[]}>
+            <TableFooter
+              list={checkedList}
+              entireChecked={allChecked && !!checkedList.length}
+              onEntirePress={() => onEntireBoxPress(filteredList)}
+            >
               <SquareBtn
-                name='장보기 추가'
-                icon='cart'
-                disabled={checkedList.length === 0}
-                onPress={onAddShoppingListPress}
-              />
-              <SquareBtn
-                name='자주 먹는 식료품 해제'
                 icon='tag-minus'
                 disabled={checkedList.length === 0}
                 onPress={() =>
@@ -139,6 +126,12 @@ export default function FavoriteFoods() {
                   )
                 }
               />
+              <SquareBtn
+                icon='basket-plus'
+                disabled={checkedList.length === 0}
+                onPress={onAddShoppingListPress}
+              />
+              <View></View>
             </TableFooter>
           </TableContainer>
 
