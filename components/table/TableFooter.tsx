@@ -24,12 +24,19 @@ export default function TableFooter({
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 52,
+    toValue: 44,
     active: !!list.length && showBtn,
   });
 
   return (
-    <View style={tw`-mx-4 bg-stone-100`}>
+    <View
+      style={tw.style(`-mx-4 bg-stone-100`, {
+        shadowColor: '#aaa',
+        shadowOpacity: 0.2,
+        shadowRadius: 10,
+        shadowOffset: { height: -15, width: 0 },
+      })}
+    >
       <Animated.View
         style={{
           height,
@@ -38,7 +45,7 @@ export default function TableFooter({
       >
         <View
           style={tw.style(
-            `flex-row justify-between items-center w-full pl-6.5 pr-5 gap-1 pt-1 border-t border-slate-500`
+            `flex-row justify-between items-center w-full pl-6.5 pr-5 gap-1 pt-1.5 border-t border-slate-300`
           )}
         >
           <View style={tw`flex-row items-center gap-2`}>
@@ -48,7 +55,7 @@ export default function TableFooter({
               title='전체 선택'
             />
             {!entireChecked && (
-              <Text style={tw`text-[14px] text-blue-700 mt-0.4`}>
+              <Text style={tw`text-[14px] text-blue-700`}>
                 {list.length}개의 식료품 선택
               </Text>
             )}

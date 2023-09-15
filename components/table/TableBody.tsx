@@ -1,5 +1,5 @@
 import { Food } from '../../constant/foodInfo';
-import { TouchableOpacity } from '../common/native-component';
+import { Text, TouchableOpacity } from '../common/native-component';
 import { useRoute } from '@react-navigation/native';
 import { FlatList, View } from 'react-native';
 import { DEEP_GRAY, LIGHT_GRAY } from '../../constant/colors';
@@ -58,7 +58,9 @@ export default function TableBody({
               >
                 {/* 유통기한 주의 식료품 정보 */}
                 {route.name === 'ExpiredFoods' && (
-                  <LeftDay expiredDate={item.expiredDate} size={15} mark />
+                  <View style={tw`w-10 items-end`}>
+                    <LeftDay expiredDate={item.expiredDate} size={15} mark />
+                  </View>
                 )}
 
                 {/* 장보기 식료품 추가 버튼 */}

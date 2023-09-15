@@ -67,21 +67,19 @@ export default function ExpiredFoods() {
             }
           />
 
-          <View style={tw`-mb-3`}>
-            <TableFooter
-              list={checkedList}
-              entireChecked={allChecked && !!checkedList.length}
-              onEntirePress={() => onEntireBoxPress(filteredList)}
-            >
-              <SquareIconBtn
-                onPress={() =>
-                  onDeleteExpiredFoodPress(setAnimationState, animationState)
-                }
-                icon='trash-can'
-                disabled={checkedList.length === 0}
-              />
-            </TableFooter>
-          </View>
+          <TableFooter
+            list={checkedList}
+            entireChecked={allChecked && !!checkedList.length}
+            onEntirePress={() => onEntireBoxPress(filteredList)}
+          >
+            <SquareIconBtn
+              onPress={() =>
+                onDeleteExpiredFoodPress(setAnimationState, animationState)
+              }
+              icon='trash-can'
+              disabled={checkedList.length === 0}
+            />
+          </TableFooter>
         </TableContainer>
       </Container>
     </SafeBottomAreaView>

@@ -39,7 +39,7 @@ export default function TableFilters({
   return (
     <View>
       <ScrollView
-        style={tw`h-12  pt-0.5`}
+        style={tw`h-12 pt-0.5`}
         contentContainerStyle={tw`gap-1 items-start pr-2`}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -85,16 +85,19 @@ export default function TableFilters({
           hasBackdrop
         >
           <View style={tw`p-4 pb-2 flex-row flex-wrap gap-1`}>
-            {categoryFilters.map(({ category, color, icon }) => (
-              <FilterTag
-                key={category}
-                filterObj={{ filter: category, icon }}
-                iconColor={color}
-                active={category === currentFilter}
-                onFilterPress={() => onFilterPress(category)}
-                length={getTableList(category, foodList).length || 0}
-              />
-            ))}
+            {categoryFilters.map(
+              ({ category, color, icon }) =>
+                !!getTableList(category, foodList).length && (
+                  <FilterTag
+                    key={category}
+                    filterObj={{ filter: category, icon }}
+                    iconColor={color}
+                    active={category === currentFilter}
+                    onFilterPress={() => onFilterPress(category)}
+                    length={getTableList(category, foodList).length}
+                  />
+                )
+            )}
           </View>
         </Modal>
       )}
