@@ -39,7 +39,7 @@ export default function TableFilters({
   return (
     <View>
       <ScrollView
-        style={tw`h-12 -mt-2 pt-1 px-0.5`}
+        style={tw`h-12 -mx-1 pt-0.5 px-0.5`}
         contentContainerStyle={tw`gap-1 items-start pr-2`}
         horizontal
         showsHorizontalScrollIndicator={false}

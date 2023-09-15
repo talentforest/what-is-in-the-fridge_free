@@ -23,7 +23,7 @@ import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import UUIDGenerator from 'react-native-uuid';
-import SquareBtn from '../components/buttons/SquareBtn';
+import SquareBtn from '../components/buttons/SquareIconBtn';
 import tw from 'twrnc';
 
 export default function ShoppingList() {
@@ -65,15 +65,9 @@ export default function ShoppingList() {
       <SafeBottomAreaView>
         <Container>
           <TableContainer>
-            <TableHeader
-              title='장보기 식료품'
-              length={shoppingList.length}
-              entireChecked={allChecked && !!checkedList.length}
-              onEntirePress={() => onEntireBoxPress(shoppingList)}
-            />
+            <TableHeader title='장보기 식료품' length={shoppingList.length} />
 
             <TableBody
-              title='장보기 목록 식료품'
               list={shoppingList}
               onCheckBoxPress={onCheckBoxPress}
               addToFridgePress={onAddToFridgePress}
@@ -84,9 +78,12 @@ export default function ShoppingList() {
               }
             />
             <View style={tw`mb-2`}>
-              <TableFooter list={checkedList}>
+              <TableFooter
+                list={checkedList}
+                entireChecked={allChecked && !!checkedList.length}
+                onEntirePress={() => onEntireBoxPress(shoppingList)}
+              >
                 <SquareBtn
-                  name='장보기 목록에서 삭제'
                   icon='trash-can'
                   disabled={checkedList.length === 0}
                   onPress={() => {
