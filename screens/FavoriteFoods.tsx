@@ -131,7 +131,6 @@ export default function FavoriteFoods() {
                 disabled={checkedList.length === 0}
                 onPress={onAddShoppingListPress}
               />
-              <View></View>
             </TableFooter>
           </TableContainer>
 

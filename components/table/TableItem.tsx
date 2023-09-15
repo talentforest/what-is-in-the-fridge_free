@@ -1,7 +1,13 @@
 import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { cutLetter } from '../../util';
-import { BLUE } from '../../constant/colors';
+import {
+  BLUE,
+  DEEP_YELLOW,
+  GRAY,
+  LIGHT_BLUE,
+  LIGHT_RED,
+} from '../../constant/colors';
 import { Food, initialFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
 import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
@@ -10,6 +16,7 @@ import { useRoute } from '@react-navigation/native';
 import CheckBox from '../common/CheckBox';
 import IndicatorExist from '../common/IndicatorExist';
 import tw from 'twrnc';
+import Icon from '../common/native-component/Icon';
 
 interface Props {
   children?: ReactNode;
@@ -78,7 +85,23 @@ export default function TableItem({
         <CheckBox checked={!!isCheckedItem} activeColor={BLUE} />
 
         <View style={tw`flex-1 flex-row items-center gap-1`}>
-          <Text style={tw`${textColor}`}>
+          {route.name === 'ExpiredFoods' &&
+            (space === '팬트리' ? (
+              <Icon
+                name='inbox-multiple'
+                type='MaterialCommunityIcons'
+                size={16}
+                color={DEEP_YELLOW}
+              />
+            ) : (
+              <Icon
+                name='fridge'
+                type='MaterialCommunityIcons'
+                size={16}
+                color={GRAY}
+              />
+            ))}
+          <Text style={tw`${textColor} ml-1`}>
             {cutLetter(initializedFood.name, 18)}
           </Text>
 

@@ -75,11 +75,11 @@ export default function SpaceItem({ food, changeInfo }: Props) {
           <TouchableOpacity
             onPress={() => onTabPress(space as TabType)}
             key={space}
-            style={tw`border-b-2 ${
+            style={tw`border-b-[3px] ${
               food.space.includes(space.slice(0, 1))
                 ? 'border-blue-600'
                 : 'border-slate-300'
-            } pr-5 pl-1 pb-0.5 my-2`}
+            } px-3.5 pb-0.5 my-1.5`}
           >
             <Text
               style={tw`text-[15px] ${
@@ -98,32 +98,36 @@ export default function SpaceItem({ food, changeInfo }: Props) {
         <>
           <View style={tw`flex-row gap-5`}>
             {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
-              <CheckBoxItem
-                key={spaceType}
-                title={spaceType}
-                checked={food.space.slice(0, 3) === spaceType}
-                onPress={() => onFridgeSpaceTypePress(spaceType)}
-              />
+              <View key={spaceType} style={tw`py-1.5`}>
+                <CheckBoxItem
+                  key={spaceType}
+                  title={spaceType}
+                  checked={food.space.slice(0, 3) === spaceType}
+                  onPress={() => onFridgeSpaceTypePress(spaceType)}
+                />
+              </View>
             ))}
           </View>
           <View style={tw`flex-row gap-5`}>
             {(['안쪽', '문쪽'] as SpaceSide[]).map((spaceSide) => (
-              <CheckBoxItem
-                key={spaceSide}
-                title={spaceSide}
-                checked={food.space.includes(spaceSide)}
-                onPress={() => onFridgeSpaceSidePress(spaceSide)}
-              />
+              <View key={spaceSide} style={tw`py-1.5`}>
+                <CheckBoxItem
+                  title={spaceSide}
+                  checked={food.space.includes(spaceSide)}
+                  onPress={() => onFridgeSpaceSidePress(spaceSide)}
+                />
+              </View>
             ))}
           </View>
           <View style={tw`flex-row flex-wrap gap-x-5 gap-y-2`}>
             {compartments.map(({ compartmentNum }) => (
-              <CheckBoxItem
-                key={compartmentNum}
-                title={`${compartmentNum}칸`}
-                checked={food.compartmentNum === compartmentNum}
-                onPress={() => onCompartmentNumPress(compartmentNum)}
-              />
+              <View key={compartmentNum} style={tw`py-1.5`}>
+                <CheckBoxItem
+                  title={`${compartmentNum}칸`}
+                  checked={food.compartmentNum === compartmentNum}
+                  onPress={() => onCompartmentNumPress(compartmentNum)}
+                />
+              </View>
             ))}
           </View>
         </>
