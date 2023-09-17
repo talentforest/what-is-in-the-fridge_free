@@ -77,30 +77,32 @@ export default function TableFilters({
         )}
       </ScrollView>
 
-      {modalVisible && categoryFilters && (
-        <Modal
-          title='카테고리별 필터링'
-          setModalVisible={setModalVisible}
-          modalVisible={modalVisible}
-          hasBackdrop
-        >
-          <View style={tw`p-4 pb-2 flex-row flex-wrap gap-1`}>
-            {categoryFilters.map(
-              ({ category, color, icon }) =>
-                !!getTableList(category, foodList).length && (
-                  <FilterTag
-                    key={category}
-                    filterObj={{ filter: category, icon }}
-                    iconColor={color}
-                    active={category === currentFilter}
-                    onFilterPress={() => onFilterPress(category)}
-                    length={getTableList(category, foodList).length}
-                  />
-                )
-            )}
-          </View>
-        </Modal>
-      )}
+      {modalVisible &&
+        categoryFilters &&
+        !!getTableList(currentFilter, foodList).length && (
+          <Modal
+            title='카테고리별 필터링'
+            setModalVisible={setModalVisible}
+            modalVisible={modalVisible}
+            hasBackdrop
+          >
+            <View style={tw`p-4 pb-2 flex-row flex-wrap gap-1`}>
+              {categoryFilters.map(
+                ({ category, color, icon }) =>
+                  !!getTableList(category, foodList).length && (
+                    <FilterTag
+                      key={category}
+                      filterObj={{ filter: category, icon }}
+                      iconColor={color}
+                      active={category === currentFilter}
+                      onFilterPress={() => onFilterPress(category)}
+                      length={getTableList(category, foodList).length}
+                    />
+                  )
+              )}
+            </View>
+          </Modal>
+        )}
     </View>
   );
 }

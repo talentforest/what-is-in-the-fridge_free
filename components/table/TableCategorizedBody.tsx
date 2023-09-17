@@ -27,16 +27,24 @@ export default function TableCategorizedBody({
 }: Props) {
   const { currentFilter } = useSelector((state) => state.currentFilter);
 
-  const { getExistCategoryList, getFilteredSortByCategoryList } =
-    useGetFoodList();
+  const {
+    getExistCategoryList,
+    getFilteredSortByCategoryList,
+    getFilteredFoodList,
+    favoriteFoods,
+    pantryFoods,
+  } = useGetFoodList();
 
   const route = useRoute();
   const routeFavoriteFoods = route.name === 'FavoriteFoods';
   const title = routeFavoriteFoods ? '자주 먹는 식료품' : '팬트리 식료품';
+  const foodList = routeFavoriteFoods ? favoriteFoods : pantryFoods;
+
+  const filteredFoodList = getFilteredFoodList(currentFilter, foodList);
 
   return (
     <>
-      {!!getExistCategoryList().length ? (
+      {!!filteredFoodList.length ? (
         <View style={tw`flex-1 -mx-2`}>
           <FlatList
             keyExtractor={(item) => item}
