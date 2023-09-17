@@ -41,13 +41,8 @@ export default function ExpiredFoodSection({ foodList }: Props) {
           </TouchableOpacity>
         ))}
         {foodList.length > MAX_NUM && (
-          <View style={tw`self-center`}>
-            <Icon
-              name='more-horizontal'
-              type='Feather'
-              size={30}
-              color={GRAY}
-            />
+          <View style={tw`self-center mt-2`}>
+            <Icon name='more-vertical' type='Feather' size={25} color={GRAY} />
           </View>
         )}
       </View>
