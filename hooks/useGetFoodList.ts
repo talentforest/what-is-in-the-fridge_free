@@ -145,5 +145,6 @@ export const useGetFoodList = () => {
     getFilteredFoodList,
     getExistCategoryList,
     getFilteredSortByCategoryList,
+    orderExpirationDate,
   };
 };
