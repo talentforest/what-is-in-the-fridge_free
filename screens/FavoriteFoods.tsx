@@ -56,7 +56,7 @@ export default function FavoriteFoods() {
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
 
-  const { onAddShoppingListPress, onDeleteFoodPress } = useHandleTableItem({
+  const { onAddShoppingListBtnPress, onDeleteFoodPress } = useHandleTableItem({
     checkedList: checkedList,
     setCheckedList,
   });
@@ -129,7 +129,7 @@ export default function FavoriteFoods() {
               <SquareBtn
                 icon='basket-plus'
                 disabled={checkedList.length === 0}
-                onPress={onAddShoppingListPress}
+                onPress={onAddShoppingListBtnPress}
               />
             </TableFooter>
           </TableContainer>

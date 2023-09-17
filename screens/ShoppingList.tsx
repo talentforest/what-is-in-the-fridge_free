@@ -6,9 +6,10 @@ import {
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { useSelector } from '../redux/hook';
-import { initialFood } from '../constant/foodInfo';
+import { Food, initialFood } from '../constant/foodInfo';
 import { Keyboard, View } from 'react-native';
 import {
+  useFindFood,
   useHandleCheckList,
   useHandleTableItem,
   useSetAnimationState,
@@ -34,6 +35,8 @@ export default function ShoppingList() {
   const myUuid = UUIDGenerator.v4();
   const dispatch = useDispatch();
 
+  const { findFood } = useFindFood();
+
   const { checkedList, setCheckedList, onEntireBoxPress, onCheckBoxPress } =
     useHandleCheckList();
 
@@ -42,17 +45,27 @@ export default function ShoppingList() {
     onAddToFridgePress, //
   } = useHandleTableItem({ checkedList, setCheckedList, setModalVisible });
 
+  const submitShoppingListItem = (name: string) => {
+    const food = findFood(name)
+      ? ({
+          ...findFood(name),
+          expiredDate: initialFood.expiredDate,
+          purchaseDate: initialFood.purchaseDate,
+        } as Food)
+      : {
+          ...initialFood,
+          id: myUuid as string,
+          name: name,
+        };
+
+    dispatch(addToShoppingList(food));
+    setAnimationState('slidedown-in');
+    setKeyword('');
+  };
+
   const onInputSubmit = () => {
     if (keyword === '') return Keyboard.dismiss();
-
-    const food = {
-      ...initialFood,
-      id: myUuid as string,
-      name: keyword,
-    };
-    dispatch(addToShoppingList(food));
-    setKeyword('');
-    setAnimationState('slidedown-in');
+    submitShoppingListItem(keyword);
   };
 
   const { animationState, setAnimationState, afterAnimation } =
@@ -80,7 +93,7 @@ export default function ShoppingList() {
 
             <TableRecommendedFoods
               keyword={keyword}
-              setAnimationState={setAnimationState}
+              submitShoppingListItem={submitShoppingListItem}
             />
 
             <View>

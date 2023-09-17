@@ -118,7 +118,7 @@ export const useHandleTableItem = ({
     setCheckedList([]);
   };
 
-  const onAddShoppingListPress = () => {
+  const onAddShoppingListBtnPress = () => {
     if (checkedList.length === 0) return;
 
     dispatch(addItemsToShoppingList(checkedList));
@@ -142,11 +142,11 @@ export const useHandleTableItem = ({
       (food) => food.name === selectedFood.name
     );
 
-    const {
-      deleteExistFood: { title, msg },
-    } = alertPhraseWithFood(existFood || selectedFood);
-
     if (existFood) {
+      const {
+        deleteExistFood: { title, msg },
+      } = alertPhraseWithFood(existFood || selectedFood);
+
       return Alert.alert(title, msg, [
         { text: '취소', style: 'destructive' },
         {
@@ -167,7 +167,7 @@ export const useHandleTableItem = ({
   return {
     onDeleteFoodPress,
     onDeleteExpiredFoodPress,
-    onAddShoppingListPress,
+    onAddShoppingListBtnPress,
     onAddToFridgePress,
   };
 };
