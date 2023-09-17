@@ -69,6 +69,10 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
           </View>
         ))}
       </View>
+      <View style={tw`self-end flex-row items-center -mb-1`}>
+        <Text style={tw`text-[13px] text-slate-500`}>들어가기</Text>
+        <Icon name='chevron-right' type='Feather' size={16} color={GRAY} />
+      </View>
     </View>
   );
 }
