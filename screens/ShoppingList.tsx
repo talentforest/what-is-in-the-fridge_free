@@ -19,19 +19,19 @@ import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListF
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
 import TableHeader from '../components/table/TableHeader';
+import TableRecommendedFoods from '../components/table/TableRecommendedFoods';
 import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import UUIDGenerator from 'react-native-uuid';
 import SquareBtn from '../components/buttons/SquareIconBtn';
-import tw from 'twrnc';
 
 export default function ShoppingList() {
   const [modalVisible, setModalVisible] = useState(false);
   const [keyword, setKeyword] = useState('');
   const { shoppingList } = useSelector((state) => state.shoppingList);
-  const myUuid = UUIDGenerator.v4();
 
+  const myUuid = UUIDGenerator.v4();
   const dispatch = useDispatch();
 
   const { checkedList, setCheckedList, onEntireBoxPress, onCheckBoxPress } =
@@ -77,7 +77,13 @@ export default function ShoppingList() {
                 afterAnimation(onDeleteFoodPress, shoppingList)
               }
             />
-            <View style={tw`mb-2`}>
+
+            <TableRecommendedFoods
+              keyword={keyword}
+              setAnimationState={setAnimationState}
+            />
+
+            <View>
               <TableFooter
                 list={checkedList}
                 entireChecked={allChecked && !!checkedList.length}
