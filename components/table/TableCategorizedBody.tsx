@@ -33,6 +33,7 @@ export default function TableCategorizedBody({
     getFilteredFoodList,
     favoriteFoods,
     pantryFoods,
+    orderExpirationDate,
   } = useGetFoodList();
 
   const route = useRoute();
@@ -62,7 +63,9 @@ export default function TableCategorizedBody({
                     keyExtractor={(item) => item.id}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={tw`pb-5`}
-                    data={getFilteredSortByCategoryList(item)}
+                    data={orderExpirationDate(
+                      getFilteredSortByCategoryList(item)
+                    )}
                     renderItem={({ item: food }) =>
                       routeFavoriteFoods ? (
                         <TableItem
