@@ -85,24 +85,8 @@ export default function TableItem({
         <CheckBox checked={!!isCheckedItem} activeColor={BLUE} />
 
         <View style={tw`flex-1 flex-row items-center gap-1`}>
-          {route.name === 'ExpiredFoods' &&
-            (space === '팬트리' ? (
-              <Icon
-                name='inbox-multiple'
-                type='MaterialCommunityIcons'
-                size={16}
-                color={DEEP_YELLOW}
-              />
-            ) : (
-              <Icon
-                name='fridge'
-                type='MaterialCommunityIcons'
-                size={16}
-                color={GRAY}
-              />
-            ))}
-          <Text style={tw`${textColor} ml-1`}>
-            {cutLetter(initializedFood.name, 18)}
+          <Text style={tw`${textColor} `}>
+            {cutLetter(initializedFood.name, 15)}
           </Text>
 
           {existItemTag && (
