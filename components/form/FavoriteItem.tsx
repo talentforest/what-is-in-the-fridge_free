@@ -1,4 +1,4 @@
-import { View, Animated } from 'react-native';
+import { View, Animated, Keyboard } from 'react-native';
 import { LIGHT_BLUE } from '../../constant/colors';
 import { useToggleAnimation, useFindFood } from '../../hooks';
 import { Food } from '../../constant/foodInfo';
@@ -81,7 +81,10 @@ export default function FavoriteItem({ food, title }: Props) {
             key={btnNm}
             btnName={btnNm}
             check={btnNm === '맞아요' ? isFavorite : !isFavorite}
-            onPress={() => onTogglePress(btnNm)}
+            onPress={() => {
+              Keyboard.dismiss();
+              onTogglePress(btnNm);
+            }}
             disabled={disabledFavoriteBtn}
           />
         ))}

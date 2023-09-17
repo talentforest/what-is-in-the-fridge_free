@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { Category } from '../../constant/foodCategories';
 import { BLUE, LIGHT_GRAY } from '../../constant/colors';
@@ -47,7 +47,10 @@ export default function CategoryItem({
     <View>
       <FormLabel label='카테고리' />
       <TouchableOpacity
-        onPress={() => setCategoryOpen((prev) => !prev)}
+        onPress={() => {
+          Keyboard.dismiss();
+          setCategoryOpen((prev) => !prev);
+        }}
         disabled={disabledCategory}
         style={tw`h-11 shadow-md border ${color} px-3 bg-white rounded-lg items-center flex-row gap-2 justify-between`}
       >

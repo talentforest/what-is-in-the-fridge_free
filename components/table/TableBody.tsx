@@ -1,5 +1,5 @@
 import { Food } from '../../constant/foodInfo';
-import { Text, TouchableOpacity } from '../common/native-component';
+import { TouchableOpacity } from '../common/native-component';
 import { useRoute } from '@react-navigation/native';
 import { FlatList, View } from 'react-native';
 import { DEEP_GRAY, LIGHT_GRAY } from '../../constant/colors';
@@ -84,7 +84,11 @@ export default function TableBody({
       ) : (
         <View style={tw`pt-24 flex-1 border-t -mx-4 border-slate-300`}>
           <EmptySign
-            message={`${currentFilter} 카테고리에, ${title}이 없어요.`}
+            message={
+              route.name === 'ShoppingList'
+                ? `${title}이 없어요`
+                : `${currentFilter} 카테고리에, ${title}이 없어요.`
+            }
           />
         </View>
       )}
