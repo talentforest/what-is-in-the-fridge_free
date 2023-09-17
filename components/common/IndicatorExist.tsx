@@ -11,7 +11,7 @@ interface Props {
 export default function IndicatorExist({ name, roundedBorder }: Props) {
   const { findFoodInFridge, findFoodInPantry } = useFindFood();
 
-  const existFood = !!findFoodInPantry(name) || !!findFoodInFridge(name);
+  const existFood = findFoodInPantry(name) || findFoodInFridge(name);
 
   const existFoodColor = existFood ? 'text-blue-600' : 'text-red-500';
 
@@ -25,7 +25,7 @@ export default function IndicatorExist({ name, roundedBorder }: Props) {
           roundedBorder ? 'text-[13px] py-0' : 'text-[15px]'
         }`}
       >
-        {existFood ? '있음' : '없음'}
+        {!!existFood ? '있음' : '없음'}
       </Text>
     </View>
   );
