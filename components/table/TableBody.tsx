@@ -2,7 +2,7 @@ import { Food } from '../../constant/foodInfo';
 import { TouchableOpacity } from '../common/native-component';
 import { useRoute } from '@react-navigation/native';
 import { FlatList, View } from 'react-native';
-import { DEEP_GRAY, LIGHT_GRAY } from '../../constant/colors';
+import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import { AnimationState, useFindFood } from '../../hooks/';
 import { useSelector } from '../../redux/hook';
 
@@ -58,8 +58,12 @@ export default function TableBody({
               >
                 {/* 유통기한 주의 식료품 정보 */}
                 {route.name === 'ExpiredFoods' && (
-                  <View style={tw`w-10 items-end`}>
-                    <LeftDay expiredDate={item.expiredDate} size={15} mark />
+                  <View style={tw`items-end`}>
+                    <LeftDay
+                      expiredDate={item.expiredDate}
+                      size={14}
+                      dateMark
+                    />
                   </View>
                 )}
 
@@ -73,7 +77,7 @@ export default function TableBody({
                       type='MaterialCommunityIcons'
                       name='plus'
                       size={23}
-                      color={findFood(item.name) ? LIGHT_GRAY : DEEP_GRAY}
+                      color={findFood(item.name) ? LIGHT_GRAY : BLUE}
                     />
                   </TouchableOpacity>
                 )}

@@ -1,63 +1,53 @@
 import {
+  expired,
+  getColorByLeftDay,
   getDiffDate,
-  getRelativeTime,
-  getTextColorByLeftDay,
-  leftThreeDays,
+  getFormattedDate,
+  getTWColorByLeftDay,
 } from '../../util';
 import { Text } from './native-component';
 import { View } from 'react-native';
-import { RED } from '../../constant/colors';
-
 import Icon from './native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
   expiredDate: string;
-  relative?: boolean;
-  mark?: boolean;
   size?: number;
+  iconMark?: boolean;
+  dateMark?: boolean;
 }
 
-function LeftDay({ expiredDate, size = 14, relative, mark }: Props) {
-  const textColor = getTextColorByLeftDay(expiredDate);
-
-  const diffDate = getDiffDate(expiredDate);
-  const relativeDate = getRelativeTime(expiredDate);
+function LeftDay({ size = 15, expiredDate, iconMark, dateMark }: Props) {
+  const textColor = getTWColorByLeftDay(expiredDate);
+  const diffDate = +getDiffDate(expiredDate).toFixed(0);
 
   return (
     <View>
-      {diffDate === '오늘' ? (
-        <Text style={tw`text-slate-600 text-[${size}px] ${textColor}`}>
-          {diffDate}
+      <View
+        style={tw`${
+          expired(expiredDate) && iconMark ? 'flex-row items-center' : ''
+        }`}
+      >
+        {expired(expiredDate) && iconMark && (
+          <Icon
+            name='exclamation-thick'
+            type='MaterialCommunityIcons'
+            color={getColorByLeftDay(expiredDate)}
+            size={size + 1}
+          />
+        )}
+
+        <Text style={tw`${textColor} text-[${size}px] self-end py-0`}>
+          {diffDate === 0
+            ? '오늘까지'
+            : `${Math.abs(diffDate)}일 ${0 > diffDate ? '지남' : '남음'}`}
         </Text>
-      ) : diffDate < 0 ? (
-        <View style={tw`flex-row items-center`}>
-          {mark && (
-            <Icon
-              name='minus'
-              type='MaterialCommunityIcons'
-              color={RED}
-              size={size - 2}
-            />
-          )}
-          <Text style={tw`${textColor} text-[${size}px]`}>
-            {relative ? `${relativeDate}` : `${Math.abs(diffDate)}일`}
-          </Text>
-        </View>
-      ) : (
-        <View style={tw`flex-row items-center`}>
-          {mark && (
-            <Icon
-              name='plus'
-              type='MaterialCommunityIcons'
-              color={leftThreeDays(expiredDate) ? 'amber' : 'green'}
-              size={size + 3}
-            />
-          )}
-          <Text style={tw`${textColor} text-[${size}px]`}>
-            {relative ? `${relativeDate}` : `${diffDate + 1}일`}
-          </Text>
-        </View>
+      </View>
+
+      {dateMark && (
+        <Text style={tw`text-[11px] self-end text-slate-500 -my-1 py-0`}>
+          {getFormattedDate(expiredDate, 'YYYY.MM.DD')}
+        </Text>
       )}
     </View>
   );

@@ -4,8 +4,8 @@ import { getFormattedDate } from '../../util';
 import { GRAY } from '../../constant/colors';
 
 import Icon from '../../components/common/native-component/Icon';
-import tw from 'twrnc';
 import LeftDay from '../../components/common/LeftDay';
+import tw from 'twrnc';
 
 interface Props {
   title: '구매날짜' | '유통기한';
@@ -27,7 +27,9 @@ export default function PantryFoodInfo({ title, date }: Props) {
         {getFormattedDate(date, 'YYYY년 MM월 DD일')}
       </Text>
 
-      {title === '유통기한' && <LeftDay expiredDate={date} mark size={13} />}
+      {title === '유통기한' && (
+        <LeftDay expiredDate={date} size={13} iconMark />
+      )}
     </View>
   );
 }
