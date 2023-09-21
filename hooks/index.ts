@@ -1,8 +1,8 @@
-export * from './useSubmitFavoriteFoods';
+export * from './useSubmitFoodsFromInput';
 export * from './useFindFood';
 export * from './useAddFood';
 export * from './useAddShoppingListFood';
-export * from './useDeleteFridgeFood';
+export * from './useDeleteFood';
 export * from './useEditFood';
 export * from './useGetFoodList';
 export * from './useHandleCheckList';
@@ -20,5 +20,4 @@ export * from './animation/useShakingAnimation';
 export * from './animation/usePulseAnimation';
 export * from './animation/useSwiperAnimation';
 export * from './animation/useDragAndDropFood';
-export * from './animation/useDragBox';
 export * from './animation/useOpacityAnimation';

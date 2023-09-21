@@ -7,7 +7,7 @@ import {
 } from '../redux/slice/fridgeFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
-import { addToPantry, removeFromPantry } from '../redux/slice/pantryFoodsSlice';
+import { addToPantry, removePantryFood } from '../redux/slice/pantryFoodsSlice';
 import { Food } from '../constant/foodInfo';
 import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
 import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
@@ -39,7 +39,7 @@ export const useAddShoppingListFood = () => {
         return Alert.alert(exist.title, exist.msg);
       }
       existFood.space === '팬트리'
-        ? dispatch(removeFromPantry({ name: existFood.name }))
+        ? dispatch(removePantryFood({ id: existFood.id }))
         : dispatch(removeFridgeFood({ id: existFood.id }));
     }
 
