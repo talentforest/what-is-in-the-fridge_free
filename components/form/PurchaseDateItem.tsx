@@ -47,7 +47,9 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
   };
 
   const onPress = () => {
-    Keyboard.dismiss();
+    if (Keyboard.isVisible()) {
+      Keyboard.dismiss();
+    }
     setPurchaseOpen((prev) => !prev);
 
     if (!purchaseOpen) {
@@ -60,9 +62,12 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
 
   return (
     <View>
-      <TouchableOpacity onPress={onPress}>
-        <FormLabel label='구매날짜' option isOpen={purchaseOpen} />
-      </TouchableOpacity>
+      <FormLabel
+        label='구매날짜'
+        option
+        isOpen={purchaseOpen}
+        onPress={onPress}
+      />
 
       <Animated.View
         style={{

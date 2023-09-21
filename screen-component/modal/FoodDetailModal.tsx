@@ -120,7 +120,11 @@ export default function FoodDetailModal({
 
             {memo?.length > 1 && (
               <InfoBox iconName='note-text-outline' label='메모'>
-                <Text style={tw`text-[15px]`}>{cutLetter(memo, 20)}</Text>
+                <View style={tw`max-h-12`}>
+                  <Text style={tw.style(`text-[15px]`, { lineHeight: 22 })}>
+                    {cutLetter(memo, 31)}
+                  </Text>
+                </View>
               </InfoBox>
             )}
           </View>

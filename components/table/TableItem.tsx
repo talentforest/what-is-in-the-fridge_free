@@ -79,7 +79,7 @@ export default function TableItem({
         <CheckBox checked={!!isCheckedItem} activeColor={BLUE} />
 
         <View style={tw`flex-1 flex-row items-center gap-1`}>
-          {expired(food.expiredDate) && (
+          {expired(food.expiredDate) && route.name === 'ExpiredFoods' && (
             <Icon
               name='exclamation-thick'
               type='MaterialCommunityIcons'

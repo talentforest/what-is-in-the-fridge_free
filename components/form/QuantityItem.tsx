@@ -34,6 +34,9 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
   };
 
   const onPress = () => {
+    if (Keyboard.isVisible()) {
+      Keyboard.dismiss();
+    }
     setQuantityOpen((prev) => !prev);
     if (!isQuanityOpen) {
       return changeInfo({ quantity: '1' });
@@ -45,9 +48,8 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
 
   return (
     <View>
-      <TouchableOpacity onPress={onPress}>
-        <FormLabel label='수량' option isOpen={isQuanityOpen} />
-      </TouchableOpacity>
+      <FormLabel label='수량' option isOpen={isQuanityOpen} onPress={onPress} />
+
       <Animated.View
         style={{
           height,

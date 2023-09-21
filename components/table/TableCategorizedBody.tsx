@@ -58,6 +58,8 @@ export default function TableCategorizedBody({
                     data={orderExpirationDate(
                       getFilteredSortByCategoryList(item)
                     )}
+                    scrollEnabled={true}
+                    keyboardDismissMode='on-drag'
                     renderItem={({ item: food }) => (
                       <TableItem
                         food={food}

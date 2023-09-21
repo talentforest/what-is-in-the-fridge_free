@@ -44,8 +44,6 @@ export const useSubmitFoodsFromInput = () => {
             text: '저장',
             onPress: () => {
               dispatch(addFavorite(findFood(inputValue) as Food));
-              setCategory('');
-              setInputValue('');
             },
             style: 'default',
           },
@@ -61,6 +59,8 @@ export const useSubmitFoodsFromInput = () => {
         })
       );
     }
+    setCategory('');
+    setInputValue('');
   };
 
   const onSubmitShoppingListItem = (

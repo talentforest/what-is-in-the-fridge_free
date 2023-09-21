@@ -78,7 +78,7 @@ export default function CompartmentBox({
           <Icon
             type='MaterialCommunityIcons'
             name='arrow-expand-all'
-            size={20}
+            size={18}
             color={LIGHT_BLUE}
           />
         </TouchableOpacity>

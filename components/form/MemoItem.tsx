@@ -1,6 +1,6 @@
-import { Animated, View } from 'react-native';
+import { Animated, Keyboard, View } from 'react-native';
 import { useEffect } from 'react';
-import { TextInput, TouchableOpacity } from '../common/native-component';
+import { TextInput } from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleMemoOpen } from '../../redux/slice/isMemoOpenSlice';
@@ -24,14 +24,15 @@ export default function MemoItem({ memo, changeInfo }: Props) {
   });
 
   useEffect(() => {
-    if (memo !== '') {
-      dispatch(toggleMemoOpen(true));
-    }
+    dispatch(toggleMemoOpen(memo !== '' ? true : false));
   }, []);
 
   const onChangeText = (value: string) => changeInfo({ memo: value });
 
   const onPress = () => {
+    if (Keyboard.isVisible()) {
+      Keyboard.dismiss();
+    }
     dispatch(toggleMemoOpen(!isMemoOpen));
 
     if (!isMemoOpen) {
@@ -41,9 +42,7 @@ export default function MemoItem({ memo, changeInfo }: Props) {
 
   return (
     <View>
-      <TouchableOpacity onPress={onPress}>
-        <FormLabel label='메모' option isOpen={isMemoOpen} />
-      </TouchableOpacity>
+      <FormLabel label='메모' option isOpen={isMemoOpen} onPress={onPress} />
 
       <Animated.View
         style={{
@@ -64,7 +63,7 @@ export default function MemoItem({ memo, changeInfo }: Props) {
               })}
               onChangeText={onChangeText}
               value={memo}
-              placeholder='식료품에 대한 메모를 작성해주세요'
+              placeholder='또다른 추가정보는 메모로 작성해주세요.'
               multiline
               returnKeyType='done'
               blurOnSubmit={true}

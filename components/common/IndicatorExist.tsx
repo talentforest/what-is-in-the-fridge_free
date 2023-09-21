@@ -23,12 +23,13 @@ export default function IndicatorExist({ name, space, roundedBorder }: Props) {
   return (
     <View style={tw`${roundedBorder ? borderStyle : ''} items-end`}>
       <Text
-        style={tw`${existFoodColor} ${
-          roundedBorder ? 'text-[13px] py-0' : 'text-[15px] py-0'
+        style={tw`${existFoodColor} py-0 ${
+          roundedBorder ? 'text-[13px] ' : 'text-[15px]'
         }`}
       >
         {!!existFood ? '있음' : '없음'}
       </Text>
+
       {space && existFood && (
         <Text style={tw`text-xs text-slate-500 py-0`}>{space}</Text>
       )}

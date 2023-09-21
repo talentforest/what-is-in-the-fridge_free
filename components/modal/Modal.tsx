@@ -20,13 +20,15 @@ export type ModalTitle =
   | '장보기 목록 식료품 추가'
   | '새로운 식료품 추가'
   | '식료품 정보 수정'
+  | '식료품 상세 정보'
   | '팬트리 식료품 추가'
-  | '팬트리 식료품 수정';
+  | '팬트리 식료품 수정'
+  | '나의 식료품 찾기';
 
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
-  title?: string;
+  title?: ModalTitle;
   children: ReactNode;
   style?: StyleProp<any>;
   animationIn?: 'fadeIn' | 'slideInUp';
@@ -56,7 +58,7 @@ export default function Modal({
       ? 'bg-stone-100'
       : animationIn === 'fadeIn'
       ? 'bg-stone-200'
-      : 'bg-stone-100';
+      : 'bg-stone-50';
 
   return (
     <RNModal
