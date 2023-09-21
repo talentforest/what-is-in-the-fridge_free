@@ -15,8 +15,11 @@ import SpaceItem from './SpaceItem';
 import ExpiredDateItem from './ExpiredDateItem';
 import NameItem from './NameItem';
 import FavoriteItem from './FavoriteItem';
-import FormControlStep from './FormControlStep';
+import FormStepBottom from './FormStepBottom';
 import PurchaseDateItem from './PurchaseDateItem';
+import QuantityItem from './QuantityItem';
+import MemoItem from './MemoItem';
+import FormStepHeader from './FormStepHeader';
 import tw from 'twrnc';
 
 interface Props {
@@ -43,7 +46,11 @@ export default function Form({
 
   return (
     <View>
-      <View style={tw`overflow-hidden`}>
+      <FormStepHeader
+        formSteps={formSteps}
+        currentStep={currentStep as FormStep}
+      />
+      <View style={tw`overflow-hidden mb-3`}>
         <Animated.View
           style={{
             transform: [{ translateX: stepTranslateX }],
@@ -53,8 +60,8 @@ export default function Form({
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={tw`flex-row`}>
               {formSteps.map(({ step, name }) => (
-                <View key={step} style={tw`w-full pb-4`}>
-                  {name === '식품 정보' && (
+                <View key={step} style={tw`w-full`}>
+                  {name === '기본정보' && (
                     <FormSectionContainer>
                       <NameItem
                         name={food.name}
@@ -70,21 +77,30 @@ export default function Form({
                       <FavoriteItem food={food} title={title} />
                     </FormSectionContainer>
                   )}
-                  {name === '식품 위치' && (
+                  {name === '위치' && (
                     <FormSectionContainer>
                       <SpaceItem food={food} changeInfo={changeInfo} />
                     </FormSectionContainer>
                   )}
-                  {name === '식품 날짜' && (
+                  {name === '유통기한' && (
                     <FormSectionContainer>
                       <ExpiredDateItem
                         date={food.expiredDate}
                         changeInfo={changeInfo}
                       />
+                    </FormSectionContainer>
+                  )}
+                  {name === '추가정보(선택)' && (
+                    <FormSectionContainer>
                       <PurchaseDateItem
                         date={food.purchaseDate}
                         changeInfo={changeInfo}
                       />
+                      <QuantityItem
+                        quantity={food.quantity}
+                        changeInfo={changeInfo}
+                      />
+                      <MemoItem memo={food.memo} changeInfo={changeInfo} />
                     </FormSectionContainer>
                   )}
                 </View>
@@ -95,7 +111,7 @@ export default function Form({
       </View>
 
       {/* 단계 */}
-      <FormControlStep
+      <FormStepBottom
         moveStep={moveStep}
         currentStep={currentStep.step}
         stepLength={formSteps.length}

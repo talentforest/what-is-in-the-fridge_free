@@ -5,7 +5,7 @@ import tw from 'twrnc';
 
 interface Props {
   message: string;
-  color?: 'gray' | 'red';
+  color?: 'gray' | 'red' | 'green';
 }
 
 export default function MessageBox({ message, color = 'gray' }: Props) {
@@ -19,7 +19,7 @@ export default function MessageBox({ message, color = 'gray' }: Props) {
           color={color}
         />
       </View>
-      <Text style={tw`text-sm text-${color}-500 flex-1`}>{message}</Text>
+      <Text style={tw`text-sm text-${color}-600 flex-1`}>{message}</Text>
     </View>
   );
 }

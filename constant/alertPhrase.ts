@@ -103,7 +103,7 @@ export const alertPhraseWithCheckList: (food: Food[]) => {
   };
   const addToShoppingList = {
     title: '장보기 목록 추가',
-    msg: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})이 장보기 목록에 추가되었어요.`,
+    msg: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})이 장보기 목록에 추가되었어요. 바로 장보기 목록으로 이동하시겠어요?`,
   };
 
   return {

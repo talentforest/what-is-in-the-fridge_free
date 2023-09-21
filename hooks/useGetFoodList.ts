@@ -12,12 +12,14 @@ export const useGetFoodList = () => {
   const { currentFilter } = useSelector((state) => state.currentFilter);
 
   const orderExpirationDate = (list: Food[]) => {
-    const sortedList = list?.sort(
+    const copiedList = list ? [...list] : [];
+
+    const sortedList = copiedList.sort(
       (food1, food2) =>
         new Date(food1.expiredDate).getTime() -
         new Date(food2.expiredDate).getTime()
     );
-    return sortedList || list;
+    return sortedList || [];
   };
 
   const allExpiredFoods = (type?: 'fridge' | 'pantry') => {
@@ -29,7 +31,7 @@ export const useGetFoodList = () => {
     );
     if (type === 'fridge') return orderExpirationDate(expiredFridgeFoods);
     if (type === 'pantry') return orderExpirationDate(expiredPantryFoods);
-    return [...expiredFridgeFoods, ...expiredPantryFoods];
+    return orderExpirationDate([...expiredFridgeFoods, ...expiredPantryFoods]);
   };
 
   const matchFoodSpace = (
@@ -63,7 +65,7 @@ export const useGetFoodList = () => {
 
   // Table 필터의 개수를 나타내주는 함수이기도 하다.
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
-    if (filter === '전체') return foodList;
+    if (filter === '전체') return orderExpirationDate(foodList);
 
     if (filter === '냉동실' || filter === '냉장실' || filter === '팬트리')
       return getFoodList('expiredFoods', filter);

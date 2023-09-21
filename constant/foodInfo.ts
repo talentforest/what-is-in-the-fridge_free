@@ -12,6 +12,8 @@ export interface Food {
   purchaseDate: string;
   expiredDate: string;
   compartmentNum?: CompartmentNum;
+  quantity: string;
+  memo: string;
 }
 
 export const initialFood: Food = {
@@ -19,16 +21,20 @@ export const initialFood: Food = {
   name: '',
   category: '신선식품류',
   purchaseDate: '',
-  expiredDate: getFormattedDate(new Date()),
+  expiredDate: getFormattedDate(new Date(), 'YYYY-MM-DD'),
   space: '냉장실 안쪽',
   compartmentNum: '1번',
+  quantity: '',
+  memo: '',
 };
 
 export const initialPantryFood: Food = {
   id: 'pantryFood_initial',
   category: '간식류',
   name: '',
-  expiredDate: getFormattedDate(new Date()),
+  expiredDate: getFormattedDate(new Date(), 'YYYY-MM-DD'),
   purchaseDate: '',
   space: '팬트리',
+  quantity: '',
+  memo: '',
 };

@@ -10,12 +10,12 @@ import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import UUIDGenerator from 'react-native-uuid';
 
 interface Props {
-  initialFoodInfo: Food;
+  initialFood: Food;
   foodLocation?: FoodLocation;
 }
 
-export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
-  const [newFood, setNewFood] = useState<Food>(initialFoodInfo);
+export const useAddFood = ({ initialFood, foodLocation }: Props) => {
+  const [newFood, setNewFood] = useState<Food>(initialFood);
 
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
@@ -69,6 +69,7 @@ export const useAddFood = ({ initialFoodInfo, foodLocation }: Props) => {
         : addToPantry(foodToAdd)
     );
     setModalVisible(false);
+    setNewFood(initialFood);
   };
 
   return {

@@ -4,13 +4,13 @@ import { Text, TouchableOpacity } from '../common/native-component';
 import { Category } from '../../constant/foodCategories';
 import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import { useFindFood } from '../../hooks';
+import { ModalTitle } from '../modal/Modal';
 
 import CategoryModal from '../../screen-component/modal/CategoryModal';
 import FormLabel from './FormLabel';
 import CategoryImageIcon from '../common/CategoryImageIcon';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
-import { ModalTitle } from '../modal/Modal';
 
 interface Props {
   name: string;
@@ -38,7 +38,7 @@ export default function CategoryItem({
     setCategoryOpen(false);
   };
 
-  const activeColor = 'border-blue-200 text-slate-900';
+  const activeColor = 'border-slate-300 text-slate-900';
   const inActiveColor = 'border-slate-300 text-slate-400';
   const color = disabledCategory ? inActiveColor : activeColor;
   const iconColor = disabledCategory ? LIGHT_GRAY : BLUE;

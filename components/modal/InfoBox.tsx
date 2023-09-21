@@ -21,14 +21,14 @@ export default function InfoBox({ label, iconName, children }: Props) {
       }`}
     >
       {/* 표 제목 */}
-      <View style={tw`flex-row gap-1 mr-1 items-center`}>
+      <View style={tw`flex-row gap-1 mr-1 items-center w-22`}>
         <Icon
           type='MaterialCommunityIcons'
           name={iconName}
           size={16}
           color={GRAY}
         />
-        <Text style={tw`text-slate-500 text-base`}>{label} :</Text>
+        <Text style={tw`text-slate-500 text-[15px]`}>{label} :</Text>
       </View>
 
       {/* 표 내용 */}

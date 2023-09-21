@@ -7,10 +7,12 @@ export const initialState: { fridgeFoods: Food[] } = {
       id: 'fridge1',
       name: '사과',
       category: '신선식품류',
-      purchaseDate: '2023-12-31',
+      purchaseDate: '2023-10-31',
       expiredDate: '2023-12-20',
       space: '냉장실 안쪽',
       compartmentNum: '1번',
+      quantity: '6',
+      memo: '',
     },
     {
       id: 'freezer1',
@@ -20,6 +22,8 @@ export const initialState: { fridgeFoods: Food[] } = {
       expiredDate: '2022-12-20',
       space: '냉동실 안쪽',
       compartmentNum: '1번',
+      quantity: '',
+      memo: '',
     },
   ],
 };
