@@ -8,7 +8,6 @@ import {
   useHandleFilter,
 } from '../hooks/';
 import { useEffect } from 'react';
-import { View } from 'react-native';
 
 import Container from '../components/common/Container';
 import TableContainer from '../components/table/TableContainer';
@@ -16,7 +15,6 @@ import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
-import tw from 'twrnc';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -30,12 +28,11 @@ export default function ExpiredFoods() {
     onCheckBoxPress, //
   } = useHandleCheckList();
 
-  const { onDeleteExpiredFoodPress } = useHandleTableItem({
-    checkedList,
-    setCheckedList,
-  });
-
-  const filteredList = getFilteredFoodList(currentFilter, allExpiredFoods());
+  const { onDeleteExpiredFoodPress, onAddShoppingListBtnPress } =
+    useHandleTableItem({
+      checkedList,
+      setCheckedList,
+    });
 
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
@@ -44,6 +41,7 @@ export default function ExpiredFoods() {
     initializeFilter();
   }, []);
 
+  const filteredList = getFilteredFoodList(currentFilter, allExpiredFoods());
   const allChecked = checkedList.length === filteredList.length;
 
   return (
@@ -72,6 +70,11 @@ export default function ExpiredFoods() {
             entireChecked={allChecked && !!checkedList.length}
             onEntirePress={() => onEntireBoxPress(filteredList)}
           >
+            <SquareIconBtn
+              icon='basket-plus'
+              disabled={checkedList.length === 0}
+              onPress={onAddShoppingListBtnPress}
+            />
             <SquareIconBtn
               onPress={() =>
                 onDeleteExpiredFoodPress(setAnimationState, animationState)

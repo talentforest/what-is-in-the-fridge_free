@@ -6,7 +6,7 @@ import {
   setShoppingList,
 } from '../redux/slice/shoppingListSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { setAllFridgeFoods } from '../redux/slice/fridgeFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import { AnimationState } from './animation/useSetAnimationState';
@@ -16,6 +16,7 @@ import {
   alertPhraseWithCheckList,
   alertPhraseWithFood,
 } from '../constant/alertPhrase';
+import { NavigateProp } from '../navigation/Navigation';
 
 interface Props {
   checkedList: Food[];
@@ -31,6 +32,7 @@ export const useHandleTableItem = ({
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
 
+  const navigation = useNavigation<NavigateProp>();
   const dispatch = useDispatch();
   const route = useRoute();
 
@@ -126,10 +128,12 @@ export const useHandleTableItem = ({
     const { title, msg } = addToShoppingList;
     if (setCheckedList) {
       return Alert.alert(title, msg, [
+        { text: '취소', style: 'destructive' },
         {
           text: '확인',
           onPress: () => {
             setCheckedList([]);
+            navigation.navigate('ShoppingList');
           },
           style: 'default',
         },

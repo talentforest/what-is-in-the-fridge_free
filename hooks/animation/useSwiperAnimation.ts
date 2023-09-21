@@ -3,7 +3,6 @@ import { Animated, PanResponder } from 'react-native';
 import { OnboardingStep } from '../../constant/onboardingInfo';
 import { FormStep } from '../../constant/formInfo';
 import { DEVICE_WIDTH } from '../../util';
-import { useRoute } from '@react-navigation/native';
 
 const DRAG_DISTANCE = 60;
 
@@ -12,14 +11,14 @@ interface Props {
 }
 
 export const useSwiperAnimation = ({ steps }: Props) => {
-  const [currentStep, setCurrentStep] = useState(steps[0]);
+  const [currentStep, setCurrentStep] = useState<OnboardingStep | FormStep>(
+    steps[0]
+  );
 
   const currentStepRef = useRef(steps[0]);
   const stepTranslateX = useRef(new Animated.Value(0)).current;
 
-  const route = useRoute();
-  const formWidth =
-    route.name === 'PantryFoods' ? -DEVICE_WIDTH + 32 : -DEVICE_WIDTH;
+  const formWidth = -DEVICE_WIDTH;
 
   useEffect(() => {
     currentStepRef.current = currentStep;
