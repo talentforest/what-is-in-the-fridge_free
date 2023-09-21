@@ -2,6 +2,7 @@ import { FlatList, View } from 'react-native';
 import { Text } from '../common/native-component';
 import { useSelector } from '../../redux/hook';
 import { Food } from '../../constant/foodInfo';
+import { foodCategories } from '../../constant/foodCategories';
 import { AnimationState, useGetFoodList } from '../../hooks';
 
 import TableItem from './TableItem';
@@ -26,7 +27,6 @@ export default function TableCategorizedBody({
   const { currentFilter } = useSelector((state) => state.currentFilter);
 
   const {
-    getExistCategoryList,
     getFilteredSortByCategoryList,
     getFilteredFoodList,
     orderExpirationDate,
@@ -43,13 +43,16 @@ export default function TableCategorizedBody({
             keyExtractor={(item) => item}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={tw`pb-25`}
-            data={getExistCategoryList()}
+            data={foodCategories.map(({ category }) => category)}
             renderItem={({ item }) =>
               getFilteredSortByCategoryList(item).length ? (
                 <View style={tw`mb-4`}>
-                  <View style={tw`flex-row items-center gap-1 ml-2 mb-1`}>
+                  <View style={tw`flex-row items-center mx-2 gap-1 mb-1`}>
                     <CategoryImageIcon kind='icon' size={15} category={item} />
                     <Text style={tw`text-sm text-slate-600`}>{item}</Text>
+                    <Text style={tw`text-sm text-slate-600`}>
+                      {getFilteredSortByCategoryList(item).length}
+                    </Text>
                   </View>
                   <FlatList
                     keyExtractor={(item) => item.id}

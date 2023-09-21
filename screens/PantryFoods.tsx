@@ -13,7 +13,7 @@ import { select } from '../redux/slice/selectedFoodSlice';
 
 import Container from '../components/common/Container';
 import TableFilters from '../components/table/TableFilters';
-import FoodBox from '../screen-component/compartments/FoodBox';
+import FoodBox from '../components/common/FoodBox';
 import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
 import CompartmentContainer from '../components/compartment/CompartmentContainer';
 import CompartmentBox from '../components/compartment/CompartmentBox';

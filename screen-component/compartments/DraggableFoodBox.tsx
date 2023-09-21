@@ -11,7 +11,7 @@ import { select } from '../../redux/slice/selectedFoodSlice';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleDragMode } from '../../redux/slice/dragModeSlice';
 
-import FoodBox from './FoodBox';
+import FoodBox from '../../components/common/FoodBox';
 
 interface Props {
   food: Food;

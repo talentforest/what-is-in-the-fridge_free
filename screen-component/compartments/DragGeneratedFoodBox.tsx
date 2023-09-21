@@ -1,6 +1,6 @@
 import { Animated, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
-import FoodBox from './FoodBox';
+import FoodBox from '../../components/common/FoodBox';
 import tw from 'twrnc';
 
 interface Props {
