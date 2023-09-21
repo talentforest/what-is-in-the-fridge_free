@@ -14,7 +14,7 @@ import { DEVICE_HEIGHT } from '../../util';
 import EmptySign from '../../components/common/EmptySign';
 import Modal from '../../components/modal/Modal';
 import Icon from '../../components/common/native-component/Icon';
-import FoodBox from '../compartments/FoodBox';
+import FoodBox from '../../components/common/FoodBox';
 import FoodDetailModal from './FoodDetailModal';
 import tw from 'twrnc';
 

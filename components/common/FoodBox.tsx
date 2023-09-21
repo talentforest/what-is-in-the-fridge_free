@@ -1,15 +1,15 @@
 import { View } from 'react-native';
-import { Text } from '../../components/common/native-component';
+import { Text } from './native-component';
 import { cutLetter, expired, leftThreeDays } from '../../util';
 import { Food } from '../../constant/foodInfo';
 import {
   INACTIVE_COLOR as DEFAULT_COLOR,
   EXPIRED_COLOR,
   LEFT_3_DAYS_COLOR,
-} from '../../components/common/FilterTag';
+} from './FilterTag';
 import { useSelector } from '../../redux/hook';
 
-import Icon from '../../components/common/native-component/Icon';
+import Icon from './native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
