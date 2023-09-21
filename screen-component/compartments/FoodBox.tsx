@@ -8,6 +8,8 @@ import {
   LEFT_3_DAYS_COLOR,
 } from '../../components/common/FilterTag';
 import { useSelector } from '../../redux/hook';
+
+import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
@@ -30,11 +32,28 @@ export default function FoodBox({ food }: Props) {
 
   return (
     <View
-      key={food.id}
-      style={tw`${activeColor()} rounded-lg justify-center items-center flex-row border h-8 px-2.5`}
+      style={tw.style(
+        `${activeColor()} rounded-lg justify-center items-center flex-row border h-8 
+        ${expired(expiredDate) ? 'pr-2.5 pl-1.5' : 'px-2.5'}`,
+        {
+          shadowColor: '#333',
+          shadowOffset: { height: 1, width: 0 },
+          shadowOpacity: 0.3,
+          shadowRadius: 2,
+        }
+      )}
     >
+      {expired(expiredDate) && (
+        <Icon
+          name='exclamation-thick'
+          type='MaterialCommunityIcons'
+          color='red'
+          size={16}
+        />
+      )}
+
       <Text style={tw`text-center ${activeColor()}`}>
-        {cutLetter(food.name, 7)}
+        {cutLetter(food.name, 10)}
       </Text>
     </View>
   );

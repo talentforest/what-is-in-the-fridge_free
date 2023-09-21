@@ -1,25 +1,18 @@
-import { Animated, ScrollView, View } from 'react-native';
+import { Animated } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Food } from '../../constant/foodInfo';
-import {
-  Text,
-  TouchableOpacity,
-} from '../../components/common/native-component';
 import { FoodLocation } from '../../constant/fridgeInfo';
-import { BLUE, GRAY, LIGHT_GRAY } from '../../constant/colors';
-import { useGetFoodList, useOpacityAnimation } from '../../hooks';
-import { formTwoSteps } from '../../constant/formInfo';
+import { useGetFoodList } from '../../hooks';
+import { formThreeSteps } from '../../constant/formInfo';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleDragMode } from '../../redux/slice/dragModeSlice';
 
 import FoodDetailModal from '../modal/FoodDetailModal';
 import ExpandedCompartmentModal from '../modal/ExpandedCompartmentModal';
-import AddFoodBtn from '../../components/buttons/AddFoodBtn';
 import DraggableFoodBox from './DraggableFoodBox';
-import Icon from '../../components/common/native-component/Icon';
-import EmptySign from '../../components/common/EmptySign';
 import DragGeneratedFoodBox from './DragGeneratedFoodBox';
-import tw from 'twrnc';
+import CompartmentBox from '../../components/compartment/CompartmentBox';
+import AddFoodModal from '../modal/AddFoodModal';
 
 interface Props {
   foodLocation: FoodLocation;
@@ -40,8 +33,9 @@ export default function Compartment({
   );
 
   const [isDragging, setIsDragging] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
   const [expandCompartment, setExpandCompartment] = useState(false);
+  const [openFoodDetailModal, setOpenFoodDetailModal] = useState(false);
+  const [openAddFoodModal, setOpenAddFoodModal] = useState(false);
 
   const { getFoodList } = useGetFoodList();
   const compartmentFoodList = getFoodList('fridgeFoods', space, compartmentNum);
@@ -56,96 +50,29 @@ export default function Compartment({
     }
   }, []);
 
-  const { bgOpacity } = useOpacityAnimation({
-    initialValue: 0,
-    active: compartmentNumToDrop === compartmentNum,
-  });
-
   return (
     <>
-      <View
-        style={tw`flex-1 border border-slate-300 rounded-lg ${
-          dragMode ? 'bg-amber-50' : 'bg-stone-50'
-        } `}
+      <CompartmentBox
+        title={`${compartmentNum}칸`}
+        foodList={getFoodList('fridgeFoods', space, compartmentNum)}
+        spaceTotalLength={foodLengthBySpace}
+        scrollEnabled={!dragMode && !isDragging}
+        bgToDrop={compartmentNumToDrop === compartmentNum && dragMode}
+        compartmentNumToDrop={compartmentNumToDrop}
+        setExpandCompartment={setExpandCompartment}
+        setOpenAddFoodModal={setOpenAddFoodModal}
       >
-        {/* 칸 정보 */}
-        <View style={tw`flex-row justify-between items-center pl-2.5 h-7.5`}>
-          <TouchableOpacity
-            disabled={!compartmentFoodList.length}
-            onPress={() => setExpandCompartment(true)}
-            style={tw`flex-row items-center gap-1`}
-          >
-            <Icon
-              name='arrow-expand-all'
-              type='MaterialCommunityIcons'
-              size={14}
-              color={compartmentFoodList.length ? BLUE : LIGHT_GRAY}
-            />
-            <Text
-              style={tw`${
-                compartmentFoodList.length ? 'text-blue-600' : 'text-slate-500'
-              } text-[15px]`}
-            >
-              {compartmentNum}칸 | 식료품 총{' '}
-              {getFoodList('fridgeFoods', space, compartmentNum).length}개
-            </Text>
-          </TouchableOpacity>
-          <AddFoodBtn
-            foodLocation={foodLocation}
-            foodLengthBySpace={foodLengthBySpace}
+        {compartmentFoodList.map((food: Food) => (
+          <DraggableFoodBox
+            key={food.id}
+            food={food}
+            setIsDragging={setIsDragging}
+            setModalVisible={setOpenFoodDetailModal}
+            dragPosition={dragPosition}
+            searchedName={searchedName}
           />
-        </View>
-
-        {/* 식료품 리스트 */}
-        {!!compartmentFoodList.length ? (
-          <ScrollView
-            disableScrollViewPanResponder
-            scrollEnabled={!dragMode && !isDragging}
-            style={tw`px-1 flex-1`}
-            contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-2 flex-wrap gap-1.3 items-center`}
-            showsVerticalScrollIndicator={false}
-          >
-            {compartmentFoodList.map((food: Food) => (
-              <DraggableFoodBox
-                key={food.id}
-                food={food}
-                setIsDragging={setIsDragging}
-                setModalVisible={setModalVisible}
-                dragPosition={dragPosition}
-                searchedName={searchedName}
-              />
-            ))}
-          </ScrollView>
-        ) : (
-          <View style={tw`flex-1 flex-row items-center pb-5 justify-center`}>
-            <EmptySign message='식료품이 아직 없어요.' />
-          </View>
-        )}
-
-        {/* 이동시키는 칸 표시 생성 */}
-        {compartmentNumToDrop === compartmentNum && dragMode && (
-          <Animated.View
-            style={{
-              opacity: bgOpacity,
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-            }}
-          >
-            <View
-              style={tw`gap-2 border bg-amber-100 border-amber-400 rounded-lg items-center flex-1 justify-center`}
-            >
-              <Icon
-                type='MaterialCommunityIcons'
-                name='inbox-arrow-down'
-                size={30}
-                color={GRAY}
-              />
-              <Text>{compartmentNum}칸으로 이동</Text>
-            </View>
-          </Animated.View>
-        )}
-      </View>
+        ))}
+      </CompartmentBox>
 
       {/* 드래깅 시 생성되는 음식박스 */}
       {isDragging && dragMode && (
@@ -158,16 +85,25 @@ export default function Compartment({
           foodList={compartmentFoodList}
           expandCompartment={expandCompartment}
           setExpandCompartment={setExpandCompartment}
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
+          modalVisible={openFoodDetailModal}
+          setModalVisible={setOpenFoodDetailModal}
         />
       )}
 
-      {!expandCompartment && modalVisible && (
+      {!expandCompartment && openFoodDetailModal && (
         <FoodDetailModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          formSteps={formTwoSteps}
+          modalVisible={openFoodDetailModal}
+          setModalVisible={setOpenFoodDetailModal}
+          formSteps={formThreeSteps}
+        />
+      )}
+
+      {openAddFoodModal && (
+        <AddFoodModal
+          modalVisible={openAddFoodModal}
+          setModalVisible={setOpenAddFoodModal}
+          formSteps={formThreeSteps}
+          foodLocation={foodLocation}
         />
       )}
     </>
