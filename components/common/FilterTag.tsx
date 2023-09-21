@@ -7,7 +7,7 @@ import { useHandleFilter } from '../../hooks';
 import Icon from './native-component/Icon';
 import tw from 'twrnc';
 
-export const INACTIVE_COLOR = 'border-slate-200 text-slate-600';
+export const INACTIVE_COLOR = 'bg-white border-slate-200 text-slate-600';
 export const DEFAULT_COLOR = 'bg-blue-100 border-blue-200 text-blue-600';
 export const EXPIRED_COLOR = 'bg-red-50 border-red-200 text-red-600';
 export const LEFT_3_DAYS_COLOR = 'bg-amber-50 border-amber-200 text-amber-600';

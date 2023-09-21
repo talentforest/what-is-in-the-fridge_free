@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { CompartmentNum } from '../../constant/fridgeInfo';
-import { formTwoSteps } from '../../constant/formInfo';
+import { formThreeSteps } from '../../constant/formInfo';
 import { select } from '../../redux/slice/selectedFoodSlice';
 import { useDispatch } from '../../redux/hook';
 import { shadowStyle } from '../compartments/DraggableFoodBox';
+import { DEVICE_HEIGHT } from '../../util';
 
 import EmptySign from '../../components/common/EmptySign';
 import Modal from '../../components/modal/Modal';
@@ -17,7 +18,6 @@ import Icon from '../../components/common/native-component/Icon';
 import FoodBox from '../compartments/FoodBox';
 import FoodDetailModal from './FoodDetailModal';
 import tw from 'twrnc';
-import { DEVICE_HEIGHT } from '../../util';
 
 interface Props {
   compartmentNum: CompartmentNum;
@@ -86,7 +86,7 @@ export default function ExpandedCompartmentModal({
         <FoodDetailModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          formSteps={formTwoSteps}
+          formSteps={formThreeSteps}
         />
       )}
     </Modal>

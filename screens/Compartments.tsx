@@ -1,4 +1,4 @@
-import { TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from '../redux/hook';
@@ -8,13 +8,13 @@ import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/common/native-component';
 import { useGetFoodList } from '../hooks';
 import { changeFilter } from '../redux/slice/filterSlice';
-import { FRIDGE_COLOR } from '../screen-component/my-fridge/FridgeShape';
+import { toggleDragMode } from '../redux/slice/dragModeSlice';
 
 import Compartment from '../screen-component/compartments/Compartment';
 import Container from '../components/common/Container';
+import CompartmentContainer from '../components/compartment/CompartmentContainer';
 import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
-import { toggleDragMode } from '../redux/slice/dragModeSlice';
 
 type RouteParams = {
   space: Space;
@@ -62,9 +62,7 @@ export default function Compartments({ route }: Route) {
             foodList={getFoodList('fridgeFoods', space)}
           />
 
-          <View
-            style={tw`${FRIDGE_COLOR} shadow-xl p-2.5 gap-2.5 flex-1 border border-slate-300 w-full m-auto self-center justify-center rounded-lg`}
-          >
+          <CompartmentContainer>
             {compartments.map((compartment) => (
               <Compartment
                 key={compartment.compartmentNum}
@@ -73,7 +71,7 @@ export default function Compartments({ route }: Route) {
                 foodLengthBySpace={getFoodList('fridgeFoods', space).length}
               />
             ))}
-          </View>
+          </CompartmentContainer>
         </Container>
       </SafeBottomAreaView>
     </TouchableWithoutFeedback>
