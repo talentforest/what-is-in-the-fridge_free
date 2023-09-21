@@ -9,21 +9,17 @@ interface Props {
   label: FormLabelType;
   option?: boolean;
   isOpen?: boolean;
-  onPress?: () => void;
 }
 
-export default function FormLabel({ label, option, isOpen, onPress }: Props) {
+export default function FormLabel({ label, option, isOpen }: Props) {
   return (
     <View style={tw`flex-row items-center gap-1 justify-between mb-1`}>
       <View style={tw`flex-row items-center gap-1 mb-0.5`}>
         <Text style={tw`text-blue-600 text-sm`}>{label}</Text>
       </View>
 
-      {option && onPress && (
-        <TouchableOpacity
-          onPress={onPress}
-          style={tw`gap-0.5 rounded-full flex-row items-center`}
-        >
+      {option && (
+        <View style={tw`gap-0.5 rounded-full flex-row items-center`}>
           <Icon
             name={isOpen ? 'chevron-up' : 'add'}
             type='Ionicons'
@@ -37,7 +33,7 @@ export default function FormLabel({ label, option, isOpen, onPress }: Props) {
           >
             {isOpen ? '생략하기' : '추가하기'}
           </Text>
-        </TouchableOpacity>
+        </View>
       )}
     </View>
   );

@@ -21,6 +21,7 @@ export const useAddFood = ({ initialFood, foodLocation }: Props) => {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
   const { isFavorite } = useSelector((state) => state.isFavorite);
+  const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
 
   const dispatch = useDispatch();
   const myUuid = UUIDGenerator.v4();
@@ -29,13 +30,14 @@ export const useAddFood = ({ initialFood, foodLocation }: Props) => {
     setNewFood({ ...newFood, ...info });
 
   const onAddSubmit = (setModalVisible: (visible: boolean) => void) => {
-    const { name, category, expiredDate, purchaseDate } = newFood;
+    const { name, category, expiredDate, purchaseDate, memo } = newFood;
 
-    const { noName, wrongDate } = alertPhrase;
-    const foodList = foodLocation ? fridgeFoods : pantryFoods;
-    const existFood = foodList.find((food) => food.name === name);
+    const { noName, wrongDate, noMemo } = alertPhrase;
 
     if (name === '') return Alert.alert(noName.title, noName.msg);
+
+    const foodList = foodLocation ? fridgeFoods : pantryFoods;
+    const existFood = foodList.find((food) => food.name === name);
 
     if (existFood) {
       const { exist, existInList } = alertPhraseWithFood(existFood);
@@ -45,6 +47,10 @@ export const useAddFood = ({ initialFood, foodLocation }: Props) => {
 
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
       return Alert.alert(wrongDate.title, wrongDate.msg);
+    }
+
+    if (isMemoOpen && memo === '') {
+      return Alert.alert(noMemo.title, noMemo.msg);
     }
 
     const isFavoriteItem = favoriteFoods.find((food) => food.name === name);

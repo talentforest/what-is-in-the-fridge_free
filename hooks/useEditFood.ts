@@ -11,6 +11,7 @@ export const useEditFood = ({ food }: { food: Food }) => {
   const [editedFood, setEditedFood] = useState(food);
   const [editing, setEditing] = useState(false);
   const { isFavorite } = useSelector((state) => state.isFavorite);
+  const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
 
   const dispatch = useDispatch();
 
@@ -19,10 +20,15 @@ export const useEditFood = ({ food }: { food: Food }) => {
   };
 
   const onEditSumbit = (foodId: string) => {
-    const { expiredDate, purchaseDate } = editedFood;
-    const { wrongDate } = alertPhrase;
+    const { expiredDate, purchaseDate, memo } = editedFood;
+
+    const { wrongDate, noMemo } = alertPhrase;
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
       return Alert.alert(wrongDate.title, wrongDate.msg);
+    }
+
+    if (isMemoOpen && memo === '') {
+      return Alert.alert(noMemo.title, noMemo.msg);
     }
 
     dispatch(isFavorite ? addFavorite(editedFood) : removeFavorite(editedFood));

@@ -1,7 +1,9 @@
 import { Animated, View } from 'react-native';
-import { useEffect, useState } from 'react';
-import { TextInput } from '../common/native-component';
+import { useEffect } from 'react';
+import { TextInput, TouchableOpacity } from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { toggleMemoOpen } from '../../redux/slice/isMemoOpenSlice';
 import FormLabel from './FormLabel';
 import tw from 'twrnc';
 
@@ -11,7 +13,9 @@ interface Props {
 }
 
 export default function MemoItem({ memo, changeInfo }: Props) {
-  const [isMemoOpen, setIsMemoOpen] = useState(false);
+  const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
+
+  const dispatch = useDispatch();
 
   const { height } = useSlideAnimation({
     initialValue: 0,
@@ -21,50 +25,49 @@ export default function MemoItem({ memo, changeInfo }: Props) {
 
   useEffect(() => {
     if (memo !== '') {
-      setIsMemoOpen(true);
+      dispatch(toggleMemoOpen(true));
     }
   }, []);
 
-  const onChangeText = (value: string) => {
-    changeInfo({ memo: value });
-  };
+  const onChangeText = (value: string) => changeInfo({ memo: value });
 
   const onPress = () => {
-    setIsMemoOpen((prev) => !prev);
+    dispatch(toggleMemoOpen(!isMemoOpen));
+
     if (!isMemoOpen) {
-      return changeInfo({ memo });
-    }
-    if (isMemoOpen) {
-      return changeInfo({ memo: '' });
+      changeInfo({ memo: '' });
     }
   };
 
   return (
-    <View style={tw`-mb-1`}>
-      <FormLabel label='메모' option isOpen={isMemoOpen} onPress={onPress} />
+    <View>
+      <TouchableOpacity onPress={onPress}>
+        <FormLabel label='메모' option isOpen={isMemoOpen} />
+      </TouchableOpacity>
 
       <Animated.View
         style={{
           height,
           overflow: 'hidden',
           marginHorizontal: -4,
-          marginBottom: -6,
         }}
       >
         <View style={tw`flex-row items-center gap-1 px-1`}>
           <View
             style={tw.style(
-              `h-16 py-1.5 flex-1 bg-white border border-slate-300 shadow-md flex-row items-center rounded-lg`,
-              { lineHeight: 30 }
+              `h-18 p-0.5 flex-1 bg-white border border-slate-300 shadow-md flex-row items-center rounded-lg`
             )}
           >
             <TextInput
-              style={tw`bg-white border-0 m-0.5 h-full flex-1 rounded-lg`}
+              style={tw.style(`bg-white border-0 h-full  flex-1 rounded-lg`, {
+                lineHeight: 22,
+              })}
               onChangeText={onChangeText}
               value={memo}
               placeholder='식료품에 대한 메모를 작성해주세요'
               multiline
               returnKeyType='done'
+              blurOnSubmit={true}
             />
           </View>
         </View>
