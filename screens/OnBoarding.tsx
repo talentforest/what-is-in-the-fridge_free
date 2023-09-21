@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from '../redux/hook';
 import { toggleOnboarding } from '../redux/slice/onboardingSlice';
 import { DEVICE_WIDTH } from '../util';
 
-import StepIndicator from '../components/form/StepIndicator';
+import StepIndicator from '../components/common/StepIndicator';
 import OnBoardingBtn from '../components/buttons/OnBoardingBtn';
 import tw from 'twrnc';
 

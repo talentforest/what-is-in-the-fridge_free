@@ -2,6 +2,7 @@ import {
   BLUE,
   DEEP_YELLOW,
   GRAY,
+  GREEN,
   INDIGO,
   ORANGE_RED,
   RED,
@@ -38,6 +39,8 @@ export default function Icon({
       ? GRAY
       : color === 'red'
       ? RED
+      : color === 'green'
+      ? GREEN
       : color;
 
   return (

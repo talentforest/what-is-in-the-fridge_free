@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
-import { DEVICE_HEIGHT, findMatchNameFoods } from '../../util';
+import { findMatchNameFoods } from '../../util';
 import { useSelector } from '../../redux/hook';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Food } from '../../constant/foodInfo';
