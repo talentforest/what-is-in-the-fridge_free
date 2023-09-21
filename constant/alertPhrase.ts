@@ -1,7 +1,7 @@
 import { Food } from './foodInfo';
 import { CompartmentNum } from './fridgeInfo';
 
-type PhraseObjKey = 'excess' | 'noName' | 'wrongDate';
+type PhraseObjKey = 'excess' | 'noName' | 'wrongDate' | 'noMemo';
 
 type PhraseFnKey = 'exist' | 'existInList' | 'successAdd' | 'deleteExistFood';
 
@@ -32,12 +32,16 @@ export const alertPhrase: AlertPhraseObj = {
     msg: '공간당 최대 15개의 식료품을 넣을 수 있습니다.',
   },
   noName: {
-    title: '식료품 이름 미작성',
+    title: '식료품 이름 작성 안내',
     msg: '식료품의 이름이 작성되지 않았어요.',
   },
   wrongDate: {
     title: '날짜 수정 알림',
     msg: '유통기한이 구매일보다 이전일 수 없어요.',
+  },
+  noMemo: {
+    title: '메모 작성 안내',
+    msg: '메모가 작성되지 않았어요.',
   },
 };
 

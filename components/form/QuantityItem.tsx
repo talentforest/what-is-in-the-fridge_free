@@ -18,7 +18,7 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 52,
+    toValue: 49,
     active: isQuanityOpen,
   });
 
@@ -44,15 +44,15 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
   };
 
   return (
-    <View style={tw`-mb-1`}>
-      <FormLabel label='수량' option isOpen={isQuanityOpen} onPress={onPress} />
-
+    <View>
+      <TouchableOpacity onPress={onPress}>
+        <FormLabel label='수량' option isOpen={isQuanityOpen} />
+      </TouchableOpacity>
       <Animated.View
         style={{
           height,
           overflow: 'hidden',
           marginHorizontal: -4,
-          marginBottom: -6,
         }}
       >
         <View style={tw`flex-row items-center gap-1 px-1`}>

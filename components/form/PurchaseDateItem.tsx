@@ -59,20 +59,16 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
   };
 
   return (
-    <View style={tw`-mb-1`}>
-      <FormLabel
-        label='구매날짜'
-        option
-        isOpen={purchaseOpen}
-        onPress={onPress}
-      />
+    <View>
+      <TouchableOpacity onPress={onPress}>
+        <FormLabel label='구매날짜' option isOpen={purchaseOpen} />
+      </TouchableOpacity>
 
       <Animated.View
         style={{
           height,
           overflow: 'hidden',
           marginHorizontal: -4,
-          marginBottom: -6,
         }}
       >
         <TouchableOpacity

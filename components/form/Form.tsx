@@ -91,7 +91,7 @@ export default function Form({
                     </FormSectionContainer>
                   )}
                   {name === '추가정보(선택)' && (
-                    <FormSectionContainer>
+                    <View style={tw`w-full gap-3 py-2 px-6`}>
                       <PurchaseDateItem
                         date={food.purchaseDate}
                         changeInfo={changeInfo}
@@ -101,7 +101,7 @@ export default function Form({
                         changeInfo={changeInfo}
                       />
                       <MemoItem memo={food.memo} changeInfo={changeInfo} />
-                    </FormSectionContainer>
+                    </View>
                   )}
                 </View>
               ))}
