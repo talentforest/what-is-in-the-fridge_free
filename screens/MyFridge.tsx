@@ -34,7 +34,7 @@ export default function MyFridge() {
   return (
     <Container>
       <View style={tw`flex-1 gap-${gap} items-center w-full h-full`}>
-        <View style={tw`w-full `}>
+        <View style={tw`w-full`}>
           <Pressable onPressOut={() => setModalVisible(true)}>
             <TextInput
               editable={false}
@@ -49,7 +49,7 @@ export default function MyFridge() {
         </View>
 
         <View style={tw`flex-1 items-center justify-center`}>
-          <View style={tw`max-h-[540px] flex-1 p-1 pb-3`}>
+          <View style={tw`max-h-[510px] flex-1 p-1 pb-3`}>
             <Fridge />
           </View>
         </View>

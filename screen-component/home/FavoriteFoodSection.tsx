@@ -1,23 +1,24 @@
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
-import {
-  Text,
-  TouchableOpacity,
-} from '../../components/common/native-component';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
 
 import SectionContainer from './SectionContainer';
-import Icon from '../../components/common/native-component/Icon';
 import FoodCard from '../../components/common/FoodCard';
 import EmptySign from '../../components/common/EmptySign';
 import tw from 'twrnc';
+import {
+  Text,
+  TouchableOpacity,
+} from '../../components/common/native-component';
+import Icon from '../../components/common/native-component/Icon';
+import { DEVICE_WIDTH } from '../../util';
 
 interface Props {
   foodList: Food[];
 }
 
-const MAX_NUM = 5;
+const MAX_NUM = 8;
 
 export default function FavoriteFoodSection({ foodList }: Props) {
   const navigation = useNavigation<NavigateProp>();
@@ -30,20 +31,17 @@ export default function FavoriteFoodSection({ foodList }: Props) {
       foodsLength={foodList.length}
     >
       {foodList.length ? (
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          style={tw`h-35 -mx-4`}
-          contentContainerStyle={tw`gap-2 px-4 py-3 pt-2`}
+        <View
+          style={tw`flex-wrap flex-row gap-y-2 gap-x-2.5 mt-2.5 -mx-1 px-1`}
         >
           {foodList.slice(0, MAX_NUM).map((food) => (
             <FoodCard key={food.id} food={food} />
           ))}
-
-          {foodList.length > MAX_NUM && (
+          {foodList.length >= MAX_NUM && (
             <TouchableOpacity
               onPress={() => navigation.navigate('FavoriteFoods')}
-              style={tw`w-15 mx-2 justify-center items-center gap-1`}
+              style={tw`w-[${DEVICE_WIDTH / 3 - 18}px] h-30
+                justify-center items-center gap-1`}
             >
               <Icon
                 name='arrow-right-circle-outline'
@@ -54,7 +52,7 @@ export default function FavoriteFoodSection({ foodList }: Props) {
               <Text style={tw`text-xs text-slate-600`}>더보기</Text>
             </TouchableOpacity>
           )}
-        </ScrollView>
+        </View>
       ) : (
         <View
           style={tw`shadow-lg items-center my-2 h-40 border border-slate-300 rounded-xl bg-white justify-center flex-1`}

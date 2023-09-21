@@ -36,7 +36,6 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
   return (
     <View style={tw`h-full p-1 py-2 bg-white rounded-lg`}>
       {/* 냉장고 공간 이름 */}
-
       <View
         style={tw`border-b border-slate-400 pb-2 mb-3 flex-row justify-between items-center gap-1`}
       >
@@ -44,9 +43,6 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
           <Icon name='caretright' type='AntDesign' size={12} color={GRAY} />
           <Text style={tw`text-slate-600`}>{space}</Text>
         </View>
-        <Text style={tw`text-slate-600 text-[15px]`}>
-          {compartmentsLength}칸
-        </Text>
       </View>
 
       {/* 냉장고 공간 정보 */}

@@ -1,13 +1,7 @@
 import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
-import { cutLetter } from '../../util';
-import {
-  BLUE,
-  DEEP_YELLOW,
-  GRAY,
-  LIGHT_BLUE,
-  LIGHT_RED,
-} from '../../constant/colors';
+import { cutLetter, expired } from '../../util';
+import { BLUE } from '../../constant/colors';
 import { Food, initialFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
 import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
@@ -35,15 +29,15 @@ export default function TableItem({
   animationState,
   afterAnimation,
 }: Props) {
-  const { findFood } = useFindFood();
   const route = useRoute();
   const shoppingListRoute = route.name === 'ShoppingList';
+  const { findFood } = useFindFood();
   const existItemTag = shoppingListRoute && findFood(food.name);
 
   const slideDownIn = animationState === 'slidedown-in';
   const slideUpOut = animationState === 'slideup-out';
 
-  const ITEM_HEIGHT = 50;
+  const ITEM_HEIGHT = 55;
   const initialValue =
     isCheckedItem && slideUpOut ? ITEM_HEIGHT : slideDownIn ? 0 : ITEM_HEIGHT;
   const toValue = isCheckedItem && slideUpOut ? 0 : ITEM_HEIGHT;
@@ -78,15 +72,22 @@ export default function TableItem({
     >
       <TouchableOpacity
         onPress={() => onCheckBoxPress(initializedFood)}
-        style={tw`shadow-md h-11 border ${
+        style={tw`shadow-md border h-[${ITEM_HEIGHT - 8}px] ${
           isCheckedItem ? 'border-blue-500' : 'border-slate-200'
         } bg-white flex-row items-center gap-1.5 px-3`}
       >
         <CheckBox checked={!!isCheckedItem} activeColor={BLUE} />
 
         <View style={tw`flex-1 flex-row items-center gap-1`}>
-          <Text style={tw`${textColor} `}>
-            {cutLetter(initializedFood.name, 15)}
+          {expired(food.expiredDate) && (
+            <Icon
+              name='exclamation-thick'
+              type='MaterialCommunityIcons'
+              color='red'
+            />
+          )}
+          <Text style={tw`${textColor}`}>
+            {cutLetter(initializedFood.name, shoppingListRoute ? 20 : 15)}
           </Text>
 
           {existItemTag && (
