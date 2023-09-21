@@ -50,7 +50,7 @@ export default function Form({
         formSteps={formSteps}
         currentStep={currentStep as FormStep}
       />
-      <View style={tw`overflow-hidden mb-3`}>
+      <View style={tw`overflow-hidden mb-3 min-h-60`}>
         <Animated.View
           style={{
             transform: [{ translateX: stepTranslateX }],

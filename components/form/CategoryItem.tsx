@@ -56,7 +56,7 @@ export default function CategoryItem({
       >
         <View style={tw`flex-row items-center gap-2`}>
           <CategoryImageIcon kind='icon' category={category} size={18} />
-          <Text style={tw`${color} border-0`}>{category}</Text>
+          <Text style={tw`${color}`}>{category}</Text>
         </View>
         <Icon
           name='unfold-more-horizontal'

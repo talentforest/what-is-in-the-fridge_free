@@ -21,7 +21,7 @@ export default function ShoppingListSection({ foodList }: Props) {
   return (
     <SectionContainer
       title='장보기 식료품'
-      message='장보기 식료품을 여기서 빠르게 확인하세요.'
+      message='장봐야하는 식료품을 간단하게 관리하세요.'
       screen='ShoppingList'
       foodsLength={foodList.length}
     >

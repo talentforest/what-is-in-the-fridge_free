@@ -32,7 +32,7 @@ export default function InfoBox({ label, iconName, children }: Props) {
       </View>
 
       {/* 표 내용 */}
-      <View>{children}</View>
+      <View style={tw`flex-1`}>{children}</View>
     </View>
   );
 }

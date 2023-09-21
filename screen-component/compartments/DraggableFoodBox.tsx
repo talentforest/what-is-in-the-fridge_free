@@ -21,13 +21,6 @@ interface Props {
   searchedName: string;
 }
 
-export const shadowStyle = {
-  shadowColor: '#333',
-  shadowOffset: { height: 1, width: 0 },
-  shadowOpacity: 0.3,
-  shadowRadius: 2,
-};
-
 export default function DraggableFoodBox({
   food,
   setIsDragging,
@@ -73,7 +66,6 @@ export default function DraggableFoodBox({
       style={{
         borderRadius: 8,
         backgroundColor: searchedFoodBox ? bgColor : '#fff',
-        ...shadowStyle,
         ...transformAnimation,
       }}
       {...(dragMode ? { ...panResponder.panHandlers } : null)}

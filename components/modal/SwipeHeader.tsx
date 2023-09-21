@@ -11,13 +11,10 @@ interface Props {
 }
 
 export default function SwipeHeader({ title, closeModal }: Props) {
-  const headerColor =
-    title === '나의 식료품 찾기' ? 'bg-blue-100' : 'bg-stone-100';
-
   return (
     <View
       style={tw.style(
-        `${headerColor} rounded-t-2xl border-b border-slate-300 px-6 py-3`
+        `bg-stone-100 rounded-t-2xl border-b border-slate-300 px-6 py-3`
       )}
     >
       <View style={tw`mb-5 bg-slate-400 w-15 self-center h-2 rounded-2xl`} />
