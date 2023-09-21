@@ -1,20 +1,17 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addToShoppingList } from '../redux/slice/shoppingListSlice';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { useSelector } from '../redux/hook';
-import { Food, initialFood } from '../constant/foodInfo';
 import { Keyboard, View } from 'react-native';
 import {
-  useFindFood,
   useHandleCheckList,
   useHandleTableItem,
   useSetAnimationState,
+  useSubmitFoodsFromInput,
 } from '../hooks';
-import { formThreeSteps } from '../constant/formInfo';
+import { formFourSteps } from '../constant/formInfo';
 
 import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
 import Container from '../components/common/Container';
@@ -24,52 +21,32 @@ import TableRecommendedFoods from '../components/table/TableRecommendedFoods';
 import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
-import UUIDGenerator from 'react-native-uuid';
-import SquareBtn from '../components/buttons/SquareIconBtn';
+import SquareIconBtn from '../components/buttons/SquareIconBtn';
 
 export default function ShoppingList() {
   const [modalVisible, setModalVisible] = useState(false);
   const [keyword, setKeyword] = useState('');
   const { shoppingList } = useSelector((state) => state.shoppingList);
 
-  const myUuid = UUIDGenerator.v4();
-  const dispatch = useDispatch();
-
-  const { findFood } = useFindFood();
-
   const { checkedList, setCheckedList, onEntireBoxPress, onCheckBoxPress } =
     useHandleCheckList();
 
-  const {
-    onDeleteFoodPress,
-    onAddToFridgePress, //
-  } = useHandleTableItem({ checkedList, setCheckedList, setModalVisible });
-
-  const submitShoppingListItem = (name: string) => {
-    const food = findFood(name)
-      ? ({
-          ...findFood(name),
-          expiredDate: initialFood.expiredDate,
-          purchaseDate: initialFood.purchaseDate,
-        } as Food)
-      : {
-          ...initialFood,
-          id: myUuid as string,
-          name: name,
-        };
-
-    dispatch(addToShoppingList(food));
-    setAnimationState('slidedown-in');
-    setKeyword('');
-  };
-
-  const onInputSubmit = () => {
-    if (keyword === '') return Keyboard.dismiss();
-    submitShoppingListItem(keyword);
-  };
+  const { onDeleteFoodPress, onAddToFridgePress } = useHandleTableItem({
+    checkedList,
+    setCheckedList,
+    setModalVisible,
+  });
 
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
+
+  const { onSubmitShoppingListItem } = useSubmitFoodsFromInput();
+
+  const onInputSubmit = () => {
+    if (keyword === '') return Keyboard.dismiss();
+    onSubmitShoppingListItem(keyword, setAnimationState);
+    setKeyword('');
+  };
 
   const allChecked = checkedList.length === shoppingList.length;
 
@@ -93,7 +70,8 @@ export default function ShoppingList() {
 
             <TableRecommendedFoods
               keyword={keyword}
-              submitShoppingListItem={submitShoppingListItem}
+              onSubmitShoppingListItem={onSubmitShoppingListItem}
+              setAnimationState={setAnimationState}
             />
 
             <View>
@@ -102,7 +80,7 @@ export default function ShoppingList() {
                 entireChecked={allChecked && !!checkedList.length}
                 onEntirePress={() => onEntireBoxPress(shoppingList)}
               >
-                <SquareBtn
+                <SquareIconBtn
                   icon='trash-can'
                   disabled={checkedList.length === 0}
                   onPress={() => {
@@ -131,7 +109,7 @@ export default function ShoppingList() {
               modalVisible={modalVisible}
               setModalVisible={setModalVisible}
               setCheckedList={setCheckedList}
-              formSteps={formThreeSteps}
+              formSteps={formFourSteps}
             />
           )}
         </Container>

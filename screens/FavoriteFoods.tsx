@@ -11,7 +11,7 @@ import {
   useSlideAnimation,
   useSetAnimationState,
   useHandleCheckList,
-  useSubmitFavoriteFoods,
+  useSubmitFoodsFromInput,
   useGetFoodList,
   useFindFood,
   useHandleFilter,
@@ -26,7 +26,7 @@ import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import CategoryModal from '../screen-component/modal/CategoryModal';
 import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
 import FormMessage from '../components/form/FormMessage';
-import SquareBtn from '../components/buttons/SquareIconBtn';
+import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import tw from 'twrnc';
 
 export default function FavoriteFoods() {
@@ -35,10 +35,10 @@ export default function FavoriteFoods() {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState<Category | ''>('');
 
-  const { isFavoriteItem } = useFindFood();
+  const { isFavoriteItem, findFood } = useFindFood();
   const { currentFilter, initializeFilter } = useHandleFilter();
   const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
-  const { onSubmitFavoriteListItem } = useSubmitFavoriteFoods();
+  const { onSubmitFavoriteListItem } = useSubmitFoodsFromInput();
 
   const {
     checkedList,
@@ -57,7 +57,7 @@ export default function FavoriteFoods() {
     useSetAnimationState();
 
   const { onAddShoppingListBtnPress, onDeleteFoodPress } = useHandleTableItem({
-    checkedList: checkedList,
+    checkedList,
     setCheckedList,
   });
 
@@ -115,7 +115,7 @@ export default function FavoriteFoods() {
               entireChecked={allChecked && !!checkedList.length}
               onEntirePress={() => onEntireBoxPress(filteredList)}
             >
-              <SquareBtn
+              <SquareIconBtn
                 icon='tag-minus'
                 disabled={checkedList.length === 0}
                 onPress={() =>
@@ -126,7 +126,7 @@ export default function FavoriteFoods() {
                   )
                 }
               />
-              <SquareBtn
+              <SquareIconBtn
                 icon='basket-plus'
                 disabled={checkedList.length === 0}
                 onPress={onAddShoppingListBtnPress}
