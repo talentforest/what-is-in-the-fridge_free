@@ -34,16 +34,14 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
     active: !!matchedFoods?.length,
   });
 
-  const editableStyle = !editable
-    ? 'border-slate-300 bg-slate-200 text-slate-600'
-    : 'bg-white border-blue-200';
+  const editableStyle = !editable ? 'bg-slate-200 text-slate-600' : 'bg-white';
 
   return (
     <View>
       <FormLabel label='식료품 이름' />
 
       <View
-        style={tw`${editableStyle} h-11 shadow-md border flex-row items-center rounded-lg`}
+        style={tw`${editableStyle} border-slate-300 h-11 shadow-md border flex-row items-center rounded-lg`}
       >
         <TextInput
           style={tw`${editableStyle} border-0 m-0.5 flex-1 rounded-lg`}

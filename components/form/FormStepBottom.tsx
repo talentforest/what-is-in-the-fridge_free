@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import ArrowBtn from '../buttons/ArrowBtn';
-import StepIndicator from './StepIndicator';
+import StepIndicator from '../common/StepIndicator';
 import tw from 'twrnc';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   stepLength: number;
 }
 
-export default function FormControlStep({
+export default function FormStepBottom({
   moveStep,
   currentStep,
   stepLength,
@@ -39,7 +39,7 @@ export default function FormControlStep({
           />
         </View>
       ) : (
-        <View style={tw`py-4`}>
+        <View style={tw`py-5`}>
           <StepIndicator
             size={2.5}
             stepLength={stepLength}

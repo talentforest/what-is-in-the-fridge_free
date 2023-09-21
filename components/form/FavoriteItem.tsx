@@ -5,19 +5,19 @@ import { Food } from '../../constant/foodInfo';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleFavorite } from '../../redux/slice/isFavoriteSlice';
+import { ModalTitle } from '../modal/Modal';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
 import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
-import { ModalTitle } from '../modal/Modal';
 
 interface Props {
   food: Food;
   title: ModalTitle;
 }
 
-const MOVED_TRANSLATE_X = 88;
+const MOVED_TRANSLATE_X = 104;
 
 export default function FavoriteItem({ food, title }: Props) {
   const { isFavorite } = useSelector((state) => state.isFavorite);
@@ -47,7 +47,6 @@ export default function FavoriteItem({ food, title }: Props) {
 
   // 식료품에 대한 정보 "수정"에서만 자주 먹는 식료품 설정을 변경할 수 있다.
   const disabledFavoriteBtn = isFavoriteItem(name) && !title.includes('수정');
-  const color = disabledFavoriteBtn ? 'border-slate-300' : 'border-blue-200';
   const backgroundColor = disabledFavoriteBtn ? LIGHT_BLUE : '#4070ff';
 
   return (
@@ -55,7 +54,7 @@ export default function FavoriteItem({ food, title }: Props) {
       <FormLabel label='자주 먹는 식료품' />
       <View
         style={tw.style(
-          `${color} h-10.5 flex-row items-center border p-1 rounded-full bg-white self-start`,
+          `border-slate-300 h-10.5 flex-row items-center border p-1 rounded-full bg-white self-start`,
           {
             shadowColor: '#aaa',
             shadowOpacity: 0.3,
@@ -67,7 +66,7 @@ export default function FavoriteItem({ food, title }: Props) {
         <Animated.View
           style={{
             transform: [{ translateX }],
-            width: 88,
+            width: 104,
             position: 'absolute',
             left: 4,
             height: '100%',

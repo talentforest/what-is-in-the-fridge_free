@@ -18,28 +18,21 @@ export const useEditFood = ({ food }: { food: Food }) => {
     return setEditedFood({ ...editedFood, ...newInfo });
   };
 
-  const onEditSumbit = (
-    foodId: string,
-    setModalVisible?: (modalVisible: boolean) => void
-  ) => {
+  const onEditSumbit = (foodId: string) => {
     const { expiredDate, purchaseDate } = editedFood;
     const { wrongDate } = alertPhrase;
-
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
       return Alert.alert(wrongDate.title, wrongDate.msg);
     }
 
-    isFavorite
-      ? dispatch(addFavorite(editedFood))
-      : dispatch(removeFavorite(editedFood));
+    dispatch(isFavorite ? addFavorite(editedFood) : removeFavorite(editedFood));
+    dispatch(
+      !food.compartmentNum
+        ? editPantryFood({ foodId, editedFood })
+        : editFridgeFood({ foodId, editedFood })
+    );
 
-    if (!food.compartmentNum && setModalVisible) {
-      dispatch(editPantryFood({ foodId, editedFood }));
-      setModalVisible(false);
-    } else {
-      dispatch(editFridgeFood({ foodId, editedFood }));
-      setEditing(false);
-    }
+    setEditing(false);
   };
 
   return {

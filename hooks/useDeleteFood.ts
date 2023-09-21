@@ -1,21 +1,22 @@
-import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from '../redux/hook';
-import { NavigateProp } from '../navigation/Navigation';
 import { Space } from '../constant/fridgeInfo';
 import { removeFridgeFood } from '../redux/slice/fridgeFoodsSlice';
+import { removePantryFood } from '../redux/slice/pantryFoodsSlice';
 
 interface Props {
   space: Space;
   setModalVisible: (visible: boolean) => void;
 }
 
-export const useDeleteFridgeFood = ({ space, setModalVisible }: Props) => {
+export const useDeleteFood = ({ space, setModalVisible }: Props) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation<NavigateProp>();
 
   const deleteFood = (foodId: string) => {
-    dispatch(removeFridgeFood({ id: foodId }));
-    navigation.navigate('Compartments', { space });
+    dispatch(
+      space === '팬트리'
+        ? removePantryFood({ id: foodId })
+        : removeFridgeFood({ id: foodId })
+    );
     setModalVisible(false);
   };
 

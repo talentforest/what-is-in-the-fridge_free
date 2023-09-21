@@ -74,7 +74,7 @@ export default function Modal({
     >
       <KeyboardAvoidingView
         behavior={PlatformIOS ? 'padding' : 'height'}
-        keyboardVerticalOffset={PlatformIOS ? -125 : 0}
+        keyboardVerticalOffset={PlatformIOS ? -130 : 0}
       >
         <SafeAreaView
           style={tw.style(

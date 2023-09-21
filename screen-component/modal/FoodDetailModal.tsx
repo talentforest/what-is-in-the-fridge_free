@@ -3,16 +3,17 @@ import { Text } from '../../components/common/native-component';
 import { useSelector } from '../../redux/hook';
 import { FormStep } from '../../constant/formInfo';
 import { FontGmarketSansBold } from '../../constant/fonts';
-import { getFormattedDate, getRelativeTime } from '../../util';
-import { useEditFood, useDeleteFridgeFood, useFindFood } from '../../hooks';
+import { cutLetter, getFormattedDate } from '../../util';
+import { useEditFood, useDeleteFood, useFindFood } from '../../hooks';
+import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
 
 import InfoBox from '../../components/modal/InfoBox';
-import FavoriteTagBox from '../../components/modal/FavoriteTagBox';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
 import CategoryImageIcon from '../../components/common/CategoryImageIcon';
 import LeftDayInfoBox from '../../components/modal/LeftDayInfoBox';
+import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
@@ -26,10 +27,10 @@ export default function FoodDetailModal({
   setModalVisible,
   formSteps,
 }: Props) {
-  const { selectedFood: food } = useSelector((state) => state.selectedFood);
+  const { selectedFood } = useSelector((state) => state.selectedFood);
 
-  const { deleteFood } = useDeleteFridgeFood({
-    space: food.space,
+  const { deleteFood } = useDeleteFood({
+    space: selectedFood.space,
     setModalVisible,
   });
 
@@ -39,11 +40,12 @@ export default function FoodDetailModal({
     editedFood,
     editFoodInfo,
     onEditSumbit, //
-  } = useEditFood({ food });
+  } = useEditFood({ food: selectedFood });
+
+  const { id, name, category, expiredDate, purchaseDate, quantity, memo } =
+    editedFood;
 
   const { isFavoriteItem } = useFindFood();
-
-  const { name, category, expiredDate, purchaseDate } = editedFood;
 
   return (
     <Modal
@@ -65,15 +67,21 @@ export default function FoodDetailModal({
               color='blue'
               iconName='checkbox-marked-outline'
               btnName='식료품 정보 수정 완료'
-              onPress={() => onEditSumbit(food.id)}
+              onPress={() => onEditSumbit(id)}
             />
           </View>
         </View>
       ) : (
         <View style={tw`mt-6 px-6 gap-2`}>
           <View
-            style={tw`self-center flex-row items-center border-t border-b border-blue-500 py-1.5 px-4`}
+            style={tw`self-center gap-1.5 flex-row items-center border-t border-b border-blue-500 mb-4 py-1.5 pl-4 pr-5`}
           >
+            <Icon
+              type='MaterialCommunityIcons'
+              name='tag-heart'
+              size={18}
+              color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
+            />
             <Text
               style={tw.style(
                 `text-stone-800 text-base text-center`,
@@ -84,16 +92,10 @@ export default function FoodDetailModal({
             </Text>
           </View>
 
-          {!!isFavoriteItem(food.name) && (
-            <View style={tw`self-center mb-2`}>
-              <FavoriteTagBox />
-            </View>
-          )}
-
           <View>
             <InfoBox iconName='dots-grid' label='카테고리'>
               <View style={tw`flex-row items-center gap-1`}>
-                <Text style={tw`text-base`}>{category}</Text>
+                <Text style={tw`text-[15px]`}>{category}</Text>
                 <CategoryImageIcon kind='icon' category={category} size={16} />
               </View>
             </InfoBox>
@@ -104,19 +106,26 @@ export default function FoodDetailModal({
 
             {purchaseDate !== '' && (
               <InfoBox iconName='calendar-month' label='구매날짜'>
-                <View>
-                  <Text style={tw`text-slate-800 text-base`}>
-                    {getFormattedDate(purchaseDate, 'YYYY년 MM월 DD일')}
-                  </Text>
-                  <Text style={tw`text-[13px] -mt-1 text-blue-600`}>
-                    {getRelativeTime(purchaseDate)}
-                  </Text>
-                </View>
+                <Text style={tw`text-slate-800 text-[15px]`}>
+                  {getFormattedDate(purchaseDate, 'YYYY년 MM월 DD일')}
+                </Text>
+              </InfoBox>
+            )}
+
+            {quantity !== '' && (
+              <InfoBox iconName='numeric-1-box-outline' label='수량'>
+                <Text style={tw`text-[15px]`}>{quantity}</Text>
+              </InfoBox>
+            )}
+
+            {memo?.length > 1 && (
+              <InfoBox iconName='note-text-outline' label='메모'>
+                <Text style={tw`text-[15px]`}>{cutLetter(memo, 20)}</Text>
               </InfoBox>
             )}
           </View>
 
-          <View style={tw`gap-2`}>
+          <View style={tw`gap-2 mt-3`}>
             <SubmitBtn
               color='blue'
               iconName='pencil'
@@ -126,7 +135,11 @@ export default function FoodDetailModal({
             <SubmitBtn
               color='amber'
               iconName='trash-can'
-              btnName={`${food.compartmentNum}칸에서 식료품 삭제`}
+              btnName={`${
+                selectedFood?.compartmentNum
+                  ? `${selectedFood.compartmentNum}칸`
+                  : '팬트리'
+              }에서 식료품 삭제`}
               onPress={() => deleteFood(editedFood.id)}
             />
           </View>

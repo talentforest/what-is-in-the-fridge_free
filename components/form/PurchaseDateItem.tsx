@@ -1,16 +1,14 @@
-import { Animated, View } from 'react-native';
-import { Text, TextInput, TouchableOpacity } from '../common/native-component';
+import { Animated, Keyboard, View } from 'react-native';
+import { TextInput, TouchableOpacity } from '../common/native-component';
 import { getFormattedDate } from '../../util';
 import { useEffect, useState } from 'react';
-import { BLUE, GRAY, LIGHT_GRAY } from '../../constant/colors';
+import { BLUE } from '../../constant/colors';
 import { useSlideAnimation } from '../../hooks';
 
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
-import MessageBox from '../common/MessageBox';
 import tw from 'twrnc';
-import { useRoute } from '@react-navigation/native';
 
 interface Props {
   date: string;
@@ -25,11 +23,9 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
   const purchaseDate = date === '' ? today : new Date(date);
   const formattedDate = getFormattedDate(purchaseDate, 'YYYY년 MM월 DD일');
 
-  const route = useRoute();
-
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 52,
+    toValue: 49,
     active: purchaseOpen,
   });
 
@@ -45,10 +41,13 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
   };
 
   const changeDate = (date: Date | '') => {
-    return changeInfo({ purchaseDate: date ? getFormattedDate(date) : '' });
+    return changeInfo({
+      purchaseDate: date ? getFormattedDate(date, 'YYYY-MM-DD') : '',
+    });
   };
 
   const onPress = () => {
+    Keyboard.dismiss();
     setPurchaseOpen((prev) => !prev);
 
     if (!purchaseOpen) {
@@ -60,55 +59,38 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
   };
 
   return (
-    <View>
-      <View style={tw`mb-1`}>
-        <View style={tw`flex-row items-center gap-1 justify-between`}>
-          <FormLabel label='구매날짜' />
-          <TouchableOpacity onPress={onPress} style={tw`flex-row items-center`}>
-            <Icon
-              name={purchaseOpen ? 'chevron-up' : 'add'}
-              type='Ionicons'
-              size={18}
-              color={purchaseOpen ? LIGHT_GRAY : GRAY}
-            />
-            <Text
-              style={tw`text-sm ${
-                purchaseOpen ? 'text-slate-500' : 'text-slate-800'
-              }`}
-            >
-              {purchaseOpen ? '생략하기' : '추가하기'}
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <Animated.View
-          style={{
-            height,
-            overflow: 'hidden',
-            marginHorizontal: -4,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => setDatePickerVisible(true)}
-            style={tw`h-11 mx-1 shadow-md px-2 border border-blue-300 bg-white rounded-lg flex-row items-center justify-between`}
-          >
-            <TextInput
-              value={formattedDate}
-              editable={false}
-              pointerEvents='none'
-              style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
-            />
-            <Icon type='AntDesign' name='calendar' size={16} color={BLUE} />
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
+    <View style={tw`-mb-1`}>
+      <FormLabel
+        label='구매날짜'
+        option
+        isOpen={purchaseOpen}
+        onPress={onPress}
+      />
 
-      {route.name !== 'PantryFoods' && (
-        <View
-          style={tw`${!purchaseOpen ? 'border-t border-slate-300 pt-1' : ''}`}
+      <Animated.View
+        style={{
+          height,
+          overflow: 'hidden',
+          marginHorizontal: -4,
+          marginBottom: -6,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            Keyboard.dismiss();
+            setDatePickerVisible(true);
+          }}
+          style={tw`h-11 mx-1 shadow-md px-2 border border-slate-300 bg-white rounded-lg flex-row items-center justify-between`}
         >
-          <MessageBox message='유통기한이 없는 식료품(예: 신선식품류)인 경우 추가 정보로 작성할 수 있어요' />
-        </View>
-      )}
+          <TextInput
+            value={formattedDate}
+            editable={false}
+            pointerEvents='none'
+            style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
+          />
+          <Icon type='AntDesign' name='calendar' size={16} color={BLUE} />
+        </TouchableOpacity>
+      </Animated.View>
 
       {/* 캘린더 픽커 모달 */}
       <DateTimePickerModal

@@ -10,16 +10,20 @@ export const initialState: { pantryFoods: Food[] } = {
       name: '소면',
       category: '간편·즉석식품류',
       purchaseDate: '',
-      expiredDate: getFormattedDate(new Date()),
+      expiredDate: getFormattedDate(new Date(), 'YYYY-MM-DD'),
       space: '팬트리',
+      quantity: '',
+      memo: '',
     },
     {
       id: 'pantryFood_2',
       name: '삼계탕',
       category: '국·반찬류',
       purchaseDate: '2023-04-02',
-      expiredDate: getFormattedDate(new Date()),
+      expiredDate: getFormattedDate(new Date(), 'YYYY-MM-DD'),
       space: '팬트리',
+      quantity: '2',
+      memo: '',
     },
   ],
 };
@@ -34,9 +38,9 @@ const pantryFoodsSlice = createSlice({
     addToPantry: (state, action: { payload: Food }) => {
       state.pantryFoods = deduplicate([...state.pantryFoods, action.payload]);
     },
-    removeFromPantry: (state, action: { payload: { name: string } }) => {
+    removePantryFood: (state, action: { payload: { id: string } }) => {
       state.pantryFoods = state.pantryFoods.filter(
-        (item) => item.name !== action.payload.name
+        (item) => item.id !== action.payload.id
       );
     },
     editPantryFood: (
@@ -56,7 +60,7 @@ const { reducer: pantryFoodsReducer } = pantryFoodsSlice;
 export const {
   setPantry,
   addToPantry,
-  removeFromPantry, //
+  removePantryFood, //
   editPantryFood,
 } = pantryFoodsSlice.actions;
 

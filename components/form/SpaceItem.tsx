@@ -14,8 +14,8 @@ import { Animated } from 'react-native';
 
 import CheckBoxItem from '../common/CheckBoxItem';
 import FormLabel from './FormLabel';
-import tw from 'twrnc';
 import MessageBox from '../common/MessageBox';
+import tw from 'twrnc';
 
 interface Props {
   food: Food;
@@ -79,7 +79,7 @@ export default function SpaceItem({ food, changeInfo }: Props) {
               food.space.includes(space.slice(0, 1))
                 ? 'border-blue-600'
                 : 'border-slate-300'
-            } px-3.5 pb-0.5 my-1.5`}
+            } pr-5 pb-0.5 my-1.5`}
           >
             <Text
               style={tw`text-[15px] ${
@@ -95,7 +95,7 @@ export default function SpaceItem({ food, changeInfo }: Props) {
       </View>
 
       {food.space !== '팬트리' && (
-        <>
+        <View>
           <View style={tw`flex-row gap-5`}>
             {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
               <View key={spaceType} style={tw`py-1.5`}>
@@ -130,15 +130,17 @@ export default function SpaceItem({ food, changeInfo }: Props) {
               </View>
             ))}
           </View>
-        </>
+        </View>
       )}
 
       {food.space === '팬트리' && (
-        <CheckBoxItem
-          title='팬트리'
-          checked={food.space === '팬트리'}
-          onPress={() => onTabPress('팬트리')}
-        />
+        <View key={spaceType} style={tw`py-1.5`}>
+          <CheckBoxItem
+            title='팬트리'
+            checked={food.space === '팬트리'}
+            onPress={() => onTabPress('팬트리')}
+          />
+        </View>
       )}
 
       <Animated.View style={{ height, marginTop: 4 }}>

@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { TextInput, TouchableOpacity } from '../common/native-component';
-import { getFormattedDate } from '../../util';
+import { getFormattedDate, getRelativeTime } from '../../util';
 import { useState } from 'react';
 import { BLUE } from '../../constant/colors';
 import { controlDateBtns } from '../../constant/controlDateBtns';
@@ -9,6 +9,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
 import ControlDateBtn from '../buttons/ControlDateBtn';
+import MessageBox from '../common/MessageBox';
 import tw from 'twrnc';
 
 interface Props {
@@ -30,20 +31,18 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
 
   const changeDate = (date: Date | string) => {
     return changeInfo({
-      expiredDate: date === '' ? '' : getFormattedDate(date),
+      expiredDate: date === '' ? '' : getFormattedDate(date, 'YYYY-MM-DD'),
     });
   };
 
   return (
     <View>
-      <View style={tw`mb-2`}>
+      <View style={tw`mb-5`}>
         <FormLabel label='유통기한' />
-
-        {/* 유통기한 */}
 
         <TouchableOpacity
           onPress={() => setDatePickerVisible(true)}
-          style={tw`h-11 shadow-md border border-blue-300 bg-white rounded-lg flex-row items-center justify-between px-2`}
+          style={tw`h-11 shadow-md border border-slate-300 bg-white rounded-lg flex-row items-center justify-between px-2`}
         >
           <TextInput
             value={formattedDate}
@@ -54,7 +53,6 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
           <Icon type='AntDesign' name='calendar' size={16} color={BLUE} />
         </TouchableOpacity>
 
-        {/* 날짜 더하기 버튼들 */}
         <View style={tw`mt-2 gap-1 flex-row flex-wrap items-start`}>
           {controlDateBtns.map((btn) => (
             <ControlDateBtn
@@ -66,6 +64,15 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
           ))}
         </View>
       </View>
+
+      <MessageBox
+        color='green'
+        message={`오늘${
+          getRelativeTime(expiredDate) === '오늘'
+            ? '까지'
+            : `로부터 ${getRelativeTime(expiredDate)}까지`
+        } 섭취할 수 있습니다.`}
+      />
 
       {/* 캘린더 픽커 모달 */}
       <DateTimePickerModal
