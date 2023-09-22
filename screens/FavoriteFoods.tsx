@@ -35,7 +35,7 @@ export default function FavoriteFoods() {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState<Category | ''>('');
 
-  const { isFavoriteItem, findFood } = useFindFood();
+  const { isFavoriteItem } = useFindFood();
   const { currentFilter, initializeFilter } = useHandleFilter();
   const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
   const { onSubmitFavoriteListItem } = useSubmitFoodsFromInput();
@@ -62,11 +62,14 @@ export default function FavoriteFoods() {
   });
 
   useEffect(() => {
-    initializeFilter();
     if (inputValue === '') {
       setShowCaution(false);
     }
   }, [inputValue]);
+
+  useEffect(() => {
+    initializeFilter();
+  }, []);
 
   const onCategoryCheckBoxPress = (category: Category) => {
     setCategory(category);

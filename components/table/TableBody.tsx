@@ -91,7 +91,7 @@ export default function TableBody({
             message={
               route.name === 'ShoppingList'
                 ? `${title}이 없어요`
-                : `${currentFilter} 카테고리에, ${title}이 없어요.`
+                : `${currentFilter}에 ${title}이 없어요.`
             }
           />
         </View>
