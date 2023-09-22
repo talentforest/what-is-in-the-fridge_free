@@ -6,7 +6,7 @@ import { FoodLocation } from '../constant/fridgeInfo';
 import { Alert } from 'react-native';
 import { addToPantry } from '../redux/slice/pantryFoodsSlice';
 import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
-import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
+import { addFavorite, editFavorite } from '../redux/slice/favoriteFoodsSlice';
 import UUIDGenerator from 'react-native-uuid';
 
 interface Props {
@@ -61,6 +61,11 @@ export const useAddFood = ({ initialFood, foodLocation }: Props) => {
       category: isFavoriteItem ? isFavoriteItem.category : category,
       space: foodLocation ? foodLocation.space : '팬트리',
     };
+
+    if (isFavoriteItem) {
+      // 자주 먹는 식료품에 먼저 추가 후, 냉장고나 팬트리에 추가할 시 공간 정보도 함께 변경.
+      dispatch(editFavorite(foodToAdd));
+    }
 
     if (isFavorite) {
       dispatch(addFavorite(foodToAdd));
