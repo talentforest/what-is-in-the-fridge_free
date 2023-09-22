@@ -59,7 +59,6 @@ export const useSubmitFoodsFromInput = () => {
         })
       );
     }
-    setCategory('');
     setInputValue('');
   };
 
