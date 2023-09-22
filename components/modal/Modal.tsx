@@ -23,7 +23,8 @@ export type ModalTitle =
   | '식료품 상세 정보'
   | '팬트리 식료품 추가'
   | '팬트리 식료품 수정'
-  | '나의 식료품 찾기';
+  | '나의 식료품 찾기'
+  | '카테고리별 필터링';
 
 interface Props {
   modalVisible: boolean;

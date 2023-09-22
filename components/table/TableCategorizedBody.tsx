@@ -4,6 +4,7 @@ import { useSelector } from '../../redux/hook';
 import { Food } from '../../constant/foodInfo';
 import { foodCategories } from '../../constant/foodCategories';
 import { AnimationState, useGetFoodList } from '../../hooks';
+import { Filter } from '../../util';
 
 import TableItem from './TableItem';
 import IndicatorExist from '../common/IndicatorExist';
@@ -35,6 +36,15 @@ export default function TableCategorizedBody({
 
   const filteredFoodList = getFilteredFoodList(currentFilter, favoriteFoods);
 
+  const data = (filter: Filter) => {
+    const categoryFilter = foodCategories.find(
+      ({ category }) => category === filter
+    );
+    return categoryFilter
+      ? [categoryFilter.category]
+      : foodCategories.map(({ category }) => category);
+  };
+
   return (
     <>
       {!!filteredFoodList.length ? (
@@ -43,7 +53,7 @@ export default function TableCategorizedBody({
             keyExtractor={(item) => item}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={tw`pb-25`}
-            data={foodCategories.map(({ category }) => category)}
+            data={data(currentFilter)}
             renderItem={({ item }) =>
               getFilteredSortByCategoryList(item).length ? (
                 <View style={tw`mb-4`}>
@@ -86,9 +96,7 @@ export default function TableCategorizedBody({
         </View>
       ) : (
         <View style={tw`pt-24 flex-1 border-t -mx-4 border-slate-300`}>
-          <EmptySign
-            message={`${currentFilter} 카테고리에, 자주 먹는 식료품이 없어요.`}
-          />
+          <EmptySign message='자주 먹는 식료품이 없어요.' />
         </View>
       )}
     </>

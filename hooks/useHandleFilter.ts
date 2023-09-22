@@ -23,14 +23,14 @@ export const useHandleFilter = () => {
     if (setCheckedList) return setCheckedList([]);
   };
 
-  const isCategoryFilter = foodCategories?.find(
-    ({ category }) => category === currentFilter
-  );
+  const findCategoryFilter = (filter: Filter) => {
+    return foodCategories?.find(({ category }) => category === filter);
+  };
 
   return {
     currentFilter,
     initializeFilter,
     onFilterPress,
-    isCategoryFilter,
+    findCategoryFilter,
   };
 };

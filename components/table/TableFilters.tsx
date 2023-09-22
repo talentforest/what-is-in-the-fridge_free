@@ -3,7 +3,7 @@ import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { Filter, FilterObj } from '../../util';
 import { BLUE, DEEP_YELLOW, RED } from '../../constant/colors';
-import { FoodCategory } from '../../constant/foodCategories';
+import { FoodCategory, foodCategories } from '../../constant/foodCategories';
 import { useHandleFilter } from '../../hooks';
 
 import FilterTag from '../common/FilterTag';
@@ -27,14 +27,23 @@ export default function TableFilters({
 }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { currentFilter, onFilterPress, initializeFilter, isCategoryFilter } =
-    useHandleFilter();
+  const {
+    currentFilter,
+    onFilterPress,
+    initializeFilter,
+    findCategoryFilter, //
+  } = useHandleFilter();
 
   useEffect(() => {
+    initializeFilter();
     return () => {
       initializeFilter();
     };
   }, []);
+
+  const firstActiveCategoryFilter = foodCategories?.find(({ category }) =>
+    foodList.map((item) => item.category).includes(category)
+  )?.category;
 
   return (
     <View>
@@ -65,11 +74,17 @@ export default function TableFilters({
           <FilterTag
             filterObj={{ filter: '카테고리', icon: 'filter' }}
             iconColor={BLUE}
-            active={!!isCategoryFilter}
+            active={
+              !!findCategoryFilter(currentFilter) ||
+              currentFilter === '카테고리'
+            }
             onFilterPress={() => {
-              if (!isCategoryFilter) {
-                onFilterPress('신선식품류', setCheckedList);
-              }
+              onFilterPress(
+                !!foodList.length
+                  ? (firstActiveCategoryFilter as Filter)
+                  : '카테고리',
+                setCheckedList
+              );
               setModalVisible(true);
             }}
             length={getTableList(currentFilter, foodList).length || 0}
@@ -84,20 +99,18 @@ export default function TableFilters({
           modalVisible={modalVisible}
           hasBackdrop
         >
-          <View style={tw`p-4 pb-2 flex-row flex-wrap gap-1`}>
-            {categoryFilters.map(
-              ({ category, color, icon }) =>
-                !!getTableList(category, foodList).length && (
-                  <FilterTag
-                    key={category}
-                    filterObj={{ filter: category, icon }}
-                    iconColor={color}
-                    active={category === currentFilter}
-                    onFilterPress={() => onFilterPress(category)}
-                    length={getTableList(category, foodList).length}
-                  />
-                )
-            )}
+          <View style={tw`p-4 flex-row flex-wrap gap-1`}>
+            {categoryFilters.map(({ category, color, icon }) => (
+              <FilterTag
+                key={category}
+                categoryFilter
+                filterObj={{ filter: category, icon }}
+                iconColor={color}
+                active={category === currentFilter}
+                onFilterPress={() => onFilterPress(category)}
+                length={getTableList(category, foodList).length}
+              />
+            ))}
           </View>
         </Modal>
       )}
