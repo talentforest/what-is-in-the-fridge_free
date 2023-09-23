@@ -21,16 +21,6 @@ export const useFindFood = () => {
     return favoriteFoods.find((favoriteFood) => favoriteFood.name === name);
   };
 
-  const allFoods = [...fridgeFoods, ...pantryFoods];
-
-  const favoriteExistFoods = favoriteFoods.filter(
-    (favoriteFood) => !!allFoods.find((food) => food.name === favoriteFood.name)
-  );
-
-  const favoriteNotExistFoods = favoriteFoods.filter(
-    (favoriteFood) => !allFoods.find((food) => food.name === favoriteFood.name)
-  );
-
   return {
     findFoodInFridge,
     findFoodInPantry,

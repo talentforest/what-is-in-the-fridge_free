@@ -25,7 +25,7 @@ export default function TableCategorizedBody({
   animationState,
   afterAnimation,
 }: Props) {
-  const { currentFilter } = useSelector((state) => state.currentFilter);
+  const { filter } = useSelector((state) => state.filter);
 
   const {
     getFilteredSortByCategoryList,
@@ -34,7 +34,7 @@ export default function TableCategorizedBody({
     favoriteFoods,
   } = useGetFoodList();
 
-  const filteredFoodList = getFilteredFoodList(currentFilter, favoriteFoods);
+  const filteredFoodList = getFilteredFoodList(filter, favoriteFoods);
 
   const data = (filter: Filter) => {
     const categoryFilter = foodCategories.find(
@@ -53,7 +53,7 @@ export default function TableCategorizedBody({
             keyExtractor={(item) => item}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={tw`pb-25`}
-            data={data(currentFilter)}
+            data={data(filter)}
             renderItem={({ item }) =>
               getFilteredSortByCategoryList(item).length ? (
                 <View style={tw`mb-4`}>
