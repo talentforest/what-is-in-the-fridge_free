@@ -26,7 +26,7 @@ interface Route {
 }
 
 export default function Compartments({ route }: Route) {
-  const { currentFilter } = useSelector((state) => state.currentFilter);
+  const { filter } = useSelector((state) => state.filter);
   const { dragMode } = useSelector((state) => state.dragMode);
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { space, searchedName } = route.params as RouteParams;
@@ -40,7 +40,7 @@ export default function Compartments({ route }: Route) {
     navigation.setOptions({
       title: space,
     });
-    if (currentFilter !== '전체') {
+    if (filter !== '전체') {
       dispatch(changeFilter('전체'));
     }
   }, []);

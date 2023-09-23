@@ -9,7 +9,7 @@ export const useGetFoodList = () => {
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
-  const { currentFilter } = useSelector((state) => state.currentFilter);
+  const { filter } = useSelector((state) => state.filter);
 
   const orderExpirationDate = (list: Food[]) => {
     const copiedList = list ? [...list] : [];
@@ -101,11 +101,11 @@ export const useGetFoodList = () => {
   const foodList = routeFavoriteFoods ? favoriteFoods : pantryFoods;
 
   const changeListByCategoryFilter = (categoryList: Category[]) => {
-    const filter = foodCategories.some(
-      ({ category }) => currentFilter === category
+    const currentFilter = foodCategories.some(
+      ({ category }) => filter === category
     );
-    return filter
-      ? categoryList.filter((category) => category === currentFilter)
+    return currentFilter
+      ? categoryList.filter((category) => category === filter)
       : categoryList;
   };
 
@@ -122,14 +122,14 @@ export const useGetFoodList = () => {
       (food) => food.category === category
     );
 
-    if (currentFilter === '없는 식료품') {
+    if (filter === '없는 식료품') {
       const allFoods = [...fridgeFoods, ...pantryFoods];
       return sortByCategory.filter(
         (food) => !!!allFoods.find((allFood) => allFood.name === food.name)
       );
     }
 
-    if (currentFilter === '자주 먹는 식료품') {
+    if (filter === '자주 먹는 식료품') {
       return sortByCategory.filter((food) =>
         favoriteFoods.find((favFood) => food.name === favFood.name)
       );

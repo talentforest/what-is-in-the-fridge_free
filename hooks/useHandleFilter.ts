@@ -1,30 +1,38 @@
+import { useRoute } from '@react-navigation/native';
 import { foodCategories } from '../constant/foodCategories';
 import { Food } from '../constant/foodInfo';
 import { useDispatch, useSelector } from '../redux/hook';
-import { changeFilter } from '../redux/slice/filterSlice';
+import { changeFilter, changePantryFilter } from '../redux/slice/filterSlice';
 import { Filter } from '../util';
 
 export const useHandleFilter = () => {
-  const { currentFilter } = useSelector((state) => state.currentFilter);
+  const { filter, pantryFilter } = useSelector((state) => state.filter);
 
+  const route = useRoute();
+  const routePantryFoods = route.name === 'PantryFoods';
   const dispatch = useDispatch();
 
-  const initializeFilter = () => {
-    if (currentFilter !== '전체') {
-      dispatch(changeFilter('전체'));
-    }
-  };
+  const currentFilter = routePantryFoods ? pantryFilter : filter;
 
   const onFilterPress = (
-    filter: Filter,
+    filterName: Filter,
     setCheckedList?: (foods: Food[]) => void
   ) => {
-    dispatch(changeFilter(filter));
+    routePantryFoods
+      ? dispatch(changePantryFilter(filterName))
+      : dispatch(changeFilter(filterName));
+
     if (setCheckedList) return setCheckedList([]);
   };
 
-  const findCategoryFilter = (filter: Filter) => {
-    return foodCategories?.find(({ category }) => category === filter);
+  const findCategoryFilter = (filterName: Filter) => {
+    return foodCategories?.find(({ category }) => category === filterName);
+  };
+
+  const initializeFilter = () => {
+    if (filter !== '전체') {
+      dispatch(changeFilter('전체'));
+    }
   };
 
   return {

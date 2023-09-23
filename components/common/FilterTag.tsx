@@ -79,7 +79,7 @@ export default function FilterTag({
         <>
           {categoryFilter && (
             <>
-              <Text style={tw`text-sm ${color}`}>: {currentFilter}</Text>
+              <Text style={tw`text-sm ${color}`}>: {filter}</Text>
               <Text style={tw`text-sm ${color}`}>{`${length}`}개</Text>
             </>
           )}

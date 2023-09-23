@@ -29,7 +29,7 @@ export default function TableBody({
   animationState,
   afterAnimation,
 }: Props) {
-  const { currentFilter } = useSelector((state) => state.currentFilter);
+  const { filter } = useSelector((state) => state.filter);
 
   const route = useRoute();
   const routeExpiredFoods = route.name === 'ExpiredFoods';
@@ -89,9 +89,9 @@ export default function TableBody({
         <View style={tw`pt-24 flex-1 border-t -mx-4 border-slate-300`}>
           <EmptySign
             message={
-              route.name === 'ShoppingList'
+              route.name === 'ShoppingList' || filter === '전체'
                 ? `${title}이 없어요`
-                : `${currentFilter}에 ${title}이 없어요.`
+                : `${filter}에 ${title}이 없어요.`
             }
           />
         </View>

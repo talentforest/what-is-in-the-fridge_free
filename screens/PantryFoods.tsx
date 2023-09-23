@@ -4,10 +4,8 @@ import {
   TouchableOpacity,
 } from '../components/common/native-component';
 import { useDispatch, useSelector } from '../redux/hook';
-import { useFocusEffect } from '@react-navigation/native';
-import { useGetFoodList, useHandleFilter } from '../hooks';
-import { foodCategories } from '../constant/foodCategories';
-import { entireFilterObj, favoriteFilterObj } from '../util';
+import { useGetFoodList } from '../hooks';
+import { entireFilterObj, expiredFilters } from '../util';
 import { formThreeSteps } from '../constant/formInfo';
 import { select } from '../redux/slice/selectedFoodSlice';
 
@@ -18,47 +16,47 @@ import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
 import CompartmentContainer from '../components/compartment/CompartmentContainer';
 import CompartmentBox from '../components/compartment/CompartmentBox';
 import AddFoodModal from '../screen-component/modal/AddFoodModal';
+import { useFocusEffect } from '@react-navigation/native';
+import { changePantryFilter } from '../redux/slice/filterSlice';
 
 export default function PantryFoods() {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
+  const { pantryFilter } = useSelector((state) => state.filter);
   const [openFoodDetailModal, setOpenFoodDetailModal] = useState(false);
   const [openAddFoodModal, setOpenAddFoodModal] = useState(false);
 
-  const { currentFilter, initializeFilter } = useHandleFilter();
   const { getFilteredFoodList } = useGetFoodList();
+
+  const dispatch = useDispatch();
 
   useFocusEffect(
     useCallback(() => {
-      initializeFilter();
       return () => {
-        initializeFilter();
+        if (pantryFilter !== '전체') {
+          dispatch(changePantryFilter('전체'));
+        }
       };
     }, [])
   );
-
-  const filteredList = getFilteredFoodList(currentFilter, pantryFoods);
-
-  const dispatch = useDispatch();
 
   return (
     <KeyboardAvoidingView>
       <Container>
         <TableFilters
-          filterList={[entireFilterObj, favoriteFilterObj]}
-          categoryFilters={foodCategories}
+          filterList={[entireFilterObj, ...expiredFilters]}
           getTableList={getFilteredFoodList}
-          foodList={filteredList}
+          foodList={pantryFoods}
         />
 
         <CompartmentContainer>
           <CompartmentBox
             title='팬트리'
-            foodList={filteredList}
+            foodList={pantryFoods}
             spaceTotalLength={pantryFoods.length}
             scrollEnabled
             setOpenAddFoodModal={setOpenAddFoodModal}
           >
-            {filteredList.map((food) => (
+            {pantryFoods.map((food) => (
               <TouchableOpacity
                 key={food.id}
                 onPress={() => {

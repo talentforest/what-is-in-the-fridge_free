@@ -35,7 +35,7 @@ const reducers = {
   onboarding: toggleOnboardingReducer,
   dragMode: toggleDragModeReducer,
   compartmentNumToDrop: changeCompartmentNumReducer,
-  currentFilter: changeFilterReducer,
+  filter: changeFilterReducer,
   showBtn: toggleShowBtnReducer,
   pantryFoods: pantryFoodsReducer,
   isFavorite: toggleFavoriteReducer,

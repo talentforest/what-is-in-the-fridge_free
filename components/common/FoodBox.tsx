@@ -7,7 +7,7 @@ import {
   EXPIRED_COLOR,
   LEFT_3_DAYS_COLOR,
 } from './FilterTag';
-import { useSelector } from '../../redux/hook';
+import { useHandleFilter } from '../../hooks';
 
 import Icon from './native-component/Icon';
 import tw from 'twrnc';
@@ -18,7 +18,8 @@ interface Props {
 
 export default function FoodBox({ food }: Props) {
   const { expiredDate } = food;
-  const { currentFilter } = useSelector((state) => state.currentFilter);
+
+  const { currentFilter } = useHandleFilter();
 
   const activeColor = () => {
     if (currentFilter === '유통기한 만료' && expired(expiredDate))

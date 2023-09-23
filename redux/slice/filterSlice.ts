@@ -1,22 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Filter } from '../../util';
 
-export const initialState: { currentFilter: Filter } = {
-  currentFilter: '전체',
+export const initialState: { filter: Filter; pantryFilter: Filter } = {
+  filter: '전체',
+  pantryFilter: '전체',
 };
 
 const filterSlice = createSlice({
-  name: 'currentFilter',
+  name: 'filter',
   initialState,
   reducers: {
     changeFilter: (state, action: { payload: Filter }) => {
-      state.currentFilter = action.payload;
+      state.filter = action.payload;
+    },
+    changePantryFilter: (state, action: { payload: Filter }) => {
+      state.pantryFilter = action.payload;
     },
   },
 });
 
 const { reducer: changeFilterReducer } = filterSlice;
 
-export const { changeFilter } = filterSlice.actions;
+export const { changeFilter, changePantryFilter } = filterSlice.actions;
 
 export default changeFilterReducer;
