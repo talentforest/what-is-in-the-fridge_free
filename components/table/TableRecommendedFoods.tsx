@@ -40,7 +40,7 @@ export default function TableRecommendedFoods({
     : foodsExceptShoppingList;
 
   return !!recommendList.length ? (
-    <View style={tw`my-2`}>
+    <View>
       <Text style={tw`text-sm text-slate-600 ml-1 mb-1`}>
         장보기 추천 식료품
       </Text>
@@ -48,7 +48,7 @@ export default function TableRecommendedFoods({
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={tw`pl-0.5 pr-5 gap-1`}
+        contentContainerStyle={tw`pl-0.5 pr-5 gap-1 py-1.5`}
       >
         {recommendList.slice(0, LIST_MAX_NUM).map((food) => (
           <TouchableOpacity

@@ -10,7 +10,7 @@ export default function EmptySign({ message }: Props) {
   const splittedMessage = message.split(', ');
 
   return (
-    <View style={tw``}>
+    <View>
       <Text style={tw`text-sm text-slate-400 text-center`}>
         {splittedMessage[0]}
       </Text>

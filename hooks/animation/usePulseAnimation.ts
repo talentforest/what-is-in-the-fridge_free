@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Animated, Easing } from 'react-native';
+import { useDispatch } from '../../redux/hook';
+import { search } from '../../redux/slice/searchedFoodSlice';
 
 export const usePulseAnimation = ({ active }: { active: boolean }) => {
-  const [bgColor, setBgColor] = useState('#ffc2c2');
   const opacity = useRef(new Animated.Value(1)).current;
   const translateY = useRef(new Animated.Value(0)).current;
+
+  const dispatch = useDispatch();
 
   const animateOpacity = (toValue: number, duration = 500) => {
     return Animated.timing(opacity, {
@@ -45,7 +48,7 @@ export const usePulseAnimation = ({ active }: { active: boolean }) => {
       animation.stop();
       opacity.setValue(1);
       translateY.setValue(0);
-      setBgColor('#fff');
+      dispatch(search(''));
     }, 4000);
     animation.start();
   };
@@ -59,6 +62,5 @@ export const usePulseAnimation = ({ active }: { active: boolean }) => {
   return {
     opacity,
     translateY,
-    bgColor,
   };
 };

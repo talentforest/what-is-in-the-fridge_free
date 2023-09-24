@@ -25,6 +25,7 @@ import toggleShowBtnReducer from './slice/showBtnSlice';
 import pantryFoodsReducer from './slice/pantryFoodsSlice';
 import toggleFavoriteReducer from './slice/isFavoriteSlice';
 import toggleMemoReducer from './slice/isMemoOpenSlice';
+import searchedFoodNameReducer from './slice/searchedFoodSlice';
 
 const reducers = {
   fridgeFoods: fridgeFoodsReducer,
@@ -40,6 +41,7 @@ const reducers = {
   pantryFoods: pantryFoodsReducer,
   isFavorite: toggleFavoriteReducer,
   isMemoOpen: toggleMemoReducer,
+  searchedFoodName: searchedFoodNameReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

@@ -7,7 +7,10 @@ import { useDispatch, useSelector } from '../redux/hook';
 import { useGetFoodList } from '../hooks';
 import { entireFilterObj, expiredFilters } from '../util';
 import { formThreeSteps } from '../constant/formInfo';
+import { useFocusEffect } from '@react-navigation/native';
+import { changePantryFilter } from '../redux/slice/filterSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
+import { search } from '../redux/slice/searchedFoodSlice';
 
 import Container from '../components/common/Container';
 import TableFilters from '../components/table/TableFilters';
@@ -16,8 +19,6 @@ import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
 import CompartmentContainer from '../components/compartment/CompartmentContainer';
 import CompartmentBox from '../components/compartment/CompartmentBox';
 import AddFoodModal from '../screen-component/modal/AddFoodModal';
-import { useFocusEffect } from '@react-navigation/native';
-import { changePantryFilter } from '../redux/slice/filterSlice';
 
 export default function PantryFoods() {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
@@ -32,6 +33,7 @@ export default function PantryFoods() {
   useFocusEffect(
     useCallback(() => {
       return () => {
+        dispatch(search(''));
         if (pantryFilter !== '전체') {
           dispatch(changePantryFilter('전체'));
         }

@@ -16,13 +16,11 @@ import AddFoodModal from '../modal/AddFoodModal';
 
 interface Props {
   foodLocation: FoodLocation;
-  searchedName: string;
   foodLengthBySpace: number;
 }
 
 export default function Compartment({
   foodLocation,
-  searchedName,
   foodLengthBySpace,
 }: Props) {
   const { dragMode } = useSelector((state) => state.dragMode);
@@ -69,7 +67,6 @@ export default function Compartment({
             setIsDragging={setIsDragging}
             setModalVisible={setOpenFoodDetailModal}
             dragPosition={dragPosition}
-            searchedName={searchedName}
           />
         ))}
       </CompartmentBox>

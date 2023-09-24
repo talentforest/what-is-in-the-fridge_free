@@ -31,7 +31,11 @@ export default function SectionContainer({
   const navigation = useNavigation<NavigateProp>();
 
   return (
-    <View style={tw`border-t border-slate-300 pt-8`}>
+    <View
+      style={tw`${
+        title === '장보기 식료품' ? '' : 'border-t'
+      } border-slate-300 pt-6`}
+    >
       <TouchableOpacity
         onPress={() => navigation.navigate(screen)}
         style={tw`flex-row justify-between`}
@@ -43,12 +47,12 @@ export default function SectionContainer({
       </TouchableOpacity>
       <MessageBox message={message} />
 
-      {foodsLength !== 0 && <View style={tw`mb-12 min-h-25`}>{children}</View>}
+      {foodsLength !== 0 && <View style={tw`mb-6 min-h-25`}>{children}</View>}
 
       {foodsLength === 0 && (
         <TouchableOpacity
           onPress={() => navigation.navigate(screen)}
-          style={tw`shadow-lg items-center h-40 mt-2 mb-10 border border-slate-300 rounded-xl bg-white justify-center`}
+          style={tw`shadow-lg items-center h-40 mt-2 mb-6 border border-slate-300 rounded-xl bg-white justify-center`}
         >
           <EmptySign message={`${title}이 없어요.`} />
         </TouchableOpacity>
