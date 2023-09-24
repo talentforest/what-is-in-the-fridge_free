@@ -19,8 +19,8 @@ export const formThreeSteps: FormStep[] = [
 ];
 
 export const formFourSteps: FormStep[] = [
-  { step: 1, name: '위치' },
-  { step: 2, name: '기본정보' },
+  { step: 1, name: '기본정보' },
+  { step: 2, name: '위치' },
   { step: 3, name: '유통기한' },
   { step: 4, name: '추가정보(선택)' },
 ];
