@@ -18,7 +18,6 @@ import tw from 'twrnc';
 
 type RouteParams = {
   space: Space;
-  searchedName: string;
 };
 
 interface Route {
@@ -29,7 +28,7 @@ export default function Compartments({ route }: Route) {
   const { filter } = useSelector((state) => state.filter);
   const { dragMode } = useSelector((state) => state.dragMode);
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
-  const { space, searchedName } = route.params as RouteParams;
+  const { space } = route.params as RouteParams;
 
   const { getFoodList, getFilteredFoodList } = useGetFoodList();
 
@@ -67,7 +66,6 @@ export default function Compartments({ route }: Route) {
               <Compartment
                 key={compartment.compartmentNum}
                 foodLocation={{ ...compartment, space }}
-                searchedName={searchedName}
                 foodLengthBySpace={getFoodList('fridgeFoods', space).length}
               />
             ))}

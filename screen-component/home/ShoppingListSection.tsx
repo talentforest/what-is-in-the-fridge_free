@@ -25,7 +25,7 @@ export default function ShoppingListSection({ foodList }: Props) {
       screen='ShoppingList'
       foodsLength={foodList.length}
     >
-      <View style={tw` flex-row gap-1 py-2 flex-wrap items-center`}>
+      <View style={tw`flex-row gap-1 py-2 flex-wrap items-center`}>
         {foldedFoods.map((food) => (
           <FoodTagBox key={food.id} food={food} />
         ))}

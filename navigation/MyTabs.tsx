@@ -15,7 +15,7 @@ import PantryFoods from '../screens/PantryFoods';
 export type RootTabParamList = {
   Home: undefined;
   MyFridge: undefined;
-  PantryFoods: undefined;
+  PantryFoods: undefined | object;
 };
 
 const Tab = createBottomTabNavigator();

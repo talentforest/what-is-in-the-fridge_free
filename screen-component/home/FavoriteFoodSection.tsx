@@ -1,18 +1,18 @@
-import { View } from 'react-native';
-import { Food } from '../../constant/foodInfo';
-import { useNavigation } from '@react-navigation/native';
-import { NavigateProp } from '../../navigation/Navigation';
-
-import SectionContainer from './SectionContainer';
-import FoodCard from '../../components/common/FoodCard';
-import EmptySign from '../../components/common/EmptySign';
-import tw from 'twrnc';
 import {
   Text,
   TouchableOpacity,
 } from '../../components/common/native-component';
-import Icon from '../../components/common/native-component/Icon';
+import { View } from 'react-native';
+import { Food } from '../../constant/foodInfo';
+import { useNavigation } from '@react-navigation/native';
+import { NavigateProp } from '../../navigation/Navigation';
 import { DEVICE_WIDTH } from '../../util';
+
+import SectionContainer from './SectionContainer';
+import FoodCard from '../../components/common/FoodCard';
+import EmptySign from '../../components/common/EmptySign';
+import Icon from '../../components/common/native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
   foodList: Food[];
@@ -34,7 +34,7 @@ export default function FavoriteFoodSection({ foodList }: Props) {
         <View
           style={tw`flex-wrap flex-row gap-y-2 gap-x-2.5 mt-2.5 -mx-1 px-1`}
         >
-          {foodList.slice(0, MAX_NUM).map((food) => (
+          {foodList.slice(-MAX_NUM).map((food) => (
             <FoodCard key={food.id} food={food} />
           ))}
           {foodList.length >= MAX_NUM && (

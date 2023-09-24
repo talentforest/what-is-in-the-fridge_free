@@ -1,16 +1,11 @@
 import { Animated } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { TouchableOpacity } from '../../components/common/native-component';
-import {
-  useDragAndDropFood,
-  usePulseAnimation,
-  useShakingAnimation,
-} from '../../hooks';
+import { useDragAndDropFood, useShakingAnimation } from '../../hooks';
 import { useFindCompartmentNum } from '../../hooks/useFindCompartmentNum';
 import { select } from '../../redux/slice/selectedFoodSlice';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleDragMode } from '../../redux/slice/dragModeSlice';
-
 import FoodBox from '../../components/common/FoodBox';
 
 interface Props {
@@ -18,7 +13,6 @@ interface Props {
   setIsDragging: (isDragging: boolean) => void;
   dragPosition: Animated.ValueXY;
   setModalVisible: (visible: boolean) => void;
-  searchedName: string;
 }
 
 export default function DraggableFoodBox({
@@ -26,17 +20,11 @@ export default function DraggableFoodBox({
   setIsDragging,
   dragPosition,
   setModalVisible,
-  searchedName,
 }: Props) {
   const { dragMode } = useSelector((state) => state.dragMode);
   const { selectedFood } = useSelector((state) => state.selectedFood);
-  const dispatch = useDispatch();
 
-  const {
-    opacity,
-    translateY,
-    bgColor, //
-  } = usePulseAnimation({ active: searchedName === food.name });
+  const dispatch = useDispatch();
 
   const { rotate } = useShakingAnimation({ active: dragMode });
 
@@ -49,25 +37,16 @@ export default function DraggableFoodBox({
     findCompartmentNum,
   });
 
-  const searchedFoodBox = searchedName === food.name;
-  const draggingFoodBox = selectedFood.name === food.name;
   const transformAnimation = dragMode
     ? {
-        opacity: draggingFoodBox ? 0.3 : 1,
+        opacity: selectedFood.name === food.name ? 0.3 : 1,
         transform: [{ rotate }],
       }
-    : {
-        opacity,
-        transform: [{ translateY: searchedFoodBox ? translateY : 0 }],
-      };
+    : {};
 
   return (
     <Animated.View
-      style={{
-        borderRadius: 8,
-        backgroundColor: searchedFoodBox ? bgColor : '#fff',
-        ...transformAnimation,
-      }}
+      style={{ ...transformAnimation }}
       {...(dragMode ? { ...panResponder.panHandlers } : null)}
     >
       <TouchableOpacity

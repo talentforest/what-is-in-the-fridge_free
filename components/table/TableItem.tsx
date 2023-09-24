@@ -9,8 +9,8 @@ import { useRoute } from '@react-navigation/native';
 
 import CheckBox from '../common/CheckBox';
 import IndicatorExist from '../common/IndicatorExist';
-import tw from 'twrnc';
 import Icon from '../common/native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
   children?: ReactNode;
@@ -87,7 +87,7 @@ export default function TableItem({
             />
           )}
           <Text style={tw`${textColor}`}>
-            {cutLetter(initializedFood.name, shoppingListRoute ? 20 : 15)}
+            {cutLetter(initializedFood.name, shoppingListRoute ? 20 : 13)}
           </Text>
 
           {existItemTag && (
