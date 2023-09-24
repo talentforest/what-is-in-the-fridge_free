@@ -18,7 +18,7 @@ export const useSwiperAnimation = ({ steps }: Props) => {
   const currentStepRef = useRef(steps[0]);
   const stepTranslateX = useRef(new Animated.Value(0)).current;
 
-  const formWidth = -DEVICE_WIDTH;
+  const formWidth = -DEVICE_WIDTH + 2;
 
   useEffect(() => {
     currentStepRef.current = currentStep;
