@@ -19,7 +19,7 @@ interface Props {
 
 function LeftDay({ size = 15, expiredDate, iconMark, dateMark }: Props) {
   const textColor = getTWColorByLeftDay(expiredDate);
-  const diffDate = +getDiffDate(expiredDate).toFixed(0);
+  const diffDate = +getDiffDate(expiredDate);
 
   return (
     <View>
