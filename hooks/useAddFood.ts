@@ -36,13 +36,12 @@ export const useAddFood = ({ initialFood, foodLocation }: Props) => {
 
     if (name === '') return Alert.alert(noName.title, noName.msg);
 
-    const foodList = foodLocation ? fridgeFoods : pantryFoods;
-    const existFood = foodList.find((food) => food.name === name);
+    const allFoods = [...fridgeFoods, ...pantryFoods];
+    const existFood = allFoods.find((food) => food.name === name);
 
     if (existFood) {
-      const { exist, existInList } = alertPhraseWithFood(existFood);
-      const guide = foodLocation ? exist : existInList;
-      return Alert.alert(guide.title, guide.msg);
+      const { exist } = alertPhraseWithFood(existFood);
+      return Alert.alert(exist.title, exist.msg);
     }
 
     if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {

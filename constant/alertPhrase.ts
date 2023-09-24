@@ -48,7 +48,11 @@ export const alertPhrase: AlertPhraseObj = {
 export const alertPhraseWithFood: AlertPhraseFn = (food: Food) => {
   const exist = {
     title: `${food.name}`,
-    msg: `${food.space} ${food.compartmentNum}에 이미 식료품이 있어요.`,
+    msg: `${
+      food.compartmentNum
+        ? `${food.space} ${food.compartmentNum}`
+        : `${food.space}`
+    }에 이미 식료품이 있어요.`,
   };
   const existInList = {
     title: `${food.name}`,
