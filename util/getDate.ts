@@ -6,7 +6,8 @@ dayjs.extend(relativeTime);
 dayjs.locale('ko');
 
 export const getDiffDate = (date: string) => {
-  return dayjs(date).diff(dayjs(), 'day', true);
+  const diff = dayjs(date).diff(dayjs(), 'day', true);
+  return +diff.toFixed(0) + 1;
 };
 
 export const getRelativeTime = (date: string | Date) => {
