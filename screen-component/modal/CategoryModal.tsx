@@ -32,6 +32,9 @@ export default function CategoryModal({
       require('../../assets/category/category-sauce.png'),
       require('../../assets/category/category-drink.png'),
       require('../../assets/category/category-bakery.png'),
+      require('../../assets/category/category-can.png'),
+      require('../../assets/category/category-powder.png'),
+      require('../../assets/category/category-noodle.png'),
     ],
   });
 
