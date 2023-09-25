@@ -45,7 +45,7 @@ export const foodCategories: FoodCategory[] = [
   {
     id: 4,
     category: '라면·면류',
-    image: 'category-instant.png',
+    image: 'category-noodle.png',
     icon: 'noodles',
     color: '#ff7b00',
   },
@@ -89,7 +89,7 @@ export const foodCategories: FoodCategory[] = [
   {
     id: 10,
     category: '견과·잡곡류·가루',
-    image: 'category-sauce.png',
+    image: 'category-powder.png',
     icon: 'peanut',
     color: '#bd8773',
   },
@@ -103,7 +103,7 @@ export const foodCategories: FoodCategory[] = [
   {
     id: 12,
     category: '햄·통조림',
-    image: 'category-sauce.png',
+    image: 'category-can.png',
     icon: 'database',
     color: '#ffad09',
   },
