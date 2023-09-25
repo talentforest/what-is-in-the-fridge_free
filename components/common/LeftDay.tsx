@@ -19,7 +19,7 @@ interface Props {
 
 function LeftDay({ size = 15, expiredDate, iconMark, dateMark }: Props) {
   const textColor = getTWColorByLeftDay(expiredDate);
-  const diffDate = +getDiffDate(expiredDate);
+  const diffDate = getDiffDate(expiredDate);
 
   return (
     <View>
@@ -40,7 +40,9 @@ function LeftDay({ size = 15, expiredDate, iconMark, dateMark }: Props) {
         <Text style={tw`${textColor} text-[${size}px] self-end py-0`}>
           {diffDate === 0
             ? '오늘까지'
-            : `${Math.abs(diffDate)}일 ${0 > diffDate ? '지남' : '남음'}`}
+            : `${Math.abs(diffDate).toFixed(0)}일 ${
+                0 > diffDate ? '지남' : '남음'
+              }`}
         </Text>
       </View>
 
