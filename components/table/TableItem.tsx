@@ -87,7 +87,10 @@ export default function TableItem({
             />
           )}
           <Text style={tw`${textColor}`}>
-            {cutLetter(initializedFood.name, shoppingListRoute ? 20 : 13)}
+            {cutLetter(
+              initializedFood.name,
+              route.name !== 'ExpiredFoods' ? 14 : 13
+            )}
           </Text>
 
           {existItemTag && (

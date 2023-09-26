@@ -10,7 +10,6 @@ import { formThreeSteps } from '../constant/formInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { changePantryFilter } from '../redux/slice/filterSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
-import { search } from '../redux/slice/searchedFoodSlice';
 
 import Container from '../components/common/Container';
 import TableFilters from '../components/table/TableFilters';
@@ -33,7 +32,6 @@ export default function PantryFoods() {
   useFocusEffect(
     useCallback(() => {
       return () => {
-        dispatch(search(''));
         if (pantryFilter !== '전체') {
           dispatch(changePantryFilter('전체'));
         }

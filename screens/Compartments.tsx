@@ -36,9 +36,8 @@ export default function Compartments({ route }: Route) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    navigation.setOptions({
-      title: space,
-    });
+    navigation.setOptions({ title: space });
+
     if (filter !== '전체') {
       dispatch(changeFilter('전체'));
     }

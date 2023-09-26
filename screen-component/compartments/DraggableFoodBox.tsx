@@ -37,16 +37,14 @@ export default function DraggableFoodBox({
     findCompartmentNum,
   });
 
-  const transformAnimation = dragMode
-    ? {
-        opacity: selectedFood.name === food.name ? 0.3 : 1,
-        transform: [{ rotate }],
-      }
-    : {};
+  const transformAnimation = {
+    opacity: selectedFood.name === food.name ? 0.3 : 1,
+    transform: [{ rotate }],
+  };
 
   return (
     <Animated.View
-      style={{ ...transformAnimation }}
+      style={dragMode ? transformAnimation : null}
       {...(dragMode ? { ...panResponder.panHandlers } : null)}
     >
       <TouchableOpacity

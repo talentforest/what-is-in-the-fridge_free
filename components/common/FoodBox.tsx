@@ -46,7 +46,7 @@ export default function FoodBox({ food }: Props) {
       }}
     >
       <View
-        style={tw.style(`${colorByExpiredDate()} rounded-lg justify-center items-center flex-row border border-slate-300 h-8 
+        style={tw.style(`${colorByExpiredDate()} h-8 rounded-lg justify-center items-center flex-row border border-slate-300
         ${expired(expiredDate) ? 'pr-2.5 pl-1.5' : 'px-2.5'}`)}
       >
         {expired(expiredDate) && (
@@ -63,7 +63,7 @@ export default function FoodBox({ food }: Props) {
             searchActive ? 'text-indigo-600' : ''
           } text-center`}
         >
-          {cutLetter(food.name, 10)}
+          {cutLetter(food.name, 9)}
         </Text>
       </View>
     </Animated.View>
