@@ -8,7 +8,7 @@ import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
-  category: Category | '';
+  category: Category;
   setCategoryOpen: (open: boolean) => void;
 }
 
@@ -18,21 +18,9 @@ export default function InputCategoryBtn({ category, setCategoryOpen }: Props) {
       onPress={() => setCategoryOpen(true)}
       style={tw`h-full border-r border-slate-300 flex-row items-center justify-center pl-1 pr-1.5`}
     >
-      {category === '' ? (
-        <Text style={tw`text-center text-slate-400 max-w-19 text-[15px]`}>
-          카테고리
-        </Text>
-      ) : (
-        <View style={tw`p-2`}>
-          <CategoryImageIcon kind='icon' category={category} size={20} />
-        </View>
-      )}
-      <Icon
-        name='unfold-more-horizontal'
-        type='MaterialCommunityIcons'
-        size={14}
-        color={LIGHT_GRAY}
-      />
+      <View style={tw`p-2`}>
+        <CategoryImageIcon kind='icon' category={category} size={20} />
+      </View>
     </TouchableOpacity>
   );
 }

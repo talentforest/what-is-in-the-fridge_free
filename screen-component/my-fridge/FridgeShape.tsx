@@ -45,6 +45,7 @@ export default function FridgeShape({ children }: { children: ReactNode }) {
           />
         )}
       </View>
+
       {/* 냉장고 탑 */}
       {PlatformIOS && (
         <View

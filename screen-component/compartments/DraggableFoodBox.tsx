@@ -38,13 +38,14 @@ export default function DraggableFoodBox({
   });
 
   const transformAnimation = {
+    backgroundColor: '#fff',
     opacity: selectedFood.name === food.name ? 0.3 : 1,
     transform: [{ rotate }],
   };
 
   return (
     <Animated.View
-      style={dragMode ? transformAnimation : null}
+      style={dragMode ? { ...transformAnimation } : null}
       {...(dragMode ? { ...panResponder.panHandlers } : null)}
     >
       <TouchableOpacity

@@ -4,8 +4,9 @@ import { getFormattedDate, getRelativeTime } from '../../util';
 import { useState } from 'react';
 import { BLUE } from '../../constant/colors';
 import { controlDateBtns } from '../../constant/controlDateBtns';
+import { shadowStyle } from '../../constant/shadowStyle';
 
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+// import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
 import ControlDateBtn from '../buttons/ControlDateBtn';
@@ -42,7 +43,10 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
 
         <TouchableOpacity
           onPress={() => setDatePickerVisible(true)}
-          style={tw`h-11 shadow-md border border-slate-300 bg-white rounded-lg flex-row items-center justify-between px-2`}
+          style={tw.style(
+            `h-11 border border-slate-300 bg-white rounded-lg flex-row items-center justify-between px-2`,
+            shadowStyle(3)
+          )}
         >
           <TextInput
             value={formattedDate}
@@ -75,7 +79,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
       />
 
       {/* 캘린더 픽커 모달 */}
-      <DateTimePickerModal
+      {/* <DateTimePickerModal
         isVisible={datePickerVisible}
         mode='date'
         locale='ko_KO'
@@ -85,7 +89,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
         onConfirm={onConfirm}
         onCancel={() => setDatePickerVisible(false)}
         minimumDate={new Date()}
-      />
+      /> */}
     </View>
   );
 }

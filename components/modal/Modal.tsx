@@ -62,55 +62,62 @@ export default function Modal({
       : 'bg-stone-50';
 
   return (
-    <RNModal
-      isVisible={modalVisible}
-      onBackdropPress={closeModal}
-      swipeDirection={['down']}
-      onSwipeComplete={closeModal}
-      propagateSwipe={true}
-      animationIn={animationIn}
-      animationOut={animationOut}
-      statusBarTranslucent={true}
-      style={tw.style(`m-0 justify-end ${centerStyle}`, style)}
-      hasBackdrop={hasBackdrop}
-      backdropOpacity={0.6}
+    <KeyboardAvoidingView
+      behavior={PlatformIOS ? 'padding' : 'height'}
+      keyboardVerticalOffset={PlatformIOS ? -130 : -100}
+      style={tw`${bgColor}`}
     >
-      <KeyboardAvoidingView
-        behavior={PlatformIOS ? 'padding' : 'height'}
-        keyboardVerticalOffset={PlatformIOS ? -130 : 0}
+      <RNModal
+        isVisible={modalVisible}
+        onBackdropPress={closeModal}
+        swipeDirection={['down']}
+        onSwipeComplete={closeModal}
+        propagateSwipe={true}
+        animationIn={animationIn}
+        animationOut={animationOut}
+        statusBarTranslucent={true}
+        style={tw.style(`m-0 justify-end ${centerStyle}`, style)}
+        hasBackdrop={hasBackdrop}
+        backdropOpacity={0.7}
       >
-        <SafeAreaView
-          style={tw.style(
-            `${
-              animationIn === 'fadeIn' ? 'rounded-2xl' : `rounded-t-2xl`
-            } ${bgColor}`,
-            Platform.select({
-              ios: {
-                shadowColor: '#333',
-                shadowOpacity: 0.4,
-                shadowOffset: { height: -3, width: 0 },
-                shadowRadius: 14,
-              },
-              android: {
-                elevation: 50,
-              },
-            })
-          )}
+        <KeyboardAvoidingView
+          enabled
+          behavior={PlatformIOS ? 'padding' : 'position'}
+          keyboardVerticalOffset={PlatformIOS ? -130 : -120}
         >
-          <SafeBottomAreaView
-            style={tw`justify-end ${
-              animationIn === 'fadeIn' ? '' : 'border border-b-0 pb-4'
-            }  rounded-t-2xl border-slate-300 max-h-[${MODAL_HEIGHT}px] `}
-          >
-            {animationIn !== 'fadeIn' && (
-              <SwipeHeader title={title} closeModal={closeModal} />
+          <SafeAreaView
+            style={tw.style(
+              `${
+                animationIn === 'fadeIn' ? 'rounded-2xl' : `rounded-t-2xl`
+              } ${bgColor}`,
+              Platform.select({
+                ios: {
+                  shadowColor: '#333',
+                  shadowOpacity: 0.4,
+                  shadowOffset: { height: -3, width: 0 },
+                  shadowRadius: 14,
+                },
+                android: {
+                  elevation: 50,
+                },
+              })
             )}
-            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-              <View>{children}</View>
-            </TouchableWithoutFeedback>
-          </SafeBottomAreaView>
-        </SafeAreaView>
-      </KeyboardAvoidingView>
-    </RNModal>
+          >
+            <SafeBottomAreaView
+              style={tw`justify-end ${
+                animationIn === 'fadeIn' ? '' : 'border border-b-0 pb-4'
+              }  rounded-t-2xl border-slate-300 max-h-[${MODAL_HEIGHT}px] `}
+            >
+              {animationIn !== 'fadeIn' && (
+                <SwipeHeader title={title} closeModal={closeModal} />
+              )}
+              <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <View>{children}</View>
+              </TouchableWithoutFeedback>
+            </SafeBottomAreaView>
+          </SafeAreaView>
+        </KeyboardAvoidingView>
+      </RNModal>
+    </KeyboardAvoidingView>
   );
 }

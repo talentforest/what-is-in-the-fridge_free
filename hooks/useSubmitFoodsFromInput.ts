@@ -21,9 +21,8 @@ export const useSubmitFoodsFromInput = () => {
 
   const onSubmitFavoriteListItem = (
     inputValue: string,
-    category: Category | '',
+    category: Category,
     setInputValue: (value: string) => void,
-    setCategory: (category: Category | '') => void,
     setShowCaution: (caution: boolean) => void
   ) => {
     if (inputValue === '') return Keyboard.dismiss();
@@ -31,7 +30,7 @@ export const useSubmitFoodsFromInput = () => {
     const existFavoriteFood = favoriteFoods.find(
       (food) => food.name === inputValue
     );
-    if (existFavoriteFood || category === '') return setShowCaution(true);
+    if (existFavoriteFood) return setShowCaution(true);
 
     if (findFood(inputValue)) {
       Alert.alert(

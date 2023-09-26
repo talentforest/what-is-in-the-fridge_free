@@ -4,6 +4,7 @@ import { TextInput } from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleMemoOpen } from '../../redux/slice/isMemoOpenSlice';
+import { shadowStyle } from '../../constant/shadowStyle';
 import FormLabel from './FormLabel';
 import tw from 'twrnc';
 
@@ -54,17 +55,20 @@ export default function MemoItem({ memo, changeInfo }: Props) {
         <View style={tw`flex-row items-center gap-1 px-1`}>
           <View
             style={tw.style(
-              `h-18 p-0.5 flex-1 bg-white border border-slate-300 shadow-md flex-row items-center rounded-lg`
+              `h-18 p-0.5 py-2 flex-1 bg-white border border-slate-300 flex-row items-center rounded-lg`,
+              shadowStyle(4)
             )}
           >
             <TextInput
-              style={tw.style(`bg-white border-0 h-full  flex-1 rounded-lg`, {
+              style={tw.style(`bg-white border-0 flex-1 h-full rounded-lg`, {
                 lineHeight: 22,
+                textAlignVertical: 'top',
               })}
               onChangeText={onChangeText}
               value={memo}
               placeholder='또다른 추가정보는 메모로 작성해주세요.'
               multiline
+              numberOfLines={3}
               returnKeyType='done'
               blurOnSubmit={true}
             />

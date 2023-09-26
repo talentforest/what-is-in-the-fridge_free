@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { Category } from '../../constant/foodCategories';
 import { DEVICE_WIDTH } from '../../util';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import CategoryImageIcon from '../common/CategoryImageIcon';
 import tw from 'twrnc';
@@ -30,8 +31,11 @@ export default function CategoryBox({
   return (
     <TouchableOpacity
       onPress={() => onCheckBoxPress(category)}
-      style={tw`shadow-md flex-row h-14 gap-1.5 border ${checkedColor} w-[${width}px] rounded-lg justify-between items-center 
-      pr-2 pl-${checked ? '5.5' : '3'}`}
+      style={tw.style(
+        `flex-row h-14 gap-1.5 border ${checkedColor} w-[${width}px] rounded-lg justify-between items-center 
+        pr-2 pl-${checked ? '5.5' : '3'}`,
+        shadowStyle(3)
+      )}
     >
       {checked && (
         <View style={tw`absolute -top-2 left-0.5`}>

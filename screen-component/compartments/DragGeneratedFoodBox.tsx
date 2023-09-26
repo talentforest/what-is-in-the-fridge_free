@@ -12,7 +12,7 @@ export default function DragGeneratedFoodBox({ food, dragPosition }: Props) {
   return (
     <Animated.View
       style={{
-        backgroundColor: 'fff',
+        backgroundColor: '#fff',
         zIndex: 100,
         borderRadius: 8,
         position: 'absolute',

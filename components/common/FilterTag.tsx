@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { Filter, FilterObj } from '../../util';
 import { GRAY } from '../../constant/colors';
 import { useHandleFilter } from '../../hooks';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import Icon from './native-component/Icon';
 import tw from 'twrnc';
@@ -50,7 +51,10 @@ export default function FilterTag({
   return (
     <TouchableOpacity
       onPress={() => onFilterPress(filter)}
-      style={tw`shadow-md bg-white flex-row items-center border px-2.5 py-1 gap-1.5 rounded-full ${color}`}
+      style={tw.style(
+        `bg-white flex-row items-center border px-2.5 py-1 gap-1.5 rounded-full ${color}`,
+        shadowStyle(3)
+      )}
       disabled={length === 0 && categoryFilter}
     >
       {icon !== '' && (

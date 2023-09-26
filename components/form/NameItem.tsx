@@ -3,6 +3,7 @@ import { Animated, Keyboard, View } from 'react-native';
 import { cutLetter, findMatchNameFoods } from '../../util';
 import { Text, TextInput, TouchableOpacity } from '../common/native-component';
 import { useGetFoodList, useFindFood, useSlideAnimation } from '../../hooks';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
@@ -46,7 +47,10 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
       <FormLabel label='식료품 이름' />
 
       <View
-        style={tw`bg-white border-slate-300 h-11 shadow-md border flex-row items-center rounded-lg`}
+        style={tw.style(
+          `bg-white border-slate-300 h-11 border flex-row items-center rounded-lg`,
+          shadowStyle(4)
+        )}
       >
         <TextInput
           style={tw`${
@@ -62,6 +66,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
           value={name}
           placeholder={`식료품 이름을 작성해주세요`}
           focusable={false}
+          onSubmitEditing={() => console.log('제출!')}
         />
       </View>
 
@@ -94,7 +99,10 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
               {matchedFoods.slice(0, FAV_ITEM_MAX).map((food) => (
                 <TouchableOpacity
                   key={food.id}
-                  style={tw`max-w-full h-7.5 shadow-md border border-blue-200 flex-row items-center bg-blue-100 px-2 gap-1 rounded-full`}
+                  style={tw.style(
+                    `max-w-full h-7.5 border border-blue-200 flex-row items-center bg-blue-100 px-2 gap-1 rounded-full`,
+                    shadowStyle(4)
+                  )}
                   onPress={() => {
                     changeInfo({ name: food.name });
                     Keyboard.dismiss();

@@ -45,7 +45,7 @@ export default function Form({
   } = useSwiperAnimation({ steps: formSteps });
 
   return (
-    <View>
+    <View style={tw``}>
       <FormStepHeader
         formSteps={formSteps}
         currentStep={currentStep as FormStep}
@@ -84,18 +84,18 @@ export default function Form({
                   )}
                   {name === '유통기한' && (
                     <FormSectionContainer>
-                      <ExpiredDateItem
+                      {/* <ExpiredDateItem
                         date={food.expiredDate}
                         changeInfo={changeInfo}
-                      />
+                      /> */}
                     </FormSectionContainer>
                   )}
-                  {name === '추가정보(선택)' && (
+                  {name === '선택정보' && (
                     <View style={tw`w-full gap-3 py-2 px-6`}>
-                      <PurchaseDateItem
+                      {/* <PurchaseDateItem
                         date={food.purchaseDate}
                         changeInfo={changeInfo}
-                      />
+                      /> */}
                       <QuantityItem
                         quantity={food.quantity}
                         changeInfo={changeInfo}

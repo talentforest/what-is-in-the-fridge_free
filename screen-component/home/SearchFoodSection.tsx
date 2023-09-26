@@ -10,6 +10,7 @@ import {
 import { Food } from '../../constant/foodInfo';
 import { useSlideAnimation } from '../../hooks';
 import { useFocusEffect } from '@react-navigation/native';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import Icon from '../../components/common/native-component/Icon';
 import SearchedItem from './SearchedItem';
@@ -53,14 +54,17 @@ export default function SearchFoodSection() {
   };
 
   return (
-    <View style={tw``}>
+    <View>
       <View>
         <TextInput
           value={keyword}
           onChangeText={setKeyword}
           placeholder='냉장고에 식료품이 있는지 검색해보세요.'
           blurOnSubmit={false}
-          style={tw`h-11 my-0.5 pl-10 border-slate-300 items-center justify-center`}
+          style={tw.style(
+            `h-11 my-0.5 pl-10 border-slate-300 items-center justify-center`,
+            shadowStyle(8)
+          )}
           onSubmitEditing={onSubmitEditing}
         />
         <TouchableOpacity

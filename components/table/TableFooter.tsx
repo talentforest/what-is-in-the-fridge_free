@@ -54,7 +54,7 @@ export default function TableFooter({
               checked={entireChecked}
               title='전체 선택'
             />
-            {!entireChecked && (
+            {!!list.length && (
               <Text style={tw`text-[14px] text-blue-700`}>
                 {list.length}개의 식료품 선택
               </Text>
