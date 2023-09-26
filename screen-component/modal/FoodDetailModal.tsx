@@ -74,7 +74,7 @@ export default function FoodDetailModal({
       ) : (
         <View style={tw`mt-6 px-6 gap-2`}>
           <View
-            style={tw`self-center gap-1.5 flex-row items-center border-t border-b border-blue-500 mb-4 py-1.5 pl-4 pr-5`}
+            style={tw`gap-2 self-center flex-row justify-center items-center border-t border-b border-slate-300 mb-4 mt-2 py-2 px-4`}
           >
             <Icon
               type='MaterialCommunityIcons'
