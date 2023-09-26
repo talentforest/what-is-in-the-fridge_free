@@ -27,7 +27,7 @@ export default function MyFridge() {
   return (
     <Container>
       <View style={tw`flex-1 items-center justify-center`}>
-        <View style={tw`max-h-[510px] flex-1 p-1 pb-3`}>
+        <View style={tw`max-h-[510px] w-full flex-1 p-1 pb-3`}>
           <Fridge />
         </View>
       </View>

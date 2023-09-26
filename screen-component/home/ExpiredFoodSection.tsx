@@ -8,6 +8,7 @@ import { cutLetter, expired } from '../../util';
 import { GRAY } from '../../constant/colors';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import SectionContainer from './SectionContainer';
 import LeftDay from '../../components/common/LeftDay';
@@ -33,7 +34,10 @@ export default function ExpiredFoodSection({ foodList }: Props) {
       <View style={tw`min-h-30 -mx-2 p-2 gap-1.5`}>
         {foodList.slice(0, MAX_NUM).map((food) => (
           <TouchableOpacity
-            style={tw`shadow-lg gap-1 flex-row items-center justify-between border border-slate-300 bg-white py-2 pr-4 pl-3 rounded-lg`}
+            style={tw.style(
+              `gap-1 flex-row items-center justify-between border border-slate-300 bg-white py-2 pr-4 pl-3 rounded-lg`,
+              shadowStyle(3)
+            )}
             key={food.id}
             onPress={() => navigation.navigate('ExpiredFoods')}
           >
@@ -44,7 +48,7 @@ export default function ExpiredFoodSection({ foodList }: Props) {
                 color='red'
               />
             )}
-            <Text style={tw`flex-1`}>{cutLetter(food.name, 16)}</Text>
+            <Text style={tw`flex-1`}>{cutLetter(food.name, 14)}</Text>
             <LeftDay expiredDate={food.expiredDate} size={15} />
           </TouchableOpacity>
         ))}

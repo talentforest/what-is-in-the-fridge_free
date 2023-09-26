@@ -39,15 +39,13 @@ export default function FoodBox({ food }: Props) {
         backgroundColor: searchActive ? '#dcd3ff' : '#fff',
         transform: [{ translateY }],
         opacity,
-        shadowColor: '#333',
-        shadowOffset: { height: 1, width: 0 },
-        shadowOpacity: 0.3,
-        shadowRadius: 2,
       }}
     >
       <View
-        style={tw.style(`${colorByExpiredDate()} h-8 rounded-lg justify-center items-center flex-row border border-slate-300
-        ${expired(expiredDate) ? 'pr-2.5 pl-1.5' : 'px-2.5'}`)}
+        style={tw.style(
+          `${colorByExpiredDate()} h-8 rounded-lg justify-center items-center flex-row border border-slate-300
+        ${expired(expiredDate) ? 'pr-2.5 pl-1.5' : 'px-2.5'}`
+        )}
       >
         {expired(expiredDate) && (
           <Icon

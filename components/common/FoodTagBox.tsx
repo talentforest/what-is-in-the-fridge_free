@@ -3,6 +3,7 @@ import { cutLetter } from '../../util';
 import { Text, TouchableOpacity } from './native-component';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
+import { shadowStyle } from '../../constant/shadowStyle';
 import tw from 'twrnc';
 
 interface Props {
@@ -16,7 +17,10 @@ export default function FoodTagBox({ food }: Props) {
     <TouchableOpacity
       onPress={() => navigation.navigate('ShoppingList')}
       key={food.id}
-      style={tw`shadow-lg py-1 px-3 bg-white border border-slate-300 gap-1 justify-center items-center flex-row rounded-lg`}
+      style={tw.style(
+        `py-1 px-3 bg-white border border-slate-300 gap-1 justify-center items-center flex-row rounded-lg`,
+        shadowStyle(5)
+      )}
     >
       <Text style={tw`text-center text-slate-900`}>
         {cutLetter(food.name, 14)}

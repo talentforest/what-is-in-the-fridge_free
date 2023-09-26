@@ -6,6 +6,7 @@ import { getCompartments } from '../../util';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 import { NavigateProp } from '../../navigation/Navigation';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import FridgeSpaceInfo from '../../screen-component/my-fridge/FridgeSpaceInfo';
 import FridgeInfo from '../../screen-component/fridge-setting/FridgeInfo';
@@ -57,9 +58,10 @@ export default function Fridge() {
         <View
           key={side}
           style={tw.style(
-            `rounded-b-md  ${freezerPosition} ${FRIDGE_COLOR}
+            `${freezerPosition} ${FRIDGE_COLOR}
             ${sideStyle(side)}`,
-            transformStyle(side)
+            transformStyle(side),
+            shadowStyle(8)
           )}
         >
           {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (

@@ -4,8 +4,9 @@ import { getFormattedDate } from '../../util';
 import { useEffect, useState } from 'react';
 import { BLUE } from '../../constant/colors';
 import { useSlideAnimation } from '../../hooks';
+import { shadowStyle } from '../../constant/shadowStyle';
 
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+// import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
 import tw from 'twrnc';
@@ -81,7 +82,10 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
             Keyboard.dismiss();
             setDatePickerVisible(true);
           }}
-          style={tw`h-11 mx-1 shadow-md px-2 border border-slate-300 bg-white rounded-lg flex-row items-center justify-between`}
+          style={tw.style(
+            `h-11 mx-1 px-2 border border-slate-300 bg-white rounded-lg flex-row items-center justify-between`,
+            shadowStyle(4)
+          )}
         >
           <TextInput
             value={formattedDate}
@@ -94,7 +98,7 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
       </Animated.View>
 
       {/* 캘린더 픽커 모달 */}
-      <DateTimePickerModal
+      {/* <DateTimePickerModal
         isVisible={datePickerVisible}
         mode='date'
         locale='ko_KO'
@@ -103,7 +107,7 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
         date={date === '' ? today : new Date(date)}
         onConfirm={onConfirm}
         onCancel={() => setDatePickerVisible(false)}
-      />
+      /> */}
     </View>
   );
 }

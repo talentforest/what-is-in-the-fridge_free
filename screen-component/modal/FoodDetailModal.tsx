@@ -83,10 +83,7 @@ export default function FoodDetailModal({
               color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
             />
             <Text
-              style={tw.style(
-                `text-stone-800 text-base text-center`,
-                FontGmarketSansBold
-              )}
+              style={tw.style(`text-stone-800 text-base`, FontGmarketSansBold)}
             >
               {name}
             </Text>

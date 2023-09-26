@@ -6,6 +6,7 @@ import { Food, initialFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
 import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
 import { useRoute } from '@react-navigation/native';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import CheckBox from '../common/CheckBox';
 import IndicatorExist from '../common/IndicatorExist';
@@ -72,9 +73,12 @@ export default function TableItem({
     >
       <TouchableOpacity
         onPress={() => onCheckBoxPress(initializedFood)}
-        style={tw`shadow-md border h-[${ITEM_HEIGHT - 8}px] ${
-          isCheckedItem ? 'border-blue-500' : 'border-slate-200'
-        } bg-white flex-row items-center gap-1.5 px-3`}
+        style={tw.style(
+          `border h-[${ITEM_HEIGHT - 8}px] ${
+            isCheckedItem ? 'border-blue-500' : 'border-slate-200'
+          } bg-white flex-row items-center gap-1.5 px-3`,
+          shadowStyle(4)
+        )}
       >
         <CheckBox checked={!!isCheckedItem} activeColor={BLUE} />
 
@@ -89,7 +93,12 @@ export default function TableItem({
           <Text style={tw`${textColor}`}>
             {cutLetter(
               initializedFood.name,
-              route.name !== 'ExpiredFoods' ? 14 : 13
+              route.name === 'ExpiredFoods'
+                ? 13
+                : (route.name === 'ShoppingList' && existItemTag) ||
+                  route.name === 'FavoriteFoods'
+                ? 14
+                : 18
             )}
           </Text>
 

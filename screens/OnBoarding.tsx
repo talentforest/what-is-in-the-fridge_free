@@ -96,39 +96,19 @@ export default function OnBoarding() {
                 </View>
 
                 {/* 이미지 */}
-                <View
-                  style={tw.style(
-                    `h-[${
-                      imgWidth * 2
-                    }px] overflow-hidden pt-6 items-center rounded-xl`,
-                    {
-                      ...Platform.select({
-                        ios: {
-                          width: '100%',
-                          shadowColor: '#444',
-                          shadowOpacity: 1,
-                          shadowRadius: 18,
-                          shadowOffset: {
-                            height: 12,
-                            width: 0,
-                          },
-                        },
-                        android: {
-                          elevation: 100,
-                          borderTopRightRadius: 60,
-                          borderTopLeftRadius: 60,
-                        },
-                      }),
-                    }
-                  )}
-                >
-                  {assets && (
+                {assets && (
+                  <View
+                    style={tw.style(
+                      `h-[${imgWidth * 2}px] w-[${imgWidth}px] 
+                      overflow-hidden mt-6 items-center rounded-[45px]`
+                    )}
+                  >
                     <Image
                       source={{ uri: getImgUri(image) }}
                       style={{ width: imgWidth, height: imgWidth * 2 }}
                     />
-                  )}
-                </View>
+                  </View>
+                )}
               </View>
             ))}
           </View>

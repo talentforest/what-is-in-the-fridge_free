@@ -4,6 +4,7 @@ import { DEVICE_WIDTH, cutLetter } from '../../util';
 import { Food } from '../../constant/foodInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import IndicatorExist from './IndicatorExist';
 import CategoryImageIcon from './CategoryImageIcon';
@@ -21,14 +22,15 @@ export default function FoodCard({ food }: Props) {
       key={food.id}
       onPress={() => navigation.navigate('FavoriteFoods')}
       style={tw.style(
-        `shadow-lg border border-slate-100 bg-white pt-2.5 px-1.5 pb-1.5 items-center justify-center 
-        w-[${DEVICE_WIDTH / 3 - 18}px] h-32 rounded-lg`
+        `border border-slate-100 bg-white pt-2.5 px-1.5 pb-1.5 items-center justify-center 
+        w-[${DEVICE_WIDTH / 3 - 18}px] h-32 rounded-lg`,
+        shadowStyle(5)
       )}
     >
       <CategoryImageIcon kind='icon' category={food.category} size={16} />
       <View style={tw`flex-1 mt-1 items-center justify-center`}>
         <Text style={tw.style(`text-center text-slate-800`)}>
-          {cutLetter(food.name, 12)}
+          {cutLetter(food.name, 9)}
         </Text>
       </View>
 

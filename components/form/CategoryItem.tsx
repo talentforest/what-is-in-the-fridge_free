@@ -5,6 +5,7 @@ import { Category } from '../../constant/foodCategories';
 import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import { useFindFood } from '../../hooks';
 import { ModalTitle } from '../modal/Modal';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import CategoryModal from '../../screen-component/modal/CategoryModal';
 import FormLabel from './FormLabel';
@@ -52,7 +53,10 @@ export default function CategoryItem({
           setCategoryOpen((prev) => !prev);
         }}
         disabled={disabledCategory}
-        style={tw`h-11 shadow-md border ${color} px-3 bg-white rounded-lg items-center flex-row gap-2 justify-between`}
+        style={tw.style(
+          `h-11 border ${color} px-3 bg-white rounded-lg items-center flex-row gap-2 justify-between`,
+          shadowStyle(3)
+        )}
       >
         <View style={tw`flex-row items-center gap-2`}>
           <CategoryImageIcon kind='icon' category={category} size={18} />

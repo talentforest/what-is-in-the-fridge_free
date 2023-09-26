@@ -33,7 +33,7 @@ export default function FavoriteFoods() {
   const [inputValue, setInputValue] = useState('');
   const [showCaution, setShowCaution] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const [category, setCategory] = useState<Category | ''>('');
+  const [category, setCategory] = useState<Category>('신선식품류');
 
   const { isFavoriteItem } = useFindFood();
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -81,7 +81,6 @@ export default function FavoriteFoods() {
       inputValue,
       category,
       setInputValue,
-      setCategory,
       setShowCaution
     );
     setAnimationState('slidedown-in');
@@ -144,7 +143,7 @@ export default function FavoriteFoods() {
               iconName='plus'
               placeholder='자주 먹는 식료품을 추가하세요.'
               onSubmitEditing={onSubmitEditing}
-              disabled={inputValue === '' || category === ''}
+              disabled={inputValue === ''}
             >
               <InputCategoryBtn
                 category={category}
@@ -159,20 +158,12 @@ export default function FavoriteFoods() {
                 paddingLeft: 12,
               }}
             >
-              {showCaution &&
-                (isFavoriteItem(inputValue) ? (
-                  <FormMessage
-                    message='이미 목록에 있는 식료품이에요.'
-                    color='orange'
-                  />
-                ) : (
-                  category === '' && (
-                    <FormMessage
-                      message='카테고리를 설정해주세요.'
-                      color='orange'
-                    />
-                  )
-                ))}
+              {showCaution && isFavoriteItem(inputValue) && (
+                <FormMessage
+                  message='이미 목록에 있는 식료품이에요.'
+                  color='orange'
+                />
+              )}
             </Animated.View>
           </View>
 

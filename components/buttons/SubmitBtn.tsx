@@ -1,3 +1,4 @@
+import { shadowStyle } from '../../constant/shadowStyle';
 import { Text, TouchableOpacity } from '../common/native-component';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
@@ -18,7 +19,10 @@ export default function SubmitBtn({
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw`bg-${color}-50 border-${color}-300 shadow-md py-2.5 flex-row items-center justify-center border gap-1.5 rounded-lg`}
+      style={tw.style(
+        `bg-${color}-50 border-${color}-300 py-2.5 flex-row items-center justify-center border gap-1.5 rounded-lg`,
+        shadowStyle(5)
+      )}
     >
       {iconName && (
         <Icon

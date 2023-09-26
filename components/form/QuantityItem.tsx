@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Text, TextInput, TouchableOpacity } from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
 import { PlatformIOS } from '../../constant/statusBarHeight';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import FormLabel from './FormLabel';
 import Icon from '../common/native-component/Icon';
@@ -59,7 +60,10 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
       >
         <View style={tw`flex-row items-center gap-1 px-1`}>
           <View
-            style={tw`h-11 flex-1 bg-white border border-slate-300 shadow-md flex-row items-center rounded-lg`}
+            style={tw.style(
+              `h-11 flex-1 bg-white border border-slate-300 flex-row items-center rounded-lg`,
+              shadowStyle(4)
+            )}
           >
             <TextInput
               style={tw`bg-white border-0 m-0.5 flex-1 rounded-lg`}
@@ -76,7 +80,10 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
               Keyboard.dismiss();
               onChangeText(`${+quantity + 1}`);
             }}
-            style={tw`h-11 w-12 gap-0.5 flex-row shadow-md bg-blue-100 border border-blue-300 rounded-lg justify-center items-center`}
+            style={tw.style(
+              `h-11 w-12 gap-0.5 flex-row bg-blue-100 border border-blue-300 rounded-lg justify-center items-center`,
+              shadowStyle(4)
+            )}
           >
             <Icon
               name='plus'
@@ -99,7 +106,10 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
               if (+quantity <= 1) return onChangeText('1');
               onChangeText(`${+quantity - 1}`);
             }}
-            style={tw`h-11 w-12 gap-0.5 flex-row shadow-md bg-red-100 border border-red-300 rounded-lg justify-center items-center`}
+            style={tw.style(
+              `h-11 w-12 gap-0.5 flex-row bg-red-100 border border-red-300 rounded-lg justify-center items-center`,
+              shadowStyle(4)
+            )}
           >
             <Icon
               name='minus'

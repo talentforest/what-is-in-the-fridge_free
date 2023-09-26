@@ -30,7 +30,7 @@ export default function FavoriteFoodSection({ foodList }: Props) {
       screen='FavoriteFoods'
       foodsLength={foodList.length}
     >
-      {foodList.length ? (
+      {foodList.length && (
         <View
           style={tw`flex-wrap flex-row gap-y-2 gap-x-2.5 mt-2.5 -mx-1 px-1`}
         >
@@ -52,12 +52,6 @@ export default function FavoriteFoodSection({ foodList }: Props) {
               <Text style={tw`text-xs text-slate-600`}>더보기</Text>
             </TouchableOpacity>
           )}
-        </View>
-      ) : (
-        <View
-          style={tw`shadow-lg items-center my-2 h-40 border border-slate-300 rounded-xl bg-white justify-center flex-1`}
-        >
-          <EmptySign message='자주 먹는 식료품이 없어요.' />
         </View>
       )}
     </SectionContainer>

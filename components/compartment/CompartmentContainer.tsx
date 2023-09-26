@@ -9,7 +9,7 @@ interface Props {
 export default function CompartmentContainer({ children }: Props) {
   return (
     <View
-      style={tw`bg-stone-300 border border-stone-400 shadow-xl p-2.5 gap-2.5 flex-1 w-full m-auto self-center justify-center rounded-lg`}
+      style={tw`bg-stone-300 border border-stone-400 p-2.5 gap-2.5 flex-1 w-full m-auto self-center justify-center rounded-lg`}
     >
       {children}
     </View>

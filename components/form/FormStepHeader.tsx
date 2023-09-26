@@ -11,7 +11,7 @@ interface Props {
 
 export default function FormStepHeader({ formSteps, currentStep }: Props) {
   return (
-    <View style={tw`flex-row items-center mx-6 mt-1 py-2`}>
+    <View style={tw`flex-row items-center mx-6 my-1 py-2`}>
       {formSteps.map(({ step, name }) => (
         <View key={step} style={tw`flex-row items-center justify-center`}>
           {step !== 1 && (

@@ -5,6 +5,7 @@ import { GRAY } from '../../constant/colors';
 import { useSelector } from '../../redux/hook';
 import { cutLetter, findMatchNameFoods } from '../../util';
 import { ScrollView } from 'react-native';
+import { shadowStyle } from '../../constant/shadowStyle';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
@@ -52,10 +53,13 @@ export default function TableRecommendedFoods({
       >
         {recommendList.slice(0, LIST_MAX_NUM).map((food) => (
           <TouchableOpacity
-            style={tw`flex-row gap-0.5 items-center border border-slate-300 pl-2 pr-3 py-0.5 bg-white shadow-md rounded-full`}
-            onPress={() => {
-              onSubmitShoppingListItem(food.name, setAnimationState);
-            }}
+            style={tw.style(
+              `flex-row gap-0.5 items-center border border-slate-300 pl-2 pr-3 py-0.5 bg-white rounded-full`,
+              shadowStyle(3)
+            )}
+            onPress={() =>
+              onSubmitShoppingListItem(food.name, setAnimationState)
+            }
             key={food.id}
           >
             <Icon
