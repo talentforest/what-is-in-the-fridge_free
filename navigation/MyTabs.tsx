@@ -3,7 +3,12 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import { DEEP_GRAY, HEADER_BGCOLOR, TAB_BG_COLOR } from '../constant/colors';
+import {
+  BLUE,
+  DEEP_GRAY,
+  HEADER_BGCOLOR,
+  TAB_BG_COLOR,
+} from '../constant/colors';
 import { PlatformIOS } from '../constant/statusBarHeight';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -22,14 +27,14 @@ const Tab = createBottomTabNavigator();
 
 const tabBarOptions = {
   allowFontScaling: false,
-  tabBarActiveTintColor: '#fadd80',
-  tabBarInactiveTintColor: '#fff',
+  tabBarActiveTintColor: '#6088ff',
+  tabBarInactiveTintColor: '#aaa',
   tabBarIconStyle: {
     flex: 1,
   },
   tabBarLabelStyle: {
-    paddingBottom: PlatformIOS ? 10 : 15,
-    fontSize: 11,
+    paddingBottom: PlatformIOS ? 10 : 7,
+    fontSize: 10,
     ...FontGmarketSansRegular,
   },
 };
@@ -46,7 +51,7 @@ const headerOptions: BottomTabNavigationOptions = {
     backgroundColor: HEADER_BGCOLOR,
   },
   headerTitleStyle: {
-    fontSize: 18,
+    fontSize: 17,
     ...FontGmarketSansRegular,
   },
   headerTitleAlign: 'center',
@@ -62,8 +67,9 @@ export default function MyTabs() {
       screenOptions={{
         ...tabBarOptions,
         tabBarStyle: {
+          borderTopWidth: 1,
           backgroundColor: TAB_BG_COLOR,
-          height: PlatformIOS ? 62 + bottomPadding : 70,
+          height: PlatformIOS ? 60 + bottomPadding : 50,
         },
       }}
     >
@@ -96,7 +102,6 @@ export default function MyTabs() {
           ),
           tabBarLabel: '나의 팬트리',
           title: '나의 팬트리',
-
           ...headerOptions,
         }}
       />
@@ -110,7 +115,7 @@ export function TabIcon({ name, color }: { name: string; color: string }) {
       type={name === 'home' ? 'Ionicons' : 'MaterialCommunityIcons'}
       name={name}
       color={color}
-      size={16}
+      size={15}
     />
   );
 }
