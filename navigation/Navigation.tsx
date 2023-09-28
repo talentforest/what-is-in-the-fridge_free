@@ -50,7 +50,7 @@ const options: NativeStackNavigationOptions = {
   ),
   headerBackVisible: false, // android
   headerTitleStyle: {
-    fontSize: 18,
+    fontSize: 17,
     ...FontGmarketSansRegular,
   },
 };

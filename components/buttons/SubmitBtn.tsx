@@ -20,8 +20,8 @@ export default function SubmitBtn({
     <TouchableOpacity
       onPress={onPress}
       style={tw.style(
-        `bg-${color}-50 border-${color}-300 py-2.5 flex-row items-center justify-center border gap-1.5 rounded-lg`,
-        shadowStyle(5)
+        `bg-${color}-100 border-${color}-200 py-3 flex-row items-center justify-center border gap-1.5 rounded-lg`,
+        shadowStyle(3)
       )}
     >
       {iconName && (

@@ -15,6 +15,7 @@ import Container from '../components/common/Container';
 import CompartmentContainer from '../components/compartment/CompartmentContainer';
 import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
+import { TAB_BLUE_BG_COLOR } from '../constant/colors';
 
 type RouteParams = {
   space: Space;
@@ -36,8 +37,12 @@ export default function Compartments({ route }: Route) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    navigation.setOptions({ title: space });
-
+    navigation.setOptions({
+      title: space,
+      headerStyle: {
+        backgroundColor: TAB_BLUE_BG_COLOR,
+      },
+    });
     if (filter !== '전체') {
       dispatch(changeFilter('전체'));
     }

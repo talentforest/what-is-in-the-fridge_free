@@ -9,7 +9,6 @@ import Navigation from './navigation/Navigation';
 import Splash from './screens/Splash';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
-import { SafeBottomAreaView } from './components/common/native-component';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);

@@ -32,7 +32,7 @@ export default function TextInputRoundedBox({
     <View
       style={tw.style(
         `h-11 mt-1 w-full border border-slate-300 rounded-full items-center flex-row bg-white pl-2`,
-        shadowStyle(5)
+        shadowStyle(3)
       )}
     >
       {children}
@@ -50,7 +50,7 @@ export default function TextInputRoundedBox({
       <TouchableOpacity
         disabled={disabled}
         onPress={onSubmitEditing}
-        style={tw`h-full rounded-xl px-2 pr-3 items-center justify-center`}
+        style={tw`h-full rounded-xl pl-2 pr-3 items-center justify-center`}
       >
         <Icon
           type={iconName === 'search' ? 'Ionicons' : 'MaterialCommunityIcons'}

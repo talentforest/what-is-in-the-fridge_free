@@ -5,11 +5,11 @@ export const shadowStyle = (spread: number) => {
     ? {
         shadowColor: '#666',
         shadowOpacity: 0.15,
-        shadowOffset: { height: 3, width: 0 },
-        shadowRadius: spread - 1,
+        shadowOffset: { height: 2, width: 0 },
+        shadowRadius: spread,
       }
     : {
         elevation: spread,
-        shadowColor: '#666',
+        shadowColor: '#aaa',
       };
 };
