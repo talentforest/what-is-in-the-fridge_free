@@ -53,6 +53,7 @@ const options: NativeStackNavigationOptions = {
     fontSize: 17,
     ...FontGmarketSansRegular,
   },
+  animation: 'slide_from_right',
 };
 
 const Navigation = () => {
@@ -75,7 +76,7 @@ const Navigation = () => {
       <Stack.Screen
         name='Compartments'
         component={Compartments}
-        options={options}
+        options={{ ...options, animation: 'default' }}
       />
       <Stack.Screen
         name='FavoriteFoods'
