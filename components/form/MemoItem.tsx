@@ -5,6 +5,7 @@ import { useSlideAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleMemoOpen } from '../../redux/slice/isMemoOpenSlice';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { PlatformIOS } from '../../constant/statusBarHeight';
 import FormLabel from './FormLabel';
 import tw from 'twrnc';
 
@@ -55,8 +56,10 @@ export default function MemoItem({ memo, changeInfo }: Props) {
         <View style={tw`flex-row items-center gap-1 px-1`}>
           <View
             style={tw.style(
-              `h-18 p-0.5 py-2 flex-1 bg-white border border-slate-300 flex-row items-center rounded-lg`,
-              shadowStyle(4)
+              `h-18 px-0.5 py-${
+                PlatformIOS ? '0.5' : '3'
+              } flex-1 bg-white border border-slate-300 flex-row items-center rounded-lg`,
+              shadowStyle(3)
             )}
           >
             <TextInput

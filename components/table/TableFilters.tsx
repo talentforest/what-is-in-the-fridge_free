@@ -95,11 +95,10 @@ export default function TableFilters({
       {modalVisible && categoryFilters && (
         <Modal
           title='카테고리별 필터링'
-          setModalVisible={setModalVisible}
-          modalVisible={modalVisible}
-          hasBackdrop
+          closeModal={() => setModalVisible(false)}
+          isVisible={modalVisible}
         >
-          <View style={tw`p-4 flex-row flex-wrap gap-1`}>
+          <View style={tw`p-4 flex-row flex-wrap gap-1 bg-stone-100 pb-6`}>
             {categoryFilters.map(({ category, color, icon }) => (
               <FilterTag
                 key={category}

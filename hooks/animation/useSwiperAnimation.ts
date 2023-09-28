@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, PanResponder } from 'react-native';
+import { Animated, Keyboard, PanResponder } from 'react-native';
 import { OnboardingStep } from '../../constant/onboardingInfo';
 import { FormStep } from '../../constant/formInfo';
 import { DEVICE_WIDTH } from '../../util';
@@ -18,7 +18,7 @@ export const useSwiperAnimation = ({ steps }: Props) => {
   const currentStepRef = useRef(steps[0]);
   const stepTranslateX = useRef(new Animated.Value(0)).current;
 
-  const formWidth = -DEVICE_WIDTH + 2;
+  const formWidth = -DEVICE_WIDTH;
 
   useEffect(() => {
     currentStepRef.current = currentStep;
@@ -45,9 +45,11 @@ export const useSwiperAnimation = ({ steps }: Props) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: (_, { dx, dy }) => {
+        Keyboard.dismiss();
         return dx > 2 || dx < -2 || dy > 2 || dy < -2;
       },
       onMoveShouldSetPanResponderCapture: (_, { dx, dy }) => {
+        Keyboard.dismiss();
         return dx > 2 || dx < -2 || dy > 2 || dy < -2;
       },
       onPanResponderGrant: () => {
