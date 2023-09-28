@@ -1,10 +1,6 @@
 import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
-import { GRAY } from '../../constant/colors';
-import {
-  Text,
-  TouchableOpacity,
-} from '../../components/common/native-component';
+import { TouchableOpacity } from '../../components/common/native-component';
 import { CompartmentNum } from '../../constant/fridgeInfo';
 import { formThreeSteps } from '../../constant/formInfo';
 import { select } from '../../redux/slice/selectedFoodSlice';
@@ -13,7 +9,6 @@ import { DEVICE_HEIGHT } from '../../util';
 
 import EmptySign from '../../components/common/EmptySign';
 import Modal from '../../components/modal/Modal';
-import Icon from '../../components/common/native-component/Icon';
 import FoodBox from '../../components/common/FoodBox';
 import FoodDetailModal from './FoodDetailModal';
 import tw from 'twrnc';
@@ -39,24 +34,12 @@ export default function ExpandedCompartmentModal({
 
   return (
     <Modal
-      modalVisible={expandCompartment}
-      setModalVisible={setExpandCompartment}
-      hasBackdrop
+      title={`${compartmentNum}칸`}
+      isVisible={expandCompartment}
+      closeModal={() => setExpandCompartment(false)}
       animationIn='fadeIn'
-      animationOut='fadeOut'
     >
-      <View style={tw`pt-3 px-5 flex-row justify-between items-center`}>
-        <Text style={tw`text-lg`}>{compartmentNum}칸</Text>
-        <TouchableOpacity
-          style={tw`px-3 -mr-3`}
-          onPress={() => setExpandCompartment(false)}
-        >
-          <Icon type='Ionicons' name='close' size={24} color={GRAY} />
-        </TouchableOpacity>
-      </View>
-      <View
-        style={tw`m-4 mt-2 bg-stone-100 rounded-lg border border-slate-100`}
-      >
+      <View style={tw`rounded-b-2xl bg-stone-200 px-2`}>
         {!!foodList.length ? (
           <ScrollView
             style={tw`h-[${DEVICE_HEIGHT * 0.5}px]`}
@@ -82,6 +65,7 @@ export default function ExpandedCompartmentModal({
           </View>
         )}
       </View>
+
       {modalVisible && (
         <FoodDetailModal
           modalVisible={modalVisible}

@@ -1,6 +1,4 @@
 import { View } from 'react-native';
-import { Text } from '../../components/common/native-component';
-import { FontGmarketSansBold } from '../../constant/fonts';
 import { Category, foodCategories } from '../../constant/foodCategories';
 import { useImageLoad } from '../../hooks';
 
@@ -42,16 +40,12 @@ export default function CategoryModal({
 
   return (
     <Modal
-      modalVisible={modalVisible}
-      setModalVisible={setModalVisible}
-      style={tw`justify-center mx-4`}
+      title='카테고리 선택'
+      isVisible={modalVisible}
+      closeModal={() => setModalVisible(false)}
       animationIn='fadeIn'
-      animationOut='fadeOut'
-      hasBackdrop
     >
-      <View style={tw`mx-5 my-6 gap-4`}>
-        <Text style={tw.style('', FontGmarketSansBold)}>카테고리 선택</Text>
-
+      <View style={tw`px-5 py-6 gap-4 rounded-b-2xl bg-white`}>
         {onCheckBoxPress && (
           <View style={tw`flex-row flex-wrap gap-2 gap-y-2.5 justify-between`}>
             {foodCategories.map(

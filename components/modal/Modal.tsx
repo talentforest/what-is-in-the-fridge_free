@@ -2,15 +2,13 @@ import { ReactNode } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
-  Platform,
-  SafeAreaView,
   StyleProp,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { SafeBottomAreaView } from '../common/native-component';
 import { DEVICE_HEIGHT } from '../../util';
 import { PlatformIOS } from '../../constant/statusBarHeight';
+import { CompartmentNum } from '../../constant/fridgeInfo';
 
 import RNModal from 'react-native-modal';
 import SwipeHeader from './SwipeHeader';
@@ -24,16 +22,17 @@ export type ModalTitle =
   | '팬트리 식료품 추가'
   | '팬트리 식료품 수정'
   | '나의 식료품 찾기'
-  | '카테고리별 필터링';
+  | '카테고리별 필터링'
+  | `${CompartmentNum}칸`
+  | '카테고리 선택';
 
 interface Props {
-  modalVisible: boolean;
-  setModalVisible: (modalVisible: boolean) => void;
-  title?: ModalTitle;
+  isVisible: boolean;
+  closeModal: () => void;
   children: ReactNode;
+  title?: ModalTitle;
   style?: StyleProp<any>;
   animationIn?: 'fadeIn' | 'slideInUp';
-  animationOut?: 'fadeOut' | 'slideOutDown';
   hasBackdrop?: boolean;
 }
 
@@ -41,83 +40,49 @@ export default function Modal({
   style,
   title,
   children,
-  modalVisible,
-  setModalVisible,
+  isVisible,
+  closeModal,
   animationIn = 'slideInUp',
-  animationOut = 'slideOutDown',
-  hasBackdrop = false,
+  hasBackdrop = true,
 }: Props) {
   const MODAL_HEIGHT = DEVICE_HEIGHT * 0.85;
 
-  const closeModal = () => setModalVisible(false);
-
-  const centerStyle = animationIn === 'fadeIn' ? 'justify-center mx-4' : '';
-  const bgColor =
-    title === '식료품 상세 정보'
-      ? 'bg-white'
-      : title === '팬트리 식료품 추가'
-      ? 'bg-stone-100'
-      : animationIn === 'fadeIn'
-      ? 'bg-stone-200'
-      : 'bg-stone-50';
+  const positionStyle =
+    animationIn === 'fadeIn' ? 'justify-center mx-4' : 'justify-end';
 
   return (
-    <KeyboardAvoidingView
-      behavior={PlatformIOS ? 'padding' : 'height'}
-      keyboardVerticalOffset={PlatformIOS ? -130 : -100}
-      style={tw`${bgColor}`}
+    <RNModal
+      isVisible={isVisible}
+      onBackdropPress={closeModal}
+      onSwipeComplete={closeModal}
+      swipeDirection={['down']}
+      propagateSwipe={true}
+      animationIn={animationIn}
+      animationOut={animationIn === 'fadeIn' ? 'fadeOut' : 'slideOutDown'}
+      statusBarTranslucent={true}
+      hasBackdrop={hasBackdrop}
+      backdropOpacity={0.7}
+      style={tw.style(`m-0 ${positionStyle}`, style)}
     >
-      <RNModal
-        isVisible={modalVisible}
-        onBackdropPress={closeModal}
-        swipeDirection={['down']}
-        onSwipeComplete={closeModal}
-        propagateSwipe={true}
-        animationIn={animationIn}
-        animationOut={animationOut}
-        statusBarTranslucent={true}
-        style={tw.style(`m-0 justify-end ${centerStyle}`, style)}
-        hasBackdrop={hasBackdrop}
-        backdropOpacity={0.7}
+      <KeyboardAvoidingView
+        enabled
+        behavior='padding'
+        keyboardVerticalOffset={PlatformIOS ? -130 : -140}
       >
-        <KeyboardAvoidingView
-          enabled
-          behavior={PlatformIOS ? 'padding' : 'position'}
-          keyboardVerticalOffset={PlatformIOS ? -130 : -120}
+        <View
+          style={tw`max-h-[${MODAL_HEIGHT}px] rounded-2xl shadow-2xl bg-stone-100 `}
         >
-          <SafeAreaView
-            style={tw.style(
-              `${
-                animationIn === 'fadeIn' ? 'rounded-2xl' : `rounded-t-2xl`
-              } ${bgColor}`,
-              Platform.select({
-                ios: {
-                  shadowColor: '#333',
-                  shadowOpacity: 0.4,
-                  shadowOffset: { height: -3, width: 0 },
-                  shadowRadius: 14,
-                },
-                android: {
-                  elevation: 50,
-                },
-              })
-            )}
-          >
-            <SafeBottomAreaView
-              style={tw`justify-end ${
-                animationIn === 'fadeIn' ? '' : 'border border-b-0 pb-4'
-              }  rounded-t-2xl border-slate-300 max-h-[${MODAL_HEIGHT}px] `}
-            >
-              {animationIn !== 'fadeIn' && (
-                <SwipeHeader title={title} closeModal={closeModal} />
-              )}
-              <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                <View>{children}</View>
-              </TouchableWithoutFeedback>
-            </SafeBottomAreaView>
-          </SafeAreaView>
-        </KeyboardAvoidingView>
-      </RNModal>
-    </KeyboardAvoidingView>
+          <SwipeHeader
+            title={title}
+            closeModal={closeModal}
+            animationIn={animationIn}
+          />
+
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View>{children}</View>
+          </TouchableWithoutFeedback>
+        </View>
+      </KeyboardAvoidingView>
+    </RNModal>
   );
 }

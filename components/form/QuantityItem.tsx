@@ -62,7 +62,7 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
           <View
             style={tw.style(
               `h-11 flex-1 bg-white border border-slate-300 flex-row items-center rounded-lg`,
-              shadowStyle(4)
+              shadowStyle(3)
             )}
           >
             <TextInput

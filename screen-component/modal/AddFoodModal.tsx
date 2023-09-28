@@ -3,6 +3,7 @@ import { FoodLocation } from '../../constant/fridgeInfo';
 import { FormStep } from '../../constant/formInfo';
 import { useAddFood } from '../../hooks';
 import { initialFood, initialPantryFood } from '../../constant/foodInfo';
+import { PlatformIOS } from '../../constant/statusBarHeight';
 
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
@@ -30,26 +31,27 @@ export default function AddFoodModal({
   return (
     <Modal
       title='새로운 식료품 추가'
-      setModalVisible={setModalVisible}
-      modalVisible={modalVisible}
-      hasBackdrop
+      closeModal={() => setModalVisible(false)}
+      isVisible={modalVisible}
     >
-      <Form
-        title='새로운 식료품 추가'
-        editableName={true}
-        food={newFood}
-        changeInfo={changeFoodInfo}
-        formSteps={formSteps}
-      />
-
-      <View style={tw`mx-6`}>
-        <SubmitBtn
-          color='blue'
-          btnName='식료품 추가하기'
-          onPress={() => {
-            onAddSubmit(setModalVisible);
-          }}
+      <View style={tw`bg-stone-100 pb-${PlatformIOS ? '12' : '6'}`}>
+        <Form
+          title='새로운 식료품 추가'
+          editableName={true}
+          food={newFood}
+          changeInfo={changeFoodInfo}
+          formSteps={formSteps}
         />
+
+        <View style={tw`mx-6`}>
+          <SubmitBtn
+            color='blue'
+            btnName='식료품 추가하기'
+            onPress={() => {
+              onAddSubmit(setModalVisible);
+            }}
+          />
+        </View>
       </View>
     </Modal>
   );

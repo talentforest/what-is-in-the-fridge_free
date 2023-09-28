@@ -2,6 +2,7 @@ import { FormStep } from '../../constant/formInfo';
 import { useAddShoppingListFood } from '../../hooks';
 import { Food } from '../../constant/foodInfo';
 import { View } from 'react-native';
+import { PlatformIOS } from '../../constant/statusBarHeight';
 
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
@@ -26,22 +27,24 @@ export default function AddShoppingListFoodModal({
   return (
     <Modal
       title='장보기 목록 식료품 추가'
-      setModalVisible={setModalVisible}
-      modalVisible={modalVisible}
+      isVisible={modalVisible}
+      closeModal={() => setModalVisible(false)}
     >
-      <Form
-        title='장보기 목록 식료품 추가'
-        food={selectedFood}
-        changeInfo={onChange}
-        formSteps={formSteps}
-      />
-
-      <View style={tw`mx-6`}>
-        <SubmitBtn
-          btnName='식료품 추가하기'
-          onPress={() => onSubmit(setModalVisible, setCheckedList)}
-          color='blue'
+      <View style={tw`bg-stone-100 pb-${PlatformIOS ? '12' : '6'}`}>
+        <Form
+          title='장보기 목록 식료품 추가'
+          food={selectedFood}
+          changeInfo={onChange}
+          formSteps={formSteps}
         />
+
+        <View style={tw`mx-6`}>
+          <SubmitBtn
+            btnName='식료품 추가하기'
+            onPress={() => onSubmit(setModalVisible, setCheckedList)}
+            color='blue'
+          />
+        </View>
       </View>
     </Modal>
   );

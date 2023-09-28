@@ -60,7 +60,7 @@ export default function Form({
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={tw`flex-row`}>
               {formSteps.map(({ step, name }) => (
-                <View key={step} style={tw`w-full`}>
+                <View key={step} style={tw`w-full border border-stone-100`}>
                   {name === '기본정보' && (
                     <FormSectionContainer>
                       <NameItem
@@ -84,18 +84,18 @@ export default function Form({
                   )}
                   {name === '유통기한' && (
                     <FormSectionContainer>
-                      {/* <ExpiredDateItem
+                      <ExpiredDateItem
                         date={food.expiredDate}
                         changeInfo={changeInfo}
-                      /> */}
+                      />
                     </FormSectionContainer>
                   )}
                   {name === '선택정보' && (
                     <View style={tw`w-full gap-3 py-2 px-6`}>
-                      {/* <PurchaseDateItem
+                      <PurchaseDateItem
                         date={food.purchaseDate}
                         changeInfo={changeInfo}
-                      /> */}
+                      />
                       <QuantityItem
                         quantity={food.quantity}
                         changeInfo={changeInfo}
