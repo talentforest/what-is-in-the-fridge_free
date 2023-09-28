@@ -5,12 +5,16 @@ import { useState } from 'react';
 import { BLUE } from '../../constant/colors';
 import { controlDateBtns } from '../../constant/controlDateBtns';
 import { shadowStyle } from '../../constant/shadowStyle';
+import RNDateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
+import { PlatformIOS } from '../../constant/statusBarHeight';
 
-// import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
 import ControlDateBtn from '../buttons/ControlDateBtn';
 import MessageBox from '../common/MessageBox';
+import DatePickerModal from '../modal/DatePickerModal';
 import tw from 'twrnc';
 
 interface Props {
@@ -19,21 +23,25 @@ interface Props {
 }
 
 export default function ExpiredDateItem({ date, changeInfo }: Props) {
+  const formattedDate = getFormattedDate(new Date(date), 'YYYY-MM-DD');
+
   const [datePickerVisible, setDatePickerVisible] = useState(false);
-
-  const today = new Date();
-  const expiredDate = date === '' ? today : new Date(date);
-  const formattedDate = getFormattedDate(expiredDate, 'YYYY년 MM월 DD일');
-
-  const onConfirm = (date: Date) => {
-    setDatePickerVisible(false);
-    changeDate(date);
-  };
+  const [expiredDate, setExpiredDate] = useState(formattedDate);
 
   const changeDate = (date: Date | string) => {
-    return changeInfo({
-      expiredDate: date === '' ? '' : getFormattedDate(date, 'YYYY-MM-DD'),
-    });
+    const expiredDate = getFormattedDate(date, 'YYYY-MM-DD');
+    return changeInfo({ expiredDate });
+  };
+
+  const onChange = (event: DateTimePickerEvent) => {
+    const { timestamp } = event.nativeEvent;
+
+    if (timestamp) {
+      const selectedDate = getFormattedDate(new Date(timestamp), 'YYYY-MM-DD');
+      setExpiredDate(selectedDate);
+    }
+
+    setDatePickerVisible(false);
   };
 
   return (
@@ -49,7 +57,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
           )}
         >
           <TextInput
-            value={formattedDate}
+            value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
             editable={false}
             pointerEvents='none'
             style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
@@ -79,17 +87,36 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
       />
 
       {/* 캘린더 픽커 모달 */}
-      {/* <DateTimePickerModal
-        isVisible={datePickerVisible}
-        mode='date'
-        locale='ko_KO'
-        cancelTextIOS='취소'
-        confirmTextIOS='확인'
-        date={expiredDate}
-        onConfirm={onConfirm}
-        onCancel={() => setDatePickerVisible(false)}
-        minimumDate={new Date()}
-      /> */}
+      {datePickerVisible &&
+        (PlatformIOS ? (
+          <DatePickerModal
+            isVisible={datePickerVisible}
+            closeModal={() => setDatePickerVisible(false)}
+            changeInfo={() => changeInfo({ expiredDate })}
+          >
+            <RNDateTimePicker
+              value={new Date(date)}
+              onChange={onChange}
+              minimumDate={new Date()}
+              display='spinner'
+              mode='date'
+              locale='ko_KO'
+              themeVariant='light'
+              positiveButton={{ label: '확인', textColor: BLUE }}
+            />
+          </DatePickerModal>
+        ) : (
+          <RNDateTimePicker
+            value={new Date(date)}
+            onChange={onChange}
+            minimumDate={new Date()}
+            display='spinner'
+            mode='date'
+            locale='ko_KO'
+            themeVariant='light'
+            positiveButton={{ label: '확인', textColor: BLUE }}
+          />
+        ))}
     </View>
   );
 }
