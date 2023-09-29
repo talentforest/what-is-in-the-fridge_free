@@ -10,7 +10,7 @@ interface Props {
 export default function StepIndicator({
   stepLength,
   currentStepId,
-  size = 3,
+  size = 2.5,
 }: Props) {
   const activeStyle = (stepId: number) => {
     return currentStepId === stepId

@@ -112,28 +112,30 @@ export default function FavoriteFoods() {
               }
             />
 
-            <TableFooter
-              list={checkedList}
-              entireChecked={allChecked && !!checkedList.length}
-              onEntirePress={() => onEntireBoxPress(filteredList)}
-            >
-              <SquareIconBtn
-                icon='tag-minus'
-                disabled={checkedList.length === 0}
-                onPress={() =>
-                  onDeleteFoodPress(
-                    setAnimationState,
-                    animationState,
-                    favoriteFoods
-                  )
-                }
-              />
-              <SquareIconBtn
-                icon='basket-plus'
-                disabled={checkedList.length === 0}
-                onPress={onAddShoppingListBtnPress}
-              />
-            </TableFooter>
+            <View style={tw`-my-3`}>
+              <TableFooter
+                list={checkedList}
+                entireChecked={allChecked && !!checkedList.length}
+                onEntirePress={() => onEntireBoxPress(filteredList)}
+              >
+                <SquareIconBtn
+                  icon='tag-minus'
+                  disabled={checkedList.length === 0}
+                  onPress={() =>
+                    onDeleteFoodPress(
+                      setAnimationState,
+                      animationState,
+                      favoriteFoods
+                    )
+                  }
+                />
+                <SquareIconBtn
+                  icon='basket-plus'
+                  disabled={checkedList.length === 0}
+                  onPress={onAddShoppingListBtnPress}
+                />
+              </TableFooter>
+            </View>
           </TableContainer>
 
           <View style={tw`mt-2`}>

@@ -28,7 +28,7 @@ export default function Splash({
     async function prepareApp() {
       try {
         await new Promise((resolve) => setTimeout(resolve, 3000));
-        // persistor.purge();
+        persistor.purge();
       } catch (e) {
         console.warn(e);
       } finally {
@@ -48,7 +48,7 @@ export default function Splash({
 
   return (
     <View
-      style={tw`flex-1 items-center justify-center bg-blue-300`}
+      style={tw`flex-1 items-center justify-center bg-[#2563eb]`}
       onLayout={onLayoutRootView}
     >
       {assets && (
@@ -57,7 +57,7 @@ export default function Splash({
           style={{ width: 200, height: 200 }}
         />
       )}
-      <Text style={tw`mt-12 text-xl`}>냉장고에 뭐가 있지?</Text>
+      <Text style={tw`mt-12 text-xl text-white`}>냉장고에 뭐가 있지?</Text>
     </View>
   );
 }

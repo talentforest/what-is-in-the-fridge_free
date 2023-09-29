@@ -1,9 +1,9 @@
 import {
   BLUE,
-  DEEP_YELLOW,
   GRAY,
   GREEN,
   INDIGO,
+  ORANGE,
   ORANGE_RED,
   RED,
 } from '../../../constant/colors';
@@ -28,7 +28,7 @@ export default function Icon({
 }: IconProps) {
   const iconColor =
     color === 'amber'
-      ? DEEP_YELLOW
+      ? ORANGE
       : color === 'blue'
       ? BLUE
       : color === 'indigo'

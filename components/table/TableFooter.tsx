@@ -24,7 +24,7 @@ export default function TableFooter({
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 44,
+    toValue: 60,
     active: !!list.length && showBtn,
   });
 
@@ -34,7 +34,7 @@ export default function TableFooter({
         shadowColor: '#aaa',
         shadowOpacity: 0.2,
         shadowRadius: 10,
-        shadowOffset: { height: -15, width: 0 },
+        shadowOffset: { height: -13, width: 0 },
       })}
     >
       <Animated.View
@@ -45,23 +45,25 @@ export default function TableFooter({
       >
         <View
           style={tw.style(
-            `flex-row justify-between items-center w-full pl-6.5 pr-5 gap-1 pt-1.5 border-t border-slate-300`
+            `flex-row justify-between items-center w-full h-full pl-6.5 pr-5 border-t border-slate-300`
           )}
         >
-          <View style={tw`flex-row items-center gap-2`}>
+          <View style={tw`flex-row items-center justify-center`}>
             <CheckBoxItem
               onPress={onEntirePress}
               checked={entireChecked}
               title='전체 선택'
             />
             {!!list.length && (
-              <Text style={tw`text-[14px] text-blue-700`}>
-                {list.length}개의 식료품 선택
+              <Text style={tw`text-sm ml-3 text-blue-600`}>
+                {list.length}개 선택
               </Text>
             )}
           </View>
 
-          <View style={tw`flex-row justify-between`}>{children}</View>
+          <View style={tw`flex-row justify-between items-center`}>
+            {children}
+          </View>
         </View>
       </Animated.View>
     </View>

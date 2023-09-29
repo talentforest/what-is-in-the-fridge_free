@@ -7,7 +7,6 @@ import {
 import { FontGmarketSansBold } from '../../constant/fonts';
 import { NavigateProp } from '../../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';
-import { shadowStyle } from '../../constant/shadowStyle';
 
 import ShowMoreBtn from '../../components/buttons/ShowMoreBtn';
 import EmptySign from '../../components/common/EmptySign';
@@ -32,11 +31,7 @@ export default function SectionContainer({
   const navigation = useNavigation<NavigateProp>();
 
   return (
-    <View
-      style={tw`${
-        title === '장보기 식료품' ? '' : 'border-t'
-      } border-slate-300 pt-8`}
-    >
+    <View style={tw`pt-8`}>
       <TouchableOpacity
         onPress={() => navigation.navigate(screen)}
         style={tw`flex-row justify-between`}
@@ -54,8 +49,7 @@ export default function SectionContainer({
         <TouchableOpacity
           onPress={() => navigation.navigate(screen)}
           style={tw.style(
-            `items-center h-40 mt-2 mb-12 border border-slate-300 rounded-xl bg-white justify-center`,
-            shadowStyle(8)
+            `items-center h-40 mt-2 mb-12 border-t border-slate-300 justify-center`
           )}
         >
           <EmptySign message={`${title}이 없어요.`} />

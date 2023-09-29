@@ -43,7 +43,7 @@ export default function FoodBox({ food }: Props) {
     >
       <View
         style={tw.style(
-          `${colorByExpiredDate()} h-8 rounded-lg justify-center items-center flex-row border border-slate-300
+          `${colorByExpiredDate()} h-8.5 rounded-lg justify-center items-center flex-row border border-slate-300
         ${expired(expiredDate) ? 'pr-2.5 pl-1.5' : 'px-2.5'}`
         )}
       >

@@ -7,6 +7,7 @@ import { select } from '../../redux/slice/selectedFoodSlice';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleDragMode } from '../../redux/slice/dragModeSlice';
 import FoodBox from '../../components/common/FoodBox';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   food: Food;
@@ -41,11 +42,16 @@ export default function DraggableFoodBox({
     backgroundColor: '#fff',
     opacity: selectedFood.name === food.name ? 0.3 : 1,
     transform: [{ rotate }],
+    ...shadowStyle(3),
   };
 
   return (
     <Animated.View
-      style={dragMode ? { ...transformAnimation } : null}
+      style={
+        dragMode
+          ? { ...transformAnimation }
+          : { backgroundColor: '#fff', borderRadius: 8, ...shadowStyle(3) }
+      }
       {...(dragMode ? { ...panResponder.panHandlers } : null)}
     >
       <TouchableOpacity

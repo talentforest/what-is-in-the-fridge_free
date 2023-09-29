@@ -11,11 +11,11 @@ interface Props {
 export default function MessageBox({ message, color = 'gray' }: Props) {
   return (
     <View style={tw`flex-row items-start gap-1 mb-1`}>
-      <View style={tw`mt-1.4`}>
+      <View style={tw`mt-1`}>
         <Icon
-          type='MaterialCommunityIcons'
-          name='message-outline'
-          size={14}
+          type='Ionicons'
+          name='chatbox-ellipses-outline'
+          size={15}
           color={color}
         />
       </View>

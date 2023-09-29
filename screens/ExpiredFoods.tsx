@@ -1,3 +1,4 @@
+import { View } from 'react-native';
 import { SafeBottomAreaView } from '../components/common/native-component';
 import { entireFilterObj, expiredFilters, spaceFilters } from '../util';
 import {
@@ -15,6 +16,7 @@ import TableBody from '../components/table/TableBody';
 import TableFooter from '../components/table/TableFooter';
 import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
+import tw from 'twrnc';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -65,24 +67,26 @@ export default function ExpiredFoods() {
             }
           />
 
-          <TableFooter
-            list={checkedList}
-            entireChecked={allChecked && !!checkedList.length}
-            onEntirePress={() => onEntireBoxPress(filteredList)}
-          >
-            <SquareIconBtn
-              icon='basket-plus'
-              disabled={checkedList.length === 0}
-              onPress={onAddShoppingListBtnPress}
-            />
-            <SquareIconBtn
-              onPress={() =>
-                onDeleteExpiredFoodPress(setAnimationState, animationState)
-              }
-              icon='trash-can'
-              disabled={checkedList.length === 0}
-            />
-          </TableFooter>
+          <View style={tw`-my-3`}>
+            <TableFooter
+              list={checkedList}
+              entireChecked={allChecked && !!checkedList.length}
+              onEntirePress={() => onEntireBoxPress(filteredList)}
+            >
+              <SquareIconBtn
+                icon='basket-plus'
+                disabled={checkedList.length === 0}
+                onPress={onAddShoppingListBtnPress}
+              />
+              <SquareIconBtn
+                onPress={() =>
+                  onDeleteExpiredFoodPress(setAnimationState, animationState)
+                }
+                icon='trash-can'
+                disabled={checkedList.length === 0}
+              />
+            </TableFooter>
+          </View>
         </TableContainer>
       </Container>
     </SafeBottomAreaView>

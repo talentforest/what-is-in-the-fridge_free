@@ -16,12 +16,12 @@ interface Props {
 export default function InfoBox({ label, iconName, children }: Props) {
   return (
     <View
-      style={tw`gap-1 py-2.5 flex-row items-start border-slate-300 ${
+      style={tw`py-2.5 flex-row items-start border-slate-300 ${
         label === '카테고리' ? '' : 'border-t'
       }`}
     >
       {/* 표 제목 */}
-      <View style={tw`flex-row gap-1 mr-1 items-center w-22`}>
+      <View style={tw`flex-row gap-0.5 items-center w-22`}>
         <Icon
           type='MaterialCommunityIcons'
           name={iconName}

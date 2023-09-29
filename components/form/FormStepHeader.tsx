@@ -11,7 +11,7 @@ interface Props {
 
 export default function FormStepHeader({ formSteps, currentStep }: Props) {
   return (
-    <View style={tw`flex-row items-center mx-6 my-1 py-2`}>
+    <View style={tw`flex-row items-center mx-6 my-1 py-2 min-h-10`}>
       {formSteps.map(({ step, name }) => (
         <View key={step} style={tw`flex-row items-center justify-center`}>
           {step !== 1 && (
@@ -34,7 +34,7 @@ export default function FormStepHeader({ formSteps, currentStep }: Props) {
             />
             <Text
               style={tw`${
-                currentStep.step === step ? 'text-amber-700' : 'text-slate-500'
+                currentStep.step === step ? 'text-amber-600' : 'text-slate-500'
               } text-[13px]`}
             >
               {name}

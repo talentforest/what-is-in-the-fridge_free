@@ -58,8 +58,7 @@ export default function Fridge() {
         <View
           key={side}
           style={tw.style(
-            `${freezerPosition} ${FRIDGE_COLOR}
-            ${sideStyle(side)}`,
+            `${freezerPosition} ${sideStyle(side)}`,
             transformStyle(side),
             shadowStyle(8)
           )}

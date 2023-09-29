@@ -13,6 +13,7 @@ import { CompartmentNum } from '../../constant/fridgeInfo';
 import RNModal from 'react-native-modal';
 import SwipeHeader from './SwipeHeader';
 import tw from 'twrnc';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 export type ModalTitle =
   | '장보기 목록 식료품 추가'
@@ -70,7 +71,9 @@ export default function Modal({
         keyboardVerticalOffset={PlatformIOS ? -130 : -140}
       >
         <View
-          style={tw`max-h-[${MODAL_HEIGHT}px] rounded-2xl shadow-2xl bg-stone-100 `}
+          style={tw.style(
+            `max-h-[${MODAL_HEIGHT}px] shadow-2xl rounded-2xl bg-stone-100`
+          )}
         >
           <SwipeHeader
             title={title}

@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { TextInput, TouchableOpacity } from '../common/native-component';
-import { getFormattedDate, getRelativeTime } from '../../util';
+import { getDiffDate, getFormattedDate, getRelativeTime } from '../../util';
 import { useState } from 'react';
 import { BLUE } from '../../constant/colors';
 import { controlDateBtns } from '../../constant/controlDateBtns';
@@ -77,14 +77,16 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
         </View>
       </View>
 
-      <MessageBox
-        color='green'
-        message={`오늘${
-          getRelativeTime(expiredDate) === '오늘'
-            ? '까지'
-            : `로부터 ${getRelativeTime(expiredDate)}까지`
-        } 섭취할 수 있습니다.`}
-      />
+      {getDiffDate(date) > 0 && (
+        <MessageBox
+          color='green'
+          message={`오늘${
+            getRelativeTime(expiredDate) === '오늘'
+              ? '까지'
+              : `로부터 ${getRelativeTime(expiredDate)}까지`
+          } 섭취할 수 있습니다.`}
+        />
+      )}
 
       {/* 캘린더 픽커 모달 */}
       {datePickerVisible &&

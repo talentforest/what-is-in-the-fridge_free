@@ -45,9 +45,11 @@ export default function CategoryModal({
       closeModal={() => setModalVisible(false)}
       animationIn='fadeIn'
     >
-      <View style={tw`px-5 py-6 gap-4 rounded-b-2xl bg-white`}>
+      <View style={tw`p-3 rounded-b-2xl bg-white`}>
         {onCheckBoxPress && (
-          <View style={tw`flex-row flex-wrap gap-2 gap-y-2.5 justify-between`}>
+          <View
+            style={tw`flex-row flex-wrap gap-1.5 gap-y-2.5 justify-between`}
+          >
             {foodCategories.map(
               ({ category }) =>
                 assets && (

@@ -66,7 +66,6 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
           value={name}
           placeholder={`식료품 이름을 작성해주세요`}
           focusable={false}
-          onSubmitEditing={() => console.log('제출!')}
         />
       </View>
 
@@ -85,7 +84,7 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
       {!isFavoriteItem(name) && editable && (
         <Animated.View
           style={{
-            height: height,
+            height,
             overflow: 'hidden',
             marginBottom: !!matchedFoods?.length ? -15 : 0,
           }}
