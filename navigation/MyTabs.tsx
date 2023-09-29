@@ -27,7 +27,7 @@ const Tab = createBottomTabNavigator();
 
 const tabBarOptions = {
   allowFontScaling: false,
-  tabBarActiveTintColor: '#6088ff',
+  tabBarActiveTintColor: BLUE,
   tabBarInactiveTintColor: '#aaa',
   tabBarIconStyle: {
     flex: 1,

@@ -21,7 +21,7 @@ export const getTWColorByLeftDay = (expiredDate: string) => {
   return expired(expiredDate)
     ? 'text-red-600'
     : leftThreeDays(expiredDate)
-    ? 'text-amber-700'
+    ? 'text-amber-600'
     : 'text-green-600';
 };
 

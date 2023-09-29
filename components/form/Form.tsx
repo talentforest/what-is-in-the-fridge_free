@@ -45,7 +45,7 @@ export default function Form({
   } = useSwiperAnimation({ steps: formSteps });
 
   return (
-    <View style={tw``}>
+    <View>
       <FormStepHeader
         formSteps={formSteps}
         currentStep={currentStep as FormStep}

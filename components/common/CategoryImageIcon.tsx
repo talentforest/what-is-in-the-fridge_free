@@ -34,7 +34,11 @@ export default function CategoryImageIcon({
         <Icon
           name={findCategory(category)?.icon || ''}
           size={size}
-          type='MaterialCommunityIcons'
+          type={
+            findCategory(category)?.icon === 'pizza'
+              ? 'Ionicons'
+              : 'MaterialCommunityIcons'
+          }
           color={iconColor || GRAY}
         />
       )}

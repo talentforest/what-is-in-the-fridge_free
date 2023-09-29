@@ -74,25 +74,23 @@ export default function ShoppingList() {
               setAnimationState={setAnimationState}
             />
 
-            <View>
-              <TableFooter
-                list={checkedList}
-                entireChecked={allChecked && !!checkedList.length}
-                onEntirePress={() => onEntireBoxPress(shoppingList)}
-              >
-                <SquareIconBtn
-                  icon='trash-can'
-                  disabled={checkedList.length === 0}
-                  onPress={() => {
-                    onDeleteFoodPress(
-                      setAnimationState,
-                      animationState,
-                      shoppingList
-                    );
-                  }}
-                />
-              </TableFooter>
-            </View>
+            <TableFooter
+              list={checkedList}
+              entireChecked={allChecked && !!checkedList.length}
+              onEntirePress={() => onEntireBoxPress(shoppingList)}
+            >
+              <SquareIconBtn
+                icon='trash-can'
+                disabled={checkedList.length === 0}
+                onPress={() => {
+                  onDeleteFoodPress(
+                    setAnimationState,
+                    animationState,
+                    shoppingList
+                  );
+                }}
+              />
+            </TableFooter>
           </TableContainer>
 
           <TextInputRoundedBox

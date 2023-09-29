@@ -16,14 +16,14 @@ export default function SquareIconBtn({ onPress, disabled, icon }: Props) {
       onPress={onPress}
       disabled={disabled}
       style={tw.style(
-        `border border-slate-300 bg-white ml-2 h-8.5 w-8.5 items-center justify-center rounded-lg`,
+        `border border-slate-200 bg-white h-11 w-11 ml-2 mb-0.5 items-center justify-center rounded-xl`,
         shadowStyle(3)
       )}
     >
       <Icon
         type='MaterialCommunityIcons'
         name={icon}
-        size={20}
+        size={21}
         color={icon.includes('plus') ? BLUE : 'amber'}
       />
     </TouchableOpacity>

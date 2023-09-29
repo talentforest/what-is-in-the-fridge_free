@@ -11,7 +11,7 @@ interface Props {
 
 export default function LeftDayInfoBox({ expiredDate }: Props) {
   return (
-    <View style={tw`flex-row items-center gap-1.5`}>
+    <View style={tw`flex-row items-center gap-1`}>
       <Text style={tw`text-slate-800 text-[15px]`}>
         {getFormattedDate(expiredDate, 'YYYY년 MM월 DD일')}
       </Text>

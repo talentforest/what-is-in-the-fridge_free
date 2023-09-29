@@ -1,3 +1,4 @@
+import { SCDream5 } from '../../constant/fonts';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { Text, TouchableOpacity } from '../common/native-component';
 import Icon from '../common/native-component/Icon';
@@ -7,7 +8,7 @@ interface Props {
   btnName: string;
   onPress: () => void;
   iconName?: string;
-  color: 'blue' | 'amber';
+  color: 'blue' | 'gray';
 }
 
 export default function SubmitBtn({
@@ -20,7 +21,7 @@ export default function SubmitBtn({
     <TouchableOpacity
       onPress={onPress}
       style={tw.style(
-        `bg-${color}-100 border-${color}-200 py-3 flex-row items-center justify-center border gap-1.5 rounded-lg`,
+        `bg-${color}-600 py-3 flex-row items-center justify-center gap-1.5 rounded-lg`,
         shadowStyle(3)
       )}
     >
@@ -28,11 +29,13 @@ export default function SubmitBtn({
         <Icon
           name={iconName}
           type='MaterialCommunityIcons'
-          color={color}
+          color='#fff'
           size={17}
         />
       )}
-      <Text style={tw`text-${color}-700 text-center text-base`}>{btnName}</Text>
+      <Text style={tw`text-white text-[15px] text-center pt-0.8`}>
+        {btnName}
+      </Text>
     </TouchableOpacity>
   );
 }

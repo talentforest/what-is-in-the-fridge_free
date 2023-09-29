@@ -13,7 +13,7 @@ interface Props {
 
 export default function SwipeHeader({ title, closeModal, animationIn }: Props) {
   return (
-    <View style={tw`bg-stone-100 rounded-t-2xl`}>
+    <View style={tw.style(`bg-stone-100 rounded-t-2xl`)}>
       {animationIn === 'slideInUp' ? (
         <View
           style={tw.style(`border rounded-t-2xl border-slate-300 px-6 py-3`)}

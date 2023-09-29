@@ -49,8 +49,9 @@ export default function CategoryItem({
       <FormLabel label='카테고리' />
       <TouchableOpacity
         onPress={() => {
-          Keyboard.dismiss();
-          setCategoryOpen((prev) => !prev);
+          if (!Keyboard.isVisible()) {
+            setCategoryOpen((prev) => !prev);
+          }
         }}
         disabled={disabledCategory}
         style={tw.style(

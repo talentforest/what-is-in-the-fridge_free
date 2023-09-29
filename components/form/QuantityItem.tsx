@@ -1,9 +1,9 @@
 import { Animated, Keyboard, View } from 'react-native';
 import { useEffect, useState } from 'react';
-import { Text, TextInput, TouchableOpacity } from '../common/native-component';
+import { TextInput, TouchableOpacity } from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
-import { PlatformIOS } from '../../constant/statusBarHeight';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { SCDream5 } from '../../constant/fonts';
 
 import FormLabel from './FormLabel';
 import Icon from '../common/native-component/Icon';
@@ -66,7 +66,10 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
             )}
           >
             <TextInput
-              style={tw`bg-white border-0 m-0.5 flex-1 rounded-lg`}
+              style={tw.style(
+                `bg-white border-0 m-0.5 flex-1 rounded-lg`,
+                SCDream5
+              )}
               onChangeText={onChangeText}
               value={quantity}
               focusable={false}
@@ -81,23 +84,16 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
               onChangeText(`${+quantity + 1}`);
             }}
             style={tw.style(
-              `h-11 w-12 gap-0.5 flex-row bg-blue-100 border border-blue-300 rounded-lg justify-center items-center`,
+              `h-11 w-12 gap-0.5 flex-row border border-slate-300 bg-stone-700 rounded-lg justify-center items-center`,
               shadowStyle(4)
             )}
           >
             <Icon
               name='plus'
               type='MaterialCommunityIcons'
-              size={16}
-              color='blue'
+              size={20}
+              color='#fff'
             />
-            <Text
-              style={tw.style(`text-blue-600 text-lg`, {
-                fontFamily: PlatformIOS ? 'Arial' : 'Roboto',
-              })}
-            >
-              1
-            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -107,23 +103,16 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
               onChangeText(`${+quantity - 1}`);
             }}
             style={tw.style(
-              `h-11 w-12 gap-0.5 flex-row bg-red-100 border border-red-300 rounded-lg justify-center items-center`,
+              `h-11 w-12 gap-0.5 flex-row border border-slate-300 bg-slate-500 rounded-lg justify-center items-center`,
               shadowStyle(4)
             )}
           >
             <Icon
               name='minus'
               type='MaterialCommunityIcons'
-              size={16}
-              color='red'
+              size={20}
+              color='#fff'
             />
-            <Text
-              style={tw.style(`text-red-600 text-lg`, {
-                fontFamily: PlatformIOS ? 'Arial' : 'Roboto',
-              })}
-            >
-              1
-            </Text>
           </TouchableOpacity>
         </View>
       </Animated.View>

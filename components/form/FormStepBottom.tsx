@@ -27,11 +27,7 @@ export default function FormStepBottom({
             moveStep={() => moveStep('prev', currentStep)}
             active={currentStep > 1}
           />
-          <StepIndicator
-            size={2.5}
-            stepLength={stepLength}
-            currentStepId={currentStep}
-          />
+          <StepIndicator stepLength={stepLength} currentStepId={currentStep} />
           <ArrowBtn
             type='next'
             moveStep={() => moveStep('next', currentStep)}
@@ -40,11 +36,7 @@ export default function FormStepBottom({
         </View>
       ) : (
         <View style={tw`py-5`}>
-          <StepIndicator
-            size={2.5}
-            stepLength={stepLength}
-            currentStepId={currentStep}
-          />
+          <StepIndicator stepLength={stepLength} currentStepId={currentStep} />
         </View>
       )}
     </View>

@@ -2,13 +2,15 @@ import { Animated, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import FoodBox from '../../components/common/FoodBox';
 import tw from 'twrnc';
+import { useSelector } from '../../redux/hook';
 
 interface Props {
-  food: Food;
   dragPosition: Animated.ValueXY;
 }
 
-export default function DragGeneratedFoodBox({ food, dragPosition }: Props) {
+export default function DragGeneratedFoodBox({ dragPosition }: Props) {
+  const { selectedFood } = useSelector((state) => state.selectedFood);
+
   return (
     <Animated.View
       style={{
@@ -23,7 +25,7 @@ export default function DragGeneratedFoodBox({ food, dragPosition }: Props) {
       }}
     >
       <View style={tw`absolute top-0 rounded-lg bg-white`}>
-        <FoodBox food={food} />
+        <FoodBox food={selectedFood} />
       </View>
     </Animated.View>
   );

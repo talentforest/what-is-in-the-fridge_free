@@ -32,16 +32,11 @@ export default function FridgeSetting() {
     <SafeBottomAreaView>
       <Container>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={tw`border border-slate-300 mb-6 rounded-lg bg-white`}>
-            <View
-              style={tw`bg-blue-200 justify-center items-center py-3 rounded-t-lg`}
-            >
-              <Text style={tw`text-blue-700`}>나의 냉장고 모습</Text>
-            </View>
-            <View style={tw`flex-1 w-[45%] h-60 mx-auto my-3`}>
+          <SelectContainter title='나의 냉장고 모습 결과'>
+            <View style={tw`flex-1 w-[45%] h-60 mx-auto my-2`}>
               <Fridge />
             </View>
-          </View>
+          </SelectContainter>
           <SelectContainter title='나의 냉장고 타입'>
             {['일반형 냉장고'].map((type) => (
               <CheckBoxItem

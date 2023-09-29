@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { Space } from '../../constant/fridgeInfo';
-import { FontGmarketSansBold } from '../../constant/fonts';
+import { FontGmarketSansBold, SCDream8 } from '../../constant/fonts';
 import { GRAY } from '../../constant/colors';
 import { useGetFoodList } from '../../hooks';
 
@@ -34,14 +34,19 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
   ];
 
   return (
-    <View style={tw`h-full p-1 py-2 bg-white rounded-lg`}>
+    <View style={tw`h-full p-2 bg-white rounded-lg`}>
       {/* 냉장고 공간 이름 */}
       <View
-        style={tw`border-b border-slate-400 pb-2 mb-3 flex-row justify-between items-center`}
+        style={tw`border-b border-slate-300 pb-1 mb-2 flex-row justify-between items-center`}
       >
         <View style={tw`flex-row items-center gap-1.5`}>
-          <Icon name='caretright' type='AntDesign' size={12} color={GRAY} />
-          <Text style={tw`text-slate-600`}>{space}</Text>
+          <Icon
+            name='information-outline'
+            type='MaterialCommunityIcons'
+            size={17}
+            color={GRAY}
+          />
+          <Text style={tw`text-slate-600 pt-0.8`}>{space}</Text>
         </View>
       </View>
 
@@ -49,14 +54,12 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
       <View style={tw`gap-1 flex-1`}>
         {spaceInfo.map(({ name, foodList }) => (
           <View key={name} style={tw`flex-row items-center justify-between`}>
-            <Text
-              style={tw`text-[15px] ${getColor(foodList(space).length, name)}`}
-            >
+            <Text style={tw`text-sm ${getColor(foodList(space).length, name)}`}>
               {name}
             </Text>
             <Text
               style={tw.style(
-                `text-[15px] ${getColor(foodList(space).length, name)} `,
+                `text-sm ${getColor(foodList(space).length, name)} `,
                 FontGmarketSansBold
               )}
             >

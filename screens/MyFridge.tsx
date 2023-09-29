@@ -7,6 +7,7 @@ import Container from '../components/common/Container';
 import Fridge from '../components/common/Fridge';
 import HeaderBtn from '../components/buttons/HeaderBtn';
 import tw from 'twrnc';
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../util';
 
 export default function MyFridge() {
   const navigation = useNavigation<NavigateProp>();
@@ -24,10 +25,15 @@ export default function MyFridge() {
     });
   }, []);
 
+  const fridgeWidth = DEVICE_WIDTH * 0.9;
+
   return (
     <Container>
       <View style={tw`flex-1 items-center justify-center`}>
-        <View style={tw`max-h-[510px] w-full flex-1 p-1 pb-3`}>
+        <View
+          style={tw`max-h-[660px] max-w-[400px]
+          h-[${fridgeWidth * 1.65}px] w-[${fridgeWidth}px] p-1 pb-3`}
+        >
           <Fridge />
         </View>
       </View>

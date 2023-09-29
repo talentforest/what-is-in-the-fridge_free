@@ -42,9 +42,7 @@ export default function TableRecommendedFoods({
 
   return !!recommendList.length ? (
     <View>
-      <Text style={tw`text-sm text-slate-600 ml-1 mb-1`}>
-        장보기 추천 식료품
-      </Text>
+      <Text style={tw`text-sm text-slate-600 ml-1`}>장보기 추천 식료품</Text>
 
       <ScrollView
         horizontal

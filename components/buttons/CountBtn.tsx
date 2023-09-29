@@ -10,22 +10,22 @@ interface Props {
 }
 
 export default function CountBtn({ type, onPress, active }: Props) {
-  const COLOR_STRING = type === 'minus' ? 'orange' : 'blue';
-  const SIZE = `h-6 w-6`;
+  const COLOR_STRING = type === 'minus' ? 'amber' : 'blue';
+  const SIZE = `h-6.5 w-6.5`;
   const ACTIVE_STYLE = active
-    ? `border border-${COLOR_STRING}-400 bg-${COLOR_STRING}-500`
+    ? `border border-${COLOR_STRING}-200 bg-${COLOR_STRING}-600`
     : 'border border-slate-300 bg-slate-100';
 
   return (
     <TouchableOpacity
-      style={tw`items-center justify-center rounded-full ${SIZE} ${ACTIVE_STYLE}`}
+      style={tw`items-center shadow-sm justify-center rounded-md ${SIZE} ${ACTIVE_STYLE}`}
       onPress={onPress}
     >
       <Icon
         type='MaterialCommunityIcons'
         name={type === 'minus' ? 'minus' : 'plus'}
         color={active ? '#fff' : LIGHT_GRAY}
-        size={18}
+        size={17}
       />
     </TouchableOpacity>
   );

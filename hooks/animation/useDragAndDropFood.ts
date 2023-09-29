@@ -12,6 +12,7 @@ import { select } from '../../redux/slice/selectedFoodSlice';
 import { toggleDragMode } from '../../redux/slice/dragModeSlice';
 import { changeCompartmentNum } from '../../redux/slice/compartmentNumToDropSlice';
 import { Animated } from 'react-native';
+import { PlatformIOS } from '../../constant/statusBarHeight';
 
 interface Props {
   food: Food;
@@ -39,13 +40,21 @@ export const useDragAndDropFood = ({
         dispatch(select(food));
         dragPosition.setValue({
           x: gestureState.moveX - 50,
-          y: gestureState.moveY - 400 - insets.bottom - insets.top,
+          y:
+            gestureState.moveY -
+            (PlatformIOS ? 400 : 500) -
+            insets.bottom -
+            insets.top,
         });
       },
       onPanResponderMove: (_, gestureState) => {
         dragPosition.setValue({
           x: gestureState.moveX - 30,
-          y: gestureState.moveY - 400 - insets.bottom - insets.top,
+          y:
+            gestureState.moveY -
+            (PlatformIOS ? 400 : 500) -
+            insets.bottom -
+            insets.top,
         });
 
         const compartmentNumToDrop = findCompartmentNum(gestureState.moveY);

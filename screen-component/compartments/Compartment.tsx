@@ -73,7 +73,7 @@ export default function Compartment({
 
       {/* 드래깅 시 생성되는 음식박스 */}
       {isDragging && dragMode && (
-        <DragGeneratedFoodBox food={selectedFood} dragPosition={dragPosition} />
+        <DragGeneratedFoodBox dragPosition={dragPosition} />
       )}
 
       {expandCompartment && (
