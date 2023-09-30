@@ -8,14 +8,14 @@ import tw from 'twrnc';
 interface Props {
   btn: ControlDateBtnType;
   date: string;
-  changeDate: (date: Date, type: '유통기한') => void;
+  changeDate: (date: Date, type: '소비기한') => void;
 }
 
 export default function ControlDateBtn({ btn, changeDate, date }: Props) {
   return (
     <TouchableOpacity
       onPress={() =>
-        changeDate(btn.calculateDate('add', new Date(date)), '유통기한')
+        changeDate(btn.calculateDate('add', new Date(date)), '소비기한')
       }
       key={btn.label}
       style={tw.style(

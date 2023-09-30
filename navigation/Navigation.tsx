@@ -91,7 +91,7 @@ const Navigation = () => {
         component={ExpiredFoods}
         options={{
           ...options,
-          title: '유통기한 주의 식료품 관리',
+          title: '소비기한 주의 식료품 관리',
         }}
       />
       <Stack.Screen

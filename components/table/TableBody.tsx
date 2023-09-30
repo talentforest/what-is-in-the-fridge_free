@@ -33,7 +33,7 @@ export default function TableBody({
 
   const route = useRoute();
   const routeExpiredFoods = route.name === 'ExpiredFoods';
-  const title = routeExpiredFoods ? '유통기한 주의 식료품' : '장보기 식료품';
+  const title = routeExpiredFoods ? '소비기한 주의 식료품' : '장보기 식료품';
 
   const { findFood } = useFindFood();
 
@@ -56,7 +56,7 @@ export default function TableBody({
                 animationState={animationState}
                 afterAnimation={afterAnimation}
               >
-                {/* 유통기한 주의 식료품 정보 */}
+                {/* 소비기한 주의 식료품 정보 */}
                 {route.name === 'ExpiredFoods' && (
                   <View style={tw`items-end`}>
                     <LeftDay

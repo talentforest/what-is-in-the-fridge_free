@@ -26,7 +26,7 @@ export default function ExpiredFoodSection({ foodList }: Props) {
 
   return (
     <SectionContainer
-      title='유통기한 주의 식료품'
+      title='소비기한 주의 식료품'
       message='빨리 먹어야 하는 식료품을 확인하세요.'
       screen='ExpiredFoods'
       foodsLength={foodList.length}

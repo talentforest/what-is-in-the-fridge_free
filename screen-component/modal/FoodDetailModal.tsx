@@ -121,7 +121,7 @@ export default function FoodDetailModal({
                   </View>
                 </InfoBox>
 
-                <InfoBox iconName='calendar-month' label='유통기한'>
+                <InfoBox iconName='calendar-month' label='소비기한'>
                   <LeftDayInfoBox expiredDate={expiredDate} />
                 </InfoBox>
 

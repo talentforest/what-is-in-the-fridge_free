@@ -8,7 +8,7 @@ import LeftDay from '../../components/common/LeftDay';
 import tw from 'twrnc';
 
 interface Props {
-  title: '구매날짜' | '유통기한';
+  title: '구매날짜' | '소비기한';
   date: string;
 }
 
@@ -16,7 +16,7 @@ export default function PantryFoodInfo({ title, date }: Props) {
   return (
     <View style={tw`flex-row items-center gap-0.5 mt-0.5 -mb-0.5`}>
       <Icon
-        name={title === '유통기한' ? 'calendar' : 'basket'}
+        name={title === '소비기한' ? 'calendar' : 'basket'}
         type='MaterialCommunityIcons'
         size={14}
         color={GRAY}
@@ -27,7 +27,7 @@ export default function PantryFoodInfo({ title, date }: Props) {
         {getFormattedDate(date, 'YYYY년 MM월 DD일')}
       </Text>
 
-      {title === '유통기한' && (
+      {title === '소비기한' && (
         <LeftDay expiredDate={date} size={13} iconMark />
       )}
     </View>

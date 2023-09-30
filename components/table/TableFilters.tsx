@@ -58,9 +58,9 @@ export default function TableFilters({
             key={filter}
             filterObj={{ filter, icon }}
             iconColor={
-              filter === '유통기한 3일 이내'
+              filter === '소비기한 3일 이내'
                 ? DEEP_YELLOW
-                : filter === '유통기한 만료'
+                : filter === '소비기한 만료'
                 ? RED
                 : BLUE
             }
