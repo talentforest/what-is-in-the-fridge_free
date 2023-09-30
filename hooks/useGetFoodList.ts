@@ -83,11 +83,11 @@ export const useGetFoodList = () => {
       );
     }
 
-    if (filter === '유통기한 만료') {
+    if (filter === '소비기한 만료') {
       const list = foodList.filter((food) => expired(food.expiredDate));
       return orderExpirationDate(list);
     }
-    if (filter === '유통기한 3일 이내') {
+    if (filter === '소비기한 3일 이내') {
       const list = foodList.filter((food) => leftThreeDays(food.expiredDate));
       return orderExpirationDate(list);
     }

@@ -37,7 +37,7 @@ export const alertPhrase: AlertPhraseObj = {
   },
   wrongDate: {
     title: '날짜 수정 알림',
-    msg: '유통기한이 구매일보다 이전일 수 없어요.',
+    msg: '소비기한이 구매일보다 이전일 수 없어요.',
   },
   noMemo: {
     title: '메모 작성 안내',
@@ -98,7 +98,7 @@ export const alertPhraseWithCheckList: (food: Food[]) => {
     msg: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 자주 먹는 식료품에서 해제하시겠어요?`,
   };
   const deleteExpiredFoods = {
-    title: '유통기한 주의 식료품 삭제',
+    title: '소비기한 주의 식료품 삭제',
     msg: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 삭제하시겠어요? 냉장고나 팬트리에서도 삭제돼요.`,
   };
   const deletePantryFoods = {

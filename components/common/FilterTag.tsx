@@ -36,9 +36,9 @@ export default function FilterTag({
   const { currentFilter } = useHandleFilter();
 
   const activeColorByFilter =
-    currentFilter === '유통기한 3일 이내'
+    currentFilter === '소비기한 3일 이내'
       ? LEFT_3_DAYS_COLOR
-      : currentFilter === '유통기한 만료'
+      : currentFilter === '소비기한 만료'
       ? EXPIRED_COLOR
       : ACTIVE_COLOR;
 

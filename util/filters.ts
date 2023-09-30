@@ -2,7 +2,7 @@ import { Category, foodCategories } from '../constant/foodCategories';
 
 export type SpaceFilter = '냉장실' | '냉동실' | '팬트리';
 export type AbsenceFilter = '없는 식료품';
-export type ExpiredFilter = '유통기한 만료' | '유통기한 3일 이내';
+export type ExpiredFilter = '소비기한 만료' | '소비기한 3일 이내';
 export type FavoriteFilter = '자주 먹는 식료품';
 
 export type Filter =
@@ -33,8 +33,8 @@ export const existAbsenceFilters: FilterObj[] = [
 ];
 
 export const expiredFilters: FilterObj[] = [
-  { filter: '유통기한 만료', icon: 'circle-medium' },
-  { filter: '유통기한 3일 이내', icon: 'circle-medium' },
+  { filter: '소비기한 만료', icon: 'circle-medium' },
+  { filter: '소비기한 3일 이내', icon: 'circle-medium' },
 ];
 
 export const categoryFilters: FilterObj[] = foodCategories.map(

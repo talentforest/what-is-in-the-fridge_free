@@ -47,7 +47,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
   return (
     <View>
       <View style={tw`mb-5`}>
-        <FormLabel label='유통기한' />
+        <FormLabel label='소비기한' />
 
         <TouchableOpacity
           onPress={() => setDatePickerVisible(true)}

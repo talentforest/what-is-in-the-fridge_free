@@ -20,10 +20,10 @@ export default function FoodBox({ food }: Props) {
   const { currentFilter } = useHandleFilter();
 
   const colorByExpiredDate = () => {
-    if (currentFilter === '유통기한 만료' && expired(expiredDate))
+    if (currentFilter === '소비기한 만료' && expired(expiredDate))
       return EXPIRED_COLOR;
 
-    if (currentFilter === '유통기한 3일 이내' && leftThreeDays(expiredDate))
+    if (currentFilter === '소비기한 3일 이내' && leftThreeDays(expiredDate))
       return LEFT_3_DAYS_COLOR;
 
     return '';

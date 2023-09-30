@@ -14,7 +14,7 @@ import MessageBox from '../../components/common/MessageBox';
 import tw from 'twrnc';
 
 interface Props {
-  title: '장보기 식료품' | '유통기한 주의 식료품' | '자주 먹는 식료품';
+  title: '장보기 식료품' | '소비기한 주의 식료품' | '자주 먹는 식료품';
   message: string;
   screen: 'ExpiredFoods' | 'FavoriteFoods' | 'ShoppingList';
   children: ReactNode;

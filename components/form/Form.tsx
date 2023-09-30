@@ -82,7 +82,7 @@ export default function Form({
                       <SpaceItem food={food} changeInfo={changeInfo} />
                     </FormSectionContainer>
                   )}
-                  {name === '유통기한' && (
+                  {name === '소비기한' && (
                     <FormSectionContainer>
                       <ExpiredDateItem
                         date={food.expiredDate}
