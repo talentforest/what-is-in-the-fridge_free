@@ -17,9 +17,9 @@ export const initialState: { fridgeFoods: Food[] } = {
     {
       id: 'freezer1',
       name: '식빵',
-      category: '신선식품류',
+      category: '베이커리·잼',
       purchaseDate: '',
-      expiredDate: '2018-12-20',
+      expiredDate: '2022-12-20',
       space: '냉동실 안쪽',
       compartmentNum: '1번',
       quantity: '',
