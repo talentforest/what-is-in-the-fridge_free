@@ -4,6 +4,7 @@ import { TextInput, TouchableOpacity } from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { SCDream5 } from '../../constant/fonts';
+import { comma } from '../../util/commaNotation';
 
 import FormLabel from './FormLabel';
 import Icon from '../common/native-component/Icon';
@@ -31,7 +32,9 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
 
   const onChangeText = (value: string) => {
     const numericText = value.replace(/[^0-9]/g, '');
-    changeInfo({ quantity: numericText });
+    const trimmedText = numericText.replace(/^0+/, '');
+
+    changeInfo({ quantity: trimmedText });
   };
 
   const onPress = () => {
@@ -71,10 +74,12 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
                 SCDream5
               )}
               onChangeText={onChangeText}
-              value={quantity}
+              value={comma(quantity)}
               focusable={false}
-              keyboardType='numeric'
+              keyboardType='number-pad'
               placeholder='1'
+              returnKeyLabel='완료'
+              returnKeyType='done'
             />
           </View>
 
