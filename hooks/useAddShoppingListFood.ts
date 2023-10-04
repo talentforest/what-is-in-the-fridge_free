@@ -10,13 +10,18 @@ import { useRoute } from '@react-navigation/native';
 import { addToPantry, removePantryFood } from '../redux/slice/pantryFoodsSlice';
 import { Food } from '../constant/foodInfo';
 import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
-import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
+import {
+  addFavorite,
+  editFavorite,
+  removeFavorite,
+} from '../redux/slice/favoriteFoodsSlice';
 
 export const useAddShoppingListFood = () => {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { selectedFood } = useSelector((state) => state.selectedFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
+  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
 
   const dispatch = useDispatch();
   const route = useRoute();
@@ -24,6 +29,9 @@ export const useAddShoppingListFood = () => {
   const onChange = (info: { [key: string]: string | boolean }) => {
     dispatch(select({ ...selectedFood, ...info }));
   };
+
+  const isFavoriteItem = (name: string) =>
+    favoriteFoods.find((food) => food.name === name);
 
   const onSubmit = (
     setModalVisible: (visible: boolean) => void,
@@ -53,6 +61,8 @@ export const useAddShoppingListFood = () => {
     isFavorite
       ? dispatch(addFavorite(selectedFood))
       : dispatch(removeFavorite(selectedFood));
+
+    if (isFavoriteItem(selectedFood.name)) dispatch(editFavorite(selectedFood));
 
     dispatch(
       selectedFood.compartmentNum
