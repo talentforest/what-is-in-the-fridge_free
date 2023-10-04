@@ -2,7 +2,7 @@ import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { cutLetter, expired } from '../../util';
 import { BLUE } from '../../constant/colors';
-import { Food, initialFood } from '../../constant/foodInfo';
+import { Food, initialFridgeFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
 import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
 import { useRoute } from '@react-navigation/native';
@@ -52,7 +52,7 @@ export default function TableItem({
 
   const { id, name, category, space } = food;
   const initializedFood = {
-    ...initialFood,
+    ...initialFridgeFood,
     id,
     name,
     category,

@@ -1,4 +1,3 @@
-import { View } from 'react-native';
 import { SafeBottomAreaView } from '../components/common/native-component';
 import { entireFilterObj, expiredFilters, spaceFilters } from '../util';
 import {
@@ -9,14 +8,16 @@ import {
   useHandleFilter,
 } from '../hooks/';
 import { useEffect } from 'react';
+import { View } from 'react-native';
 
 import Container from '../components/common/Container';
-import TableContainer from '../components/table/TableContainer';
 import TableBody from '../components/table/TableBody';
-import TableFooter from '../components/table/TableFooter';
+import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
+import TableFooterContainer from '../components/table/TableFooterContainer';
 import tw from 'twrnc';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -40,6 +41,7 @@ export default function ExpiredFoods() {
     useSetAnimationState();
 
   useEffect(() => {
+    setCheckedList([]);
     initializeFilter();
   }, []);
 
@@ -49,45 +51,43 @@ export default function ExpiredFoods() {
   return (
     <SafeBottomAreaView>
       <Container>
-        <TableContainer>
-          <TableFilters
-            filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
-            getTableList={getFilteredFoodList}
-            setCheckedList={setCheckedList}
-            foodList={allExpiredFoods()}
-          />
+        <TableFilters
+          filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
+          getTableList={getFilteredFoodList}
+          setCheckedList={setCheckedList}
+          foodList={allExpiredFoods()}
+        />
 
-          <TableBody
-            list={filteredList}
-            onCheckBoxPress={onCheckBoxPress}
-            checkedList={checkedList}
-            animationState={animationState}
-            afterAnimation={() =>
-              afterAnimation(onDeleteExpiredFoodPress, allExpiredFoods())
-            }
-          />
+        <TableBody
+          list={filteredList}
+          onCheckBoxPress={onCheckBoxPress}
+          checkedList={checkedList}
+          animationState={animationState}
+          afterAnimation={() =>
+            afterAnimation(onDeleteExpiredFoodPress, allExpiredFoods())
+          }
+        />
 
-          <View style={tw`-my-3`}>
-            <TableFooter
-              list={checkedList}
-              entireChecked={allChecked && !!checkedList.length}
-              onEntirePress={() => onEntireBoxPress(filteredList)}
-            >
-              <SquareIconBtn
-                icon='basket-plus'
-                disabled={checkedList.length === 0}
-                onPress={onAddShoppingListBtnPress}
-              />
-              <SquareIconBtn
-                onPress={() =>
-                  onDeleteExpiredFoodPress(setAnimationState, animationState)
-                }
-                icon='trash-can'
-                disabled={checkedList.length === 0}
-              />
-            </TableFooter>
-          </View>
-        </TableContainer>
+        <TableFooterContainer>
+          <TableSelectedHandleBox
+            list={checkedList}
+            entireChecked={allChecked && !!checkedList.length}
+            onEntirePress={() => onEntireBoxPress(filteredList)}
+          >
+            <SquareIconBtn
+              icon='basket-plus'
+              disabled={checkedList.length === 0}
+              onPress={onAddShoppingListBtnPress}
+            />
+            <SquareIconBtn
+              onPress={() =>
+                onDeleteExpiredFoodPress(setAnimationState, animationState)
+              }
+              icon='trash-can'
+              disabled={checkedList.length === 0}
+            />
+          </TableSelectedHandleBox>
+        </TableFooterContainer>
       </Container>
     </SafeBottomAreaView>
   );

@@ -57,13 +57,6 @@ export default function TableFilters({
           <FilterTag
             key={filter}
             filterObj={{ filter, icon }}
-            iconColor={
-              filter === '소비기한 3일 이내'
-                ? DEEP_YELLOW
-                : filter === '소비기한 만료'
-                ? RED
-                : BLUE
-            }
             active={filter === currentFilter}
             onFilterPress={() => onFilterPress(filter, setCheckedList)}
             length={getTableList(filter, foodList).length || 0}
@@ -73,7 +66,6 @@ export default function TableFilters({
         {categoryFilters && (
           <FilterTag
             filterObj={{ filter: '카테고리', icon: 'filter' }}
-            iconColor={BLUE}
             active={
               !!findCategoryFilter(currentFilter) ||
               currentFilter === '카테고리'
@@ -99,14 +91,16 @@ export default function TableFilters({
           isVisible={modalVisible}
         >
           <View style={tw`p-4 flex-row flex-wrap gap-1 bg-stone-100 pb-6`}>
-            {categoryFilters.map(({ category, color, icon }) => (
+            {categoryFilters.map(({ category, icon }) => (
               <FilterTag
                 key={category}
                 categoryFilter
                 filterObj={{ filter: category, icon }}
-                iconColor={color}
                 active={category === currentFilter}
-                onFilterPress={() => onFilterPress(category)}
+                onFilterPress={() => {
+                  onFilterPress(category);
+                  setModalVisible(false);
+                }}
                 length={getTableList(category, foodList).length}
               />
             ))}

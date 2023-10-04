@@ -4,7 +4,7 @@ import {
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { useSelector } from '../redux/hook';
-import { Keyboard, View } from 'react-native';
+import { Keyboard } from 'react-native';
 import {
   useHandleCheckList,
   useHandleTableItem,
@@ -15,13 +15,13 @@ import { formFourSteps } from '../constant/formInfo';
 
 import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
 import Container from '../components/common/Container';
-import TableContainer from '../components/table/TableContainer';
 import TableHeader from '../components/table/TableHeader';
 import TableRecommendedFoods from '../components/table/TableRecommendedFoods';
 import TableBody from '../components/table/TableBody';
-import TableFooter from '../components/table/TableFooter';
+import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
+import TableFooterContainer from '../components/table/TableFooterContainer';
 
 export default function ShoppingList() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -54,27 +54,29 @@ export default function ShoppingList() {
     <KeyboardAvoidingView>
       <SafeBottomAreaView>
         <Container>
-          <TableContainer>
-            <TableHeader title='장보기 식료품' length={shoppingList.length} />
+          <TableHeader title='장보기 식료품' length={shoppingList.length} />
 
-            <TableBody
-              list={shoppingList}
-              onCheckBoxPress={onCheckBoxPress}
-              addToFridgePress={onAddToFridgePress}
-              checkedList={checkedList}
-              animationState={animationState}
-              afterAnimation={() =>
-                afterAnimation(onDeleteFoodPress, shoppingList)
-              }
-            />
+          <TableBody
+            list={shoppingList}
+            onCheckBoxPress={onCheckBoxPress}
+            addToFridgePress={onAddToFridgePress}
+            checkedList={checkedList}
+            animationState={animationState}
+            afterAnimation={() =>
+              afterAnimation(onDeleteFoodPress, shoppingList)
+            }
+          />
+          <TableFooterContainer>
+            {!!!checkedList.length && (
+              <TableRecommendedFoods
+                keyword={keyword}
+                setKeyword={setKeyword}
+                onSubmitShoppingListItem={onSubmitShoppingListItem}
+                setAnimationState={setAnimationState}
+              />
+            )}
 
-            <TableRecommendedFoods
-              keyword={keyword}
-              onSubmitShoppingListItem={onSubmitShoppingListItem}
-              setAnimationState={setAnimationState}
-            />
-
-            <TableFooter
+            <TableSelectedHandleBox
               list={checkedList}
               entireChecked={allChecked && !!checkedList.length}
               onEntirePress={() => onEntireBoxPress(shoppingList)}
@@ -90,17 +92,17 @@ export default function ShoppingList() {
                   );
                 }}
               />
-            </TableFooter>
-          </TableContainer>
+            </TableSelectedHandleBox>
 
-          <TextInputRoundedBox
-            value={keyword}
-            setValue={setKeyword}
-            iconName='plus'
-            placeholder='식료품 이름을 작성해주세요.'
-            onSubmitEditing={onInputSubmit}
-            disabled={keyword === ''}
-          />
+            <TextInputRoundedBox
+              value={keyword}
+              setValue={setKeyword}
+              iconName='plus'
+              placeholder='식료품 이름을 작성해주세요.'
+              onSubmitEditing={onInputSubmit}
+              disabled={keyword === ''}
+            />
+          </TableFooterContainer>
 
           <AddShoppingListFoodModal
             modalVisible={modalVisible}
