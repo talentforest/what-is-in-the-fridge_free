@@ -70,13 +70,11 @@ export default function PantryFoods() {
           </CompartmentBox>
         </CompartmentContainer>
 
-        {openFoodDetailModal && (
-          <FoodDetailModal
-            modalVisible={openFoodDetailModal}
-            setModalVisible={setOpenFoodDetailModal}
-            formSteps={formThreeSteps}
-          />
-        )}
+        <FoodDetailModal
+          modalVisible={openFoodDetailModal}
+          setModalVisible={setOpenFoodDetailModal}
+          formSteps={formThreeSteps}
+        />
 
         <AddFoodModal
           modalVisible={openAddFoodModal}

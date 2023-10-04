@@ -102,14 +102,12 @@ export default function ShoppingList() {
             disabled={keyword === ''}
           />
 
-          {modalVisible && (
-            <AddShoppingListFoodModal
-              modalVisible={modalVisible}
-              setModalVisible={setModalVisible}
-              setCheckedList={setCheckedList}
-              formSteps={formFourSteps}
-            />
-          )}
+          <AddShoppingListFoodModal
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            setCheckedList={setCheckedList}
+            formSteps={formFourSteps}
+          />
         </Container>
       </SafeBottomAreaView>
     </KeyboardAvoidingView>

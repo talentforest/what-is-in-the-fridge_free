@@ -1,9 +1,10 @@
-import { View } from 'react-native';
+import { Animated, PanResponder, Pressable, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { GRAY } from '../../constant/colors';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
+import { useRef } from 'react';
 
 interface Props {
   title?: string;
@@ -24,10 +25,6 @@ export default function SwipeHeader({ title, closeModal, animationIn }: Props) {
 
           <View style={tw`flex-row justify-between items-center mt-0`}>
             {title && <Text style={tw`text-lg`}>{title}</Text>}
-
-            <TouchableOpacity onPress={closeModal}>
-              <Icon type='Ionicons' name='close' size={23} color={GRAY} />
-            </TouchableOpacity>
           </View>
         </View>
       ) : (

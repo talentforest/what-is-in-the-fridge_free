@@ -55,8 +55,12 @@ export default function Modal({
     <RNModal
       isVisible={isVisible}
       onBackdropPress={closeModal}
+      backdropTransitionOutTiming={0} // 안드로이드 깜박임 이슈
+      onBackButtonPress={closeModal} // 안드로이드 뒤로 가기 버튼
       onSwipeComplete={closeModal}
-      swipeDirection={['down']}
+      swipeDirection={animationIn === 'fadeIn' ? undefined : ['down']}
+      animationInTiming={animationIn === 'fadeIn' ? 600 : 400}
+      animationOutTiming={animationIn === 'fadeIn' ? 400 : 700}
       propagateSwipe={true}
       animationIn={animationIn}
       animationOut={animationIn === 'fadeIn' ? 'fadeOut' : 'slideOutDown'}
@@ -72,7 +76,9 @@ export default function Modal({
       >
         <View
           style={tw.style(
-            `max-h-[${MODAL_HEIGHT}px] shadow-2xl rounded-2xl bg-stone-100`
+            `max-h-[${MODAL_HEIGHT}px] ${
+              animationIn !== 'fadeIn' ? 'shadow-2xl' : ''
+            } rounded-2xl bg-stone-100`
           )}
         >
           <SwipeHeader

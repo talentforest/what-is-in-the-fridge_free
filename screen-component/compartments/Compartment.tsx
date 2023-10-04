@@ -76,33 +76,25 @@ export default function Compartment({
         <DragGeneratedFoodBox dragPosition={dragPosition} />
       )}
 
-      {expandCompartment && (
-        <ExpandedCompartmentModal
-          compartmentNum={compartmentNum}
-          foodList={compartmentFoodList}
-          expandCompartment={expandCompartment}
-          setExpandCompartment={setExpandCompartment}
-          modalVisible={openFoodDetailModal}
-          setModalVisible={setOpenFoodDetailModal}
-        />
-      )}
+      <ExpandedCompartmentModal
+        compartmentNum={compartmentNum}
+        foodList={compartmentFoodList}
+        expandCompartment={expandCompartment}
+        setExpandCompartment={setExpandCompartment}
+      />
 
-      {!expandCompartment && openFoodDetailModal && (
-        <FoodDetailModal
-          modalVisible={openFoodDetailModal}
-          setModalVisible={setOpenFoodDetailModal}
-          formSteps={formThreeSteps}
-        />
-      )}
+      <FoodDetailModal
+        modalVisible={openFoodDetailModal}
+        setModalVisible={setOpenFoodDetailModal}
+        formSteps={formThreeSteps}
+      />
 
-      {openAddFoodModal && (
-        <AddFoodModal
-          modalVisible={openAddFoodModal}
-          setModalVisible={setOpenAddFoodModal}
-          formSteps={formThreeSteps}
-          foodLocation={foodLocation}
-        />
-      )}
+      <AddFoodModal
+        modalVisible={openAddFoodModal}
+        setModalVisible={setOpenAddFoodModal}
+        formSteps={formThreeSteps}
+        foodLocation={foodLocation}
+      />
     </>
   );
 }

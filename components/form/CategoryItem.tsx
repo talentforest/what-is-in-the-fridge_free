@@ -71,14 +71,12 @@ export default function CategoryItem({
         />
       </TouchableOpacity>
 
-      {categoryOpen && (
-        <CategoryModal
-          modalVisible={categoryOpen}
-          setModalVisible={setCategoryOpen}
-          currentChecked={fixedCategory}
-          onCheckBoxPress={onCheckBoxPress}
-        />
-      )}
+      <CategoryModal
+        modalVisible={categoryOpen}
+        setModalVisible={setCategoryOpen}
+        currentChecked={fixedCategory}
+        onCheckBoxPress={onCheckBoxPress}
+      />
     </View>
   );
 }

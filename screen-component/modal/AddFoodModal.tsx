@@ -31,8 +31,8 @@ export default function AddFoodModal({
   return (
     <Modal
       title='새로운 식료품 추가'
-      closeModal={() => setModalVisible(false)}
       isVisible={modalVisible}
+      closeModal={() => setModalVisible(false)}
     >
       <View style={tw`bg-stone-100 pb-${PlatformIOS ? '12' : '6'}`}>
         <Form
