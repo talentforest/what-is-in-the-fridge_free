@@ -10,7 +10,7 @@ type FridgeSettingTitle =
   | '나의 냉장고 타입'
   | '냉동실 위치'
   | '각 공간의 칸 개수'
-  | '나의 냉장고 모습 결과';
+  | '나의 냉장고 모습';
 
 interface Props {
   title: FridgeSettingTitle;

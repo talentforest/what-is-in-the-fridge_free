@@ -26,7 +26,7 @@ export default function FavoriteFoodSection({ foodList }: Props) {
   return (
     <SectionContainer
       title='자주 먹는 식료품'
-      message='장을 볼때 어떤 식료품이 없는지 참고할 수 있어요.'
+      message='장을 볼 때 어떤 식료품이 없는지 참고할 수 있어요.'
       screen='FavoriteFoods'
       foodsLength={foodList.length}
     >

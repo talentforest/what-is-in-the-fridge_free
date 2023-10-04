@@ -42,10 +42,10 @@ export default function CompartmentHeader({
               setOpenAddFoodModal(true);
             }
           }}
-          style={tw`px-2 pl-6 border border-white h-full items-center justify-center `}
+          style={tw`px-1 pl-6 border border-stone-50 rounded-md h-full items-center justify-center `}
           disabled={dragMode}
         >
-          <Icon type='MaterialCommunityIcons' name='plus' size={26} />
+          <Icon type='MaterialCommunityIcons' name='plus' size={24} />
         </TouchableOpacity>
       </View>
     </View>

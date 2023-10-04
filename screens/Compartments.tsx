@@ -9,13 +9,13 @@ import { SafeBottomAreaView } from '../components/common/native-component';
 import { useGetFoodList } from '../hooks';
 import { changeFilter } from '../redux/slice/filterSlice';
 import { toggleDragMode } from '../redux/slice/dragModeSlice';
+import { TAB_BLUE_BG_COLOR } from '../constant/colors';
 
 import Compartment from '../screen-component/compartments/Compartment';
 import Container from '../components/common/Container';
 import CompartmentContainer from '../components/compartment/CompartmentContainer';
 import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
-import { TAB_BLUE_BG_COLOR } from '../constant/colors';
 
 type RouteParams = {
   space: Space;
@@ -52,7 +52,7 @@ export default function Compartments({ route }: Route) {
 
   return (
     <TouchableWithoutFeedback
-      style={tw`flex-1 border-2`}
+      style={tw`flex-1`}
       onPress={() => {
         if (dragMode) return dispatch(toggleDragMode(false));
       }}

@@ -34,7 +34,7 @@ export default function FridgeInfo({ space, compartments }: Props) {
           <Text
             style={tw.style(
               `${
-                space.includes('냉동') ? 'text-blue-600' : 'text-cyan-600'
+                space.includes('냉동') ? 'text-blue-600' : 'text-sky-600'
               } text-sm pb-1`,
               FontGmarketSansBold
             )}

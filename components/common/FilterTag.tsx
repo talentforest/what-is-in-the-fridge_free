@@ -1,5 +1,4 @@
 import { Text, TouchableOpacity } from './native-component';
-import { View } from 'react-native';
 import { Filter, FilterObj } from '../../util';
 import { GRAY } from '../../constant/colors';
 import { useHandleFilter } from '../../hooks';
@@ -18,7 +17,6 @@ interface Props {
   onFilterPress: (filter: Filter) => void;
   filterObj: FilterObj;
   active: boolean;
-  iconColor: string;
   length?: number;
   categoryFilter?: boolean;
 }
@@ -27,11 +25,10 @@ export default function FilterTag({
   onFilterPress,
   filterObj,
   length,
-  iconColor,
   active,
   categoryFilter,
 }: Props) {
-  const { filter, icon } = filterObj;
+  const { filter } = filterObj;
 
   const { currentFilter } = useHandleFilter();
 
@@ -52,29 +49,13 @@ export default function FilterTag({
     <TouchableOpacity
       onPress={() => onFilterPress(filter)}
       style={tw.style(
-        `bg-white flex-row items-center border px-2.5 py-1 gap-1.5 rounded-full ${color}`,
+        `bg-white flex-row items-center border px-3 py-1 gap-1.5 rounded-full ${color}`,
         shadowStyle(3)
       )}
       disabled={length === 0 && categoryFilter}
     >
-      {icon !== '' && (
-        <View>
-          <Icon
-            type='MaterialCommunityIcons'
-            name={icon}
-            size={14}
-            color={
-              active
-                ? iconColor
-                : length === 0 && categoryFilter
-                ? '#e2e2e2'
-                : iconColor
-            }
-          />
-        </View>
-      )}
-
       <Text style={tw`text-sm ${color}`}>{filter}</Text>
+
       {filter !== '카테고리' && (
         <Text style={tw`text-sm ${color}`}>{`${length}`}개</Text>
       )}
@@ -87,12 +68,7 @@ export default function FilterTag({
               <Text style={tw`text-sm ${color}`}>{`${length}`}개</Text>
             </>
           )}
-          <Icon
-            name='chevron-down'
-            type='Ionicons'
-            size={13}
-            color={active ? iconColor : GRAY}
-          />
+          <Icon name='chevron-down' type='Ionicons' size={13} color={GRAY} />
         </>
       )}
     </TouchableOpacity>

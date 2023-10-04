@@ -31,8 +31,7 @@ export default function SearchFoodSection() {
 
   const { height } = useSlideAnimation({
     initialValue: !!keyword.length && !searchedFoods.length ? 32 : 0,
-    toValue:
-      32 + 45 * ((searchedFoods.length < 5 ? searchedFoods.length : 4) || 0),
+    toValue: 100,
     active: !!searchedFoods?.length && !!keyword.length,
   });
 
@@ -54,7 +53,7 @@ export default function SearchFoodSection() {
   };
 
   return (
-    <View>
+    <View style={tw`mb-4`}>
       <View>
         <TextInput
           value={keyword}
@@ -75,19 +74,23 @@ export default function SearchFoodSection() {
           <Icon name='search' type='Ionicons' size={20} />
         </TouchableOpacity>
       </View>
-      <Animated.View style={{ height, overflow: 'hidden' }}>
+      <Animated.View
+        style={{ height, overflow: 'hidden', marginHorizontal: -16 }}
+      >
         {!!searchedFoods?.length ? (
-          <Text style={tw`h-8 text-sm text-blue-600 pl-2 pt-2 pb-1`}>
+          <Text style={tw`h-8 text-sm text-blue-600 pl-6 pt-2 pb-1`}>
             {searchedFoods?.length}건의 검색결과가 있습니다.
           </Text>
         ) : (
-          <Text style={tw`h-8 text-sm text-blue-600 pl-2 pt-2 pb-1`}>
+          <Text style={tw`h-8 text-sm text-blue-600 pl-6 pt-2 pb-1`}>
             검색 결과가 없습니다.
           </Text>
         )}
         <ScrollView
-          style={tw`px-2 border border-slate-300 rounded-xl bg-white`}
-          showsVerticalScrollIndicator={false}
+          horizontal
+          scrollEnabled
+          contentContainerStyle={tw`px-4 pb-2 py-1 gap-2`}
+          showsHorizontalScrollIndicator={false}
         >
           {!!searchedFoods?.length &&
             searchedFoods.map((food: Food) => (
