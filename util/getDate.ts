@@ -12,16 +12,20 @@ export const getDiffDate = (date: string) => {
 };
 
 export const getRelativeTime = (date: string | Date) => {
-  const yesterday = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
-  const today = dayjs().format('YYYY-MM-DD');
-  const tomorrow = dayjs().add(1, 'day').format('YYYY-MM-DD');
   const formatDate = dayjs(date).format('YYYY-MM-DD');
+  const diff = getDiffDate(formatDate);
 
-  if (yesterday === formatDate) return '어제';
-  if (today === formatDate) return '오늘';
-  if (tomorrow === formatDate) return '내일';
+  switch (diff) {
+    case -1:
+      return '어제';
+    case 0:
+      return '오늘';
+    case 1:
+      return '내일';
 
-  return dayjs(date).fromNow();
+    default:
+      return dayjs(date).add(1, 'day').fromNow();
+  }
 };
 
 export const getFormattedDate = (

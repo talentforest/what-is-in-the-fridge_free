@@ -13,7 +13,6 @@ import { CompartmentNum } from '../../constant/fridgeInfo';
 import RNModal from 'react-native-modal';
 import SwipeHeader from './SwipeHeader';
 import tw from 'twrnc';
-import { shadowStyle } from '../../constant/shadowStyle';
 
 export type ModalTitle =
   | '장보기 목록 식료품 추가'
@@ -25,13 +24,14 @@ export type ModalTitle =
   | '나의 식료품 찾기'
   | '카테고리별 필터링'
   | `${CompartmentNum}칸`
-  | '카테고리 선택';
+  | '카테고리 선택'
+  | '날짜 선택';
 
 interface Props {
   isVisible: boolean;
   closeModal: () => void;
   children: ReactNode;
-  title?: ModalTitle;
+  title: ModalTitle;
   style?: StyleProp<any>;
   animationIn?: 'fadeIn' | 'slideInUp';
   hasBackdrop?: boolean;
@@ -48,8 +48,7 @@ export default function Modal({
 }: Props) {
   const MODAL_HEIGHT = DEVICE_HEIGHT * 0.85;
 
-  const positionStyle =
-    animationIn === 'fadeIn' ? 'justify-center mx-4' : 'justify-end';
+  const positionStyle = animationIn === 'fadeIn' ? 'mx-4' : 'justify-end';
 
   return (
     <RNModal
@@ -60,11 +59,11 @@ export default function Modal({
       onSwipeComplete={closeModal}
       swipeDirection={animationIn === 'fadeIn' ? undefined : ['down']}
       animationInTiming={animationIn === 'fadeIn' ? 600 : 400}
-      animationOutTiming={animationIn === 'fadeIn' ? 400 : 700}
+      animationOutTiming={400}
       propagateSwipe={true}
       animationIn={animationIn}
       animationOut={animationIn === 'fadeIn' ? 'fadeOut' : 'slideOutDown'}
-      statusBarTranslucent={true}
+      statusBarTranslucent={animationIn === 'fadeIn' ? false : true}
       hasBackdrop={hasBackdrop}
       backdropOpacity={0.7}
       style={tw.style(`m-0 ${positionStyle}`, style)}
@@ -72,20 +71,22 @@ export default function Modal({
       <KeyboardAvoidingView
         enabled
         behavior='padding'
-        keyboardVerticalOffset={PlatformIOS ? -130 : -140}
+        keyboardVerticalOffset={PlatformIOS ? -155 : -140}
       >
         <View
           style={tw.style(
-            `max-h-[${MODAL_HEIGHT}px] ${
-              animationIn !== 'fadeIn' ? 'shadow-2xl' : ''
-            } rounded-2xl bg-stone-100`
+            `max-h-[${MODAL_HEIGHT}px]
+            ${animationIn !== 'fadeIn' ? 'shadow-2xl' : ''} 
+            ${title !== '날짜 선택' ? 'bg-stone-100' : ''} rounded-2xl`
           )}
         >
-          <SwipeHeader
-            title={title}
-            closeModal={closeModal}
-            animationIn={animationIn}
-          />
+          {title !== '날짜 선택' && (
+            <SwipeHeader
+              title={title}
+              closeModal={closeModal}
+              animationIn={animationIn}
+            />
+          )}
 
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View>{children}</View>

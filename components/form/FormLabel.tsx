@@ -22,7 +22,7 @@ export default function FormLabel({ label, option, isOpen, onPress }: Props) {
       {option && onPress && (
         <TouchableOpacity
           onPress={onPress}
-          style={tw`gap-0.5 rounded-full flex-row items-center`}
+          style={tw`gap-0.5 pl-4 flex-row items-center justify-end`}
         >
           <Icon
             name={isOpen ? 'chevron-up' : 'add'}
@@ -31,7 +31,7 @@ export default function FormLabel({ label, option, isOpen, onPress }: Props) {
             color={isOpen ? LIGHT_GRAY : GRAY}
           />
           <Text
-            style={tw`text-[14px] py-0 ${
+            style={tw`text-[14px] ${
               isOpen ? 'text-slate-500' : 'text-slate-700'
             }`}
           >
