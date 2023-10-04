@@ -21,6 +21,7 @@ import CategoryImageIcon from '../../components/common/CategoryImageIcon';
 import LeftDayInfoBox from '../../components/modal/LeftDayInfoBox';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
+import { comma } from '../../util/commaNotation';
 
 interface Props {
   modalVisible: boolean;
@@ -35,21 +36,27 @@ export default function FoodDetailModal({
 }: Props) {
   const { selectedFood } = useSelector((state) => state.selectedFood);
 
-  const { deleteFood } = useDeleteFood({
-    space: selectedFood.space,
-    setModalVisible,
-  });
-
   const {
     editing,
     setEditing,
     editedFood,
+    setEditedFood,
     editFoodInfo,
     onEditSumbit, //
-  } = useEditFood({ food: selectedFood });
+  } = useEditFood();
 
-  const { id, name, category, expiredDate, purchaseDate, quantity, memo } =
-    editedFood;
+  const {
+    id,
+    name,
+    space,
+    category,
+    expiredDate,
+    purchaseDate,
+    quantity,
+    memo,
+  } = editedFood;
+
+  const { deleteFood } = useDeleteFood({ space, setModalVisible });
 
   const { isFavoriteItem } = useFindFood();
 
@@ -63,11 +70,13 @@ export default function FoodDetailModal({
     <Modal
       title={editing ? '식료품 정보 수정' : '식료품 상세 정보'}
       closeModal={() => {
-        if (editing) setEditing(false);
+        if (editing) {
+          setEditedFood(selectedFood);
+          setEditing(false);
+        }
         setModalVisible(false);
       }}
       isVisible={modalVisible}
-      hasBackdrop={false}
     >
       <View
         style={tw`${editing ? 'bg-stone-100' : 'bg-white'} 
@@ -102,12 +111,7 @@ export default function FoodDetailModal({
                   size={18}
                   color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
                 />
-                <Text
-                  style={tw.style(
-                    `text-stone-800 text-base`,
-                    FontGmarketSansBold
-                  )}
-                >
+                <Text style={tw.style(`text-stone-800`, FontGmarketSansBold)}>
                   {name}
                 </Text>
               </View>
@@ -138,7 +142,7 @@ export default function FoodDetailModal({
 
                 {quantity !== '' && (
                   <InfoBox iconName='numeric-1-box-outline' label='수량'>
-                    <Text style={tw`text-[15px]`}>{quantity}</Text>
+                    <Text style={tw`text-[15px]`}>{comma(quantity)}</Text>
                   </InfoBox>
                 )}
 
@@ -164,10 +168,8 @@ export default function FoodDetailModal({
                   color='gray'
                   iconName='trash-can'
                   btnName={`${
-                    selectedFood?.compartmentNum
-                      ? `${selectedFood.compartmentNum}칸`
-                      : '팬트리'
-                  }에서 식료품 삭제`}
+                    space === '팬트리' ? '팬트리에서' : '냉장고에서'
+                  } 식료품 삭제`}
                   onPress={() => deleteFood(editedFood.id)}
                 />
               </View>
