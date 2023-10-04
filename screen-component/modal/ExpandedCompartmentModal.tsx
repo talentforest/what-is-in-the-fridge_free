@@ -12,14 +12,13 @@ import Modal from '../../components/modal/Modal';
 import FoodBox from '../../components/common/FoodBox';
 import FoodDetailModal from './FoodDetailModal';
 import tw from 'twrnc';
+import { useState } from 'react';
 
 interface Props {
   compartmentNum: CompartmentNum;
   foodList: Food[];
   expandCompartment: boolean;
   setExpandCompartment: (visible: boolean) => void;
-  modalVisible: boolean;
-  setModalVisible: (visible: boolean) => void;
 }
 
 export default function ExpandedCompartmentModal({
@@ -27,9 +26,9 @@ export default function ExpandedCompartmentModal({
   foodList,
   expandCompartment,
   setExpandCompartment,
-  modalVisible,
-  setModalVisible,
 }: Props) {
+  const [modalVisible, setModalVisible] = useState(false);
+
   const dispatch = useDispatch();
 
   return (
@@ -66,13 +65,11 @@ export default function ExpandedCompartmentModal({
         )}
       </View>
 
-      {modalVisible && (
-        <FoodDetailModal
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          formSteps={formThreeSteps}
-        />
-      )}
+      <FoodDetailModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        formSteps={formThreeSteps}
+      />
     </Modal>
   );
 }

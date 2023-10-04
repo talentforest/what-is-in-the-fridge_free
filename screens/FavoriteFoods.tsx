@@ -169,14 +169,12 @@ export default function FavoriteFoods() {
             </Animated.View>
           </View>
 
-          {categoryOpen && (
-            <CategoryModal
-              modalVisible={categoryOpen}
-              setModalVisible={setCategoryOpen}
-              currentChecked={category}
-              onCheckBoxPress={onCategoryCheckBoxPress}
-            />
-          )}
+          <CategoryModal
+            modalVisible={categoryOpen}
+            setModalVisible={setCategoryOpen}
+            currentChecked={category}
+            onCheckBoxPress={onCategoryCheckBoxPress}
+          />
         </Container>
       </SafeBottomAreaView>
     </KeyboardAvoidingView>

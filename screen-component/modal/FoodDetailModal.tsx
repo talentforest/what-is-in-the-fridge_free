@@ -62,7 +62,10 @@ export default function FoodDetailModal({
   return (
     <Modal
       title={editing ? '식료품 정보 수정' : '식료품 상세 정보'}
-      closeModal={() => setModalVisible(false)}
+      closeModal={() => {
+        if (editing) setEditing(false);
+        setModalVisible(false);
+      }}
       isVisible={modalVisible}
       hasBackdrop={false}
     >
