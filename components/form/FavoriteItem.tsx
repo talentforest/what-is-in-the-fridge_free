@@ -89,19 +89,17 @@ export default function FavoriteItem({ food, title }: Props) {
         ))}
       </View>
 
-      {!title.includes('수정') && !!isFavoriteItem(name) && (
-        <FormMessage
-          message='자주 먹는 식료품이므로 위의 정보가 자동으로 적용돼요.'
-          color='green'
-        />
-      )}
+      <FormMessage
+        active={!title.includes('수정') && !!isFavoriteItem(name)}
+        message='자주 먹는 식료품이므로 위의 정보가 자동으로 적용돼요.'
+        color='green'
+      />
 
-      {isFavorite && !isFavoriteItem(name) && (
-        <FormMessage
-          message={'자주 먹는 식료품 목록에 추가돼요.'}
-          color='green'
-        />
-      )}
+      <FormMessage
+        active={isFavorite && !isFavoriteItem(name)}
+        message={'자주 먹는 식료품 목록에 추가돼요.'}
+        color='green'
+      />
     </View>
   );
 }

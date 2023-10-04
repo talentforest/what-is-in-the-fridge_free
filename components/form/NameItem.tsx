@@ -69,16 +69,15 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
         />
       </View>
 
-      {showMsg && (
-        <FormMessage
-          message={
-            name.length === NAME_MAX_LENGTH
-              ? `식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없습니다.`
-              : '식료품 이름은 수정할 수 없어요.'
-          }
-          color='orange'
-        />
-      )}
+      <FormMessage
+        active={showMsg}
+        message={
+          name.length === NAME_MAX_LENGTH
+            ? `식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없습니다.`
+            : '식료품 이름은 수정할 수 없어요.'
+        }
+        color='orange'
+      />
 
       {/* 자주 먹는 식료품 태그 목록 */}
       {!isFavoriteItem(name) && editable && (
