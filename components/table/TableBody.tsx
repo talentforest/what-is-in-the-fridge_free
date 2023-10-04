@@ -72,12 +72,13 @@ export default function TableBody({
                   <TouchableOpacity
                     onPress={() => addToFridgePress(item)}
                     style={tw`h-full justify-center px-3 -mx-3`}
+                    disabled={!!checkedList.length}
                   >
                     <Icon
                       type='MaterialCommunityIcons'
                       name='plus'
                       size={23}
-                      color={findFood(item.name) ? LIGHT_GRAY : BLUE}
+                      color={!!checkedList.length ? '#e0e0e0' : BLUE}
                     />
                   </TouchableOpacity>
                 )}
