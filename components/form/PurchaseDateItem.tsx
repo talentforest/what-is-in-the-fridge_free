@@ -8,11 +8,11 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import RNDateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
+import { PlatformIOS } from '../../constant/statusBarHeight';
 
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
 import tw from 'twrnc';
-import { PlatformIOS } from '../../constant/statusBarHeight';
 import DatePickerModal from '../modal/DatePickerModal';
 
 interface Props {
@@ -48,18 +48,18 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
   };
 
   const onChange = (event: DateTimePickerEvent) => {
+    if (!PlatformIOS) setDatePickerVisible(false);
     const timeStamp = event.nativeEvent.timestamp;
 
     if (timeStamp) {
-      const selectedDate = getFormattedDate(new Date(timeStamp), 'YYYY-MM-DD');
-      setPurchaseDate(selectedDate);
+      const purchaseDate = getFormattedDate(new Date(timeStamp), 'YYYY-MM-DD');
+      if (!PlatformIOS) changeInfo({ purchaseDate });
+      setPurchaseDate(purchaseDate);
     }
   };
 
   const onPress = () => {
-    if (Keyboard.isVisible()) {
-      Keyboard.dismiss();
-    }
+    if (Keyboard.isVisible()) Keyboard.dismiss();
     setPurchaseOpen((prev) => !prev);
     changeDate(!purchaseOpen ? new Date() : '');
   };
@@ -106,12 +106,11 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
           <DatePickerModal
             isVisible={datePickerVisible}
             closeModal={() => setDatePickerVisible(false)}
-            changeInfo={() => changeInfo({ purchaseDate })}
+            positivePress={() => changeInfo({ purchaseDate })}
           >
             <RNDateTimePicker
               value={new Date(date)}
               onChange={onChange}
-              minimumDate={new Date()}
               display='spinner'
               mode='date'
               locale='ko_KO'
@@ -123,7 +122,6 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
           <RNDateTimePicker
             value={new Date(date)}
             onChange={onChange}
-            minimumDate={new Date()}
             display='spinner'
             mode='date'
             locale='ko_KO'

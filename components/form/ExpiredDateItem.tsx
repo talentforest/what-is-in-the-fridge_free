@@ -34,14 +34,14 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
   };
 
   const onChange = (event: DateTimePickerEvent) => {
+    if (!PlatformIOS) setDatePickerVisible(false);
     const { timestamp } = event.nativeEvent;
 
     if (timestamp) {
-      const selectedDate = getFormattedDate(new Date(timestamp), 'YYYY-MM-DD');
-      setExpiredDate(selectedDate);
+      const expiredDate = getFormattedDate(new Date(timestamp), 'YYYY-MM-DD');
+      if (!PlatformIOS) changeInfo({ expiredDate });
+      return setExpiredDate(expiredDate);
     }
-
-    setDatePickerVisible(false);
   };
 
   return (
@@ -77,13 +77,13 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
         </View>
       </View>
 
-      {getDiffDate(date) > 0 && (
+      {getDiffDate(date) >= 0 && (
         <MessageBox
-          color='green'
-          message={`오늘${
-            getRelativeTime(expiredDate) === '오늘'
-              ? '까지'
-              : `로부터 ${getRelativeTime(expiredDate)}까지`
+          color='gray'
+          message={`${
+            getRelativeTime(date) === '오늘'
+              ? '오늘까지'
+              : `${getRelativeTime(date)}까지`
           } 섭취할 수 있습니다.`}
         />
       )}
@@ -94,7 +94,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
           <DatePickerModal
             isVisible={datePickerVisible}
             closeModal={() => setDatePickerVisible(false)}
-            changeInfo={() => changeInfo({ expiredDate })}
+            positivePress={() => changeInfo({ expiredDate })}
           >
             <RNDateTimePicker
               value={new Date(date)}
