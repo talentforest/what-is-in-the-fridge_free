@@ -16,7 +16,7 @@ export interface Food {
   memo: string;
 }
 
-export const initialFood: Food = {
+export const initialFridgeFood: Food = {
   id: 'food_initial',
   name: '',
   category: '신선식품류',

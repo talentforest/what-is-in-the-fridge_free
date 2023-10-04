@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { FoodLocation } from '../../constant/fridgeInfo';
 import { FormStep } from '../../constant/formInfo';
 import { useAddFood } from '../../hooks';
-import { initialFood, initialPantryFood } from '../../constant/foodInfo';
+import { initialFridgeFood, initialPantryFood } from '../../constant/foodInfo';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 
 import Modal from '../../components/modal/Modal';
@@ -23,8 +23,10 @@ export default function AddFoodModal({
   setModalVisible,
   formSteps,
 }: Props) {
+  const initialFood = foodLocation ? initialFridgeFood : initialPantryFood;
+
   const { newFood, changeFoodInfo, onAddSubmit } = useAddFood({
-    initialFood: foodLocation ? initialFood : initialPantryFood,
+    initialFood,
     foodLocation,
   });
 
@@ -32,7 +34,10 @@ export default function AddFoodModal({
     <Modal
       title='새로운 식료품 추가'
       isVisible={modalVisible}
-      closeModal={() => setModalVisible(false)}
+      closeModal={() => {
+        changeFoodInfo({ ...initialFood });
+        setModalVisible(false);
+      }}
     >
       <View style={tw`bg-stone-100 pb-${PlatformIOS ? '12' : '6'}`}>
         <Form

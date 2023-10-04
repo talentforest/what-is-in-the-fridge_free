@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Food, initialFood } from '../../constant/foodInfo';
+import { Food, initialFridgeFood } from '../../constant/foodInfo';
 
 export const initialState: { selectedFood: Food } = {
-  selectedFood: initialFood,
+  selectedFood: initialFridgeFood,
 };
 
 const selectedFoodSlice = createSlice({

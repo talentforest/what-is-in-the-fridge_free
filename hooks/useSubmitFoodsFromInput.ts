@@ -1,7 +1,7 @@
 import { Alert, Keyboard } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
-import { Food, initialFood } from '../constant/foodInfo';
+import { Food, initialFridgeFood } from '../constant/foodInfo';
 import { Category } from '../constant/foodCategories';
 import { addToShoppingList } from '../redux/slice/shoppingListSlice';
 import { AnimationState } from './animation/useSetAnimationState';
@@ -34,10 +34,10 @@ export const useSubmitFoodsFromInput = () => {
 
     if (findFood(inputValue)) {
       Alert.alert(
-        '알림',
+        '동일 식료품 존재 알림',
         `동일한 이름의 식료품이 ${
           findFood(inputValue)?.space
-        }에 존재합니다. 해당 정보로 저장됩니다`,
+        }에 있습니다. 해당 카테고리 정보로 저장됩니다.`,
         [
           {
             text: '저장',
@@ -51,7 +51,7 @@ export const useSubmitFoodsFromInput = () => {
     } else {
       dispatch(
         addFavorite({
-          ...initialFood,
+          ...initialFridgeFood,
           id: myUuid as string,
           name: inputValue,
           category,
@@ -65,7 +65,7 @@ export const useSubmitFoodsFromInput = () => {
     name: string,
     setAnimationState: (state: AnimationState) => void
   ) => {
-    const { expiredDate, purchaseDate } = initialFood;
+    const { expiredDate, purchaseDate } = initialFridgeFood;
 
     const food = Object.keys(findFood(name) || {}).length
       ? ({
@@ -74,7 +74,7 @@ export const useSubmitFoodsFromInput = () => {
           purchaseDate,
         } as Food)
       : {
-          ...initialFood,
+          ...initialFridgeFood,
           id: myUuid as string,
           name,
         };
