@@ -12,6 +12,7 @@ import { useDispatch } from '../../redux/hook';
 import { search } from '../../redux/slice/searchedFoodSlice';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
+import { GRAY } from '../../constant/colors';
 
 interface Props {
   food: Food;
@@ -32,26 +33,17 @@ export default function SearchedItem({ food }: Props) {
   };
 
   return (
-    <View
-      style={tw`h-11.2 border-b border-slate-300 px-1 flex-row items-center justify-between`}
+    <TouchableOpacity
+      onPress={() => onNavigatePress(space)}
+      style={tw`h-14 bg-white shadow-md rounded-lg px-2 justify-center`}
     >
-      <Text style={tw` text-slate-700 text-sm`}>{cutLetter(name, 13)}</Text>
-      <TouchableOpacity
-        onPress={() => onNavigatePress(space)} //
-        style={tw`flex-row items-center h-full`}
-      >
+      <Text style={tw` text-slate-700 text-sm`}>{cutLetter(name, 11)}</Text>
+      <View style={tw`flex-row items-center justify-end`}>
         <Text style={tw` text-slate-500 text-sm`}>
-          <Text
-            style={tw`${
-              space === '팬트리' ? 'text-green-600' : 'text-blue-600'
-            } text-sm`}
-          >
-            {space}
-          </Text>{' '}
-          {compartmentNum}칸
+          <Text style={tw`text-blue-600 text-xs`}>{space}</Text>
         </Text>
-        <Icon type='MaterialCommunityIcons' name='arrow-top-right' size={18} />
-      </TouchableOpacity>
-    </View>
+        <Icon type='MaterialCommunityIcons' name='arrow-top-right' size={12} />
+      </View>
+    </TouchableOpacity>
   );
 }

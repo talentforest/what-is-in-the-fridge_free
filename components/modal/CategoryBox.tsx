@@ -32,19 +32,19 @@ export default function CategoryBox({
       onPress={() => onCheckBoxPress(category)}
       style={tw.style(
         `flex-row h-23 items-center justify-center border ${checkedColor} w-[${width}px] rounded-lg
-        pt-3.5 pb-1 px-1`
+        pt-3 pb-1 px-1`
       )}
     >
-      <View style={tw`items-center justify-center gap-1`}>
+      <View style={tw`items-center justify-center gap-2`}>
         {assets && (
           <CategoryImageIcon
             kind='image'
             assets={assets}
             category={category}
-            size={32}
+            size={30}
           />
         )}
-        <View style={tw`flex-1 items-center justify-center`}>
+        <View style={tw`items-center justify-center`}>
           <Text
             style={tw.style(
               `text-[13px] text-center ${

@@ -1,5 +1,5 @@
 import { Keyboard, Platform, View } from 'react-native';
-import { TouchableOpacity } from './native-component';
+import { Text, TouchableOpacity } from './native-component';
 import { useSelector } from '../../redux/hook';
 import { Space, SpaceSide } from '../../constant/fridgeInfo';
 import { getCompartments } from '../../util';
@@ -7,6 +7,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 import { NavigateProp } from '../../navigation/Navigation';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { FontGmarketSansBold } from '../../constant/fonts';
 
 import FridgeSpaceInfo from '../../screen-component/my-fridge/FridgeSpaceInfo';
 import FridgeInfo from '../../screen-component/fridge-setting/FridgeInfo';
@@ -58,11 +59,21 @@ export default function Fridge() {
         <View
           key={side}
           style={tw.style(
-            `${freezerPosition} ${sideStyle(side)}`,
+            `${freezerPosition} ${sideStyle(side)} ${
+              PlatformIOS ? 'bg-stone-300 rounded-b-md' : ''
+            }`,
             transformStyle(side),
             shadowStyle(8)
           )}
         >
+          {!PlatformIOS && routeFridgeSetting && (
+            <View style={tw`absolute -top-6 text-center items-center w-full`}>
+              <Text style={tw.style(`text-sm`, FontGmarketSansBold)}>
+                {side}
+              </Text>
+            </View>
+          )}
+
           {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (
             <TouchableOpacity
               key={space}

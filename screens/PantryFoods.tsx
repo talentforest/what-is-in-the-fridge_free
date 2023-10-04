@@ -10,6 +10,8 @@ import { formThreeSteps } from '../constant/formInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { changePantryFilter } from '../redux/slice/filterSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
+import { shadowStyle } from '../constant/shadowStyle';
+import { PlatformIOS } from '../constant/statusBarHeight';
 
 import Container from '../components/common/Container';
 import TableFilters from '../components/table/TableFilters';
@@ -62,6 +64,11 @@ export default function PantryFoods() {
                 onPress={() => {
                   dispatch(select(food));
                   setOpenFoodDetailModal(true);
+                }}
+                style={{
+                  backgroundColor: '#fff',
+                  borderRadius: 8,
+                  ...shadowStyle(PlatformIOS ? 3 : 10),
                 }}
               >
                 <FoodBox food={food} />

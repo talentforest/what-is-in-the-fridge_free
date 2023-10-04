@@ -20,11 +20,15 @@ export default function CompartmentsSettingBox({ space }: Props) {
   const MAX_COMPARTMENTS_NUM =
     space === '냉동실 안쪽' || space === '냉동실 문쪽' ? 3 : 5;
 
+  const spaceColor = (space: Space) => {
+    return space.includes('냉동') ? 'text-blue-600' : 'text-sky-600';
+  };
+
   return (
     <View
       style={tw`p-3 gap-3 justify-center flex-1 items-center bg-white border border-slate-300 rounded-md`}
     >
-      <Text style={tw`text-sm`}>{space}</Text>
+      <Text style={tw`text-sm ${spaceColor(space)}`}>{space}</Text>
       <View style={tw`flex-row items-center justify-center`}>
         <CountBtn
           type='plus'
@@ -33,7 +37,7 @@ export default function CompartmentsSettingBox({ space }: Props) {
         />
 
         <View style={tw`flex-row items-center gap-1 mx-2`}>
-          <Text style={tw.style(`text-blue-600 text-[17px]`, SCDream8)}>
+          <Text style={tw.style(`text-slate-800 text-[17px]`, SCDream8)}>
             {fridgeInfo.compartments[space]}
           </Text>
           <Text style={tw`text-slate-500 pt-1`}>칸</Text>

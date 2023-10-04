@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { Food } from '../../constant/foodInfo';
-import { cutLetter, expired } from '../../util';
+import { cutLetter, expired, getDiffDate } from '../../util';
 import { GRAY } from '../../constant/colors';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
@@ -48,6 +48,15 @@ export default function ExpiredFoodSection({ foodList }: Props) {
                 color='red'
               />
             )}
+
+            {getDiffDate(food.expiredDate) === 0 && (
+              <Icon
+                name='exclamation-thick'
+                type='MaterialCommunityIcons'
+                color='amber'
+              />
+            )}
+
             <Text style={tw`flex-1`}>{cutLetter(food.name, 14)}</Text>
             <LeftDay expiredDate={food.expiredDate} size={15} />
           </TouchableOpacity>

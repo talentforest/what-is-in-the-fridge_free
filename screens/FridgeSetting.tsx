@@ -13,6 +13,7 @@ import CompartmentsSettingBox from '../screen-component/fridge-setting/Compartme
 import Container from '../components/common/Container';
 import CheckBoxItem from '../components/common/CheckBoxItem';
 import tw from 'twrnc';
+import { PlatformIOS } from '../constant/statusBarHeight';
 
 export default function FridgeSetting() {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
@@ -32,8 +33,12 @@ export default function FridgeSetting() {
     <SafeBottomAreaView>
       <Container>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <SelectContainter title='나의 냉장고 모습 결과'>
-            <View style={tw`flex-1 w-[45%] h-60 mx-auto my-2`}>
+          <SelectContainter title='나의 냉장고 모습'>
+            <View
+              style={tw`w-[45%] h-54 mx-auto ${
+                PlatformIOS ? 'my-2' : 'mb-2 mt-6'
+              }`}
+            >
               <Fridge />
             </View>
           </SelectContainter>

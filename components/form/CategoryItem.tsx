@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Keyboard, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { Category } from '../../constant/foodCategories';
-import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import { useFindFood } from '../../hooks';
 import { ModalTitle } from '../modal/Modal';
 import { shadowStyle } from '../../constant/shadowStyle';
@@ -10,7 +9,6 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import CategoryModal from '../../screen-component/modal/CategoryModal';
 import FormLabel from './FormLabel';
 import CategoryImageIcon from '../common/CategoryImageIcon';
-import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
@@ -42,16 +40,14 @@ export default function CategoryItem({
   const activeColor = 'border-slate-300 text-slate-900';
   const inActiveColor = 'border-slate-300 text-slate-400';
   const color = disabledCategory ? inActiveColor : activeColor;
-  const iconColor = disabledCategory ? LIGHT_GRAY : BLUE;
 
   return (
     <View>
       <FormLabel label='카테고리' />
       <TouchableOpacity
         onPress={() => {
-          if (!Keyboard.isVisible()) {
-            setCategoryOpen((prev) => !prev);
-          }
+          if (Keyboard.isVisible()) Keyboard.dismiss();
+          setCategoryOpen((prev) => !prev);
         }}
         disabled={disabledCategory}
         style={tw.style(
@@ -63,12 +59,6 @@ export default function CategoryItem({
           <CategoryImageIcon kind='icon' category={category} size={18} />
           <Text style={tw`${color}`}>{category}</Text>
         </View>
-        <Icon
-          name='unfold-more-horizontal'
-          type='MaterialCommunityIcons'
-          size={18}
-          color={iconColor}
-        />
       </TouchableOpacity>
 
       <CategoryModal

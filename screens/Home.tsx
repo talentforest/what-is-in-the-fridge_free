@@ -33,7 +33,7 @@ const Home = () => {
           >
             <Text
               style={tw.style(
-                `text-blue-600 ${PlatformIOS ? 'text-[22px]' : 'text-2xl'}`,
+                `text-[#3284FF] ${PlatformIOS ? 'text-[22px]' : 'text-2xl'}`,
                 Cafe24Ssurround
               )}
             >

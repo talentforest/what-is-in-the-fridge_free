@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function CountBtn({ type, onPress, active }: Props) {
-  const COLOR_STRING = type === 'minus' ? 'amber' : 'blue';
+  const COLOR_STRING = type === 'minus' ? 'slate' : 'blue';
   const SIZE = `h-6.5 w-6.5`;
   const ACTIVE_STYLE = active
     ? `border border-${COLOR_STRING}-200 bg-${COLOR_STRING}-600`

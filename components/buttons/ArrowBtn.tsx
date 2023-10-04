@@ -23,7 +23,7 @@ export default function ArrowBtn({ type, moveStep, active }: Props) {
           <Icon
             name='chevron-left'
             type='MaterialCommunityIcons'
-            size={18}
+            size={22}
             color={active ? BLUE : LIGHT_GRAY}
           />
         )}

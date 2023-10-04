@@ -6,8 +6,9 @@ import { useFindCompartmentNum } from '../../hooks/useFindCompartmentNum';
 import { select } from '../../redux/slice/selectedFoodSlice';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleDragMode } from '../../redux/slice/dragModeSlice';
-import FoodBox from '../../components/common/FoodBox';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { PlatformIOS } from '../../constant/statusBarHeight';
+import FoodBox from '../../components/common/FoodBox';
 
 interface Props {
   food: Food;
@@ -38,20 +39,21 @@ export default function DraggableFoodBox({
     findCompartmentNum,
   });
 
-  const transformAnimation = {
-    backgroundColor: '#fff',
-    opacity: selectedFood.name === food.name ? 0.3 : 1,
-    transform: [{ rotate }],
-    ...shadowStyle(3),
-  };
+  const conditionalStyle = dragMode
+    ? {
+        opacity: selectedFood.name === food.name ? 0.3 : 1,
+        transform: [{ rotate }],
+      }
+    : null;
 
   return (
     <Animated.View
-      style={
-        dragMode
-          ? { ...transformAnimation }
-          : { backgroundColor: '#fff', borderRadius: 8, ...shadowStyle(3) }
-      }
+      style={{
+        backgroundColor: '#fff',
+        ...shadowStyle(PlatformIOS ? 3 : 10),
+        borderRadius: 8,
+        ...conditionalStyle,
+      }}
       {...(dragMode ? { ...panResponder.panHandlers } : null)}
     >
       <TouchableOpacity

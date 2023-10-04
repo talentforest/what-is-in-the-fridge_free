@@ -72,13 +72,13 @@ export default function CompartmentBox({
           onPress={() => {
             setExpandCompartment(true);
           }}
-          style={tw`p-2 absolute left-0 bottom-0`}
+          style={tw`absolute border border-white right-1.5 bottom-1.5`}
           disabled={false}
         >
           <Icon
             type='MaterialCommunityIcons'
-            name='arrow-expand-all'
-            size={18}
+            name='resize-bottom-right'
+            size={30}
             color={LIGHT_BLUE}
           />
         </TouchableOpacity>

@@ -22,16 +22,12 @@ function LeftDay({ size = 15, expiredDate, iconMark, dateMark }: Props) {
   const textColor = getTWColorByLeftDay(expiredDate);
   const diffDate = getDiffDate(expiredDate);
 
+  const attentionDate = expired(expiredDate) || leftThreeDays(expiredDate);
+
   return (
     <View>
-      <View
-        style={tw`${
-          (expired(expiredDate) || leftThreeDays(expiredDate)) && iconMark
-            ? 'flex-row items-center'
-            : ''
-        }`}
-      >
-        {expired(expiredDate) && iconMark && (
+      <View style={tw`flex-row items-center self-end`}>
+        {attentionDate && iconMark && (
           <Icon
             name='exclamation-thick'
             type='MaterialCommunityIcons'
@@ -40,12 +36,12 @@ function LeftDay({ size = 15, expiredDate, iconMark, dateMark }: Props) {
           />
         )}
 
-        {leftThreeDays(expiredDate) && iconMark && (
+        {!attentionDate && iconMark && (
           <Icon
-            name='circle-medium'
+            name='menu-right-outline'
             type='MaterialCommunityIcons'
             color={getColorByLeftDay(expiredDate)}
-            size={size}
+            size={size + 2}
           />
         )}
 
@@ -59,7 +55,7 @@ function LeftDay({ size = 15, expiredDate, iconMark, dateMark }: Props) {
       </View>
 
       {dateMark && (
-        <Text style={tw`text-[11px] self-end text-slate-500 -my-1`}>
+        <Text style={tw`text-[10px] self-end text-slate-500 -my-1.5`}>
           {getFormattedDate(expiredDate, 'YYYY.MM.DD')}
         </Text>
       )}

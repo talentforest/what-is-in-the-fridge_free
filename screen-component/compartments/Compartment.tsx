@@ -23,9 +23,9 @@ export default function Compartment({
   foodLocation,
   foodLengthBySpace,
 }: Props) {
-  const { dragMode } = useSelector((state) => state.dragMode);
-  const { selectedFood } = useSelector((state) => state.selectedFood);
   const { space, compartmentNum } = foodLocation;
+
+  const { dragMode } = useSelector((state) => state.dragMode);
   const { compartmentNumToDrop } = useSelector(
     (state) => state.compartmentNumToDrop
   );
