@@ -31,7 +31,7 @@ export default function TextInputRoundedBox({
   return (
     <View
       style={tw.style(
-        `h-11 mt-1 w-full border border-slate-300 rounded-full items-center flex-row bg-white pl-2`,
+        `h-11 w-full border border-slate-300 rounded-full items-center flex-row bg-white pl-2`,
         shadowStyle(3)
       )}
     >

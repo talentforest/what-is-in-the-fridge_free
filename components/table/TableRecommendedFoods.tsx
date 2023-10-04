@@ -11,6 +11,7 @@ import tw from 'twrnc';
 
 interface Props {
   keyword: string;
+  setKeyword: (keyword: string) => void;
   onSubmitShoppingListItem: (
     name: string,
     setAnimationState: (state: AnimationState) => void
@@ -22,6 +23,7 @@ const LIST_MAX_NUM = 7;
 
 export default function TableRecommendedFoods({
   keyword,
+  setKeyword,
   onSubmitShoppingListItem,
   setAnimationState,
 }: Props) {
@@ -43,7 +45,6 @@ export default function TableRecommendedFoods({
   return !!recommendList.length ? (
     <View>
       <Text style={tw`text-sm text-slate-600 ml-1`}>장보기 추천 식료품</Text>
-
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -55,9 +56,10 @@ export default function TableRecommendedFoods({
               `flex-row gap-0.5 items-center border border-slate-300 pl-2 pr-3 py-0.5 bg-white rounded-full`,
               shadowStyle(3)
             )}
-            onPress={() =>
-              onSubmitShoppingListItem(food.name, setAnimationState)
-            }
+            onPress={() => {
+              onSubmitShoppingListItem(food.name, setAnimationState);
+              setKeyword('');
+            }}
             key={food.id}
           >
             <Icon

@@ -5,7 +5,7 @@ import {
 } from '../components/common/native-component';
 import { Category, foodCategories } from '../constant/foodCategories';
 import { entireFilterObj, existAbsenceFilters } from '../util';
-import { Animated, View } from 'react-native';
+import { Animated } from 'react-native';
 import {
   useHandleTableItem,
   useSlideAnimation,
@@ -19,15 +19,14 @@ import {
 
 import Container from '../components/common/Container';
 import TableCategorizedBody from '../components/table/TableCategorizedBody';
-import TableContainer from '../components/table/TableContainer';
+import TableFooterContainer from '../components/table/TableFooterContainer';
 import TableFilters from '../components/table/TableFilters';
-import TableFooter from '../components/table/TableFooter';
+import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import CategoryModal from '../screen-component/modal/CategoryModal';
 import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
 import FormMessage from '../components/form/FormMessage';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
-import tw from 'twrnc';
 
 export default function FavoriteFoods() {
   const [inputValue, setInputValue] = useState('');
@@ -50,7 +49,7 @@ export default function FavoriteFoods() {
   const { height, interpolatedOpacity } = useSlideAnimation({
     initialValue: 0,
     toValue: 20,
-    active: showCaution,
+    active: !!(showCaution && isFavoriteItem(inputValue)),
   });
 
   const { animationState, setAnimationState, afterAnimation } =
@@ -62,12 +61,7 @@ export default function FavoriteFoods() {
   });
 
   useEffect(() => {
-    if (inputValue === '') {
-      setShowCaution(false);
-    }
-  }, [inputValue]);
-
-  useEffect(() => {
+    setCheckedList([]);
     initializeFilter();
   }, []);
 
@@ -94,51 +88,47 @@ export default function FavoriteFoods() {
     <KeyboardAvoidingView>
       <SafeBottomAreaView>
         <Container>
-          <TableContainer>
-            <TableFilters
-              filterList={[entireFilterObj, ...existAbsenceFilters]}
-              categoryFilters={foodCategories}
-              getTableList={getFilteredFoodList}
-              setCheckedList={setCheckedList}
-              foodList={favoriteFoods}
-            />
+          <TableFilters
+            filterList={[entireFilterObj, ...existAbsenceFilters]}
+            categoryFilters={foodCategories}
+            getTableList={getFilteredFoodList}
+            setCheckedList={setCheckedList}
+            foodList={favoriteFoods}
+          />
 
-            <TableCategorizedBody
-              onCheckBoxPress={onCheckBoxPress}
-              checkedList={checkedList}
-              animationState={animationState}
-              afterAnimation={() =>
-                afterAnimation(onDeleteFoodPress, favoriteFoods)
-              }
-            />
+          <TableCategorizedBody
+            onCheckBoxPress={onCheckBoxPress}
+            checkedList={checkedList}
+            animationState={animationState}
+            afterAnimation={() =>
+              afterAnimation(onDeleteFoodPress, favoriteFoods)
+            }
+          />
 
-            <View style={tw`-my-3`}>
-              <TableFooter
-                list={checkedList}
-                entireChecked={allChecked && !!checkedList.length}
-                onEntirePress={() => onEntireBoxPress(filteredList)}
-              >
-                <SquareIconBtn
-                  icon='tag-minus'
-                  disabled={checkedList.length === 0}
-                  onPress={() =>
-                    onDeleteFoodPress(
-                      setAnimationState,
-                      animationState,
-                      favoriteFoods
-                    )
-                  }
-                />
-                <SquareIconBtn
-                  icon='basket-plus'
-                  disabled={checkedList.length === 0}
-                  onPress={onAddShoppingListBtnPress}
-                />
-              </TableFooter>
-            </View>
-          </TableContainer>
+          <TableFooterContainer>
+            <TableSelectedHandleBox
+              list={checkedList}
+              entireChecked={allChecked && !!checkedList.length}
+              onEntirePress={() => onEntireBoxPress(filteredList)}
+            >
+              <SquareIconBtn
+                icon='tag-minus'
+                disabled={checkedList.length === 0}
+                onPress={() =>
+                  onDeleteFoodPress(
+                    setAnimationState,
+                    animationState,
+                    favoriteFoods
+                  )
+                }
+              />
+              <SquareIconBtn
+                icon='basket-plus'
+                disabled={checkedList.length === 0}
+                onPress={onAddShoppingListBtnPress}
+              />
+            </TableSelectedHandleBox>
 
-          <View style={tw`mt-2`}>
             <TextInputRoundedBox
               value={inputValue}
               setValue={setInputValue}
@@ -160,14 +150,13 @@ export default function FavoriteFoods() {
                 paddingLeft: 12,
               }}
             >
-              {showCaution && isFavoriteItem(inputValue) && (
-                <FormMessage
-                  message='이미 목록에 있는 식료품이에요.'
-                  color='orange'
-                />
-              )}
+              <FormMessage
+                active={!!(showCaution && isFavoriteItem(inputValue))}
+                message='이미 목록에 있는 식료품이에요.'
+                color='orange'
+              />
             </Animated.View>
-          </View>
+          </TableFooterContainer>
 
           <CategoryModal
             modalVisible={categoryOpen}
