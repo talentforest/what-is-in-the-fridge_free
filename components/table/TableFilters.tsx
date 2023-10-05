@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { Filter, FilterObj } from '../../util';
@@ -26,6 +26,7 @@ export default function TableFilters({
   setCheckedList,
 }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
+  const scrollViewRef = useRef<ScrollView | null>(null);
 
   const {
     currentFilter,
@@ -45,20 +46,35 @@ export default function TableFilters({
     foodList.map((item) => item.category).includes(category)
   )?.category;
 
+  const itemScrollTo = (filter: Filter, index: number) => {
+    const offset = index <= 1 ? 0 : filter.length > 6 ? 90 : 180;
+    return index === filterList.length - 1
+      ? scrollViewRef.current?.scrollToEnd()
+      : scrollViewRef.current?.scrollTo({
+          x: index * 50 + offset,
+          y: 0,
+          animated: true,
+        });
+  };
+
   return (
     <View>
       <ScrollView
+        ref={scrollViewRef}
         style={tw`h-12 pt-0.5`}
         contentContainerStyle={tw`gap-1 items-start pr-2`}
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {filterList.map(({ filter, icon }) => (
+        {filterList.map(({ filter, icon }, index) => (
           <FilterTag
             key={filter}
             filterObj={{ filter, icon }}
             active={filter === currentFilter}
-            onFilterPress={() => onFilterPress(filter, setCheckedList)}
+            onFilterPress={() => {
+              onFilterPress(filter, setCheckedList);
+              itemScrollTo(filter, index);
+            }}
             length={getTableList(filter, foodList).length || 0}
           />
         ))}

@@ -49,7 +49,7 @@ export default function FilterTag({
     <TouchableOpacity
       onPress={() => onFilterPress(filter)}
       style={tw.style(
-        `bg-white flex-row items-center border px-3 py-1 gap-1.5 rounded-full ${color}`,
+        `h-9 min-w-20 bg-white flex-row items-center border px-3 py-1 gap-1.5 rounded-full ${color}`,
         shadowStyle(3)
       )}
       disabled={length === 0 && categoryFilter}
