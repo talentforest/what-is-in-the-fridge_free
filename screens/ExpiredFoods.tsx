@@ -16,8 +16,6 @@ import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
-import tw from 'twrnc';
-import { useFocusEffect } from '@react-navigation/native';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
