@@ -16,6 +16,7 @@ import Icon from '../components/common/native-component/Icon';
 import Home from '../screens/Home';
 import MyFridge from '../screens/MyFridge';
 import PantryFoods from '../screens/PantryFoods';
+import { Text } from '../components/common/native-component';
 
 export type RootTabParamList = {
   Home: undefined;
@@ -89,7 +90,7 @@ export default function MyTabs() {
         options={{
           tabBarIcon: ({ color }) => <TabIcon name='fridge' color={color} />,
           tabBarLabel: '나의 냉장고',
-          title: '나의 냉장고',
+          headerTitle: () => headerTitle('나의 냉장고'),
           ...headerOptions,
         }}
       />
@@ -101,6 +102,7 @@ export default function MyTabs() {
             <TabIcon name='inbox-multiple' color={color} />
           ),
           tabBarLabel: '나의 팬트리',
+          headerTitle: () => headerTitle('나의 팬트리'),
           title: '나의 팬트리',
           ...headerOptions,
         }}
@@ -119,3 +121,11 @@ export function TabIcon({ name, color }: { name: string; color: string }) {
     />
   );
 }
+
+const headerTitle = (title: string) => {
+  return (
+    <Text allowFontScaling={false} style={{ fontSize: 17 }}>
+      {title}
+    </Text>
+  );
+};
