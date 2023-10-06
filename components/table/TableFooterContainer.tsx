@@ -10,7 +10,7 @@ export default function TableFooterContainer({ children }: Props) {
   return (
     <View
       style={tw.style(
-        `bg-blue-100 border border-blue-300 rounded-t-2xl -mx-4 -mb-4`,
+        `bg-stone-300 border border-stone-400 rounded-t-2xl -mx-4 -mb-4`,
         {
           shadowColor: '#aaa',
           shadowOpacity: 0.3,

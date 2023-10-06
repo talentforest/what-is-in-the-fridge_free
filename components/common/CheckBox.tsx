@@ -3,20 +3,20 @@ import Icon from './native-component/Icon';
 
 interface Props {
   checked: boolean;
-  activeColor?: string;
+  inActiveColor?: string;
   size?: number;
 }
 
 export default function CheckBox({
   checked,
-  activeColor = BLUE,
+  inActiveColor = '#bbb',
   size = 18,
 }: Props) {
   return (
     <Icon
       type='Ionicons'
       name={checked ? 'checkbox' : 'square-outline'}
-      color={checked ? activeColor : '#bbb'}
+      color={checked ? BLUE : inActiveColor}
       size={size}
     />
   );

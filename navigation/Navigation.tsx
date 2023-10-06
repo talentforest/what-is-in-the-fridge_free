@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
 import { DEEP_GRAY, HEADER_BGCOLOR } from '../constant/colors';
-import { FontGmarketSansRegular } from '../constant/fonts';
+import { Text } from '../components/common/native-component';
 
 import MyTabs, { RootTabParamList } from './MyTabs';
 import Compartments from '../screens/Compartments';
@@ -15,14 +15,11 @@ import FridgeSetting from '../screens/FridgeSetting';
 import HeaderBtn from '../components/buttons/HeaderBtn';
 import OnBoarding from '../screens/OnBoarding';
 import ShoppingList from '../screens/ShoppingList';
-import FavoriteCategories from '../screens/FavoriteCategories';
-import { Text } from '../components/common/native-component';
 
 export type RootStackParamList = {
   MyTabs: undefined;
   OnBoarding: undefined;
   Compartments: undefined | object;
-  FavoriteCategories: undefined;
   FavoriteFoods: undefined;
   ExpiredFoods: undefined;
   ShoppingList: undefined;
@@ -76,14 +73,6 @@ const Navigation = () => {
         name='Compartments'
         component={Compartments}
         options={{ ...options, animation: 'default' }}
-      />
-      <Stack.Screen
-        name='FavoriteCategories'
-        component={FavoriteCategories}
-        options={{
-          ...options,
-          headerTitle: () => headerTitle('자주 먹는 식료품'),
-        }}
       />
       <Stack.Screen
         name='FavoriteFoods'
