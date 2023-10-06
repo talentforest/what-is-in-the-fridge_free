@@ -11,6 +11,8 @@ export const useGetFoodList = () => {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
   const { filter } = useSelector((state) => state.filter);
 
+  const allFoods = [...fridgeFoods, ...pantryFoods];
+
   const orderExpirationDate = (list: Food[]) => {
     const copiedList = list ? [...list] : [];
 
@@ -21,6 +23,15 @@ export const useGetFoodList = () => {
     );
     return sortedList || [];
   };
+
+  function orderedByExist() {
+    const compareFavorite = (food: Food) => {
+      return allFoods.some((favFood) => favFood.name === food.name);
+    };
+    const existingFoods = favoriteFoods.filter((food) => compareFavorite(food));
+    const missingFoods = favoriteFoods.filter((food) => !compareFavorite(food));
+    return [...missingFoods, ...existingFoods];
+  }
 
   const allExpiredFoods = (type?: 'fridge' | 'pantry') => {
     const expiredFridgeFoods = fridgeFoods.filter(
@@ -63,37 +74,30 @@ export const useGetFoodList = () => {
     return filteredFoods;
   };
 
-  // Table 필터의 개수를 나타내주는 함수이기도 하다.
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
-    if (filter === '전체') return orderExpirationDate(foodList);
+    if (filter === '전체') return foodList;
 
     if (filter === '냉동실' || filter === '냉장실' || filter === '팬트리')
       return getFoodList('expiredFoods', filter);
 
     if (filter === '없는 식료품') {
-      const allFoods = [...fridgeFoods, ...pantryFoods];
       return foodList.filter(
         (food) => !!!allFoods.find((allFood) => allFood.name === food.name)
       );
     }
 
-    if (filter === '자주 먹는 식료품') {
+    if (filter === '자주 먹는 식료품')
       return foodList.filter((food) =>
         favoriteFoods.find((favFood) => food.name === favFood.name)
       );
-    }
 
-    if (filter === '소비기한 만료') {
-      const list = foodList.filter((food) => expired(food.expiredDate));
-      return orderExpirationDate(list);
-    }
-    if (filter === '소비기한 3일 이내') {
-      const list = foodList.filter((food) => leftThreeDays(food.expiredDate));
-      return orderExpirationDate(list);
-    }
+    if (filter === '소비기한 만료')
+      return foodList.filter((food) => expired(food.expiredDate));
 
-    const listByCategory = foodList.filter((food) => food.category === filter);
-    return orderExpirationDate(listByCategory);
+    if (filter === '소비기한 3일 이내')
+      return foodList.filter((food) => leftThreeDays(food.expiredDate));
+
+    return foodList.filter((food) => food.category === filter);
   };
 
   const route = useRoute();
@@ -143,6 +147,7 @@ export const useGetFoodList = () => {
     favoriteFoods,
     pantryFoods,
     allExpiredFoods,
+    orderedByExist,
     getFoodList,
     getFilteredFoodList,
     getExistCategoryList,

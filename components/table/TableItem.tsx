@@ -1,7 +1,6 @@
 import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { cutLetter, expired } from '../../util';
-import { BLUE } from '../../constant/colors';
 import { Food, initialFridgeFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
 import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
@@ -11,6 +10,7 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import CheckBox from '../common/CheckBox';
 import IndicatorExist from '../common/IndicatorExist';
 import Icon from '../common/native-component/Icon';
+import CategoryImageIcon from '../common/CategoryImageIcon';
 import tw from 'twrnc';
 
 interface Props {
@@ -38,7 +38,7 @@ export default function TableItem({
   const slideDownIn = animationState === 'slidedown-in';
   const slideUpOut = animationState === 'slideup-out';
 
-  const ITEM_HEIGHT = 55;
+  const ITEM_HEIGHT = 50;
   const initialValue =
     isCheckedItem && slideUpOut ? ITEM_HEIGHT : slideDownIn ? 0 : ITEM_HEIGHT;
   const toValue = isCheckedItem && slideUpOut ? 0 : ITEM_HEIGHT;
@@ -68,7 +68,6 @@ export default function TableItem({
         height,
         opacity: interpolatedOpacity,
         overflow: 'hidden',
-        paddingHorizontal: 8,
       }}
     >
       <TouchableOpacity
@@ -80,7 +79,11 @@ export default function TableItem({
           shadowStyle(4)
         )}
       >
-        <CheckBox checked={!!isCheckedItem} activeColor={BLUE} />
+        <CheckBox checked={!!isCheckedItem} />
+
+        {!shoppingListRoute && (
+          <CategoryImageIcon kind='icon' size={15} category={category} />
+        )}
 
         <View style={tw`flex-1 flex-row items-center gap-1`}>
           {expired(food.expiredDate) && route.name === 'ExpiredFoods' && (

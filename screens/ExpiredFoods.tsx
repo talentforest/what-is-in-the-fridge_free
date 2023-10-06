@@ -8,7 +8,6 @@ import {
   useHandleFilter,
 } from '../hooks/';
 import { useEffect } from 'react';
-import { View } from 'react-native';
 
 import Container from '../components/common/Container';
 import TableBody from '../components/table/TableBody';
@@ -57,6 +56,7 @@ export default function ExpiredFoods() {
         />
 
         <TableBody
+          title='소비기한 주의 식료품'
           list={filteredList}
           onCheckBoxPress={onCheckBoxPress}
           checkedList={checkedList}

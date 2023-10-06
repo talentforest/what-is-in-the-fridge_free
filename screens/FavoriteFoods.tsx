@@ -3,7 +3,7 @@ import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
 } from '../components/common/native-component';
-import { Category, foodCategories } from '../constant/foodCategories';
+import { Category } from '../constant/foodCategories';
 import { entireFilterObj, existAbsenceFilters } from '../util';
 import { Animated } from 'react-native';
 import {
@@ -18,7 +18,6 @@ import {
 } from '../hooks';
 
 import Container from '../components/common/Container';
-import TableCategorizedBody from '../components/table/TableCategorizedBody';
 import TableFooterContainer from '../components/table/TableFooterContainer';
 import TableFilters from '../components/table/TableFilters';
 import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
@@ -27,6 +26,7 @@ import CategoryModal from '../screen-component/modal/CategoryModal';
 import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
 import FormMessage from '../components/form/FormMessage';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
+import TableBody from '../components/table/TableBody';
 
 export default function FavoriteFoods() {
   const [inputValue, setInputValue] = useState('');
@@ -36,7 +36,8 @@ export default function FavoriteFoods() {
 
   const { isFavoriteItem } = useFindFood();
   const { currentFilter, initializeFilter } = useHandleFilter();
-  const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
+  const { favoriteFoods, getFilteredFoodList, orderedByExist } =
+    useGetFoodList();
   const { onSubmitFavoriteListItem } = useSubmitFoodsFromInput();
 
   const {
@@ -61,7 +62,6 @@ export default function FavoriteFoods() {
   });
 
   useEffect(() => {
-    setCheckedList([]);
     initializeFilter();
   }, []);
 
@@ -82,6 +82,12 @@ export default function FavoriteFoods() {
 
   const filteredList = getFilteredFoodList(currentFilter, favoriteFoods);
 
+  const filteredFoodList = () => {
+    return currentFilter === '전체'
+      ? orderedByExist()
+      : getFilteredFoodList(currentFilter, favoriteFoods);
+  };
+
   const allChecked = checkedList.length === filteredList.length;
 
   return (
@@ -90,16 +96,17 @@ export default function FavoriteFoods() {
         <Container>
           <TableFilters
             filterList={[entireFilterObj, ...existAbsenceFilters]}
-            categoryFilters={foodCategories}
             getTableList={getFilteredFoodList}
             setCheckedList={setCheckedList}
             foodList={favoriteFoods}
           />
 
-          <TableCategorizedBody
+          <TableBody
+            title='자주 먹는 식료품'
             onCheckBoxPress={onCheckBoxPress}
             checkedList={checkedList}
             animationState={animationState}
+            list={filteredFoodList()}
             afterAnimation={() =>
               afterAnimation(onDeleteFoodPress, favoriteFoods)
             }
@@ -132,17 +139,16 @@ export default function FavoriteFoods() {
             <TextInputRoundedBox
               value={inputValue}
               setValue={setInputValue}
-              iconName='plus'
               placeholder='자주 먹는 식료품을 추가하세요.'
               onSubmitEditing={onSubmitEditing}
               disabled={inputValue === ''}
+              checkedListLength={checkedList.length}
             >
               <InputCategoryBtn
                 category={category}
                 setCategoryOpen={setCategoryOpen}
               />
             </TextInputRoundedBox>
-
             <Animated.View
               style={{
                 height,

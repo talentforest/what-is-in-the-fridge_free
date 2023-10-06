@@ -57,6 +57,7 @@ export default function ShoppingList() {
           <TableHeader title='장보기 식료품' length={shoppingList.length} />
 
           <TableBody
+            title='장보기 식료품'
             list={shoppingList}
             onCheckBoxPress={onCheckBoxPress}
             addToFridgePress={onAddToFridgePress}
@@ -67,15 +68,6 @@ export default function ShoppingList() {
             }
           />
           <TableFooterContainer>
-            {!!!checkedList.length && (
-              <TableRecommendedFoods
-                keyword={keyword}
-                setKeyword={setKeyword}
-                onSubmitShoppingListItem={onSubmitShoppingListItem}
-                setAnimationState={setAnimationState}
-              />
-            )}
-
             <TableSelectedHandleBox
               list={checkedList}
               entireChecked={allChecked && !!checkedList.length}
@@ -94,13 +86,20 @@ export default function ShoppingList() {
               />
             </TableSelectedHandleBox>
 
+            <TableRecommendedFoods
+              active={!!checkedList.length}
+              keyword={keyword}
+              setKeyword={setKeyword}
+              onSubmitShoppingListItem={onSubmitShoppingListItem}
+              setAnimationState={setAnimationState}
+            />
             <TextInputRoundedBox
               value={keyword}
               setValue={setKeyword}
-              iconName='plus'
               placeholder='식료품 이름을 작성해주세요.'
               onSubmitEditing={onInputSubmit}
               disabled={keyword === ''}
+              checkedListLength={checkedList.length}
             />
           </TableFooterContainer>
 

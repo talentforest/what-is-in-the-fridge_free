@@ -8,6 +8,7 @@ interface Props {
   checked: boolean;
   title: string;
   disabled?: boolean;
+  inActiveColor?: string;
 }
 
 export default function CheckBoxItem({
@@ -15,6 +16,7 @@ export default function CheckBoxItem({
   onPress,
   checked,
   title,
+  inActiveColor,
 }: Props) {
   return (
     <TouchableOpacity
@@ -22,7 +24,7 @@ export default function CheckBoxItem({
       style={tw`flex-row items-center gap-1`}
       onPress={onPress}
     >
-      <CheckBox checked={checked} activeColor={BLUE} />
+      <CheckBox checked={checked} inActiveColor={inActiveColor} />
       <Text style={tw`${checked ? 'text-blue-700' : 'text-slate-700'}`}>
         {title}
       </Text>

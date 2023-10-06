@@ -29,12 +29,7 @@ export default function TableSelectedHandleBox({
   });
 
   return (
-    <Animated.View
-      style={{
-        height,
-        overflow: 'hidden',
-      }}
-    >
+    <Animated.View style={{ height, overflow: 'hidden' }}>
       <View
         style={tw.style(`mx-4 flex-row justify-between items-center h-full`)}
       >
@@ -43,6 +38,7 @@ export default function TableSelectedHandleBox({
             onPress={onEntirePress}
             checked={entireChecked}
             title='전체 선택'
+            inActiveColor='#333'
           />
           {!!list.length && (
             <Text style={tw`text-sm ml-6 text-blue-600`}>
