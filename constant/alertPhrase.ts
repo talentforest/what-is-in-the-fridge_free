@@ -91,7 +91,13 @@ export const alertPhraseWithCheckList: (food: Food[]) => {
     msg: string;
   };
 } = (checkedList: Food[]) => {
-  const checkedFoodNameList = checkedList.map((food) => food.name).join(', ');
+  const checkedFoodNameList =
+    checkedList.length > 8
+      ? `${checkedList
+          .map((food) => food.name)
+          .slice(0, 8)
+          .join(', ')} 등...`
+      : checkedList.map((food) => food.name).join(', ');
 
   const unSettingFavoriteFoods = {
     title: '자주 먹는 식료품 해제',
