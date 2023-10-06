@@ -1,6 +1,8 @@
+import { View } from 'react-native';
 import { BLUE } from '../../constant/colors';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { TouchableOpacity } from '../common/native-component';
+
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
@@ -16,16 +18,18 @@ export default function SquareIconBtn({ onPress, disabled, icon }: Props) {
       onPress={onPress}
       disabled={disabled}
       style={tw.style(
-        `border border-slate-200 bg-white h-11 w-11 ml-2 mb-0.5 items-center justify-center rounded-xl`,
-        shadowStyle(3)
+        `bg-white border border-slate-200 ml-1 mb-0.5 items-center justify-center rounded-2xl`,
+        shadowStyle(4)
       )}
     >
-      <Icon
-        type='MaterialCommunityIcons'
-        name={icon}
-        size={21}
-        color={icon.includes('plus') ? BLUE : 'amber'}
-      />
+      <View style={tw`p-3`}>
+        <Icon
+          type='MaterialCommunityIcons'
+          name={icon}
+          size={22}
+          color={icon.includes('plus') ? BLUE : 'amber'}
+        />
+      </View>
     </TouchableOpacity>
   );
 }
