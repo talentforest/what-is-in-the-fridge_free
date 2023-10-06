@@ -1,6 +1,6 @@
-import { View } from 'react-native';
+import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
-import { AnimationState, useGetFoodList } from '../../hooks';
+import { AnimationState, useGetFoodList, useSlideAnimation } from '../../hooks';
 import { GRAY } from '../../constant/colors';
 import { useSelector } from '../../redux/hook';
 import { cutLetter, findMatchNameFoods } from '../../util';
@@ -10,6 +10,7 @@ import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
+  active: boolean;
   keyword: string;
   setKeyword: (keyword: string) => void;
   onSubmitShoppingListItem: (
@@ -22,6 +23,7 @@ interface Props {
 const LIST_MAX_NUM = 7;
 
 export default function TableRecommendedFoods({
+  active,
   keyword,
   setKeyword,
   onSubmitShoppingListItem,
@@ -42,39 +44,47 @@ export default function TableRecommendedFoods({
     ? findMatchName
     : foodsExceptShoppingList;
 
+  const { height } = useSlideAnimation({
+    initialValue: 75,
+    toValue: 0,
+    active,
+  });
+
   return !!recommendList.length ? (
-    <View>
-      <Text style={tw`text-sm text-slate-600 ml-1`}>장보기 추천 식료품</Text>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={tw`pl-0.5 pr-5 gap-1 py-1.5`}
-      >
-        {recommendList.slice(0, LIST_MAX_NUM).map((food) => (
-          <TouchableOpacity
-            style={tw.style(
-              `flex-row gap-0.5 items-center border border-slate-300 pl-2 pr-3 py-0.5 bg-white rounded-full`,
-              shadowStyle(3)
-            )}
-            onPress={() => {
-              onSubmitShoppingListItem(food.name, setAnimationState);
-              setKeyword('');
-            }}
-            key={food.id}
-          >
-            <Icon
-              name='plus'
-              type='MaterialCommunityIcons'
-              size={18}
-              color={GRAY}
-            />
-            <Text style={tw`text-[15px] text-slate-700`}>
-              {cutLetter(food.name, 16)}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-    </View>
+    <Animated.View style={{ height, overflow: 'hidden' }}>
+      <View style={tw`px-4 py-2`}>
+        <Text style={tw`text-sm text-slate-600 ml-1`}>장보기 추천 식료품</Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={tw`pl-0.5 pr-5 gap-1 py-1.5`}
+        >
+          {recommendList.slice(0, LIST_MAX_NUM).map((food) => (
+            <TouchableOpacity
+              style={tw.style(
+                `flex-row gap-0.5 items-center border border-slate-300 pl-2 pr-3 py-0.5 bg-white rounded-full`,
+                shadowStyle(3)
+              )}
+              onPress={() => {
+                onSubmitShoppingListItem(food.name, setAnimationState);
+                setKeyword('');
+              }}
+              key={food.id}
+            >
+              <Icon
+                name='plus'
+                type='MaterialCommunityIcons'
+                size={18}
+                color={GRAY}
+              />
+              <Text style={tw`text-[15px] text-slate-700`}>
+                {cutLetter(food.name, 16)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+    </Animated.View>
   ) : (
     <></>
   );

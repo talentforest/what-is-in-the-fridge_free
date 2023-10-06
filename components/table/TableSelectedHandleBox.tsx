@@ -24,7 +24,7 @@ export default function TableSelectedHandleBox({
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 58,
+    toValue: 80,
     active: !!list.length && showBtn,
   });
 
@@ -33,20 +33,19 @@ export default function TableSelectedHandleBox({
       style={{
         height,
         overflow: 'hidden',
-        marginTop: !!list.length && showBtn ? -8 : 0,
       }}
     >
       <View
-        style={tw.style(`flex-row justify-between items-center w-full h-full`)}
+        style={tw.style(`mx-4 flex-row justify-between items-center h-full`)}
       >
-        <View style={tw`flex-row items-center justify-center`}>
+        <View style={tw`justify-center`}>
           <CheckBoxItem
             onPress={onEntirePress}
             checked={entireChecked}
             title='전체 선택'
           />
           {!!list.length && (
-            <Text style={tw`text-sm ml-3 text-blue-600`}>
+            <Text style={tw`text-sm ml-6 text-blue-600`}>
               {list.length}개 선택
             </Text>
           )}
