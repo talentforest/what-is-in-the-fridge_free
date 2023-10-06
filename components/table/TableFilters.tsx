@@ -1,39 +1,45 @@
+import { useRoute } from '@react-navigation/native';
+import { BLUE, GRAY } from '../../constant/colors';
 import { useEffect, useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { Filter, FilterObj } from '../../util';
-import { BLUE, DEEP_YELLOW, RED } from '../../constant/colors';
-import { FoodCategory, foodCategories } from '../../constant/foodCategories';
+import { foodCategories } from '../../constant/foodCategories';
 import { useHandleFilter } from '../../hooks';
 
 import FilterTag from '../common/FilterTag';
 import Modal from '../modal/Modal';
+import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
   filterList: FilterObj[];
-  categoryFilters?: FoodCategory[];
   foodList: Food[];
   getTableList: (filter: Filter, list: Food[]) => Food[];
-  setCheckedList?: (foods: Food[]) => void;
+  setCheckedList: (foods: Food[]) => void;
 }
 
 export default function TableFilters({
   filterList,
-  categoryFilters,
   getTableList,
   foodList,
   setCheckedList,
 }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const route = useRoute();
+  const routeFavoriteFoods = route.name === 'FavoriteFoods';
+
   const scrollViewRef = useRef<ScrollView | null>(null);
 
   const {
     currentFilter,
-    onFilterPress,
+    changeFilterState,
     initializeFilter,
     findCategoryFilter, //
-  } = useHandleFilter();
+    filterState,
+    scrollToFilter,
+  } = useHandleFilter(scrollViewRef);
 
   useEffect(() => {
     initializeFilter();
@@ -42,19 +48,23 @@ export default function TableFilters({
     };
   }, []);
 
-  const firstActiveCategoryFilter = foodCategories?.find(({ category }) =>
+  const activeCategory = foodCategories?.find(({ category }) =>
     foodList.map((item) => item.category).includes(category)
-  )?.category;
+  )?.category as Filter;
 
-  const itemScrollTo = (filter: Filter, index: number) => {
-    const offset = index <= 1 ? 0 : filter.length > 6 ? 90 : 180;
-    return index === filterList.length - 1
-      ? scrollViewRef.current?.scrollToEnd()
-      : scrollViewRef.current?.scrollTo({
-          x: index * 50 + offset,
-          y: 0,
-          animated: true,
-        });
+  const getLength = (filter: Filter) => getTableList(filter, foodList).length;
+
+  const categoryFilter = getLength(filterState) ? filterState : activeCategory;
+
+  const onFilterPress = (filter: Filter, index: number) => {
+    changeFilterState(filter);
+    setCheckedList([]);
+    return scrollToFilter(filterState, filterList.length, index);
+  };
+
+  const onCategoryFilterPress = (filter: Filter) => {
+    onFilterPress(filter, filterList.length);
+    return setModalVisible((prev) => !prev);
   };
 
   return (
@@ -71,53 +81,43 @@ export default function TableFilters({
             key={filter}
             filterObj={{ filter, icon }}
             active={filter === currentFilter}
-            onFilterPress={() => {
-              onFilterPress(filter, setCheckedList);
-              itemScrollTo(filter, index);
-            }}
-            length={getTableList(filter, foodList).length || 0}
+            length={getLength(filter) || 0}
+            onFilterPress={() => onFilterPress(filter, index)}
           />
         ))}
 
-        {categoryFilters && (
+        {routeFavoriteFoods && (
           <FilterTag
-            filterObj={{ filter: '카테고리', icon: 'filter' }}
-            active={
-              !!findCategoryFilter(currentFilter) ||
-              currentFilter === '카테고리'
-            }
-            onFilterPress={() => {
-              onFilterPress(
-                !!foodList.length
-                  ? (firstActiveCategoryFilter as Filter)
-                  : '카테고리',
-                setCheckedList
-              );
-              setModalVisible(true);
-            }}
-            length={getTableList(currentFilter, foodList).length || 0}
-          />
+            filterObj={{ filter: categoryFilter }}
+            active={!!findCategoryFilter(currentFilter)}
+            length={getLength(filterState) || getLength(activeCategory)}
+            onFilterPress={() => onCategoryFilterPress(categoryFilter)}
+          >
+            <Icon
+              name='chevron-down'
+              type='Ionicons'
+              size={14}
+              color={!!findCategoryFilter(currentFilter) ? BLUE : GRAY}
+            />
+          </FilterTag>
         )}
       </ScrollView>
 
-      {modalVisible && categoryFilters && (
+      {routeFavoriteFoods && (
         <Modal
           title='카테고리별 필터링'
           closeModal={() => setModalVisible(false)}
           isVisible={modalVisible}
         >
           <View style={tw`p-4 flex-row flex-wrap gap-1 bg-stone-100 pb-6`}>
-            {categoryFilters.map(({ category, icon }) => (
+            {foodCategories.map(({ category, icon }) => (
               <FilterTag
                 key={category}
-                categoryFilter
+                foodIcon
                 filterObj={{ filter: category, icon }}
                 active={category === currentFilter}
-                onFilterPress={() => {
-                  onFilterPress(category);
-                  setModalVisible(false);
-                }}
-                length={getTableList(category, foodList).length}
+                onFilterPress={() => onCategoryFilterPress(category)}
+                length={getLength(category)}
               />
             ))}
           </View>
