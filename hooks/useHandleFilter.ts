@@ -1,11 +1,10 @@
 import { useRoute } from '@react-navigation/native';
 import { foodCategories } from '../constant/foodCategories';
-import { Food } from '../constant/foodInfo';
 import { useDispatch, useSelector } from '../redux/hook';
 import { changeFilter, changePantryFilter } from '../redux/slice/filterSlice';
 import { Filter } from '../util';
 
-export const useHandleFilter = () => {
+export const useHandleFilter = (scrollViewRef?: any) => {
   const { filter, pantryFilter } = useSelector((state) => state.filter);
 
   const route = useRoute();
@@ -14,20 +13,18 @@ export const useHandleFilter = () => {
 
   const currentFilter = routePantryFoods ? pantryFilter : filter;
 
-  const onFilterPress = (
-    filterName: Filter,
-    setCheckedList?: (foods: Food[]) => void
-  ) => {
+  const changeFilterState = (filterName: Filter) => {
     routePantryFoods
       ? dispatch(changePantryFilter(filterName))
       : dispatch(changeFilter(filterName));
-
-    if (setCheckedList) return setCheckedList([]);
   };
 
   const findCategoryFilter = (filterName: Filter) => {
     return foodCategories?.find(({ category }) => category === filterName);
   };
+
+  const filterState =
+    findCategoryFilter(currentFilter)?.category || '신선식품류';
 
   const initializeFilter = () => {
     if (filter !== '전체') {
@@ -35,10 +32,27 @@ export const useHandleFilter = () => {
     }
   };
 
+  const scrollToFilter = (
+    filter: Filter,
+    filterLength: number,
+    index: number
+  ) => {
+    const offset = index <= 1 ? 0 : filter.length > 6 ? 90 : 180;
+    return index === filterLength - 1
+      ? scrollViewRef.current?.scrollToEnd()
+      : scrollViewRef.current?.scrollTo({
+          x: index * 50 + offset,
+          y: 0,
+          animated: true,
+        });
+  };
+
   return {
     currentFilter,
     initializeFilter,
-    onFilterPress,
+    changeFilterState,
     findCategoryFilter,
+    filterState,
+    scrollToFilter,
   };
 };

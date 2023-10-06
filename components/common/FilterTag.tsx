@@ -1,10 +1,11 @@
 import { Text, TouchableOpacity } from './native-component';
 import { Filter, FilterObj } from '../../util';
-import { GRAY } from '../../constant/colors';
 import { useHandleFilter } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { Category } from '../../constant/foodCategories';
+import { ReactNode } from 'react';
 
-import Icon from './native-component/Icon';
+import CategoryImageIcon from './CategoryImageIcon';
 import tw from 'twrnc';
 
 export const DISABLED_COLOR = 'bg-white border-slate-200 text-slate-400';
@@ -18,7 +19,8 @@ interface Props {
   filterObj: FilterObj;
   active: boolean;
   length?: number;
-  categoryFilter?: boolean;
+  foodIcon?: boolean;
+  children?: ReactNode;
 }
 
 export default function FilterTag({
@@ -26,7 +28,8 @@ export default function FilterTag({
   filterObj,
   length,
   active,
-  categoryFilter,
+  foodIcon,
+  children,
 }: Props) {
   const { filter } = filterObj;
 
@@ -41,7 +44,7 @@ export default function FilterTag({
 
   const color = active
     ? activeColorByFilter
-    : length === 0 && categoryFilter
+    : length === 0
     ? DISABLED_COLOR
     : INACTIVE_COLOR;
 
@@ -52,25 +55,20 @@ export default function FilterTag({
         `h-9 min-w-20 bg-white flex-row items-center border px-3 py-1 gap-1.5 rounded-full ${color}`,
         shadowStyle(3)
       )}
-      disabled={length === 0 && categoryFilter}
+      disabled={length === 0}
     >
+      {foodIcon && (
+        <CategoryImageIcon
+          kind='icon'
+          category={filter as Category}
+          size={16}
+        />
+      )}
       <Text style={tw`text-sm ${color}`}>{filter}</Text>
+      <Text style={tw`text-sm ${color}`}>{`${length}`}개</Text>
 
-      {filter !== '카테고리' && (
-        <Text style={tw`text-sm ${color}`}>{`${length}`}개</Text>
-      )}
-
-      {filter === '카테고리' && (
-        <>
-          {categoryFilter && (
-            <>
-              <Text style={tw`text-sm ${color}`}>: {filter}</Text>
-              <Text style={tw`text-sm ${color}`}>{`${length}`}개</Text>
-            </>
-          )}
-          <Icon name='chevron-down' type='Ionicons' size={13} color={GRAY} />
-        </>
-      )}
+      {/* chevron-down icon */}
+      {children}
     </TouchableOpacity>
   );
 }

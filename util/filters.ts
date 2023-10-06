@@ -11,9 +11,8 @@ export type Filter =
   | ExpiredFilter
   | Category
   | FavoriteFilter
-  | '카테고리'
   | '전체';
-export type FilterObj = { filter: Filter; icon: string };
+export type FilterObj = { filter: Filter; icon?: string };
 
 export const entireFilterObj: FilterObj = { filter: '전체', icon: '' };
 
