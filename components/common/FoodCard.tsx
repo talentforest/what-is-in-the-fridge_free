@@ -22,7 +22,7 @@ export default function FoodCard({ food }: Props) {
       key={food.id}
       onPress={() => navigation.navigate('FavoriteFoods')}
       style={tw.style(
-        `border border-slate-100 bg-white pt-2.5 px-1.5 pb-1.5 items-center justify-center 
+        `border border-slate-300 bg-white pt-2.5 px-1.5 pb-1.5 items-center justify-center 
         w-[${DEVICE_WIDTH / 3 - 18}px] h-32 rounded-lg`,
         shadowStyle(5)
       )}
