@@ -16,6 +16,7 @@ import Container from '../components/common/Container';
 import CompartmentContainer from '../components/compartment/CompartmentContainer';
 import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
+import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 
 type RouteParams = {
   space: Space;
@@ -38,7 +39,7 @@ export default function Compartments({ route }: Route) {
 
   useEffect(() => {
     navigation.setOptions({
-      title: space,
+      headerTitle: () => <NavigationHeaderTitle title={space} />,
       headerStyle: {
         backgroundColor: TAB_BLUE_BG_COLOR,
       },

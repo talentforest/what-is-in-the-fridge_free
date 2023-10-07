@@ -15,6 +15,7 @@ import FridgeSetting from '../screens/FridgeSetting';
 import HeaderBtn from '../components/buttons/HeaderBtn';
 import OnBoarding from '../screens/OnBoarding';
 import ShoppingList from '../screens/ShoppingList';
+import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 
 export type RootStackParamList = {
   MyTabs: undefined;
@@ -79,7 +80,9 @@ const Navigation = () => {
         component={FavoriteFoods}
         options={{
           ...options,
-          headerTitle: () => headerTitle('자주 먹는 식료품 관리'),
+          headerTitle: () => (
+            <NavigationHeaderTitle title='자주 먹는 식료품 관리' />
+          ),
         }}
       />
       <Stack.Screen
@@ -87,7 +90,9 @@ const Navigation = () => {
         component={ExpiredFoods}
         options={{
           ...options,
-          headerTitle: () => headerTitle('소비기한 주의 식료품 관리'),
+          headerTitle: () => (
+            <NavigationHeaderTitle title='소비기한 주의 식료품 관리' />
+          ),
         }}
       />
       <Stack.Screen
@@ -95,7 +100,7 @@ const Navigation = () => {
         component={ShoppingList}
         options={{
           ...options,
-          headerTitle: () => headerTitle('장보기 목록 관리'),
+          headerTitle: () => <NavigationHeaderTitle title='장보기 목록 관리' />,
         }}
       />
       <Stack.Screen
@@ -103,18 +108,10 @@ const Navigation = () => {
         component={FridgeSetting}
         options={{
           ...options,
-          headerTitle: () => headerTitle('나의 냉장고 설정'),
+          headerTitle: () => <NavigationHeaderTitle title='나의 냉장고 설정' />,
         }}
       />
     </Stack.Navigator>
-  );
-};
-
-const headerTitle = (title: string) => {
-  return (
-    <Text allowFontScaling={false} style={{ fontSize: 17 }}>
-      {title}
-    </Text>
   );
 };
 
