@@ -7,7 +7,6 @@ import { Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/common/native-component';
 import { useGetFoodList } from '../hooks';
-import { changeFilter } from '../redux/slice/filterSlice';
 import { toggleDragMode } from '../redux/slice/dragModeSlice';
 import { TAB_BLUE_BG_COLOR } from '../constant/colors';
 
@@ -27,7 +26,6 @@ interface Route {
 }
 
 export default function Compartments({ route }: Route) {
-  const { filter } = useSelector((state) => state.filter);
   const { dragMode } = useSelector((state) => state.dragMode);
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { space } = route.params as RouteParams;
@@ -44,9 +42,6 @@ export default function Compartments({ route }: Route) {
         backgroundColor: TAB_BLUE_BG_COLOR,
       },
     });
-    if (filter !== '전체') {
-      dispatch(changeFilter('전체'));
-    }
   }, []);
 
   const compartments = getCompartments(fridgeInfo.compartments[space]);

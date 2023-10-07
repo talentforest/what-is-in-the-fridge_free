@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import { BLUE, GRAY } from '../../constant/colors';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { Filter, FilterObj } from '../../util';
@@ -16,7 +16,7 @@ interface Props {
   filterList: FilterObj[];
   foodList: Food[];
   getTableList: (filter: Filter, list: Food[]) => Food[];
-  setCheckedList: (foods: Food[]) => void;
+  setCheckedList?: (foods: Food[]) => void;
 }
 
 export default function TableFilters({
@@ -35,18 +35,10 @@ export default function TableFilters({
   const {
     currentFilter,
     changeFilterState,
-    initializeFilter,
     findCategoryFilter, //
     filterState,
     scrollToFilter,
   } = useHandleFilter(scrollViewRef);
-
-  useEffect(() => {
-    initializeFilter();
-    return () => {
-      initializeFilter();
-    };
-  }, []);
 
   const activeCategory = foodCategories?.find(({ category }) =>
     foodList.map((item) => item.category).includes(category)
@@ -54,11 +46,14 @@ export default function TableFilters({
 
   const getLength = (filter: Filter) => getTableList(filter, foodList).length;
 
-  const categoryFilter = getLength(filterState) ? filterState : activeCategory;
+  const categoryFilter =
+    getLength(filterState) || getLength('전체') === 0
+      ? filterState
+      : activeCategory;
 
   const onFilterPress = (filter: Filter, index: number) => {
     changeFilterState(filter);
-    setCheckedList([]);
+    if (setCheckedList) setCheckedList([]);
     return scrollToFilter(filterState, filterList.length, index);
   };
 
