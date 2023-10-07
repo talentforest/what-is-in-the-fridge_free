@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { Image, ImageSourcePropType, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import { fonts } from '../constant/fonts';
 import { Text } from '../components/common/native-component';
@@ -53,7 +53,7 @@ export default function Splash({
     >
       {assets && (
         <Image
-          source={assets[0] as ImageSourcePropType}
+          source={{ uri: assets[0].localUri as string }}
           style={{ width: 200, height: 200 }}
         />
       )}

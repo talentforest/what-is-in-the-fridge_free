@@ -8,7 +8,7 @@ import { shadowStyle } from '../../constant/shadowStyle';
 
 import CategoryModal from '../../screen-component/modal/CategoryModal';
 import FormLabel from './FormLabel';
-import CategoryImageIcon from '../common/CategoryImageIcon';
+import CategoryIcon from '../common/CategoryIcon';
 import tw from 'twrnc';
 
 interface Props {
@@ -56,7 +56,7 @@ export default function CategoryItem({
         )}
       >
         <View style={tw`flex-row items-center gap-2`}>
-          <CategoryImageIcon kind='icon' category={category} size={18} />
+          <CategoryIcon category={category} size={18} />
           <Text style={tw`${color}`}>{category}</Text>
         </View>
       </TouchableOpacity>

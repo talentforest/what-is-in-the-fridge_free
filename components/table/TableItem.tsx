@@ -10,7 +10,7 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import CheckBox from '../common/CheckBox';
 import IndicatorExist from '../common/IndicatorExist';
 import Icon from '../common/native-component/Icon';
-import CategoryImageIcon from '../common/CategoryImageIcon';
+import CategoryIcon from '../common/CategoryIcon';
 import tw from 'twrnc';
 
 interface Props {
@@ -81,9 +81,7 @@ export default function TableItem({
       >
         <CheckBox checked={!!isCheckedItem} />
 
-        {!shoppingListRoute && (
-          <CategoryImageIcon kind='icon' size={15} category={category} />
-        )}
+        {!shoppingListRoute && <CategoryIcon size={15} category={category} />}
 
         <View style={tw`flex-1 flex-row items-center gap-1`}>
           {expired(food.expiredDate) && route.name === 'ExpiredFoods' && (

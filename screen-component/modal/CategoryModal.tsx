@@ -26,7 +26,7 @@ export default function CategoryModal({
       require('../../assets/category/category-instant.png'),
       require('../../assets/category/category-dessert.png'),
       require('../../assets/category/category-sidedish.png'),
-      require('../../assets/category/category-egg-dairy.png'),
+      require('../../assets/category/category-dairy.png'),
       require('../../assets/category/category-sauce.png'),
       require('../../assets/category/category-drink.png'),
       require('../../assets/category/category-bakery.png'),
@@ -38,6 +38,14 @@ export default function CategoryModal({
 
   if (!isLoaded) return null;
 
+  const getMatchURI = (category: Category) => {
+    const matchItem = foodCategories.find((i) => i.category === category);
+    const asset = assets?.find(
+      ({ name }) => `${name}.png` === matchItem?.image
+    );
+    return asset?.localUri;
+  };
+
   return (
     <Modal
       title='카테고리 선택'
@@ -46,22 +54,19 @@ export default function CategoryModal({
       animationIn='fadeIn'
     >
       <View style={tw`p-3 rounded-b-2xl bg-white`}>
-        {onCheckBoxPress && (
+        {onCheckBoxPress && assets && (
           <View
             style={tw`flex-row flex-wrap gap-1.5 gap-y-2.5 justify-between`}
           >
-            {foodCategories.map(
-              ({ category }) =>
-                assets && (
-                  <CategoryBox
-                    key={category}
-                    checked={category === currentChecked}
-                    category={category}
-                    onCheckBoxPress={onCheckBoxPress}
-                    assets={assets}
-                  />
-                )
-            )}
+            {foodCategories.map(({ category }) => (
+              <CategoryBox
+                key={category}
+                checked={category === currentChecked}
+                category={category}
+                onCheckBoxPress={onCheckBoxPress}
+                localUri={getMatchURI(category) || assets[0].uri}
+              />
+            ))}
           </View>
         )}
       </View>

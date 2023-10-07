@@ -59,7 +59,7 @@ export const foodCategories: FoodCategory[] = [
   {
     id: 6,
     category: '유제품류',
-    image: 'category-egg-dairy.png',
+    image: 'category-dairy.png',
     icon: 'cheese',
     color: '#ffb668',
   },

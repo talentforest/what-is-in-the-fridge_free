@@ -7,7 +7,7 @@ import { NavigateProp } from '../../navigation/Navigation';
 import { shadowStyle } from '../../constant/shadowStyle';
 
 import IndicatorExist from './IndicatorExist';
-import CategoryImageIcon from './CategoryImageIcon';
+import CategoryIcon from './CategoryIcon';
 import tw from 'twrnc';
 
 interface Props {
@@ -27,7 +27,7 @@ export default function FoodCard({ food }: Props) {
         shadowStyle(5)
       )}
     >
-      <CategoryImageIcon kind='icon' category={food.category} size={16} />
+      <CategoryIcon category={food.category} size={16} />
       <View style={tw`flex-1 mt-1 items-center justify-center`}>
         <Text style={tw.style(`text-center text-slate-800`)}>
           {cutLetter(food.name, 9)}
