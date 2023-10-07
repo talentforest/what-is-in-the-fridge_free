@@ -5,7 +5,7 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import { Category } from '../../constant/foodCategories';
 import { ReactNode } from 'react';
 
-import CategoryImageIcon from './CategoryImageIcon';
+import CategoryIcon from './CategoryIcon';
 import tw from 'twrnc';
 
 export const DISABLED_COLOR = 'bg-white border-slate-200 text-slate-400';
@@ -57,13 +57,7 @@ export default function FilterTag({
       )}
       disabled={length === 0}
     >
-      {foodIcon && (
-        <CategoryImageIcon
-          kind='icon'
-          category={filter as Category}
-          size={16}
-        />
-      )}
+      {foodIcon && <CategoryIcon category={filter as Category} size={16} />}
       <Text style={tw`text-sm ${color}`}>{filter}</Text>
       <Text style={tw`text-sm ${color}`}>{`${length}`}개</Text>
 

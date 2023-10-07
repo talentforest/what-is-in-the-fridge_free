@@ -12,16 +12,16 @@ import {
 } from '../../hooks';
 import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
 import { PlatformIOS } from '../../constant/statusBarHeight';
+import { comma } from '../../util/commaNotation';
 
 import InfoBox from '../../components/modal/InfoBox';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
-import CategoryImageIcon from '../../components/common/CategoryImageIcon';
 import LeftDayInfoBox from '../../components/modal/LeftDayInfoBox';
 import Icon from '../../components/common/native-component/Icon';
+import CategoryIcon from '../../components/common/CategoryIcon';
 import tw from 'twrnc';
-import { comma } from '../../util/commaNotation';
 
 interface Props {
   modalVisible: boolean;
@@ -119,11 +119,7 @@ export default function FoodDetailModal({
               <View>
                 <InfoBox iconName='dots-grid' label='카테고리'>
                   <View style={tw`flex-row items-center gap-1`}>
-                    <CategoryImageIcon
-                      kind='icon'
-                      category={category}
-                      size={16}
-                    />
+                    <CategoryIcon category={category} size={16} />
                     <Text style={tw`text-[15px]`}>{category}</Text>
                   </View>
                 </InfoBox>

@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Category } from '../../constant/foodCategories';
 import { TouchableOpacity } from '../common/native-component';
 
-import CategoryImageIcon from '../common/CategoryImageIcon';
+import CategoryIcon from '../common/CategoryIcon';
 import tw from 'twrnc';
 
 interface Props {
@@ -17,7 +17,7 @@ export default function InputCategoryBtn({ category, setCategoryOpen }: Props) {
       style={tw`h-full border-r border-slate-300 flex-row items-center justify-center`}
     >
       <View style={tw`pl-3.5 pr-2.5`}>
-        <CategoryImageIcon kind='icon' category={category} size={20} />
+        <CategoryIcon category={category} size={20} />
       </View>
     </TouchableOpacity>
   );
