@@ -5,6 +5,7 @@ import { Food, initialFridgeFood } from '../constant/foodInfo';
 import { Category } from '../constant/foodCategories';
 import { addToShoppingList } from '../redux/slice/shoppingListSlice';
 import { AnimationState } from './animation/useSetAnimationState';
+import { alertPhraseWithFood } from '../constant/alertPhrase';
 import UUIDGenerator from 'react-native-uuid';
 
 export const useSubmitFoodsFromInput = () => {
@@ -32,22 +33,22 @@ export const useSubmitFoodsFromInput = () => {
     );
     if (existFavoriteFood) return setShowCaution(true);
 
-    if (findFood(inputValue)) {
-      Alert.alert(
-        '동일 식료품 존재 알림',
-        `동일한 이름의 식료품이 ${
-          findFood(inputValue)?.space
-        }에 있습니다. 해당 카테고리 정보로 저장됩니다.`,
-        [
-          {
-            text: '저장',
-            onPress: () => {
-              dispatch(addFavorite(findFood(inputValue) as Food));
-            },
-            style: 'default',
+    const {
+      modifyCategory: { title, msg },
+    } = alertPhraseWithFood(findFood(inputValue) as Food);
+
+    if (category !== findFood(inputValue)?.category) {
+      Alert.alert(title, msg, [
+        {
+          text: '저장',
+          onPress: () => {
+            dispatch(addFavorite(findFood(inputValue) as Food));
+            setInputValue('');
           },
-        ]
-      );
+          style: 'default',
+        },
+        { text: '취소', style: 'destructive' },
+      ]);
     } else {
       dispatch(
         addFavorite({
@@ -57,8 +58,8 @@ export const useSubmitFoodsFromInput = () => {
           category,
         })
       );
+      setInputValue('');
     }
-    setInputValue('');
   };
 
   const onSubmitShoppingListItem = (
