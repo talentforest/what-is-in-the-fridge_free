@@ -1,4 +1,4 @@
-import { Animated } from 'react-native';
+import { Animated, ScrollView } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Food } from '../../constant/foodInfo';
 import { FoodLocation } from '../../constant/fridgeInfo';
@@ -36,6 +36,7 @@ export default function Compartment({
   const [openAddFoodModal, setOpenAddFoodModal] = useState(false);
 
   const { getFoodList } = useGetFoodList();
+
   const compartmentFoodList = getFoodList('fridgeFoods', space, compartmentNum);
 
   const dragPosition = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
@@ -48,6 +49,11 @@ export default function Compartment({
     }
   }, []);
 
+  const scrollViewRef = useRef<ScrollView | null>(null);
+  const scrollEnd = () => {
+    scrollViewRef?.current?.scrollToEnd({ animated: true });
+  };
+
   return (
     <>
       <CompartmentBox
@@ -59,6 +65,7 @@ export default function Compartment({
         compartmentNumToDrop={compartmentNumToDrop}
         setExpandCompartment={setExpandCompartment}
         setOpenAddFoodModal={setOpenAddFoodModal}
+        scrollViewRef={scrollViewRef}
       >
         {compartmentFoodList.map((food: Food) => (
           <DraggableFoodBox
@@ -90,6 +97,7 @@ export default function Compartment({
       />
 
       <AddFoodModal
+        scrollEnd={scrollEnd}
         modalVisible={openAddFoodModal}
         setModalVisible={setOpenAddFoodModal}
         formSteps={formThreeSteps}

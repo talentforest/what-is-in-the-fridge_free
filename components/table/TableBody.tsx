@@ -15,7 +15,8 @@ import tw from 'twrnc';
 
 interface Props {
   title: '소비기한 주의 식료품' | '자주 먹는 식료품' | '장보기 식료품';
-  list: Food[];
+  totalLength?: number;
+  filteredList: Food[];
   onCheckBoxPress: (food: Food) => void;
   addToFridgePress?: (food: Food) => void;
   checkedList: Food[];
@@ -25,7 +26,8 @@ interface Props {
 
 export default function TableBody({
   title,
-  list,
+  totalLength,
+  filteredList,
   onCheckBoxPress,
   addToFridgePress,
   checkedList,
@@ -36,19 +38,20 @@ export default function TableBody({
   const flatListRef = useRef<FlatList | null>(null);
 
   useEffect(() => {
+    // 리스트에 아이템이 추가되어 전체 개수가 변할 때만 아래로 자동 스크롤
     flatListRef?.current?.scrollToEnd({ animated: true });
-  }, [list.length]);
+  }, [totalLength]);
 
   return (
     <>
-      {!!list.length ? (
+      {!!filteredList.length ? (
         <View style={tw`flex-1 -mx-2`}>
           <FlatList
             ref={flatListRef}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={tw`pb-20 px-2`}
-            data={list}
+            data={filteredList}
             renderItem={({ item }) => (
               <TableItem
                 food={item}

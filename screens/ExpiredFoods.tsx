@@ -57,7 +57,7 @@ export default function ExpiredFoods() {
 
         <TableBody
           title='소비기한 주의 식료품'
-          list={filteredList}
+          filteredList={filteredList}
           onCheckBoxPress={onCheckBoxPress}
           checkedList={checkedList}
           animationState={animationState}

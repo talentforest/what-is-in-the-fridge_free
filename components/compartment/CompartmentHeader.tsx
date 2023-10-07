@@ -6,7 +6,7 @@ import { useSelector } from '../../redux/hook';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
-const MAX_LIST_LENGTH = 10;
+const MAX_LIST_LENGTH = 50;
 
 interface Props {
   title: string;
