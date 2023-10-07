@@ -3,7 +3,12 @@ import { CompartmentNum } from './fridgeInfo';
 
 type PhraseObjKey = 'excess' | 'noName' | 'wrongDate' | 'noMemo';
 
-type PhraseFnKey = 'exist' | 'existInList' | 'successAdd' | 'deleteExistFood';
+type PhraseFnKey =
+  | 'exist'
+  | 'existInList'
+  | 'successAdd'
+  | 'deleteExistFood'
+  | 'modifyCategory';
 
 type PhraseWithCheckListKey =
   | 'unSettingFavoriteFoods'
@@ -67,11 +72,17 @@ export const alertPhraseWithFood: AlertPhraseFn = (food: Food) => {
     msg: `이미 ${food.space}에 ${food.name} 식료품이 존재해요. 기존 식료품을 삭제하고 새로 추가하시겠어요?`,
   };
 
+  const modifyCategory = {
+    title: '카테고리 변경 알림',
+    msg: `${food.space}에 있는 동일한 식료품은 "${food.category}"로 저장되어 있어요. 해당 카테고리 정보로 저장하시겠어요?.`,
+  };
+
   return {
     exist,
     existInList,
     successAdd,
     deleteExistFood,
+    modifyCategory,
   };
 };
 
