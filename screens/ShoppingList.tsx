@@ -58,7 +58,8 @@ export default function ShoppingList() {
 
           <TableBody
             title='장보기 식료품'
-            list={shoppingList}
+            filteredList={shoppingList}
+            totalLength={shoppingList.length}
             onCheckBoxPress={onCheckBoxPress}
             addToFridgePress={onAddToFridgePress}
             checkedList={checkedList}

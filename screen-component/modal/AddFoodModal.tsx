@@ -15,6 +15,7 @@ interface Props {
   setModalVisible: (modalVisible: boolean) => void;
   formSteps: FormStep[];
   foodLocation?: FoodLocation;
+  scrollEnd: () => void;
 }
 
 export default function AddFoodModal({
@@ -22,6 +23,7 @@ export default function AddFoodModal({
   modalVisible,
   setModalVisible,
   formSteps,
+  scrollEnd,
 }: Props) {
   const initialFood = foodLocation ? initialFridgeFood : initialPantryFood;
 
@@ -54,6 +56,7 @@ export default function AddFoodModal({
             btnName='식료품 추가하기'
             onPress={() => {
               onAddSubmit(setModalVisible);
+              scrollEnd();
             }}
           />
         </View>

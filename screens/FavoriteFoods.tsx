@@ -84,7 +84,7 @@ export default function FavoriteFoods() {
 
   const filteredFoodList = () => {
     return currentFilter === '전체'
-      ? orderedByExist()
+      ? favoriteFoods
       : getFilteredFoodList(currentFilter, favoriteFoods);
   };
 
@@ -106,7 +106,8 @@ export default function FavoriteFoods() {
             onCheckBoxPress={onCheckBoxPress}
             checkedList={checkedList}
             animationState={animationState}
-            list={filteredFoodList()}
+            filteredList={filteredFoodList()}
+            totalLength={favoriteFoods.length}
             afterAnimation={() =>
               afterAnimation(onDeleteFoodPress, favoriteFoods)
             }

@@ -1,8 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from '../components/common/native-component';
+import { ScrollView } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import { useGetFoodList } from '../hooks';
 import { entireFilterObj, expiredFilters } from '../util';
@@ -41,6 +42,11 @@ export default function PantryFoods() {
     }, [])
   );
 
+  const scrollViewRef = useRef<ScrollView | null>(null);
+  const scrollEnd = () => {
+    scrollViewRef?.current?.scrollToEnd({ animated: true });
+  };
+
   return (
     <KeyboardAvoidingView>
       <Container>
@@ -52,6 +58,7 @@ export default function PantryFoods() {
 
         <CompartmentContainer>
           <CompartmentBox
+            scrollViewRef={scrollViewRef}
             title='팬트리'
             foodList={pantryFoods}
             spaceTotalLength={pantryFoods.length}
@@ -84,6 +91,7 @@ export default function PantryFoods() {
         />
 
         <AddFoodModal
+          scrollEnd={scrollEnd}
           modalVisible={openAddFoodModal}
           setModalVisible={setOpenAddFoodModal}
           formSteps={formThreeSteps}

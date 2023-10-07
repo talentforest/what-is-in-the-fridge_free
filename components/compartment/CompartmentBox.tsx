@@ -21,6 +21,7 @@ interface Props {
   compartmentNumToDrop?: CompartmentNumToDrop;
   setExpandCompartment?: (modal: boolean) => void;
   setOpenAddFoodModal: (modal: boolean) => void;
+  scrollViewRef: any;
 }
 
 export default function CompartmentBox({
@@ -33,6 +34,7 @@ export default function CompartmentBox({
   compartmentNumToDrop,
   setExpandCompartment,
   setOpenAddFoodModal,
+  scrollViewRef,
 }: Props) {
   const { bgOpacity } = useOpacityAnimation({
     initialValue: 0,
@@ -54,6 +56,7 @@ export default function CompartmentBox({
 
       {!!foodList.length ? (
         <ScrollView
+          ref={scrollViewRef}
           disableScrollViewPanResponder
           scrollEnabled={scrollEnabled}
           style={tw`px-1 flex-1`}
