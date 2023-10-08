@@ -30,9 +30,7 @@ export default function TableSelectedHandleBox({
 
   return (
     <Animated.View style={{ height, overflow: 'hidden' }}>
-      <View
-        style={tw.style(`mx-4 flex-row justify-between items-center h-full`)}
-      >
+      <View style={tw.style(`flex-row justify-between items-center h-full`)}>
         <View style={tw`justify-center`}>
           <CheckBoxItem
             onPress={onEntirePress}

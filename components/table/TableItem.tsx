@@ -1,6 +1,6 @@
 import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
-import { cutLetter, expired } from '../../util';
+import { cutLetter, expired, getDiffDate } from '../../util';
 import { Food, initialFridgeFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
 import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
@@ -9,8 +9,8 @@ import { shadowStyle } from '../../constant/shadowStyle';
 
 import CheckBox from '../common/CheckBox';
 import IndicatorExist from '../common/IndicatorExist';
-import Icon from '../common/native-component/Icon';
 import CategoryIcon from '../common/CategoryIcon';
+import ExpiredExclamation from '../common/ExpiredExclamation';
 import tw from 'twrnc';
 
 interface Props {
@@ -73,7 +73,7 @@ export default function TableItem({
       <TouchableOpacity
         onPress={() => onCheckBoxPress(initializedFood)}
         style={tw.style(
-          `border h-[${ITEM_HEIGHT - 8}px] ${
+          `border h-[${ITEM_HEIGHT - 6}px] ${
             isCheckedItem ? 'border-blue-500' : 'border-slate-200'
           } bg-white flex-row items-center gap-1.5 px-3`,
           shadowStyle(4)
@@ -81,25 +81,22 @@ export default function TableItem({
       >
         <CheckBox checked={!!isCheckedItem} />
 
-        {!shoppingListRoute && <CategoryIcon size={15} category={category} />}
-
         <View style={tw`flex-1 flex-row items-center gap-1`}>
-          {expired(food.expiredDate) && route.name === 'ExpiredFoods' && (
-            <Icon
-              name='exclamation-thick'
-              type='MaterialCommunityIcons'
-              color='red'
-            />
+          {route.name === 'ExpiredFoods' && (
+            <ExpiredExclamation expiredDate={food.expiredDate} />
           )}
+
+          {!shoppingListRoute && <CategoryIcon size={16} category={category} />}
           <Text style={tw`${textColor}`}>
             {cutLetter(
               initializedFood.name,
-              route.name === 'ExpiredFoods'
-                ? 13
-                : (route.name === 'ShoppingList' && existItemTag) ||
-                  route.name === 'FavoriteFoods'
-                ? 14
-                : 18
+              route.name === 'ExpiredFoods' &&
+                (expired(food.expiredDate) ||
+                  getDiffDate(food.expiredDate) === 0)
+                ? 11
+                : route.name === 'ShoppingList' && !existItemTag
+                ? 16
+                : 13
             )}
           </Text>
 

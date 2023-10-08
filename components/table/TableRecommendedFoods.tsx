@@ -52,7 +52,7 @@ export default function TableRecommendedFoods({
 
   return !!recommendList.length ? (
     <Animated.View style={{ height, overflow: 'hidden' }}>
-      <View style={tw`px-4 py-2`}>
+      <View style={tw`py-2`}>
         <Text style={tw`text-sm text-slate-600 ml-1`}>장보기 추천 식료품</Text>
         <ScrollView
           horizontal

@@ -6,6 +6,7 @@ import { Food } from '../../constant/foodInfo';
 import { Filter, FilterObj } from '../../util';
 import { foodCategories } from '../../constant/foodCategories';
 import { useHandleFilter } from '../../hooks';
+import { PlatformIOS } from '../../constant/statusBarHeight';
 
 import FilterTag from '../common/FilterTag';
 import Modal from '../modal/Modal';
@@ -104,7 +105,11 @@ export default function TableFilters({
           closeModal={() => setModalVisible(false)}
           isVisible={modalVisible}
         >
-          <View style={tw`p-4 flex-row flex-wrap gap-1 bg-stone-100 pb-6`}>
+          <View
+            style={tw`p-4 flex-row flex-wrap gap-1 bg-stone-100 ${
+              PlatformIOS ? 'pb-12' : 'pb-6'
+            }`}
+          >
             {foodCategories.map(({ category, icon }) => (
               <FilterTag
                 key={category}

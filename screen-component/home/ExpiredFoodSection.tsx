@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { Food } from '../../constant/foodInfo';
-import { cutLetter, expired, getDiffDate } from '../../util';
+import { cutLetter } from '../../util';
 import { GRAY } from '../../constant/colors';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
@@ -13,6 +13,7 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import SectionContainer from './SectionContainer';
 import LeftDay from '../../components/common/LeftDay';
 import Icon from '../../components/common/native-component/Icon';
+import ExpiredExclamation from '../../components/common/ExpiredExclamation';
 import tw from 'twrnc';
 
 interface Props {
@@ -35,29 +36,15 @@ export default function ExpiredFoodSection({ foodList }: Props) {
         {foodList.slice(0, MAX_NUM).map((food) => (
           <TouchableOpacity
             style={tw.style(
-              `gap-1 flex-row items-center justify-between border border-slate-300 bg-white py-2 pr-4 pl-3 rounded-lg`,
+              `h-10.5 gap-1 flex-row items-center justify-between border border-slate-300 bg-white pr-4 pl-3 rounded-lg`,
               shadowStyle(3)
             )}
             key={food.id}
             onPress={() => navigation.navigate('ExpiredFoods')}
           >
-            {expired(food.expiredDate) && (
-              <Icon
-                name='exclamation-thick'
-                type='MaterialCommunityIcons'
-                color='red'
-              />
-            )}
+            <ExpiredExclamation expiredDate={food.expiredDate} />
 
-            {getDiffDate(food.expiredDate) === 0 && (
-              <Icon
-                name='exclamation-thick'
-                type='MaterialCommunityIcons'
-                color='amber'
-              />
-            )}
-
-            <Text style={tw`flex-1`}>{cutLetter(food.name, 14)}</Text>
+            <Text style={tw.style(`flex-1`)}>{cutLetter(food.name, 14)}</Text>
             <LeftDay expiredDate={food.expiredDate} size={15} />
           </TouchableOpacity>
         ))}

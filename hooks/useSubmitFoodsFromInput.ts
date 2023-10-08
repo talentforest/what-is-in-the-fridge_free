@@ -33,11 +33,11 @@ export const useSubmitFoodsFromInput = () => {
     );
     if (existFavoriteFood) return setShowCaution(true);
 
-    const {
-      modifyCategory: { title, msg },
-    } = alertPhraseWithFood(findFood(inputValue) as Food);
+    if (findFood(inputValue) && category !== findFood(inputValue)?.category) {
+      const {
+        modifyCategory: { title, msg },
+      } = alertPhraseWithFood(findFood(inputValue) as Food);
 
-    if (category !== findFood(inputValue)?.category) {
       Alert.alert(title, msg, [
         {
           text: '저장',

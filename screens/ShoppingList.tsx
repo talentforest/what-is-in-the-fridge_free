@@ -15,7 +15,6 @@ import { formFourSteps } from '../constant/formInfo';
 
 import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
 import Container from '../components/common/Container';
-import TableHeader from '../components/table/TableHeader';
 import TableRecommendedFoods from '../components/table/TableRecommendedFoods';
 import TableBody from '../components/table/TableBody';
 import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
@@ -54,8 +53,6 @@ export default function ShoppingList() {
     <KeyboardAvoidingView>
       <SafeBottomAreaView>
         <Container>
-          <TableHeader title='장보기 식료품' length={shoppingList.length} />
-
           <TableBody
             title='장보기 식료품'
             filteredList={shoppingList}
