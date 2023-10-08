@@ -6,14 +6,15 @@ import {
 import { useDispatch, useSelector } from '../redux/hook';
 import { Space, SpaceType } from '../constant/fridgeInfo';
 import { changeSetting } from '../redux/slice/fridgeInfoSlice';
+import { PlatformIOS } from '../constant/statusBarHeight';
 
-import Fridge from '../components/common/Fridge';
 import SelectContainter from '../screen-component/fridge-setting/SelectContainter';
 import CompartmentsSettingBox from '../screen-component/fridge-setting/CompartmentsSettingBox';
 import Container from '../components/common/Container';
 import CheckBoxItem from '../components/common/CheckBoxItem';
+import AndroidFridge from '../components/fridge/AndroidFridge';
+import IOSFridge from '../components/fridge/IOSFridge';
 import tw from 'twrnc';
-import { PlatformIOS } from '../constant/statusBarHeight';
 
 export default function FridgeSetting() {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
@@ -29,18 +30,26 @@ export default function FridgeSetting() {
     onChangePress({ freezer: position });
   };
 
+  const width = 160;
+
   return (
     <SafeBottomAreaView>
       <Container>
         <ScrollView showsVerticalScrollIndicator={false}>
           <SelectContainter title='나의 냉장고 모습'>
-            <View
-              style={tw`w-[45%] h-54 mx-auto ${
-                PlatformIOS ? 'my-2' : 'mb-2 mt-6'
-              }`}
-            >
-              <Fridge />
-            </View>
+            {PlatformIOS ? (
+              <View
+                style={tw`mx-auto my-2 h-[${width * 1.5}px] w-[${width}px]`}
+              >
+                <IOSFridge />
+              </View>
+            ) : (
+              <View
+                style={tw`w-[${width}px] h-[${width * 1.1}px] mx-auto my-2`}
+              >
+                <AndroidFridge />
+              </View>
+            )}
           </SelectContainter>
           <SelectContainter title='나의 냉장고 타입'>
             {['일반형 냉장고'].map((type) => (
