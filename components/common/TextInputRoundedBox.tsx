@@ -36,10 +36,15 @@ export default function TextInputRoundedBox({
   });
 
   return (
-    <Animated.View style={{ height, overflow: 'hidden' }}>
+    <Animated.View
+      style={{
+        height,
+        overflow: 'hidden',
+      }}
+    >
       <View
         style={tw.style(
-          `flex-1 mt-3 mb-4 rounded-full items-center flex-row bg-white mx-4`,
+          `flex-1 mt-3 mb-4 rounded-full items-center flex-row bg-white `,
           shadowStyle(3)
         )}
       >

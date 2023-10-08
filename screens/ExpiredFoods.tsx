@@ -66,7 +66,7 @@ export default function ExpiredFoods() {
           }
         />
 
-        <TableFooterContainer>
+        <TableFooterContainer active={!!checkedList.length}>
           <TableSelectedHandleBox
             list={checkedList}
             entireChecked={allChecked && !!checkedList.length}

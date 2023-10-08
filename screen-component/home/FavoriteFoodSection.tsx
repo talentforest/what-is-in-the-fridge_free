@@ -18,7 +18,7 @@ interface Props {
   foodList: Food[];
 }
 
-const MAX_NUM = 8;
+const MAX_NUM = 7;
 
 export default function FavoriteFoodSection({ foodList }: Props) {
   const navigation = useNavigation<NavigateProp>();
@@ -30,17 +30,15 @@ export default function FavoriteFoodSection({ foodList }: Props) {
       screen='FavoriteFoods'
       foodsLength={foodList.length}
     >
-      {foodList.length && (
-        <View
-          style={tw`flex-wrap flex-row gap-y-2 gap-x-2.5 mt-2.5 -mx-1 px-1`}
-        >
+      {foodList.length ? (
+        <View style={tw`flex-wrap flex-row gap-1.5 mt-2.5 -mx-1 px-1`}>
           {foodList.slice(-MAX_NUM).map((food) => (
             <FoodCard key={food.id} food={food} />
           ))}
           {foodList.length >= MAX_NUM && (
             <TouchableOpacity
               onPress={() => navigation.navigate('FavoriteFoods')}
-              style={tw`w-[${DEVICE_WIDTH / 3 - 18}px] h-30
+              style={tw`w-[${DEVICE_WIDTH / 4 - 14}px] h-28
                 justify-center items-center gap-1`}
             >
               <Icon
@@ -52,6 +50,12 @@ export default function FavoriteFoodSection({ foodList }: Props) {
               <Text style={tw`text-xs text-slate-600`}>더보기</Text>
             </TouchableOpacity>
           )}
+        </View>
+      ) : (
+        <View
+          style={tw`shadow-lg items-center my-2 h-40 border border-slate-300 rounded-xl bg-white justify-center flex-1`}
+        >
+          <EmptySign message='자주 먹는 식료품이 없어요.' />
         </View>
       )}
     </SectionContainer>

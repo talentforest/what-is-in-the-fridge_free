@@ -22,15 +22,15 @@ export default function FoodCard({ food }: Props) {
       key={food.id}
       onPress={() => navigation.navigate('FavoriteFoods')}
       style={tw.style(
-        `border border-slate-300 bg-white pt-2.5 px-1.5 pb-1.5 items-center justify-center 
-        w-[${DEVICE_WIDTH / 3 - 18}px] h-32 rounded-lg`,
+        `border border-slate-300 bg-white pt-2 px-1.5 pb-1 items-center justify-center 
+        w-[${DEVICE_WIDTH / 4 - 13}px] h-28 rounded-lg`,
         shadowStyle(5)
       )}
     >
-      <CategoryIcon category={food.category} size={16} />
-      <View style={tw`flex-1 mt-1 items-center justify-center`}>
+      <CategoryIcon category={food.category} size={17} />
+      <View style={tw`mt-1.3 items-center justify-center h-13.5`}>
         <Text style={tw.style(`text-center text-slate-800`)}>
-          {cutLetter(food.name, 9)}
+          {cutLetter(food.name, 7)}
         </Text>
       </View>
 

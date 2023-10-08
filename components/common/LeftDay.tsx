@@ -1,14 +1,7 @@
-import {
-  expired,
-  getColorByLeftDay,
-  getDiffDate,
-  getFormattedDate,
-  getTWColorByLeftDay,
-  leftThreeDays,
-} from '../../util';
+import { getDiffDate, getFormattedDate, getTWColorByLeftDay } from '../../util';
 import { Text } from './native-component';
 import { View } from 'react-native';
-import Icon from './native-component/Icon';
+import ExpiredExclamation from './ExpiredExclamation';
 import tw from 'twrnc';
 
 interface Props {
@@ -22,29 +15,10 @@ function LeftDay({ size = 15, expiredDate, iconMark, dateMark }: Props) {
   const textColor = getTWColorByLeftDay(expiredDate);
   const diffDate = getDiffDate(expiredDate);
 
-  const attentionDate = expired(expiredDate) || leftThreeDays(expiredDate);
-
   return (
     <View>
       <View style={tw`flex-row items-center self-end`}>
-        {attentionDate && iconMark && (
-          <Icon
-            name='exclamation-thick'
-            type='MaterialCommunityIcons'
-            color={getColorByLeftDay(expiredDate)}
-            size={size}
-          />
-        )}
-
-        {!attentionDate && iconMark && (
-          <Icon
-            name='menu-right-outline'
-            type='MaterialCommunityIcons'
-            color={getColorByLeftDay(expiredDate)}
-            size={size + 2}
-          />
-        )}
-
+        {iconMark && <ExpiredExclamation expiredDate={expiredDate} size={14} />}
         <Text style={tw`${textColor} text-[${size}px] self-end`}>
           {diffDate === 0
             ? '오늘까지'
@@ -55,7 +29,7 @@ function LeftDay({ size = 15, expiredDate, iconMark, dateMark }: Props) {
       </View>
 
       {dateMark && (
-        <Text style={tw`text-[10px] self-end text-slate-500 -my-1.5`}>
+        <Text style={tw`text-xs py-0 self-end text-slate-500 -mt-1`}>
           {getFormattedDate(expiredDate, 'YYYY.MM.DD')}
         </Text>
       )}

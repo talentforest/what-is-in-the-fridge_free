@@ -57,7 +57,13 @@ export default function FilterTag({
       )}
       disabled={length === 0}
     >
-      {foodIcon && <CategoryIcon category={filter as Category} size={16} />}
+      {foodIcon && (
+        <CategoryIcon
+          category={filter as Category}
+          size={16}
+          inactive={length === 0}
+        />
+      )}
       <Text style={tw`text-sm ${color}`}>{filter}</Text>
       <Text style={tw`text-sm ${color}`}>{`${length}`}개</Text>
 

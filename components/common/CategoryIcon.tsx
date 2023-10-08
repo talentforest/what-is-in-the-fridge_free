@@ -3,15 +3,16 @@ import {
   FoodCategory,
   foodCategories,
 } from '../../constant/foodCategories';
-import { GRAY } from '../../constant/colors';
+import { LIGHT_GRAY } from '../../constant/colors';
 import Icon from './native-component/Icon';
 
 interface Props {
   category: Category;
   size: number;
+  inactive?: boolean;
 }
 
-export default function CategoryIcon({ category, size }: Props) {
+export default function CategoryIcon({ category, size, inactive }: Props) {
   const findCategory = (category: Category) => {
     return foodCategories.find((item) => item.category === category);
   };
@@ -23,7 +24,7 @@ export default function CategoryIcon({ category, size }: Props) {
       name={icon}
       size={size}
       type={icon === 'pizza' ? 'Ionicons' : 'MaterialCommunityIcons'}
-      color={color || GRAY}
+      color={inactive ? LIGHT_GRAY : color}
     />
   );
 }

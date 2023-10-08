@@ -6,7 +6,7 @@ import { EXPIRED_COLOR, LEFT_3_DAYS_COLOR } from './FilterTag';
 import { useHandleFilter, usePulseAnimation } from '../../hooks';
 import { useSelector } from '../../redux/hook';
 
-import Icon from './native-component/Icon';
+import ExpiredExclamation from './ExpiredExclamation';
 import tw from 'twrnc';
 
 interface Props {
@@ -43,18 +43,10 @@ export default function FoodBox({ food }: Props) {
     >
       <View
         style={tw.style(
-          `${colorByExpiredDate()} h-8.5 rounded-lg justify-center items-center flex-row border border-slate-300
-        ${expired(expiredDate) ? 'pr-2.5 pl-1.5' : 'px-2.5'}`
+          `${colorByExpiredDate()} gap-1 h-8.5 rounded-lg justify-center items-center flex-row border border-slate-300 px-2.5`
         )}
       >
-        {expired(expiredDate) && (
-          <Icon
-            name='exclamation-thick'
-            type='MaterialCommunityIcons'
-            color='red'
-            size={16}
-          />
-        )}
+        <ExpiredExclamation expiredDate={expiredDate} />
 
         <Text
           style={tw`${colorByExpiredDate()} ${
