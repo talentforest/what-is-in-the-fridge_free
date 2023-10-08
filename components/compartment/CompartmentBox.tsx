@@ -42,7 +42,7 @@ export default function CompartmentBox({
           ref={scrollViewRef}
           scrollEnabled
           style={tw`px-1 flex-1`}
-          contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-2 flex-wrap gap-1.3 items-center`}
+          contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-14 flex-wrap gap-1.3 items-center`}
           showsVerticalScrollIndicator={false}
         >
           {children}

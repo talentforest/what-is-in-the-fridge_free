@@ -29,16 +29,16 @@ export default function Compartment({
   const [openFoodDetailModal, setOpenFoodDetailModal] = useState(false);
   const [openAddFoodModal, setOpenAddFoodModal] = useState(false);
 
+  const scrollViewRef = useRef<ScrollView | null>(null);
+
+  const dispatch = useDispatch();
   const { getFoodList } = useGetFoodList();
 
   const compartmentFoodList = getFoodList('fridgeFoods', space, compartmentNum);
 
-  const scrollViewRef = useRef<ScrollView | null>(null);
   const scrollEnd = () => {
     scrollViewRef?.current?.scrollToEnd({ animated: true });
   };
-
-  const dispatch = useDispatch();
 
   return (
     <>
