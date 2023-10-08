@@ -61,7 +61,7 @@ export default function TableBody({
                 afterAnimation={afterAnimation}
               >
                 {title === '소비기한 주의 식료품' && (
-                  <View style={tw`items-end`}>
+                  <View style={tw`items-end w-20`}>
                     <LeftDay
                       expiredDate={item.expiredDate}
                       size={14}
@@ -71,13 +71,15 @@ export default function TableBody({
                 )}
 
                 {title === '자주 먹는 식료품' && (
-                  <IndicatorExist name={item.name} space={item.space} />
+                  <View style={tw`ml-2`}>
+                    <IndicatorExist name={item.name} space={item.space} />
+                  </View>
                 )}
 
                 {title === '장보기 식료품' && addToFridgePress && (
                   <TouchableOpacity
                     onPress={() => addToFridgePress(item)}
-                    style={tw`h-full justify-center px-3 -mx-3`}
+                    style={tw`h-full justify-center w-[10%] items-center -mr-3`}
                     disabled={!!checkedList.length}
                   >
                     <Icon

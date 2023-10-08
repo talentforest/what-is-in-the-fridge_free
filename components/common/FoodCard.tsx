@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from './native-component';
-import { DEVICE_WIDTH, cutLetter } from '../../util';
+import { DEVICE_WIDTH } from '../../util';
 import { Food } from '../../constant/foodInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
@@ -29,8 +29,12 @@ export default function FoodCard({ food }: Props) {
     >
       <CategoryIcon category={food.category} size={17} />
       <View style={tw`mt-1.3 items-center justify-center h-13.5`}>
-        <Text style={tw.style(`text-center text-slate-800`)}>
-          {cutLetter(food.name, 7)}
+        <Text
+          numberOfLines={2}
+          ellipsizeMode='tail'
+          style={tw`text-center text-slate-800`}
+        >
+          {food.name}
         </Text>
       </View>
 

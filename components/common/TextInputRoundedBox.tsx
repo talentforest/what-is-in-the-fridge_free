@@ -49,7 +49,7 @@ export default function TextInputRoundedBox({
         )}
       >
         {children}
-        <View style={tw`flex-1`}>
+        <View style={tw`flex-1 ${!!children ? '' : 'ml-3'}`}>
           <TextInput
             value={value}
             onChangeText={setValue}

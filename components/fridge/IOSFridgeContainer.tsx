@@ -38,7 +38,7 @@ export default function IOSFridgeContainer({
             `${
               routeFridgeSetting
                 ? '-bottom-5 -right-1.8 h-[32%] w-[50%]'
-                : '-bottom-2 -right-3 h-[26%] w-[50%]'
+                : '-bottom-2 -right-3 w-[50%] h-[26%]'
             } rounded-t-md absolute border ${FRIDGE_COLOR}`,
             {
               transform: [

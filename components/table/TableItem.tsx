@@ -1,6 +1,5 @@
 import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
-import { cutLetter, expired, getDiffDate } from '../../util';
 import { Food, initialFridgeFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
 import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
@@ -87,21 +86,16 @@ export default function TableItem({
           )}
 
           {!shoppingListRoute && <CategoryIcon size={16} category={category} />}
-          <Text style={tw`${textColor}`}>
-            {cutLetter(
-              initializedFood.name,
-              route.name === 'ExpiredFoods' &&
-                (expired(food.expiredDate) ||
-                  getDiffDate(food.expiredDate) === 0)
-                ? 11
-                : route.name === 'ShoppingList' && !existItemTag
-                ? 16
-                : 13
-            )}
+          <Text
+            numberOfLines={1}
+            ellipsizeMode='tail'
+            style={tw`${textColor} flex-1`}
+          >
+            {initializedFood.name}
           </Text>
 
           {existItemTag && (
-            <View style={tw`flex-1 items-start`}>
+            <View style={tw`w-11 ml-2`}>
               <IndicatorExist name={food.name} roundedBorder />
             </View>
           )}

@@ -3,7 +3,7 @@ import { Text } from '../../components/common/native-component';
 import { useSelector } from '../../redux/hook';
 import { FormStep } from '../../constant/formInfo';
 import { FontGmarketSansBold } from '../../constant/fonts';
-import { cutLetter, getFormattedDate } from '../../util';
+import { getFormattedDate } from '../../util';
 import {
   useEditFood,
   useDeleteFood,
@@ -131,7 +131,7 @@ export default function FoodDetailModal({
                 {purchaseDate !== '' && (
                   <InfoBox iconName='calendar-month' label='구매날짜'>
                     <Text style={tw`text-slate-800 text-[15px]`}>
-                      {getFormattedDate(purchaseDate, 'YYYY년 MM월 DD일')}
+                      {getFormattedDate(purchaseDate, 'YY년 MM월 DD일')}
                     </Text>
                   </InfoBox>
                 )}
@@ -145,8 +145,14 @@ export default function FoodDetailModal({
                 {memo?.length > 1 && (
                   <InfoBox iconName='note-text-outline' label='메모'>
                     <View style={tw`max-h-12`}>
-                      <Text style={tw.style(`text-[15px]`, { lineHeight: 22 })}>
-                        {cutLetter(memo, 31)}
+                      <Text
+                        numberOfLines={3}
+                        ellipsizeMode='tail'
+                        style={tw.style(`text-[15px]`, {
+                          lineHeight: 22,
+                        })}
+                      >
+                        {memo}
                       </Text>
                     </View>
                   </InfoBox>

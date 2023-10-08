@@ -57,7 +57,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
           )}
         >
           <TextInput
-            value={getFormattedDate(date, 'YYYY년 MM월 DD일')}
+            value={getFormattedDate(date, 'YY년 MM월 DD일')}
             editable={false}
             pointerEvents='none'
             style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}

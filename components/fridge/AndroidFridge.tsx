@@ -31,14 +31,8 @@ export default function AndroidFridge() {
 
   if (!isLoaded) return null;
 
-  const margin = {
-    top: routeFridgeSetting ? 4 : 9,
-    left: routeFridgeSetting ? 4 : 8,
-    right: routeFridgeSetting ? 1.5 : 2.5,
-  };
-
   return (
-    <View style={tw`flex-row flex-1`}>
+    <View style={tw`flex-row flex-1 justify-end items-end`}>
       {/* 안드로이드 냉장고 이미지 */}
       {assets && (
         <View style={tw`absolute h-full w-full`}>
@@ -53,51 +47,52 @@ export default function AndroidFridge() {
         </View>
       )}
 
-      {(['안쪽', '문쪽'] as SpaceSide[]).map((side) => (
-        <View
-          key={side}
-          style={tw.style(
-            `${freezer === 'top' ? '' : 'flex-col-reverse'}
-            ${
-              side === '문쪽'
-                ? `w-[42%] mr-${margin.right}`
-                : `ml-${margin.left} flex-1`
-            } mt-${margin.top} border ${FRIDGE_COLOR}
-            ${routeFridgeSetting ? '' : 'p-0.5'}
-            ${`rounded-${side.includes('문쪽') ? 'r' : 'l'}-lg`}`,
-            shadowStyle(8)
-          )}
-        >
-          {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (
-            <TouchableOpacity
-              key={space}
-              disabled={routeFridgeSetting}
-              onPress={() => {
-                Keyboard.dismiss();
-                navigation.navigate('Compartments', { space });
-              }}
-              style={tw`${space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'} ${
-                routeFridgeSetting ? 'p-0.8' : 'p-1.2'
-              }`}
-            >
-              {/* 나의 냉장고 정보 */}
-              {!routeFridgeSetting && (
-                <FridgeSpaceInfo
-                  space={space}
-                  compartmentsLength={
-                    getCompartments(compartments[space]).length
-                  }
-                />
-              )}
+      {/* 냉장고 내부 칸 */}
+      <View style={tw`flex-row w-[87%] mr-[2.5%] -mb-0.5`}>
+        {(['안쪽', '문쪽'] as SpaceSide[]).map((side) => (
+          <View
+            key={side}
+            style={tw.style(
+              `${freezer === 'top' ? '' : 'flex-col-reverse'}
+              h-[92%] border ${FRIDGE_COLOR} flex-1
+              ${routeFridgeSetting ? '' : 'p-0.5'}
+              ${`rounded-${side.includes('문쪽') ? 'r' : 'l'}-${
+                routeFridgeSetting ? 'md' : 'lg'
+              }`}`,
+              shadowStyle(8)
+            )}
+          >
+            {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (
+              <TouchableOpacity
+                key={space}
+                disabled={routeFridgeSetting}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  navigation.navigate('Compartments', { space });
+                }}
+                style={tw`${space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'} ${
+                  routeFridgeSetting ? 'p-0.8' : 'p-1.2'
+                }`}
+              >
+                {/* 나의 냉장고 정보 */}
+                {!routeFridgeSetting && (
+                  <FridgeSpaceInfo
+                    space={space}
+                    compartmentsLength={
+                      getCompartments(compartments[space]).length
+                    }
+                  />
+                )}
 
-              {/* 냉장고 설정 */}
-              {routeFridgeSetting && (
-                <FridgeInfo space={space} compartments={compartments} />
-              )}
-            </TouchableOpacity>
-          ))}
-        </View>
-      ))}
+                {/* 냉장고 설정 */}
+                {routeFridgeSetting && (
+                  <FridgeInfo space={space} compartments={compartments} />
+                )}
+              </TouchableOpacity>
+            ))}
+          </View>
+        ))}
+      </View>
     </View>
   );
 }

@@ -23,7 +23,7 @@ interface Props {
 export default function PurchaseDateItem({ date, changeInfo }: Props) {
   const formattedDate = getFormattedDate(
     date === '' ? new Date() : new Date(date),
-    'YYYY년 MM월 DD일'
+    'YY년 MM월 DD일'
   );
 
   const [datePickerVisible, setDatePickerVisible] = useState(false);

@@ -49,5 +49,5 @@ export const getRelativeTime = (date: string | Date) => {
 
 export const getFormattedDate = (
   date: string | Date,
-  format: 'YYYY-MM-DD' | 'YYYY년 MM월 DD일' | 'YYYY.MM.DD'
+  format: 'YYYY-MM-DD' | 'YY년 MM월 DD일' | 'YY.MM.DD'
 ) => dayjs(date).format(format);

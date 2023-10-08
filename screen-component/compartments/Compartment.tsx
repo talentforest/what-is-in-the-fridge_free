@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { Food } from '../../constant/foodInfo';
 import { FoodLocation } from '../../constant/fridgeInfo';
 import { useGetFoodList } from '../../hooks';
-import { formThreeSteps } from '../../constant/formInfo';
+import { formFourSteps, formThreeSteps } from '../../constant/formInfo';
 import { useDispatch } from '../../redux/hook';
 import { TouchableOpacity } from '../../components/common/native-component';
 import { select } from '../../redux/slice/selectedFoodSlice';
@@ -73,7 +73,7 @@ export default function Compartment({
       <FoodDetailModal
         modalVisible={openFoodDetailModal}
         setModalVisible={setOpenFoodDetailModal}
-        formSteps={formThreeSteps}
+        formSteps={formFourSteps}
       />
 
       <AddFoodModal

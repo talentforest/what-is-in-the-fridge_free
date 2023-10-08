@@ -52,21 +52,27 @@ export default function NameItem({ name, changeInfo, editable }: Props) {
           shadowStyle(4)
         )}
       >
-        <TextInput
-          style={tw`${
-            !editable ? 'text-slate-400' : ''
-          } border-0 m-0.5 flex-1 rounded-lg`}
-          editable={editable}
-          onPressOut={() => {
-            if (!editable) {
-              setShowMsg(true);
-            }
-          }}
-          onChangeText={onChangeText}
-          value={name}
-          placeholder={`식료품 이름을 작성해주세요`}
-          focusable={false}
-        />
+        {editable ? (
+          <TextInput
+            style={tw`border-0 m-0.5 flex-1 rounded-lg`}
+            editable={editable}
+            onPressOut={() => {
+              if (!editable) setShowMsg(true);
+            }}
+            onChangeText={onChangeText}
+            value={name}
+            placeholder={`식료품 이름을 작성해주세요`}
+            focusable={false}
+          />
+        ) : (
+          <Text
+            style={tw`text-slate-400 border-0 m-0.5 px-2 flex-1 rounded-lg`}
+            numberOfLines={1}
+            ellipsizeMode='tail'
+          >
+            {name}
+          </Text>
+        )}
       </View>
 
       <FormMessage

@@ -16,7 +16,7 @@ export default function TableFooterContainer({ children, active }: Props) {
     <View
       style={tw.style(
         `bg-stone-100 ${
-          !routeExpiredFoods || active ? 'border-t border-slate-300' : ''
+          !routeExpiredFoods || active ? 'border-t border-gray-300' : ''
         } px-4 -mx-4 -mb-4`,
         {
           shadowColor: '#aaa',

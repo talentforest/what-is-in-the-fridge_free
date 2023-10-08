@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { Food } from '../../constant/foodInfo';
-import { cutLetter } from '../../util';
 import { GRAY } from '../../constant/colors';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
@@ -44,8 +43,16 @@ export default function ExpiredFoodSection({ foodList }: Props) {
           >
             <ExpiredExclamation expiredDate={food.expiredDate} />
 
-            <Text style={tw.style(`flex-1`)}>{cutLetter(food.name, 14)}</Text>
-            <LeftDay expiredDate={food.expiredDate} size={15} />
+            <Text
+              style={tw.style(`flex-1`)}
+              numberOfLines={1}
+              ellipsizeMode='tail'
+            >
+              {food.name}
+            </Text>
+            <View style={tw`ml-2 w-21`}>
+              <LeftDay expiredDate={food.expiredDate} size={15} />
+            </View>
           </TouchableOpacity>
         ))}
         {foodList.length > MAX_NUM && (

@@ -30,7 +30,7 @@ function LeftDay({ size = 15, expiredDate, iconMark, dateMark }: Props) {
 
       {dateMark && (
         <Text style={tw`text-xs py-0 self-end text-slate-500 -mt-1`}>
-          {getFormattedDate(expiredDate, 'YYYY.MM.DD')}
+          {getFormattedDate(expiredDate, 'YY.MM.DD')}
         </Text>
       )}
     </View>
