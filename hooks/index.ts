@@ -19,5 +19,3 @@ export * from './animation/useToggleAnimation';
 export * from './animation/useShakingAnimation';
 export * from './animation/usePulseAnimation';
 export * from './animation/useSwiperAnimation';
-export * from './animation/useDragAndDropFood';
-export * from './animation/useOpacityAnimation';

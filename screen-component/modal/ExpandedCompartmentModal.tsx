@@ -6,13 +6,13 @@ import { formThreeSteps } from '../../constant/formInfo';
 import { select } from '../../redux/slice/selectedFoodSlice';
 import { useDispatch } from '../../redux/hook';
 import { DEVICE_HEIGHT } from '../../util';
+import { useState } from 'react';
 
 import EmptySign from '../../components/common/EmptySign';
 import Modal from '../../components/modal/Modal';
 import FoodBox from '../../components/common/FoodBox';
 import FoodDetailModal from './FoodDetailModal';
 import tw from 'twrnc';
-import { useState } from 'react';
 
 interface Props {
   compartmentNum: CompartmentNum;

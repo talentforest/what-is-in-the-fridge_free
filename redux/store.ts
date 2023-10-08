@@ -18,8 +18,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import selectedFoodReducer from './slice/selectedFoodSlice';
 import fridgeInfoReducer from './slice/fridgeInfoSlice';
 import toggleOnboardingReducer from './slice/onboardingSlice';
-import toggleDragModeReducer from './slice/dragModeSlice';
-import changeCompartmentNumReducer from './slice/compartmentNumToDropSlice';
 import changeFilterReducer from './slice/filterSlice';
 import toggleShowBtnReducer from './slice/showBtnSlice';
 import pantryFoodsReducer from './slice/pantryFoodsSlice';
@@ -34,8 +32,6 @@ const reducers = {
   selectedFood: selectedFoodReducer,
   fridgeInfo: fridgeInfoReducer,
   onboarding: toggleOnboardingReducer,
-  dragMode: toggleDragModeReducer,
-  compartmentNumToDrop: changeCompartmentNumReducer,
   filter: changeFilterReducer,
   showBtn: toggleShowBtnReducer,
   pantryFoods: pantryFoodsReducer,

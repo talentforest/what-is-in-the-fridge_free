@@ -1,18 +1,18 @@
-import { Animated, ScrollView } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
+import { ScrollView } from 'react-native';
+import { useRef, useState } from 'react';
 import { Food } from '../../constant/foodInfo';
 import { FoodLocation } from '../../constant/fridgeInfo';
 import { useGetFoodList } from '../../hooks';
 import { formThreeSteps } from '../../constant/formInfo';
-import { useDispatch, useSelector } from '../../redux/hook';
-import { toggleDragMode } from '../../redux/slice/dragModeSlice';
+import { useDispatch } from '../../redux/hook';
+import { TouchableOpacity } from '../../components/common/native-component';
+import { select } from '../../redux/slice/selectedFoodSlice';
 
 import FoodDetailModal from '../modal/FoodDetailModal';
 import ExpandedCompartmentModal from '../modal/ExpandedCompartmentModal';
-import DraggableFoodBox from './DraggableFoodBox';
-import DragGeneratedFoodBox from './DragGeneratedFoodBox';
 import CompartmentBox from '../../components/compartment/CompartmentBox';
 import AddFoodModal from '../modal/AddFoodModal';
+import FoodBox from '../../components/common/FoodBox';
 
 interface Props {
   foodLocation: FoodLocation;
@@ -25,12 +25,6 @@ export default function Compartment({
 }: Props) {
   const { space, compartmentNum } = foodLocation;
 
-  const { dragMode } = useSelector((state) => state.dragMode);
-  const { compartmentNumToDrop } = useSelector(
-    (state) => state.compartmentNumToDrop
-  );
-
-  const [isDragging, setIsDragging] = useState(false);
   const [expandCompartment, setExpandCompartment] = useState(false);
   const [openFoodDetailModal, setOpenFoodDetailModal] = useState(false);
   const [openAddFoodModal, setOpenAddFoodModal] = useState(false);
@@ -39,20 +33,12 @@ export default function Compartment({
 
   const compartmentFoodList = getFoodList('fridgeFoods', space, compartmentNum);
 
-  const dragPosition = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (dragMode) {
-      dispatch(toggleDragMode(false));
-    }
-  }, []);
-
   const scrollViewRef = useRef<ScrollView | null>(null);
   const scrollEnd = () => {
     scrollViewRef?.current?.scrollToEnd({ animated: true });
   };
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -60,28 +46,22 @@ export default function Compartment({
         title={`${compartmentNum}칸`}
         foodList={getFoodList('fridgeFoods', space, compartmentNum)}
         spaceTotalLength={foodLengthBySpace}
-        scrollEnabled={!dragMode && !isDragging}
-        bgToDrop={compartmentNumToDrop === compartmentNum && dragMode}
-        compartmentNumToDrop={compartmentNumToDrop}
         setExpandCompartment={setExpandCompartment}
         setOpenAddFoodModal={setOpenAddFoodModal}
         scrollViewRef={scrollViewRef}
       >
         {compartmentFoodList.map((food: Food) => (
-          <DraggableFoodBox
+          <TouchableOpacity
             key={food.id}
-            food={food}
-            setIsDragging={setIsDragging}
-            setModalVisible={setOpenFoodDetailModal}
-            dragPosition={dragPosition}
-          />
+            onPress={() => {
+              dispatch(select(food));
+              setOpenFoodDetailModal(true);
+            }}
+          >
+            <FoodBox food={food} />
+          </TouchableOpacity>
         ))}
       </CompartmentBox>
-
-      {/* 드래깅 시 생성되는 음식박스 */}
-      {isDragging && dragMode && (
-        <DragGeneratedFoodBox dragPosition={dragPosition} />
-      )}
 
       <ExpandedCompartmentModal
         compartmentNum={compartmentNum}

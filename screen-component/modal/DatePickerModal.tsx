@@ -1,10 +1,13 @@
 import { ReactNode } from 'react';
 import { View } from 'react-native';
-import { Text, TouchableOpacity } from '../common/native-component';
+import {
+  Text,
+  TouchableOpacity,
+} from '../../components/common/native-component';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 import { SCDream5 } from '../../constant/fonts';
 
-import Modal from './Modal';
+import Modal from '../../components/modal/Modal';
 import tw from 'twrnc';
 
 interface Props {

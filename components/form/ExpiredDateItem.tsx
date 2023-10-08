@@ -14,7 +14,7 @@ import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
 import ControlDateBtn from '../buttons/ControlDateBtn';
 import MessageBox from '../common/MessageBox';
-import DatePickerModal from '../modal/DatePickerModal';
+import DatePickerModal from '../../screen-component/modal/DatePickerModal';
 import tw from 'twrnc';
 
 interface Props {

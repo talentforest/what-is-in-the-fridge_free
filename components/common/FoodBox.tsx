@@ -8,6 +8,7 @@ import { useSelector } from '../../redux/hook';
 
 import ExpiredExclamation from './ExpiredExclamation';
 import tw from 'twrnc';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   food: Food;
@@ -39,6 +40,7 @@ export default function FoodBox({ food }: Props) {
         backgroundColor: searchActive ? '#dcd3ff' : '#fff',
         transform: [{ translateY }],
         opacity,
+        ...shadowStyle(10),
       }}
     >
       <View

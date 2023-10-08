@@ -13,7 +13,7 @@ import { PlatformIOS } from '../../constant/statusBarHeight';
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
 import tw from 'twrnc';
-import DatePickerModal from '../modal/DatePickerModal';
+import DatePickerModal from '../../screen-component/modal/DatePickerModal';
 
 interface Props {
   date: string;
