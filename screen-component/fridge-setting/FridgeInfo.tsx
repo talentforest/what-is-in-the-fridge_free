@@ -16,19 +16,9 @@ interface Props {
 }
 
 export default function FridgeInfo({ space, compartments }: Props) {
-  const doorRadius = (space: Space) => {
-    return space.includes('문쪽') ? `rounded-r-[4px]` : `rounded-l-[4px]`;
-  };
-
   return (
-    <View
-      style={tw`border border-slate-400 bg-stone-500 
-        ${doorRadius(space)} justify-center`}
-    >
-      <View
-        style={tw`absolute w-full h-full
-        ${doorRadius(space)} bg-white opacity-70`}
-      />
+    <View style={tw`justify-center`}>
+      <View style={tw`absolute w-full h-full opacity-70`} />
       {space.slice(-2) !== '문쪽' && (
         <View style={tw`absolute -left-18 z-10 flex-row items-center gap-1.5`}>
           <Text
@@ -44,7 +34,7 @@ export default function FridgeInfo({ space, compartments }: Props) {
           <Icon name='caretright' type='AntDesign' size={12} color={GRAY} />
         </View>
       )}
-      <View style={tw`h-full gap-1 p-1`}>
+      <View style={tw`h-full gap-0.7`}>
         {getCompartments(compartments[space]).map(({ compartmentNum }) => (
           <CompartmentBox
             key={compartmentNum}

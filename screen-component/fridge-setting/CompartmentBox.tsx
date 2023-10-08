@@ -13,7 +13,7 @@ export default function CompartmentBox({ space, compartmentNum }: Props) {
   return (
     <View
       key={compartmentNum}
-      style={tw`flex-1 w-full mx-auto rounded-[4px] justify-end border border-slate-400 bg-white`}
+      style={tw`flex-1 w-full mx-auto rounded-[4px] justify-end border border-slate-300 bg-white`}
     >
       {space.includes('문쪽') && (
         <View
