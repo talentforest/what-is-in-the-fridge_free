@@ -5,16 +5,15 @@ import { useSelector } from '../../redux/hook';
 import { Text, TouchableOpacity } from '../common/native-component';
 import {
   CompartmentNum,
+  FoodStorageType,
   Space,
   SpaceSide,
   SpaceType,
 } from '../../constant/fridgeInfo';
-import { useGetFoodList, useSlideAnimation } from '../../hooks';
-import { Animated } from 'react-native';
+import { isFridgeFood, isPantryFood } from '../../util/checkFoodSpace';
 
 import CheckBoxItem from '../common/CheckBoxItem';
 import FormLabel from './FormLabel';
-import MessageBox from '../common/MessageBox';
 import tw from 'twrnc';
 
 interface Props {
@@ -22,73 +21,65 @@ interface Props {
   changeInfo: (newInfo: { [key: string]: string | boolean }) => void;
 }
 
-type TabType = '팬트리' | '냉장고';
-
 export default function SpaceItem({ food, changeInfo }: Props) {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
-
-  const { getFoodList } = useGetFoodList();
 
   const spaceType = food.space.slice(0, 3);
   const spaceSide = food.space.slice(4, 6);
 
-  const checkFoodLengthLimit = () => {
-    const space = `${spaceType} ${spaceSide}` as Space;
-    const foodLength = getFoodList('fridgeFoods', space).length;
-    return foodLength >= 15;
-  };
-
-  const { height } = useSlideAnimation({
-    initialValue: 0,
-    toValue: 30,
-    active: checkFoodLengthLimit(),
-  });
-
   const maxCompartmentsNum = fridgeInfo.compartments[food.space];
   const compartments = getCompartments(maxCompartmentsNum);
 
-  const onFridgeSpaceTypePress = (spaceType: SpaceType) => {
-    changeInfo({ space: `${spaceType} ${spaceSide}` });
+  const getCompartmentNum = (space: Space) => {
+    if (food.compartmentNum) {
+      const maxCompartmentNum = fridgeInfo.compartments[space];
+      const compartmentNum =
+        +food.compartmentNum.slice(0, 1) > maxCompartmentNum
+          ? `${maxCompartmentNum}번`
+          : food.compartmentNum;
+      return compartmentNum;
+    }
+    return '1번';
   };
 
-  const onFridgeSpaceSidePress = (spaceSide: SpaceSide) => {
-    changeInfo({ space: `${spaceType} ${spaceSide}` });
-    checkFoodLengthLimit();
-  };
+  const onFridgeSpacePress = (space: Space) =>
+    changeInfo({ space, compartmentNum: getCompartmentNum(space) });
 
   const onCompartmentNumPress = (compartmentNum: CompartmentNum) => {
     changeInfo({ compartmentNum });
   };
 
-  const onTabPress = (space: TabType) => {
-    if (space === '냉장고') {
-      return changeInfo({ space: '냉장실 안쪽', compartmentNum: '1번' });
-    }
-    changeInfo({ space: '팬트리', compartmentNum: '' });
+  const onTabPress = (space: FoodStorageType) => {
+    if (isPantryFood(food.space) && isPantryFood(space)) return;
+    if (isFridgeFood(food.space) && isFridgeFood(space)) return;
+
+    return space === '냉장고'
+      ? changeInfo({ space: '냉장실 안쪽', compartmentNum: '1번' })
+      : changeInfo({ space: '팬트리' });
   };
 
   return (
     <View>
       <FormLabel label='추가할 식료품의 위치' />
       <View style={tw`flex-row items-center`}>
-        {['냉장고', '팬트리'].map((space) => (
+        {['냉장고', '팬트리'].map((storage) => (
           <TouchableOpacity
-            onPress={() => onTabPress(space as TabType)}
-            key={space}
+            onPress={() => onTabPress(storage as FoodStorageType)}
+            key={storage}
             style={tw`border-b-[3px] ${
-              food.space.includes(space.slice(0, 1))
+              food.space.includes(storage.slice(0, 1))
                 ? 'border-blue-600'
                 : 'border-slate-300'
             } pr-5 pb-0.5 my-1.5`}
           >
             <Text
               style={tw`text-[15px] ${
-                food.space.includes(space.slice(0, 1))
+                food.space.includes(storage.slice(0, 1))
                   ? 'text-slate-700'
                   : 'text-slate-400'
               }`}
             >
-              {space}
+              {storage}
             </Text>
           </TouchableOpacity>
         ))}
@@ -103,22 +94,28 @@ export default function SpaceItem({ food, changeInfo }: Props) {
                   key={spaceType}
                   title={spaceType}
                   checked={food.space.slice(0, 3) === spaceType}
-                  onPress={() => onFridgeSpaceTypePress(spaceType)}
+                  onPress={() =>
+                    onFridgeSpacePress(`${spaceType} ${spaceSide}` as Space)
+                  }
                 />
               </View>
             ))}
           </View>
+
           <View style={tw`flex-row gap-5`}>
             {(['안쪽', '문쪽'] as SpaceSide[]).map((spaceSide) => (
               <View key={spaceSide} style={tw`py-1.5`}>
                 <CheckBoxItem
                   title={spaceSide}
                   checked={food.space.includes(spaceSide)}
-                  onPress={() => onFridgeSpaceSidePress(spaceSide)}
+                  onPress={() =>
+                    onFridgeSpacePress(`${spaceType} ${spaceSide}` as Space)
+                  }
                 />
               </View>
             ))}
           </View>
+
           <View style={tw`flex-row flex-wrap gap-x-5 gap-y-2`}>
             {compartments.map(({ compartmentNum }) => (
               <View key={compartmentNum} style={tw`py-1.5`}>
@@ -142,13 +139,6 @@ export default function SpaceItem({ food, changeInfo }: Props) {
           />
         </View>
       )}
-
-      <Animated.View style={{ height, marginTop: 4 }}>
-        <MessageBox
-          message='해당 공간은 식료품 개수 한도에 도달했습니다.'
-          color='red'
-        />
-      </Animated.View>
     </View>
   );
 }
