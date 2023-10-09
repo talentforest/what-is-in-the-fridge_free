@@ -1,3 +1,4 @@
+export type FoodStorageType = '팬트리' | '냉장고';
 export type SpaceType = '냉장실' | '냉동실';
 export type SpaceSide = '안쪽' | '문쪽';
 
@@ -14,3 +15,5 @@ export type FoodLocation = {
   space: Space;
   compartmentNum: CompartmentNum;
 };
+
+export const MAX_LIST_LENGTH = 50;

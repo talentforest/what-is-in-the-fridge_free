@@ -37,7 +37,7 @@ export default function Compartments({ route }: Route) {
         backgroundColor: TAB_BLUE_BG_COLOR,
       },
     });
-  }, []);
+  }, [space]);
 
   const compartments = getCompartments(fridgeInfo.compartments[space]);
 

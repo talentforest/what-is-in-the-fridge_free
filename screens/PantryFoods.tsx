@@ -3,16 +3,17 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from '../components/common/native-component';
-import { ScrollView } from 'react-native';
+import { LayoutChangeEvent, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import { useGetFoodList } from '../hooks';
 import { entireFilterObj, expiredFilters } from '../util';
-import { formThreeSteps } from '../constant/formInfo';
+import { formFourSteps, formThreeSteps } from '../constant/formInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { changePantryFilter } from '../redux/slice/filterSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
 import { shadowStyle } from '../constant/shadowStyle';
 import { PlatformIOS } from '../constant/statusBarHeight';
+import { Food } from '../constant/foodInfo';
 
 import Container from '../components/common/Container';
 import TableFilters from '../components/table/TableFilters';
@@ -25,6 +26,7 @@ import AddFoodModal from '../screen-component/modal/AddFoodModal';
 export default function PantryFoods() {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
   const { pantryFilter } = useSelector((state) => state.filter);
+  const { searchedFoodName } = useSelector((state) => state.searchedFoodName);
   const [openFoodDetailModal, setOpenFoodDetailModal] = useState(false);
   const [openAddFoodModal, setOpenAddFoodModal] = useState(false);
 
@@ -43,8 +45,17 @@ export default function PantryFoods() {
   );
 
   const scrollViewRef = useRef<ScrollView | null>(null);
+
   const scrollEnd = () => {
     scrollViewRef?.current?.scrollToEnd({ animated: true });
+  };
+
+  const onItemLayout = (event: LayoutChangeEvent, food: Food) => {
+    if (searchedFoodName === food.name) {
+      const { y } = event.nativeEvent.layout;
+      scrollViewRef?.current?.scrollTo({ y, animated: true });
+    }
+    return null;
   };
 
   return (
@@ -62,7 +73,6 @@ export default function PantryFoods() {
             title='팬트리'
             foodList={pantryFoods}
             spaceTotalLength={pantryFoods.length}
-            scrollEnabled
             setOpenAddFoodModal={setOpenAddFoodModal}
           >
             {pantryFoods.map((food) => (
@@ -77,6 +87,9 @@ export default function PantryFoods() {
                   borderRadius: 8,
                   ...shadowStyle(PlatformIOS ? 3 : 10),
                 }}
+                onLayout={(event: LayoutChangeEvent) => {
+                  onItemLayout(event, food);
+                }}
               >
                 <FoodBox food={food} />
               </TouchableOpacity>
@@ -87,7 +100,7 @@ export default function PantryFoods() {
         <FoodDetailModal
           modalVisible={openFoodDetailModal}
           setModalVisible={setOpenFoodDetailModal}
-          formSteps={formThreeSteps}
+          formSteps={formFourSteps}
         />
 
         <AddFoodModal

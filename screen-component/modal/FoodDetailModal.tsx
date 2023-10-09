@@ -95,7 +95,7 @@ export default function FoodDetailModal({
                 color='blue'
                 iconName='checkbox-marked-outline'
                 btnName='식료품 정보 수정 완료'
-                onPress={() => onEditSumbit(id)}
+                onPress={() => onEditSumbit(id, setModalVisible)}
               />
             </View>
           </Animated.View>

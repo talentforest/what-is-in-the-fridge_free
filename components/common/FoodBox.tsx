@@ -31,6 +31,7 @@ export default function FoodBox({ food }: Props) {
   };
 
   const searchActive = searchedFoodName === food.name;
+
   const { opacity, translateY } = usePulseAnimation({ active: searchActive });
 
   return (

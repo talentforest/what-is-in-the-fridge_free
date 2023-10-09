@@ -8,7 +8,8 @@ type PhraseFnKey =
   | 'existInList'
   | 'successAdd'
   | 'deleteExistFood'
-  | 'modifyCategory';
+  | 'modifyCategory'
+  | 'moveStorage';
 
 type PhraseWithCheckListKey =
   | 'unSettingFavoriteFoods'
@@ -54,9 +55,9 @@ export const alertPhraseWithFood: AlertPhraseFn = (food: Food) => {
   const exist = {
     title: `${food.name}`,
     msg: `${
-      food.compartmentNum
-        ? `${food.space} ${food.compartmentNum}`
-        : `${food.space}`
+      food.space === '팬트리'
+        ? `${food.space}`
+        : `${food.space} ${food.compartmentNum}`
     }에 이미 식료품이 있어요.`,
   };
   const existInList = {
@@ -77,12 +78,18 @@ export const alertPhraseWithFood: AlertPhraseFn = (food: Food) => {
     msg: `${food.space}에 있는 동일한 식료품은 "${food.category}"로 저장되어 있어요. 해당 카테고리 정보로 저장하시겠어요?.`,
   };
 
+  const moveStorage = {
+    title: '위치 수정 알림',
+    msg: `식료품의 위치가 ${food.space}으로 이동되었어요. ${food.space}으로 이동하시겠어요?`,
+  };
+
   return {
     exist,
     existInList,
     successAdd,
     deleteExistFood,
     modifyCategory,
+    moveStorage,
   };
 };
 

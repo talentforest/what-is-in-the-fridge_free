@@ -2,10 +2,9 @@ import { Alert, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { alertPhrase } from '../../constant/alertPhrase';
 import { Food } from '../../constant/foodInfo';
+import { MAX_LIST_LENGTH } from '../../constant/fridgeInfo';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
-
-const MAX_LIST_LENGTH = 50;
 
 interface Props {
   title: string;
