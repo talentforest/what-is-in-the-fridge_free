@@ -13,3 +13,4 @@ export * from './filters';
 export * from './controlDate';
 export * from './getDate';
 export * from './getLeftDays';
+export * from './getDateToken';

@@ -56,7 +56,7 @@ export default function MemoItem({ memo, changeInfo }: Props) {
         <View style={tw`flex-row items-center gap-1 px-1`}>
           <View
             style={tw.style(
-              `h-18 px-0.5 py-${
+              `h-17 px-0.5 py-${
                 PlatformIOS ? '0.5' : '3'
               } flex-1 bg-white border border-slate-300 flex-row items-center rounded-lg`,
               shadowStyle(3)
@@ -65,7 +65,7 @@ export default function MemoItem({ memo, changeInfo }: Props) {
             <TextInput
               style={tw.style(`bg-white border-0 flex-1 h-full rounded-lg`, {
                 lineHeight: 22,
-                textAlignVertical: 'top',
+                // textAlignVertical: 'top',
               })}
               onChangeText={onChangeText}
               value={memo}

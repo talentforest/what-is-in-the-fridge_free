@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocale from 'dayjs/plugin/updateLocale';
+import { DateState } from '../screen-component/modal/DateNumInputModal';
 
 const config = {
   thresholds: [
@@ -51,3 +52,17 @@ export const getFormattedDate = (
   date: string | Date,
   format: 'YYYY-MM-DD' | 'YY년 MM월 DD일' | 'YY.MM.DD'
 ) => dayjs(date).format(format);
+
+export const isValidDate = (dateString: string): DateState => {
+  const date = new Date(dateString);
+  if (
+    !(!isNaN(date.getTime()) && dateString === date.toISOString().slice(0, 10))
+  ) {
+    return { state: 'error', msg: '날짜 형식이 맞지 않아요.' };
+  }
+  if (getDiffDate(dateString) < 0) {
+    return { state: 'error', msg: '소비기한은 오늘 이전일 수 없어요' };
+  }
+
+  return { state: 'ok', msg: '' };
+};

@@ -10,7 +10,7 @@ interface Props {
 
 export default function MessageBox({ message, color = 'gray' }: Props) {
   return (
-    <View style={tw`flex-row items-start gap-1 mb-1`}>
+    <View style={tw`flex-row w-full items-start gap-1 mb-1`}>
       <View style={tw`mt-1`}>
         <Icon
           type='Ionicons'
@@ -19,7 +19,7 @@ export default function MessageBox({ message, color = 'gray' }: Props) {
           color={color}
         />
       </View>
-      <Text style={tw`text-sm text-${color}-600 flex-1`}>{message}</Text>
+      <Text style={tw`text-sm text-${color}-600`}>{message}</Text>
     </View>
   );
 }

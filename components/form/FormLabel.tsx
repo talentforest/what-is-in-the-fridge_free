@@ -14,8 +14,8 @@ interface Props {
 
 export default function FormLabel({ label, option, isOpen, onPress }: Props) {
   return (
-    <View style={tw`flex-row items-center gap-1 justify-between mb-1`}>
-      <View style={tw`flex-row items-center gap-1 mb-0.5`}>
+    <View style={tw`flex-row items-center gap-1 justify-between pb-0.5`}>
+      <View style={tw`flex-row items-center`}>
         <Text style={tw`text-blue-600 text-sm`}>{label}</Text>
       </View>
 

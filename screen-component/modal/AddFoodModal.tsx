@@ -4,6 +4,7 @@ import { FormStep } from '../../constant/formInfo';
 import { useAddFood } from '../../hooks';
 import { initialFridgeFood, initialPantryFood } from '../../constant/foodInfo';
 import { PlatformIOS } from '../../constant/statusBarHeight';
+import { useSelector } from '../../redux/hook';
 
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
@@ -25,6 +26,8 @@ export default function AddFoodModal({
   formSteps,
   scrollEnd,
 }: Props) {
+  const { expiredDateModal } = useSelector((state) => state.formModalVisible);
+
   const initialFood = foodLocation ? initialFridgeFood : initialPantryFood;
 
   const { newFood, changeFoodInfo, onAddSubmit } = useAddFood({
@@ -40,6 +43,7 @@ export default function AddFoodModal({
         changeFoodInfo({ ...initialFood });
         setModalVisible(false);
       }}
+      overlapped={!!expiredDateModal}
     >
       <View style={tw`bg-stone-100 pb-${PlatformIOS ? '12' : '6'}`}>
         <Form

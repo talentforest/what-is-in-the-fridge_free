@@ -25,15 +25,15 @@ export default function DatePickerModal({
 }: Props) {
   return (
     <Modal
-      title='날짜 선택'
+      title='구매날짜 설정'
       isVisible={isVisible}
       closeModal={closeModal}
       hasBackdrop
       animationIn='fadeIn'
       style={tw`justify-end`}
     >
-      <View style={tw`border mb-${PlatformIOS ? '12' : '6'} gap-2`}>
-        <View style={tw`bg-white rounded-2xl`}>
+      <View style={tw`mb-${PlatformIOS ? '12' : '6'} gap-2`}>
+        <View style={tw`bg-white  rounded-b-2xl`}>
           {children}
           <TouchableOpacity
             onPress={() => {

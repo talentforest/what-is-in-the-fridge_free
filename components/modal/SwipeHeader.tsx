@@ -1,10 +1,9 @@
-import { Animated, PanResponder, Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { GRAY } from '../../constant/colors';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
-import { useRef } from 'react';
 
 interface Props {
   title?: string;
@@ -17,13 +16,16 @@ export default function SwipeHeader({ title, closeModal, animationIn }: Props) {
     <View style={tw.style(`bg-stone-100 rounded-t-2xl`)}>
       {animationIn === 'slideInUp' ? (
         <View
-          style={tw.style(`border rounded-t-2xl border-slate-300 px-6 py-3`)}
+          style={tw.style(
+            `border rounded-t-2xl border-slate-300 px-6 pt-3 pb-1`
+          )}
         >
+          {/* 터치바 */}
           <View
-            style={tw`mb-5 bg-slate-400 w-15 self-center h-2 rounded-2xl`}
+            style={tw`mb-4 bg-slate-500 w-15 self-center h-1.8 rounded-2xl`}
           />
 
-          <View style={tw`flex-row justify-between items-center mt-0`}>
+          <View style={tw`flex-row justify-between items-center`}>
             {title && <Text style={tw`text-lg`}>{title}</Text>}
           </View>
         </View>

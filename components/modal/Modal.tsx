@@ -25,7 +25,8 @@ export type ModalTitle =
   | '카테고리별 필터링'
   | `${CompartmentNum}칸`
   | '카테고리 선택'
-  | '날짜 선택';
+  | '소비기한 설정'
+  | '구매날짜 설정';
 
 interface Props {
   isVisible: boolean;
@@ -35,6 +36,7 @@ interface Props {
   style?: StyleProp<any>;
   animationIn?: 'fadeIn' | 'slideInUp';
   hasBackdrop?: boolean;
+  overlapped?: boolean;
 }
 
 export default function Modal({
@@ -45,10 +47,16 @@ export default function Modal({
   closeModal,
   animationIn = 'slideInUp',
   hasBackdrop = true,
+  overlapped,
 }: Props) {
-  const MODAL_HEIGHT = DEVICE_HEIGHT * 0.85;
+  const MODAL_HEIGHT = DEVICE_HEIGHT * 0.83;
 
-  const positionStyle = animationIn === 'fadeIn' ? 'mx-4' : 'justify-end';
+  const positionStyle =
+    animationIn !== 'fadeIn'
+      ? 'justify-end'
+      : title === '소비기한 설정'
+      ? 'mx-4 mb-8'
+      : 'mx-4';
 
   return (
     <RNModal
@@ -69,24 +77,16 @@ export default function Modal({
       style={tw.style(`m-0 ${positionStyle}`, style)}
     >
       <KeyboardAvoidingView
-        enabled
+        enabled={!overlapped}
         behavior='padding'
-        keyboardVerticalOffset={PlatformIOS ? -155 : -140}
+        keyboardVerticalOffset={!PlatformIOS ? -140 : -170}
       >
-        <View
-          style={tw.style(
-            `max-h-[${MODAL_HEIGHT}px]
-            ${animationIn !== 'fadeIn' ? 'shadow-2xl' : ''} 
-            ${title !== '날짜 선택' ? 'bg-stone-100' : ''} rounded-2xl`
-          )}
-        >
-          {title !== '날짜 선택' && (
-            <SwipeHeader
-              title={title}
-              closeModal={closeModal}
-              animationIn={animationIn}
-            />
-          )}
+        <View style={tw.style(`max-h-[${MODAL_HEIGHT}px] rounded-2xl`)}>
+          <SwipeHeader
+            title={title}
+            closeModal={closeModal}
+            animationIn={animationIn}
+          />
 
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View>{children}</View>

@@ -9,12 +9,15 @@ import RNDateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import { PlatformIOS } from '../../constant/statusBarHeight';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { toggleExpiredDateModal } from '../../redux/slice/formModalSlice';
 
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
 import ControlDateBtn from '../buttons/ControlDateBtn';
 import MessageBox from '../common/MessageBox';
 import DatePickerModal from '../../screen-component/modal/DatePickerModal';
+import DateNumInputModal from '../../screen-component/modal/DateNumInputModal';
 import tw from 'twrnc';
 
 interface Props {
@@ -25,8 +28,11 @@ interface Props {
 export default function ExpiredDateItem({ date, changeInfo }: Props) {
   const formattedDate = getFormattedDate(new Date(date), 'YYYY-MM-DD');
 
+  const { expiredDateModal } = useSelector((state) => state.formModalVisible);
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [expiredDate, setExpiredDate] = useState(formattedDate);
+
+  const dispatch = useDispatch();
 
   const changeDate = (date: Date | string) => {
     const expiredDate = getFormattedDate(date, 'YYYY-MM-DD');
@@ -50,7 +56,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
         <FormLabel label='소비기한' />
 
         <TouchableOpacity
-          onPress={() => setDatePickerVisible(true)}
+          onPress={() => dispatch(toggleExpiredDateModal(true))}
           style={tw.style(
             `h-11 border border-slate-300 bg-white rounded-lg flex-row items-center justify-between px-2`,
             shadowStyle(3)
@@ -85,6 +91,16 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
               ? '오늘까지'
               : `${getRelativeTime(date)}까지`
           } 섭취할 수 있습니다.`}
+        />
+      )}
+
+      {/* 날짜 숫자 입력 모달 */}
+      {expiredDateModal && (
+        <DateNumInputModal
+          isVisible={expiredDateModal}
+          closeModal={() => dispatch(toggleExpiredDateModal(false))}
+          expiredDate={expiredDate}
+          changeInfo={changeInfo}
         />
       )}
 
