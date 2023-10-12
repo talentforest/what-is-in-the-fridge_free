@@ -34,20 +34,20 @@ type AlertPhraseFn = (food: Food) => {
 
 export const alertPhrase: AlertPhraseObj = {
   excess: {
-    title: '식료품 개수 초과 알림',
+    title: '식료품 개수 초과',
     msg: '공간당 최대 10개의 식료품을 넣을 수 있습니다.',
   },
   noName: {
-    title: '식료품 이름 작성 안내',
+    title: '식료품 이름 미작성',
     msg: '식료품의 이름이 작성되지 않았어요.',
   },
   wrongDate: {
-    title: '날짜 수정 알림',
-    msg: '소비기한이 구매일보다 이전일 수 없어요.',
+    title: '유효하지 않은 소비기한',
+    msg: '소비기한은 구매일 이후여야 해요.',
   },
   noMemo: {
-    title: '메모 작성 안내',
-    msg: '메모가 작성되지 않았어요.',
+    title: '메모 미작성',
+    msg: '메모가 작성되지 않았어요. 작성하지 않는다면 생략하기 버튼을 눌러주세요',
   },
 };
 
@@ -69,17 +69,17 @@ export const alertPhraseWithFood: AlertPhraseFn = (food: Food) => {
     msg: '',
   };
   const deleteExistFood = {
-    title: `기존 식료품 삭제 안내`,
+    title: `기존 식료품 삭제 알림`,
     msg: `이미 ${food.space}에 ${food.name} 식료품이 존재해요. 기존 식료품을 삭제하고 새로 추가하시겠어요?`,
   };
 
   const modifyCategory = {
     title: '카테고리 변경 알림',
-    msg: `${food.space}에 있는 동일한 식료품은 "${food.category}"로 저장되어 있어요. 해당 카테고리 정보로 저장하시겠어요?.`,
+    msg: `${food.space}에 있는 동일한 식료품은 "${food.category}"로 저장되어 있어요. 기존의 카테고리 정보로 저장돼요.`,
   };
 
   const moveStorage = {
-    title: '위치 수정 알림',
+    title: '식료품 위치 이동 알림',
     msg: `식료품의 위치가 ${food.space}으로 이동되었어요. ${food.space}으로 이동하시겠어요?`,
   };
 
