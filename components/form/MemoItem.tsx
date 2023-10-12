@@ -65,7 +65,7 @@ export default function MemoItem({ memo, changeInfo }: Props) {
             <TextInput
               style={tw.style(`bg-white border-0 flex-1 h-full rounded-lg`, {
                 lineHeight: 22,
-                // textAlignVertical: 'top',
+                textAlignVertical: 'top', // android
               })}
               onChangeText={onChangeText}
               value={memo}

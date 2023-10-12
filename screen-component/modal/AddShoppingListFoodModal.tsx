@@ -2,7 +2,7 @@ import { FormStep } from '../../constant/formInfo';
 import { useAddShoppingListFood } from '../../hooks';
 import { Food } from '../../constant/foodInfo';
 import { View } from 'react-native';
-import { PlatformIOS } from '../../constant/statusBarHeight';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
@@ -24,13 +24,19 @@ export default function AddShoppingListFoodModal({
 }: Props) {
   const { selectedFood, onChange, onSubmit } = useAddShoppingListFood();
 
+  const insets = useSafeAreaInsets();
+
   return (
     <Modal
       title='장보기 목록 식료품 추가'
       isVisible={modalVisible}
       closeModal={() => setModalVisible(false)}
     >
-      <View style={tw`bg-stone-100 pb-${PlatformIOS ? '12' : '6'}`}>
+      <View
+        style={tw.style(`bg-stone-100`, {
+          paddingBottom: insets?.bottom + 12,
+        })}
+      >
         <Form
           title='장보기 목록 식료품 추가'
           food={selectedFood}

@@ -4,8 +4,8 @@ import {
   Text,
   TouchableOpacity,
 } from '../../components/common/native-component';
-import { PlatformIOS } from '../../constant/statusBarHeight';
 import { SCDream5 } from '../../constant/fonts';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Modal from '../../components/modal/Modal';
 import tw from 'twrnc';
@@ -23,6 +23,8 @@ export default function DatePickerModal({
   positivePress,
   children,
 }: Props) {
+  const insets = useSafeAreaInsets();
+
   return (
     <Modal
       title='구매날짜 설정'
@@ -32,8 +34,8 @@ export default function DatePickerModal({
       animationIn='fadeIn'
       style={tw`justify-end`}
     >
-      <View style={tw`mb-${PlatformIOS ? '12' : '6'} gap-2`}>
-        <View style={tw`bg-white  rounded-b-2xl`}>
+      <View style={{ paddingBottom: insets?.bottom + 12 }}>
+        <View style={tw`bg-white  rounded-b-2xl mb-1.5`}>
           {children}
           <TouchableOpacity
             onPress={() => {
@@ -50,14 +52,15 @@ export default function DatePickerModal({
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
-          onPress={closeModal}
-          style={tw`py-3 bg-white rounded-2xl`}
-        >
-          <Text style={tw.style(`text-lg text-center text-red-500`, SCDream5)}>
-            취소
-          </Text>
-        </TouchableOpacity>
+        <View style={tw`py-3 bg-white rounded-2xl`}>
+          <TouchableOpacity onPress={closeModal}>
+            <Text
+              style={tw.style(`text-lg text-center text-red-500`, SCDream5)}
+            >
+              취소
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </Modal>
   );

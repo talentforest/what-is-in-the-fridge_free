@@ -11,12 +11,12 @@ import {
 } from '../constant/colors';
 import { PlatformIOS } from '../constant/statusBarHeight';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Text } from '../components/common/native-component';
 
 import Icon from '../components/common/native-component/Icon';
 import Home from '../screens/Home';
 import MyFridge from '../screens/MyFridge';
 import PantryFoods from '../screens/PantryFoods';
-import { Text } from '../components/common/native-component';
 
 export type RootTabParamList = {
   Home: undefined;

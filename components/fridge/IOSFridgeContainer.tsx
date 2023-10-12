@@ -24,10 +24,10 @@ export default function IOSFridgeContainer({
           style={tw.style(
             `${
               routeFridgeSetting
-                ? 'left-2.2 top-4.5 w-[48%]'
-                : 'left-4.8 -top-1 w-[46%]'
+                ? 'left-2.5 top-4.5 w-[45%]'
+                : 'left-4.8 -top-1 w-[43.5%]'
             } 
-            ${FRIDGE_COLOR} rounded-t-md absolute  h-full border border-b-0 border-l shadow-lg`,
+            ${FRIDGE_COLOR} rounded-t-md absolute h-full border border-b-0 border-l shadow-lg`,
             { transform: [{ skewX: '45deg' }] }
           )}
         />
@@ -37,9 +37,9 @@ export default function IOSFridgeContainer({
           style={tw.style(
             `${
               routeFridgeSetting
-                ? '-bottom-5 -right-1.8 h-[32%] w-[50%]'
-                : '-bottom-2 -right-3 w-[50%] h-[26%]'
-            } rounded-t-md absolute border ${FRIDGE_COLOR}`,
+                ? '-bottom-5 h-[32%] w-[50%]'
+                : '-bottom-2 w-[50%] h-[26%]'
+            } -right-1 rounded-t-md  absolute border ${FRIDGE_COLOR}`,
             {
               transform: [
                 { skewX: '-50deg' },

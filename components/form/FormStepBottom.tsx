@@ -19,7 +19,7 @@ export default function FormStepBottom({
   const routePantryFoods = route.name === 'PantryFoods';
 
   return (
-    <View>
+    <View style={tw`h-10`}>
       {!routePantryFoods ? (
         <View style={tw`items-center flex-row justify-between mx-4`}>
           <ArrowBtn

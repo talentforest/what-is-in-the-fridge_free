@@ -3,8 +3,8 @@ import { FoodLocation } from '../../constant/fridgeInfo';
 import { FormStep } from '../../constant/formInfo';
 import { useAddFood } from '../../hooks';
 import { initialFridgeFood, initialPantryFood } from '../../constant/foodInfo';
-import { PlatformIOS } from '../../constant/statusBarHeight';
 import { useSelector } from '../../redux/hook';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
@@ -35,6 +35,8 @@ export default function AddFoodModal({
     foodLocation,
   });
 
+  const insets = useSafeAreaInsets();
+
   return (
     <Modal
       title='새로운 식료품 추가'
@@ -45,7 +47,11 @@ export default function AddFoodModal({
       }}
       overlapped={!!expiredDateModal}
     >
-      <View style={tw`bg-stone-100 pb-${PlatformIOS ? '12' : '6'}`}>
+      <View
+        style={tw.style(`bg-stone-100`, {
+          paddingBottom: insets?.bottom + 12,
+        })}
+      >
         <Form
           title='새로운 식료품 추가'
           editableName={true}

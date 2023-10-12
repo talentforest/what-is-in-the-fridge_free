@@ -41,7 +41,7 @@ export default function FoodBox({ food }: Props) {
         backgroundColor: searchActive ? '#dcd3ff' : '#fff',
         transform: [{ translateY }],
         opacity,
-        ...shadowStyle(10),
+        ...shadowStyle(3),
       }}
     >
       <View

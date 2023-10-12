@@ -35,7 +35,7 @@ export default function IOSFridge() {
             `${FRIDGE_COLOR} border 
             ${routeFridgeSetting ? '' : 'p-0.8'}
             ${freezer === 'top' ? '' : 'flex-col-reverse'} 
-            ${side === '문쪽' ? 'w-[42.5%]' : 'w-[45%]'}
+            ${side === '문쪽' ? 'w-[42%]' : 'w-[43%]'}
             rounded-${side.includes('문쪽') ? 'r' : 'l'}-lg`,
             side === '문쪽' ? transformStyle : {},
             shadowStyle(8)
@@ -44,12 +44,13 @@ export default function IOSFridge() {
           {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (
             <TouchableOpacity
               key={space}
+              disabled={routeFridgeSetting}
               onPress={() => {
                 Keyboard.dismiss();
                 navigation.navigate('Compartments', { space });
               }}
               style={tw`${space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'}
-              ${routeFridgeSetting ? 'p-0.8' : 'p-1.2'}`}
+              ${routeFridgeSetting ? 'p-1' : 'p-1.2'}`}
             >
               {/* 나의 냉장고 정보 */}
               {!routeFridgeSetting && (

@@ -40,14 +40,13 @@ export const useSubmitFoodsFromInput = () => {
 
       Alert.alert(title, msg, [
         {
-          text: '저장',
+          text: '확인',
           onPress: () => {
             dispatch(addFavorite(findFood(inputValue) as Food));
             setInputValue('');
           },
           style: 'default',
         },
-        { text: '취소', style: 'destructive' },
       ]);
     } else {
       dispatch(

@@ -94,9 +94,10 @@ export default function DateNumInputModal({
             closeModal();
           }}
           style={tw.style(
-            `bg-blue-600 h-10 w-full flex-row items-center justify-center gap-1.5 rounded-lg`,
+            `bg-blue-600 h-12 w-full flex-row items-center justify-center gap-1.5 rounded-lg`,
             shadowStyle(3)
           )}
+          activeOpacity={0.9}
         >
           <Icon
             name='check-circle-outline'

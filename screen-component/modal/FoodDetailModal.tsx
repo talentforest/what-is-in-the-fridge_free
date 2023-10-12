@@ -11,8 +11,8 @@ import {
   useSlideAnimation,
 } from '../../hooks';
 import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
-import { PlatformIOS } from '../../constant/statusBarHeight';
 import { comma } from '../../util/commaNotation';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import InfoBox from '../../components/modal/InfoBox';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
@@ -56,6 +56,8 @@ export default function FoodDetailModal({
     memo,
   } = editedFood;
 
+  const insets = useSafeAreaInsets();
+
   const { deleteFood } = useDeleteFood({ space, setModalVisible });
 
   const { isFavoriteItem } = useFindFood();
@@ -79,8 +81,9 @@ export default function FoodDetailModal({
       isVisible={modalVisible}
     >
       <View
-        style={tw`${editing ? 'bg-stone-100' : 'bg-white'} 
-        pb-${PlatformIOS ? '12' : '6'}`}
+        style={tw.style(`${editing ? 'bg-stone-100' : 'bg-white'}`, {
+          paddingBottom: insets?.bottom + 12,
+        })}
       >
         {editing ? (
           <Animated.View style={{ minHeight: height, overflow: 'hidden' }}>

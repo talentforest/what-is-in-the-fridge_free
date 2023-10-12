@@ -7,7 +7,6 @@ import {
   View,
 } from 'react-native';
 import { DEVICE_HEIGHT } from '../../util';
-import { PlatformIOS } from '../../constant/statusBarHeight';
 import { CompartmentNum } from '../../constant/fridgeInfo';
 
 import RNModal from 'react-native-modal';
@@ -79,7 +78,7 @@ export default function Modal({
       <KeyboardAvoidingView
         enabled={!overlapped}
         behavior='padding'
-        keyboardVerticalOffset={!PlatformIOS ? -140 : -170}
+        keyboardVerticalOffset={-140}
       >
         <View style={tw.style(`max-h-[${MODAL_HEIGHT}px] rounded-2xl`)}>
           <SwipeHeader
