@@ -23,6 +23,7 @@ interface Props {
 
 export default function SpaceItem({ food, changeInfo }: Props) {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
+  const { selectedFood } = useSelector((state) => state.selectedFood);
 
   const spaceType = food.space.slice(0, 3);
   const spaceSide = food.space.slice(4, 6);
@@ -49,12 +50,15 @@ export default function SpaceItem({ food, changeInfo }: Props) {
     changeInfo({ compartmentNum });
   };
 
-  const onTabPress = (space: FoodStorageType) => {
-    if (isPantryFood(food.space) && isPantryFood(space)) return;
-    if (isFridgeFood(food.space) && isFridgeFood(space)) return;
+  const onTabPress = (storage: FoodStorageType) => {
+    if (isPantryFood(food.space) && isPantryFood(storage)) return;
+    if (isFridgeFood(food.space) && isFridgeFood(storage)) return;
 
-    return space === '냉장고'
-      ? changeInfo({ space: '냉장실 안쪽', compartmentNum: '1번' })
+    return storage === '냉장고'
+      ? changeInfo({
+          space: selectedFood.space,
+          compartmentNum: selectedFood.compartmentNum || '1번',
+        })
       : changeInfo({ space: '팬트리' });
   };
 
@@ -87,7 +91,7 @@ export default function SpaceItem({ food, changeInfo }: Props) {
 
       {food.space !== '팬트리' && (
         <View>
-          <View style={tw`flex-row gap-5`}>
+          <View style={tw`flex-row gap-4`}>
             {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
               <View key={spaceType} style={tw`py-1.5`}>
                 <CheckBoxItem
@@ -102,7 +106,7 @@ export default function SpaceItem({ food, changeInfo }: Props) {
             ))}
           </View>
 
-          <View style={tw`flex-row gap-5`}>
+          <View style={tw`flex-row gap-4 border-b border-t border-slate-300`}>
             {(['안쪽', '문쪽'] as SpaceSide[]).map((spaceSide) => (
               <View key={spaceSide} style={tw`py-1.5`}>
                 <CheckBoxItem
@@ -116,7 +120,7 @@ export default function SpaceItem({ food, changeInfo }: Props) {
             ))}
           </View>
 
-          <View style={tw`flex-row flex-wrap gap-x-5 gap-y-2`}>
+          <View style={tw`flex-row flex-wrap gap-x-4`}>
             {compartments.map(({ compartmentNum }) => (
               <View key={compartmentNum} style={tw`py-1.5`}>
                 <CheckBoxItem
