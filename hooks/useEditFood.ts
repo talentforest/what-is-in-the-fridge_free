@@ -49,7 +49,7 @@ export const useEditFood = () => {
     return space.includes('냉장실') || space.includes('냉동실');
   };
 
-  const checkSameSpace = (originSpace: Space, newSpace: Space) => {
+  const checkSameStorage = (originSpace: Space, newSpace: Space) => {
     const sameFridge = fridgeFood(originSpace) && fridgeFood(newSpace);
     const samePantry = !fridgeFood(originSpace) && !fridgeFood(newSpace);
     return samePantry || sameFridge;
@@ -71,9 +71,8 @@ export const useEditFood = () => {
 
     if (isFavoriteItem(editedFood.name)) dispatch(editFavorite(editedFood));
 
-    // 냉장고에서 냉장고, 팬트리에서 팬트리 이동시
     const originSpace = selectedFood.space;
-    if (checkSameSpace(originSpace, newSpace)) {
+    if (checkSameStorage(originSpace, newSpace)) {
       dispatch(
         newSpace === '팬트리'
           ? editPantryFood({ foodId, editedFood })
@@ -89,16 +88,22 @@ export const useEditFood = () => {
         dispatch(addToPantry(editedFood));
       }
     }
+    // 위치가 변경된 경우에만
+    if (
+      originSpace !== newSpace ||
+      selectedFood?.compartmentNum !== editedFood?.compartmentNum
+    ) {
+      dispatch(search(editedFood.name));
+    }
 
     setEditing(false);
     setModalVisible(false);
-    dispatch(search(editedFood.name));
 
     const {
       moveStorage: { title, msg },
     } = alertPhraseWithFood(editedFood);
 
-    if (originSpace.slice(0, 3) !== newSpace.slice(0, 3))
+    if (originSpace !== newSpace)
       return Alert.alert(title, msg, [
         {
           text: '취소',
