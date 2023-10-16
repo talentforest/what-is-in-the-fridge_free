@@ -1,15 +1,16 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/common/native-component';
-import { Animated, Image, Platform, View } from 'react-native';
+import { Animated, Image, View } from 'react-native';
 import { useImageLoad, useSwiperAnimation } from '../hooks';
 import { onboardingSteps } from '../constant/onboardingInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../navigation/Navigation';
-import { FontGmarketSansBold } from '../constant/fonts';
+import { SCDream5 } from '../constant/fonts';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch, useSelector } from '../redux/hook';
 import { toggleOnboarding } from '../redux/slice/onboardingSlice';
 import { DEVICE_WIDTH } from '../util';
+import { PlatformIOS } from '../constant/statusBarHeight';
 
 import StepIndicator from '../components/common/StepIndicator';
 import OnBoardingBtn from '../components/buttons/OnBoardingBtn';
@@ -23,9 +24,18 @@ export default function OnBoarding() {
 
   const { isLoaded, assets, getImgUri } = useImageLoad({
     images: [
-      require('../assets/onboading/iphone13pro-1.png'),
-      require('../assets/onboading/iphone13pro-2.png'),
-      require('../assets/onboading/iphone13pro-3.png'),
+      require('../assets/onboarding/iphone13pro-1.png'),
+      require('../assets/onboarding/iphone13pro-2.png'),
+      require('../assets/onboarding/iphone13pro-3.png'),
+      require('../assets/onboarding/iphone13pro-4.png'),
+      require('../assets/onboarding/iphone13pro-5.png'),
+      require('../assets/onboarding/iphone13pro-6.png'),
+      require('../assets/onboarding/android-1.png'),
+      require('../assets/onboarding/android-2.png'),
+      require('../assets/onboarding/android-3.png'),
+      require('../assets/onboarding/android-4.png'),
+      require('../assets/onboarding/android-5.png'),
+      require('../assets/onboarding/android-6.png'),
     ],
   });
 
@@ -51,84 +61,80 @@ export default function OnBoarding() {
 
   if (!isLoaded) return null;
 
-  const imgWidth = DEVICE_WIDTH * 0.85;
+  const imgWidth = DEVICE_WIDTH * 0.75 > 350 ? 350 : DEVICE_WIDTH * 0.75;
   const lastStep = onboardingSteps.length === currentStep.step;
 
   return (
-    <SafeAreaView edges={['top']} style={tw`bg-blue-100 flex-1`}>
-      <View style={tw`flex-1 pt-8 items-center justify-center`}>
-        {/* 단계 표시 */}
-        <StepIndicator
-          stepLength={onboardingSteps.length}
-          currentStepId={currentStep.step}
-        />
+    <View style={tw`flex-1`}>
+      <SafeAreaView edges={['top', 'bottom']} style={tw`bg-blue-100 flex-1`}>
+        <View style={tw`flex-1 pt-8 gap-6 items-center justify-center`}>
+          {/* 단계 표시 */}
+          <StepIndicator
+            stepLength={onboardingSteps.length}
+            currentStepId={currentStep.step}
+          />
 
-        {/* 스와이프 화면들 */}
-        <Animated.View
-          style={{
-            flex: 1,
-            width: DEVICE_WIDTH,
-            transform: [{ translateX: stepTranslateX }],
-          }}
-          {...panResponder.panHandlers}
-        >
-          <View style={tw`flex-row flex-1`}>
-            {onboardingSteps.map(({ step, desc, image }) => (
-              <View key={step} style={tw`w-full items-center`}>
-                {/* 문구 */}
-                <View style={tw`mt-8 mb-3 gap-1 items-center justify-center`}>
-                  <Text
-                    style={tw.style(
-                      `text-[18px] text-slate-800`,
-                      FontGmarketSansBold
-                    )}
-                  >
-                    {desc.split(', ')[0]}
-                  </Text>
-                  <Text
-                    style={tw.style(
-                      `text-[18px] text-slate-800`,
-                      FontGmarketSansBold
-                    )}
-                  >
-                    {desc.split(', ')[1]}
-                  </Text>
-                </View>
-
-                {/* 이미지 */}
-                {assets && (
-                  <View
-                    style={tw.style(
-                      `h-[${imgWidth * 2}px] w-[${imgWidth}px] 
-                      overflow-hidden mt-6 items-center rounded-[45px]`
-                    )}
-                  >
-                    <Image
-                      source={{ uri: getImgUri(image) }}
-                      style={{ width: imgWidth, height: imgWidth * 2 }}
-                    />
-                  </View>
-                )}
-              </View>
-            ))}
-          </View>
-        </Animated.View>
-
-        {/* 들어가기 버튼 */}
-        {lastStep && (
-          <LinearGradient
-            colors={['rgba(256,256,256,0)', '#c9dbfc', '#9abdfc', '#68adfd']}
-            style={tw.style(
-              `absolute bottom-0 w-full h-[30%] justify-end items-center pb-15 px-8`
-            )}
+          {/* 스와이프 화면들 */}
+          <Animated.View
+            style={{
+              flex: 1,
+              width: DEVICE_WIDTH,
+              transform: [{ translateX: stepTranslateX }],
+            }}
+            {...panResponder.panHandlers}
           >
-            <OnBoardingBtn
-              name={lastStep ? '들어가기' : '다음'}
-              onPress={completeOnboarding}
-            />
-          </LinearGradient>
-        )}
-      </View>
-    </SafeAreaView>
+            <View style={tw`flex-row flex-1 items-center`}>
+              {onboardingSteps.map(({ step, desc, image }) => (
+                <View
+                  key={step}
+                  style={tw`w-full items-center justify-between gap-5`}
+                >
+                  {/* 문구 */}
+                  <View style={tw`items-center`}>
+                    <Text style={tw.style(`text-slate-800`, SCDream5)}>
+                      {desc.split(', ')[0]}
+                    </Text>
+                    <Text style={tw.style(`text-slate-800`, SCDream5)}>
+                      {desc.split(', ')[1]}
+                    </Text>
+                  </View>
+
+                  {/* 이미지 */}
+                  {assets && (
+                    <View
+                      style={tw.style(
+                        `h-[${imgWidth * 2.1}px] w-[${imgWidth}px]
+                      overflow-hidden justify-between`
+                      )}
+                    >
+                      <Image
+                        source={{ uri: getImgUri(image) }}
+                        style={{
+                          width: imgWidth,
+                          height: PlatformIOS ? imgWidth * 2 : imgWidth * 2.1,
+                        }}
+                      />
+                    </View>
+                  )}
+                </View>
+              ))}
+            </View>
+          </Animated.View>
+        </View>
+      </SafeAreaView>
+      {/* 들어가기 버튼 */}
+      {lastStep && (
+        <LinearGradient
+          colors={['rgba(256,256,256,0)', '#c9dbfc', '#9abdfc', '#68adfd']}
+          style={tw.style(
+            `absolute bottom-0 w-full h-[20%] justify-end items-center pb-10 px-8`
+          )}
+        >
+          {lastStep && (
+            <OnBoardingBtn name='시작하기' onPress={completeOnboarding} />
+          )}
+        </LinearGradient>
+      )}
+    </View>
   );
 }
