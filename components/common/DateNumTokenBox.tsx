@@ -14,7 +14,9 @@ interface Props {
   expiredDate: string;
   dateToken: string[];
   setDateToken: (tokens: string[]) => void;
-  setInValidDate: (valid: React.SetStateAction<DateState>) => void;
+  setInValidDate: (
+    valid: React.Dispatch<React.SetStateAction<DateState>>
+  ) => void;
 }
 
 export default function DateNumTokenBox({
@@ -63,7 +65,7 @@ export default function DateNumTokenBox({
       setDateToken(updatedDateToken);
       moveFocus('prev', index);
     }
-    setInValidDate((prev: DateState) => ({ ...prev, state: 'ok' }));
+    setInValidDate((prev) => ({ ...prev, state: 'ok' }));
   };
 
   const onChangeText = (text: string, index: number) => {

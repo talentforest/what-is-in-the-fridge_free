@@ -34,7 +34,7 @@ export const useSlideAnimation = ({
     } else {
       animatedSlide(initialValue);
     }
-  }, [active, initialValue]);
+  }, [active, initialValue, toValue]);
 
   const interpolatedOpacity = height.interpolate({
     inputRange: [0, initialValue],

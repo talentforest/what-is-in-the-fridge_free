@@ -16,6 +16,7 @@ interface Props {
   fixedCategory: Category;
   changeInfo: (newInfo: { [key: string]: string }) => void;
   title: ModalTitle;
+  noneBackdrop?: boolean;
 }
 
 export default function CategoryItem({
@@ -23,6 +24,7 @@ export default function CategoryItem({
   fixedCategory,
   changeInfo,
   title,
+  noneBackdrop,
 }: Props) {
   const [categoryOpen, setCategoryOpen] = useState(false);
 
@@ -62,6 +64,7 @@ export default function CategoryItem({
       </TouchableOpacity>
 
       <CategoryModal
+        noneBackdrop={noneBackdrop || false}
         modalVisible={categoryOpen}
         setModalVisible={setCategoryOpen}
         currentChecked={fixedCategory}

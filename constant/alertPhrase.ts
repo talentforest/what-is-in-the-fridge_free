@@ -1,7 +1,12 @@
 import { Food } from './foodInfo';
-import { CompartmentNum } from './fridgeInfo';
+import { CompartmentNum, Space } from './fridgeInfo';
 
-type PhraseObjKey = 'excess' | 'noName' | 'wrongDate' | 'noMemo';
+type PhraseObjKey =
+  | 'excess'
+  | 'noName'
+  | 'wrongDate'
+  | 'noMemo'
+  | 'alreadyExist';
 
 type PhraseFnKey =
   | 'exist'
@@ -16,7 +21,8 @@ type PhraseWithCheckListKey =
   | 'deleteExpiredFoods'
   | 'deletePantryFoods'
   | 'deleteFromShoppingList'
-  | 'addToShoppingList';
+  | 'addToShoppingList'
+  | 'confirmAddAll';
 
 type AlertPhraseObj = {
   [key in PhraseObjKey]: {
@@ -32,10 +38,12 @@ type AlertPhraseFn = (food: Food) => {
   };
 };
 
+export const MAX_NUM_ADD_AT_ONCE = 8;
+
 export const alertPhrase: AlertPhraseObj = {
   excess: {
     title: '식료품 개수 초과',
-    msg: '공간당 최대 10개의 식료품을 넣을 수 있습니다.',
+    msg: `최대 ${MAX_NUM_ADD_AT_ONCE}개까지 한번에 추가할 수 있어요.`,
   },
   noName: {
     title: '식료품 이름 미작성',
@@ -48,6 +56,10 @@ export const alertPhrase: AlertPhraseObj = {
   noMemo: {
     title: '메모 미작성',
     msg: '메모가 작성되지 않았어요. 작성하지 않는다면 생략하기 버튼을 눌러주세요',
+  },
+  alreadyExist: {
+    title: '이미 존재하는 식료품 알림',
+    msg: '이미 냉장고나 팬트리에 존재하는 식료품은 한번에 추가할 수 없어요. 선택을 해제해주세요.',
   },
 };
 
@@ -103,39 +115,60 @@ export const alertPhraseDeleteCompartment: (compartmentNum: CompartmentNum) => {
   };
 };
 
+const convertNameList = (list: Food[]) =>
+  list.map((food) => food.name).join(', ');
+
+const getNameList = (list: Food[]) => {
+  const nameList = convertNameList(list.slice(0, 8));
+  return list.length > 8 ? `${nameList} 등...` : nameList;
+};
+
+const getPosition = (space: Space, compartmentNum?: CompartmentNum) => {
+  return compartmentNum && space !== '팬트리'
+    ? `${space} ${compartmentNum}칸`
+    : space;
+};
+
 export const alertPhraseWithCheckList: (food: Food[]) => {
   [key in PhraseWithCheckListKey]: {
     title: string;
     msg: string;
   };
 } = (checkedList: Food[]) => {
-  const checkedFoodNameList =
-    checkedList.length > 8
-      ? `${checkedList
-          .map((food) => food.name)
-          .slice(0, 8)
-          .join(', ')} 등...`
-      : checkedList.map((food) => food.name).join(', ');
+  const nameList = getNameList(checkedList);
+  const listLength = checkedList.length;
 
   const unSettingFavoriteFoods = {
     title: '자주 먹는 식료품 해제',
-    msg: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 자주 먹는 식료품에서 해제하시겠어요?`,
+    msg: `총 ${listLength}개의 식료품(${nameList})을 자주 먹는 식료품에서 해제하시겠어요?`,
   };
+
   const deleteExpiredFoods = {
     title: '소비기한 주의 식료품 삭제',
-    msg: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 삭제하시겠어요? 냉장고나 팬트리에서도 삭제돼요.`,
+    msg: `총 ${listLength}개의 식료품(${nameList})을 삭제하시겠어요? 냉장고나 팬트리 공간에서도 삭제돼요.`,
   };
+
   const deletePantryFoods = {
     title: '팬트리 식료품 삭제',
-    msg: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 팬트리 목록에서 삭제하시겠어요?`,
+    msg: `총 ${listLength}개의 식료품(${nameList})을 팬트리 목록에서 삭제하시겠어요?`,
   };
+
   const deleteFromShoppingList = {
     title: '장보기 식료품 삭제',
-    msg: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})을 장보기 목록에서 삭제하시겠어요?`,
+    msg: `총 ${listLength}개의 식료품(${nameList})을 장보기 목록에서 삭제하시겠어요?`,
   };
+
   const addToShoppingList = {
     title: '장보기 목록 추가',
-    msg: `총 ${checkedList.length}개의 식료품(${checkedFoodNameList})이 장보기 목록에 추가되었어요. 바로 장보기 목록으로 이동하시겠어요?`,
+    msg: `총 ${listLength}개의 식료품(${nameList})이 장보기 목록에 추가되었어요. 바로 장보기 목록으로 이동하시겠어요?`,
+  };
+
+  const confirmAddAll = {
+    title: '식료품 한번에 추가',
+    msg: `총 ${listLength}개의 식료품을 ${getPosition(
+      checkedList[0]?.space,
+      checkedList[0]?.compartmentNum
+    )}에 추가하시겠어요?`,
   };
 
   return {
@@ -144,5 +177,6 @@ export const alertPhraseWithCheckList: (food: Food[]) => {
     deletePantryFoods,
     deleteFromShoppingList,
     addToShoppingList,
+    confirmAddAll,
   };
 };

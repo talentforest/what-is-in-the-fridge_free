@@ -27,6 +27,12 @@ const shoppingListSlice = createSlice({
         (item) => item.name !== action.payload.name
       );
     },
+    removeShoppingListFoods: (state, action: { payload: Food[] }) => {
+      const filteredShoppingListFood = state.shoppingList.filter(
+        (food) => !action.payload.some((newFood) => newFood.name === food.name)
+      );
+      state.shoppingList = filteredShoppingListFood;
+    },
   },
 });
 
@@ -37,6 +43,7 @@ export const {
   addItemsToShoppingList,
   addToShoppingList,
   removeFromShoppingList,
+  removeShoppingListFoods,
 } = shoppingListSlice.actions;
 
 export default shoppingListReducer;

@@ -35,6 +35,9 @@ const fridgeFoodsSlice = createSlice({
     setAllFridgeFoods: (state, action: { payload: Food[] }) => {
       state.fridgeFoods = action.payload;
     },
+    addFridgeFoods: (state, action: { payload: Food[] }) => {
+      state.fridgeFoods = [...state.fridgeFoods, ...action.payload];
+    },
     addFridgeFood: (state, action: { payload: Food }) => {
       state.fridgeFoods = [...state.fridgeFoods, action.payload];
     },
@@ -60,6 +63,7 @@ const { reducer: fridgeFoodsReducer } = fridgeFoodsSlice;
 export const {
   setAllFridgeFoods,
   addFridgeFood,
+  addFridgeFoods,
   removeFridgeFood,
   editFridgeFood,
 } = fridgeFoodsSlice.actions;

@@ -25,7 +25,9 @@ export type ModalTitle =
   | `${CompartmentNum}칸`
   | '카테고리 선택'
   | '소비기한 설정'
-  | '구매날짜 설정';
+  | '구매날짜 설정'
+  | '한번에 추가할 공간'
+  | '추가할 식료품 정보';
 
 interface Props {
   isVisible: boolean;

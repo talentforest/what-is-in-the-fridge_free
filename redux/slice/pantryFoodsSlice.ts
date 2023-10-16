@@ -35,6 +35,12 @@ const pantryFoodsSlice = createSlice({
     setPantry: (state, action: { payload: Food[] }) => {
       state.pantryFoods = deduplicate([...action.payload]);
     },
+    addPantryFoods: (state, action: { payload: Food[] }) => {
+      state.pantryFoods = deduplicate([
+        ...state.pantryFoods,
+        ...action.payload,
+      ]);
+    },
     addToPantry: (state, action: { payload: Food }) => {
       if ('compartmentNum' in action.payload) {
         const { compartmentNum, ...newFood } = action.payload;
@@ -74,6 +80,7 @@ const { reducer: pantryFoodsReducer } = pantryFoodsSlice;
 export const {
   setPantry,
   addToPantry,
+  addPantryFoods,
   removePantryFood, //
   editPantryFood,
 } = pantryFoodsSlice.actions;

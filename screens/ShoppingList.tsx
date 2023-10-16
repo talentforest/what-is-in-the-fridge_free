@@ -3,32 +3,40 @@ import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
 } from '../components/common/native-component';
-import { useSelector } from '../redux/hook';
-import { Keyboard } from 'react-native';
+import { useDispatch, useSelector } from '../redux/hook';
+import { Alert, Keyboard } from 'react-native';
 import {
+  useFindFood,
   useHandleCheckList,
   useHandleTableItem,
   useSetAnimationState,
   useSubmitFoodsFromInput,
 } from '../hooks';
 import { formFourSteps } from '../constant/formInfo';
+import { MAX_NUM_ADD_AT_ONCE, alertPhrase } from '../constant/alertPhrase';
+import { selectNone } from '../redux/slice/selectedFoodSlice';
 
 import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
 import Container from '../components/common/Container';
-import TableRecommendedFoods from '../components/table/TableRecommendedFoods';
 import TableBody from '../components/table/TableBody';
 import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
+import AddAtOnceModal from '../screen-component/modal/AddAtOnceModal';
 
 export default function ShoppingList() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [addAtOnceModal, setAddAtOnceModal] = useState(false);
   const [keyword, setKeyword] = useState('');
   const { shoppingList } = useSelector((state) => state.shoppingList);
 
-  const { checkedList, setCheckedList, onEntireBoxPress, onCheckBoxPress } =
-    useHandleCheckList();
+  const {
+    checkedList,
+    setCheckedList,
+    onEntireBoxPress,
+    onCheckBoxPress, //
+  } = useHandleCheckList();
 
   const { onDeleteFoodPress, onAddToFridgePress } = useHandleTableItem({
     checkedList,
@@ -36,8 +44,11 @@ export default function ShoppingList() {
     setModalVisible,
   });
 
-  const { animationState, setAnimationState, afterAnimation } =
-    useSetAnimationState();
+  const {
+    animationState,
+    setAnimationState,
+    afterAnimation, //
+  } = useSetAnimationState();
 
   const { onSubmitShoppingListItem } = useSubmitFoodsFromInput();
 
@@ -47,7 +58,38 @@ export default function ShoppingList() {
     setKeyword('');
   };
 
+  const { findFood } = useFindFood();
+
+  const dispatch = useDispatch();
+
   const allChecked = checkedList.length === shoppingList.length;
+
+  const onAddAtOnceBtnPress = () => {
+    const alreadyItemExist = checkedList.some((food) => findFood(food.name));
+
+    if (alreadyItemExist) {
+      const {
+        alreadyExist: { title, msg },
+      } = alertPhrase;
+      Alert.alert(title, msg);
+      return;
+    }
+
+    if (checkedList.length > MAX_NUM_ADD_AT_ONCE) {
+      const {
+        excess: { title, msg },
+      } = alertPhrase;
+      Alert.alert(title, msg);
+      return;
+    }
+
+    dispatch(selectNone());
+    setAddAtOnceModal(true);
+  };
+
+  const onDeleteBtnPress = () => {
+    onDeleteFoodPress(setAnimationState, animationState, shoppingList);
+  };
 
   return (
     <KeyboardAvoidingView>
@@ -72,25 +114,19 @@ export default function ShoppingList() {
               onEntirePress={() => onEntireBoxPress(shoppingList)}
             >
               <SquareIconBtn
+                btnName='한번에 추가'
+                icon='shape-square-rounded-plus'
+                disabled={checkedList.length === 0}
+                onPress={onAddAtOnceBtnPress}
+              />
+              <SquareIconBtn
+                btnName='삭제'
                 icon='trash-can'
                 disabled={checkedList.length === 0}
-                onPress={() => {
-                  onDeleteFoodPress(
-                    setAnimationState,
-                    animationState,
-                    shoppingList
-                  );
-                }}
+                onPress={onDeleteBtnPress}
               />
             </TableSelectedHandleBox>
 
-            <TableRecommendedFoods
-              active={!!checkedList.length}
-              keyword={keyword}
-              setKeyword={setKeyword}
-              onSubmitShoppingListItem={onSubmitShoppingListItem}
-              setAnimationState={setAnimationState}
-            />
             <TextInputRoundedBox
               value={keyword}
               setValue={setKeyword}
@@ -106,6 +142,13 @@ export default function ShoppingList() {
             setModalVisible={setModalVisible}
             setCheckedList={setCheckedList}
             formSteps={formFourSteps}
+          />
+
+          <AddAtOnceModal
+            checkedList={checkedList}
+            setCheckedList={setCheckedList}
+            modalVisible={addAtOnceModal}
+            setModalVisible={setAddAtOnceModal}
           />
         </Container>
       </SafeBottomAreaView>

@@ -12,11 +12,14 @@ const selectedFoodSlice = createSlice({
     select: (state, action: { payload: Food }) => {
       state.selectedFood = action.payload;
     },
+    selectNone: (state) => {
+      state.selectedFood = initialFridgeFood;
+    },
   },
 });
 
 const { reducer: selectedFoodReducer } = selectedFoodSlice;
 
-export const { select } = selectedFoodSlice.actions;
+export const { select, selectNone } = selectedFoodSlice.actions;
 
 export default selectedFoodReducer;

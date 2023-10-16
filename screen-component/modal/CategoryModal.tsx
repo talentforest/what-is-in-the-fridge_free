@@ -11,6 +11,7 @@ interface Props {
   setModalVisible: (modalVisible: boolean) => void;
   currentChecked?: string;
   onCheckBoxPress?: (category: Category) => void;
+  noneBackdrop?: boolean;
 }
 
 export default function CategoryModal({
@@ -18,6 +19,7 @@ export default function CategoryModal({
   setModalVisible,
   currentChecked,
   onCheckBoxPress,
+  noneBackdrop,
 }: Props) {
   const { isLoaded, assets } = useImageLoad({
     images: [
@@ -52,6 +54,7 @@ export default function CategoryModal({
       isVisible={modalVisible}
       closeModal={() => setModalVisible(false)}
       animationIn='fadeIn'
+      hasBackdrop={!noneBackdrop}
     >
       <View style={tw`p-3 rounded-b-2xl bg-white`}>
         {onCheckBoxPress && assets && (

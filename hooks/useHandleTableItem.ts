@@ -17,6 +17,7 @@ import {
   alertPhraseWithFood,
 } from '../constant/alertPhrase';
 import { NavigateProp } from '../navigation/Navigation';
+import { validFoodObj } from '../util/validFoodObj';
 
 interface Props {
   checkedList: Food[];
