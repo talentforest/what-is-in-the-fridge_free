@@ -52,7 +52,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
 
   return (
     <View>
-      <View style={tw`mb-5`}>
+      <View style={tw`mb-3`}>
         <FormLabel label='소비기한' />
 
         <TouchableOpacity
@@ -83,17 +83,18 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
         </View>
       </View>
 
-      {getDiffDate(date) >= 0 && (
-        <MessageBox
-          color='gray'
-          message={`${
-            getRelativeTime(date) === '오늘'
-              ? '오늘까지'
-              : `${getRelativeTime(date)}까지`
-          } 섭취할 수 있습니다.`}
-        />
-      )}
-
+      <View style={tw`h-6.5`}>
+        {getDiffDate(date) >= 0 && (
+          <MessageBox
+            color='gray'
+            message={`${
+              getRelativeTime(date) === '오늘'
+                ? '오늘까지'
+                : `${getRelativeTime(date)}까지`
+            } 섭취할 수 있습니다.`}
+          />
+        )}
+      </View>
       {/* 날짜 숫자 입력 모달 */}
       {expiredDateModal && (
         <DateNumInputModal

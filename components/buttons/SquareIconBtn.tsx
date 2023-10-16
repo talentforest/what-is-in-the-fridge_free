@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { BLUE } from '../../constant/colors';
 import { shadowStyle } from '../../constant/shadowStyle';
-import { TouchableOpacity } from '../common/native-component';
+import { Text, TouchableOpacity } from '../common/native-component';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
@@ -10,9 +10,15 @@ interface Props {
   onPress: () => void;
   disabled: boolean;
   icon: string;
+  btnName: '삭제' | '한번에 추가' | '장보기 추가' | '해제';
 }
 
-export default function SquareIconBtn({ onPress, disabled, icon }: Props) {
+export default function SquareIconBtn({
+  onPress,
+  disabled,
+  icon,
+  btnName,
+}: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -22,13 +28,14 @@ export default function SquareIconBtn({ onPress, disabled, icon }: Props) {
         shadowStyle(4)
       )}
     >
-      <View style={tw`p-3`}>
+      <View style={tw`px-3 py-2 flex-row items-center gap-1`}>
         <Icon
           type='MaterialCommunityIcons'
           name={icon}
-          size={22}
+          size={18}
           color={icon.includes('plus') ? BLUE : 'amber'}
         />
+        <Text style={tw`text-[15px]`}>{btnName}</Text>
       </View>
     </TouchableOpacity>
   );

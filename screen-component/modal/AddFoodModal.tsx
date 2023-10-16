@@ -62,6 +62,7 @@ export default function AddFoodModal({
 
         <View style={tw`mx-6`}>
           <SubmitBtn
+            iconName='plus'
             color='blue'
             btnName='식료품 추가하기'
             onPress={() => {

@@ -79,7 +79,15 @@ export default function Form({
                   )}
                   {name === '위치' && (
                     <FormSectionContainer>
-                      <SpaceItem food={food} changeInfo={changeInfo} />
+                      <SpaceItem
+                        food={food}
+                        changeInfo={changeInfo}
+                        label={
+                          title === '식료품 정보 수정'
+                            ? '식료품 위치 수정'
+                            : '추가할 식료품의 위치'
+                        }
+                      />
                     </FormSectionContainer>
                   )}
                   {name === '소비기한' && (

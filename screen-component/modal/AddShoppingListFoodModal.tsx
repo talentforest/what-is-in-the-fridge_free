@@ -46,6 +46,7 @@ export default function AddShoppingListFoodModal({
 
         <View style={tw`mx-6`}>
           <SubmitBtn
+            iconName='plus'
             btnName='식료품 추가하기'
             onPress={() => onSubmit(setModalVisible, setCheckedList)}
             color='blue'

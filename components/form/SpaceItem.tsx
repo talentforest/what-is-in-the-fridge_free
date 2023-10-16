@@ -5,12 +5,13 @@ import { useSelector } from '../../redux/hook';
 import { Text, TouchableOpacity } from '../common/native-component';
 import {
   CompartmentNum,
-  FoodStorageType,
+  StorageType,
   Space,
   SpaceSide,
   SpaceType,
 } from '../../constant/fridgeInfo';
 import { isFridgeFood, isPantryFood } from '../../util/checkFoodSpace';
+import { FormLabelType } from '../../constant/formInfo';
 
 import CheckBoxItem from '../common/CheckBoxItem';
 import FormLabel from './FormLabel';
@@ -19,9 +20,10 @@ import tw from 'twrnc';
 interface Props {
   food: Food;
   changeInfo: (newInfo: { [key: string]: string | boolean }) => void;
+  label: FormLabelType;
 }
 
-export default function SpaceItem({ food, changeInfo }: Props) {
+export default function SpaceItem({ food, changeInfo, label }: Props) {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { selectedFood } = useSelector((state) => state.selectedFood);
 
@@ -50,13 +52,16 @@ export default function SpaceItem({ food, changeInfo }: Props) {
     changeInfo({ compartmentNum });
   };
 
-  const onTabPress = (storage: FoodStorageType) => {
+  const onTabPress = (storage: StorageType) => {
     if (isPantryFood(food.space) && isPantryFood(storage)) return;
     if (isFridgeFood(food.space) && isFridgeFood(storage)) return;
 
     return storage === '냉장고'
       ? changeInfo({
-          space: selectedFood.space,
+          space:
+            selectedFood.space === '팬트리'
+              ? '냉장실 안쪽'
+              : selectedFood.space,
           compartmentNum: selectedFood.compartmentNum || '1번',
         })
       : changeInfo({ space: '팬트리' });
@@ -64,11 +69,11 @@ export default function SpaceItem({ food, changeInfo }: Props) {
 
   return (
     <View>
-      <FormLabel label='추가할 식료품의 위치' />
+      <FormLabel label={label} />
       <View style={tw`flex-row items-center`}>
         {['냉장고', '팬트리'].map((storage) => (
           <TouchableOpacity
-            onPress={() => onTabPress(storage as FoodStorageType)}
+            onPress={() => onTabPress(storage as StorageType)}
             key={storage}
             style={tw`border-b-[3px] ${
               food.space.includes(storage.slice(0, 1))

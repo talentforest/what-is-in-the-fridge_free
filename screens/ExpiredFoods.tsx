@@ -73,11 +73,13 @@ export default function ExpiredFoods() {
             onEntirePress={() => onEntireBoxPress(filteredList)}
           >
             <SquareIconBtn
+              btnName='장보기 추가'
               icon='basket-plus'
               disabled={checkedList.length === 0}
               onPress={onAddShoppingListBtnPress}
             />
             <SquareIconBtn
+              btnName='삭제'
               onPress={() =>
                 onDeleteExpiredFoodPress(setAnimationState, animationState)
               }

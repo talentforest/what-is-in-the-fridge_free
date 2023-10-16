@@ -96,7 +96,7 @@ export default function FoodDetailModal({
             <View style={tw`mx-6 mt-2`}>
               <SubmitBtn
                 color='blue'
-                iconName='checkbox-marked-outline'
+                iconName='check-square'
                 btnName='식료품 정보 수정 완료'
                 onPress={() => onEditSumbit(id, setModalVisible)}
               />
@@ -165,13 +165,13 @@ export default function FoodDetailModal({
               <View style={tw`gap-1 mt-3`}>
                 <SubmitBtn
                   color='blue'
-                  iconName='pencil'
+                  iconName='edit'
                   btnName='식료품 정보 수정'
                   onPress={() => setEditing((prev) => !prev)}
                 />
                 <SubmitBtn
                   color='gray'
-                  iconName='trash-can'
+                  iconName='trash-2'
                   btnName={`${
                     space === '팬트리' ? '팬트리에서' : '냉장고에서'
                   } 식료품 삭제`}

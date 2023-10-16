@@ -30,7 +30,7 @@ export default function ControlDateBtn({ btn, changeDate, date }: Props) {
         color={btn.btnColor}
       />
 
-      <Text style={tw`text-white text-${btn.btnColor}-700 text-sm`}>
+      <Text style={tw`-ml-0.5 text-white text-${btn.btnColor}-700 text-sm`}>
         {btn.label}
       </Text>
     </TouchableOpacity>

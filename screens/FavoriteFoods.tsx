@@ -120,6 +120,13 @@ export default function FavoriteFoods() {
               onEntirePress={() => onEntireBoxPress(filteredList)}
             >
               <SquareIconBtn
+                btnName='장보기 추가'
+                icon='basket-plus'
+                disabled={checkedList.length === 0}
+                onPress={onAddShoppingListBtnPress}
+              />
+              <SquareIconBtn
+                btnName='해제'
                 icon='tag-minus'
                 disabled={checkedList.length === 0}
                 onPress={() =>
@@ -129,11 +136,6 @@ export default function FavoriteFoods() {
                     favoriteFoods
                   )
                 }
-              />
-              <SquareIconBtn
-                icon='basket-plus'
-                disabled={checkedList.length === 0}
-                onPress={onAddShoppingListBtnPress}
               />
             </TableSelectedHandleBox>
 

@@ -95,7 +95,7 @@ export default function TableBody({
           />
         </View>
       ) : (
-        <View style={tw`pt-24 flex-1 border-t -mx-4 border-slate-300`}>
+        <View style={tw`pt-24 flex-1 -mx-4`}>
           <EmptySign
             message={
               title === '장보기 식료품' || filter === '전체'
