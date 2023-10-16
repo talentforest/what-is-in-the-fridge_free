@@ -3,8 +3,11 @@ import { Text, TouchableOpacity } from '../common/native-component';
 import { Food, initialFridgeFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
 import { AnimationState, useFindFood, useSlideAnimation } from '../../hooks';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { NavigateProp } from '../../navigation/Navigation';
+import { useDispatch } from '../../redux/hook';
+import { search } from '../../redux/slice/searchedFoodSlice';
 
 import CheckBox from '../common/CheckBox';
 import IndicatorExist from '../common/IndicatorExist';
@@ -29,8 +32,12 @@ export default function TableItem({
   animationState,
   afterAnimation,
 }: Props) {
+  const navigation = useNavigation<NavigateProp>();
   const route = useRoute();
+
   const shoppingListRoute = route.name === 'ShoppingList';
+  const dispatch = useDispatch();
+
   const { findFood } = useFindFood();
   const existItemTag = shoppingListRoute && findFood(food.name);
 
@@ -95,9 +102,17 @@ export default function TableItem({
           </Text>
 
           {existItemTag && (
-            <View style={tw`w-11 ml-2`}>
-              <IndicatorExist name={food.name} roundedBorder />
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                dispatch(search(food.name));
+                return food.space === '팬트리'
+                  ? navigation.navigate('PantryFoods')
+                  : navigation.navigate('Compartments', { space: food.space });
+              }}
+              style={tw`w-15 ml-2`}
+            >
+              <IndicatorExist name={food.name} roundedBorder navigate />
+            </TouchableOpacity>
           )}
         </View>
 
