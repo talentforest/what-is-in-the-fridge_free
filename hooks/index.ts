@@ -9,7 +9,6 @@ export * from './useHandleCheckList';
 export * from './useHandleCompartments';
 export * from './useHandleTableItem';
 export * from './useImageLoad';
-export * from './useFindCompartmentNum';
 export * from './useHandleFilter';
 
 // 애니메이션
