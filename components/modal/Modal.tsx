@@ -50,7 +50,7 @@ export default function Modal({
   hasBackdrop = true,
   overlapped,
 }: Props) {
-  const MODAL_HEIGHT = DEVICE_HEIGHT * 0.83;
+  const MODAL_HEIGHT = DEVICE_HEIGHT * 0.9;
 
   const positionStyle =
     animationIn !== 'fadeIn'

@@ -99,7 +99,7 @@ export default function Form({
                     </FormSectionContainer>
                   )}
                   {name === '선택정보' && (
-                    <View style={tw`w-full gap-3 py-2 px-6`}>
+                    <View style={tw`w-full gap-2 py-2 px-6`}>
                       <PurchaseDateItem
                         date={food.purchaseDate}
                         changeInfo={changeInfo}

@@ -65,15 +65,16 @@ export const useAddShoppingListFood = () => {
     if (isFavoriteItem(selectedFood.name)) dispatch(editFavorite(selectedFood));
 
     dispatch(
-      selectedFood.compartmentNum
-        ? addFridgeFood(selectedFood)
-        : addToPantry(selectedFood)
+      selectedFood.space === '팬트리'
+        ? addToPantry(selectedFood)
+        : addFridgeFood(selectedFood)
     );
     dispatch(removeFromShoppingList({ name: selectedFood.name }));
 
-    const position = selectedFood.compartmentNum
-      ? `${space} ${selectedFood.compartmentNum}`
-      : `${space}`;
+    const position =
+      selectedFood.space === '팬트리'
+        ? `${space}`
+        : `${space} ${selectedFood.compartmentNum}`;
 
     const { successAdd } = alertPhraseWithFood(selectedFood);
     Alert.alert(successAdd.title, `${position}에 추가되었어요.`);
