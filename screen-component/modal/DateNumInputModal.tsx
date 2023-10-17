@@ -18,7 +18,6 @@ export type DateType = '년' | '월' | '일';
 interface Props {
   closeModal: () => void;
   isVisible: boolean;
-  expiredDate: string;
   changeInfo: (newInfo: { [key: string]: string }) => void;
 }
 
@@ -30,7 +29,6 @@ export type DateState = {
 export default function DateNumInputModal({
   closeModal,
   isVisible,
-  expiredDate,
   changeInfo,
 }: Props) {
   const [dateToken, setDateToken] = useState(['', '', '', '', '', '']);
@@ -60,12 +58,13 @@ export default function DateNumInputModal({
       animationIn='fadeIn'
     >
       <View
-        style={tw`bg-white h-[${DEVICE_HEIGHT * 0.25}px] 
-        rounded-b-xl gap-2 px-4 py-7 items-center justify-center`}
+        style={tw`bg-white h-[${DEVICE_HEIGHT * 0.22}px] 
+        rounded-b-xl p-4 items-center justify-center`}
       >
-        <View style={tw`flex-row gap-2 w-full items-center justify-center`}>
+        <View
+          style={tw`flex-1 flex-row gap-2 w-full items-center justify-center`}
+        >
           <DateNumTokenBox
-            expiredDate={expiredDate}
             dateToken={dateToken}
             setDateToken={setDateToken}
             setInValidDate={setInValidDate}

@@ -6,21 +6,17 @@ import {
   DateType,
 } from '../../screen-component/modal/DateNumInputModal';
 import { Text } from './native-component';
-import { DEVICE_WIDTH, getDateToken } from '../../util';
+import { DEVICE_WIDTH, formattedToday, getDateToken } from '../../util';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 import tw from 'twrnc';
 
 interface Props {
-  expiredDate: string;
   dateToken: string[];
   setDateToken: (tokens: string[]) => void;
-  setInValidDate: (
-    valid: React.Dispatch<React.SetStateAction<DateState>>
-  ) => void;
+  setInValidDate: React.Dispatch<React.SetStateAction<DateState>>;
 }
 
 export default function DateNumTokenBox({
-  expiredDate,
   dateToken,
   setDateToken,
   setInValidDate,
@@ -103,7 +99,7 @@ export default function DateNumTokenBox({
               <TextInput
                 allowFontScaling={false}
                 ref={(element: TextInput) => setRef(element, idx)}
-                placeholder={getDateToken(expiredDate)[idx]}
+                placeholder={getDateToken(formattedToday)[idx]}
                 placeholderTextColor='#d4d4d4'
                 keyboardType='number-pad'
                 maxLength={1}

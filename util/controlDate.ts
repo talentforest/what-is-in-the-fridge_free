@@ -1,3 +1,5 @@
+import { formattedToday } from './getDate';
+
 export type Operator = 'add' | 'minus';
 
 export const controlDay = (operator: Operator, date: Date) => {

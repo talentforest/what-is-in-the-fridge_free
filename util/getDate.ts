@@ -25,9 +25,10 @@ dayjs.extend(relativeTime, config);
 dayjs.locale('ko');
 dayjs.extend(updateLocale);
 
+export const formattedToday = dayjs().format('YYYY-MM-DD');
+
 export const getDiffDate = (date: string) => {
-  const today = dayjs().format('YYYY-MM-DD');
-  const diffDate = dayjs(date).diff(today, 'day');
+  const diffDate = dayjs(date).diff(formattedToday, 'day');
   return diffDate;
 };
 
@@ -44,7 +45,9 @@ export const getRelativeTime = (date: string | Date) => {
       return '내일';
 
     default:
-      return dayjs(date).add(1, 'day').fromNow();
+      return diff < 0
+        ? dayjs(date).fromNow()
+        : dayjs(date).add(1, 'day').fromNow();
   }
 };
 
