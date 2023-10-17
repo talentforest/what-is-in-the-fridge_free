@@ -31,7 +31,7 @@ export default function EditingBox({
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: favoriteFood ? 290 : 340,
+    toValue: favoriteFood ? 310 : 340,
     active: isEditing,
   });
 

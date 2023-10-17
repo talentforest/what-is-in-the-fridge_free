@@ -61,7 +61,7 @@ export default function OnBoarding() {
 
   if (!isLoaded) return null;
 
-  const imgWidth = DEVICE_WIDTH * 0.75 > 350 ? 350 : DEVICE_WIDTH * 0.75;
+  const imgWidth = DEVICE_WIDTH * 0.75 > 350 ? 350 : DEVICE_WIDTH * 0.65;
   const lastStep = onboardingSteps.length === currentStep.step;
 
   return (

@@ -22,7 +22,7 @@ export default function CurrentPositionBox({
 }: Props) {
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 44,
+    toValue: 46,
     active,
   });
 
@@ -53,10 +53,10 @@ export default function CurrentPositionBox({
           {onBackPress && (
             <TouchableOpacity
               onPress={onBackPress}
-              style={tw`flex-row items-center gap-1 px-3 rounded-full bg-slate-100 border border-slate-300`}
+              style={tw`flex-row items-center gap-1 px-3 py-1 rounded-full bg-slate-100 border border-slate-300`}
             >
               <Icon name='rotate-ccw' type='Feather' size={11} color={GRAY} />
-              <Text style={tw`text-[12px] py-0 text-slate-600`}>
+              <Text style={tw`text-[12px] text-slate-600 py-0`}>
                 공간 다시 선택
               </Text>
             </TouchableOpacity>
