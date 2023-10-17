@@ -39,7 +39,7 @@ export default function TableItem({
   const dispatch = useDispatch();
 
   const { findFood } = useFindFood();
-  const existItemTag = shoppingListRoute && findFood(food.name);
+  const existFood = shoppingListRoute && findFood(food.name);
 
   const slideDownIn = animationState === 'slidedown-in';
   const slideUpOut = animationState === 'slideup-out';
@@ -65,7 +65,7 @@ export default function TableItem({
     space,
   };
 
-  const existTagColor = existItemTag ? 'text-slate-400' : 'text-slate-800';
+  const existTagColor = existFood ? 'text-slate-400' : 'text-slate-800';
   const textColor = isCheckedItem ? 'text-blue-600' : existTagColor;
 
   return (
@@ -101,13 +101,15 @@ export default function TableItem({
             {initializedFood.name}
           </Text>
 
-          {existItemTag && (
+          {existFood && (
             <TouchableOpacity
               onPress={() => {
                 dispatch(search(food.name));
-                return food.space === '팬트리'
+                return existFood.space === '팬트리'
                   ? navigation.navigate('PantryFoods')
-                  : navigation.navigate('Compartments', { space: food.space });
+                  : navigation.navigate('Compartments', {
+                      space: existFood.space,
+                    });
               }}
               style={tw`w-15 ml-2`}
             >
