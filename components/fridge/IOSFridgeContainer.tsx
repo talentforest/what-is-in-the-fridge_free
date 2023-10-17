@@ -35,16 +35,16 @@ export default function IOSFridgeContainer({
         {/* 탑 문쪽 */}
         <View
           style={tw.style(
-            `${
+            `rounded-t-md w-[49%] ${
               routeFridgeSetting
-                ? '-bottom-5 h-[32%] w-[50%]'
-                : '-bottom-2 w-[50%] h-[26%]'
-            } -right-1 rounded-t-md  absolute border ${FRIDGE_COLOR}`,
+                ? '-bottom-5 h-[32%]'
+                : '-bottom-2 h-[35%] rounded-tr-xl'
+            } -right-1 absolute border ${FRIDGE_COLOR}`,
             {
               transform: [
                 { skewX: '-50deg' },
-                { skewY: '6deg' },
-                { translateX: routeFridgeSetting ? 0 : 3 },
+                { skewY: '5deg' },
+                { translateX: routeFridgeSetting ? -2 : 0 },
               ],
             }
           )}
@@ -80,7 +80,7 @@ export default function IOSFridgeContainer({
             {
               transform: [
                 { skewY: '-33deg' },
-                { translateY: routeFridgeSetting ? 4 : 13 },
+                { translateY: routeFridgeSetting ? 4 : 7 },
               ],
             }
           )}

@@ -43,10 +43,10 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
           <Icon
             name='information-outline'
             type='MaterialCommunityIcons'
-            size={17}
+            size={15}
             color={GRAY}
           />
-          <Text style={tw`text-slate-600 pt-0.8`}>{space}</Text>
+          <Text style={tw`text-slate-600 text-[15px] pt-0.8`}>{space}</Text>
         </View>
       </View>
 

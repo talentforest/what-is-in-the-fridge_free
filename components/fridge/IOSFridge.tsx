@@ -22,8 +22,19 @@ export default function IOSFridge() {
   const route = useRoute();
   const routeFridgeSetting = route.name === 'FridgeSetting';
 
-  const transformStyle = {
-    transform: [{ skewY: '7deg' }, { translateY: routeFridgeSetting ? 4 : 9 }],
+  const onCompartmentPress = (space: Space) => {
+    Keyboard.dismiss();
+    navigation.navigate('Compartments', { space });
+  };
+
+  const doorTransformStyle = {
+    transform: [{ skewY: '5deg' }, { translateY: routeFridgeSetting ? 3 : 6 }],
+  };
+
+  const sideStyle = (side: SpaceSide) => {
+    return `${FRIDGE_COLOR} ${routeFridgeSetting ? '' : 'p-0.8'}
+      ${freezer === 'top' ? '' : 'flex-col-reverse'} border
+      ${side === '문쪽' ? 'w-[42%] rounded-r-lg' : 'w-[43%] rounded-l-lg'}`;
   };
 
   return (
@@ -32,23 +43,16 @@ export default function IOSFridge() {
         <View
           key={side}
           style={tw.style(
-            `${FRIDGE_COLOR} border 
-            ${routeFridgeSetting ? '' : 'p-0.8'}
-            ${freezer === 'top' ? '' : 'flex-col-reverse'} 
-            ${side === '문쪽' ? 'w-[42%]' : 'w-[43%]'}
-            rounded-${side.includes('문쪽') ? 'r' : 'l'}-lg`,
-            side === '문쪽' ? transformStyle : {},
-            shadowStyle(8)
+            sideStyle(side),
+            shadowStyle(8),
+            side === '문쪽' ? doorTransformStyle : {}
           )}
         >
           {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map((space) => (
             <TouchableOpacity
               key={space}
               disabled={routeFridgeSetting}
-              onPress={() => {
-                Keyboard.dismiss();
-                navigation.navigate('Compartments', { space });
-              }}
+              onPress={() => onCompartmentPress(space)}
               style={tw`${space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'}
               ${routeFridgeSetting ? 'p-1' : 'p-1.2'}`}
             >
