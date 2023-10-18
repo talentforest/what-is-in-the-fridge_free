@@ -71,7 +71,7 @@ export default function SearchFoodSection() {
           style={tw`absolute top-3 left-3`}
           disabled={keyword === ''}
         >
-          <Icon name='search' type='Ionicons' size={20} />
+          <Icon name='search' type='Feather' size={20} />
         </TouchableOpacity>
       </View>
       <Animated.View

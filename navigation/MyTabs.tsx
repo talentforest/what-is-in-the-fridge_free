@@ -88,7 +88,9 @@ export default function MyTabs() {
         name='MyFridge'
         component={MyFridge}
         options={{
-          tabBarIcon: ({ color }) => <TabIcon name='fridge' color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabIcon name='fridge-outline' color={color} />
+          ),
           tabBarLabel: '나의 냉장고',
           headerTitle: () => headerTitle('나의 냉장고'),
           ...headerOptions,
@@ -98,9 +100,7 @@ export default function MyTabs() {
         name='PantryFoods'
         component={PantryFoods}
         options={{
-          tabBarIcon: ({ color }) => (
-            <TabIcon name='inbox-multiple' color={color} />
-          ),
+          tabBarIcon: ({ color }) => <TabIcon name='box' color={color} />,
           tabBarLabel: '나의 팬트리',
           headerTitle: () => headerTitle('나의 팬트리'),
           title: '나의 팬트리',
@@ -114,10 +114,10 @@ export default function MyTabs() {
 export function TabIcon({ name, color }: { name: string; color: string }) {
   return (
     <Icon
-      type={name === 'home' ? 'Ionicons' : 'MaterialCommunityIcons'}
+      type={name === 'fridge-outline' ? 'MaterialCommunityIcons' : 'Feather'}
       name={name}
       color={color}
-      size={15}
+      size={name === 'fridge-outline' ? 17 : 15}
     />
   );
 }

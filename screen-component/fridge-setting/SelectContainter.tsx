@@ -21,7 +21,7 @@ export default function SelectContainter({ title, children }: Props) {
   return (
     <View style={tw`mb-8`}>
       <View style={tw`flex-row items-center gap-1 pb-0.5`}>
-        <Icon name='settings-outline' type='Ionicons' color={GRAY} size={14} />
+        <Icon name='settings' type='Feather' color={GRAY} size={13} />
         <Text style={tw`text-slate-600 text-sm`}>{title}</Text>
       </View>
 

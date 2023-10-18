@@ -24,18 +24,10 @@ export default function FormStepHeader({ formSteps, currentStep }: Props) {
             />
           )}
           <View style={tw`flex-row items-center gap-0.5`}>
-            <Icon
-              name={`numeric-${step}-box-multiple${
-                currentStep.step === step ? '' : '-outline'
-              }`}
-              type='MaterialCommunityIcons'
-              size={14}
-              color={currentStep.step === step ? 'amber' : '#999999'}
-            />
             <Text
               style={tw`${
                 currentStep.step === step ? 'text-amber-600' : 'text-slate-500'
-              } text-[13px]`}
+              } text-[13px] pl-0.3`}
             >
               {name}
             </Text>

@@ -5,7 +5,6 @@ import {
 } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
 import { DEEP_GRAY, HEADER_BGCOLOR } from '../constant/colors';
-import { Text } from '../components/common/native-component';
 
 import MyTabs, { RootTabParamList } from './MyTabs';
 import Compartments from '../screens/Compartments';
@@ -42,12 +41,7 @@ const options: NativeStackNavigationOptions = {
   },
   headerTitleAlign: 'center',
   headerLeft: () => (
-    <HeaderBtn
-      backBtn
-      type='MaterialCommunityIcons'
-      iconName='chevron-left'
-      size={26}
-    />
+    <HeaderBtn backBtn type='Feather' iconName='chevron-left' size={22} />
   ),
   headerBackVisible: false, // android
   animation: 'slide_from_right',

@@ -23,7 +23,7 @@ export default function CategoryIcon({ category, size, inactive }: Props) {
     <Icon
       name={icon}
       size={size}
-      type={icon === 'pizza' ? 'Ionicons' : 'MaterialCommunityIcons'}
+      type='MaterialCommunityIcons'
       color={inactive ? LIGHT_GRAY : color}
     />
   );

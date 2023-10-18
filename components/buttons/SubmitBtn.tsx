@@ -35,7 +35,7 @@ export default function SubmitBtn({
         {btnName}
       </Text>
       {tailIcon && (
-        <Icon name={tailIcon} type='Ionicons' color='#fff' size={16} />
+        <Icon name={tailIcon} type='Feather' color='#fff' size={18} />
       )}
     </TouchableOpacity>
   );

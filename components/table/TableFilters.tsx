@@ -91,7 +91,7 @@ export default function TableFilters({
           >
             <Icon
               name='chevron-down'
-              type='Ionicons'
+              type='Feather'
               size={14}
               color={!!findCategoryFilter(currentFilter) ? BLUE : GRAY}
             />

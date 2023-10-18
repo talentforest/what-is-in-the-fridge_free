@@ -25,8 +25,8 @@ export default function FormLabel({ label, option, isOpen, onPress }: Props) {
           style={tw`gap-0.5 pl-4 flex-row items-center justify-end`}
         >
           <Icon
-            name={isOpen ? 'chevron-up' : 'add'}
-            type='Ionicons'
+            name={isOpen ? 'chevron-up' : 'plus'}
+            type='Feather'
             size={16}
             color={isOpen ? LIGHT_GRAY : GRAY}
           />

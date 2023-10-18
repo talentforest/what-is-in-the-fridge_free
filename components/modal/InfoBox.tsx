@@ -21,7 +21,7 @@ export default function InfoBox({ label, iconName, children }: Props) {
       }`}
     >
       {/* 표 제목 */}
-      <View style={tw`flex-row gap-0.5 items-center w-22`}>
+      <View style={tw`flex-row gap-1 items-center w-23`}>
         <Icon
           type='MaterialCommunityIcons'
           name={iconName}

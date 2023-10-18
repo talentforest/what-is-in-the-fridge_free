@@ -31,7 +31,7 @@ export default function FridgeInfo({ space, compartments }: Props) {
           >
             {space.slice(0, 3)}
           </Text>
-          <Icon name='caretright' type='AntDesign' size={12} color={GRAY} />
+          <Icon name='chevrons-right' type='Feather' size={20} color={GRAY} />
         </View>
       )}
       <View style={tw`h-full gap-0.7`}>

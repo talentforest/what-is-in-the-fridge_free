@@ -33,7 +33,7 @@ export default function SwipeHeader({ title, closeModal, animationIn }: Props) {
         <View style={tw`pt-4 pb-2 px-5 flex-row justify-between items-center`}>
           <Text style={tw`text-lg`}>{title}</Text>
           <TouchableOpacity style={tw`px-3 -mr-3`} onPress={closeModal}>
-            <Icon type='Ionicons' name='close' size={24} color={GRAY} />
+            <Icon type='Feather' name='x' size={22} color={GRAY} />
           </TouchableOpacity>
         </View>
       )}

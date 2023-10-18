@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { Space } from '../../constant/fridgeInfo';
-import { FontGmarketSansBold, SCDream8 } from '../../constant/fonts';
+import { FontGmarketSansBold } from '../../constant/fonts';
 import { GRAY } from '../../constant/colors';
 import { useGetFoodList } from '../../hooks';
 
@@ -40,13 +40,8 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
         style={tw`border-b border-slate-300 pb-1 mb-2 flex-row justify-between items-center`}
       >
         <View style={tw`flex-row items-center gap-1.5`}>
-          <Icon
-            name='information-outline'
-            type='MaterialCommunityIcons'
-            size={15}
-            color={GRAY}
-          />
-          <Text style={tw`text-slate-600 text-[15px] pt-0.8`}>{space}</Text>
+          <Icon name='info' type='Feather' size={15} color={GRAY} />
+          <Text style={tw`text-slate-600 text-[15px] pt-0.5`}>{space}</Text>
         </View>
       </View>
 

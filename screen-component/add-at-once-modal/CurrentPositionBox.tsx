@@ -4,10 +4,10 @@ import {
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { GRAY, INDIGO } from '../../constant/colors';
-import Icon from '../../components/common/native-component/Icon';
-import tw from 'twrnc';
 import { useSlideAnimation } from '../../hooks';
 import { Animated } from 'react-native';
+import Icon from '../../components/common/native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
   position: string;
@@ -30,12 +30,7 @@ export default function CurrentPositionBox({
     <View>
       {onBackPress && (
         <View style={tw`flex-row items-center gap-1`}>
-          <Icon
-            name='location-sharp'
-            type='Ionicons'
-            size={14}
-            color={INDIGO}
-          />
+          <Icon name='map-pin' type='Feather' size={13} color={INDIGO} />
           <Text style={tw`text-sm text-indigo-600`}>한번에 추가할 공간</Text>
         </View>
       )}

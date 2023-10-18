@@ -69,7 +69,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
           </View>
 
           <View style={tw`h-full items-center justify-center pl-5 pr-1`}>
-            <Icon type='AntDesign' name='calendar' size={17} color={BLUE} />
+            <Icon type='Feather' name='calendar' size={18} color={BLUE} />
           </View>
         </TouchableOpacity>
 

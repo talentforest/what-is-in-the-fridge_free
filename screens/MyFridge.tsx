@@ -18,10 +18,10 @@ export default function MyFridge() {
     navigation.setOptions({
       headerRight: () => (
         <HeaderBtn
-          iconName='cog'
-          type='MaterialCommunityIcons'
+          iconName='settings'
+          type='Feather'
           onPress={() => navigation.navigate('FridgeSetting')}
-          size={20}
+          size={18}
         />
       ),
     });

@@ -28,9 +28,9 @@ export default function SpaceBtn({ onPress, active, btnName, tab }: Props) {
     >
       {tab && (
         <Icon
-          name={btnName === '냉장고' ? 'fridge-outline' : 'inbox'}
-          type='MaterialCommunityIcons'
-          size={16}
+          name={btnName === '냉장고' ? 'fridge-outline' : 'box'}
+          type={btnName === '냉장고' ? 'MaterialCommunityIcons' : 'Feather'}
+          size={btnName === '냉장고' ? 16 : 15}
           color={active ? '#fff' : GRAY}
         />
       )}

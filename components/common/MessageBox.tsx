@@ -13,9 +13,9 @@ export default function MessageBox({ message, color = 'gray' }: Props) {
     <View style={tw`flex-row w-full items-start gap-1`}>
       <View style={tw`mt-1`}>
         <Icon
-          type='Ionicons'
-          name='chatbox-ellipses-outline'
-          size={15}
+          type='MaterialCommunityIcons'
+          name='comment-processing-outline'
+          size={14}
           color={color}
         />
       </View>

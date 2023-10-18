@@ -98,12 +98,7 @@ export default function DateNumInputModal({
           )}
           activeOpacity={0.9}
         >
-          <Icon
-            name='check-circle-outline'
-            type='MaterialCommunityIcons'
-            color='#fff'
-            size={17}
-          />
+          <Icon name='check-square' type='Feather' color='#fff' size={17} />
           <Text style={tw`text-white text-[15px] text-center pt-0.8`}>
             설정 완료
           </Text>

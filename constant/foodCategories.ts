@@ -39,7 +39,7 @@ export const foodCategories: FoodCategory[] = [
     id: 3,
     category: '간편·즉석식품류',
     image: 'category-instant.png',
-    icon: 'pizza',
+    icon: 'hamburger',
     color: '#ff9c11',
   },
   {
@@ -90,7 +90,7 @@ export const foodCategories: FoodCategory[] = [
     id: 10,
     category: '견과·잡곡류·가루',
     image: 'category-powder.png',
-    icon: 'peanut',
+    icon: 'grain',
     color: '#bd8773',
   },
   {
@@ -105,6 +105,6 @@ export const foodCategories: FoodCategory[] = [
     category: '햄·통조림',
     image: 'category-can.png',
     icon: 'hockey-puck',
-    color: '#aaa',
+    color: '#08d9ff',
   },
 ];

@@ -28,7 +28,7 @@ export default function Splash({
     async function prepareApp() {
       try {
         await new Promise((resolve) => setTimeout(resolve, 3000));
-        persistor.purge();
+        // persistor.purge();
       } catch (e) {
         console.warn(e);
       } finally {

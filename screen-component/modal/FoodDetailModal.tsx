@@ -127,12 +127,12 @@ export default function FoodDetailModal({
                   </View>
                 </InfoBox>
 
-                <InfoBox iconName='calendar-month' label='소비기한'>
+                <InfoBox iconName='calendar' label='소비기한'>
                   <LeftDayInfoBox expiredDate={expiredDate} />
                 </InfoBox>
 
                 {purchaseDate !== '' && (
-                  <InfoBox iconName='calendar-month' label='구매날짜'>
+                  <InfoBox iconName='calendar' label='구매날짜'>
                     <Text style={tw`text-slate-800 text-[15px]`}>
                       {getFormattedDate(purchaseDate, 'YY년 MM월 DD일')}
                     </Text>
@@ -140,7 +140,7 @@ export default function FoodDetailModal({
                 )}
 
                 {quantity !== '' && (
-                  <InfoBox iconName='numeric-1-box-outline' label='수량'>
+                  <InfoBox iconName='sort-numeric-ascending' label='수량'>
                     <Text style={tw`text-[15px]`}>{comma(quantity)}</Text>
                   </InfoBox>
                 )}

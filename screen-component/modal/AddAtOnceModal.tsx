@@ -173,7 +173,7 @@ export default function AddAtOnceModal({
                     color='gray'
                     onPress={onNextStepPress}
                     textSize={16}
-                    tailIcon='chevron-forward'
+                    tailIcon='chevron-right'
                   />
                 </View>
               </View>

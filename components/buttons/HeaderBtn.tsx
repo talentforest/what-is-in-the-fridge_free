@@ -6,7 +6,7 @@ import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
-  type?: 'MaterialCommunityIcons' | 'AntDesign' | 'Ionicons' | 'Feather';
+  type?: 'MaterialCommunityIcons' | 'Feather';
   iconName: string;
   size: number;
   onPress?: () => void;
@@ -16,7 +16,7 @@ interface Props {
 export default function HeaderBtn({
   iconName,
   onPress,
-  type = 'Ionicons',
+  type = 'Feather',
   size,
   backBtn,
 }: Props) {
