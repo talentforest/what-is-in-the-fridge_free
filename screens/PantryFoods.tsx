@@ -72,7 +72,6 @@ export default function PantryFoods() {
             scrollViewRef={scrollViewRef}
             title='팬트리'
             foodList={pantryFoods}
-            spaceTotalLength={pantryFoods.length}
             setOpenAddFoodModal={setOpenAddFoodModal}
           >
             {pantryFoods.map((food) => (

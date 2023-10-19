@@ -2,20 +2,17 @@ import { Alert, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { alertPhrase } from '../../constant/alertPhrase';
 import { Food } from '../../constant/foodInfo';
-import { MAX_LIST_LENGTH } from '../../constant/fridgeInfo';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
   title: string;
   foodList: Food[];
-  spaceTotalLength: number;
   setOpenAddFoodModal: (modal: boolean) => void;
 }
 
 export default function CompartmentHeader({
   title,
-  spaceTotalLength,
   foodList,
   setOpenAddFoodModal,
 }: Props) {
@@ -31,14 +28,7 @@ export default function CompartmentHeader({
         </Text>
 
         <TouchableOpacity
-          onPress={() => {
-            if (spaceTotalLength === MAX_LIST_LENGTH)
-              return Alert.alert(
-                alertPhrase.excess.title,
-                alertPhrase.excess.msg
-              );
-            setOpenAddFoodModal(true);
-          }}
+          onPress={() => setOpenAddFoodModal(true)}
           style={tw`px-1 pl-6 border border-stone-50 rounded-md h-full items-center justify-center `}
         >
           <Icon type='MaterialCommunityIcons' name='plus' size={24} />

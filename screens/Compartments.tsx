@@ -55,7 +55,6 @@ export default function Compartments({ route }: Route) {
             <Compartment
               key={compartment.compartmentNum}
               foodLocation={{ ...compartment, space }}
-              foodLengthBySpace={getFoodList('fridgeFoods', space).length}
             />
           ))}
         </CompartmentContainer>

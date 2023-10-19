@@ -16,13 +16,9 @@ import FoodBox from '../../components/common/FoodBox';
 
 interface Props {
   foodLocation: FoodLocation;
-  foodLengthBySpace: number;
 }
 
-export default function Compartment({
-  foodLocation,
-  foodLengthBySpace,
-}: Props) {
+export default function Compartment({ foodLocation }: Props) {
   const { space, compartmentNum } = foodLocation;
   const { searchedFoodName } = useSelector((state) => state.searchedFoodName);
 
@@ -54,7 +50,6 @@ export default function Compartment({
       <CompartmentBox
         title={`${compartmentNum}칸`}
         foodList={getFoodList('fridgeFoods', space, compartmentNum)}
-        spaceTotalLength={foodLengthBySpace}
         setExpandCompartment={setExpandCompartment}
         setOpenAddFoodModal={setOpenAddFoodModal}
         scrollViewRef={scrollViewRef}

@@ -15,5 +15,3 @@ export type FoodLocation = {
   space: Space;
   compartmentNum: CompartmentNum;
 };
-
-export const MAX_LIST_LENGTH = 50;

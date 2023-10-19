@@ -13,7 +13,6 @@ interface Props {
   children: ReactNode;
   title: string;
   foodList: Food[];
-  spaceTotalLength: number;
   setExpandCompartment?: (modal: boolean) => void;
   setOpenAddFoodModal: (modal: boolean) => void;
   scrollViewRef: any;
@@ -22,7 +21,6 @@ interface Props {
 export default function CompartmentBox({
   title,
   foodList,
-  spaceTotalLength,
   children,
   setExpandCompartment,
   setOpenAddFoodModal,
@@ -33,7 +31,6 @@ export default function CompartmentBox({
       <CompartmentHeader
         title={title}
         foodList={foodList}
-        spaceTotalLength={spaceTotalLength}
         setOpenAddFoodModal={setOpenAddFoodModal}
       />
 
