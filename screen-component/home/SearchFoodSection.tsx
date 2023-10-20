@@ -30,8 +30,8 @@ export default function SearchFoodSection() {
   }, 300);
 
   const { height } = useSlideAnimation({
-    initialValue: !!keyword.length && !searchedFoods.length ? 32 : 0,
-    toValue: 100,
+    initialValue: !!keyword.length && !searchedFoods.length ? 60 : 0,
+    toValue: 120,
     active: !!searchedFoods?.length && !!keyword.length,
   });
 
@@ -75,7 +75,11 @@ export default function SearchFoodSection() {
         </TouchableOpacity>
       </View>
       <Animated.View
-        style={{ height, overflow: 'hidden', marginHorizontal: -16 }}
+        style={{
+          height,
+          overflow: 'hidden',
+          marginHorizontal: -16,
+        }}
       >
         {!!searchedFoods?.length ? (
           <Text style={tw`h-8 text-sm text-blue-600 pl-6 pt-2 pb-1`}>

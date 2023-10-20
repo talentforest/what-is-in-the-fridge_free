@@ -21,6 +21,7 @@ import QuantityItem from './QuantityItem';
 import MemoItem from './MemoItem';
 import FormStepHeader from './FormStepHeader';
 import tw from 'twrnc';
+import RNBannerAds from '../Ads/RNBannerAds';
 
 interface Props {
   title: ModalTitle;
@@ -96,10 +97,13 @@ export default function Form({
                         date={food.expiredDate}
                         changeInfo={changeInfo}
                       />
+                      <View style={tw`pt-8 pb-0`}>
+                        <RNBannerAds />
+                      </View>
                     </FormSectionContainer>
                   )}
                   {name === '선택정보' && (
-                    <View style={tw`w-full gap-2 py-2 px-6`}>
+                    <View style={tw`w-full gap-2 py-2 px-6 min-h-50`}>
                       <PurchaseDateItem
                         date={food.purchaseDate}
                         changeInfo={changeInfo}

@@ -15,7 +15,6 @@ import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
-import RNBannerAd from '../components/common/RNBannerAd';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -89,7 +88,6 @@ export default function ExpiredFoods() {
             />
           </TableSelectedHandleBox>
         </TableFooterContainer>
-        <RNBannerAd />
       </Container>
     </SafeBottomAreaView>
   );

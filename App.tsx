@@ -9,6 +9,7 @@ import Navigation from './navigation/Navigation';
 import Splash from './screens/Splash';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
+import AnchoredBannerAd from './components/Ads/AnchoredBannerAd';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -29,6 +30,9 @@ export default function App() {
         <SafeAreaProvider>
           <NavigationContainer>
             <Navigation />
+
+            <AnchoredBannerAd />
+
             <StatusBar style='light' />
           </NavigationContainer>
         </SafeAreaProvider>

@@ -12,7 +12,6 @@ import ExpiredFoodSection from '../screen-component/home/ExpiredFoodSection';
 import FavoriteFoodSection from '../screen-component/home/FavoriteFoodSection';
 import SearchFoodSection from '../screen-component/home/SearchFoodSection';
 import tw from 'twrnc';
-import RNBannerAd from '../components/common/RNBannerAd';
 
 const Home = () => {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
@@ -46,15 +45,10 @@ const Home = () => {
 
           <ShoppingListSection foodList={shoppingList} />
 
-          <RNBannerAd />
-
           <ExpiredFoodSection foodList={allExpiredFoods()} />
 
           <FavoriteFoodSection foodList={favoriteFoods} />
         </Container>
-        <View style={tw`items-center mt-10 mb-2`}>
-          <RNBannerAd />
-        </View>
       </ScrollView>
     </SafeAreaView>
   );

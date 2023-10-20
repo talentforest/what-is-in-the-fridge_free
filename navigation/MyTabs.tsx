@@ -70,7 +70,7 @@ export default function MyTabs() {
         tabBarStyle: {
           borderTopWidth: 1,
           backgroundColor: TAB_BG_COLOR,
-          height: PlatformIOS ? 60 + bottomPadding : 50,
+          height: PlatformIOS ? 60 + bottomPadding : 55,
         },
       }}
     >
