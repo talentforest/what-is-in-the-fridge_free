@@ -15,6 +15,7 @@ import CheckBoxItem from '../components/common/CheckBoxItem';
 import AndroidFridge from '../components/fridge/AndroidFridge';
 import IOSFridge from '../components/fridge/IOSFridge';
 import tw from 'twrnc';
+import RNBannerAd from '../components/common/RNBannerAd';
 
 export default function FridgeSetting() {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
@@ -89,6 +90,8 @@ export default function FridgeSetting() {
               </View>
             ))}
           </SelectContainter>
+
+          <RNBannerAd />
         </ScrollView>
       </Container>
     </SafeBottomAreaView>

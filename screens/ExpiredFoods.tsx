@@ -15,11 +15,8 @@ import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
-import {
-  BannerAd,
-  BannerAdSize,
-  TestIds,
-} from 'react-native-google-mobile-ads';
+import RNBannerAd from '../components/common/RNBannerAd';
+import React from 'react';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -93,6 +90,7 @@ export default function ExpiredFoods() {
             />
           </TableSelectedHandleBox>
         </TableFooterContainer>
+        <RNBannerAd />
       </Container>
     </SafeBottomAreaView>
   );
