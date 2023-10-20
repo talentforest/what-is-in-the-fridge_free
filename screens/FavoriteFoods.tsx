@@ -36,8 +36,7 @@ export default function FavoriteFoods() {
 
   const { isFavoriteItem } = useFindFood();
   const { currentFilter, initializeFilter } = useHandleFilter();
-  const { favoriteFoods, getFilteredFoodList, orderedByExist } =
-    useGetFoodList();
+  const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
   const { onSubmitFavoriteListItem } = useSubmitFoodsFromInput();
 
   const {
@@ -98,6 +97,7 @@ export default function FavoriteFoods() {
             filterList={[entireFilterObj, ...existAbsenceFilters]}
             getTableList={getFilteredFoodList}
             setCheckedList={setCheckedList}
+            setCategory={setCategory}
             foodList={favoriteFoods}
           />
 

@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { Filter, FilterObj } from '../../util';
-import { foodCategories } from '../../constant/foodCategories';
+import { Category, foodCategories } from '../../constant/foodCategories';
 import { useHandleFilter } from '../../hooks';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 
@@ -18,6 +18,7 @@ interface Props {
   foodList: Food[];
   getTableList: (filter: Filter, list: Food[]) => Food[];
   setCheckedList?: (foods: Food[]) => void;
+  setCategory?: (category: Category) => void;
 }
 
 export default function TableFilters({
@@ -25,6 +26,7 @@ export default function TableFilters({
   getTableList,
   foodList,
   setCheckedList,
+  setCategory,
 }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -60,6 +62,7 @@ export default function TableFilters({
 
   const onCategoryFilterPress = (filter: Filter) => {
     onFilterPress(filter, filterList.length);
+    setCategory(filter as Category);
     return setModalVisible((prev) => !prev);
   };
 

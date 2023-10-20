@@ -147,7 +147,6 @@ export const useGetFoodList = () => {
     favoriteFoods,
     pantryFoods,
     allExpiredFoods,
-    orderedByExist,
     getFoodList,
     getFilteredFoodList,
     getExistCategoryList,
