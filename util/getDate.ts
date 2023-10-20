@@ -33,6 +33,8 @@ export const getDiffDate = (date: string) => {
 };
 
 export const getRelativeTime = (date: string | Date) => {
+  if (date === '') return;
+
   const formatDate = dayjs(date).format('YYYY-MM-DD');
   const diff = getDiffDate(formatDate);
 
