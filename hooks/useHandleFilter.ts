@@ -2,7 +2,7 @@ import { useRoute } from '@react-navigation/native';
 import { foodCategories } from '../constant/foodCategories';
 import { useDispatch, useSelector } from '../redux/hook';
 import { changeFilter, changePantryFilter } from '../redux/slice/filterSlice';
-import { Filter } from '../util';
+import { Filter, scrollTo, scrollToEnd } from '../util';
 
 export const useHandleFilter = (scrollViewRef?: any) => {
   const { filter, pantryFilter } = useSelector((state) => state.filter);
@@ -34,17 +34,16 @@ export const useHandleFilter = (scrollViewRef?: any) => {
 
   const scrollToFilter = (
     filter: Filter,
-    filterLength: number,
+    filtersLength: number,
     index: number
   ) => {
-    const offset = index <= 1 ? 0 : filter.length > 6 ? 90 : 180;
-    return index === filterLength - 1
-      ? scrollViewRef.current?.scrollToEnd()
-      : scrollViewRef.current?.scrollTo({
-          x: index * 50 + offset,
-          y: 0,
-          animated: true,
-        });
+    const offset = index <= 1 ? 0 : filter.length > 6 ? 80 : 160;
+    const x = index * 50 + offset;
+    const y = 0;
+
+    return index === filtersLength - 1
+      ? scrollToEnd(scrollViewRef)
+      : scrollTo(scrollViewRef, x, y);
   };
 
   return {

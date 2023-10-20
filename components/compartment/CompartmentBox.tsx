@@ -1,18 +1,23 @@
-import { ScrollView, View } from 'react-native';
+import { LayoutChangeEvent, ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
-import { ReactNode } from 'react';
 import { TouchableOpacity } from '../common/native-component';
 import { LIGHT_BLUE } from '../../constant/colors';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { select } from '../../redux/slice/selectedFoodSlice';
+import { shadowStyle } from '../../constant/shadowStyle';
+import { PlatformIOS } from '../../constant/statusBarHeight';
+import { scrollTo } from '../../util';
 
 import CompartmentHeader from './CompartmentHeader';
 import EmptySign from '../common/EmptySign';
+import FoodBox from '../common/FoodBox';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
-  children: ReactNode;
   title: string;
   foodList: Food[];
+  setOpenFoodDetailModal?: (modal: boolean) => void;
   setExpandCompartment?: (modal: boolean) => void;
   setOpenAddFoodModal: (modal: boolean) => void;
   scrollViewRef: any;
@@ -21,11 +26,23 @@ interface Props {
 export default function CompartmentBox({
   title,
   foodList,
-  children,
+  setOpenFoodDetailModal,
   setExpandCompartment,
   setOpenAddFoodModal,
   scrollViewRef,
 }: Props) {
+  const { searchedFoodName } = useSelector((state) => state.searchedFoodName);
+
+  const dispatch = useDispatch();
+
+  const onItemLayout = (event: LayoutChangeEvent, food: Food) => {
+    if (searchedFoodName === food.name) {
+      const { y } = event.nativeEvent.layout;
+      scrollTo(scrollViewRef, 0, y);
+    }
+    return null;
+  };
+
   return (
     <View style={tw`flex-1 border border-slate-300 bg-white rounded-lg`}>
       <CompartmentHeader
@@ -42,7 +59,23 @@ export default function CompartmentBox({
           contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-12 flex-wrap gap-1.3 items-center`}
           showsVerticalScrollIndicator={false}
         >
-          {children}
+          {foodList.map((food: Food) => (
+            <TouchableOpacity
+              key={food.id}
+              onPress={() => {
+                dispatch(select(food));
+                setOpenFoodDetailModal(true);
+              }}
+              style={{
+                borderRadius: 8,
+                backgroundColor: '#fff',
+                ...shadowStyle(PlatformIOS ? 3 : 4),
+              }}
+              onLayout={(event: LayoutChangeEvent) => onItemLayout(event, food)}
+            >
+              <FoodBox food={food} />
+            </TouchableOpacity>
+          ))}
         </ScrollView>
       ) : (
         <View style={tw`flex-1 flex-row items-center pb-5 justify-center`}>

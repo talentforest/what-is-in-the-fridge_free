@@ -6,7 +6,6 @@ import { EXPIRED_COLOR, LEFT_3_DAYS_COLOR } from './FilterTag';
 import { useHandleFilter, usePulseAnimation } from '../../hooks';
 import { useSelector } from '../../redux/hook';
 
-import { shadowStyle } from '../../constant/shadowStyle';
 import ExpiredExclamation from './ExpiredExclamation';
 import tw from 'twrnc';
 
@@ -41,7 +40,6 @@ export default function FoodBox({ food }: Props) {
         backgroundColor: searchActive ? '#dcd3ff' : '#fff',
         transform: [{ translateY }],
         opacity,
-        ...shadowStyle(3),
       }}
     >
       <View

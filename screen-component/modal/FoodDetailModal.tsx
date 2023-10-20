@@ -2,7 +2,7 @@ import { Animated, View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { useSelector } from '../../redux/hook';
 import { FormStep } from '../../constant/formInfo';
-import { FontGmarketSansBold } from '../../constant/fonts';
+import { SCDream5 } from '../../constant/fonts';
 import { getFormattedDate } from '../../util';
 import {
   useEditFood,
@@ -114,9 +114,7 @@ export default function FoodDetailModal({
                   size={18}
                   color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
                 />
-                <Text style={tw.style(`text-stone-800`, FontGmarketSansBold)}>
-                  {name}
-                </Text>
+                <Text style={tw.style(`text-stone-800`, SCDream5)}>{name}</Text>
               </View>
 
               <View>

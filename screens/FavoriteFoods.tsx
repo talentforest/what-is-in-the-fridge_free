@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { Category } from '../constant/foodCategories';
-import { entireFilterObj, existAbsenceFilters } from '../util';
-import { Animated } from 'react-native';
+import { entireFilterObj, existAbsenceFilters, scrollToIndex } from '../util';
+import { Animated, FlatList } from 'react-native';
 import {
   useHandleTableItem,
   useSlideAnimation,
@@ -33,6 +33,8 @@ export default function FavoriteFoods() {
   const [showCaution, setShowCaution] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [category, setCategory] = useState<Category>('신선식품류');
+
+  const flatListRef = useRef<FlatList | null>(null);
 
   const { isFavoriteItem } = useFindFood();
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -77,6 +79,7 @@ export default function FavoriteFoods() {
       setShowCaution
     );
     setAnimationState('slidedown-in');
+    scrollToIndex(flatListRef, filteredFoodList().length - 1);
   };
 
   const filteredList = getFilteredFoodList(currentFilter, favoriteFoods);
@@ -107,10 +110,10 @@ export default function FavoriteFoods() {
             checkedList={checkedList}
             animationState={animationState}
             filteredList={filteredFoodList()}
-            totalLength={favoriteFoods.length}
             afterAnimation={() =>
               afterAnimation(onDeleteFoodPress, favoriteFoods)
             }
+            flatListRef={flatListRef}
           />
 
           <TableFooterContainer>
@@ -152,6 +155,7 @@ export default function FavoriteFoods() {
                 setCategoryOpen={setCategoryOpen}
               />
             </TextInputRoundedBox>
+
             <Animated.View
               style={{
                 height,

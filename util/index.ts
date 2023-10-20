@@ -14,3 +14,4 @@ export * from './controlDate';
 export * from './getDate';
 export * from './getLeftDays';
 export * from './getDateToken';
+export * from './scroll';

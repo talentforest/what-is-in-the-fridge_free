@@ -4,7 +4,7 @@ import { FlatList, View } from 'react-native';
 import { BLUE } from '../../constant/colors';
 import { AnimationState } from '../../hooks/';
 import { useSelector } from '../../redux/hook';
-import { useEffect, useRef } from 'react';
+import { MutableRefObject } from 'react';
 
 import LeftDay from '../common/LeftDay';
 import TableItem from './TableItem';
@@ -15,32 +15,26 @@ import tw from 'twrnc';
 
 interface Props {
   title: '소비기한 주의 식료품' | '자주 먹는 식료품' | '장보기 식료품';
-  totalLength?: number;
   filteredList: Food[];
+  checkedList: Food[];
   onCheckBoxPress: (food: Food) => void;
   addToFridgePress?: (food: Food) => void;
-  checkedList: Food[];
   animationState: AnimationState;
   afterAnimation: () => void;
+  flatListRef?: MutableRefObject<FlatList>;
 }
 
 export default function TableBody({
   title,
-  totalLength,
   filteredList,
+  checkedList,
   onCheckBoxPress,
   addToFridgePress,
-  checkedList,
   animationState,
   afterAnimation,
+  flatListRef,
 }: Props) {
   const { filter } = useSelector((state) => state.filter);
-  const flatListRef = useRef<FlatList | null>(null);
-
-  useEffect(() => {
-    // 리스트에 아이템이 추가되어 전체 개수가 변할 때만 아래로 자동 스크롤
-    flatListRef?.current?.scrollToEnd({ animated: true });
-  }, [totalLength]);
 
   return (
     <>
@@ -50,7 +44,7 @@ export default function TableBody({
             ref={flatListRef}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={tw`pb-20 px-2`}
+            contentContainerStyle={tw`pb-10 px-2`}
             data={filteredList}
             renderItem={({ item }) => (
               <TableItem

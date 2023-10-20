@@ -1,6 +1,6 @@
-import { FoodStorageType, Space } from '../constant/fridgeInfo';
+import { Space, StorageType } from '../constant/fridgeInfo';
 
-export const isFridgeFood = (space: Space | FoodStorageType) => {
+export const isFridgeFood = (space: Space | StorageType) => {
   return (
     space.includes('냉장실') ||
     space.includes('냉동실') ||
@@ -8,6 +8,6 @@ export const isFridgeFood = (space: Space | FoodStorageType) => {
   );
 };
 
-export const isPantryFood = (space: Space | FoodStorageType) => {
+export const isPantryFood = (space: Space | StorageType) => {
   return space.includes('팬트리');
 };

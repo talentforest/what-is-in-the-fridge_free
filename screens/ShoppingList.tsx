@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { useDispatch, useSelector } from '../redux/hook';
-import { Alert, Keyboard } from 'react-native';
+import { Alert, FlatList, Keyboard } from 'react-native';
 import {
   useFindFood,
   useHandleCheckList,
@@ -15,6 +15,7 @@ import {
 import { formFourSteps } from '../constant/formInfo';
 import { MAX_NUM_ADD_AT_ONCE, alertPhrase } from '../constant/alertPhrase';
 import { selectNone } from '../redux/slice/selectedFoodSlice';
+import { scrollToIndex } from '../util';
 
 import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
 import Container from '../components/common/Container';
@@ -30,6 +31,8 @@ export default function ShoppingList() {
   const [addAtOnceModal, setAddAtOnceModal] = useState(false);
   const [keyword, setKeyword] = useState('');
   const { shoppingList } = useSelector((state) => state.shoppingList);
+
+  const flatListRef = useRef<FlatList | null>(null);
 
   const {
     checkedList,
@@ -52,17 +55,18 @@ export default function ShoppingList() {
 
   const { onSubmitShoppingListItem } = useSubmitFoodsFromInput();
 
-  const onInputSubmit = () => {
-    if (keyword === '') return Keyboard.dismiss();
-    onSubmitShoppingListItem(keyword, setAnimationState);
-    setKeyword('');
-  };
-
   const { findFood } = useFindFood();
 
   const dispatch = useDispatch();
 
   const allChecked = checkedList.length === shoppingList.length;
+
+  const onSubmitEditing = () => {
+    if (keyword === '') return Keyboard.dismiss();
+    onSubmitShoppingListItem(keyword, setAnimationState);
+    setKeyword('');
+    scrollToIndex(flatListRef, shoppingList.length - 1);
+  };
 
   const onAddAtOnceBtnPress = () => {
     const alreadyItemExist = checkedList.some((food) => findFood(food.name));
@@ -98,7 +102,6 @@ export default function ShoppingList() {
           <TableBody
             title='장보기 식료품'
             filteredList={shoppingList}
-            totalLength={shoppingList.length}
             onCheckBoxPress={onCheckBoxPress}
             addToFridgePress={onAddToFridgePress}
             checkedList={checkedList}
@@ -106,6 +109,7 @@ export default function ShoppingList() {
             afterAnimation={() =>
               afterAnimation(onDeleteFoodPress, shoppingList)
             }
+            flatListRef={flatListRef}
           />
           <TableFooterContainer>
             <TableSelectedHandleBox
@@ -131,7 +135,7 @@ export default function ShoppingList() {
               value={keyword}
               setValue={setKeyword}
               placeholder='식료품 이름을 작성해주세요.'
-              onSubmitEditing={onInputSubmit}
+              onSubmitEditing={onSubmitEditing}
               disabled={keyword === ''}
               checkedListLength={checkedList.length}
             />
