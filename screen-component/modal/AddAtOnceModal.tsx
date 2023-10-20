@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { addAtOnceStep } from '../../constant/formInfo';
 import { Text } from '../../components/common/native-component';
-import { INDIGO } from '../../constant/colors';
 import { select, selectNone } from '../../redux/slice/selectedFoodSlice';
 import { alertPhraseWithCheckList } from '../../constant/alertPhrase';
 import { validFoodObj } from '../../util/validFoodObj';
@@ -190,14 +189,13 @@ export default function AddAtOnceModal({
               active={currentStorage !== ''}
             />
 
-            <View style={tw`flex-row items-center mt-3 mb-1 gap-1`}>
+            <View style={tw`flex-row items-center mt-6 mb-1 gap-1`}>
               <Icon
                 name={isEditing ? 'edit' : 'list'}
                 type='Feather'
-                color={INDIGO}
                 size={15}
               />
-              <Text style={tw`text-sm text-indigo-600`}>
+              <Text style={tw`text-sm text-blue-600`}>
                 {!isEditing
                   ? '추가할 식료품 정보 목록'
                   : '선택한 식료품 정보 수정'}

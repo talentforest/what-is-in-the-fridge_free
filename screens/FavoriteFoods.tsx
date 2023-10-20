@@ -155,8 +155,10 @@ export default function FavoriteFoods() {
             <Animated.View
               style={{
                 height,
+                marginTop: -15,
+                marginBottom: 15,
                 opacity: interpolatedOpacity,
-                paddingLeft: 12,
+                paddingLeft: 50,
               }}
             >
               <FormMessage
