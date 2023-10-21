@@ -19,7 +19,6 @@ import CurrentPosition from '../add-at-once-modal/CurrentPositionBox';
 import FoodItem from '../add-at-once-modal/FoodItem';
 import SelectPositionBox from '../add-at-once-modal/SelectPositionBox';
 import EditingBox from '../add-at-once-modal/EditingBox';
-import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
@@ -150,13 +149,12 @@ export default function AddAtOnceModal({
                   btnName={storage}
                   onPress={() => setCurrentStorage(storage)}
                   active={storage == currentStorage}
-                  tab
                 />
               ))}
             </View>
 
             {!!currentStorage && (
-              <View style={tw`mt-2`}>
+              <View style={tw`mt-0.5`}>
                 <View style={tw`gap-1`}>
                   <CurrentPosition position={position} active={true} />
 
@@ -190,12 +188,7 @@ export default function AddAtOnceModal({
             />
 
             <View style={tw`flex-row items-center mt-6 mb-1 gap-1`}>
-              <Icon
-                name={isEditing ? 'edit' : 'list'}
-                type='Feather'
-                size={15}
-              />
-              <Text style={tw`text-sm text-blue-600`}>
+              <Text style={tw`text-sm text-indigo-600`}>
                 {!isEditing
                   ? '추가할 식료품 정보 목록'
                   : '선택한 식료품 정보 수정'}

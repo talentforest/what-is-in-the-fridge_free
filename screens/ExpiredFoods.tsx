@@ -15,6 +15,7 @@ import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
+import AnchoredBannerAd from '../components/Ads/AnchoredBannerAd';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -89,6 +90,9 @@ export default function ExpiredFoods() {
           </TableSelectedHandleBox>
         </TableFooterContainer>
       </Container>
+
+      {/* 광고 */}
+      <AnchoredBannerAd />
     </SafeBottomAreaView>
   );
 }

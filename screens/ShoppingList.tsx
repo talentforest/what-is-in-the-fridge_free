@@ -111,6 +111,7 @@ export default function ShoppingList() {
             }
             flatListRef={flatListRef}
           />
+
           <TableFooterContainer>
             <TableSelectedHandleBox
               list={checkedList}

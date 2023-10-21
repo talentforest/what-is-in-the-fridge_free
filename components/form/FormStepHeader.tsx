@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 import { FormStep } from '../../constant/formInfo';
 import { Text } from '../common/native-component';
-import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
@@ -16,9 +15,9 @@ export default function FormStepHeader({ formSteps, currentStep }: Props) {
         <View key={step} style={tw`flex-row items-center justify-center`}>
           {step !== 1 && (
             <View
-              style={tw`w-5 mx-0 rounded-full border-b-2 ${
+              style={tw`w-5 mx-0 rounded-full border-b ${
                 currentStep.step === step - 1
-                  ? 'border-amber-500'
+                  ? 'border-amber-400'
                   : 'border-slate-300'
               }`}
             />
@@ -26,7 +25,7 @@ export default function FormStepHeader({ formSteps, currentStep }: Props) {
           <View style={tw`flex-row items-center gap-0.5`}>
             <Text
               style={tw`${
-                currentStep.step === step ? 'text-amber-600' : 'text-slate-500'
+                currentStep.step === step ? 'text-amber-500' : 'text-slate-500'
               } text-[13px] pl-0.3`}
             >
               {name}

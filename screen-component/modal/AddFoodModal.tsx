@@ -10,6 +10,7 @@ import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import tw from 'twrnc';
+import AnchoredBannerAd from '../../components/Ads/AnchoredBannerAd';
 
 interface Props {
   modalVisible: boolean;
@@ -47,11 +48,7 @@ export default function AddFoodModal({
       }}
       overlapped={!!expiredDateModal}
     >
-      <View
-        style={tw.style(`bg-stone-100`, {
-          paddingBottom: insets?.bottom + 12,
-        })}
-      >
+      <View style={tw.style(`bg-stone-100`)}>
         <Form
           title='새로운 식료품 추가'
           editableName={true}
@@ -60,7 +57,7 @@ export default function AddFoodModal({
           formSteps={formSteps}
         />
 
-        <View style={tw`mx-6`}>
+        <View style={tw`mx-6 mb-5`}>
           <SubmitBtn
             iconName='plus'
             color='blue'
@@ -70,6 +67,14 @@ export default function AddFoodModal({
               scrollEnd();
             }}
           />
+        </View>
+
+        <View
+          style={{
+            paddingBottom: insets?.bottom,
+          }}
+        >
+          <AnchoredBannerAd />
         </View>
       </View>
     </Modal>

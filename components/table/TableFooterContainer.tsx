@@ -17,7 +17,7 @@ export default function TableFooterContainer({ children, active }: Props) {
       style={tw.style(
         `bg-stone-100 ${
           !routeExpiredFoods || active ? 'border-t border-gray-300' : ''
-        } px-4 -mx-4 -mb-4`,
+        } px-4 -mx-4 -mb-3`,
         {
           shadowColor: '#aaa',
           shadowOpacity: 0.2,

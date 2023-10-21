@@ -7,12 +7,12 @@ import {
 import { getFormattedDate } from '../../util';
 import { Food } from '../../constant/foodInfo';
 
+import { useSlideAnimation } from '../../hooks';
+import { SCDream5 } from '../../constant/fonts';
+import { INDIGO } from '../../constant/colors';
 import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
-import { useSlideAnimation } from '../../hooks';
-import { useSelector } from '../../redux/hook';
-import { SCDream5 } from '../../constant/fonts';
 
 interface Props {
   food: Food;
@@ -45,7 +45,12 @@ export default function FoodItem({
           onPress={() => onFoodItemPress(food)}
         >
           <View style={tw`flex-row flex-1 items-center gap-3`}>
-            <Icon name={isEditing ? 'x' : 'edit'} type='Feather' size={15} />
+            <Icon
+              name={isEditing ? 'x' : 'edit'}
+              type='Feather'
+              size={isEditing ? 16 : 14}
+              color={INDIGO}
+            />
             <Text
               style={tw`text-[15px] flex-1`}
               numberOfLines={1}
