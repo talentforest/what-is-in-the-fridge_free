@@ -24,18 +24,18 @@ export default function OnBoarding() {
 
   const { isLoaded, assets, getImgUri } = useImageLoad({
     images: [
-      require('../assets/onboarding/iphone13pro-1.png'),
-      require('../assets/onboarding/iphone13pro-2.png'),
-      require('../assets/onboarding/iphone13pro-3.png'),
-      require('../assets/onboarding/iphone13pro-4.png'),
-      require('../assets/onboarding/iphone13pro-5.png'),
-      require('../assets/onboarding/iphone13pro-6.png'),
-      require('../assets/onboarding/android-1.png'),
-      require('../assets/onboarding/android-2.png'),
-      require('../assets/onboarding/android-3.png'),
-      require('../assets/onboarding/android-4.png'),
-      require('../assets/onboarding/android-5.png'),
-      require('../assets/onboarding/android-6.png'),
+      require('../assets/onboarding/iphone-compartments.png'),
+      require('../assets/onboarding/iphone-expired-list.png'),
+      require('../assets/onboarding/iphone-favorite-list.png'),
+      require('../assets/onboarding/iphone-food-detail.png'),
+      require('../assets/onboarding/iphone-my-fridge.png'),
+      require('../assets/onboarding/iphone-shopping-list.png'),
+      require('../assets/onboarding/android-compartments.png'),
+      require('../assets/onboarding/android-expired-list.png'),
+      require('../assets/onboarding/android-favorite-list.png'),
+      require('../assets/onboarding/android-food-detail.png'),
+      require('../assets/onboarding/android-my-fridge.png'),
+      require('../assets/onboarding/android-shopping-list.png'),
     ],
   });
 
@@ -67,7 +67,7 @@ export default function OnBoarding() {
   return (
     <View style={tw`flex-1`}>
       <SafeAreaView edges={['top', 'bottom']} style={tw`bg-blue-100 flex-1`}>
-        <View style={tw`flex-1 pt-8 gap-6 items-center justify-center`}>
+        <View style={tw`flex-1 pt-8 gap-3`}>
           {/* 단계 표시 */}
           <StepIndicator
             stepLength={onboardingSteps.length}
