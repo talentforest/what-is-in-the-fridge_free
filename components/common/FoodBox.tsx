@@ -1,8 +1,8 @@
 import { Animated, View } from 'react-native';
 import { Text } from './native-component';
-import { cutLetter, expired, leftThreeDays } from '../../util';
+import { cutLetter, expired, leftThreeDays, leftWeek } from '../../util';
 import { Food } from '../../constant/foodInfo';
-import { EXPIRED_COLOR, LEFT_3_DAYS_COLOR } from './FilterTag';
+import { EXPIRED_COLOR, LEFT_3_DAYS_COLOR, LEFT_WEEK_COLOR } from './FilterTag';
 import { useHandleFilter, usePulseAnimation } from '../../hooks';
 import { useSelector } from '../../redux/hook';
 
@@ -25,6 +25,9 @@ export default function FoodBox({ food }: Props) {
 
     if (currentFilter === '소비기한 3일 이내' && leftThreeDays(expiredDate))
       return LEFT_3_DAYS_COLOR;
+
+    if (currentFilter === '소비기한 일주일 이내' && leftWeek(expiredDate))
+      return LEFT_WEEK_COLOR;
 
     return '';
   };

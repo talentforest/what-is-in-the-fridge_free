@@ -58,7 +58,7 @@ export default function TableFilters({
     changeFilterState(filter);
 
     if (setCheckedList) setCheckedList([]);
-    return scrollToFilter(filter, filterList.length, index);
+    return scrollToFilter(index);
   };
 
   const onCategoryFilterPress = (filter: Filter) => {

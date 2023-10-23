@@ -3,7 +3,7 @@ import { Category, foodCategories } from '../constant/foodCategories';
 import { Food } from '../constant/foodInfo';
 import { CompartmentNum, Space, SpaceType } from '../constant/fridgeInfo';
 import { useSelector } from '../redux/hook';
-import { Filter, expired, getLeftDays, leftThreeDays } from '../util';
+import { Filter, expired, getLeftDays, leftThreeDays, leftWeek } from '../util';
 
 export const useGetFoodList = () => {
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
@@ -35,17 +35,17 @@ export const useGetFoodList = () => {
 
   const allExpiredFoods = (type?: 'fridge' | 'pantry') => {
     const expiredFridgeFoods = fridgeFoods.filter(
-      (food) => getLeftDays(food.expiredDate) < 4
+      (food) => getLeftDays(food.expiredDate) < 8
     );
     const expiredPantryFoods = pantryFoods.filter(
-      (food) => getLeftDays(food.expiredDate) < 4
+      (food) => getLeftDays(food.expiredDate) < 8
     );
     if (type === 'fridge') return orderExpirationDate(expiredFridgeFoods);
     if (type === 'pantry') return orderExpirationDate(expiredPantryFoods);
     return orderExpirationDate([...expiredFridgeFoods, ...expiredPantryFoods]);
   };
 
-  const matchFoodSpace = (
+  const matchSpaceFoods = (
     food: Food,
     space: Space | SpaceType,
     compartmentNum?: CompartmentNum
@@ -68,10 +68,9 @@ export const useGetFoodList = () => {
   ) => {
     const foodList = type === 'fridgeFoods' ? fridgeFoods : allExpiredFoods();
 
-    const filteredFoods = foodList.filter((food) =>
-      matchFoodSpace(food as Food, space, compartmentNum)
+    return foodList.filter((food) =>
+      matchSpaceFoods(food, space, compartmentNum)
     );
-    return filteredFoods;
   };
 
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
@@ -96,6 +95,9 @@ export const useGetFoodList = () => {
 
     if (filter === '소비기한 3일 이내')
       return foodList.filter((food) => leftThreeDays(food.expiredDate));
+
+    if (filter === '소비기한 일주일 이내')
+      return foodList.filter((food) => leftWeek(food.expiredDate));
 
     return foodList.filter((food) => food.category === filter);
   };

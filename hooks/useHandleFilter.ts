@@ -32,16 +32,27 @@ export const useHandleFilter = (scrollViewRef?: any) => {
     }
   };
 
-  const scrollToFilter = (
-    filter: Filter,
-    filtersLength: number,
-    index: number
-  ) => {
-    const offset = index <= 1 ? 0 : filter.length > 6 ? 80 : 160;
-    const x = index * 50 + offset;
+  const scrollToFilter = (index: number) => {
+    const x =
+      index === 0
+        ? 0
+        : index === 1
+        ? 30
+        : index === 2
+        ? 160
+        : index === 3
+        ? 335
+        : index === 4
+        ? 500
+        : index === 5
+        ? 600
+        : index === 6
+        ? 600
+        : 600;
+
     const y = 0;
 
-    return index === filtersLength - 1
+    return index === 7
       ? scrollToEnd(scrollViewRef)
       : scrollTo(scrollViewRef, x, y);
   };
