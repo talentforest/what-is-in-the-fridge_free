@@ -24,12 +24,6 @@ export default function OnBoarding() {
 
   const { isLoaded, assets, getImgUri } = useImageLoad({
     images: [
-      require('../assets/onboarding/iphone-compartments.png'),
-      require('../assets/onboarding/iphone-expired-list.png'),
-      require('../assets/onboarding/iphone-favorite-list.png'),
-      require('../assets/onboarding/iphone-food-detail.png'),
-      require('../assets/onboarding/iphone-my-fridge.png'),
-      require('../assets/onboarding/iphone-shopping-list.png'),
       require('../assets/onboarding/android-compartments.png'),
       require('../assets/onboarding/android-expired-list.png'),
       require('../assets/onboarding/android-favorite-list.png'),
@@ -91,10 +85,14 @@ export default function OnBoarding() {
                 >
                   {/* 문구 */}
                   <View style={tw`items-center`}>
-                    <Text style={tw.style(`text-slate-800`, SCDream5)}>
+                    <Text
+                      style={tw.style(`text-slate-800 text-[15px]`, SCDream5)}
+                    >
                       {desc.split(', ')[0]}
                     </Text>
-                    <Text style={tw.style(`text-slate-800`, SCDream5)}>
+                    <Text
+                      style={tw.style(`text-slate-800 text-[15px]`, SCDream5)}
+                    >
                       {desc.split(', ')[1]}
                     </Text>
                   </View>
