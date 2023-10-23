@@ -13,7 +13,10 @@ npm-debug.*
 *.orig.*
 web-build/
 .env/
+env.d.ts
 .environment/
+
+
 
 
 # macOS

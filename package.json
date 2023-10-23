@@ -25,6 +25,7 @@
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-native": "0.72.6",
+    "react-native-dotenv": "^3.4.9",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-google-mobile-ads": "^12.3.0",
     "react-native-modal": "^13.0.1",
@@ -46,6 +47,7 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.14",
     "@types/react-native-datepicker": "^1.7.1",
+    "@types/react-native-dotenv": "^0.2.1",
     "@types/react-native-vector-icons": "^6.4.13",
     "@types/react-redux": "^7.1.25",
     "typescript": "^5.1.3"
