@@ -50,7 +50,10 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
         {spaceInfo.map(({ name, foodList }) => (
           <View key={name} style={tw`flex-row items-center justify-between`}>
             <Text
-              style={tw`text-[13px] ${getColor(foodList(space).length, name)}`}
+              style={tw.style(
+                `text-[13px] ${getColor(foodList(space).length, name)}`,
+                { letterSpacing: -1 }
+              )}
             >
               {name}
             </Text>

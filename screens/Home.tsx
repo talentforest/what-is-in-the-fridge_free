@@ -38,7 +38,7 @@ const Home = () => {
                 Cafe24Ssurround
               )}
             >
-              냉장고에 뭐가 있지?
+              냉장고에 뭐가 있지
             </Text>
           </View>
 

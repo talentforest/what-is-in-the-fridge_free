@@ -57,7 +57,7 @@ export default function Splash({
           style={{ width: 200, height: 200 }}
         />
       )}
-      <Text style={tw`mt-12 text-xl text-white`}>냉장고에 뭐가 있지?</Text>
+      <Text style={tw`mt-12 text-xl text-white`}>냉장고에 뭐가 있지</Text>
     </View>
   );
 }
