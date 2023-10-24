@@ -66,18 +66,15 @@ export const useSubmitFoodsFromInput = () => {
     setAnimationState: (state: AnimationState) => void
   ) => {
     const { expiredDate, purchaseDate } = initialFridgeFood;
+    const initialFood = { ...initialFridgeFood, id: myUuid as string, name };
+    const isExistFood = { ...findFood(name), expiredDate, purchaseDate };
+    const isFavoriteFood = favoriteFoods.find((food) => food.name === name);
 
     const food = Object.keys(findFood(name) || {}).length
-      ? ({
-          ...findFood(name),
-          expiredDate,
-          purchaseDate,
-        } as Food)
-      : {
-          ...initialFridgeFood,
-          id: myUuid as string,
-          name,
-        };
+      ? isExistFood
+      : isFavoriteFood
+      ? isFavoriteFood
+      : initialFood; //
 
     dispatch(addToShoppingList(food));
     setAnimationState('slidedown-in');

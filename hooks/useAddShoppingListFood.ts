@@ -6,7 +6,6 @@ import {
   removeFridgeFood,
 } from '../redux/slice/fridgeFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
-import { useRoute } from '@react-navigation/native';
 import { addToPantry, removePantryFood } from '../redux/slice/pantryFoodsSlice';
 import { Food } from '../constant/foodInfo';
 import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
@@ -24,37 +23,37 @@ export const useAddShoppingListFood = () => {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
 
   const dispatch = useDispatch();
-  const route = useRoute();
 
   const onChange = (info: { [key: string]: string | boolean }) => {
     dispatch(select({ ...selectedFood, ...info }));
   };
 
+  const allFoods = [...fridgeFoods, ...pantryFoods];
+
+  const existFood = allFoods.find((food) => food.name === selectedFood.name);
+
   const isFavoriteItem = (name: string) =>
     favoriteFoods.find((food) => food.name === name);
+
+  const { wrongDate } = alertPhrase;
 
   const onSubmit = (
     setModalVisible: (visible: boolean) => void,
     setCheckedList: (checkedList: Food[]) => void
   ) => {
+    const { expiredDate, purchaseDate, space } = selectedFood;
+
     // 기존 식료품 삭제
-    const existFood = [...fridgeFoods, ...pantryFoods].find(
-      (food) => food.name === selectedFood.name
-    );
     if (existFood) {
-      if (route.name !== 'ShoppingList') {
-        const { exist } = alertPhraseWithFood(existFood);
-        return Alert.alert(exist.title, exist.msg);
-      }
       existFood.space === '팬트리'
         ? dispatch(removePantryFood({ id: existFood.id }))
         : dispatch(removeFridgeFood({ id: existFood.id }));
     }
 
-    const { expiredDate, purchaseDate, space } = selectedFood;
+    const isWrongDate =
+      new Date(expiredDate).getTime() < new Date(purchaseDate).getTime();
 
-    const { wrongDate } = alertPhrase;
-    if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
+    if (isWrongDate) {
       return Alert.alert(wrongDate.title, wrongDate.msg);
     }
 
@@ -77,6 +76,7 @@ export const useAddShoppingListFood = () => {
         : `${space} ${selectedFood.compartmentNum}`;
 
     const { successAdd } = alertPhraseWithFood(selectedFood);
+
     Alert.alert(successAdd.title, `${position}에 추가되었어요.`);
 
     setModalVisible(false);

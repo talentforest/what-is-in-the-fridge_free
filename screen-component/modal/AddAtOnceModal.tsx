@@ -1,5 +1,9 @@
 import { Alert, View } from 'react-native';
-import { Food } from '../../constant/foodInfo';
+import {
+  Food,
+  initialFridgeFood,
+  initialPantryFood,
+} from '../../constant/foodInfo';
 import { StorageType, Space, CompartmentNum } from '../../constant/fridgeInfo';
 import { useState } from 'react';
 import { useDispatch, useSelector } from '../../redux/hook';
@@ -11,6 +15,7 @@ import { validFoodObj } from '../../util/validFoodObj';
 import { addPantryFoods } from '../../redux/slice/pantryFoodsSlice';
 import { removeShoppingListFoods } from '../../redux/slice/shoppingListSlice';
 import { addFridgeFoods } from '../../redux/slice/fridgeFoodsSlice';
+import { useFindFood } from '../../hooks';
 
 import SpaceBtn from '../../components/buttons/SpaceBtn';
 import Modal from '../../components/modal/Modal';
@@ -45,6 +50,8 @@ export default function AddAtOnceModal({
   const [currentStep, setCurrentStep] = useState(addAtOnceStep[0]);
   const [isEditing, setIsEditing] = useState(false);
 
+  const { isFavoriteItem } = useFindFood();
+
   const getCompartmentNum = (position: Position) => {
     const foodCompartmentNum = +position.slice(7, 8);
     const space = position.slice(0, 6) as Space;
@@ -62,24 +69,37 @@ export default function AddAtOnceModal({
   };
 
   const onBackStepPress = () => {
-    setCurrentStep({
-      step: 1,
-      name: '한번에 추가할 공간',
-    });
+    setCurrentStep({ step: 1, name: '한번에 추가할 공간' });
     dispatch(selectNone());
+    setIsEditing(false);
   };
 
   const onNextStepPress = () => {
     const space = fridgePosition.slice(0, 6);
     const compartmentNum = fridgePosition.slice(-2);
+
     setCheckedList((prev) =>
       prev.map((food) => {
+        const favoriteItem = isFavoriteItem(food.name); // id, category 정보만 필요
+
         return currentStorage === '팬트리'
-          ? validFoodObj({ ...food, space: '팬트리' })
-          : ({ ...food, space, compartmentNum } as Food);
+          ? validFoodObj({
+              ...initialPantryFood,
+              id: favoriteItem?.id || food.id,
+              name: food.name,
+              category: favoriteItem?.category || food.category,
+              space: '팬트리',
+            })
+          : ({
+              ...initialFridgeFood,
+              id: favoriteItem?.id || food.id,
+              name: food.name,
+              category: favoriteItem?.category || food.category,
+              space,
+              compartmentNum,
+            } as Food);
       })
     );
-
     setCurrentStep({ step: 2, name: '추가할 식료품 정보' });
   };
 
@@ -187,7 +207,7 @@ export default function AddAtOnceModal({
               active={currentStorage !== ''}
             />
 
-            <View style={tw`flex-row items-center mt-6 mb-1 gap-1`}>
+            <View style={tw`mt-6 mb-1`}>
               <Text style={tw`text-sm text-indigo-600`}>
                 {!isEditing
                   ? '추가할 식료품 정보 목록'

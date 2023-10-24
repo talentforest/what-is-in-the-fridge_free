@@ -31,14 +31,8 @@ export default function EditingBox({
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: favoriteFood ? 310 : 340,
+    toValue: favoriteFood ? 310 : 390,
     active: isEditing,
-  });
-
-  const { height: msgHeight } = useSlideAnimation({
-    initialValue: 0,
-    toValue: 46,
-    active: !!favoriteFood,
   });
 
   const dispatch = useDispatch();
@@ -69,19 +63,16 @@ export default function EditingBox({
           shadowStyle(3)
         )}
       >
-        <Animated.View
-          style={{
-            height: msgHeight,
-            overflow: 'hidden',
-          }}
-        >
-          <MessageBox
-            message='자주 먹는 식료품은 소비기한 정보만 변경 가능합니다.'
-            color='indigo'
-          />
-        </Animated.View>
+        <MessageBox
+          message={
+            !!isFavoriteItem(selectedFood.name)
+              ? '자주 먹는 식료품은 소비기한 정보만 변경 가능합니다.'
+              : '이곳에서는 소비기한과 카테고리 정보만 변경 가능합니다.'
+          }
+          color='gray'
+        />
 
-        <View style={tw`mb-5 ${favoriteFood ? 'pt-2' : ''} gap-4`}>
+        <View style={tw`mb-5 mt-2 ${favoriteFood ? 'pt-2' : ''} gap-4`}>
           {/* 카테고리 수정 */}
           {!favoriteFood && (
             <CategoryItem

@@ -17,7 +17,7 @@ import {
   alertPhraseWithFood,
 } from '../constant/alertPhrase';
 import { NavigateProp } from '../navigation/Navigation';
-import { validFoodObj } from '../util/validFoodObj';
+import { useFindFood } from './useFindFood';
 
 interface Props {
   checkedList: Food[];
@@ -33,9 +33,12 @@ export const useHandleTableItem = ({
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
 
+  const { isFavoriteItem } = useFindFood();
+
   const navigation = useNavigation<NavigateProp>();
-  const dispatch = useDispatch();
   const route = useRoute();
+
+  const dispatch = useDispatch();
 
   const {
     deleteExpiredFoods,
@@ -114,7 +117,8 @@ export const useHandleTableItem = ({
 
     if (animationState === 'slideup-out' && allTableItems) {
       const filteredCheckItem = allTableItems.filter(
-        (food) => !checkedList.find((checkedFood) => checkedFood.id === food.id)
+        (food) =>
+          !checkedList.find((checkedFood) => checkedFood.name === food.name)
       );
       dispatch(getInfoByRoute(name).fn(filteredCheckItem));
     }
@@ -142,10 +146,10 @@ export const useHandleTableItem = ({
     }
   };
 
+  const allFoods = [...fridgeFoods, ...pantryFoods];
+
   const onAddToFridgePress = (selectedFood: Food) => {
-    const existFood = [...fridgeFoods, ...pantryFoods].find(
-      (food) => food.name === selectedFood.name
-    );
+    const existFood = allFoods.find((food) => food.name === selectedFood.name);
 
     if (existFood) {
       const {
@@ -165,7 +169,12 @@ export const useHandleTableItem = ({
       ]);
     }
 
-    dispatch(select(selectedFood));
+    const favoriteItem = isFavoriteItem(selectedFood.name);
+
+    const food = favoriteItem?.id ? favoriteItem : selectedFood;
+
+    dispatch(select(food));
+
     setModalVisible && setModalVisible(true);
   };
 
