@@ -1,8 +1,7 @@
-import { Alert, View } from 'react-native';
-import { Text, TouchableOpacity } from '../common/native-component';
-import { alertPhrase } from '../../constant/alertPhrase';
+import { View } from 'react-native';
+import { Text } from '../common/native-component';
 import { Food } from '../../constant/foodInfo';
-import Icon from '../common/native-component/Icon';
+import AddIconBtn from '../buttons/AddIconBtn';
 import tw from 'twrnc';
 
 interface Props {
@@ -27,12 +26,7 @@ export default function CompartmentHeader({
           {title} | 식료품 총 {foodList.length}개
         </Text>
 
-        <TouchableOpacity
-          onPress={() => setOpenAddFoodModal(true)}
-          style={tw`px-1 pl-6 border border-stone-50 rounded-md h-full items-center justify-center `}
-        >
-          <Icon type='MaterialCommunityIcons' name='plus' size={24} />
-        </TouchableOpacity>
+        <AddIconBtn onPress={() => setOpenAddFoodModal(true)} />
       </View>
     </View>
   );

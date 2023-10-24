@@ -27,7 +27,7 @@ export default function Splash({
   useEffect(() => {
     async function prepareApp() {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         // persistor.purge();
       } catch (e) {
         console.warn(e);
@@ -54,7 +54,7 @@ export default function Splash({
       {assets && (
         <Image
           source={{ uri: assets[0].localUri as string }}
-          style={{ width: 180, height: 180 }}
+          style={{ width: 200, height: 200 }}
         />
       )}
       <Text style={tw`mt-12 text-xl text-white`}>냉장고에 뭐가 있지</Text>

@@ -1,16 +1,13 @@
 import { Food } from '../../constant/foodInfo';
-import { TouchableOpacity } from '../common/native-component';
 import { FlatList, View } from 'react-native';
-import { BLUE } from '../../constant/colors';
 import { AnimationState } from '../../hooks/';
 import { useSelector } from '../../redux/hook';
 import { MutableRefObject } from 'react';
 
-import LeftDay from '../common/LeftDay';
 import TableItem from './TableItem';
-import Icon from '../common/native-component/Icon';
+import TableItemFront from './TableItemFront';
+import TableItemEnd from './TableItemEnd';
 import EmptySign from '../common/EmptySign';
-import IndicatorExist from '../common/IndicatorExist';
 import tw from 'twrnc';
 
 interface Props {
@@ -53,38 +50,16 @@ export default function TableBody({
                 isCheckedItem={!!checkedList.find(({ id }) => id === item.id)}
                 animationState={animationState}
                 afterAnimation={afterAnimation}
-              >
-                {title === '소비기한 주의 식료품' && (
-                  <View style={tw`items-end w-20`}>
-                    <LeftDay
-                      expiredDate={item.expiredDate}
-                      size={14}
-                      dateMark
-                    />
-                  </View>
-                )}
-
-                {title === '자주 먹는 식료품' && (
-                  <View style={tw`ml-2`}>
-                    <IndicatorExist name={item.name} space={item.space} />
-                  </View>
-                )}
-
-                {title === '장보기 식료품' && addToFridgePress && (
-                  <TouchableOpacity
-                    onPress={() => addToFridgePress(item)}
-                    style={tw`h-full justify-center w-[13%] pr-1 items-center -mr-3`}
-                    disabled={!!checkedList.length}
-                  >
-                    <Icon
-                      type='MaterialCommunityIcons'
-                      name='plus'
-                      size={23}
-                      color={!!checkedList.length ? '#e0e0e0' : BLUE}
-                    />
-                  </TouchableOpacity>
-                )}
-              </TableItem>
+                frontChildren={<TableItemFront food={item} />}
+                endChildren={
+                  <TableItemEnd
+                    food={item}
+                    title={title}
+                    addToFridgePress={addToFridgePress}
+                    isCheckList={!!checkedList.length}
+                  />
+                }
+              />
             )}
           />
         </View>
