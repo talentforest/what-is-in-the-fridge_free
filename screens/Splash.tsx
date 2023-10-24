@@ -54,7 +54,7 @@ export default function Splash({
       {assets && (
         <Image
           source={{ uri: assets[0].localUri as string }}
-          style={{ width: 200, height: 200 }}
+          style={{ width: 180, height: 180 }}
         />
       )}
       <Text style={tw`mt-12 text-xl text-white`}>냉장고에 뭐가 있지</Text>

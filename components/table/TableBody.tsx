@@ -73,7 +73,7 @@ export default function TableBody({
                 {title === '장보기 식료품' && addToFridgePress && (
                   <TouchableOpacity
                     onPress={() => addToFridgePress(item)}
-                    style={tw`h-full justify-center w-[10%] items-center -mr-3`}
+                    style={tw`h-full justify-center w-[13%] pr-1 items-center -mr-3`}
                     disabled={!!checkedList.length}
                   >
                     <Icon

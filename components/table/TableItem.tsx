@@ -81,7 +81,7 @@ export default function TableItem({
         style={tw.style(
           `border h-[${ITEM_HEIGHT - 6}px] ${
             isCheckedItem ? 'border-blue-500' : 'border-slate-200'
-          } bg-white flex-row items-center gap-1.5 px-3`,
+          } bg-white flex-row items-center gap-1 px-3`,
           shadowStyle(4)
         )}
       >
@@ -111,7 +111,7 @@ export default function TableItem({
                       space: existFood.space,
                     });
               }}
-              style={tw`w-15 ml-2`}
+              style={tw`w-15 ml-1`}
             >
               <IndicatorExist name={food.name} roundedBorder navigate />
             </TouchableOpacity>
