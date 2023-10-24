@@ -27,7 +27,7 @@ import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
 import FormMessage from '../components/form/FormMessage';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableBody from '../components/table/TableBody';
-import AnchoredBannerAd from '../components/Ads/AnchoredBannerAd';
+import AnchoredBannerAd from '../components/ads/AnchoredBannerAd';
 
 export default function FavoriteFoods() {
   const [inputValue, setInputValue] = useState('');

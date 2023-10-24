@@ -11,7 +11,7 @@ import ShoppingListSection from '../screen-component/home/ShoppingListSection';
 import ExpiredFoodSection from '../screen-component/home/ExpiredFoodSection';
 import FavoriteFoodSection from '../screen-component/home/FavoriteFoodSection';
 import SearchFoodSection from '../screen-component/home/SearchFoodSection';
-import RNBannerAds from '../components/Ads/RNBannerAds';
+import AnchoredBannerAd from '../components/ads/AnchoredBannerAd';
 import tw from 'twrnc';
 
 const Home = () => {
@@ -23,7 +23,7 @@ const Home = () => {
   return (
     <SafeAreaView edges={['top']} style={tw`${BG_COLOR}`}>
       <ScrollView
-        contentContainerStyle={tw`pb-0 ${BG_COLOR}`}
+        contentContainerStyle={tw`${BG_COLOR}`}
         showsVerticalScrollIndicator={false}
       >
         <Container>
@@ -49,12 +49,12 @@ const Home = () => {
           <ExpiredFoodSection foodList={allExpiredFoods()} />
 
           <FavoriteFoodSection foodList={favoriteFoods} />
-
-          {/* 광고 */}
-          <View style={tw`mt-5`}>
-            <RNBannerAds />
-          </View>
         </Container>
+
+        {/* 광고 */}
+        <View style={tw`my-5`}>
+          <AnchoredBannerAd />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

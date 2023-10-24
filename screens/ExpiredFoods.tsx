@@ -15,7 +15,7 @@ import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
-import AnchoredBannerAd from '../components/Ads/AnchoredBannerAd';
+import AnchoredBannerAd from '../components/ads/AnchoredBannerAd';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();

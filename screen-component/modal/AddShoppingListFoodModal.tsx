@@ -8,7 +8,7 @@ import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import tw from 'twrnc';
-import AnchoredBannerAd from '../../components/Ads/AnchoredBannerAd';
+import AnchoredBannerAd from '../../components/ads/AnchoredBannerAd';
 
 interface Props {
   modalVisible: boolean;
@@ -33,7 +33,7 @@ export default function AddShoppingListFoodModal({
       isVisible={modalVisible}
       closeModal={() => setModalVisible(false)}
     >
-      <View style={tw.style(`bg-stone-100`)}>
+      <View style={tw.style(`bg-stone-100`, { paddingBottom: insets?.bottom })}>
         <Form
           title='장보기 목록 식료품 추가'
           food={selectedFood}
@@ -48,14 +48,6 @@ export default function AddShoppingListFoodModal({
             onPress={() => onSubmit(setModalVisible, setCheckedList)}
             color='blue'
           />
-        </View>
-
-        <View
-          style={{
-            paddingBottom: insets?.bottom,
-          }}
-        >
-          <AnchoredBannerAd />
         </View>
       </View>
     </Modal>

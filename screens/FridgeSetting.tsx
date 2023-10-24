@@ -13,7 +13,7 @@ import CompartmentsSettingBox from '../screen-component/fridge-setting/Compartme
 import CheckBoxItem from '../components/common/CheckBoxItem';
 import AndroidFridge from '../components/fridge/AndroidFridge';
 import IOSFridge from '../components/fridge/IOSFridge';
-import AnchoredBannerAd from '../components/Ads/AnchoredBannerAd';
+import AnchoredBannerAd from '../components/ads/AnchoredBannerAd';
 import tw from 'twrnc';
 
 export default function FridgeSetting() {
