@@ -11,12 +11,8 @@ interface Props {
 export const useDeleteFood = ({ space, setModalVisible }: Props) => {
   const dispatch = useDispatch();
 
-  const deleteFood = (foodId: string) => {
-    dispatch(
-      space === '팬트리'
-        ? removePantryFood({ id: foodId })
-        : removeFridgeFood({ id: foodId })
-    );
+  const deleteFood = (id: string) => {
+    dispatch(space === '팬트리' ? removePantryFood(id) : removeFridgeFood(id));
     setModalVisible(false);
   };
 

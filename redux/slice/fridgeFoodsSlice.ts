@@ -41,18 +41,18 @@ const fridgeFoodsSlice = createSlice({
     addFridgeFood: (state, action: { payload: Food }) => {
       state.fridgeFoods = [...state.fridgeFoods, action.payload];
     },
-    removeFridgeFood: (state, action: { payload: { id: string } }) => {
+    removeFridgeFood: (state, action: { payload: string }) => {
       state.fridgeFoods = state.fridgeFoods.filter(
-        (food) => food.id !== action.payload.id
+        (food) => food.id !== action.payload
       );
     },
     editFridgeFood: (
       state,
-      action: { payload: { foodId: string; editedFood: Food } }
+      action: { payload: { id: string; food: Food } }
     ) => {
-      state.fridgeFoods = state.fridgeFoods.map((food) => {
-        const { foodId, editedFood } = action.payload;
-        return food.id === foodId ? editedFood : food;
+      state.fridgeFoods = state.fridgeFoods.map((fridgeFood) => {
+        const { id, food } = action.payload;
+        return fridgeFood.id === id ? food : fridgeFood;
       });
     },
   },

@@ -21,6 +21,7 @@ const MOVED_TRANSLATE_X = 104;
 
 export default function FavoriteItem({ food, title }: Props) {
   const { isFavorite } = useSelector((state) => state.isFavorite);
+  const { selectedFood } = useSelector((state) => state.selectedFood);
   const { isFavoriteItem } = useFindFood();
   const { name } = food;
 

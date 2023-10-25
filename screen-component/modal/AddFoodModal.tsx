@@ -51,7 +51,6 @@ export default function AddFoodModal({
       <View style={tw.style(`bg-stone-100`, { paddingBottom: insets?.bottom })}>
         <Form
           title='새로운 식료품 추가'
-          editableName={true}
           food={newFood}
           changeInfo={changeFoodInfo}
           formSteps={formSteps}

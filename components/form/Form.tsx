@@ -26,17 +26,10 @@ interface Props {
   title: ModalTitle;
   food: Food;
   changeInfo: (newInfo: { [key: string]: string | boolean }) => void;
-  editableName?: boolean;
   formSteps: FormStep[];
 }
 
-export default function Form({
-  title,
-  changeInfo,
-  food,
-  editableName,
-  formSteps,
-}: Props) {
+export default function Form({ title, changeInfo, food, formSteps }: Props) {
   const {
     moveStep,
     stepTranslateX,
@@ -63,20 +56,22 @@ export default function Form({
                 <View key={step} style={tw`w-full border border-stone-100`}>
                   {name === '기본정보' && (
                     <FormSectionContainer>
-                      <NameItem
-                        name={food.name}
-                        changeInfo={changeInfo}
-                        editable={editableName || false}
-                      />
+                      {/* 식료품 이름 */}
+                      <NameItem name={food.name} changeInfo={changeInfo} />
+
+                      {/* 카테고리 */}
                       <CategoryItem
                         name={food.name}
                         fixedCategory={food.category}
                         changeInfo={changeInfo}
                         title={title}
                       />
+
+                      {/* 자주 먹는 식료품 */}
                       <FavoriteItem food={food} title={title} />
                     </FormSectionContainer>
                   )}
+
                   {name === '위치' && (
                     <FormSectionContainer>
                       <SpaceItem

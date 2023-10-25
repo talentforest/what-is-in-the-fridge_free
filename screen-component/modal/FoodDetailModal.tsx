@@ -46,14 +46,13 @@ export default function FoodDetailModal({
   } = useEditFood();
 
   const {
-    id,
     name,
     space,
     category,
     expiredDate,
     purchaseDate,
     quantity,
-    memo,
+    memo, //
   } = editedFood;
 
   const insets = useSafeAreaInsets();
@@ -68,16 +67,18 @@ export default function FoodDetailModal({
     active: editing,
   });
 
+  const closeModal = () => {
+    if (editing) {
+      setEditedFood(selectedFood);
+      setEditing(false);
+    }
+    setModalVisible(false);
+  };
+
   return (
     <Modal
       title={editing ? '식료품 정보 수정' : '식료품 상세 정보'}
-      closeModal={() => {
-        if (editing) {
-          setEditedFood(selectedFood);
-          setEditing(false);
-        }
-        setModalVisible(false);
-      }}
+      closeModal={closeModal}
       isVisible={modalVisible}
     >
       <View
@@ -98,7 +99,7 @@ export default function FoodDetailModal({
                 color='blue'
                 iconName='check-square'
                 btnName='식료품 정보 수정 완료'
-                onPress={() => onEditSumbit(id, setModalVisible)}
+                onPress={() => onEditSumbit(setModalVisible)}
               />
             </View>
           </Animated.View>

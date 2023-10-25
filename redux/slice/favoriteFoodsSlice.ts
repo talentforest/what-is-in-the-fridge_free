@@ -19,9 +19,9 @@ const favoriteFoodsSlice = createSlice({
         action.payload,
       ]);
     },
-    removeFavorite: (state, action: { payload: { name: string } }) => {
+    removeFavorite: (state, action: { payload: string }) => {
       state.favoriteFoods = state.favoriteFoods.filter(
-        (item) => item.name !== action.payload.name
+        (item) => item.name !== action.payload
       );
     },
     editFavorite: (state, action: { payload: Food }) => {

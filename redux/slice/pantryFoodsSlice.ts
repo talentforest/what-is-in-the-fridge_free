@@ -49,26 +49,25 @@ const pantryFoodsSlice = createSlice({
         state.pantryFoods = deduplicate([...state.pantryFoods, action.payload]);
       }
     },
-    removePantryFood: (state, action: { payload: { id: string } }) => {
+    removePantryFood: (state, action: { payload: string }) => {
       state.pantryFoods = state.pantryFoods.filter(
-        (item) => item.id !== action.payload.id
+        (item) => item.id !== action.payload
       );
     },
     editPantryFood: (
       state,
-      action: { payload: { foodId: string; editedFood: Food } }
+      action: { payload: { id: string; food: Food } }
     ) => {
-      const { foodId, editedFood } = action.payload;
+      const { id, food } = action.payload;
 
-      if ('compartmentNum' in editedFood) {
-        const { compartmentNum, ...newEditedFood } = editedFood;
-
-        state.pantryFoods = state.pantryFoods.map((food) =>
-          food.id === foodId ? newEditedFood : food
+      if ('compartmentNum' in food) {
+        const { compartmentNum, ...newEditedFood } = food;
+        state.pantryFoods = state.pantryFoods.map((pantryFood) =>
+          pantryFood.id === id ? newEditedFood : pantryFood
         );
       } else {
-        state.pantryFoods = state.pantryFoods.map((food) =>
-          food.id === foodId ? editedFood : food
+        state.pantryFoods = state.pantryFoods.map((pantryFood) =>
+          pantryFood.id === id ? food : pantryFood
         );
       }
     },

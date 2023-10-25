@@ -46,8 +46,8 @@ export const useAddShoppingListFood = () => {
     // 기존 식료품 삭제
     if (existFood) {
       existFood.space === '팬트리'
-        ? dispatch(removePantryFood({ id: existFood.id }))
-        : dispatch(removeFridgeFood({ id: existFood.id }));
+        ? dispatch(removePantryFood(existFood.id))
+        : dispatch(removeFridgeFood(existFood.id));
     }
 
     const isWrongDate =
@@ -59,7 +59,7 @@ export const useAddShoppingListFood = () => {
 
     isFavorite
       ? dispatch(addFavorite(selectedFood))
-      : dispatch(removeFavorite(selectedFood));
+      : dispatch(removeFavorite(selectedFood.name));
 
     if (isFavoriteItem(selectedFood.name)) dispatch(editFavorite(selectedFood));
 

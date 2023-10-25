@@ -5,6 +5,8 @@ import { Category } from '../../constant/foodCategories';
 import { useFindFood } from '../../hooks';
 import { ModalTitle } from '../modal/Modal';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { useDispatch } from '../../redux/hook';
+import { editFavorite } from '../../redux/slice/favoriteFoodsSlice';
 
 import CategoryModal from '../../screen-component/modal/CategoryModal';
 import FormLabel from './FormLabel';
@@ -34,7 +36,13 @@ export default function CategoryItem({
 
   const category = disabledCategory ? favoriteFoodItemCategory : fixedCategory;
 
-  const onCheckBoxPress = (category: string) => {
+  const dispatch = useDispatch();
+
+  const onCheckBoxPress = (category: Category) => {
+    if (isFavoriteItem(name)) {
+      // 자주 먹는 식료품 목록에 포함되어 있을 경우 해당 아이템의 카테고리 정보도 변경
+      dispatch(editFavorite({ ...isFavoriteItem(name), category }));
+    }
     changeInfo({ category });
     setCategoryOpen(false);
   };
@@ -43,14 +51,16 @@ export default function CategoryItem({
   const inActiveColor = 'border-slate-300 text-slate-400';
   const color = disabledCategory ? inActiveColor : activeColor;
 
+  const onPress = () => {
+    if (Keyboard.isVisible()) Keyboard.dismiss();
+    setCategoryOpen((prev) => !prev);
+  };
+
   return (
     <View>
       <FormLabel label='카테고리' />
       <TouchableOpacity
-        onPress={() => {
-          if (Keyboard.isVisible()) Keyboard.dismiss();
-          setCategoryOpen((prev) => !prev);
-        }}
+        onPress={onPress}
         disabled={disabledCategory}
         style={tw.style(
           `h-11 border ${color} px-3 bg-white rounded-lg items-center flex-row gap-2 justify-between`,

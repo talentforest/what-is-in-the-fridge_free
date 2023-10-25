@@ -11,3 +11,9 @@ export const isFridgeFood = (space: Space | StorageType) => {
 export const isPantryFood = (space: Space | StorageType) => {
   return space.includes('팬트리');
 };
+
+export const checkSameStorage = (originSpace: Space, newSpace: Space) => {
+  const sameFridge = isFridgeFood(originSpace) && isFridgeFood(newSpace);
+  const samePantry = !isFridgeFood(originSpace) && !isFridgeFood(newSpace);
+  return samePantry || sameFridge;
+};

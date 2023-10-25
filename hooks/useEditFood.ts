@@ -13,27 +13,32 @@ import {
   removePantryFood,
 } from '../redux/slice/pantryFoodsSlice';
 import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
-import {
-  addFavorite,
-  editFavorite,
-  removeFavorite,
-} from '../redux/slice/favoriteFoodsSlice';
+import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { Space } from '../constant/fridgeInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../navigation/Navigation';
 import { search } from '../redux/slice/searchedFoodSlice';
+import { useFindFood } from './useFindFood';
+import {
+  checkSameStorage,
+  isFridgeFood,
+  isPantryFood,
+} from '../util/checkFoodSpace';
+import UUIDGenerator from 'react-native-uuid';
 
 export const useEditFood = () => {
   const { isFavorite } = useSelector((state) => state.isFavorite);
   const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
   const { selectedFood } = useSelector((state) => state.selectedFood);
-  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
 
   const [editedFood, setEditedFood] = useState(selectedFood);
   const [editing, setEditing] = useState(false);
 
-  const dispatch = useDispatch();
+  const myUuid = UUIDGenerator.v4();
+
   const navigation = useNavigation<NavigateProp>();
+  const dispatch = useDispatch();
+  const { isFavoriteItem } = useFindFood();
 
   useEffect(() => {
     setEditedFood(selectedFood);
@@ -42,84 +47,91 @@ export const useEditFood = () => {
   const editFoodInfo = (newInfo: FoodInfo) =>
     setEditedFood({ ...editedFood, ...newInfo });
 
-  const isFavoriteItem = (name: string) =>
-    favoriteFoods.find((food) => food.name === name);
-
-  const fridgeFood = (space: Space) => {
-    return space.includes('냉장실') || space.includes('냉동실');
+  const afterChangedPositionAlert = (newSpace: Space) => {
+    const { moveStorage } = alertPhraseWithFood(editedFood);
+    return Alert.alert(moveStorage.title, moveStorage.msg, [
+      {
+        text: '취소',
+        style: 'destructive',
+      },
+      {
+        text: '확인',
+        onPress: () => {
+          editedFood.space === '팬트리'
+            ? navigation.navigate('PantryFoods')
+            : navigation.navigate('Compartments', { space: newSpace });
+        },
+        style: 'default',
+      },
+    ]);
   };
 
-  const checkSameStorage = (originSpace: Space, newSpace: Space) => {
-    const sameFridge = fridgeFood(originSpace) && fridgeFood(newSpace);
-    const samePantry = !fridgeFood(originSpace) && !fridgeFood(newSpace);
-    return samePantry || sameFridge;
-  };
+  const onEditSumbit = (setModalVisible: (visible: boolean) => void) => {
+    const {
+      id,
+      expiredDate,
+      purchaseDate,
+      memo,
+      name: newName,
+      space: newSpace,
+    } = editedFood;
 
-  const onEditSumbit = (
-    foodId: string,
-    setModalVisible: (visible: boolean) => void
-  ) => {
-    const { expiredDate, purchaseDate, memo, space: newSpace, id } = editedFood;
-
-    const { wrongDate, noMemo } = alertPhrase;
-    if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime())
-      return Alert.alert(wrongDate.title, wrongDate.msg);
-
+    // check valid
+    const { noName, wrongDate, noMemo } = alertPhrase;
+    if (newName === '') return Alert.alert(noName.title, noName.msg);
+    const isWrongDate =
+      new Date(expiredDate).getTime() < new Date(purchaseDate).getTime();
+    if (isWrongDate) return Alert.alert(wrongDate.title, wrongDate.msg);
     if (isMemoOpen && memo === '') return Alert.alert(noMemo.title, noMemo.msg);
 
-    dispatch(isFavorite ? addFavorite(editedFood) : removeFavorite(editedFood));
+    // change id by isEditedName, isFavoriteItem(newName)
+    const isEditedName = newName !== selectedFood.name;
+    const setId = !isEditedName
+      ? id
+      : isEditedName && isFavoriteItem(newName) // 수정한 이름이 이미 자주 먹는 식료품인 경우 해당 정보의 id
+      ? isFavoriteItem(newName).id
+      : (myUuid as string); // 이름이 수정된 경우에는 새로운 id
 
-    if (isFavoriteItem(editedFood.name)) dispatch(editFavorite(editedFood));
+    const food = { ...editedFood, id: setId };
 
+    // 자주 먹는 식료품 정보대로 자주 먹는 식료품 목록 설정
+    isFavorite
+      ? dispatch(addFavorite(food))
+      : dispatch(removeFavorite(newName));
+
+    // 수정한 식료품 객체(food)를 각각의 맞는 공간에 추가
     const originSpace = selectedFood.space;
     if (checkSameStorage(originSpace, newSpace)) {
       dispatch(
-        newSpace === '팬트리'
-          ? editPantryFood({ foodId, editedFood })
-          : editFridgeFood({ foodId, editedFood })
+        originSpace === '팬트리'
+          ? editPantryFood({ id, food })
+          : editFridgeFood({ id, food })
       );
-    } else {
-      if (originSpace.includes('팬트리')) {
-        dispatch(removePantryFood({ id }));
-        dispatch(addFridgeFood(editedFood));
-      }
-      if (originSpace.includes('냉장실') || originSpace.includes('냉동실')) {
-        dispatch(removeFridgeFood({ id }));
-        dispatch(addToPantry(editedFood));
-      }
     }
-    // 위치가 변경된 경우에만
-    if (
-      originSpace !== newSpace ||
-      selectedFood?.compartmentNum !== editedFood?.compartmentNum
-    ) {
-      dispatch(search(editedFood.name));
+    if (!checkSameStorage(originSpace, newSpace)) {
+      if (isPantryFood(newSpace)) {
+        dispatch(removeFridgeFood(id));
+        dispatch(addToPantry(food));
+      }
+      if (isFridgeFood(newSpace)) {
+        dispatch(removePantryFood(id));
+        dispatch(addFridgeFood(food));
+      }
     }
 
     setEditing(false);
     setModalVisible(false);
 
-    const {
-      moveStorage: { title, msg },
-    } = alertPhraseWithFood(editedFood);
-
-    if (originSpace !== newSpace)
-      return Alert.alert(title, msg, [
-        {
-          text: '취소',
-          style: 'destructive',
-        },
-        {
-          text: '확인',
-          onPress: () => {
-            editedFood.space === '팬트리'
-              ? navigation.navigate('PantryFoods')
-              : navigation.navigate('Compartments', { space: newSpace });
-          },
-          style: 'default',
-        },
-      ]);
-    //
+    // 위치가 변경된 경우에만 search 세팅 후 navigation 이동
+    const sameSpace = originSpace === newSpace;
+    const sameCompartmentNum =
+      selectedFood?.compartmentNum === editedFood?.compartmentNum;
+    if (!sameSpace || !sameCompartmentNum) {
+      dispatch(search(editedFood.name));
+    }
+    if (originSpace !== newSpace) {
+      afterChangedPositionAlert(newSpace);
+    }
   };
 
   return {

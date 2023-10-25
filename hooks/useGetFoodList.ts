@@ -24,15 +24,6 @@ export const useGetFoodList = () => {
     return sortedList || [];
   };
 
-  function orderedByExist() {
-    const compareFavorite = (food: Food) => {
-      return allFoods.some((favFood) => favFood.name === food.name);
-    };
-    const existingFoods = favoriteFoods.filter((food) => compareFavorite(food));
-    const missingFoods = favoriteFoods.filter((food) => !compareFavorite(food));
-    return [...missingFoods, ...existingFoods];
-  }
-
   const allExpiredFoods = (type?: 'fridge' | 'pantry') => {
     const expiredFridgeFoods = fridgeFoods.filter(
       (food) => getLeftDays(food.expiredDate) < 8
