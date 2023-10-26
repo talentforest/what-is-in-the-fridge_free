@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 import { TextInput } from '../common/native-component';
+import { useRoute } from '@react-navigation/native';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
@@ -16,6 +17,9 @@ const NAME_MAX_LENGTH = 40;
 export default function NameItem({ name, changeInfo }: Props) {
   const onChangeText = (value: string) => changeInfo({ name: value });
 
+  const route = useRoute();
+  const routeShoppingList = route.name === 'ShoppingList';
+
   return (
     <View>
       <FormLabel label='식료품 이름' />
@@ -27,6 +31,7 @@ export default function NameItem({ name, changeInfo }: Props) {
         placeholder='식료품 이름을 작성해주세요'
         focusable={false}
         maxLength={40}
+        editable={!routeShoppingList}
       />
 
       <FormMessage
