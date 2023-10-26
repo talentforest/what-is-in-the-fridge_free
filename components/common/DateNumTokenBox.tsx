@@ -6,7 +6,7 @@ import {
   DateType,
 } from '../../screen-component/modal/DateNumInputModal';
 import { Text } from './native-component';
-import { DEVICE_WIDTH, formattedToday, getDateToken } from '../../util';
+import { formattedToday, getDateToken } from '../../util';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 import tw from 'twrnc';
 
@@ -14,12 +14,14 @@ interface Props {
   dateToken: string[];
   setDateToken: (tokens: string[]) => void;
   setInValidDate: React.Dispatch<React.SetStateAction<DateState>>;
+  width: number;
 }
 
 export default function DateNumTokenBox({
   dateToken,
   setDateToken,
   setInValidDate,
+  width,
 }: Props) {
   const [isFocusedItem, setIsFocusedItem] = useState(0);
 
@@ -76,16 +78,13 @@ export default function DateNumTokenBox({
   };
 
   return (
-    <View style={tw`w-[90%] items-center justify-center`}>
-      <View style={tw`flex-row items-center gap-1`}>
+    <View style={tw` items-center justify-center`}>
+      <View style={tw`flex-row items-center gap-0.5`}>
         {[1, 2, 3, 4, 5, 6].map((number, idx) => (
-          <View key={number} style={tw`flex-row gap-2 items-center h-full`}>
-            {idx / 2 === 1 && <DateTypeText dateType='년' />}
-            {idx / 2 === 2 && <DateTypeText dateType='월' />}
-
+          <View key={number} style={tw`flex-row gap-0.5 items-center h-full`}>
             <View
               style={tw.style(
-                `bg-stone-100 w-[${DEVICE_WIDTH * 0.1}px] aspect-square 
+                `bg-stone-100 w-[${width}px] aspect-square 
                 text-xl rounded-md items-center justify-center ${
                   isFocusedItem === idx ||
                   (isFocusedItem === 6 && idx + 1 === isFocusedItem) ||
@@ -116,6 +115,8 @@ export default function DateNumTokenBox({
               />
             </View>
 
+            {idx / 2 === 0.5 && <DateTypeText dateType='년' />}
+            {idx / 2 === 1.5 && <DateTypeText dateType='월' />}
             {idx / 2 === 2.5 && <DateTypeText dateType='일' />}
           </View>
         ))}
@@ -126,7 +127,10 @@ export default function DateNumTokenBox({
 
 const DateTypeText = ({ dateType }: { dateType: DateType }) => {
   return (
-    <Text style={tw`text-slate-500 text-sm px-0 self-end mb-1`}>
+    <Text
+      style={tw`text-slate-500 text-[14px] self-end 
+      ${dateType !== '일' ? 'mr-1' : ''}`}
+    >
       {dateType}
     </Text>
   );

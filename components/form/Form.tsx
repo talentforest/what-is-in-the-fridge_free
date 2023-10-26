@@ -43,7 +43,7 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
         formSteps={formSteps}
         currentStep={currentStep as FormStep}
       />
-      <View style={tw`overflow-hidden min-h-70`}>
+      <View style={tw`overflow-hidden w-full min-h-70`}>
         <Animated.View
           style={{
             transform: [{ translateX: stepTranslateX }],

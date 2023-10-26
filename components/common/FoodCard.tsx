@@ -12,9 +12,10 @@ import tw from 'twrnc';
 
 interface Props {
   food: Food;
+  width: number;
 }
 
-export default function FoodCard({ food }: Props) {
+export default function FoodCard({ food, width }: Props) {
   const navigation = useNavigation<NavigateProp>();
 
   return (
@@ -22,8 +23,7 @@ export default function FoodCard({ food }: Props) {
       key={food.id}
       onPress={() => navigation.navigate('FavoriteFoods')}
       style={tw.style(
-        `border border-slate-300 bg-white pt-2 px-1.5 pb-1 items-center justify-center 
-        w-[${DEVICE_WIDTH / 4 - 13}px] h-28 rounded-lg`,
+        `w-[${width}px] h-28 border border-slate-300 bg-white pt-2 px-1.5 pb-1 items-center justify-center rounded-lg`,
         shadowStyle(5)
       )}
     >

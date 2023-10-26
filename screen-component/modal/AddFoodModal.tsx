@@ -10,7 +10,6 @@ import Modal from '../../components/modal/Modal';
 import Form from '../../components/form/Form';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import tw from 'twrnc';
-import AnchoredBannerAd from '../../components/ads/AnchoredBannerAd';
 
 interface Props {
   modalVisible: boolean;

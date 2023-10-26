@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Keyboard, PanResponder } from 'react-native';
+import {
+  Animated,
+  Keyboard,
+  PanResponder,
+  useWindowDimensions,
+} from 'react-native';
 import { OnboardingStep } from '../../constant/onboardingInfo';
 import { FormStep } from '../../constant/formInfo';
-import { DEVICE_WIDTH } from '../../util';
 
 const DRAG_DISTANCE = 60;
 
@@ -10,19 +14,21 @@ interface Props {
   steps: OnboardingStep[] | FormStep[];
 }
 
+type Step = OnboardingStep | FormStep;
+
 export const useSwiperAnimation = ({ steps }: Props) => {
-  const [currentStep, setCurrentStep] = useState<OnboardingStep | FormStep>(
-    steps[0]
-  );
+  const [currentStep, setCurrentStep] = useState<Step>(steps[0]);
 
   const currentStepRef = useRef(steps[0]);
   const stepTranslateX = useRef(new Animated.Value(0)).current;
 
-  const formWidth = -DEVICE_WIDTH;
-
   useEffect(() => {
     currentStepRef.current = currentStep;
   }, [currentStep]);
+
+  const { width } = useWindowDimensions();
+
+  const formWidth = -width;
 
   const animatedForm = (stepId: number) => {
     Animated.spring(stepTranslateX, {
@@ -36,7 +42,6 @@ export const useSwiperAnimation = ({ steps }: Props) => {
     const nextStepId =
       currentStepId === steps.length ? currentStepId - 1 : currentStepId;
     const stepId = direction === 'prev' ? prevStepId : nextStepId;
-
     animatedForm(stepId);
     setCurrentStep(steps[stepId]);
   };

@@ -1,17 +1,10 @@
-import {
-  Text,
-  TouchableOpacity,
-} from '../../components/common/native-component';
-import { View } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { Food } from '../../constant/foodInfo';
-import { useNavigation } from '@react-navigation/native';
-import { NavigateProp } from '../../navigation/Navigation';
-import { DEVICE_WIDTH } from '../../util';
 
 import SectionContainer from './SectionContainer';
 import FoodCard from '../../components/common/FoodCard';
 import EmptySign from '../../components/common/EmptySign';
-import Icon from '../../components/common/native-component/Icon';
+import ShowMoreBtnBox from '../../components/buttons/ShowMoreBtnBox';
 import tw from 'twrnc';
 
 interface Props {
@@ -21,7 +14,9 @@ interface Props {
 const MAX_NUM = 7;
 
 export default function FavoriteFoodSection({ foodList }: Props) {
-  const navigation = useNavigation<NavigateProp>();
+  const { width } = useWindowDimensions();
+
+  const cardWidth = (width - 52) / 4;
 
   return (
     <SectionContainer
@@ -31,25 +26,14 @@ export default function FavoriteFoodSection({ foodList }: Props) {
       foodsLength={foodList.length}
     >
       {foodList.length ? (
-        <View style={tw`flex-wrap flex-row gap-1.5 mt-2.5 -mx-1 px-1`}>
-          {foodList.slice(-MAX_NUM).map((food) => (
-            <FoodCard key={food.id} food={food} />
-          ))}
-          {foodList.length >= MAX_NUM && (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('FavoriteFoods')}
-              style={tw`w-[${DEVICE_WIDTH / 4 - 14}px] h-28
-                justify-center items-center gap-1`}
-            >
-              <Icon
-                name='arrow-right-circle-outline'
-                type='MaterialCommunityIcons'
-                size={30}
-                color={'#888'}
-              />
-              <Text style={tw`text-xs text-slate-600`}>더보기</Text>
-            </TouchableOpacity>
-          )}
+        <View style={tw`-mx-1 px-1 justify-center items-center`}>
+          <View style={tw`flex-wrap flex-row my-2.5 gap-1.5 justify-center`}>
+            {foodList.slice(-MAX_NUM).map((food) => (
+              <FoodCard key={food.id} food={food} width={cardWidth} />
+            ))}
+
+            {foodList.length >= MAX_NUM && <ShowMoreBtnBox width={cardWidth} />}
+          </View>
         </View>
       ) : (
         <View

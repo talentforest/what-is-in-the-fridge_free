@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
-import { View } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { NavigateProp } from '../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';
-import { DEVICE_WIDTH } from '../util';
 import { PlatformIOS } from '../constant/statusBarHeight';
 
 import Container from '../components/common/Container';
@@ -12,6 +11,8 @@ import IOSFridge from '../components/fridge/IOSFridge';
 import tw from 'twrnc';
 
 export default function MyFridge() {
+  const { width } = useWindowDimensions();
+
   const navigation = useNavigation<NavigateProp>();
 
   useEffect(() => {
@@ -27,11 +28,11 @@ export default function MyFridge() {
     });
   }, []);
 
-  const fridgeWidth = DEVICE_WIDTH * 0.9;
+  const fridgeWidth = width > 390 ? width * 0.8 : width * 0.9;
 
   return (
     <Container>
-      <View style={tw`flex-1 items-center justify-center`}>
+      <View style={tw`w-full flex-1 items-center justify-center`}>
         {PlatformIOS ? (
           <View
             style={tw`max-h-[660px] max-w-[400px] p-1 pb-3
@@ -40,7 +41,7 @@ export default function MyFridge() {
             <IOSFridge />
           </View>
         ) : (
-          <View style={tw`h-[${fridgeWidth * 1.44}px] w-[${fridgeWidth}px]`}>
+          <View style={tw`h-[${fridgeWidth * 1.445}px] w-[${fridgeWidth}px]`}>
             <AndroidFridge />
           </View>
         )}

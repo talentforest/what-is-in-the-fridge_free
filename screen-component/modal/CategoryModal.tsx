@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { Category, foodCategories } from '../../constant/foodCategories';
 import { useImageLoad } from '../../hooks';
 
@@ -38,8 +38,6 @@ export default function CategoryModal({
     ],
   });
 
-  if (!isLoaded) return null;
-
   const getMatchURI = (category: Category) => {
     const matchItem = foodCategories.find((i) => i.category === category);
     const asset = assets?.find(
@@ -47,6 +45,12 @@ export default function CategoryModal({
     );
     return asset?.localUri;
   };
+
+  const { width } = useWindowDimensions();
+
+  const cardWidth = (width - 75) / 3;
+
+  if (!isLoaded) return null;
 
   return (
     <Modal
@@ -68,6 +72,7 @@ export default function CategoryModal({
                 category={category}
                 onCheckBoxPress={onCheckBoxPress}
                 localUri={getMatchURI(category) || assets[0].uri}
+                width={cardWidth}
               />
             ))}
           </View>

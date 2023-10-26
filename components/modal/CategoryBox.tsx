@@ -9,6 +9,7 @@ interface Props {
   category: Category;
   onCheckBoxPress: (category: Category) => void;
   localUri: string;
+  width: number;
 }
 
 export default function CategoryBox({
@@ -16,9 +17,8 @@ export default function CategoryBox({
   category,
   onCheckBoxPress,
   localUri,
+  width,
 }: Props) {
-  const width = (DEVICE_WIDTH - 75) / 3;
-
   const checkedColor = checked
     ? 'bg-amber-200 border-amber-300'
     : 'bg-slate-100 border-slate-200';
