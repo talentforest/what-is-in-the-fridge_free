@@ -24,7 +24,7 @@ export default function CategoryModal({
   const { isLoaded, assets } = useImageLoad({
     images: [
       require('../../assets/category/category-fresh.png'),
-      require('../../assets/category/category-meat-fish.png'),
+      require('../../assets/category/category-meat-fish-egg.png'),
       require('../../assets/category/category-instant.png'),
       require('../../assets/category/category-dessert.png'),
       require('../../assets/category/category-sidedish.png'),

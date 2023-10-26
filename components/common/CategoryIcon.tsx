@@ -5,6 +5,7 @@ import {
 } from '../../constant/foodCategories';
 import { LIGHT_GRAY } from '../../constant/colors';
 import Icon from './native-component/Icon';
+import IconMeatFishEgg from './native-component/IconMeatFishEgg';
 
 interface Props {
   category: Category;
@@ -20,11 +21,17 @@ export default function CategoryIcon({ category, size, inactive }: Props) {
   const { icon, color } = findCategory(category) as FoodCategory;
 
   return (
-    <Icon
-      name={icon}
-      size={size}
-      type='MaterialCommunityIcons'
-      color={inactive ? LIGHT_GRAY : color}
-    />
+    <>
+      {icon === 'icon-meat-fish-egg.svg' ? (
+        <IconMeatFishEgg size={size} />
+      ) : (
+        <Icon
+          name={icon}
+          size={size}
+          type='MaterialCommunityIcons'
+          color={inactive ? LIGHT_GRAY : color}
+        />
+      )}
+    </>
   );
 }

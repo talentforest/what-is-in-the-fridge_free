@@ -31,8 +31,8 @@ export const foodCategories: FoodCategory[] = [
   {
     id: 2,
     category: '정육·수산·계란',
-    image: 'category-meat-fish.png',
-    icon: 'food-steak',
+    image: 'category-meat-fish-egg.png',
+    icon: 'icon-meat-fish-egg.svg',
     color: '#d54e42',
   },
   {
