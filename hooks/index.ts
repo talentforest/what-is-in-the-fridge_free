@@ -1,6 +1,7 @@
 export * from './useSubmitFoodsFromInput';
 export * from './useFindFood';
 export * from './useAddFood';
+export * from './useAddAtOnce';
 export * from './useAddShoppingListFood';
 export * from './useDeleteFood';
 export * from './useEditFood';
