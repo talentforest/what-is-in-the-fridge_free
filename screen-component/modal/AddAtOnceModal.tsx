@@ -1,21 +1,9 @@
-import { Alert, View } from 'react-native';
-import {
-  Food,
-  initialFridgeFood,
-  initialPantryFood,
-} from '../../constant/foodInfo';
-import { StorageType, Space, CompartmentNum } from '../../constant/fridgeInfo';
-import { useState } from 'react';
-import { useDispatch, useSelector } from '../../redux/hook';
-import { addAtOnceStep } from '../../constant/formInfo';
+import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
-import { select, selectNone } from '../../redux/slice/selectedFoodSlice';
-import { alertPhraseWithCheckList } from '../../constant/alertPhrase';
-import { validFoodObj } from '../../util/validFoodObj';
-import { addPantryFoods } from '../../redux/slice/pantryFoodsSlice';
-import { removeShoppingListFoods } from '../../redux/slice/shoppingListSlice';
-import { addFridgeFoods } from '../../redux/slice/fridgeFoodsSlice';
-import { useFindFood } from '../../hooks';
+import { Food } from '../../constant/foodInfo';
+import { StorageType, Space, CompartmentNum } from '../../constant/fridgeInfo';
+import { useSelector } from '../../redux/hook';
+import { useAddAtOnce } from '../../hooks';
 
 import SpaceBtn from '../../components/buttons/SpaceBtn';
 import Modal from '../../components/modal/Modal';
@@ -41,122 +29,30 @@ export default function AddAtOnceModal({
   checkedList,
   setCheckedList,
 }: Props) {
-  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { selectedFood } = useSelector((state) => state.selectedFood);
 
-  const [currentStorage, setCurrentStorage] = useState<StorageType | ''>('');
-  const [fridgePosition, setFridgePosition] =
-    useState<Position>('냉장실 안쪽 1번');
-  const [currentStep, setCurrentStep] = useState(addAtOnceStep[0]);
-  const [isEditing, setIsEditing] = useState(false);
-
-  const { isFavoriteItem } = useFindFood();
-
-  const getCompartmentNum = (position: Position) => {
-    const foodCompartmentNum = +position.slice(7, 8);
-    const space = position.slice(0, 6) as Space;
-    const maxCompartmentsNum = fridgeInfo.compartments[space];
-
-    return foodCompartmentNum > maxCompartmentsNum
-      ? `${maxCompartmentsNum}번`
-      : `${foodCompartmentNum}번`;
-  };
-
-  const onFridgePositionPress = (position: Position) => {
-    const space = position.slice(0, 6);
-    const compartmentNum = getCompartmentNum(position);
-    setFridgePosition(`${space} ${compartmentNum}` as Position);
-  };
-
-  const onBackStepPress = () => {
-    setCurrentStep({ step: 1, name: '한번에 추가할 공간' });
-    dispatch(selectNone());
-    setIsEditing(false);
-  };
-
-  const onNextStepPress = () => {
-    const space = fridgePosition.slice(0, 6);
-    const compartmentNum = fridgePosition.slice(-2);
-
-    setCheckedList((prev) =>
-      prev.map((food) => {
-        const favoriteItem = isFavoriteItem(food.name); // id, category 정보만 필요
-
-        return currentStorage === '팬트리'
-          ? validFoodObj({
-              ...initialPantryFood,
-              id: favoriteItem?.id || food.id,
-              name: food.name,
-              category: favoriteItem?.category || food.category,
-              space: '팬트리',
-            })
-          : ({
-              ...initialFridgeFood,
-              id: favoriteItem?.id || food.id,
-              name: food.name,
-              category: favoriteItem?.category || food.category,
-              space,
-              compartmentNum,
-            } as Food);
-      })
-    );
-    setCurrentStep({ step: 2, name: '추가할 식료품 정보' });
-  };
-
-  const onSubmitPress = () => {
-    const {
-      confirmAddAll: { title, msg },
-    } = alertPhraseWithCheckList(checkedList);
-
-    Alert.alert(title, msg, [
-      {
-        text: '한번에 추가',
-        onPress: () => {
-          dispatch(
-            currentStorage === '팬트리'
-              ? addPantryFoods(checkedList)
-              : addFridgeFoods(checkedList)
-          );
-          dispatch(removeShoppingListFoods(checkedList));
-          Alert.alert('추가 완료', '성공적으로 추가되었습니다!');
-          setModalVisible(false);
-          setCheckedList([]);
-        },
-        style: 'default',
-      },
-      { text: '취소', style: 'destructive' },
-    ]);
-  };
-
-  const dispatch = useDispatch();
-
-  const onFoodItemPress = (selectedFood: Food) => {
-    if (!isEditing && setIsEditing) {
-      dispatch(select(selectedFood));
-      setIsEditing(true);
-    }
-    if (isEditing) {
-      setIsEditing(false);
-      dispatch(selectNone());
-    }
-  };
-
-  const position =
-    currentStorage === '팬트리' ? `${currentStorage}` : `${fridgePosition}칸`;
+  const {
+    position,
+    fridgePosition,
+    currentStep,
+    currentStorage,
+    setCurrentStorage,
+    isEditing,
+    setIsEditing,
+    onFridgePositionPress,
+    onFoodItemPress,
+    onSubmitPress,
+    onNextStepPress,
+    onBackStepPress,
+    closeModal,
+  } = useAddAtOnce({ checkedList, setCheckedList, setModalVisible });
 
   return (
     <Modal
       title={currentStep.name}
       isVisible={modalVisible}
       animationIn='fadeIn'
-      closeModal={() => {
-        setModalVisible(false);
-        setCurrentStorage('');
-        setFridgePosition('냉장실 안쪽 1번');
-        setCurrentStep({ step: 1, name: '한번에 추가할 공간' });
-        setIsEditing(false);
-        dispatch(selectNone());
-      }}
+      closeModal={closeModal}
     >
       <View style={tw`bg-stone-100 px-5 pb-4 rounded-b-2xl`}>
         {/* 1단계 */}

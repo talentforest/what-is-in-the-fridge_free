@@ -69,13 +69,11 @@ export default function ShoppingList() {
   };
 
   const onAddAtOnceBtnPress = () => {
-    const alreadyItemExist = checkedList.some((food) => findFood(food.name));
+    const hasCheckListFood = checkedList.some((food) => findFood(food.name));
 
-    if (alreadyItemExist) {
-      const {
-        alreadyExist: { title, msg },
-      } = alertPhrase;
-      Alert.alert(title, msg);
+    if (hasCheckListFood) {
+      const { alreadyExist } = alertPhrase;
+      Alert.alert(alreadyExist.title, alreadyExist.msg);
       return;
     }
 
