@@ -3,6 +3,7 @@ export * from './deduplicate';
 export * from './keyboard';
 export * from './dimensions';
 export * from './debounce';
+export * from './getTagColor';
 
 // 냉장고 관련 함수
 export * from './findMatchNameFoods';
