@@ -29,7 +29,7 @@ interface Props {
 export default function PurchaseDateItem({ date, changeInfo }: Props) {
   const formattedDate = getFormattedDate(
     date === '' ? new Date() : new Date(date),
-    'YY년 MM월 DD일'
+    'YY.MM.DD'
   );
 
   const [purchaseOpen, setPurchaseOpen] = useState(false);

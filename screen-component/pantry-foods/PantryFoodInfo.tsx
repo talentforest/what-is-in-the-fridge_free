@@ -24,7 +24,7 @@ export default function PantryFoodInfo({ title, date }: Props) {
       <Text style={tw`text-[13px] text-slate-500 mr-1`}>{title} :</Text>
 
       <Text style={tw`text-[13px] text-slate-500 mr-1`}>
-        {getFormattedDate(date, 'YY년 MM월 DD일')}
+        {getFormattedDate(date, 'YY.MM.DD')}
       </Text>
 
       {title === '소비기한' && (

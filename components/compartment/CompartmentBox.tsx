@@ -78,8 +78,8 @@ export default function CompartmentBox({
           ))}
         </ScrollView>
       ) : (
-        <View style={tw`flex-1 flex-row items-center pb-5 justify-center`}>
-          <EmptySign message='식료품이 아직 없어요.' />
+        <View style={tw`flex-1 flex-row items-center justify-center`}>
+          <EmptySign message='식료품이 아직 없어요.' assetSize={60} />
         </View>
       )}
 

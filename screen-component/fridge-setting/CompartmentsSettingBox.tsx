@@ -2,7 +2,6 @@ import { Text } from '../../components/common/native-component';
 import { useSelector } from '../../redux/hook';
 import { View } from 'react-native';
 import { Space } from '../../constant/fridgeInfo';
-import { SCDream8 } from '../../constant/fonts';
 import { useHandleCompartments } from '../../hooks';
 
 import CountBtn from '../../components/buttons/CountBtn';
@@ -37,7 +36,7 @@ export default function CompartmentsSettingBox({ space }: Props) {
         />
 
         <View style={tw`flex-row items-center gap-1 mx-2`}>
-          <Text style={tw.style(`text-slate-800 text-[17px]`, SCDream8)}>
+          <Text style={tw.style(`text-slate-800 text-[17px]`)}>
             {fridgeInfo.compartments[space]}
           </Text>
           <Text style={tw`text-slate-500 pt-1`}>칸</Text>

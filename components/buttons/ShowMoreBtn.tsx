@@ -18,7 +18,7 @@ export default function ShowMoreBtn({ screen }: Props) {
       onPress={() => navigation.navigate(screen)}
       style={tw`flex-row items-center`}
     >
-      <Text style={tw.style(`text-slate-600 text-[13px]`)}>더보기</Text>
+      <Text style={tw.style(`text-slate-600 text-sm`)}>더보기</Text>
       <Icon
         name='chevron-right'
         type='MaterialCommunityIcons'

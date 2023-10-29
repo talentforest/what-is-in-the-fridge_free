@@ -5,7 +5,6 @@ import { useImageLoad, useSwiperAnimation } from '../hooks';
 import { onboardingSteps } from '../constant/onboardingInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../navigation/Navigation';
-import { SCDream5 } from '../constant/fonts';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch, useSelector } from '../redux/hook';
 import { toggleOnboarding } from '../redux/slice/onboardingSlice';
@@ -85,14 +84,10 @@ export default function OnBoarding() {
                 >
                   {/* 문구 */}
                   <View style={tw`items-center`}>
-                    <Text
-                      style={tw.style(`text-slate-800 text-[15px]`, SCDream5)}
-                    >
+                    <Text style={tw.style(`text-slate-800 text-[15px]`)}>
                       {desc.split(', ')[0]}
                     </Text>
-                    <Text
-                      style={tw.style(`text-slate-800 text-[15px]`, SCDream5)}
-                    >
+                    <Text style={tw.style(`text-slate-800 text-[15px]`)}>
                       {desc.split(', ')[1]}
                     </Text>
                   </View>

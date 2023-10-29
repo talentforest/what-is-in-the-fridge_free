@@ -90,7 +90,7 @@ export default function FridgeSetting() {
         </SelectContainter>
       </ScrollView>
 
-      <AnchoredBannerAd />
+      {/* <AnchoredBannerAd /> */}
     </SafeBottomAreaView>
   );
 }

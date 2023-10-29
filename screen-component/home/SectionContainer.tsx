@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
 } from '../../components/common/native-component';
-import { FontGmarketSansBold } from '../../constant/fonts';
 import { NavigateProp } from '../../navigation/Navigation';
 import { useNavigation } from '@react-navigation/native';
 
@@ -36,20 +35,18 @@ export default function SectionContainer({
         onPress={() => navigation.navigate(screen)}
         style={tw`flex-row justify-between`}
       >
-        <Text style={tw.style(`text-lg text-slate-700`, FontGmarketSansBold)}>
-          {title}
-        </Text>
+        <Text style={tw.style(`text-xl text-slate-700`)}>{title}</Text>
         <ShowMoreBtn screen={screen} />
       </TouchableOpacity>
       <MessageBox message={message} />
 
-      {foodsLength !== 0 && <View style={tw`mb-12 min-h-25`}>{children}</View>}
+      {foodsLength !== 0 && <View style={tw`mb-12 min-h-30`}>{children}</View>}
 
       {foodsLength === 0 && (
         <TouchableOpacity
           onPress={() => navigation.navigate(screen)}
           style={tw.style(
-            `items-center h-40 mt-2 mb-12 border-t border-slate-300 justify-center`
+            `items-center justify-center h-45 mt-2 mb-12 pt-4 border-t border-slate-300`
           )}
         >
           <EmptySign message={`${title}이 없어요.`} />

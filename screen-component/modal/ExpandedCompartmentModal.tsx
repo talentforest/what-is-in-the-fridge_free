@@ -59,8 +59,8 @@ export default function ExpandedCompartmentModal({
             ))}
           </ScrollView>
         ) : (
-          <View style={tw`h-50 flex-row items-center pb-10 justify-center`}>
-            <EmptySign message='식료품이 아직 없어요.' />
+          <View style={tw`h-50 flex-row items-center justify-center`}>
+            <EmptySign message='식료품이 아직 없어요.' assetSize={80} />
           </View>
         )}
       </View>

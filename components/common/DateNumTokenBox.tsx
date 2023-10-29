@@ -1,6 +1,5 @@
 import { TextInput, View } from 'react-native';
 import { useRef, useState } from 'react';
-import { SCDream8 } from '../../constant/fonts';
 import {
   DateState,
   DateType,
@@ -9,6 +8,7 @@ import { Text } from './native-component';
 import { formattedToday, getDateToken } from '../../util';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 import tw from 'twrnc';
+import { HSSaemaulRegular } from '../../constant/fonts';
 
 interface Props {
   dateToken: string[];
@@ -91,8 +91,7 @@ export default function DateNumTokenBox({
                   (isFocusedItem === -1 && idx - 1 === isFocusedItem)
                     ? 'border-blue-600 border-2'
                     : 'border-slate-200 border-2'
-                }`,
-                SCDream8
+                }`
               )}
             >
               <TextInput
@@ -110,7 +109,7 @@ export default function DateNumTokenBox({
                 onKeyPress={({ nativeEvent: { key } }) => onKeyPress(key, idx)}
                 style={tw.style(
                   `h-full text-xl rounded-md ${!PlatformIOS ? 'pl-1.5' : ''}`,
-                  { ...SCDream8, lineHeight: 24, letterSpacing: 1 }
+                  { ...HSSaemaulRegular, lineHeight: 24, letterSpacing: 1 }
                 )}
               />
             </View>

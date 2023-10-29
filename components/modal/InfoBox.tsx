@@ -28,7 +28,7 @@ export default function InfoBox({ label, iconName, children }: Props) {
           size={16}
           color={GRAY}
         />
-        <Text style={tw`text-slate-500 text-[15px]`}>{label} :</Text>
+        <Text style={tw`text-slate-500`}>{label} :</Text>
       </View>
 
       {/* 표 내용 */}

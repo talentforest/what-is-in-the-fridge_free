@@ -2,7 +2,6 @@ import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { useSelector } from '../../redux/hook';
 import { FormStep } from '../../constant/formInfo';
-import { SCDream5 } from '../../constant/fonts';
 import { getFormattedDate } from '../../util';
 import {
   useEditFood,
@@ -115,14 +114,14 @@ export default function FoodDetailModal({
                 size={18}
                 color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
               />
-              <Text style={tw.style(`text-stone-800`, SCDream5)}>{name}</Text>
+              <Text style={tw.style(`text-stone-800 text-lg`)}>{name}</Text>
             </View>
 
             <View>
               <InfoBox iconName='dots-grid' label='카테고리'>
                 <View style={tw`flex-row items-center gap-1`}>
                   <CategoryIcon category={category} size={16} />
-                  <Text style={tw`text-[15px]`}>{category}</Text>
+                  <Text style={tw``}>{category}</Text>
                 </View>
               </InfoBox>
 
@@ -132,15 +131,15 @@ export default function FoodDetailModal({
 
               {purchaseDate !== '' && (
                 <InfoBox iconName='calendar' label='구매날짜'>
-                  <Text style={tw`text-slate-800 text-[15px]`}>
-                    {getFormattedDate(purchaseDate, 'YY년 MM월 DD일')}
+                  <Text style={tw`text-slate-800`}>
+                    {getFormattedDate(purchaseDate, 'YY.MM.DD')}
                   </Text>
                 </InfoBox>
               )}
 
               {quantity !== '' && (
                 <InfoBox iconName='sort-numeric-ascending' label='수량'>
-                  <Text style={tw`text-[15px]`}>{comma(quantity)}</Text>
+                  <Text style={tw``}>{comma(quantity)}</Text>
                 </InfoBox>
               )}
 
@@ -150,9 +149,7 @@ export default function FoodDetailModal({
                     <Text
                       numberOfLines={3}
                       ellipsizeMode='tail'
-                      style={tw.style(`text-[15px]`, {
-                        lineHeight: 22,
-                      })}
+                      style={{ lineHeight: 22 }}
                     >
                       {memo}
                     </Text>

@@ -11,7 +11,7 @@ interface Props {
 export default function ExpiredExclamation({ expiredDate, size = 16 }: Props) {
   return (
     <>
-      {expired(expiredDate) && (
+      {expired(expiredDate) ? (
         <View style={tw`-mx-1`}>
           <Icon
             name='exclamation-thick'
@@ -20,9 +20,7 @@ export default function ExpiredExclamation({ expiredDate, size = 16 }: Props) {
             size={size}
           />
         </View>
-      )}
-
-      {getDiffDate(expiredDate) === 0 && (
+      ) : getDiffDate(expiredDate) === 0 ? (
         <View style={tw`-mx-1`}>
           <Icon
             name='exclamation-thick'
@@ -31,6 +29,8 @@ export default function ExpiredExclamation({ expiredDate, size = 16 }: Props) {
             size={size}
           />
         </View>
+      ) : (
+        <></>
       )}
     </>
   );

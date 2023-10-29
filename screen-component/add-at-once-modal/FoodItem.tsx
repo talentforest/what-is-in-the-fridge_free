@@ -8,7 +8,6 @@ import { getFormattedDate } from '../../util';
 import { Food } from '../../constant/foodInfo';
 
 import { useSlideAnimation } from '../../hooks';
-import { SCDream5 } from '../../constant/fonts';
 import { INDIGO } from '../../constant/colors';
 import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/native-component/Icon';
@@ -66,7 +65,6 @@ export default function FoodItem({
               <Text
                 style={tw.style(`text-sm text-slate-600`, {
                   letterSpacing: -0.5,
-                  ...SCDream5,
                 })}
               >
                 {getFormattedDate(food.expiredDate, 'YY.MM.DD')}

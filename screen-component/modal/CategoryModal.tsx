@@ -24,11 +24,11 @@ export default function CategoryModal({
   const { isLoaded, assets } = useImageLoad({
     images: [
       require('../../assets/category/category-fresh.png'),
-      require('../../assets/category/category-meat-fish-egg.png'),
+      require('../../assets/category/category-meat-fish.png'),
       require('../../assets/category/category-instant.png'),
       require('../../assets/category/category-dessert.png'),
       require('../../assets/category/category-sidedish.png'),
-      require('../../assets/category/category-dairy.png'),
+      require('../../assets/category/category-dairy-egg.png'),
       require('../../assets/category/category-sauce.png'),
       require('../../assets/category/category-drink.png'),
       require('../../assets/category/category-bakery.png'),

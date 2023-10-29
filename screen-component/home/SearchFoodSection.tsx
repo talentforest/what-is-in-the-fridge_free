@@ -15,6 +15,7 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import Icon from '../../components/common/native-component/Icon';
 import SearchedItem from './SearchedItem';
 import tw from 'twrnc';
+import { GRAY } from '../../constant/colors';
 
 export default function SearchFoodSection() {
   const [keyword, setKeyword] = useState('');
@@ -61,7 +62,7 @@ export default function SearchFoodSection() {
           placeholder='냉장고에 식료품이 있는지 검색해보세요.'
           blurOnSubmit={false}
           style={tw.style(
-            `h-11 my-0.5 pl-10 border-slate-300 items-center justify-center`,
+            `h-10 my-0.5 pl-10 border-slate-300 items-center justify-center`,
             shadowStyle(8)
           )}
           onSubmitEditing={onSubmitEditing}
@@ -71,7 +72,7 @@ export default function SearchFoodSection() {
           style={tw`absolute top-3 left-3`}
           disabled={keyword === ''}
         >
-          <Icon name='search' type='Feather' size={20} />
+          <Icon name='search' type='Feather' size={18} color={GRAY} />
         </TouchableOpacity>
       </View>
       <Animated.View

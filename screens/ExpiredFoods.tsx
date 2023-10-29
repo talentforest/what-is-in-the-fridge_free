@@ -15,7 +15,7 @@ import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
-import AnchoredBannerAd from '../components/ads/AnchoredBannerAd';
+// import AnchoredBannerAd from '../components/ads/AnchoredBannerAd';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -44,7 +44,20 @@ export default function ExpiredFoods() {
   }, []);
 
   const filteredList = getFilteredFoodList(currentFilter, allExpiredFoods());
+
   const allChecked = checkedList.length === filteredList.length;
+
+  const onDeletePress = () => {
+    onDeleteExpiredFoodPress(setAnimationState, animationState);
+  };
+
+  const animationAfterRun = () => {
+    afterAnimation(onDeleteExpiredFoodPress, allExpiredFoods());
+  };
+
+  const onEntirePress = () => {
+    onEntireBoxPress(filteredList);
+  };
 
   return (
     <SafeBottomAreaView>
@@ -62,16 +75,14 @@ export default function ExpiredFoods() {
           onCheckBoxPress={onCheckBoxPress}
           checkedList={checkedList}
           animationState={animationState}
-          afterAnimation={() =>
-            afterAnimation(onDeleteExpiredFoodPress, allExpiredFoods())
-          }
+          afterAnimation={animationAfterRun}
         />
 
         <TableFooterContainer active={!!checkedList.length}>
           <TableSelectedHandleBox
             list={checkedList}
             entireChecked={allChecked && !!checkedList.length}
-            onEntirePress={() => onEntireBoxPress(filteredList)}
+            onEntirePress={onEntirePress}
           >
             <SquareIconBtn
               btnName='장보기 추가'
@@ -81,9 +92,7 @@ export default function ExpiredFoods() {
             />
             <SquareIconBtn
               btnName='삭제'
-              onPress={() =>
-                onDeleteExpiredFoodPress(setAnimationState, animationState)
-              }
+              onPress={onDeletePress}
               icon='trash-can'
               disabled={checkedList.length === 0}
             />
@@ -92,7 +101,7 @@ export default function ExpiredFoods() {
       </Container>
 
       {/* 광고 */}
-      <AnchoredBannerAd />
+      {/* <AnchoredBannerAd /> */}
     </SafeBottomAreaView>
   );
 }

@@ -10,16 +10,14 @@ interface Props {
 
 export default function MessageBox({ message, color = 'gray' }: Props) {
   return (
-    <View style={tw`flex-row w-full items-start gap-1`}>
-      <View style={tw`mt-1`}>
-        <Icon
-          type='MaterialCommunityIcons'
-          name='comment-processing-outline'
-          size={14}
-          color={color}
-        />
-      </View>
-      <Text style={tw`text-sm text-${color}-600 flex-1`}>{message}</Text>
+    <View style={tw`flex-row w-full items-center gap-1`}>
+      <Icon
+        type='MaterialCommunityIcons'
+        name='comment-processing-outline'
+        size={14}
+        color={color}
+      />
+      <Text style={tw`text-${color}-500 flex-1`}>{message}</Text>
     </View>
   );
 }

@@ -13,6 +13,7 @@ import { useSelector } from '../../redux/hook';
 
 import ExpiredExclamation from './ExpiredExclamation';
 import tw from 'twrnc';
+import CategoryIcon from './CategoryIcon';
 
 interface Props {
   food: Food;
@@ -56,6 +57,8 @@ export default function FoodBox({ food }: Props) {
         )}
       >
         <ExpiredExclamation expiredDate={expiredDate} />
+
+        <CategoryIcon category={food.category} size={16} />
 
         <Text
           style={tw`${colorByFilter('text')} 

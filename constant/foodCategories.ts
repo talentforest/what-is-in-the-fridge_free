@@ -1,9 +1,9 @@
 export type Category =
   | '신선식품류'
-  | '정육·수산·계란'
+  | '정육·수산'
   | '간편·즉석식품류'
   | '라면·면류'
-  | '유제품류'
+  | '유제품류·계란'
   | '간식류'
   | '국·반찬류'
   | '양념·장류·소스·오일'
@@ -30,16 +30,16 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 2,
-    category: '정육·수산·계란',
-    image: 'category-meat-fish-egg.png',
-    icon: 'icon-meat-fish-egg.svg',
+    category: '정육·수산',
+    image: 'category-meat-fish.png',
+    icon: 'icon-meat-fish',
     color: '#d54e42',
   },
   {
     id: 3,
     category: '간편·즉석식품류',
     image: 'category-instant.png',
-    icon: 'hamburger',
+    icon: 'category-instant',
     color: '#ff9c11',
   },
   {
@@ -58,9 +58,9 @@ export const foodCategories: FoodCategory[] = [
   },
   {
     id: 6,
-    category: '유제품류',
-    image: 'category-dairy.png',
-    icon: 'cheese',
+    category: '유제품류·계란',
+    image: 'category-dairy-egg.png',
+    icon: 'dairy-egg',
     color: '#ffb668',
   },
   {
@@ -97,7 +97,7 @@ export const foodCategories: FoodCategory[] = [
     id: 11,
     category: '양념·장류·소스·오일',
     image: 'category-sauce.png',
-    icon: 'soy-sauce',
+    icon: 'category-sauce',
     color: '#ff3838',
   },
   {

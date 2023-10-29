@@ -25,21 +25,15 @@ export default function FavoriteFoodSection({ foodList }: Props) {
       screen='FavoriteFoods'
       foodsLength={foodList.length}
     >
-      {foodList.length ? (
+      {foodList.length && (
         <View style={tw`-mx-1 px-1 justify-center items-center`}>
-          <View style={tw`flex-wrap flex-row my-2.5 gap-1.5 justify-center`}>
+          <View style={tw`flex-wrap flex-row my-2.5 gap-1.5 w-full`}>
             {foodList.slice(-MAX_NUM).map((food) => (
               <FoodCard key={food.id} food={food} width={cardWidth} />
             ))}
 
             {foodList.length >= MAX_NUM && <ShowMoreBtnBox width={cardWidth} />}
           </View>
-        </View>
-      ) : (
-        <View
-          style={tw`shadow-lg items-center my-2 h-40 border border-slate-300 rounded-xl bg-white justify-center flex-1`}
-        >
-          <EmptySign message='자주 먹는 식료품이 없어요.' />
         </View>
       )}
     </SectionContainer>

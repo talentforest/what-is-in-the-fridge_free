@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { TextInput, TouchableOpacity } from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
-import { SCDream5 } from '../../constant/fonts';
 import { comma } from '../../util/commaNotation';
 
 import FormLabel from './FormLabel';
@@ -71,7 +70,7 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
             <TextInput
               style={tw.style(
                 `bg-white border-0 m-0.5 flex-1 rounded-lg`,
-                SCDream5
+                HSSaemaulRegular
               )}
               onChangeText={onChangeText}
               value={comma(quantity)}

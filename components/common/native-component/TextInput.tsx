@@ -1,5 +1,5 @@
 import { TextInput as Input, TextInputProps, TextStyle } from 'react-native';
-import { FontGmarketSansRegular } from '../../../constant/fonts';
+import { HSSaemaulRegular } from '../../../constant/fonts';
 import { LIGHT_GRAY } from '../../../constant/colors';
 import tw from 'twrnc';
 
@@ -11,8 +11,8 @@ export function TextInput({ style, ...props }: Props) {
   return (
     <Input
       style={tw.style(
-        `text-[16px] h-10 border border-slate-200 px-2.5 rounded-lg bg-white`,
-        FontGmarketSansRegular,
+        `text-base h-10 border border-slate-200 px-2.5 rounded-lg bg-white`,
+        HSSaemaulRegular,
         style
       )}
       numberOfLines={1}

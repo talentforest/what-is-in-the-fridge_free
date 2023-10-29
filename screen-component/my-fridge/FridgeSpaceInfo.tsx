@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { Space } from '../../constant/fridgeInfo';
-import { FontGmarketSansBold } from '../../constant/fonts';
 import { GRAY } from '../../constant/colors';
 import { useGetFoodList } from '../../hooks';
 
@@ -59,8 +58,7 @@ export default function FridgeSpaceInfo({ space, compartmentsLength }: Props) {
             </Text>
             <Text
               style={tw.style(
-                `text-[13px] ${getColor(foodList(space).length, name)} `,
-                FontGmarketSansBold
+                `text-sm ${getColor(foodList(space).length, name)} `
               )}
             >
               {foodList(space).length}개

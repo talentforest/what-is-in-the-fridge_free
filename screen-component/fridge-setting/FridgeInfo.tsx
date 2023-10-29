@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
-import { FontGmarketSansBold } from '../../constant/fonts';
 import { Space } from '../../constant/fridgeInfo';
 import { getCompartments } from '../../util';
 import { MaxCompartmentsNumObj } from '../../redux/slice/fridgeInfoSlice';
@@ -25,8 +24,7 @@ export default function FridgeInfo({ space, compartments }: Props) {
             style={tw.style(
               `${
                 space.includes('냉동') ? 'text-blue-600' : 'text-sky-600'
-              } text-sm pb-1`,
-              FontGmarketSansBold
+              } text-sm pb-1`
             )}
           >
             {space.slice(0, 3)}

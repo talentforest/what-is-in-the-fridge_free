@@ -1,4 +1,4 @@
-import { FontGmarketSansRegular } from '../constant/fonts';
+import { HSSaemaulRegular } from '../constant/fonts';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
@@ -36,7 +36,7 @@ const tabBarOptions = {
   tabBarLabelStyle: {
     paddingBottom: PlatformIOS ? 10 : 7,
     fontSize: 10,
-    ...FontGmarketSansRegular,
+    ...HSSaemaulRegular,
   },
 };
 
@@ -53,7 +53,7 @@ const headerOptions: BottomTabNavigationOptions = {
   },
   headerTitleStyle: {
     fontSize: 17,
-    ...FontGmarketSansRegular,
+    ...HSSaemaulRegular,
   },
   headerTitleAlign: 'center',
 };

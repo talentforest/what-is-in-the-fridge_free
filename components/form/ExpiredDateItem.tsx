@@ -48,7 +48,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
         >
           <View style={tw`flex-row gap-2 items-center`}>
             <TextInput
-              value={getFormattedDate(date, 'YY년 MM월 DD일')}
+              value={getFormattedDate(date, 'YY.MM.DD')}
               editable={false}
               pointerEvents='none'
               style={tw`border-0 pl-0 my-0 py-0 px-0 mr-1 text-slate-900`}

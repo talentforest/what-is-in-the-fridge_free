@@ -1,6 +1,6 @@
 import { Food } from '../../constant/foodInfo';
 import { FlatList, View } from 'react-native';
-import { AnimationState } from '../../hooks/';
+import { AnimationState, useImageLoad } from '../../hooks/';
 import { useSelector } from '../../redux/hook';
 import { MutableRefObject } from 'react';
 
@@ -71,6 +71,7 @@ export default function TableBody({
                 ? `${title}이 없어요`
                 : `${filter}에 ${title}이 없어요.`
             }
+            assetSize={160}
           />
         </View>
       )}

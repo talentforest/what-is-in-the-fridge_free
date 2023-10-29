@@ -2,7 +2,6 @@ import { ScrollView, View } from 'react-native';
 import { Text } from '../components/common/native-component';
 import { useSelector } from '../redux/hook';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Cafe24Ssurround } from '../constant/fonts';
 import { useGetFoodList } from '../hooks';
 import { PlatformIOS } from '../constant/statusBarHeight';
 
@@ -29,13 +28,12 @@ const Home = () => {
         <Container>
           <View
             style={tw`flex-row items-center justify-between ${
-              PlatformIOS ? 'my-4' : 'mt-2 mb-4'
+              PlatformIOS ? 'my-4' : 'my-2'
             }`}
           >
             <Text
               style={tw.style(
-                `text-[#3284FF] ${PlatformIOS ? 'text-[22px]' : 'text-2xl'}`,
-                Cafe24Ssurround
+                `text-[#3284FF] ${PlatformIOS ? 'text-[22px]' : 'text-2xl'}`
               )}
             >
               냉장고에 뭐가 있지
@@ -52,9 +50,7 @@ const Home = () => {
         </Container>
 
         {/* 광고 */}
-        <View style={tw`my-5`}>
-          <AnchoredBannerAd />
-        </View>
+        <View style={tw`my-5`}>{/* <AnchoredBannerAd /> */}</View>
       </ScrollView>
     </SafeAreaView>
   );

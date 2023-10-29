@@ -1,13 +1,7 @@
 export const fonts = {
-  GmarketSans_500: require('../assets/fonts/GmarketSans_medium.ttf'),
-  GmarketSans_700: require('../assets/fonts/GmarketSans_bold.ttf'),
-  Cafe24_Ssurround: require('../assets/fonts/Cafe24Ssurround.ttf'),
-  SCDream8: require('../assets/fonts/SCDream8.otf'),
-  SCDream5: require('../assets/fonts/SCDream5.otf'),
+  HSSaemaul_Regular: require('../assets/fonts/HSSaemaul_Regular.ttf'),
+  Ownglyph_Ddakong: require('../assets/fonts/Ownglyph_Ddakong.ttf'),
 };
 
-export const FontGmarketSansRegular = { fontFamily: 'GmarketSans_500' };
-export const FontGmarketSansBold = { fontFamily: 'GmarketSans_700' };
-export const Cafe24Ssurround = { fontFamily: 'Cafe24_Ssurround' };
-export const SCDream8 = { fontFamily: 'SCDream8' };
-export const SCDream5 = { fontFamily: 'SCDream5' };
+export const HSSaemaulRegular = { fontFamily: 'HSSaemaul_Regular' };
+export const Ownglyph_Ddakong = { fontFamily: 'Ownglyph_Ddakong' };
