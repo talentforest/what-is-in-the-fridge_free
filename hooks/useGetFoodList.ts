@@ -1,9 +1,9 @@
-import { useRoute } from '@react-navigation/native';
 import { Category, foodCategories } from '../constant/foodCategories';
 import { Food } from '../constant/foodInfo';
 import { CompartmentNum, Space, SpaceType } from '../constant/fridgeInfo';
 import { useSelector } from '../redux/hook';
 import { Filter, expired, getLeftDays, leftThreeDays, leftWeek } from '../util';
+import { useRouteName } from './useRouteName';
 
 export const useGetFoodList = () => {
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
@@ -93,8 +93,8 @@ export const useGetFoodList = () => {
     return foodList.filter((food) => food.category === filter);
   };
 
-  const route = useRoute();
-  const routeFavoriteFoods = route.name === 'FavoriteFoods';
+  const { routeFavoriteFoods } = useRouteName();
+
   const foodList = routeFavoriteFoods ? favoriteFoods : pantryFoods;
 
   const changeListByCategoryFilter = (categoryList: Category[]) => {

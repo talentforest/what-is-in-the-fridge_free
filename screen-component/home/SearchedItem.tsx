@@ -10,9 +10,10 @@ import { NavigateProp } from '../../navigation/Navigation';
 import { Food } from '../../constant/foodInfo';
 import { useDispatch } from '../../redux/hook';
 import { search } from '../../redux/slice/searchedFoodSlice';
+
+import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
-import { GRAY } from '../../constant/colors';
 
 interface Props {
   food: Food;
@@ -21,7 +22,7 @@ interface Props {
 export default function SearchedItem({ food }: Props) {
   const navigation = useNavigation<NavigateProp>();
 
-  const { name, space, compartmentNum } = food;
+  const { name, space, category } = food;
 
   const dispatch = useDispatch();
 
@@ -35,14 +36,15 @@ export default function SearchedItem({ food }: Props) {
   return (
     <TouchableOpacity
       onPress={() => onNavigatePress(space)}
-      style={tw`h-14 bg-white shadow-md rounded-lg px-2 justify-center`}
+      style={tw`h-12 bg-blue-50 shadow-md rounded-xl px-2.5 justify-center`}
     >
-      <Text style={tw` text-slate-700 text-sm`}>{cutLetter(name, 11)}</Text>
-      <View style={tw`flex-row items-center justify-end`}>
-        <Text style={tw` text-slate-500 text-sm`}>
-          <Text style={tw`text-blue-600 text-xs`}>{space}</Text>
-        </Text>
-        <Icon type='MaterialCommunityIcons' name='arrow-top-right' size={12} />
+      <View style={tw`flex-row items-center gap-1`}>
+        <CategoryIcon category={category} size={12} />
+        <Text style={tw`text-slate-700 text-base`}>{cutLetter(name, 11)}</Text>
+      </View>
+      <View style={tw`flex-row items-center`}>
+        <Text style={tw`text-blue-600 text-sm`}>{space}</Text>
+        <Icon type='Feather' name='arrow-up-right' size={12} />
       </View>
     </TouchableOpacity>
   );

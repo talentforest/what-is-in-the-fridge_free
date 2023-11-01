@@ -19,7 +19,7 @@ export default function ControlDateBtn({ type, btn, changeDate, date }: Props) {
     <TouchableOpacity
       onPress={() => changeDate(btn.calculateDate(type, new Date(date)))}
       style={tw.style(
-        `pl-2.5 pr-1.5 h-9 rounded-3xl flex-row items-center justify-center 
+        `pl-2.8 pr-1.8 h-7 rounded-3xl flex-row items-center justify-center 
         bg-${btn.btnColor}-50  border border-${btn.btnColor}-200`,
         shadowStyle(3)
       )}
@@ -27,7 +27,7 @@ export default function ControlDateBtn({ type, btn, changeDate, date }: Props) {
       <Text
         style={tw`-ml-0.5 ${
           btn.label === '오늘' ? 'pr-1' : ''
-        } text-white text-${btn.btnColor}-700 text-[13px]`}
+        } text-white text-${btn.btnColor}-700 text-base`}
       >
         {btn.label}
       </Text>
@@ -40,7 +40,7 @@ export default function ControlDateBtn({ type, btn, changeDate, date }: Props) {
         <Icon
           name={type === 'add' ? 'plus' : 'minus'}
           type='Feather'
-          size={14}
+          size={15}
           color={btn.btnColor}
         />
       )}

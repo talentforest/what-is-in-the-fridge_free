@@ -1,16 +1,14 @@
-import { PlatformIOS } from './statusBarHeight';
-
 export type OnboardingStep = { step: number; desc: string; image: string };
 
 export const onboardingSteps: OnboardingStep[] = [
   {
     step: 1,
-    desc: '우리집에 맞게, 냉장고를 커스텀할 수 있어요.',
-    image: 'android-my-fridge.png',
+    desc: '우리집 냉장고에 맞게, 커스텀할 수 있어요.',
+    image: 'android-fridge-setting.png',
   },
   {
     step: 2,
-    desc: '냉장고를 열지 않고도, 칸별로 식료품들을 한눈에 파악해요.',
+    desc: '냉장고를 열지 않고, 칸별로 식료품들을 한눈에 파악해요.',
     image: 'android-compartments.png',
   },
   {
@@ -30,13 +28,13 @@ export const onboardingSteps: OnboardingStep[] = [
   },
   {
     step: 6,
-    desc: '자주 먹는 식료품 목록을 통해 어떤 식료품을, 장보기 목록에 넣어야 할지 파악해요.',
+    desc: '자주 먹는 식료품 목록을 통해, 어떤 식료품을 구매해야 할지 파악해요.',
     image: 'android-favorite-list.png',
   },
 
   {
     step: 7,
     desc: '우리집 냉장고에 뭐가 있는지 고민하지 마세요., 그럼 우리집 식료품 관리를 시작해볼까요?',
-    image: 'android-expired-list.png',
+    image: 'android-home.png',
   },
 ];

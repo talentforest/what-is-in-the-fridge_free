@@ -54,11 +54,11 @@ export default function AddAtOnceModal({
       animationIn='fadeIn'
       closeModal={closeModal}
     >
-      <View style={tw`bg-stone-100 px-5 pb-4 rounded-b-2xl`}>
+      <View style={tw`bg-stone-100 px-5 py-3 rounded-b-2xl`}>
         {/* 1단계 */}
         {currentStep.step === 1 && (
           <View>
-            <View style={tw`flex-row gap-1.5`}>
+            <View style={tw`flex-row gap-1`}>
               {(['냉장고', '팬트리'] as StorageType[]).map((storage) => (
                 <SpaceBtn
                   key={storage}
@@ -85,7 +85,6 @@ export default function AddAtOnceModal({
                     btnName='다음 단계'
                     color='gray'
                     onPress={onNextStepPress}
-                    textSize={16}
                     tailIcon='chevron-right'
                   />
                 </View>
@@ -103,8 +102,8 @@ export default function AddAtOnceModal({
               active={currentStorage !== ''}
             />
 
-            <View style={tw`mt-6 mb-1`}>
-              <Text style={tw`text-sm text-indigo-600`}>
+            <View style={tw`mt-4 mb-1`}>
+              <Text style={tw`text-base text-blue-600`}>
                 {!isEditing
                   ? '추가할 식료품 정보 목록'
                   : '선택한 식료품 정보 수정'}

@@ -14,9 +14,9 @@ interface Props {
 
 export default function FormLabel({ label, option, isOpen, onPress }: Props) {
   return (
-    <View style={tw`flex-row items-center gap-1 justify-between pb-0.5`}>
+    <View style={tw`flex-row items-center justify-between`}>
       <View style={tw`flex-row items-center`}>
-        <Text style={tw`text-blue-600 text-sm`}>{label}</Text>
+        <Text style={tw`text-blue-600 text-base`}>{label}</Text>
       </View>
 
       {option && onPress && (
@@ -27,14 +27,10 @@ export default function FormLabel({ label, option, isOpen, onPress }: Props) {
           <Icon
             name={isOpen ? 'chevron-up' : 'plus'}
             type='Feather'
-            size={16}
+            size={15}
             color={isOpen ? LIGHT_GRAY : GRAY}
           />
-          <Text
-            style={tw`text-[14px] ${
-              isOpen ? 'text-slate-500' : 'text-slate-700'
-            }`}
-          >
+          <Text style={tw`text-sm text-slate-500`}>
             {isOpen ? '생략하기' : '추가하기'}
           </Text>
         </TouchableOpacity>

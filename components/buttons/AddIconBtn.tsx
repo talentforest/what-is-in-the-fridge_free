@@ -12,13 +12,13 @@ export default function AddIconBtn({ onPress, disabled }: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw`h-full justify-center w-[13%] pr-1 items-center`}
+      style={tw`h-full justify-center w-[12%] border border-white rounded-xl items-center`}
       disabled={disabled}
     >
       <Icon
-        type='MaterialCommunityIcons'
+        type='Feather'
         name='plus'
-        size={23}
+        size={20}
         color={disabled ? '#e0e0e0' : BLUE}
       />
     </TouchableOpacity>

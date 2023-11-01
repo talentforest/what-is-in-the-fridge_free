@@ -24,19 +24,12 @@ export default function TableSelectedHandleBox({
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 80,
+    toValue: 72,
     active: !!list.length && showBtn,
   });
 
   return (
-    <Animated.View
-      style={{
-        height,
-        overflow: 'hidden',
-        marginHorizontal: -16,
-        paddingHorizontal: 16,
-      }}
-    >
+    <Animated.View style={tw.style(`overflow-hidden -mx-4 px-4`, { height })}>
       <View style={tw.style(`flex-row justify-between items-center h-full`)}>
         <View style={tw`justify-center`}>
           <CheckBoxItem
@@ -46,7 +39,7 @@ export default function TableSelectedHandleBox({
             inActiveColor='#333'
           />
           {!!list.length && (
-            <Text style={tw`text-sm ml-5.8 -mt-0.5 text-blue-600`}>
+            <Text style={tw`text-base ml-5.5 -mt-1 text-blue-600`}>
               {list.length}개 선택
             </Text>
           )}

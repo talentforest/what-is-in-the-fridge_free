@@ -27,12 +27,16 @@ import TableFooterContainer from '../components/table/TableFooterContainer';
 import AddAtOnceModal from '../screen-component/modal/AddAtOnceModal';
 
 export default function ShoppingList() {
+  const { shoppingList } = useSelector((state) => state.shoppingList);
   const [modalVisible, setModalVisible] = useState(false);
   const [addAtOnceModal, setAddAtOnceModal] = useState(false);
   const [keyword, setKeyword] = useState('');
-  const { shoppingList } = useSelector((state) => state.shoppingList);
 
   const flatListRef = useRef<FlatList | null>(null);
+
+  const { findFood } = useFindFood();
+
+  const dispatch = useDispatch();
 
   const {
     checkedList,
@@ -55,12 +59,6 @@ export default function ShoppingList() {
 
   const { onSubmitShoppingListItem } = useSubmitFoodsFromInput();
 
-  const { findFood } = useFindFood();
-
-  const dispatch = useDispatch();
-
-  const allChecked = checkedList.length === shoppingList.length;
-
   const onSubmitEditing = () => {
     if (keyword === '') return Keyboard.dismiss();
     onSubmitShoppingListItem(keyword, setAnimationState);
@@ -76,12 +74,9 @@ export default function ShoppingList() {
       Alert.alert(alreadyExist.title, alreadyExist.msg);
       return;
     }
-
     if (checkedList.length > MAX_NUM_ADD_AT_ONCE) {
-      const {
-        excess: { title, msg },
-      } = alertPhrase;
-      Alert.alert(title, msg);
+      const { excess } = alertPhrase;
+      Alert.alert(excess.title, excess.msg);
       return;
     }
 
@@ -92,6 +87,8 @@ export default function ShoppingList() {
   const onDeleteBtnPress = () => {
     onDeleteFoodPress(setAnimationState, animationState, shoppingList);
   };
+
+  const allChecked = checkedList.length === shoppingList.length;
 
   return (
     <KeyboardAvoidingView>

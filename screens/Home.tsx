@@ -1,57 +1,75 @@
-import { ScrollView, View } from 'react-native';
-import { Text } from '../components/common/native-component';
-import { useSelector } from '../redux/hook';
+import { View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useGetFoodList } from '../hooks';
-import { PlatformIOS } from '../constant/statusBarHeight';
+import { useImageLoad } from '../hooks';
+import { useState } from 'react';
+import { Food } from '../constant/foodInfo';
+import { navigationBtns } from '../constant/navigationBtn';
+import { findAsset } from '../util';
 
 import Container, { BG_COLOR } from '../components/common/Container';
-import ShoppingListSection from '../screen-component/home/ShoppingListSection';
-import ExpiredFoodSection from '../screen-component/home/ExpiredFoodSection';
-import FavoriteFoodSection from '../screen-component/home/FavoriteFoodSection';
 import SearchFoodSection from '../screen-component/home/SearchFoodSection';
-import AnchoredBannerAd from '../components/ads/AnchoredBannerAd';
+import Fridge from '../components/fridge/Fridge';
+import SearchedFoodList from '../screen-component/home/SearchedFoodList';
+import NavigationBtnBox from '../screen-component/home/NavigationBtnBox';
+import PantyEntranceBtn from '../screen-component/home/PantyEntranceBtn';
+import HomeHeader from '../screen-component/home/HomeHeader';
 import tw from 'twrnc';
 
 const Home = () => {
-  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
-  const { shoppingList } = useSelector((state) => state.shoppingList);
+  const [keyword, setKeyword] = useState('');
+  const [searchedFoods, setSearchedFoods] = useState<Food[]>([]);
 
-  const { allExpiredFoods } = useGetFoodList();
+  const { height } = useWindowDimensions();
+
+  const { isLoaded, assets } = useImageLoad({
+    images: [
+      require('../assets/food/apple.png'),
+      require('../assets/food/meat.png'),
+      require('../assets/shoppinglist.png'),
+      require('../assets/expired-foods.png'),
+      require('../assets/favorite-foods.png'),
+    ],
+  });
+
+  if (!isLoaded) return null;
 
   return (
-    <SafeAreaView edges={['top']} style={tw`${BG_COLOR}`}>
-      <ScrollView
-        contentContainerStyle={tw`${BG_COLOR}`}
-        showsVerticalScrollIndicator={false}
-      >
-        <Container>
+    <SafeAreaView edges={['top']} style={tw`${BG_COLOR} flex-1`}>
+      <Container>
+        <View style={tw`flex-1 mt-1`}>
+          <HomeHeader />
+
+          <SearchFoodSection
+            keyword={keyword}
+            setKeyword={setKeyword}
+            setSearchedFoods={setSearchedFoods}
+          />
+
           <View
-            style={tw`flex-row items-center justify-between ${
-              PlatformIOS ? 'my-4' : 'my-2'
-            }`}
+            style={tw`h-[${height * 0.6}px] items-center justify-center mb-2`}
           >
-            <Text
-              style={tw.style(
-                `text-[#3284FF] ${PlatformIOS ? 'text-[22px]' : 'text-2xl'}`
-              )}
-            >
-              냉장고에 뭐가 있지
-            </Text>
+            <PantyEntranceBtn />
+            <Fridge />
           </View>
 
-          <SearchFoodSection />
+          <View style={tw`absolute top-23 w-full`}>
+            <SearchedFoodList keyword={keyword} searchedFoods={searchedFoods} />
+          </View>
 
-          <ShoppingListSection foodList={shoppingList} />
-
-          <ExpiredFoodSection foodList={allExpiredFoods()} />
-
-          <FavoriteFoodSection foodList={favoriteFoods} />
-        </Container>
-
-        {/* 광고 */}
-        <View style={tw`my-5`}>{/* <AnchoredBannerAd /> */}</View>
-      </ScrollView>
+          {assets && (
+            <View style={tw`pb-6 pt-2 flex-row justify-between`}>
+              {navigationBtns.map(({ title, assetName, navigationName }) => (
+                <NavigationBtnBox
+                  key={title}
+                  title={title}
+                  uri={findAsset(assets, assetName).localUri}
+                  navigatonName={navigationName}
+                />
+              ))}
+            </View>
+          )}
+        </View>
+      </Container>
     </SafeAreaView>
   );
 };

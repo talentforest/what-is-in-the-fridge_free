@@ -43,7 +43,7 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
         formSteps={formSteps}
         currentStep={currentStep as FormStep}
       />
-      <View style={tw`overflow-hidden w-full min-h-70`}>
+      <View style={tw`overflow-hidden w-full min-h-60`}>
         <Animated.View
           style={{
             transform: [{ translateX: stepTranslateX }],
@@ -94,17 +94,19 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
                     </FormSectionContainer>
                   )}
                   {name === '선택정보' && (
-                    <View style={tw`w-full gap-2 py-2 px-6 min-h-50`}>
-                      <PurchaseDateItem
-                        date={food.purchaseDate}
-                        changeInfo={changeInfo}
-                      />
-                      <QuantityItem
-                        quantity={food.quantity}
-                        changeInfo={changeInfo}
-                      />
-                      <MemoItem memo={food.memo} changeInfo={changeInfo} />
-                    </View>
+                    <FormSectionContainer>
+                      <View style={tw`min-h-50 gap-2`}>
+                        <PurchaseDateItem
+                          date={food.purchaseDate}
+                          changeInfo={changeInfo}
+                        />
+                        <QuantityItem
+                          quantity={food.quantity}
+                          changeInfo={changeInfo}
+                        />
+                        <MemoItem memo={food.memo} changeInfo={changeInfo} />
+                      </View>
+                    </FormSectionContainer>
                   )}
                 </View>
               ))}

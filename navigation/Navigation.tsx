@@ -6,7 +6,6 @@ import {
 import { NavigationProp } from '@react-navigation/native';
 import { DEEP_GRAY, HEADER_BGCOLOR } from '../constant/colors';
 
-import MyTabs, { RootTabParamList } from './MyTabs';
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
 import ExpiredFoods from '../screens/ExpiredFoods';
@@ -15,19 +14,24 @@ import HeaderBtn from '../components/buttons/HeaderBtn';
 import OnBoarding from '../screens/OnBoarding';
 import ShoppingList from '../screens/ShoppingList';
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
+import Home from '../screens/Home';
+import PantryFoods from '../screens/PantryFoods';
+import Setting from '../screens/Setting';
 
 export type RootStackParamList = {
-  MyTabs: undefined;
+  Home: undefined;
   OnBoarding: undefined;
   Compartments: undefined | object;
   FavoriteFoods: undefined;
   ExpiredFoods: undefined;
   ShoppingList: undefined;
+  PantryFoods: undefined;
+  Setting: undefined;
   FridgeSetting: undefined;
 };
 
-export type RouteName = keyof RootTabParamList | keyof RootStackParamList;
-export type RootNavParamList = RootTabParamList & RootStackParamList;
+export type RouteName = keyof RootStackParamList;
+export type RootNavParamList = RootStackParamList;
 export type NavigateProp = NavigationProp<RootNavParamList>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -59,16 +63,28 @@ const Navigation = () => {
           component={OnBoarding}
         />
       )}
+
       <Stack.Screen
-        options={{ headerShown: false }}
-        name='MyTabs'
-        component={MyTabs}
+        name='Home'
+        component={Home}
+        options={{ ...options, headerShown: false }}
       />
+
       <Stack.Screen
         name='Compartments'
         component={Compartments}
-        options={{ ...options, animation: 'default' }}
+        options={{ ...options }}
       />
+
+      <Stack.Screen
+        name='PantryFoods'
+        component={PantryFoods}
+        options={{
+          ...options,
+          headerTitle: () => <NavigationHeaderTitle title='팬트리 식료품' />,
+        }}
+      />
+
       <Stack.Screen
         name='FavoriteFoods'
         component={FavoriteFoods}
@@ -79,6 +95,7 @@ const Navigation = () => {
           ),
         }}
       />
+
       <Stack.Screen
         name='ExpiredFoods'
         component={ExpiredFoods}
@@ -89,6 +106,7 @@ const Navigation = () => {
           ),
         }}
       />
+
       <Stack.Screen
         name='ShoppingList'
         component={ShoppingList}
@@ -97,12 +115,24 @@ const Navigation = () => {
           headerTitle: () => <NavigationHeaderTitle title='장보기 목록 관리' />,
         }}
       />
+
+      <Stack.Screen
+        name='Setting'
+        component={Setting}
+        options={{
+          ...options,
+          headerTitle: () => <NavigationHeaderTitle title='설정' />,
+        }}
+      />
+
       <Stack.Screen
         name='FridgeSetting'
         component={FridgeSetting}
         options={{
           ...options,
-          headerTitle: () => <NavigationHeaderTitle title='나의 냉장고 설정' />,
+          headerTitle: () => (
+            <NavigationHeaderTitle title='나의 냉장고 커스텀' />
+          ),
         }}
       />
     </Stack.Navigator>

@@ -1,25 +1,15 @@
 import { Animated, Keyboard, View } from 'react-native';
-import { Text, TextInput, TouchableOpacity } from '../common/native-component';
-import {
-  formattedToday,
-  getColorByLeftDay,
-  getDiffDate,
-  getFormattedDate,
-  getRelativeTime,
-  getTWColorByLeftDay,
-} from '../../util';
+import { InputStyle, TextInput } from '../common/native-component';
+import { getFormattedDate } from '../../util';
 import { useEffect, useState } from 'react';
 import { useSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { minusControlDateBtns } from '../../constant/controlDateBtns';
 
 import FormLabel from './FormLabel';
-import tw from 'twrnc';
-import Icon from '../common/native-component/Icon';
 import ControlDateBtn from '../buttons/ControlDateBtn';
-import {
-  controlDateBtns,
-  minusControlDateBtns,
-} from '../../constant/controlDateBtns';
+import RelativeTime from '../common/RelativeTime';
+import tw from 'twrnc';
 
 interface Props {
   date: string;
@@ -36,7 +26,7 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 91,
+    toValue: 82,
     active: purchaseOpen,
   });
 
@@ -66,16 +56,10 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
         onPress={onPress}
       />
 
-      <Animated.View
-        style={{
-          height,
-          overflow: 'hidden',
-          marginHorizontal: -4,
-        }}
-      >
+      <Animated.View style={tw.style(`overflow-hidden -mx-1 px-1`, { height })}>
         <View
           style={tw.style(
-            `h-11 mx-1 px-2 border border-slate-300 bg-white rounded-lg flex-row items-center`,
+            `flex-row items-center ${InputStyle} pl-0`,
             shadowStyle(3)
           )}
         >
@@ -83,12 +67,10 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
             value={formattedDate}
             editable={false}
             pointerEvents='none'
-            style={tw`border-0 pl-0 my-0 py-0 text-slate-900`}
+            style={tw`border-0 h-full my-1`}
           />
 
-          <Text style={tw`text-sm ${getTWColorByLeftDay(date)}`}>
-            {getRelativeTime(date)}
-          </Text>
+          {date !== '' && <RelativeTime date={date} />}
         </View>
 
         <View style={tw`mt-2 gap-1 flex-row flex-wrap items-start`}>

@@ -7,8 +7,8 @@ import {
 import { Text } from './native-component';
 import { formattedToday, getDateToken } from '../../util';
 import { PlatformIOS } from '../../constant/statusBarHeight';
-import tw from 'twrnc';
 import { HSSaemaulRegular } from '../../constant/fonts';
+import tw from 'twrnc';
 
 interface Props {
   dateToken: string[];
@@ -85,13 +85,13 @@ export default function DateNumTokenBox({
             <View
               style={tw.style(
                 `bg-stone-100 w-[${width}px] aspect-square 
-                text-xl rounded-md items-center justify-center ${
-                  isFocusedItem === idx ||
-                  (isFocusedItem === 6 && idx + 1 === isFocusedItem) ||
-                  (isFocusedItem === -1 && idx - 1 === isFocusedItem)
-                    ? 'border-blue-600 border-2'
-                    : 'border-slate-200 border-2'
-                }`
+                 rounded-md items-center justify-center ${
+                   isFocusedItem === idx ||
+                   (isFocusedItem === 6 && idx + 1 === isFocusedItem) ||
+                   (isFocusedItem === -1 && idx - 1 === isFocusedItem)
+                     ? 'bg-amber-100 border-amber-400 border-2'
+                     : 'border-slate-200 border-2'
+                 }`
               )}
             >
               <TextInput
@@ -108,8 +108,8 @@ export default function DateNumTokenBox({
                 onChangeText={(text) => onChangeText(text, idx)}
                 onKeyPress={({ nativeEvent: { key } }) => onKeyPress(key, idx)}
                 style={tw.style(
-                  `h-full text-xl rounded-md ${!PlatformIOS ? 'pl-1.5' : ''}`,
-                  { ...HSSaemaulRegular, lineHeight: 24, letterSpacing: 1 }
+                  `h-full text-2xl rounded-md ${PlatformIOS ? '' : 'pl-2'}`,
+                  { ...HSSaemaulRegular, letterSpacing: 1 }
                 )}
               />
             </View>
@@ -127,7 +127,7 @@ export default function DateNumTokenBox({
 const DateTypeText = ({ dateType }: { dateType: DateType }) => {
   return (
     <Text
-      style={tw`text-slate-500 text-[14px] self-end 
+      style={tw`text-slate-500 self-end 
       ${dateType !== '일' ? 'mr-1' : ''}`}
     >
       {dateType}

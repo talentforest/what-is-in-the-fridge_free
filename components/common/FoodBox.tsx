@@ -1,72 +1,94 @@
-import { Animated, View } from 'react-native';
-import { Text } from './native-component';
+import { Animated, LayoutChangeEvent, ScrollView, View } from 'react-native';
+import { Text, TouchableOpacity } from './native-component';
 import {
+  colorByFilter,
   cutLetter,
-  expired,
-  getTagColor,
-  leftThreeDays,
-  leftWeek,
+  getColorByLeftDay,
+  getDiffDate,
+  scrollTo,
 } from '../../util';
 import { Food } from '../../constant/foodInfo';
 import { useHandleFilter, usePulseAnimation } from '../../hooks';
-import { useSelector } from '../../redux/hook';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { select } from '../../redux/slice/selectedFoodSlice';
+import { shadowStyle } from '../../constant/shadowStyle';
+import { MutableRefObject } from 'react';
+import { INDIGO } from '../../constant/colors';
 
-import ExpiredExclamation from './ExpiredExclamation';
-import tw from 'twrnc';
 import CategoryIcon from './CategoryIcon';
+import tw from 'twrnc';
 
 interface Props {
   food: Food;
+  setOpenFoodDetailModal: (open: boolean) => void;
+  scrollViewRef?: MutableRefObject<ScrollView>;
 }
 
-export default function FoodBox({ food }: Props) {
-  const { searchedFoodName } = useSelector((state) => state.searchedFoodName);
+export default function FoodBox({
+  food,
+  setOpenFoodDetailModal,
+  scrollViewRef,
+}: Props) {
   const { expiredDate } = food;
+  const { searchedFoodName } = useSelector((state) => state.searchedFoodName);
 
   const { currentFilter } = useHandleFilter();
 
-  const colorByFilter = (type: 'text' | 'bg') => {
-    const active =
-      currentFilter === '소비기한 만료'
-        ? expired(expiredDate)
-        : currentFilter === '소비기한 3일 이내'
-        ? leftThreeDays(expiredDate)
-        : currentFilter === '소비기한 일주일 이내'
-        ? leftWeek(expiredDate)
-        : false;
-    return getTagColor(currentFilter, active, type);
+  const active = searchedFoodName === food.name;
+  const { opacity, translateY } = usePulseAnimation({ active });
+
+  const dispatch = useDispatch();
+
+  const onItemLayout = (event: LayoutChangeEvent, food: Food) => {
+    if (searchedFoodName === food.name) {
+      const { y } = event.nativeEvent.layout;
+      scrollTo(scrollViewRef, 0, y);
+    }
+    return null;
   };
 
-  const searchActive = searchedFoodName === food.name;
-
-  const { opacity, translateY } = usePulseAnimation({ active: searchActive });
+  const onPress = () => {
+    dispatch(select(food));
+    setOpenFoodDetailModal(true);
+  };
 
   return (
-    <Animated.View
-      style={{
-        borderRadius: 8,
-        backgroundColor: searchActive ? '#dcd3ff' : '#fff',
-        transform: [{ translateY }],
-        opacity,
-      }}
+    <TouchableOpacity
+      onPress={onPress}
+      style={tw.style(`rounded-lg bg-white`, shadowStyle(3))}
+      onLayout={(event: LayoutChangeEvent) => onItemLayout(event, food)}
     >
-      <View
-        style={tw.style(
-          `${colorByFilter('bg')} 
-          gap-1 h-8.5 rounded-lg justify-center items-center flex-row border border-slate-300 px-2.5`
-        )}
+      <Animated.View
+        style={tw.style(`rounded-lg`, {
+          borderRadius: 8,
+          backgroundColor: active ? INDIGO : '#fff',
+          transform: [{ translateY }],
+          opacity,
+        })}
       >
-        <ExpiredExclamation expiredDate={expiredDate} />
-
-        <CategoryIcon category={food.category} size={16} />
-
-        <Text
-          style={tw`${colorByFilter('text')} 
-          ${searchActive ? 'text-indigo-600' : ''} text-center`}
+        <View
+          style={tw.style(`border border-slate-300 gap-1 h-8 rounded-lg justify-center items-center flex-row px-2.5
+          ${colorByFilter(currentFilter, expiredDate, 'bg')} 
+          ${active ? 'border-indigo-300' : ''}`)}
         >
-          {cutLetter(food.name, 9)}
-        </Text>
-      </View>
-    </Animated.View>
+          {getDiffDate(expiredDate) <= 7 && (
+            <View
+              style={tw`w-1.7 aspect-square rounded-full absolute top-0.5 right-0.5
+              border-${getColorByLeftDay(expiredDate)}-500 border
+              bg-${getColorByLeftDay(expiredDate)}-400`}
+            />
+          )}
+
+          <CategoryIcon category={food.category} size={14} />
+
+          <Text
+            style={tw`${colorByFilter(currentFilter, expiredDate, 'text')} 
+            ${active ? 'text-indigo-600' : ''} text-center`}
+          >
+            {cutLetter(food.name, 9)}
+          </Text>
+        </View>
+      </Animated.View>
+    </TouchableOpacity>
   );
 }

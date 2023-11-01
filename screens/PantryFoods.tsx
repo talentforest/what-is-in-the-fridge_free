@@ -1,5 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
-import { KeyboardAvoidingView } from '../components/common/native-component';
+import {
+  KeyboardAvoidingView,
+  SafeBottomAreaView,
+} from '../components/common/native-component';
 import { ScrollView } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import { useGetFoodList } from '../hooks';
@@ -38,37 +41,39 @@ export default function PantryFoods() {
   );
 
   return (
-    <KeyboardAvoidingView>
-      <Container>
-        <TableFilters
-          filterList={[entireFilterObj, ...expiredFilters]}
-          getTableList={getFilteredFoodList}
-          foodList={pantryFoods}
-        />
-
-        <CompartmentContainer>
-          <CompartmentBox
-            scrollViewRef={scrollViewRef}
-            title='팬트리'
+    <SafeBottomAreaView>
+      <KeyboardAvoidingView>
+        <Container>
+          <TableFilters
+            filterList={[entireFilterObj, ...expiredFilters]}
+            getTableList={getFilteredFoodList}
             foodList={pantryFoods}
-            setOpenFoodDetailModal={setOpenFoodDetailModal}
-            setOpenAddFoodModal={setOpenAddFoodModal}
           />
-        </CompartmentContainer>
 
-        <FoodDetailModal
-          modalVisible={openFoodDetailModal}
-          setModalVisible={setOpenFoodDetailModal}
-          formSteps={formFourSteps}
-        />
+          <CompartmentContainer>
+            <CompartmentBox
+              scrollViewRef={scrollViewRef}
+              title='팬트리'
+              foodList={pantryFoods}
+              setOpenFoodDetailModal={setOpenFoodDetailModal}
+              setOpenAddFoodModal={setOpenAddFoodModal}
+            />
+          </CompartmentContainer>
 
-        <AddFoodModal
-          scrollEnd={() => scrollToEnd(scrollViewRef)}
-          modalVisible={openAddFoodModal}
-          setModalVisible={setOpenAddFoodModal}
-          formSteps={formThreeSteps}
-        />
-      </Container>
-    </KeyboardAvoidingView>
+          <FoodDetailModal
+            modalVisible={openFoodDetailModal}
+            setModalVisible={setOpenFoodDetailModal}
+            formSteps={formFourSteps}
+          />
+
+          <AddFoodModal
+            scrollEnd={() => scrollToEnd(scrollViewRef)}
+            modalVisible={openAddFoodModal}
+            setModalVisible={setOpenAddFoodModal}
+            formSteps={formThreeSteps}
+          />
+        </Container>
+      </KeyboardAvoidingView>
+    </SafeBottomAreaView>
   );
 }

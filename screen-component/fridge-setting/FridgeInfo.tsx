@@ -3,7 +3,7 @@ import { Text } from '../../components/common/native-component';
 import { Space } from '../../constant/fridgeInfo';
 import { getCompartments } from '../../util';
 import { MaxCompartmentsNumObj } from '../../redux/slice/fridgeInfoSlice';
-import { GRAY } from '../../constant/colors';
+import { MEDIUM_GRAY } from '../../constant/colors';
 
 import CompartmentBox from './CompartmentBox';
 import Icon from '../../components/common/native-component/Icon';
@@ -21,15 +21,17 @@ export default function FridgeInfo({ space, compartments }: Props) {
       {space.slice(-2) !== '문쪽' && (
         <View style={tw`absolute -left-18 z-10 flex-row items-center gap-1.5`}>
           <Text
-            style={tw.style(
-              `${
-                space.includes('냉동') ? 'text-blue-600' : 'text-sky-600'
-              } text-sm pb-1`
-            )}
+            style={tw.style(`pb-1
+            ${space.includes('냉동') ? 'text-blue-600' : 'text-sky-600'}`)}
           >
             {space.slice(0, 3)}
           </Text>
-          <Icon name='chevrons-right' type='Feather' size={20} color={GRAY} />
+          <Icon
+            name='chevrons-right'
+            type='Feather'
+            size={20}
+            color={MEDIUM_GRAY}
+          />
         </View>
       )}
       <View style={tw`h-full gap-0.7`}>

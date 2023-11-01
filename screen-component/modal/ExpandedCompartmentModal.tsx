@@ -1,10 +1,7 @@
 import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
-import { TouchableOpacity } from '../../components/common/native-component';
 import { CompartmentNum } from '../../constant/fridgeInfo';
 import { formThreeSteps } from '../../constant/formInfo';
-import { select } from '../../redux/slice/selectedFoodSlice';
-import { useDispatch } from '../../redux/hook';
 import { DEVICE_HEIGHT } from '../../util';
 import { useState } from 'react';
 
@@ -29,8 +26,6 @@ export default function ExpandedCompartmentModal({
 }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const dispatch = useDispatch();
-
   return (
     <Modal
       title={`${compartmentNum}칸`}
@@ -41,26 +36,28 @@ export default function ExpandedCompartmentModal({
       <View style={tw`rounded-b-2xl bg-stone-200 px-2`}>
         {!!foodList.length ? (
           <ScrollView
-            style={tw`h-[${DEVICE_HEIGHT * 0.5}px]`}
-            contentContainerStyle={tw`flex-row p-2 flex-1 flex-wrap gap-1 items-center`}
+            style={tw`h-[${DEVICE_HEIGHT * 0.4}px]`}
+            contentContainerStyle={tw`p-2 flex-row flex-wrap gap-1`}
             showsVerticalScrollIndicator={false}
           >
             {foodList.map((food: Food) => (
-              <TouchableOpacity
+              <FoodBox
                 key={food.id}
-                onPress={() => {
-                  dispatch(select(food));
-                  setModalVisible(true);
-                }}
-                style={tw`bg-white rounded-lg`}
-              >
-                <FoodBox food={food} />
-              </TouchableOpacity>
+                food={food}
+                setOpenFoodDetailModal={setModalVisible}
+              />
             ))}
           </ScrollView>
         ) : (
-          <View style={tw`h-50 flex-row items-center justify-center`}>
-            <EmptySign message='식료품이 아직 없어요.' assetSize={80} />
+          <View
+            style={tw`h-[${DEVICE_HEIGHT * 0.3}px]
+            flex-row items-center justify-center`}
+          >
+            <EmptySign
+              message='식료품이 아직 없어요.'
+              assetSize={60}
+              compartmentNum={compartmentNum}
+            />
           </View>
         )}
       </View>

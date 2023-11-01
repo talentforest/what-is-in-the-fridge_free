@@ -15,18 +15,19 @@ export default function CompartmentHeader({
   foodList,
   setOpenAddFoodModal,
 }: Props) {
+  const onPress = () => setOpenAddFoodModal(true);
+
   return (
     <View>
       <View style={tw`flex-row justify-between items-center pl-2.5 h-7.5`}>
         <Text
-          style={tw`${
-            foodList.length ? 'text-blue-600' : 'text-slate-500'
-          }  text-[15px]`}
+          style={tw`${foodList.length ? 'text-blue-600' : 'text-slate-500'} 
+          text-base`}
         >
-          {title} | 식료품 총 {foodList.length}개
+          {title} / 식료품 총 {foodList.length}개
         </Text>
 
-        <AddIconBtn onPress={() => setOpenAddFoodModal(true)} />
+        <AddIconBtn onPress={onPress} />
       </View>
     </View>
   );

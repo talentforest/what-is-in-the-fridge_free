@@ -75,14 +75,10 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
           <TouchableOpacity
             onPress={() => onTabPress(storage as StorageType)}
             key={storage}
-            style={tw`border-b-[3px] ${
-              food.space.includes(storage.slice(0, 1))
-                ? 'border-blue-600'
-                : 'border-slate-300'
-            } pr-5 pb-0.5 my-1.5`}
+            style={tw`w-13 mt-0.5`}
           >
             <Text
-              style={tw`text-[15px] ${
+              style={tw`text-[17px] ${
                 food.space.includes(storage.slice(0, 1))
                   ? 'text-slate-700'
                   : 'text-slate-400'
@@ -90,6 +86,14 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
             >
               {storage}
             </Text>
+
+            <View
+              style={tw`h-1 w-full bg-blue-600 rounded-xl ${
+                food.space.includes(storage.slice(0, 1))
+                  ? 'bg-blue-600'
+                  : 'bg-slate-300'
+              } `}
+            />
           </TouchableOpacity>
         ))}
       </View>

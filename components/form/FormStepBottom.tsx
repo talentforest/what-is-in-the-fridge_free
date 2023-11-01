@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRouteName } from '../../hooks/useRouteName';
 import ArrowBtn from '../buttons/ArrowBtn';
 import StepIndicator from '../common/StepIndicator';
 import tw from 'twrnc';
@@ -15,8 +15,7 @@ export default function FormStepBottom({
   currentStep,
   stepLength,
 }: Props) {
-  const route = useRoute();
-  const routePantryFoods = route.name === 'PantryFoods';
+  const { routePantryFoods } = useRouteName();
 
   return (
     <View style={tw`h-10`}>

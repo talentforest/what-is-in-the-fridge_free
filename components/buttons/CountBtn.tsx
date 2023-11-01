@@ -11,7 +11,7 @@ interface Props {
 
 export default function CountBtn({ type, onPress, active }: Props) {
   const COLOR_STRING = type === 'minus' ? 'slate' : 'blue';
-  const SIZE = `h-6.5 w-6.5`;
+  const SIZE = `h-6 w-6`;
   const ACTIVE_STYLE = active
     ? `border border-${COLOR_STRING}-200 bg-${COLOR_STRING}-600`
     : 'border border-slate-300 bg-slate-100';
@@ -22,10 +22,10 @@ export default function CountBtn({ type, onPress, active }: Props) {
       onPress={onPress}
     >
       <Icon
-        type='MaterialCommunityIcons'
+        type='Feather'
         name={type === 'minus' ? 'minus' : 'plus'}
         color={active ? '#fff' : LIGHT_GRAY}
-        size={17}
+        size={14}
       />
     </TouchableOpacity>
   );

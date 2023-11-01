@@ -1,18 +1,21 @@
 import { Animated, Keyboard, View } from 'react-native';
 import { useEffect } from 'react';
-import { TextInput } from '../common/native-component';
+import { InputStyle, TextInput } from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleMemoOpen } from '../../redux/slice/isMemoOpenSlice';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 import FormLabel from './FormLabel';
+import FormMessage from './FormMessage';
 import tw from 'twrnc';
 
 interface Props {
   memo: string;
   changeInfo: (newInfo: { [key: string]: string }) => void;
 }
+
+const MEMO_MAX_LENGTH = 70;
 
 export default function MemoItem({ memo, changeInfo }: Props) {
   const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
@@ -21,7 +24,7 @@ export default function MemoItem({ memo, changeInfo }: Props) {
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 80,
+    toValue: 65,
     active: isMemoOpen,
   });
 
@@ -36,10 +39,7 @@ export default function MemoItem({ memo, changeInfo }: Props) {
       Keyboard.dismiss();
     }
     dispatch(toggleMemoOpen(!isMemoOpen));
-
-    if (!isMemoOpen) {
-      changeInfo({ memo: '' });
-    }
+    if (!isMemoOpen) changeInfo({ memo: '' });
   };
 
   return (
@@ -56,15 +56,14 @@ export default function MemoItem({ memo, changeInfo }: Props) {
         <View style={tw`flex-row items-center gap-1 px-1`}>
           <View
             style={tw.style(
-              `h-17 px-0.5 py-${
-                PlatformIOS ? '0.5' : '3'
-              } flex-1 bg-white border border-slate-300 flex-row items-center rounded-lg`,
+              `py-${PlatformIOS ? '0.5' : '2'} ${InputStyle}
+               h-16 px-0 flex-1 flex-row items-center`,
               shadowStyle(3)
             )}
           >
             <TextInput
-              style={tw.style(`bg-white border-0 flex-1 h-full rounded-lg`, {
-                lineHeight: 22,
+              style={tw.style(`border-0 h-full`, {
+                lineHeight: 21,
                 textAlignVertical: 'top', // android
               })}
               onChangeText={onChangeText}
@@ -74,10 +73,17 @@ export default function MemoItem({ memo, changeInfo }: Props) {
               numberOfLines={3}
               returnKeyType='done'
               blurOnSubmit={true}
+              maxLength={MEMO_MAX_LENGTH}
             />
           </View>
         </View>
       </Animated.View>
+
+      <FormMessage
+        active={memo.length >= MEMO_MAX_LENGTH}
+        color='orange'
+        message={`메모는 ${MEMO_MAX_LENGTH}자를 넘을 수 없습니다.`}
+      />
     </View>
   );
 }

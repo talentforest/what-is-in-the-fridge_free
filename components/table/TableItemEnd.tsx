@@ -1,6 +1,6 @@
-import { useRoute } from '@react-navigation/native';
 import { useFindFood } from '../../hooks';
 import { View } from 'react-native';
+import { useRouteName } from '../../hooks/useRouteName';
 import { Food } from '../../constant/foodInfo';
 
 import LeftDay from '../common/LeftDay';
@@ -21,8 +21,7 @@ export default function TableItemEnd({
   addToFridgePress,
   isCheckList,
 }: Props) {
-  const route = useRoute();
-  const routeShoppingList = route.name === 'ShoppingList';
+  const { routeShoppingList } = useRouteName();
 
   const { findFood } = useFindFood();
 
@@ -47,7 +46,7 @@ export default function TableItemEnd({
 
       {title === '소비기한 주의 식료품' && (
         <View style={tw`items-end w-20 mr-3`}>
-          <LeftDay expiredDate={food.expiredDate} size={14} dateMark />
+          <LeftDay expiredDate={food.expiredDate} dateMark />
         </View>
       )}
 

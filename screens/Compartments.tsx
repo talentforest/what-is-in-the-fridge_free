@@ -39,7 +39,8 @@ export default function Compartments({ route }: Route) {
     });
   }, [space]);
 
-  const compartments = getCompartments(fridgeInfo.compartments[space]);
+  const maxCompartmentNum = fridgeInfo.compartments[space];
+  const compartments = getCompartments(maxCompartmentNum);
 
   return (
     <SafeBottomAreaView>

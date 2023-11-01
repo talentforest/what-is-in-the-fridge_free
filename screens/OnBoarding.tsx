@@ -27,8 +27,9 @@ export default function OnBoarding() {
       require('../assets/onboarding/android-expired-list.png'),
       require('../assets/onboarding/android-favorite-list.png'),
       require('../assets/onboarding/android-food-detail.png'),
-      require('../assets/onboarding/android-my-fridge.png'),
+      require('../assets/onboarding/android-fridge-setting.png'),
       require('../assets/onboarding/android-shopping-list.png'),
+      require('../assets/onboarding/android-home.png'),
     ],
   });
 
@@ -43,7 +44,7 @@ export default function OnBoarding() {
     try {
       if (lastStep && onboarding) {
         dispatch(toggleOnboarding(false));
-        navigation.navigate('MyTabs'); // 메인 화면으로 이동
+        navigation.navigate('Home');
       } else {
         moveStep('next', currentStep.step);
       }
@@ -84,21 +85,23 @@ export default function OnBoarding() {
                 >
                   {/* 문구 */}
                   <View style={tw`items-center`}>
-                    <Text style={tw.style(`text-slate-800 text-[15px]`)}>
-                      {desc.split(', ')[0]}
-                    </Text>
-                    <Text style={tw.style(`text-slate-800 text-[15px]`)}>
-                      {desc.split(', ')[1]}
-                    </Text>
+                    {[desc.split(', ')[0], desc.split(', ')[1]].map((desc) => (
+                      <Text
+                        key={desc}
+                        style={tw.style(`text-slate-800`, {
+                          lineHeight: 20,
+                        })}
+                      >
+                        {desc}
+                      </Text>
+                    ))}
                   </View>
 
                   {/* 이미지 */}
                   {assets && (
                     <View
-                      style={tw.style(
-                        `h-[${imgWidth * 2.1}px] w-[${imgWidth}px]
-                      overflow-hidden justify-between`
-                      )}
+                      style={tw.style(`h-[${imgWidth * 2.1}px] w-[${imgWidth}px]
+                      overflow-hidden justify-between`)}
                     >
                       <Image
                         source={{ uri: getImgUri(image) }}
@@ -115,12 +118,13 @@ export default function OnBoarding() {
           </Animated.View>
         </View>
       </SafeAreaView>
+
       {/* 들어가기 버튼 */}
       {lastStep && (
         <LinearGradient
           colors={['rgba(256,256,256,0)', '#c9dbfc', '#9abdfc', '#68adfd']}
           style={tw.style(
-            `absolute bottom-0 w-full h-[20%] justify-end items-center pb-10 px-8`
+            `absolute bottom-0 w-full h-[24%] justify-end items-center pb-10 px-8`
           )}
         >
           {lastStep && (

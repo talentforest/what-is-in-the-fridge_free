@@ -16,7 +16,7 @@ export default function LeftDayInfoBox({ expiredDate }: Props) {
         {getFormattedDate(expiredDate, 'YY.MM.DD')}
       </Text>
 
-      <LeftDay expiredDate={expiredDate} size={14} iconMark />
+      <LeftDay expiredDate={expiredDate} />
     </View>
   );
 }

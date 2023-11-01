@@ -9,7 +9,6 @@ interface Props {
   color?: 'blue' | 'gray';
   iconName?: string;
   tailIcon?: string;
-  textSize?: number;
 }
 
 export default function SubmitBtn({
@@ -17,23 +16,20 @@ export default function SubmitBtn({
   onPress,
   iconName,
   color = 'blue',
-  textSize = 15,
   tailIcon,
 }: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={tw.style(
-        `bg-${color}-600 h-13 flex-row items-center justify-center gap-1.5 rounded-lg`,
+        `bg-${color}-600 h-11.5 flex-row items-center justify-center gap-1.5 rounded-lg`,
         shadowStyle(3)
       )}
     >
       {iconName && (
-        <Icon name={iconName} type='Feather' color='#fff' size={16} />
+        <Icon name={iconName} type='Feather' color='#fff' size={15} />
       )}
-      <Text style={tw`text-white text-center pt-0.8 text-[${textSize}px]`}>
-        {btnName}
-      </Text>
+      <Text style={tw`text-white text-center pt-0.5 text-base`}>{btnName}</Text>
       {tailIcon && (
         <Icon name={tailIcon} type='Feather' color='#fff' size={18} />
       )}

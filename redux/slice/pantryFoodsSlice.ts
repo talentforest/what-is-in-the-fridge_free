@@ -8,7 +8,7 @@ export const initialState: { pantryFoods: Food[] } = {
     {
       id: 'pantryFood_1',
       name: '소면',
-      category: '간편·즉석식품류',
+      category: '간편/즉석식품류',
       purchaseDate: '',
       expiredDate: getFormattedDate(new Date(), 'YYYY-MM-DD'),
       space: '팬트리',
@@ -18,7 +18,7 @@ export const initialState: { pantryFoods: Food[] } = {
     {
       id: 'pantryFood_2',
       name: '삼계탕',
-      category: '국·반찬류',
+      category: '국/반찬류',
       purchaseDate: '2023-04-02',
       expiredDate: getFormattedDate(new Date(), 'YYYY-MM-DD'),
       space: '팬트리',

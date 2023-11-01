@@ -66,10 +66,7 @@ export default function DateNumInputModal({
       closeModal={closeModal}
       animationIn='fadeIn'
     >
-      <View
-        style={tw`bg-white h-[${DEVICE_HEIGHT * 0.24}px] 
-        rounded-b-xl p-4 items-center justify-center`}
-      >
+      <View style={tw`bg-white h-[${DEVICE_HEIGHT * 0.24}px] rounded-b-xl p-4`}>
         <View style={tw`w-full flex-1 flex-row items-center justify-center`}>
           <DateNumTokenBox
             dateToken={dateToken}

@@ -6,9 +6,8 @@ import {
 } from '../../components/common/native-component';
 import { getFormattedDate } from '../../util';
 import { Food } from '../../constant/foodInfo';
-
 import { useSlideAnimation } from '../../hooks';
-import { INDIGO } from '../../constant/colors';
+
 import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
@@ -27,7 +26,7 @@ export default function FoodItem({
   active,
 }: Props) {
   const { height } = useSlideAnimation({
-    initialValue: 48,
+    initialValue: 44,
     toValue: 0,
     active,
   });
@@ -38,7 +37,7 @@ export default function FoodItem({
         <TouchableOpacity
           key={food.id}
           style={tw.style(
-            `bg-white border border-slate-300 rounded-md h-full flex-row items-center px-2.5 justify-between`,
+            `bg-white border border-slate-200 rounded-xl h-full flex-row items-center px-2.5 justify-between`,
             shadowStyle(3)
           )}
           onPress={() => onFoodItemPress(food)}
@@ -48,13 +47,8 @@ export default function FoodItem({
               name={isEditing ? 'x' : 'edit'}
               type='Feather'
               size={isEditing ? 16 : 14}
-              color={INDIGO}
             />
-            <Text
-              style={tw`text-[15px] flex-1`}
-              numberOfLines={1}
-              ellipsizeMode='tail'
-            >
+            <Text style={tw`flex-1`} numberOfLines={1} ellipsizeMode='tail'>
               {food.name}
             </Text>
           </View>
@@ -63,7 +57,7 @@ export default function FoodItem({
             <CategoryIcon category={food.category} size={16} />
             <View style={tw`w-15 items-end`}>
               <Text
-                style={tw.style(`text-sm text-slate-600`, {
+                style={tw.style(`text-slate-600`, {
                   letterSpacing: -0.5,
                 })}
               >

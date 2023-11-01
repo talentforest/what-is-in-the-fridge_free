@@ -5,18 +5,18 @@ import {
 } from '../../constant/foodCategories';
 import { LIGHT_GRAY } from '../../constant/colors';
 import Icon from './native-component/Icon';
-import IconMeatFishEgg from './native-component/IconMeatFishEgg';
-import IconDairyEgg from './native-component/IconDairyEgg';
-import IconSauce from './native-component/IconSauce';
-import IconPizza from './native-component/IconPizza';
+import IconMeatFishEgg from '../svg/IconMeatFishEgg';
+import IconDairyEgg from '../svg/IconDairyEgg';
+import IconSauce from '../svg/IconSauce';
+import IconPizza from '../svg/IconPizza';
 
 interface Props {
   category: Category;
   size: number;
-  inactive?: boolean;
+  inActive?: boolean;
 }
 
-export default function CategoryIcon({ category, size, inactive }: Props) {
+export default function CategoryIcon({ category, size, inActive }: Props) {
   const findCategory = (category: Category) => {
     const categoryName = foodCategories.find(
       (item) => item.category === category
@@ -29,19 +29,19 @@ export default function CategoryIcon({ category, size, inactive }: Props) {
   return (
     <>
       {icon === 'icon-meat-fish' ? (
-        <IconMeatFishEgg size={size} />
+        <IconMeatFishEgg size={size} inActive={inActive} />
       ) : icon === 'dairy-egg' ? (
-        <IconDairyEgg size={size} />
+        <IconDairyEgg size={size} inActive={inActive} />
       ) : icon === 'category-sauce' ? (
-        <IconSauce size={size} />
+        <IconSauce size={size} inActive={inActive} />
       ) : icon === 'category-instant' ? (
-        <IconPizza size={size} />
+        <IconPizza size={size} inActive={inActive} />
       ) : (
         <Icon
           name={icon}
           size={size}
           type='MaterialCommunityIcons'
-          color={inactive ? LIGHT_GRAY : color}
+          color={inActive ? LIGHT_GRAY : color}
         />
       )}
     </>

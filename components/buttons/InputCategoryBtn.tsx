@@ -16,8 +16,8 @@ export default function InputCategoryBtn({ category, setCategoryOpen }: Props) {
       onPress={() => setCategoryOpen(true)}
       style={tw`h-full border-r border-slate-200 flex-row items-center justify-center`}
     >
-      <View style={tw`pl-3.5 pr-2.5`}>
-        <CategoryIcon category={category} size={20} />
+      <View style={tw`pl-3.5 pr-2.5 pb-0.5`}>
+        <CategoryIcon category={category} size={18} />
       </View>
     </TouchableOpacity>
   );

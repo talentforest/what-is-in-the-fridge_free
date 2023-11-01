@@ -1,6 +1,10 @@
 import { Animated, Keyboard, View } from 'react-native';
 import { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity } from '../common/native-component';
+import {
+  InputStyle,
+  TextInput,
+  TouchableOpacity,
+} from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { comma } from '../../util/commaNotation';
@@ -19,7 +23,7 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: 49,
+    toValue: 48,
     active: isQuanityOpen,
   });
 
@@ -49,6 +53,18 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
     }
   };
 
+  const onHandleCountPress = (btn: string) => {
+    if (btn === 'plus') {
+      Keyboard.dismiss();
+      onChangeText(`${+quantity + 1}`);
+    }
+    if (btn === 'minus') {
+      Keyboard.dismiss();
+      if (+quantity <= 1) return onChangeText('1');
+      onChangeText(`${+quantity - 1}`);
+    }
+  };
+
   return (
     <View>
       <FormLabel label='수량' option isOpen={isQuanityOpen} onPress={onPress} />
@@ -60,64 +76,30 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
           marginHorizontal: -4,
         }}
       >
-        <View style={tw`flex-row items-center gap-1 px-1`}>
-          <View
-            style={tw.style(
-              `h-11 flex-1 bg-white border border-slate-300 flex-row items-center rounded-lg`,
-              shadowStyle(3)
-            )}
-          >
-            <TextInput
+        <View style={tw`flex-row items-center gap-1 p-1 -mt-1`}>
+          <TextInput
+            style={tw.style(`flex-1`, shadowStyle(3))}
+            onChangeText={onChangeText}
+            value={comma(quantity)}
+            focusable={false}
+            keyboardType='number-pad'
+            placeholder='1'
+          />
+
+          {['plus', 'minus'].map((btn) => (
+            <TouchableOpacity
+              key={btn}
+              onPress={() => onHandleCountPress(btn)}
               style={tw.style(
-                `bg-white border-0 m-0.5 flex-1 rounded-lg`,
-                HSSaemaulRegular
+                `h-10 w-11 flex-row border border-slate-300 
+                ${btn === 'plus' ? 'bg-stone-700' : 'bg-slate-500'}
+                rounded-xl justify-center items-center`,
+                shadowStyle(4)
               )}
-              onChangeText={onChangeText}
-              value={comma(quantity)}
-              focusable={false}
-              keyboardType='number-pad'
-              placeholder='1'
-              returnKeyLabel='완료'
-              returnKeyType='done'
-            />
-          </View>
-
-          <TouchableOpacity
-            onPress={() => {
-              Keyboard.dismiss();
-              onChangeText(`${+quantity + 1}`);
-            }}
-            style={tw.style(
-              `h-11 w-12 gap-0.5 flex-row border border-slate-300 bg-stone-700 rounded-lg justify-center items-center`,
-              shadowStyle(4)
-            )}
-          >
-            <Icon
-              name='plus'
-              type='MaterialCommunityIcons'
-              size={20}
-              color='#fff'
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              Keyboard.dismiss();
-              if (+quantity <= 1) return onChangeText('1');
-              onChangeText(`${+quantity - 1}`);
-            }}
-            style={tw.style(
-              `h-11 w-12 gap-0.5 flex-row border border-slate-300 bg-slate-500 rounded-lg justify-center items-center`,
-              shadowStyle(4)
-            )}
-          >
-            <Icon
-              name='minus'
-              type='MaterialCommunityIcons'
-              size={20}
-              color='#fff'
-            />
-          </TouchableOpacity>
+            >
+              <Icon name={btn} type='Feather' size={16} color='#fff' />
+            </TouchableOpacity>
+          ))}
         </View>
       </Animated.View>
     </View>

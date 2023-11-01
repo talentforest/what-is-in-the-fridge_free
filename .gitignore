@@ -13,8 +13,6 @@ npm-debug.*
 *.orig.*
 web-build/
 .env/
-.env
-env.d.ts
 .environment/
 
 

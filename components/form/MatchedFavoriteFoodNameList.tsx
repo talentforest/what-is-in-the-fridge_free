@@ -51,7 +51,7 @@ export default function MatchedFavoriteFoodNameList({
                 <TouchableOpacity
                   key={food.id}
                   style={tw.style(
-                    `max-w-full h-7.5 border border-blue-200 flex-row items-center bg-blue-100 px-1.5 rounded-full`,
+                    `max-w-full h-7 border border-blue-200 flex-row items-center bg-blue-100 px-2 rounded-full`,
                     shadowStyle(4)
                   )}
                   onPress={() => {
@@ -61,16 +61,20 @@ export default function MatchedFavoriteFoodNameList({
                 >
                   <Icon
                     name={food.name === name ? 'check' : 'plus'}
-                    type='MaterialCommunityIcons'
-                    size={16}
+                    type='Feather'
+                    size={14}
                   />
-                  <Text style={tw`text-blue-700 text-[13px]`}>
+                  <Text
+                    style={tw.style(`text-blue-700 text-[15px]`, {
+                      lineHeight: 22,
+                    })}
+                  >
                     {cutLetter(food.name, 8)}
                   </Text>
                 </TouchableOpacity>
               ))}
               {matchedFoodList.length > FAV_ITEM_MAX && (
-                <Text style={tw`ml-2 text-slate-800 text-[14px]`}>
+                <Text style={tw`ml-2 text-slate-800 text-sm`}>
                   +{matchedFoodList.length - FAV_ITEM_MAX}개
                 </Text>
               )}

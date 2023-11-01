@@ -25,9 +25,9 @@ export default function CompartmentsSettingBox({ space }: Props) {
 
   return (
     <View
-      style={tw`p-3 gap-3 justify-center flex-1 items-center bg-white border border-slate-300 rounded-md`}
+      style={tw`px-2 py-2.5 gap-1 justify-center flex-1 items-center bg-white border border-slate-300 rounded-md`}
     >
-      <Text style={tw`text-sm ${spaceColor(space)}`}>{space}</Text>
+      <Text style={tw`${spaceColor(space)}`}>{space}</Text>
       <View style={tw`flex-row items-center justify-center`}>
         <CountBtn
           type='plus'
@@ -36,10 +36,10 @@ export default function CompartmentsSettingBox({ space }: Props) {
         />
 
         <View style={tw`flex-row items-center gap-1 mx-2`}>
-          <Text style={tw.style(`text-slate-800 text-[17px]`)}>
+          <Text style={tw.style(`text-slate-800`)}>
             {fridgeInfo.compartments[space]}
           </Text>
-          <Text style={tw`text-slate-500 pt-1`}>칸</Text>
+          <Text style={tw`text-slate-500 pt-1 text-base`}>칸</Text>
         </View>
         <CountBtn
           type='minus'

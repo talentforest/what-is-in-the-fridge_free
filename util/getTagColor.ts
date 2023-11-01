@@ -1,4 +1,5 @@
 import { Filter } from './filters';
+import { expired, leftThreeDays, leftWeek } from './getLeftDays';
 
 export const DISABLED_BG_COLOR = 'bg-white border-slate-200';
 export const DISABLED_TEXT_COLOR = 'text-slate-400';
@@ -57,4 +58,21 @@ export const getTagColor = (
     : length === 0
     ? DISABLED_BG_COLOR
     : INACTIVE_BG_COLOR;
+};
+
+export const colorByFilter = (
+  filter: Filter,
+  date: string,
+  type: 'text' | 'bg'
+) => {
+  const active =
+    filter === '소비기한 만료'
+      ? expired(date)
+      : filter === '소비기한 3일 이내'
+      ? leftThreeDays(date)
+      : filter === '소비기한 일주일 이내'
+      ? leftWeek(date)
+      : false;
+
+  return getTagColor(filter, active, type);
 };

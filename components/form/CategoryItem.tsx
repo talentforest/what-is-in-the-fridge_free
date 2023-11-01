@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Keyboard, View } from 'react-native';
-import { Text, TouchableOpacity } from '../common/native-component';
+import { InputStyle, Text, TouchableOpacity } from '../common/native-component';
 import { Category } from '../../constant/foodCategories';
 import { useFindFood } from '../../hooks';
 import { ModalTitle } from '../modal/Modal';
@@ -32,9 +32,9 @@ export default function CategoryItem({
 
   const { isFavoriteItem } = useFindFood();
   const favoriteFoodItemCategory = isFavoriteItem(name)?.category;
-  const disabledCategory = favoriteFoodItemCategory && !title.includes('수정');
+  const disabled = favoriteFoodItemCategory && !title.includes('수정');
 
-  const category = disabledCategory ? favoriteFoodItemCategory : fixedCategory;
+  const category = disabled ? favoriteFoodItemCategory : fixedCategory;
 
   const dispatch = useDispatch();
 
@@ -47,10 +47,6 @@ export default function CategoryItem({
     setCategoryOpen(false);
   };
 
-  const activeColor = 'border-slate-300 text-slate-900';
-  const inActiveColor = 'border-slate-300 text-slate-400';
-  const color = disabledCategory ? inActiveColor : activeColor;
-
   const onPress = () => {
     if (Keyboard.isVisible()) Keyboard.dismiss();
     setCategoryOpen((prev) => !prev);
@@ -59,17 +55,17 @@ export default function CategoryItem({
   return (
     <View>
       <FormLabel label='카테고리' />
+
       <TouchableOpacity
         onPress={onPress}
-        disabled={disabledCategory}
-        style={tw.style(
-          `h-11 border ${color} px-3 bg-white rounded-lg items-center flex-row gap-2 justify-between`,
-          shadowStyle(3)
-        )}
+        disabled={disabled}
+        style={tw.style(`${InputStyle}`, shadowStyle(3))}
       >
-        <View style={tw`flex-row items-center gap-2`}>
-          <CategoryIcon category={category} size={18} />
-          <Text style={tw`${color}`}>{category}</Text>
+        <View style={tw`flex-row items-center h-full gap-1`}>
+          <CategoryIcon category={category} size={16} inActive={disabled} />
+          <Text style={tw`${`text-slate-${disabled ? '400' : '900'}`}`}>
+            {category}
+          </Text>
         </View>
       </TouchableOpacity>
 

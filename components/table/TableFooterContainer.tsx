@@ -1,6 +1,6 @@
-import { useRoute } from '@react-navigation/native';
 import { ReactNode } from 'react';
 import { View } from 'react-native';
+import { useRouteName } from '../../hooks/useRouteName';
 import tw from 'twrnc';
 
 interface Props {
@@ -9,8 +9,7 @@ interface Props {
 }
 
 export default function TableFooterContainer({ children, active }: Props) {
-  const route = useRoute();
-  const routeExpiredFoods = route.name === 'ExpiredFoods';
+  const { routeExpiredFoods } = useRouteName();
 
   return (
     <View

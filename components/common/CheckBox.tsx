@@ -10,7 +10,7 @@ interface Props {
 export default function CheckBox({
   checked,
   inActiveColor = '#bbb',
-  size = 18,
+  size = 17,
 }: Props) {
   return (
     <Icon

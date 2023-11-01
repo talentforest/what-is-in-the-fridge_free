@@ -36,7 +36,7 @@ export default function OnBoardingBtn({ name, onPress }: Props) {
         style={tw`bg-blue-600 shadow-md rounded-lg py-2 pl-4 pr-2`}
       >
         <View style={tw`flex-row justify-center gap-1 items-center`}>
-          <Text style={tw`text-white w-16`}>{name}</Text>
+          <Text style={tw`text-white w-13`}>{name}</Text>
           <Icon name='chevron-right' type='Feather' size={21} color='#fff' />
         </View>
       </TouchableOpacity>

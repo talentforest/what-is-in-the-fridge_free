@@ -34,7 +34,7 @@ export default function FilterTag({
       onPress={() => onFilterPress(filter)}
       style={tw.style(
         `${getTagColor(currentFilter, active, 'bg', length)} 
-        h-9 min-w-20 flex-row items-center border px-3 py-1 gap-1.5 rounded-full`,
+        h-8.5 min-w-17 flex-row items-center border px-3 gap-1.5 rounded-full`,
         shadowStyle(3)
       )}
       disabled={length === 0}
@@ -43,31 +43,17 @@ export default function FilterTag({
         <CategoryIcon
           category={filter as Category}
           size={16}
-          inactive={length === 0}
+          inActive={length === 0}
         />
       )}
+
       <Text
-        style={tw`text-sm ${getTagColor(
-          currentFilter,
-          active,
-          'text',
-          length
-        )}`}
+        style={tw`text-base 
+        ${getTagColor(currentFilter, active, 'text', length)}`}
       >
-        {filter}
-      </Text>
-      <Text
-        style={tw`text-sm ${getTagColor(
-          currentFilter,
-          active,
-          'text',
-          length
-        )}`}
-      >
-        {`${length}`}개
+        {filter} {`${length}`}개
       </Text>
 
-      {/* chevron-down icon */}
       {children}
     </TouchableOpacity>
   );

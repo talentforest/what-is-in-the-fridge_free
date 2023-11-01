@@ -11,7 +11,7 @@ import { useFindFood, useSlideAnimation } from '../../hooks';
 
 import CategoryItem from '../../components/form/CategoryItem';
 import ExpiredDateItem from '../../components/form/ExpiredDateItem';
-import MessageBox from '../../components/common/MessageBox';
+import FormMessage from '../../components/form/FormMessage';
 import tw from 'twrnc';
 
 interface Props {
@@ -31,7 +31,7 @@ export default function EditingBox({
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: favoriteFood ? 310 : 390,
+    toValue: favoriteFood ? 232 : 306,
     active: isEditing,
   });
 
@@ -59,20 +59,21 @@ export default function EditingBox({
     <Animated.View style={{ height, overflow: 'hidden' }}>
       <View
         style={tw.style(
-          `p-2.5 -mt-1 bg-stone-200 border border-slate-300 rounded-xl`,
+          `p-2.5 pt-0.5 bg-stone-200 border border-slate-300 rounded-xl`,
           shadowStyle(3)
         )}
       >
-        <MessageBox
+        <FormMessage
           message={
             !!isFavoriteItem(selectedFood.name)
               ? '자주 먹는 식료품은 소비기한 정보만 변경 가능합니다.'
               : '이곳에서는 소비기한과 카테고리 정보만 변경 가능합니다.'
           }
-          color='gray'
+          color='green'
+          active={true}
         />
 
-        <View style={tw`mb-5 mt-2 ${favoriteFood ? 'pt-2' : ''} gap-4`}>
+        <View style={tw`my-2 gap-3`}>
           {/* 카테고리 수정 */}
           {!favoriteFood && (
             <CategoryItem
@@ -82,7 +83,6 @@ export default function EditingBox({
                 dispatch(select({ ...selectedFood, ...category }));
               }}
               title='카테고리 선택'
-              noneBackdrop
             />
           )}
           {/* 소비기한 수정 */}
@@ -98,7 +98,7 @@ export default function EditingBox({
           onPress={onSubmitPress}
           style={tw`border border-slate-300 bg-indigo-600 py-1.5 items-center rounded-full`}
         >
-          <Text style={tw`text-[15px] text-white`}>수정 완료</Text>
+          <Text style={tw`text-white text-base`}>수정 완료</Text>
         </TouchableOpacity>
       </View>
     </Animated.View>

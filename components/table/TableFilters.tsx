@@ -1,4 +1,3 @@
-import { useRoute } from '@react-navigation/native';
 import { BLUE, GRAY } from '../../constant/colors';
 import { useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
@@ -7,6 +6,7 @@ import { Filter, FilterObj } from '../../util';
 import { Category, foodCategories } from '../../constant/foodCategories';
 import { useHandleFilter } from '../../hooks';
 import { PlatformIOS } from '../../constant/statusBarHeight';
+import { useRouteName } from '../../hooks/useRouteName';
 
 import FilterTag from '../common/FilterTag';
 import Modal from '../modal/Modal';
@@ -30,8 +30,7 @@ export default function TableFilters({
 }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const route = useRoute();
-  const routeFavoriteFoods = route.name === 'FavoriteFoods';
+  const { routeFavoriteFoods } = useRouteName();
 
   const scrollViewRef = useRef<ScrollView | null>(null);
 
@@ -43,16 +42,14 @@ export default function TableFilters({
     scrollToFilter,
   } = useHandleFilter(scrollViewRef);
 
-  const activeCategory = foodCategories?.find(({ category }) =>
-    foodList.map((item) => item.category).includes(category)
-  )?.category as Filter;
-
   const getLength = (filter: Filter) => getTableList(filter, foodList).length;
+  const hasLength = getLength(filterState) || getLength('전체') === 0;
+  const categoryList = foodList.map(({ category }) => category);
+  const activeCategory = foodCategories?.find(({ category }) => {
+    return categoryList.includes(category);
+  })?.category as Filter;
 
-  const categoryFilter =
-    getLength(filterState) || getLength('전체') === 0
-      ? filterState
-      : activeCategory;
+  const categoryFilter = hasLength ? filterState : activeCategory;
 
   const onFilterPress = (filter: Filter, index: number) => {
     changeFilterState(filter);
@@ -70,7 +67,7 @@ export default function TableFilters({
     <View>
       <ScrollView
         ref={scrollViewRef}
-        style={tw`h-12 pt-0.5`}
+        style={tw`h-11.5 pt-0.5`}
         contentContainerStyle={tw`gap-1 items-start pr-2`}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -109,9 +106,8 @@ export default function TableFilters({
           isVisible={modalVisible}
         >
           <View
-            style={tw`p-4 flex-row flex-wrap gap-1 bg-stone-100 ${
-              PlatformIOS ? 'pb-12' : 'pb-6'
-            }`}
+            style={tw`p-4 flex-row flex-wrap gap-1 bg-stone-100 
+            ${PlatformIOS ? 'pb-12' : 'pb-6'}`}
           >
             {foodCategories.map(({ category, icon }) => (
               <FilterTag

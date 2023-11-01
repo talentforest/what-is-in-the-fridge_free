@@ -1,12 +1,8 @@
-import { LayoutChangeEvent, ScrollView, View } from 'react-native';
+import { MutableRefObject } from 'react';
+import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { TouchableOpacity } from '../common/native-component';
-import { LIGHT_BLUE } from '../../constant/colors';
-import { useDispatch, useSelector } from '../../redux/hook';
-import { select } from '../../redux/slice/selectedFoodSlice';
-import { shadowStyle } from '../../constant/shadowStyle';
-import { PlatformIOS } from '../../constant/statusBarHeight';
-import { scrollTo } from '../../util';
+import { CompartmentNum } from '../../constant/fridgeInfo';
 
 import CompartmentHeader from './CompartmentHeader';
 import EmptySign from '../common/EmptySign';
@@ -20,7 +16,7 @@ interface Props {
   setOpenFoodDetailModal?: (modal: boolean) => void;
   setExpandCompartment?: (modal: boolean) => void;
   setOpenAddFoodModal: (modal: boolean) => void;
-  scrollViewRef: any;
+  scrollViewRef: MutableRefObject<ScrollView>;
 }
 
 export default function CompartmentBox({
@@ -31,20 +27,10 @@ export default function CompartmentBox({
   setOpenAddFoodModal,
   scrollViewRef,
 }: Props) {
-  const { searchedFoodName } = useSelector((state) => state.searchedFoodName);
-
-  const dispatch = useDispatch();
-
-  const onItemLayout = (event: LayoutChangeEvent, food: Food) => {
-    if (searchedFoodName === food.name) {
-      const { y } = event.nativeEvent.layout;
-      scrollTo(scrollViewRef, 0, y);
-    }
-    return null;
-  };
+  const compartmentNum = title.slice(0, 2) as CompartmentNum;
 
   return (
-    <View style={tw`flex-1 border border-slate-300 bg-white rounded-lg`}>
+    <View style={tw`flex-1 border border-slate-200 bg-white rounded-lg`}>
       <CompartmentHeader
         title={title}
         foodList={foodList}
@@ -56,47 +42,35 @@ export default function CompartmentBox({
           ref={scrollViewRef}
           scrollEnabled
           style={tw`px-1 flex-1`}
-          contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-12 flex-wrap gap-1.3 items-center`}
+          contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-12 flex-wrap gap-1.2 items-center`}
           showsVerticalScrollIndicator={false}
         >
           {foodList.map((food: Food) => (
-            <TouchableOpacity
+            <FoodBox
               key={food.id}
-              onPress={() => {
-                dispatch(select(food));
-                setOpenFoodDetailModal(true);
-              }}
-              style={{
-                borderRadius: 8,
-                backgroundColor: '#fff',
-                ...shadowStyle(PlatformIOS ? 3 : 4),
-              }}
-              onLayout={(event: LayoutChangeEvent) => onItemLayout(event, food)}
-            >
-              <FoodBox food={food} />
-            </TouchableOpacity>
+              food={food}
+              scrollViewRef={scrollViewRef}
+              setOpenFoodDetailModal={setOpenFoodDetailModal}
+            />
           ))}
         </ScrollView>
       ) : (
-        <View style={tw`flex-1 flex-row items-center justify-center`}>
-          <EmptySign message='식료품이 아직 없어요.' assetSize={60} />
+        <View style={tw`flex-1 mb-2 flex-row items-center justify-center`}>
+          <EmptySign
+            message={'식료품이 아직 없어요.'}
+            assetSize={32}
+            compartmentNum={compartmentNum}
+          />
         </View>
       )}
 
       {setExpandCompartment && (
         <TouchableOpacity
-          onPress={() => {
-            setExpandCompartment(true);
-          }}
-          style={tw`absolute border border-white right-1.5 bottom-1.5`}
+          onPress={() => setExpandCompartment(true)}
+          style={tw`absolute border border-white p-2 left-0 bottom-0`}
           disabled={false}
         >
-          <Icon
-            type='MaterialCommunityIcons'
-            name='resize-bottom-right'
-            size={30}
-            color={LIGHT_BLUE}
-          />
+          <Icon type='Feather' name='maximize' size={15} />
         </TouchableOpacity>
       )}
     </View>

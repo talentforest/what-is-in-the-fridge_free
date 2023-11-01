@@ -1,14 +1,14 @@
-import { useRoute } from '@react-navigation/native';
 import { foodCategories } from '../constant/foodCategories';
 import { useDispatch, useSelector } from '../redux/hook';
 import { changeFilter, changePantryFilter } from '../redux/slice/filterSlice';
 import { Filter, scrollTo, scrollToEnd } from '../util';
+import { useRouteName } from './useRouteName';
 
 export const useHandleFilter = (scrollViewRef?: any) => {
   const { filter, pantryFilter } = useSelector((state) => state.filter);
 
-  const route = useRoute();
-  const routePantryFoods = route.name === 'PantryFoods';
+  const { routePantryFoods } = useRouteName();
+
   const dispatch = useDispatch();
 
   const currentFilter = routePantryFoods ? pantryFilter : filter;

@@ -1,7 +1,6 @@
-import { Image, View } from 'react-native';
+import { Image, View, useWindowDimensions } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { Category } from '../../constant/foodCategories';
-import { DEVICE_WIDTH } from '../../util';
 import tw from 'twrnc';
 
 interface Props {
@@ -9,7 +8,6 @@ interface Props {
   category: Category;
   onCheckBoxPress: (category: Category) => void;
   localUri: string;
-  width: number;
 }
 
 export default function CategoryBox({
@@ -17,29 +15,33 @@ export default function CategoryBox({
   category,
   onCheckBoxPress,
   localUri,
-  width,
 }: Props) {
   const checkedColor = checked
-    ? 'bg-amber-200 border-amber-300'
-    : 'bg-slate-100 border-slate-200';
+    ? 'bg-amber-200 border-amber-200'
+    : 'bg-slate-50 border-slate-100';
+
+  const { width } = useWindowDimensions();
+
+  const cardWidth = (width - 95) / 3;
 
   return (
     <TouchableOpacity
       onPress={() => onCheckBoxPress(category)}
-      style={tw`w-[${width}px] ${checkedColor} flex-row h-26 items-center justify-center border rounded-lg pt-3 pb-1 px-1`}
+      style={tw.style(
+        `w-[${cardWidth}px] ${checkedColor} flex-row h-22 gap-0.5 items-center justify-center border rounded-lg pt-2 pb-1 px-1.5`
+      )}
     >
-      <View style={tw`items-center justify-center gap-2`}>
+      <View style={tw`items-center justify-center gap-1`}>
         {localUri && (
           <Image source={{ uri: localUri }} style={{ width: 40, height: 40 }} />
         )}
         <View style={tw`items-center justify-center`}>
           <Text
             style={tw.style(
-              `text-[13px] text-center ${
-                checked ? 'text-blue-600' : 'text-slate-600'
-              }`,
+              `text-[15px] text-center 
+              ${checked ? 'text-blue-600' : 'text-slate-600'}`,
               {
-                lineHeight: 18,
+                lineHeight: 17,
               }
             )}
           >

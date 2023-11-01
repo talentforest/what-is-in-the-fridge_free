@@ -1,4 +1,4 @@
-import { View, useWindowDimensions } from 'react-native';
+import { View } from 'react-native';
 import { Category, foodCategories } from '../../constant/foodCategories';
 import { useImageLoad } from '../../hooks';
 
@@ -31,7 +31,7 @@ export default function CategoryModal({
       require('../../assets/category/category-dairy-egg.png'),
       require('../../assets/category/category-sauce.png'),
       require('../../assets/category/category-drink.png'),
-      require('../../assets/category/category-bakery.png'),
+      require('../../assets/category/category-bakery-jam.png'),
       require('../../assets/category/category-can.png'),
       require('../../assets/category/category-powder.png'),
       require('../../assets/category/category-noodle.png'),
@@ -46,10 +46,6 @@ export default function CategoryModal({
     return asset?.localUri;
   };
 
-  const { width } = useWindowDimensions();
-
-  const cardWidth = (width - 75) / 3;
-
   if (!isLoaded) return null;
 
   return (
@@ -59,6 +55,7 @@ export default function CategoryModal({
       closeModal={() => setModalVisible(false)}
       animationIn='fadeIn'
       hasBackdrop={!noneBackdrop}
+      style={tw`mx-6`}
     >
       <View style={tw`p-3 rounded-b-2xl bg-white`}>
         {onCheckBoxPress && assets && (
@@ -72,7 +69,6 @@ export default function CategoryModal({
                 category={category}
                 onCheckBoxPress={onCheckBoxPress}
                 localUri={getMatchURI(category) || assets[0].uri}
-                width={cardWidth}
               />
             ))}
           </View>

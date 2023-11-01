@@ -1,12 +1,19 @@
 import { Text, TouchableOpacity } from '../common/native-component';
-import tw from 'twrnc';
+import {
+  INDIGO,
+  LIGHT_INDIGO,
+  MEDIUM_GRAY,
+  MEDIUM_INDIGO,
+} from '../../constant/colors';
 import Icon from '../common/native-component/Icon';
+import tw from 'twrnc';
 
 interface ToggleBtnProps {
   check: boolean;
   onPress: () => void;
   btnName: string;
   disabled?: boolean;
+  width: number;
 }
 
 export default function ToggleBtn({
@@ -14,22 +21,27 @@ export default function ToggleBtn({
   onPress,
   btnName,
   disabled,
+  width,
 }: ToggleBtnProps) {
   return (
     <TouchableOpacity
-      style={tw`flex-row items-center justify-center gap-1 h-full px-2 w-26`}
+      style={tw`flex-row items-center justify-center gap-1 h-full w-[${width}px]`}
       onPress={onPress}
       disabled={disabled}
     >
       <Icon
         type='MaterialCommunityIcons'
-        name='tag-heart'
-        size={16}
-        color={check ? '#fff' : '#ccc'}
+        name={btnName === '맞아요' ? 'tag' : 'tag-outline'}
+        size={14}
+        color={check ? (disabled ? MEDIUM_INDIGO : INDIGO) : MEDIUM_INDIGO}
       />
       <Text
-        style={tw`${check ? 'text-white' : 'text-slate-400'} ${
-          disabled && btnName === '아니에요' ? 'text-slate-300' : ''
+        style={tw`${
+          check
+            ? disabled
+              ? 'text-indigo-300'
+              : 'text-indigo-600'
+            : 'text-indigo-300'
         }`}
       >
         {btnName}

@@ -68,7 +68,7 @@ export default function Modal({
       onSwipeComplete={closeModal}
       swipeDirection={animationIn === 'fadeIn' ? undefined : ['down']}
       animationInTiming={animationIn === 'fadeIn' ? 600 : 400}
-      animationOutTiming={400}
+      animationOutTiming={200}
       propagateSwipe={true}
       animationIn={animationIn}
       animationOut={animationIn === 'fadeIn' ? 'fadeOut' : 'slideOutDown'}
@@ -80,9 +80,9 @@ export default function Modal({
       <KeyboardAvoidingView
         enabled={!overlapped}
         behavior='padding'
-        keyboardVerticalOffset={-140}
+        keyboardVerticalOffset={-100}
       >
-        <View style={tw.style(`max-h-[${MODAL_HEIGHT}px] rounded-2xl`)}>
+        <View style={tw.style(`max-h-[${MODAL_HEIGHT}px]`)}>
           <SwipeHeader
             title={title}
             closeModal={closeModal}

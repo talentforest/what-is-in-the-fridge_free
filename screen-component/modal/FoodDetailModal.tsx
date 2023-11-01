@@ -3,12 +3,7 @@ import { Text } from '../../components/common/native-component';
 import { useSelector } from '../../redux/hook';
 import { FormStep } from '../../constant/formInfo';
 import { getFormattedDate } from '../../util';
-import {
-  useEditFood,
-  useDeleteFood,
-  useFindFood,
-  useSlideAnimation,
-} from '../../hooks';
+import { useEditFood, useDeleteFood, useFindFood } from '../../hooks';
 import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
 import { comma } from '../../util/commaNotation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -60,12 +55,6 @@ export default function FoodDetailModal({
 
   const { isFavoriteItem } = useFindFood();
 
-  const { height } = useSlideAnimation({
-    initialValue: 200,
-    toValue: 400,
-    active: editing,
-  });
-
   const closeModal = () => {
     if (editing) {
       setEditedFood(selectedFood);
@@ -104,24 +93,37 @@ export default function FoodDetailModal({
             </View>
           </View>
         ) : (
-          <View style={tw`px-6 pt-6 gap-2`}>
+          <View style={tw`px-6 pt-4 gap-1`}>
             <View
-              style={tw`gap-2 self-center flex-row justify-center items-center border-t border-b border-slate-300 mb-4 mt-2 py-2 px-4`}
+              style={tw`gap-1.5 self-center flex-row justify-center items-center border-slate-300 mb-4 mt-2 py-1.5 px-2.5`}
             >
+              <View
+                style={tw`absolute top-0 left-0 border-t-2 border-l-2 rounded-tl-[3px] border-slate-400 w-4 h-3`}
+              />
               <Icon
                 type='MaterialCommunityIcons'
-                name='tag-heart'
-                size={18}
+                name={!!isFavoriteItem(name) ? 'tag' : 'tag-outline'}
+                size={16}
                 color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
               />
-              <Text style={tw.style(`text-stone-800 text-lg`)}>{name}</Text>
+              <Text
+                style={tw.style(`max-w-4/5 text-stone-800`, {
+                  lineHeight: 22,
+                })}
+              >
+                {name}
+              </Text>
+
+              <View
+                style={tw`absolute bottom-0 right-0 border-b-2 border-r-2 rounded-br-[3px] border-slate-400 w-4 h-3`}
+              />
             </View>
 
             <View>
-              <InfoBox iconName='dots-grid' label='카테고리'>
+              <InfoBox iconName='grid' label='카테고리'>
                 <View style={tw`flex-row items-center gap-1`}>
                   <CategoryIcon category={category} size={16} />
-                  <Text style={tw``}>{category}</Text>
+                  <Text>{category}</Text>
                 </View>
               </InfoBox>
 
@@ -138,14 +140,14 @@ export default function FoodDetailModal({
               )}
 
               {quantity !== '' && (
-                <InfoBox iconName='sort-numeric-ascending' label='수량'>
+                <InfoBox iconName='bar-chart-2' label='수량'>
                   <Text style={tw``}>{comma(quantity)}</Text>
                 </InfoBox>
               )}
 
               {memo?.length > 1 && (
-                <InfoBox iconName='note-text-outline' label='메모'>
-                  <View style={tw`max-h-12`}>
+                <InfoBox iconName='file-text' label='메모'>
+                  <View style={tw`max-h-18`}>
                     <Text
                       numberOfLines={3}
                       ellipsizeMode='tail'
@@ -158,7 +160,7 @@ export default function FoodDetailModal({
               )}
             </View>
 
-            <View style={tw`gap-1 mt-3`}>
+            <View style={tw`gap-1 mt-1`}>
               <SubmitBtn
                 color='blue'
                 iconName='edit'

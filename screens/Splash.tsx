@@ -21,7 +21,7 @@ export default function Splash({
 }: Props) {
   const [fontsLoaded] = useFonts(fonts);
   const { isLoaded, assets } = useImageLoad({
-    images: [require('../assets/question-fridge.png')],
+    images: [require('../assets/fridge.png')],
   });
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function Splash({
 
   return (
     <View
-      style={tw`flex-1 items-center justify-center bg-[#3284FF]`}
+      style={tw`flex-1 items-center justify-center bg-[#D7F0FF]`}
       onLayout={onLayoutRootView}
     >
       {assets && (
@@ -57,7 +57,7 @@ export default function Splash({
           style={{ width: 200, height: 200 }}
         />
       )}
-      <Text style={tw`mt-12 text-xl text-white`}>냉장고에 뭐가 있지</Text>
+      <Text style={tw`mt-12 text-2xl text-blue-800`}>냉장고에 뭐가 있지</Text>
     </View>
   );
 }

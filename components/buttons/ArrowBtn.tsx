@@ -17,26 +17,28 @@ export default function ArrowBtn({ type, moveStep, active }: Props) {
       <TouchableOpacity
         onPress={moveStep}
         disabled={!active}
-        style={tw`flex-row items-center p-2`}
+        style={tw`flex-row items-center gap-0.5 p-2`}
       >
         {type === 'previous' && (
           <Icon
             name='chevron-left'
-            type='MaterialCommunityIcons'
-            size={22}
+            type='Feather'
+            size={16}
             color={active ? BLUE : LIGHT_GRAY}
           />
         )}
+
         <Text
-          style={tw`text-sm ${active ? 'text-blue-600' : 'text-slate-400'}`}
+          style={tw`text-base ${active ? 'text-blue-600' : 'text-slate-400'}`}
         >
           {type === 'previous' ? '이전' : '다음'}
         </Text>
+
         {type === 'next' && (
           <Icon
             name='chevron-right'
-            type='MaterialCommunityIcons'
-            size={22}
+            type='Feather'
+            size={16}
             color={active ? BLUE : LIGHT_GRAY}
           />
         )}

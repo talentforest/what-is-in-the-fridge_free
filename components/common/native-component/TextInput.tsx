@@ -7,14 +7,15 @@ interface Props extends TextInputProps {
   style?: TextStyle;
 }
 
-export function TextInput({ style, ...props }: Props) {
+export const InputStyle =
+  'text-lg h-10 border border-slate-200 px-3 rounded-xl bg-white text-slate-900';
+
+export function TextInput({ style, editable, ...props }: Props) {
   return (
     <Input
-      style={tw.style(
-        `text-base h-10 border border-slate-200 px-2.5 rounded-lg bg-white`,
-        HSSaemaulRegular,
-        style
-      )}
+      style={tw.style(`${InputStyle}`, HSSaemaulRegular, style, {
+        lineHeight: 18,
+      })}
       numberOfLines={1}
       placeholderTextColor={LIGHT_GRAY}
       allowFontScaling={false}

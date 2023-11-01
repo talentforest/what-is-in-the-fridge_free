@@ -30,7 +30,7 @@ export default function TableItem({
   const slideDownIn = animationState === 'slidedown-in';
   const slideUpOut = animationState === 'slideup-out';
 
-  const ITEM_HEIGHT = 50;
+  const ITEM_HEIGHT = 46;
 
   const initialValue =
     isCheckedItem && slideUpOut ? ITEM_HEIGHT : slideDownIn ? 0 : ITEM_HEIGHT;
@@ -59,14 +59,15 @@ export default function TableItem({
         height,
         opacity: interpolatedOpacity,
         overflow: 'hidden',
+        marginHorizontal: -4,
       }}
     >
       <TouchableOpacity
         onPress={() => onCheckBoxPress(initializedFood)}
         style={tw.style(
-          `border h-[${ITEM_HEIGHT - 6}px] ${
+          `border h-[${ITEM_HEIGHT - 5}px] ${
             isCheckedItem ? 'border-blue-500' : 'border-slate-200'
-          } bg-white flex-row items-center gap-1 pl-3`,
+          } bg-white flex-row items-center gap-1 pl-3 rounded-lg mx-1`,
           shadowStyle(4)
         )}
       >

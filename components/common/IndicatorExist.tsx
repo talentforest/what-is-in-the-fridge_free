@@ -22,44 +22,39 @@ export default function IndicatorExist({
   navigate,
   roundedBorder,
 }: Props) {
-  const navigation = useNavigation<NavigateProp>();
   const { findFood } = useFindFood();
-  const dispatch = useDispatch();
   const existFood = findFood(name);
+
+  const navigation = useNavigation<NavigateProp>();
+
+  const dispatch = useDispatch();
 
   const existFoodColor = existFood ? 'text-blue-600' : 'text-red-500';
   const borderStyle =
-    'border border-blue-400 px-2 h-7.5 rounded-full items-center';
+    'border h-7 border-blue-400 px-2 rounded-full items-center';
+
+  const onNavigatePress = () => {
+    dispatch(search(name));
+    return space === '팬트리'
+      ? navigation.navigate('PantryFoods')
+      : navigation.navigate('Compartments', { space });
+  };
 
   return (
-    <TouchableOpacity
-      onPress={() => {
-        dispatch(search(name));
-        return space === '팬트리'
-          ? navigation.navigate('PantryFoods')
-          : navigation.navigate('Compartments', { space });
-      }}
-      disabled={!navigate}
-    >
-      <View style={tw`${roundedBorder ? borderStyle : ''} items-end`}>
-        <View
-          style={tw`flex-row items-center -gap-0.2 ${navigate ? 'h-full' : ''}`}
+    <TouchableOpacity disabled={!navigate} onPress={onNavigatePress}>
+      <View
+        style={tw`flex-row items-center ${navigate ? 'h-full' : ''} 
+        ${roundedBorder ? borderStyle : ''}`}
+      >
+        <Text
+          style={tw`${existFoodColor}
+          ${roundedBorder ? 'text-base' : 'text-lg'}`}
         >
-          <Text
-            style={tw`${existFoodColor} py-0 ${
-              roundedBorder ? 'text-[13px] ' : 'text-[15px]'
-            }`}
-          >
-            {!!existFood ? '있음' : '없음'}
-          </Text>
+          {!!existFood ? '있음' : '없음'}
+        </Text>
 
-          {existFood && navigate && (
-            <Icon name='arrow-up-right' type='Feather' size={15} />
-          )}
-        </View>
-
-        {space && existFood && !borderStyle && (
-          <Text style={tw`text-xs text-slate-500 py-0`}>{space}</Text>
+        {existFood && navigate && (
+          <Icon name='arrow-up-right' type='Feather' size={13} />
         )}
       </View>
     </TouchableOpacity>

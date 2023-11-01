@@ -28,14 +28,14 @@ export default function SquareIconBtn({
         shadowStyle(4)
       )}
     >
-      <View style={tw`px-3 py-2 flex-row items-center gap-1`}>
+      <View style={tw`px-3 py-1.5 flex-row items-center gap-1`}>
         <Icon
           type='MaterialCommunityIcons'
           name={icon}
-          size={18}
+          size={16}
           color={icon.includes('plus') ? BLUE : 'amber'}
         />
-        <Text style={tw`text-[15px]`}>{btnName}</Text>
+        <Text>{btnName}</Text>
       </View>
     </TouchableOpacity>
   );

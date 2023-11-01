@@ -2,45 +2,47 @@ import { Image, View } from 'react-native';
 import { Text } from './native-component';
 import { useImageLoad } from '../../hooks';
 import { getImgName } from '../../util';
+import { CompartmentNum } from '../../constant/fridgeInfo';
 import tw from 'twrnc';
 
 interface Props {
   message: string;
   assetSize?: number;
+  compartmentNum?: CompartmentNum;
 }
 
-export default function EmptySign({ message, assetSize }: Props) {
-  const splittedMessage = message.split(', ');
-
+export default function EmptySign({
+  message,
+  assetSize,
+  compartmentNum,
+}: Props) {
   const { isLoaded, assets } = useImageLoad({
     images: [
-      require('../../assets/question-face.png'),
-      require('../../assets/shoppinglist-food.png'),
-      require('../../assets/apple.png'),
+      require('../../assets/shoppinglist.png'),
       require('../../assets/expired-foods.png'),
-      require('../../assets/meat.png'),
+      require('../../assets/favorite-foods.png'),
+      require('../../assets/food/apple.png'),
+      require('../../assets/food/meat.png'),
+      require('../../assets/food/carrot.png'),
+      require('../../assets/food/green-onion.png'),
     ],
   });
 
-  const assetName = getImgName(message);
+  const assetName = getImgName(message, compartmentNum);
 
   const asset = assets?.find((asset) => asset.name === assetName);
 
   if (!isLoaded) return null;
 
   return (
-    <View style={tw`items-center justify-center`}>
-      <Text style={tw`text-slate-400 text-center`}>{splittedMessage[0]}</Text>
-
-      {message[1] && (
-        <Text style={tw`text-slate-400 text-center`}>{splittedMessage[1]}</Text>
-      )}
+    <View style={tw`items-center justify-center gap-2`}>
+      <Text style={tw`text-slate-400 text-center text-base`}>{message}</Text>
 
       {assets && assetSize && (
         <Image
           source={{ uri: asset?.localUri }}
-          width={assetName === 'apple' ? assetSize * 0.5 : assetSize}
-          height={assetName === 'apple' ? assetSize * 0.5 : assetSize}
+          width={assetSize}
+          height={assetSize}
           style={tw`opacity-50`}
         />
       )}

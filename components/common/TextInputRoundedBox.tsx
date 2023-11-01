@@ -30,7 +30,7 @@ export default function TextInputRoundedBox({
   checkedListLength,
 }: Props) {
   const { height } = useSlideAnimation({
-    initialValue: 72,
+    initialValue: 66,
     toValue: 0,
     active: !!checkedListLength,
   });
@@ -49,13 +49,13 @@ export default function TextInputRoundedBox({
         )}
       >
         {children}
-        <View style={tw`flex-1 ${!!children ? '' : 'ml-3'}`}>
+        <View style={tw`flex-1 ${!!children ? '' : 'ml-2'}`}>
           <TextInput
             value={value}
             onChangeText={setValue}
             placeholder={placeholder}
             blurOnSubmit={false}
-            style={tw`border-0 flex-1 rounded-full my-0.5 items-center justify-center`}
+            style={tw`border-0 flex-1 rounded-full items-center justify-center`}
             onSubmitEditing={onSubmitEditing}
             autoFocus={autoFocus}
           />
@@ -63,12 +63,12 @@ export default function TextInputRoundedBox({
         <TouchableOpacity
           disabled={disabled}
           onPress={onSubmitEditing}
-          style={tw`h-full pl-2 pr-2.5 items-center justify-center`}
+          style={tw`h-full pl-2 pr-3 items-center justify-center`}
         >
           <Icon
-            type='MaterialCommunityIcons'
+            type='Feather'
             name='plus'
-            size={23}
+            size={20}
             color={disabled ? LIGHT_GRAY : DEEP_GRAY}
           />
         </TouchableOpacity>
