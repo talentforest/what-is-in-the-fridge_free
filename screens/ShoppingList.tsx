@@ -26,6 +26,7 @@ import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
 import AddAtOnceModal from '../screen-component/modal/AddAtOnceModal';
+import { MAX_LIMIT } from '../constant/foodInfo';
 
 export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
@@ -35,7 +36,7 @@ export default function ShoppingList() {
 
   const flatListRef = useRef<FlatList | null>(null);
 
-  const { findFood } = useFindFood();
+  const { findFood, allFoods } = useFindFood();
 
   const dispatch = useDispatch();
 
@@ -68,8 +69,28 @@ export default function ShoppingList() {
   };
 
   const onAddAtOnceBtnPress = () => {
-    const hasCheckListFood = checkedList.some((food) => findFood(food.name));
+    if (allFoods.length + checkedList.length >= MAX_LIMIT) {
+      const {
+        excessTotal: { title },
+      } = alertPhrase;
+      dispatch(toggleAlertModal(true));
+      dispatch(
+        setAlertInfo({
+          title,
+          msg: `식료품 저장 개수의 최대 한도인 ${MAX_LIMIT}개를 초과하게 됩니다. ${
+            MAX_LIMIT === allFoods.length
+              ? '더 추가하실 수 없습니다'
+              : `${
+                  MAX_LIMIT - allFoods.length
+                }개의 식료품을 더 추가하실 수 있습니다.`
+          } `,
+          btns: ['확인'],
+        })
+      );
+      return;
+    }
 
+    const hasCheckListFood = checkedList.some((food) => findFood(food.name));
     if (hasCheckListFood) {
       const {
         alreadyExist: { title, msg },
@@ -81,7 +102,7 @@ export default function ShoppingList() {
 
     if (checkedList.length > MAX_NUM_ADD_AT_ONCE) {
       const {
-        excess: { title, msg },
+        excessToAddAtOnce: { title, msg },
       } = alertPhrase;
       dispatch(toggleAlertModal(true));
       dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));

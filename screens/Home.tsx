@@ -1,4 +1,10 @@
-import { View, useWindowDimensions } from 'react-native';
+import {
+  Keyboard,
+  Pressable,
+  TouchableWithoutFeedback,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useImageLoad } from '../hooks';
 import { useState } from 'react';
@@ -35,41 +41,46 @@ const Home = () => {
 
   return (
     <SafeAreaView edges={['top']} style={tw`${BG_COLOR} flex-1`}>
-      <Container>
-        <View style={tw`flex-1 mt-1`}>
-          <HomeHeader />
+      <Pressable style={tw`flex-1`} onPress={() => Keyboard.dismiss()}>
+        <Container>
+          <View style={tw`flex-1 mt-1`}>
+            <HomeHeader />
 
-          <SearchFoodSection
-            keyword={keyword}
-            setKeyword={setKeyword}
-            setSearchedFoods={setSearchedFoods}
-          />
+            <SearchFoodSection
+              keyword={keyword}
+              setKeyword={setKeyword}
+              setSearchedFoods={setSearchedFoods}
+            />
 
-          <View
-            style={tw`h-[${height * 0.6}px] items-center justify-center mb-2`}
-          >
-            <PantyEntranceBtn />
-            <Fridge />
-          </View>
-
-          <View style={tw`absolute top-23 w-full`}>
-            <SearchedFoodList keyword={keyword} searchedFoods={searchedFoods} />
-          </View>
-
-          {assets && (
-            <View style={tw`pb-6 pt-2 flex-row justify-between`}>
-              {navigationBtns.map(({ title, assetName, navigationName }) => (
-                <NavigationBtnBox
-                  key={title}
-                  title={title}
-                  uri={findAsset(assets, assetName).localUri}
-                  navigatonName={navigationName}
-                />
-              ))}
+            <View
+              style={tw`h-[${height * 0.6}px] items-center justify-center mb-2`}
+            >
+              <PantyEntranceBtn />
+              <Fridge />
             </View>
-          )}
-        </View>
-      </Container>
+
+            <View style={tw`absolute top-23 w-full`}>
+              <SearchedFoodList
+                keyword={keyword}
+                searchedFoods={searchedFoods}
+              />
+            </View>
+
+            {assets && (
+              <View style={tw`pb-6 pt-2 flex-row justify-between`}>
+                {navigationBtns.map(({ title, assetName, navigationName }) => (
+                  <NavigationBtnBox
+                    key={title}
+                    title={title}
+                    uri={findAsset(assets, assetName).localUri}
+                    navigatonName={navigationName}
+                  />
+                ))}
+              </View>
+            )}
+          </View>
+        </Container>
+      </Pressable>
     </SafeAreaView>
   );
 };

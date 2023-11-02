@@ -38,7 +38,7 @@ export default function Setting() {
           </View>
 
           <Text style={tw`text-base text-slate-500 mb-2`}>
-            이용권 구매시 식료품을 제한 없이 저장할 수 있습니다.
+            이용권 구매시 식료품 정보를 한도 없이 저장할 수 있어요.
           </Text>
         </View>
 

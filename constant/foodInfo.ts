@@ -38,3 +38,5 @@ export const initialPantryFood: Food = {
   quantity: '',
   memo: '',
 };
+
+export const MAX_LIMIT = 30;

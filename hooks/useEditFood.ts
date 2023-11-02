@@ -145,7 +145,8 @@ export const useEditFood = () => {
       alertTitle === '식료품 이름 미작성' ||
       alertTitle === '메모 미작성' ||
       alertTitle === '유효하지 않은 소비기한' ||
-      alertTitle === '식료품 이동 알림'
+      alertTitle === '식료품 이동 알림' ||
+      alertTitle === '식료품 개수 한도 도달'
     ) {
       dispatch(toggleAlertModal(false));
     }

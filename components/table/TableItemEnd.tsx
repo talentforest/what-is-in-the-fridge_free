@@ -1,12 +1,18 @@
 import { useFindFood } from '../../hooks';
 import { View } from 'react-native';
 import { useRouteName } from '../../hooks/useRouteName';
-import { Food } from '../../constant/foodInfo';
+import { Food, MAX_LIMIT } from '../../constant/foodInfo';
 
 import LeftDay from '../common/LeftDay';
 import AddIconBtn from '../buttons/AddIconBtn';
 import IndicatorExist from '../common/IndicatorExist';
 import tw from 'twrnc';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { alertPhrase } from '../../constant/alertPhrase';
+import {
+  setAlertInfo,
+  toggleAlertModal,
+} from '../../redux/slice/alertModalSlice';
 
 interface Props {
   title: string;
@@ -22,8 +28,20 @@ export default function TableItemEnd({
   isCheckList,
 }: Props) {
   const { routeShoppingList } = useRouteName();
+  const { findFood, allFoods } = useFindFood();
 
-  const { findFood } = useFindFood();
+  const dispatch = useDispatch();
+  const onPress = () => {
+    if (allFoods.length >= MAX_LIMIT) {
+      const {
+        excessTotal: { title, msg },
+      } = alertPhrase;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
+    }
+    addToFridgePress(food);
+  };
 
   return (
     <>
@@ -38,7 +56,7 @@ export default function TableItemEnd({
             />
           )}
           <AddIconBtn
-            onPress={() => addToFridgePress(food)}
+            onPress={onPress}
             disabled={!!(isCheckList || findFood(food.name))}
           />
         </>

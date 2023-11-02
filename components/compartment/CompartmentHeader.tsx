@@ -1,8 +1,15 @@
 import { View } from 'react-native';
 import { Text } from '../common/native-component';
-import { Food } from '../../constant/foodInfo';
+import { Food, MAX_LIMIT } from '../../constant/foodInfo';
 import AddIconBtn from '../buttons/AddIconBtn';
 import tw from 'twrnc';
+import { useDispatch, useSelector } from '../../redux/hook';
+import {
+  setAlertInfo,
+  toggleAlertModal,
+} from '../../redux/slice/alertModalSlice';
+import { alertPhrase } from '../../constant/alertPhrase';
+import { useFindFood } from '../../hooks';
 
 interface Props {
   title: string;
@@ -15,7 +22,20 @@ export default function CompartmentHeader({
   foodList,
   setOpenAddFoodModal,
 }: Props) {
-  const onPress = () => setOpenAddFoodModal(true);
+  const { allFoods } = useFindFood();
+
+  const dispatch = useDispatch();
+  const onPress = () => {
+    if (allFoods.length >= MAX_LIMIT) {
+      const {
+        excessTotal: { title, msg },
+      } = alertPhrase;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
+    }
+    setOpenAddFoodModal(true);
+  };
 
   return (
     <View>

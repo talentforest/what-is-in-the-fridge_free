@@ -1,8 +1,9 @@
-import { Food } from './foodInfo';
+import { Food, MAX_LIMIT } from './foodInfo';
 import { CompartmentNum, Space } from './fridgeInfo';
 
 type PhraseObjKey =
-  | 'excess'
+  | 'excessTotal'
+  | 'excessToAddAtOnce'
   | 'noName'
   | 'wrongDate'
   | 'noMemo'
@@ -34,7 +35,11 @@ type AlertPhraseFn = (food: Food) => {
 export const MAX_NUM_ADD_AT_ONCE = 8;
 
 export const alertPhrase: AlertPhraseObj = {
-  excess: {
+  excessTotal: {
+    title: '식료품 개수 한도 도달',
+    msg: `냉장고와 팬트리, 총합 식료품 개수 한도인 ${MAX_LIMIT}개에 도달했습니다.`,
+  },
+  excessToAddAtOnce: {
     title: '식료품 개수 초과',
     msg: `최대 ${MAX_NUM_ADD_AT_ONCE}개까지 한번에 추가할 수 있어요.`,
   },

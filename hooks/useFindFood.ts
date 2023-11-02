@@ -26,11 +26,14 @@ export const useFindFood = () => {
     return shoppingList.find((food) => food.name === name);
   };
 
+  const allFoods = [...fridgeFoods, ...pantryFoods];
+
   return {
     findFoodInFridge,
     findFoodInPantry,
     findFood,
     isFavoriteItem,
     isShoppingListItem,
+    allFoods,
   };
 };
