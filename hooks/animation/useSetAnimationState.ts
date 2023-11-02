@@ -4,7 +4,6 @@ import { Food } from '../../constant/foodInfo';
 export type AnimationState = 'none' | 'slidedown-in' | 'slideup-out';
 
 export type onPressType = (
-  setAnimationState: (state: AnimationState) => void,
   animationState: AnimationState,
   allTableItems: Food[]
 ) => void;
@@ -14,7 +13,7 @@ export const useSetAnimationState = () => {
 
   const afterAnimation = (onPress: onPressType, foodList: Food[]) => {
     if (animationState === 'slideup-out') {
-      onPress(setAnimationState, animationState, foodList);
+      onPress(animationState, foodList);
       setAnimationState('none');
     }
     if (animationState === 'slidedown-in') {

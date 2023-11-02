@@ -8,18 +8,11 @@ type PhraseObjKey =
   | 'noMemo'
   | 'alreadyExist';
 
-type PhraseFnKey =
-  | 'exist'
-  | 'existInList'
-  | 'successAdd'
-  | 'deleteExistFood'
-  | 'modifyCategory'
-  | 'moveStorage';
+type PhraseFnKey = 'exist' | 'successAdd' | 'modifyCategory' | 'moveStorage';
 
 type PhraseWithCheckListKey =
   | 'unSettingFavoriteFoods'
   | 'deleteExpiredFoods'
-  | 'deletePantryFoods'
   | 'deleteFromShoppingList'
   | 'addToShoppingList'
   | 'confirmAddAll';
@@ -55,51 +48,40 @@ export const alertPhrase: AlertPhraseObj = {
   },
   noMemo: {
     title: '메모 미작성',
-    msg: '메모가 작성되지 않았어요. 작성하지 않는다면 생략하기 버튼을 눌러주세요',
+    msg: '메모가 작성되지 않았어요. 작성하지 않는다면 생략하기 버튼을 눌러주세요.',
   },
   alreadyExist: {
     title: '이미 존재하는 식료품 알림',
-    msg: '이미 냉장고나 팬트리에 존재하는 식료품은 한번에 추가할 수 없어요. 선택을 해제해주세요.',
+    msg: '이미 냉장고나 팬트리에 있는 식료품은 추가할 수 없어요. 갖고 계신 식료품은 선택을 해제해주세요.',
   },
 };
 
 export const alertPhraseWithFood: AlertPhraseFn = (food: Food) => {
   const exist = {
-    title: `${food.name}`,
-    msg: `${
+    title: '이미 존재하는 식료품 알림',
+    msg: `${food.name} 식료품은 이미 ${
       food.space === '팬트리'
         ? `${food.space}`
         : `${food.space} ${food.compartmentNum}`
-    }에 이미 식료품이 있어요.`,
-  };
-  const existInList = {
-    title: `${food.name}`,
-    msg: '이미 목록에 있어요.',
+    }에 있어요.`,
   };
   const successAdd = {
-    title: `${food.name}`,
+    title: '식료품 추가 완료',
     msg: '',
   };
-  const deleteExistFood = {
-    title: `기존 식료품 삭제 알림`,
-    msg: `이미 ${food.space}에 ${food.name} 식료품이 존재해요. 기존 식료품을 삭제하고 새로 추가하시겠어요?`,
-  };
-
   const modifyCategory = {
     title: '카테고리 변경 알림',
-    msg: `${food.space}에 있는 동일한 식료품은 "${food.category}"로 저장되어 있어요. 기존의 카테고리 정보로 저장돼요.`,
+    msg: `${food.space}에 있는 동일한 식료품은 "${food.category}" 카테고리로 저장되어 있어요. 기존에 갖고 계신 정보로 저장돼요.`,
   };
 
   const moveStorage = {
-    title: '식료품 위치 이동 알림',
-    msg: `식료품의 위치가 ${food.space}으로 이동되었어요. ${food.space}으로 이동하시겠어요?`,
+    title: '식료품 이동 알림',
+    msg: `${food.name}의 위치가 ${food.space}으로 이동되었어요.`,
   };
 
   return {
     exist,
-    existInList,
     successAdd,
-    deleteExistFood,
     modifyCategory,
     moveStorage,
   };
@@ -111,7 +93,7 @@ export const alertPhraseDeleteCompartment: (compartmentNum: CompartmentNum) => {
 } = (compartmentNum: CompartmentNum) => {
   return {
     title: '식료품 존재 안내',
-    msg: `${compartmentNum}번 칸에 식료품이 있어 삭제할 수 없어요.`,
+    msg: `${compartmentNum}칸에 식료품이 있어요.`,
   };
 };
 
@@ -148,11 +130,6 @@ export const alertPhraseWithCheckList: (food: Food[]) => {
     msg: `총 ${listLength}개의 식료품(${nameList})을 삭제하시겠어요? 냉장고나 팬트리 공간에서도 삭제돼요.`,
   };
 
-  const deletePantryFoods = {
-    title: '팬트리 식료품 삭제',
-    msg: `총 ${listLength}개의 식료품(${nameList})을 팬트리 목록에서 삭제하시겠어요?`,
-  };
-
   const deleteFromShoppingList = {
     title: '장보기 식료품 삭제',
     msg: `총 ${listLength}개의 식료품(${nameList})을 장보기 목록에서 삭제하시겠어요?`,
@@ -160,7 +137,7 @@ export const alertPhraseWithCheckList: (food: Food[]) => {
 
   const addToShoppingList = {
     title: '장보기 목록 추가',
-    msg: `총 ${listLength}개의 식료품(${nameList})이 장보기 목록에 추가되었어요. 바로 장보기 목록으로 이동하시겠어요?`,
+    msg: `총 ${listLength}개의 식료품(${nameList})이 장보기 목록에 추가되었어요.`,
   };
 
   const confirmAddAll = {
@@ -174,7 +151,6 @@ export const alertPhraseWithCheckList: (food: Food[]) => {
   return {
     unSettingFavoriteFoods,
     deleteExpiredFoods,
-    deletePantryFoods,
     deleteFromShoppingList,
     addToShoppingList,
     confirmAddAll,

@@ -9,10 +9,10 @@ import { addAtOnceStep } from '../constant/formInfo';
 import { useFindFood } from './useFindFood';
 import { validFoodObj } from '../util/validFoodObj';
 import { alertPhraseWithCheckList } from '../constant/alertPhrase';
-import { Alert } from 'react-native';
 import { addPantryFoods } from '../redux/slice/pantryFoodsSlice';
 import { addFridgeFoods } from '../redux/slice/fridgeFoodsSlice';
 import { removeShoppingListFoods } from '../redux/slice/shoppingListSlice';
+import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
 
 interface Props {
   checkedList: Food[];
@@ -78,29 +78,36 @@ export const useAddAtOnce = ({
     setCurrentStep({ step: 2, name: '추가할 식료품 정보' });
   };
 
+  const position =
+    currentStorage === '팬트리' ? `${currentStorage}` : `${fridgePosition}칸`;
+
+  const onAlertPress = () => {
+    dispatch(
+      currentStorage === '팬트리'
+        ? addPantryFoods(checkedList)
+        : addFridgeFoods(checkedList)
+    );
+    dispatch(removeShoppingListFoods(checkedList));
+
+    dispatch(toggleAlertModal(true));
+    dispatch(
+      setAlertInfo({
+        title: '추가 완료',
+        msg: `성공적으로 ${position}에 추가되었습니다!`,
+        btns: ['확인'],
+      })
+    );
+
+    setModalVisible(false);
+    setCheckedList([]);
+  };
+
   const onSubmitPress = () => {
     const {
       confirmAddAll: { title, msg },
     } = alertPhraseWithCheckList(checkedList);
-
-    Alert.alert(title, msg, [
-      {
-        text: '한번에 추가',
-        onPress: () => {
-          dispatch(
-            currentStorage === '팬트리'
-              ? addPantryFoods(checkedList)
-              : addFridgeFoods(checkedList)
-          );
-          dispatch(removeShoppingListFoods(checkedList));
-          Alert.alert('추가 완료', '성공적으로 추가되었습니다!');
-          setModalVisible(false);
-          setCheckedList([]);
-        },
-        style: 'default',
-      },
-      { text: '취소', style: 'destructive' },
-    ]);
+    dispatch(toggleAlertModal(true));
+    dispatch(setAlertInfo({ title, msg, btns: ['취소', '한번에 추가'] }));
   };
 
   const onFoodItemPress = (selectedFood: Food) => {
@@ -113,9 +120,6 @@ export const useAddAtOnce = ({
       dispatch(selectNone());
     }
   };
-
-  const position =
-    currentStorage === '팬트리' ? `${currentStorage}` : `${fridgePosition}칸`;
 
   const closeModal = () => {
     setModalVisible(false);
@@ -140,5 +144,6 @@ export const useAddAtOnce = ({
     onNextStepPress,
     onBackStepPress,
     closeModal,
+    onAlertPress,
   };
 };

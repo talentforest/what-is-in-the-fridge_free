@@ -29,7 +29,9 @@ export default function SubmitBtn({
       {iconName && (
         <Icon name={iconName} type='Feather' color='#fff' size={15} />
       )}
-      <Text style={tw`text-white text-center pt-0.5 text-base`}>{btnName}</Text>
+
+      <Text style={tw`text-white text-center`}>{btnName}</Text>
+
       {tailIcon && (
         <Icon name={tailIcon} type='Feather' color='#fff' size={18} />
       )}

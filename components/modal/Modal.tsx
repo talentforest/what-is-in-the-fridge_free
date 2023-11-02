@@ -14,6 +14,7 @@ import SwipeHeader from './SwipeHeader';
 import tw from 'twrnc';
 
 export type ModalTitle =
+  | '알림'
   | '장보기 목록 식료품 추가'
   | '새로운 식료품 추가'
   | '식료품 정보 수정'
@@ -52,29 +53,26 @@ export default function Modal({
 }: Props) {
   const MODAL_HEIGHT = DEVICE_HEIGHT * 0.9;
 
-  const positionStyle =
-    animationIn !== 'fadeIn'
-      ? 'justify-end'
-      : title === '소비기한 설정'
-      ? 'mx-4 mb-8'
-      : 'mx-4';
+  const positionStyle = animationIn !== 'fadeIn' ? 'justify-end' : 'mx-4';
 
   return (
     <RNModal
       isVisible={isVisible}
-      onBackdropPress={closeModal}
+      onBackdropPress={title === '알림' ? undefined : closeModal}
       backdropTransitionOutTiming={0} // 안드로이드 깜박임 이슈
       onBackButtonPress={closeModal} // 안드로이드 뒤로 가기 버튼
       onSwipeComplete={closeModal}
       swipeDirection={animationIn === 'fadeIn' ? undefined : ['down']}
-      animationInTiming={animationIn === 'fadeIn' ? 600 : 400}
-      animationOutTiming={200}
+      animationInTiming={
+        animationIn === 'fadeIn' ? (title === '알림' ? 100 : 600) : 400
+      }
+      animationOutTiming={title === '알림' ? 100 : 200}
       propagateSwipe={true}
       animationIn={animationIn}
       animationOut={animationIn === 'fadeIn' ? 'fadeOut' : 'slideOutDown'}
-      statusBarTranslucent={animationIn === 'fadeIn' ? false : true}
+      statusBarTranslucent={true}
       hasBackdrop={hasBackdrop}
-      backdropOpacity={0.7}
+      backdropOpacity={title === '알림' ? 0.2 : 0.6}
       style={tw.style(`m-0 ${positionStyle}`, style)}
     >
       <KeyboardAvoidingView
@@ -83,11 +81,13 @@ export default function Modal({
         keyboardVerticalOffset={-100}
       >
         <View style={tw.style(`max-h-[${MODAL_HEIGHT}px]`)}>
-          <SwipeHeader
-            title={title}
-            closeModal={closeModal}
-            animationIn={animationIn}
-          />
+          {title !== '알림' && (
+            <SwipeHeader
+              title={title}
+              closeModal={closeModal}
+              animationIn={animationIn}
+            />
+          )}
 
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View>{children}</View>

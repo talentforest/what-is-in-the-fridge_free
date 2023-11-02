@@ -3,10 +3,11 @@ import { Food, FoodInfo } from '../constant/foodInfo';
 import { useState } from 'react';
 import { addFridgeFood } from '../redux/slice/fridgeFoodsSlice';
 import { FoodLocation } from '../constant/fridgeInfo';
-import { Alert } from 'react-native';
 import { addToPantry } from '../redux/slice/pantryFoodsSlice';
 import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
 import { addFavorite, editFavorite } from '../redux/slice/favoriteFoodsSlice';
+import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
+import { beforePurchaseDate } from '../util';
 import UUIDGenerator from 'react-native-uuid';
 
 interface Props {
@@ -31,25 +32,39 @@ export const useAddFood = ({ initialFood, foodLocation }: Props) => {
 
   const onAddSubmit = (setModalVisible: (visible: boolean) => void) => {
     const { name, category, expiredDate, purchaseDate, memo } = newFood;
-
     const { noName, wrongDate, noMemo } = alertPhrase;
-
-    if (name === '') return Alert.alert(noName.title, noName.msg);
 
     const allFoods = [...fridgeFoods, ...pantryFoods];
     const existFood = allFoods.find((food) => food.name === name);
 
     if (existFood) {
-      const { exist } = alertPhraseWithFood(existFood);
-      return Alert.alert(exist.title, exist.msg);
+      const {
+        exist: { title, msg },
+      } = alertPhraseWithFood(existFood);
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
     }
 
-    if (new Date(expiredDate).getTime() < new Date(purchaseDate).getTime()) {
-      return Alert.alert(wrongDate.title, wrongDate.msg);
+    if (name === '') {
+      const { title, msg } = noName;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
+    }
+
+    if (beforePurchaseDate(purchaseDate, expiredDate)) {
+      const { title, msg } = wrongDate;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
     }
 
     if (isMemoOpen && memo === '') {
-      return Alert.alert(noMemo.title, noMemo.msg);
+      const { title, msg } = noMemo;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
     }
 
     const isFavoriteItem = favoriteFoods.find((food) => food.name === name);

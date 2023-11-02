@@ -10,7 +10,7 @@ interface Props extends TextInputProps {
 export const InputStyle =
   'text-lg h-10 border border-slate-200 px-3 rounded-xl bg-white text-slate-900';
 
-export function TextInput({ style, editable, ...props }: Props) {
+export function TextInput({ style, ...props }: Props) {
   return (
     <Input
       style={tw.style(`${InputStyle}`, HSSaemaulRegular, style, {

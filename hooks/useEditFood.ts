@@ -6,7 +6,6 @@ import {
   editFridgeFood,
   removeFridgeFood,
 } from '../redux/slice/fridgeFoodsSlice';
-import { Alert } from 'react-native';
 import {
   addToPantry,
   editPantryFood,
@@ -14,9 +13,6 @@ import {
 } from '../redux/slice/pantryFoodsSlice';
 import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
 import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
-import { Space } from '../constant/fridgeInfo';
-import { useNavigation } from '@react-navigation/native';
-import { NavigateProp } from '../navigation/Navigation';
 import { search } from '../redux/slice/searchedFoodSlice';
 import { useFindFood } from './useFindFood';
 import {
@@ -24,19 +20,23 @@ import {
   isFridgeFood,
   isPantryFood,
 } from '../util/checkFoodSpace';
+import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
+import { beforePurchaseDate } from '../util';
 import UUIDGenerator from 'react-native-uuid';
 
 export const useEditFood = () => {
   const { isFavorite } = useSelector((state) => state.isFavorite);
   const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
   const { selectedFood } = useSelector((state) => state.selectedFood);
+  const {
+    alertInfo: { title: alertTitle },
+  } = useSelector((state) => state.alertModal);
 
   const [editedFood, setEditedFood] = useState(selectedFood);
   const [editing, setEditing] = useState(false);
 
   const myUuid = UUIDGenerator.v4();
 
-  const navigation = useNavigation<NavigateProp>();
   const dispatch = useDispatch();
   const { isFavoriteItem } = useFindFood();
 
@@ -47,23 +47,13 @@ export const useEditFood = () => {
   const editFoodInfo = (newInfo: FoodInfo) =>
     setEditedFood({ ...editedFood, ...newInfo });
 
-  const afterChangedPositionAlert = (newSpace: Space) => {
-    const { moveStorage } = alertPhraseWithFood(editedFood);
-    return Alert.alert(moveStorage.title, moveStorage.msg, [
-      {
-        text: '취소',
-        style: 'destructive',
-      },
-      {
-        text: '확인',
-        onPress: () => {
-          editedFood.space === '팬트리'
-            ? navigation.navigate('PantryFoods')
-            : navigation.navigate('Compartments', { space: newSpace });
-        },
-        style: 'default',
-      },
-    ]);
+  const afterChangedPositionAlert = () => {
+    const {
+      moveStorage: { title, msg },
+    } = alertPhraseWithFood(editedFood);
+
+    dispatch(toggleAlertModal(true));
+    dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
   };
 
   const onEditSumbit = (setModalVisible: (visible: boolean) => void) => {
@@ -78,11 +68,26 @@ export const useEditFood = () => {
 
     // check valid
     const { noName, wrongDate, noMemo } = alertPhrase;
-    if (newName === '') return Alert.alert(noName.title, noName.msg);
-    const isWrongDate =
-      new Date(expiredDate).getTime() < new Date(purchaseDate).getTime();
-    if (isWrongDate) return Alert.alert(wrongDate.title, wrongDate.msg);
-    if (isMemoOpen && memo === '') return Alert.alert(noMemo.title, noMemo.msg);
+    if (newName === '') {
+      const { title, msg } = noName;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
+    }
+
+    if (beforePurchaseDate(purchaseDate, expiredDate)) {
+      const { title, msg } = wrongDate;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
+    }
+
+    if (isMemoOpen && memo === '') {
+      const { title, msg } = noMemo;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
+    }
 
     // change id by isEditedName, isFavoriteItem(newName)
     const isEditedName = newName !== selectedFood.name;
@@ -130,7 +135,19 @@ export const useEditFood = () => {
       dispatch(search(editedFood.name));
     }
     if (originSpace !== newSpace) {
-      afterChangedPositionAlert(newSpace);
+      afterChangedPositionAlert();
+    }
+  };
+
+  const onAlertComfirmPress = () => {
+    if (
+      alertTitle === '이미 존재하는 식료품 알림' ||
+      alertTitle === '식료품 이름 미작성' ||
+      alertTitle === '메모 미작성' ||
+      alertTitle === '유효하지 않은 소비기한' ||
+      alertTitle === '식료품 이동 알림'
+    ) {
+      dispatch(toggleAlertModal(false));
     }
   };
 
@@ -141,5 +158,6 @@ export const useEditFood = () => {
     setEditedFood,
     editFoodInfo,
     onEditSumbit,
+    onAlertComfirmPress,
   };
 };

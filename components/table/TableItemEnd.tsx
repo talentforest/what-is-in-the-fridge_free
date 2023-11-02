@@ -39,7 +39,7 @@ export default function TableItemEnd({
           )}
           <AddIconBtn
             onPress={() => addToFridgePress(food)}
-            disabled={isCheckList}
+            disabled={!!(isCheckList || findFood(food.name))}
           />
         </>
       )}

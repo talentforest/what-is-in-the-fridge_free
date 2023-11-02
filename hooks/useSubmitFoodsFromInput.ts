@@ -1,4 +1,4 @@
-import { Alert, Keyboard } from 'react-native';
+import { Keyboard } from 'react-native';
 import { useDispatch } from '../redux/hook';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { initialFridgeFood } from '../constant/foodInfo';
@@ -7,6 +7,7 @@ import { addToShoppingList } from '../redux/slice/shoppingListSlice';
 import { AnimationState } from './animation/useSetAnimationState';
 import { alertPhraseWithFood } from '../constant/alertPhrase';
 import { useFindFood } from './useFindFood';
+import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
 import UUIDGenerator from 'react-native-uuid';
 
 export const useSubmitFoodsFromInput = () => {
@@ -33,23 +34,16 @@ export const useSubmitFoodsFromInput = () => {
     };
 
     const hasFood = findFood(inputValue);
-
     if (hasFood) {
       if (category !== hasFood.category) {
         const {
           modifyCategory: { title, msg },
         } = alertPhraseWithFood(hasFood);
-
-        return Alert.alert(title, msg, [
-          {
-            text: '확인',
-            onPress: () => {
-              dispatch(addFavorite(hasFood));
-              setInputValue('');
-            },
-            style: 'default',
-          },
-        ]);
+        dispatch(toggleAlertModal(true));
+        dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+        dispatch(addFavorite(hasFood));
+        setInputValue('');
+        return;
       }
 
       dispatch(addFavorite({ ...initialFavFood, id: hasFood.id }));

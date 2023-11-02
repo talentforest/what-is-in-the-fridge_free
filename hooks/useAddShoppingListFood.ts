@@ -1,12 +1,8 @@
-import { Alert } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import { removeFromShoppingList } from '../redux/slice/shoppingListSlice';
-import {
-  addFridgeFood,
-  removeFridgeFood,
-} from '../redux/slice/fridgeFoodsSlice';
+import { addFridgeFood } from '../redux/slice/fridgeFoodsSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
-import { addToPantry, removePantryFood } from '../redux/slice/pantryFoodsSlice';
+import { addToPantry } from '../redux/slice/pantryFoodsSlice';
 import { Food } from '../constant/foodInfo';
 import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
 import {
@@ -14,13 +10,14 @@ import {
   editFavorite,
   removeFavorite,
 } from '../redux/slice/favoriteFoodsSlice';
+import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
+import { beforePurchaseDate } from '../util';
 
 export const useAddShoppingListFood = () => {
-  const { pantryFoods } = useSelector((state) => state.pantryFoods);
-  const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { selectedFood } = useSelector((state) => state.selectedFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+  const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
 
   const dispatch = useDispatch();
 
@@ -28,33 +25,29 @@ export const useAddShoppingListFood = () => {
     dispatch(select({ ...selectedFood, ...info }));
   };
 
-  const allFoods = [...fridgeFoods, ...pantryFoods];
-
-  const existFood = allFoods.find((food) => food.name === selectedFood.name);
-
   const isFavoriteItem = (name: string) =>
     favoriteFoods.find((food) => food.name === name);
 
-  const { wrongDate } = alertPhrase;
+  const { wrongDate, noMemo } = alertPhrase;
 
   const onSubmit = (
     setModalVisible: (visible: boolean) => void,
     setCheckedList: (checkedList: Food[]) => void
   ) => {
-    const { expiredDate, purchaseDate, space } = selectedFood;
+    const { expiredDate, purchaseDate, space, memo } = selectedFood;
 
-    // 기존 식료품 삭제
-    if (existFood) {
-      existFood.space === '팬트리'
-        ? dispatch(removePantryFood(existFood.id))
-        : dispatch(removeFridgeFood(existFood.id));
+    if (beforePurchaseDate(purchaseDate, expiredDate)) {
+      const { title, msg } = wrongDate;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
     }
 
-    const isWrongDate =
-      new Date(expiredDate).getTime() < new Date(purchaseDate).getTime();
-
-    if (isWrongDate) {
-      return Alert.alert(wrongDate.title, wrongDate.msg);
+    if (isMemoOpen && memo === '') {
+      const { title, msg } = noMemo;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
     }
 
     isFavorite
@@ -73,11 +66,20 @@ export const useAddShoppingListFood = () => {
     const position =
       selectedFood.space === '팬트리'
         ? `${space}`
-        : `${space} ${selectedFood.compartmentNum}`;
+        : `${space} ${selectedFood.compartmentNum}칸`;
 
-    const { successAdd } = alertPhraseWithFood(selectedFood);
+    const {
+      successAdd: { title },
+    } = alertPhraseWithFood(selectedFood);
 
-    Alert.alert(successAdd.title, `${position}에 추가되었어요.`);
+    dispatch(toggleAlertModal(true));
+    dispatch(
+      setAlertInfo({
+        title,
+        msg: `${selectedFood.name} 식료품이 ${position}에 추가되었어요.`,
+        btns: ['확인'],
+      })
+    );
 
     setModalVisible(false);
     setCheckedList([]);

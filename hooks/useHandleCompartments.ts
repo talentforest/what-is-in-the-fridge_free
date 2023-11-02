@@ -1,4 +1,3 @@
-import { Alert } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import {
   minusCompartment,
@@ -6,6 +5,7 @@ import {
 } from '../redux/slice/fridgeInfoSlice';
 import { CompartmentNum, Space } from '../constant/fridgeInfo';
 import { alertPhraseDeleteCompartment } from '../constant/alertPhrase';
+import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
 
 interface Props {
   space: Space;
@@ -29,11 +29,15 @@ export const useHandleCompartments = ({ space }: Props) => {
   const onMinusPress = () => {
     if (fridgeInfo.compartments[space] <= 1) return;
     const guide = alertPhraseDeleteCompartment(
-      `${fridgeInfo.compartments[space]}칸` as CompartmentNum
+      `${fridgeInfo.compartments[space]}번` as CompartmentNum
     );
+    const { title, msg } = guide;
 
-    if (existFoodInLastCompartment.length !== 0)
-      return Alert.alert(guide.title, guide.msg);
+    if (existFoodInLastCompartment.length !== 0) {
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
+    }
 
     dispatch(minusCompartment(space));
   };
@@ -43,8 +47,13 @@ export const useHandleCompartments = ({ space }: Props) => {
     dispatch(plusCompartment(space));
   };
 
+  const onConfirmPress = () => {
+    dispatch(toggleAlertModal(false));
+  };
+
   return {
     onMinusPress,
     onPlusPress,
+    onConfirmPress,
   };
 };

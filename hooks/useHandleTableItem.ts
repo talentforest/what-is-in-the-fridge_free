@@ -1,23 +1,19 @@
 import { Food } from '../constant/foodInfo';
-import { Alert } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import {
   addItemsToShoppingList,
   setShoppingList,
 } from '../redux/slice/shoppingListSlice';
 import { select } from '../redux/slice/selectedFoodSlice';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { setAllFridgeFoods } from '../redux/slice/fridgeFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
 import { AnimationState } from './animation/useSetAnimationState';
 import { toggleShowBtn } from '../redux/slice/showBtnSlice';
 import { setPantry } from '../redux/slice/pantryFoodsSlice';
-import {
-  alertPhraseWithCheckList,
-  alertPhraseWithFood,
-} from '../constant/alertPhrase';
-import { NavigateProp } from '../navigation/Navigation';
+import { alertPhraseWithCheckList } from '../constant/alertPhrase';
 import { useFindFood } from './useFindFood';
+import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
 
 interface Props {
   checkedList: Food[];
@@ -30,12 +26,14 @@ export const useHandleTableItem = ({
   setCheckedList,
   setModalVisible,
 }: Props) => {
+  const {
+    alertInfo: { title: alertTitle },
+  } = useSelector((state) => state.alertModal);
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
 
   const { isFavoriteItem } = useFindFood();
 
-  const navigation = useNavigation<NavigateProp>();
   const route = useRoute();
 
   const dispatch = useDispatch();
@@ -43,32 +41,26 @@ export const useHandleTableItem = ({
   const {
     deleteExpiredFoods,
     unSettingFavoriteFoods,
-    deletePantryFoods,
     deleteFromShoppingList,
     addToShoppingList,
   } = alertPhraseWithCheckList(checkedList);
 
-  const alertPress = (
-    alertPhrase: { title: string; msg: string },
+  const onDeleteConfirmPress = (
     setAnimationState: (state: AnimationState) => void
   ) => {
-    const { title, msg } = alertPhrase;
-    const onPress = () => {
-      setAnimationState('slideup-out');
-      dispatch(toggleShowBtn(false));
-    };
-    return Alert.alert(title, msg, [
-      { text: '취소', style: 'destructive' },
-      { text: '삭제', onPress, style: 'default' }, // 확인 누르면 애니메이션 상태 전환
-    ]);
+    setAnimationState('slideup-out');
+    dispatch(toggleShowBtn(false));
   };
 
-  const onDeleteExpiredFoodPress = (
-    setAnimationState: (state: AnimationState) => void,
-    animationState: AnimationState
-  ) => {
-    if (animationState === 'none')
-      return alertPress(deleteExpiredFoods, setAnimationState); // 확인 누르면 애니메이션 상태 전환
+  const alertPress = (alertPhrase: { title: string; msg: string }) => {
+    const { title, msg } = alertPhrase;
+    dispatch(toggleAlertModal(true));
+    dispatch(setAlertInfo({ title, msg, btns: ['취소', '삭제'] }));
+    return;
+  };
+
+  const onDeleteExpiredFoodPress = (animationState: AnimationState) => {
+    if (animationState === 'none') return alertPress(deleteExpiredFoods); // 확인 누르면 애니메이션 상태 전환
 
     if (animationState === 'slideup-out') {
       const findFridgeFoodInCheckList = (fridgeFood: Food) => {
@@ -98,22 +90,19 @@ export const useHandleTableItem = ({
   };
 
   const getInfoByRoute = (route: string) => {
-    return route === 'PantryFoods'
-      ? { phrase: deletePantryFoods, fn: setPantry }
-      : route === 'ShoppingList'
+    return route === 'ShoppingList'
       ? { phrase: deleteFromShoppingList, fn: setShoppingList }
       : { phrase: unSettingFavoriteFoods, fn: setFavoriteList };
   };
 
   // 팬트리 | 쇼핑리스트 | 자주 먹는 식료품 - 아이템 삭제
   const onDeleteFoodPress = (
-    setAnimationState: (state: AnimationState) => void,
     animationState: AnimationState,
     allTableItems: Food[]
   ) => {
     const { name } = route;
     if (animationState === 'none')
-      return alertPress(getInfoByRoute(name).phrase, setAnimationState); // 확인 누르면 애니메이션 상태 전환
+      return alertPress(getInfoByRoute(name).phrase); // 확인 누르면 애니메이션 상태 전환
 
     if (animationState === 'slideup-out' && allTableItems) {
       const filteredCheckItem = allTableItems.filter(
@@ -129,53 +118,53 @@ export const useHandleTableItem = ({
     if (checkedList.length === 0) return;
 
     dispatch(addItemsToShoppingList(checkedList));
-
-    const { title, msg } = addToShoppingList;
     if (setCheckedList) {
-      return Alert.alert(title, msg, [
-        { text: '취소', style: 'destructive' },
-        {
-          text: '확인',
-          onPress: () => {
-            setCheckedList([]);
-            navigation.navigate('ShoppingList');
-          },
-          style: 'default',
-        },
-      ]);
+      const { title, msg } = addToShoppingList;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
     }
   };
 
-  const allFoods = [...fridgeFoods, ...pantryFoods];
-
   const onAddToFridgePress = (selectedFood: Food) => {
-    const existFood = allFoods.find((food) => food.name === selectedFood.name);
-
-    if (existFood) {
-      const {
-        deleteExistFood: { title, msg },
-      } = alertPhraseWithFood(existFood || selectedFood);
-
-      return Alert.alert(title, msg, [
-        { text: '취소', style: 'destructive' },
-        {
-          text: '삭제 후 다시 추가',
-          onPress: () => {
-            dispatch(select(selectedFood));
-            setModalVisible && setModalVisible(true);
-          },
-          style: 'default',
-        },
-      ]);
-    }
-
     const favoriteItem = isFavoriteItem(selectedFood.name);
-
     const food = favoriteItem?.id ? favoriteItem : selectedFood;
 
     dispatch(select(food));
-
     setModalVisible && setModalVisible(true);
+  };
+
+  const onConfirmPress = (
+    setAnimationState?: (state: AnimationState) => void
+  ) => {
+    if (
+      (alertTitle === '자주 먹는 식료품 해제' ||
+        alertTitle === '소비기한 주의 식료품 삭제' ||
+        alertTitle === '장보기 식료품 삭제') &&
+      setAnimationState
+    ) {
+      onDeleteConfirmPress(setAnimationState);
+      dispatch(toggleAlertModal(false));
+      return;
+    }
+
+    if (
+      alertTitle === '장보기 목록 추가' ||
+      alertTitle === '식료품 한번에 추가'
+    ) {
+      setCheckedList([]);
+      dispatch(toggleAlertModal(false));
+      return;
+    }
+    if (
+      alertTitle === '카테고리 변경 알림' ||
+      alertTitle === '이미 존재하는 식료품 알림' ||
+      alertTitle === '식료품 개수 초과' ||
+      alertTitle === '식료품 추가 완료'
+    ) {
+      dispatch(toggleAlertModal(false));
+      return;
+    }
   };
 
   return {
@@ -183,5 +172,7 @@ export const useHandleTableItem = ({
     onDeleteExpiredFoodPress,
     onAddShoppingListBtnPress,
     onAddToFridgePress,
+    onDeleteConfirmPress,
+    onConfirmPress,
   };
 };

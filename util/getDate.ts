@@ -71,3 +71,10 @@ export const isValidDate = (dateString: string): DateState => {
 
   return { state: 'ok', msg: '' };
 };
+
+export const beforePurchaseDate = (
+  purchaseDate: string,
+  expiredDate: string
+) => {
+  return new Date(expiredDate).getTime() < new Date(purchaseDate).getTime();
+};

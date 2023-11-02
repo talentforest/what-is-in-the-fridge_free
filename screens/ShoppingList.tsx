@@ -4,7 +4,7 @@ import {
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { useDispatch, useSelector } from '../redux/hook';
-import { Alert, FlatList, Keyboard } from 'react-native';
+import { FlatList, Keyboard } from 'react-native';
 import {
   useFindFood,
   useHandleCheckList,
@@ -16,6 +16,7 @@ import { formFourSteps } from '../constant/formInfo';
 import { MAX_NUM_ADD_AT_ONCE, alertPhrase } from '../constant/alertPhrase';
 import { selectNone } from '../redux/slice/selectedFoodSlice';
 import { scrollToIndex } from '../util';
+import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
 
 import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
 import Container from '../components/common/Container';
@@ -45,11 +46,11 @@ export default function ShoppingList() {
     onCheckBoxPress, //
   } = useHandleCheckList();
 
-  const { onDeleteFoodPress, onAddToFridgePress } = useHandleTableItem({
-    checkedList,
-    setCheckedList,
-    setModalVisible,
-  });
+  const {
+    onDeleteFoodPress,
+    onAddToFridgePress,
+    onConfirmPress, //
+  } = useHandleTableItem({ checkedList, setCheckedList, setModalVisible });
 
   const {
     animationState,
@@ -70,13 +71,20 @@ export default function ShoppingList() {
     const hasCheckListFood = checkedList.some((food) => findFood(food.name));
 
     if (hasCheckListFood) {
-      const { alreadyExist } = alertPhrase;
-      Alert.alert(alreadyExist.title, alreadyExist.msg);
+      const {
+        alreadyExist: { title, msg },
+      } = alertPhrase;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
       return;
     }
+
     if (checkedList.length > MAX_NUM_ADD_AT_ONCE) {
-      const { excess } = alertPhrase;
-      Alert.alert(excess.title, excess.msg);
+      const {
+        excess: { title, msg },
+      } = alertPhrase;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
       return;
     }
 
@@ -85,7 +93,7 @@ export default function ShoppingList() {
   };
 
   const onDeleteBtnPress = () => {
-    onDeleteFoodPress(setAnimationState, animationState, shoppingList);
+    onDeleteFoodPress(animationState, shoppingList);
   };
 
   const allChecked = checkedList.length === shoppingList.length;
@@ -149,6 +157,7 @@ export default function ShoppingList() {
             setCheckedList={setCheckedList}
             modalVisible={addAtOnceModal}
             setModalVisible={setAddAtOnceModal}
+            onConfirmPress={() => onConfirmPress(setAnimationState)}
           />
         </Container>
       </SafeBottomAreaView>

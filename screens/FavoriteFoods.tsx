@@ -27,6 +27,7 @@ import InputCategoryBtn from '../components/buttons/InputCategoryBtn';
 import FormMessage from '../components/form/FormMessage';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableBody from '../components/table/TableBody';
+import AlertModal from '../screen-component/modal/AlertModal';
 
 export default function FavoriteFoods() {
   const [inputValue, setInputValue] = useState('');
@@ -57,10 +58,11 @@ export default function FavoriteFoods() {
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
 
-  const { onAddShoppingListBtnPress, onDeleteFoodPress } = useHandleTableItem({
-    checkedList,
-    setCheckedList,
-  });
+  const {
+    onAddShoppingListBtnPress,
+    onDeleteFoodPress,
+    onConfirmPress, //
+  } = useHandleTableItem({ checkedList, setCheckedList });
 
   useEffect(() => {
     initializeFilter();
@@ -132,13 +134,7 @@ export default function FavoriteFoods() {
                 btnName='해제'
                 icon='tag-minus'
                 disabled={checkedList.length === 0}
-                onPress={() =>
-                  onDeleteFoodPress(
-                    setAnimationState,
-                    animationState,
-                    favoriteFoods
-                  )
-                }
+                onPress={() => onDeleteFoodPress(animationState, favoriteFoods)}
               />
             </TableSelectedHandleBox>
 
@@ -162,7 +158,7 @@ export default function FavoriteFoods() {
                 marginTop: -15,
                 marginBottom: 15,
                 opacity: interpolatedOpacity,
-                paddingLeft: 50,
+                paddingLeft: 8,
               }}
             >
               <FormMessage
@@ -179,6 +175,8 @@ export default function FavoriteFoods() {
             currentChecked={category}
             onCheckBoxPress={onCategoryCheckBoxPress}
           />
+
+          <AlertModal onPress={() => onConfirmPress(setAnimationState)} />
         </Container>
       </SafeBottomAreaView>
     </KeyboardAvoidingView>

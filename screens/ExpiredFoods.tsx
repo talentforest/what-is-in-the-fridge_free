@@ -15,6 +15,7 @@ import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
+import AlertModal from '../screen-component/modal/AlertModal';
 
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
@@ -28,11 +29,11 @@ export default function ExpiredFoods() {
     onCheckBoxPress, //
   } = useHandleCheckList();
 
-  const { onDeleteExpiredFoodPress, onAddShoppingListBtnPress } =
-    useHandleTableItem({
-      checkedList,
-      setCheckedList,
-    });
+  const {
+    onDeleteExpiredFoodPress,
+    onAddShoppingListBtnPress,
+    onConfirmPress,
+  } = useHandleTableItem({ checkedList, setCheckedList });
 
   const { animationState, setAnimationState, afterAnimation } =
     useSetAnimationState();
@@ -45,18 +46,6 @@ export default function ExpiredFoods() {
   const filteredList = getFilteredFoodList(currentFilter, allExpiredFoods());
 
   const allChecked = checkedList.length === filteredList.length;
-
-  const onDeletePress = () => {
-    onDeleteExpiredFoodPress(setAnimationState, animationState);
-  };
-
-  const animationAfterRun = () => {
-    afterAnimation(onDeleteExpiredFoodPress, allExpiredFoods());
-  };
-
-  const onEntirePress = () => {
-    onEntireBoxPress(filteredList);
-  };
 
   return (
     <SafeBottomAreaView>
@@ -74,14 +63,16 @@ export default function ExpiredFoods() {
           onCheckBoxPress={onCheckBoxPress}
           checkedList={checkedList}
           animationState={animationState}
-          afterAnimation={animationAfterRun}
+          afterAnimation={() => {
+            afterAnimation(onDeleteExpiredFoodPress, allExpiredFoods());
+          }}
         />
 
         <TableFooterContainer active={!!checkedList.length}>
           <TableSelectedHandleBox
             list={checkedList}
             entireChecked={allChecked && !!checkedList.length}
-            onEntirePress={onEntirePress}
+            onEntirePress={() => onEntireBoxPress(filteredList)}
           >
             <SquareIconBtn
               btnName='장보기 추가'
@@ -91,12 +82,14 @@ export default function ExpiredFoods() {
             />
             <SquareIconBtn
               btnName='삭제'
-              onPress={onDeletePress}
+              onPress={() => onDeleteExpiredFoodPress(animationState)}
               icon='trash-can'
               disabled={checkedList.length === 0}
             />
           </TableSelectedHandleBox>
         </TableFooterContainer>
+
+        <AlertModal onPress={() => onConfirmPress(setAnimationState)} />
       </Container>
     </SafeBottomAreaView>
   );

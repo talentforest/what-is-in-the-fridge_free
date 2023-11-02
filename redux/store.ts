@@ -25,6 +25,7 @@ import toggleFavoriteReducer from './slice/isFavoriteSlice';
 import toggleMemoReducer from './slice/isMemoOpenSlice';
 import searchedFoodNameReducer from './slice/searchedFoodSlice';
 import toggleFormModalReducer from './slice/formModalSlice';
+import toggleAlertModalReducer from './slice/alertModalSlice';
 
 const reducers = {
   fridgeFoods: fridgeFoodsReducer,
@@ -40,6 +41,7 @@ const reducers = {
   isMemoOpen: toggleMemoReducer,
   searchedFoodName: searchedFoodNameReducer,
   formModalVisible: toggleFormModalReducer,
+  alertModal: toggleAlertModalReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

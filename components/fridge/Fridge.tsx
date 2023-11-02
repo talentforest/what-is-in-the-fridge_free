@@ -51,8 +51,9 @@ export default function Fridge() {
                   <TouchableOpacity
                     key={space}
                     disabled={routeFridgeSetting}
-                    style={tw`${space.includes('냉동') ? 'h-[40%]' : 'h-[60%]'} 
-                    ${routeFridgeSetting ? 'p-0.8' : 'p-1.2'}`}
+                    style={tw`${routeFridgeSetting ? 'p-0.8' : 'p-1.2'} 
+                    ${space.includes('냉동') ? 'h-[40%] pb-1' : 'h-[60%] pt-1'} 
+                    `}
                     onPress={() => {
                       Keyboard.dismiss();
                       navigation.navigate('Compartments', { space });
