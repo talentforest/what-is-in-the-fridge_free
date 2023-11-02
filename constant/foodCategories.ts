@@ -104,7 +104,7 @@ export const foodCategories: FoodCategory[] = [
     id: 12,
     category: '햄/통조림',
     image: 'category-can.png',
-    icon: 'hockey-puck',
+    icon: 'can',
     color: '#08d9ff',
   },
 ];

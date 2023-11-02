@@ -9,6 +9,7 @@ import IconMeatFishEgg from '../svg/IconMeatFishEgg';
 import IconDairyEgg from '../svg/IconDairyEgg';
 import IconSauce from '../svg/IconSauce';
 import IconPizza from '../svg/IconPizza';
+import IconCan from '../svg/IconCan';
 
 interface Props {
   category: Category;
@@ -28,7 +29,9 @@ export default function CategoryIcon({ category, size, inActive }: Props) {
 
   return (
     <>
-      {icon === 'icon-meat-fish' ? (
+      {icon === 'can' ? (
+        <IconCan size={size} inActive={inActive} />
+      ) : icon === 'icon-meat-fish' ? (
         <IconMeatFishEgg size={size} inActive={inActive} />
       ) : icon === 'dairy-egg' ? (
         <IconDairyEgg size={size} inActive={inActive} />
