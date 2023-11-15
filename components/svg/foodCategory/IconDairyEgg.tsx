@@ -1,5 +1,5 @@
 import Svg, { ClipPath, Defs, G, Path, Rect } from 'react-native-svg';
-import { LIGHT_GRAY } from '../../constant/colors';
+import { LIGHT_GRAY } from '../../../constant/colors';
 
 interface Props {
   size: number;
