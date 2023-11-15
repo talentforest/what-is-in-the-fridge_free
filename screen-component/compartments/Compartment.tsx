@@ -50,6 +50,7 @@ export default function Compartment({ foodLocation }: Props) {
 
       <FoodDetailModal
         modalVisible={openFoodDetailModal}
+        openAddFoodModal={openAddFoodModal}
         setModalVisible={setOpenFoodDetailModal}
         formSteps={formFourSteps}
       />

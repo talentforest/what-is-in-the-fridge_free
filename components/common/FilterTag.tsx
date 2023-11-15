@@ -34,7 +34,7 @@ export default function FilterTag({
       onPress={() => onFilterPress(filter)}
       style={tw.style(
         `${getTagColor(currentFilter, active, 'bg', length)} 
-        h-8.5 min-w-17 flex-row items-center border px-3 gap-1.5 rounded-full`,
+        min-w-17 flex-row items-center justify-between border py-1.5 px-3.5 gap-1.5 rounded-full`,
         shadowStyle(3)
       )}
       disabled={length === 0}
@@ -48,10 +48,16 @@ export default function FilterTag({
       )}
 
       <Text
-        style={tw`text-base 
-        ${getTagColor(currentFilter, active, 'text', length)}`}
+        fontSize={16}
+        style={tw`${getTagColor(currentFilter, active, 'text', length)}`}
       >
-        {filter} {`${length}`}개
+        {filter}
+      </Text>
+      <Text
+        fontSize={16}
+        style={tw`${getTagColor(currentFilter, active, 'text', length)}`}
+      >
+        {length}개
       </Text>
 
       {children}

@@ -70,7 +70,7 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
   return (
     <View>
       <FormLabel label={label} />
-      <View style={tw`flex-row items-center`}>
+      <View style={tw`flex-row items-center pb-0.5`}>
         {['냉장고', '팬트리'].map((storage) => (
           <TouchableOpacity
             onPress={() => onTabPress(storage as StorageType)}
@@ -78,7 +78,7 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
             style={tw`w-13 mt-0.5`}
           >
             <Text
-              style={tw`text-[17px] ${
+              style={tw`${
                 food.space.includes(storage.slice(0, 1))
                   ? 'text-slate-700'
                   : 'text-slate-400'
@@ -131,7 +131,7 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
 
           <View style={tw`flex-row flex-wrap gap-x-4`}>
             {compartments.map(({ compartmentNum }) => (
-              <View key={compartmentNum} style={tw`py-1.5`}>
+              <View key={compartmentNum} style={tw`py-1`}>
                 <CheckBoxItem
                   title={`${compartmentNum}칸`}
                   checked={food.compartmentNum === compartmentNum}

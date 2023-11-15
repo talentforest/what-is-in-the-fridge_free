@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, useWindowDimensions } from 'react-native';
 import { useRouteName } from '../../hooks/useRouteName';
 import ArrowBtn from '../buttons/ArrowBtn';
 import StepIndicator from '../common/StepIndicator';
@@ -20,7 +20,7 @@ export default function FormStepBottom({
   return (
     <View style={tw`h-10`}>
       {!routePantryFoods ? (
-        <View style={tw`items-center flex-row justify-between mx-4`}>
+        <View style={tw`items-center flex-row justify-between`}>
           <ArrowBtn
             type='previous'
             moveStep={() => moveStep('prev', currentStep)}

@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { Keyboard, View } from 'react-native';
-import { InputStyle, Text, TouchableOpacity } from '../common/native-component';
+import {
+  InputStyle,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from '../common/native-component';
 import { Category } from '../../constant/foodCategories';
 import { useFindFood } from '../../hooks';
 import { ModalTitle } from '../modal/Modal';
@@ -18,7 +23,6 @@ interface Props {
   fixedCategory: Category;
   changeInfo: (newInfo: { [key: string]: string }) => void;
   title: ModalTitle;
-  noneBackdrop?: boolean;
 }
 
 export default function CategoryItem({
@@ -26,7 +30,6 @@ export default function CategoryItem({
   fixedCategory,
   changeInfo,
   title,
-  noneBackdrop,
 }: Props) {
   const [categoryOpen, setCategoryOpen] = useState(false);
 
@@ -61,16 +64,18 @@ export default function CategoryItem({
         disabled={disabled}
         style={tw.style(`${InputStyle}`, shadowStyle(3))}
       >
-        <View style={tw`flex-row items-center h-full gap-1`}>
+        <View style={tw`flex-row items-center h-full`}>
           <CategoryIcon category={category} size={16} inActive={disabled} />
-          <Text style={tw`${`text-slate-${disabled ? '400' : '900'}`}`}>
-            {category}
-          </Text>
+
+          <TextInput
+            editable={false}
+            value={category}
+            style={tw`border-0 flex-1 pl-2 h-full`}
+          />
         </View>
       </TouchableOpacity>
 
       <CategoryModal
-        noneBackdrop={noneBackdrop || false}
         modalVisible={categoryOpen}
         setModalVisible={setCategoryOpen}
         currentChecked={fixedCategory}

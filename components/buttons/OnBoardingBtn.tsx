@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, View } from 'react-native';
-import { BLUE } from '../../constant/colors';
 import { Text, TouchableOpacity } from '../common/native-component';
-import Icon from '../common/native-component/Icon';
+import IconChevronRight from '../svg/arrow/IconChevronRight';
 import tw from 'twrnc';
 
 interface Props {
@@ -36,8 +35,10 @@ export default function OnBoardingBtn({ name, onPress }: Props) {
         style={tw`bg-blue-600 shadow-md rounded-lg py-2 pl-4 pr-2`}
       >
         <View style={tw`flex-row justify-center gap-1 items-center`}>
-          <Text style={tw`text-white w-13`}>{name}</Text>
-          <Icon name='chevron-right' type='Feather' size={21} color='#fff' />
+          <Text fontSize={20} style={tw`text-white`}>
+            {name}
+          </Text>
+          <IconChevronRight size={20} color='#fff' />
         </View>
       </TouchableOpacity>
     </Animated.View>

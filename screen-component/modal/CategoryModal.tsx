@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Category, foodCategories } from '../../constant/foodCategories';
 import { useImageLoad } from '../../hooks';
 
-import Modal from '../../components/modal/Modal';
+import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 import CategoryBox from '../../components/modal/CategoryBox';
 import tw from 'twrnc';
 
@@ -11,7 +11,6 @@ interface Props {
   setModalVisible: (modalVisible: boolean) => void;
   currentChecked?: string;
   onCheckBoxPress?: (category: Category) => void;
-  noneBackdrop?: boolean;
 }
 
 export default function CategoryModal({
@@ -19,7 +18,6 @@ export default function CategoryModal({
   setModalVisible,
   currentChecked,
   onCheckBoxPress,
-  noneBackdrop,
 }: Props) {
   const { isLoaded, assets } = useImageLoad({
     images: [
@@ -46,34 +44,29 @@ export default function CategoryModal({
     return asset?.localUri;
   };
 
+  const closeModal = () => setModalVisible(false);
+
   if (!isLoaded) return null;
 
   return (
-    <Modal
+    <FadeInMiddleModal
       title='카테고리 선택'
       isVisible={modalVisible}
-      closeModal={() => setModalVisible(false)}
-      animationIn='fadeIn'
-      hasBackdrop={!noneBackdrop}
-      style={tw`mx-6`}
+      closeModal={closeModal}
     >
-      <View style={tw`p-3 rounded-b-2xl bg-white`}>
-        {onCheckBoxPress && assets && (
-          <View
-            style={tw`flex-row flex-wrap gap-1.5 gap-y-2.5 justify-between`}
-          >
-            {foodCategories.map(({ category }) => (
-              <CategoryBox
-                key={category}
-                checked={category === currentChecked}
-                category={category}
-                onCheckBoxPress={onCheckBoxPress}
-                localUri={getMatchURI(category) || assets[0].uri}
-              />
-            ))}
-          </View>
-        )}
-      </View>
-    </Modal>
+      {onCheckBoxPress && assets && (
+        <View style={tw`flex-row flex-wrap gap-1.5 gap-y-2.5 justify-between`}>
+          {foodCategories.map(({ category }) => (
+            <CategoryBox
+              key={category}
+              checked={category === currentChecked}
+              category={category}
+              onCheckBoxPress={onCheckBoxPress}
+              localUri={getMatchURI(category) || assets[0].uri}
+            />
+          ))}
+        </View>
+      )}
+    </FadeInMiddleModal>
   );
 }

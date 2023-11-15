@@ -27,6 +27,12 @@ export const useHandleFilter = (scrollViewRef?: any) => {
     findCategoryFilter(currentFilter)?.category || '신선식품류';
 
   const initializeFilter = () => {
+    if (routePantryFoods) {
+      if (pantryFilter !== '전체') {
+        dispatch(changePantryFilter('전체'));
+      }
+      return;
+    }
     if (filter !== '전체') {
       dispatch(changeFilter('전체'));
     }

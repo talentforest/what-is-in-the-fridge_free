@@ -15,6 +15,7 @@ import SelectPositionBox from '../add-at-once-modal/SelectPositionBox';
 import EditingBox from '../add-at-once-modal/EditingBox';
 import AlertModal from './AlertModal';
 import tw from 'twrnc';
+import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 
 interface Props {
   modalVisible: boolean;
@@ -76,100 +77,97 @@ export default function AddAtOnceModal({
 
   return (
     <>
-      <Modal
+      <FadeInMiddleModal
         title={currentStep.name}
         isVisible={modalVisible}
-        animationIn='fadeIn'
         closeModal={closeModal}
       >
-        <View style={tw`bg-stone-100 px-5 py-3 rounded-b-2xl`}>
-          {/* 1단계 */}
-          {currentStep.step === 1 && (
-            <View>
-              <View style={tw`flex-row gap-1`}>
-                {(['냉장고', '팬트리'] as StorageType[]).map((storage) => (
-                  <SpaceBtn
-                    key={storage}
-                    btnName={storage}
-                    onPress={() => setCurrentStorage(storage)}
-                    active={storage == currentStorage}
-                  />
-                ))}
-              </View>
-
-              {!!currentStorage && (
-                <View style={tw`mt-0.5`}>
-                  <View style={tw`gap-1`}>
-                    <CurrentPosition position={position} active={true} />
-
-                    <SelectPositionBox
-                      active={currentStorage === '냉장고'}
-                      fridgePosition={fridgePosition}
-                      onFridgePositionPress={onFridgePositionPress}
-                    />
-                  </View>
-                  <View style={tw`mt-4`}>
-                    <SubmitBtn
-                      btnName='다음 단계'
-                      color='gray'
-                      onPress={onNextStepPress}
-                      tailIcon='chevron-right'
-                    />
-                  </View>
-                </View>
-              )}
-            </View>
-          )}
-
-          {/* 2단계 */}
-          {currentStep.step === 2 && (
-            <View>
-              <CurrentPosition
-                position={position}
-                onBackPress={onBackStepPress}
-                active={currentStorage !== ''}
-              />
-
-              <View style={tw`mt-4 mb-1`}>
-                <Text style={tw`text-base text-blue-600`}>
-                  {!isEditing
-                    ? '추가할 식료품 정보 목록'
-                    : '선택한 식료품 정보 수정'}
-                </Text>
-              </View>
-
-              {checkedList.map((food) => (
-                <FoodItem
-                  key={food.id}
-                  food={food}
-                  isEditing={isEditing}
-                  onFoodItemPress={onFoodItemPress}
-                  active={
-                    selectedFood.name !== '' && selectedFood.name !== food.name
-                  }
+        {/* 1단계 */}
+        {currentStep.step === 1 && (
+          <View>
+            <View style={tw`flex-row gap-1`}>
+              {(['냉장고', '팬트리'] as StorageType[]).map((storage) => (
+                <SpaceBtn
+                  key={storage}
+                  btnName={storage}
+                  onPress={() => setCurrentStorage(storage)}
+                  active={storage == currentStorage}
                 />
               ))}
+            </View>
 
-              <EditingBox
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-                setCheckedList={setCheckedList}
-              />
+            {!!currentStorage && (
+              <View style={tw`mt-0.5`}>
+                <View>
+                  <CurrentPosition position={position} active={true} />
 
-              {!isEditing && (
-                <View style={tw`gap-2 mt-6`}>
-                  <SubmitBtn
-                    iconName='plus'
-                    btnName='한번에 추가'
-                    color='blue'
-                    onPress={onSubmitPress}
+                  <SelectPositionBox
+                    active={currentStorage === '냉장고'}
+                    fridgePosition={fridgePosition}
+                    onFridgePositionPress={onFridgePositionPress}
                   />
                 </View>
-              )}
+                <View style={tw`mt-4`}>
+                  <SubmitBtn
+                    btnName='다음 단계'
+                    color='gray'
+                    onPress={onNextStepPress}
+                    tailIcon
+                  />
+                </View>
+              </View>
+            )}
+          </View>
+        )}
+
+        {/* 2단계 */}
+        {currentStep.step === 2 && (
+          <View>
+            <CurrentPosition
+              position={position}
+              onBackPress={onBackStepPress}
+              active={currentStorage !== ''}
+            />
+
+            <View style={tw`mt-4 mb-1`}>
+              <Text fontSize={14} style={tw`text-blue-600`}>
+                {!isEditing
+                  ? '추가할 식료품 정보 목록'
+                  : '선택한 식료품 정보 수정'}
+              </Text>
             </View>
-          )}
-        </View>
-      </Modal>
+
+            {checkedList.map((food) => (
+              <FoodItem
+                key={food.id}
+                food={food}
+                isEditing={isEditing}
+                onFoodItemPress={onFoodItemPress}
+                active={
+                  selectedFood.name !== '' && selectedFood.name !== food.name
+                }
+              />
+            ))}
+
+            <EditingBox
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              setCheckedList={setCheckedList}
+            />
+
+            {!isEditing && (
+              <View style={tw`gap-2 mt-6`}>
+                <SubmitBtn
+                  iconName='plus'
+                  btnName='한번에 추가'
+                  color='blue'
+                  onPress={onSubmitPress}
+                />
+              </View>
+            )}
+          </View>
+        )}
+      </FadeInMiddleModal>
 
       <AlertModal onPress={onPress} />
     </>

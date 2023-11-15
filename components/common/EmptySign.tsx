@@ -24,7 +24,8 @@ export default function EmptySign({
       require('../../assets/food/apple.png'),
       require('../../assets/food/meat.png'),
       require('../../assets/food/carrot.png'),
-      require('../../assets/food/green-onion.png'),
+      require('../../assets/food/banana.png'),
+      require('../../assets/food/egg.png'),
     ],
   });
 
@@ -36,7 +37,9 @@ export default function EmptySign({
 
   return (
     <View style={tw`items-center justify-center gap-2`}>
-      <Text style={tw`text-slate-400 text-center text-base`}>{message}</Text>
+      <Text fontSize={16} style={tw`text-slate-400 text-center`}>
+        {message}
+      </Text>
 
       {assets && assetSize && (
         <Image

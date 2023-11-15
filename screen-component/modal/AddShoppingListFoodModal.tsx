@@ -24,30 +24,32 @@ export default function AddShoppingListFoodModal({
 }: Props) {
   const { selectedFood, onChange, onSubmit } = useAddShoppingListFood();
 
+  const closeModal = () => setModalVisible(false);
+
   const insets = useSafeAreaInsets();
 
   return (
     <Modal
       title='장보기 목록 식료품 추가'
       isVisible={modalVisible}
-      closeModal={() => setModalVisible(false)}
+      closeModal={closeModal}
     >
-      <View style={tw.style(`bg-stone-100`, { paddingBottom: insets?.bottom })}>
-        <Form
-          title='장보기 목록 식료품 추가'
-          food={selectedFood}
-          changeInfo={onChange}
-          formSteps={formSteps}
-        />
-
-        <View style={tw`mx-6 mb-5`}>
-          <SubmitBtn
-            iconName='plus'
-            btnName='식료품 추가하기'
-            onPress={() => onSubmit(setModalVisible, setCheckedList)}
-            color='blue'
+      <View style={{ paddingBottom: insets?.bottom }}>
+        <View style={tw`-mx-4`}>
+          <Form
+            title='장보기 목록 식료품 추가'
+            food={selectedFood}
+            changeInfo={onChange}
+            formSteps={formSteps}
           />
         </View>
+
+        <SubmitBtn
+          iconName='plus'
+          btnName='식료품 추가하기'
+          onPress={() => onSubmit(setModalVisible, setCheckedList)}
+          color='blue'
+        />
       </View>
     </Modal>
   );

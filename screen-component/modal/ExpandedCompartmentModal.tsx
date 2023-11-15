@@ -1,14 +1,13 @@
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, useWindowDimensions } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { CompartmentNum } from '../../constant/fridgeInfo';
-import { formThreeSteps } from '../../constant/formInfo';
-import { DEVICE_HEIGHT } from '../../util';
+import { formFourSteps } from '../../constant/formInfo';
 import { useState } from 'react';
 
 import EmptySign from '../../components/common/EmptySign';
-import Modal from '../../components/modal/Modal';
 import FoodBox from '../../components/common/FoodBox';
 import FoodDetailModal from './FoodDetailModal';
+import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 import tw from 'twrnc';
 
 interface Props {
@@ -26,47 +25,48 @@ export default function ExpandedCompartmentModal({
 }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
+  const closeModal = () => setExpandCompartment(false);
+
+  const { height } = useWindowDimensions();
+
   return (
-    <Modal
-      title={`${compartmentNum}칸`}
+    <FadeInMiddleModal
+      title={`${compartmentNum}칸 크게 보기`}
       isVisible={expandCompartment}
-      closeModal={() => setExpandCompartment(false)}
-      animationIn='fadeIn'
+      closeModal={closeModal}
     >
-      <View style={tw`rounded-b-2xl bg-stone-200 px-2`}>
-        {!!foodList.length ? (
-          <ScrollView
-            style={tw`h-[${DEVICE_HEIGHT * 0.4}px]`}
-            contentContainerStyle={tw`p-2 flex-row flex-wrap gap-1`}
-            showsVerticalScrollIndicator={false}
-          >
-            {foodList.map((food: Food) => (
-              <FoodBox
-                key={food.id}
-                food={food}
-                setOpenFoodDetailModal={setModalVisible}
-              />
-            ))}
-          </ScrollView>
-        ) : (
-          <View
-            style={tw`h-[${DEVICE_HEIGHT * 0.3}px]
-            flex-row items-center justify-center`}
-          >
-            <EmptySign
-              message='식료품이 아직 없어요.'
-              assetSize={60}
-              compartmentNum={compartmentNum}
+      {!!foodList.length ? (
+        <ScrollView
+          style={tw`h-[${height * 0.45}px] bg-sky-100 rounded-xl`}
+          contentContainerStyle={tw`p-2 flex-row flex-wrap gap-1`}
+          showsVerticalScrollIndicator={false}
+        >
+          {foodList.map((food: Food) => (
+            <FoodBox
+              key={food.id}
+              food={food}
+              setOpenFoodDetailModal={setModalVisible}
             />
-          </View>
-        )}
-      </View>
+          ))}
+        </ScrollView>
+      ) : (
+        <View
+          style={tw`h-[${height * 0.3}px]
+            flex-row items-center justify-center`}
+        >
+          <EmptySign
+            message='식료품이 아직 없어요.'
+            assetSize={60}
+            compartmentNum={compartmentNum}
+          />
+        </View>
+      )}
 
       <FoodDetailModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        formSteps={formThreeSteps}
+        formSteps={formFourSteps}
       />
-    </Modal>
+    </FadeInMiddleModal>
   );
 }

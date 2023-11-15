@@ -21,9 +21,17 @@ export default function Fridge() {
   const navigation = useNavigation<NavigateProp>();
   const { routeFridgeSetting } = useRouteName();
 
-  const { height } = useWindowDimensions();
+  const { height, width } = useWindowDimensions();
 
-  const homeFridgeHeight = height * 0.5 >= 400 ? 370 : height * 0.49;
+  const homeFridgeHeight =
+    height > 900
+      ? width < 500
+        ? 440
+        : 500
+      : height * 0.5 >= 400
+      ? 370
+      : height * 0.45;
+
   const fridgeHeight = routeFridgeSetting ? 160 : homeFridgeHeight;
 
   return (

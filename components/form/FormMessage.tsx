@@ -19,7 +19,9 @@ export default function FormMessage({ active, message, color }: Props) {
   return (
     <Animated.View style={{ height }}>
       <View style={tw`flex-row items-start mt-0.5`}>
-        <Text style={tw`text-${color}-600 flex-1 text-sm`}>{message}</Text>
+        <Text fontSize={15} style={tw`text-${color}-600 flex-1`}>
+          {message}
+        </Text>
       </View>
     </Animated.View>
   );

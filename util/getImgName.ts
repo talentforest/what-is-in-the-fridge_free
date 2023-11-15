@@ -8,7 +8,8 @@ export type AssetName =
   | 'apple'
   | 'meat'
   | 'carrot'
-  | 'green-onion';
+  | 'banana'
+  | 'egg';
 
 export const getImgName: (
   title: string,
@@ -27,8 +28,8 @@ export const getImgName: (
     : compartmentNum === '3번'
     ? 'carrot'
     : compartmentNum === '4번'
-    ? 'green-onion'
-    : 'apple';
+    ? 'banana'
+    : 'egg';
 
   return assetName;
 };

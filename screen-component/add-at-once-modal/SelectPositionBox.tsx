@@ -31,7 +31,7 @@ export default function SelectPositionBox({
 
   const { height } = useSlideAnimation({
     initialValue: 0,
-    toValue: maxCompartmentsNum === 5 ? 180 : 148,
+    toValue: maxCompartmentsNum === 5 ? 172 : 152,
     active,
   });
 
@@ -60,11 +60,10 @@ export default function SelectPositionBox({
       style={{
         height,
         overflow: 'hidden',
-        backgroundColor: '#fff',
         borderRadius: 8,
       }}
     >
-      <View style={tw`py-1 px-4 border border-slate-300 rounded-lg`}>
+      <View style={tw`px-4 bg-white border border-slate-300 rounded-lg`}>
         <View style={tw`flex-row gap-4`}>
           {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
             <View key={spaceType} style={tw`py-2`}>

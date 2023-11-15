@@ -4,4 +4,4 @@ export * from './SafeBottomAreaView';
 export * from './TextInput';
 export * from './KeyboardAvoidingView';
 export * from './Icon';
-export * from '../../svg/IconMeatFishEgg';
+export * from '../../svg/foodCategory/IconMeatFishEgg';

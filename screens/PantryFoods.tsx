@@ -1,15 +1,13 @@
-import { useCallback, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { ScrollView } from 'react-native';
-import { useDispatch, useSelector } from '../redux/hook';
-import { useGetFoodList } from '../hooks';
+import { useSelector } from '../redux/hook';
+import { useGetFoodList, useHandleFilter } from '../hooks';
 import { entireFilterObj, expiredFilters, scrollToEnd } from '../util';
 import { formFourSteps, formThreeSteps } from '../constant/formInfo';
-import { useFocusEffect } from '@react-navigation/native';
-import { changePantryFilter } from '../redux/slice/filterSlice';
 
 import Container from '../components/common/Container';
 import TableFilters from '../components/table/TableFilters';
@@ -20,7 +18,6 @@ import AddFoodModal from '../screen-component/modal/AddFoodModal';
 
 export default function PantryFoods() {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
-  const { pantryFilter } = useSelector((state) => state.filter);
   const [openFoodDetailModal, setOpenFoodDetailModal] = useState(false);
   const [openAddFoodModal, setOpenAddFoodModal] = useState(false);
 
@@ -28,17 +25,11 @@ export default function PantryFoods() {
 
   const { getFilteredFoodList } = useGetFoodList();
 
-  const dispatch = useDispatch();
+  const { initializeFilter } = useHandleFilter();
 
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        if (pantryFilter !== '전체') {
-          dispatch(changePantryFilter('전체'));
-        }
-      };
-    }, [])
-  );
+  useEffect(() => {
+    initializeFilter();
+  }, []);
 
   return (
     <SafeBottomAreaView>

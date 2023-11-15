@@ -93,7 +93,7 @@ export const useAddAtOnce = ({
     dispatch(
       setAlertInfo({
         title: '추가 완료',
-        msg: `성공적으로 ${position}에 추가되었습니다!`,
+        msg: `${position}에 성공적으로 추가되었습니다.`,
         btns: ['확인'],
       })
     );

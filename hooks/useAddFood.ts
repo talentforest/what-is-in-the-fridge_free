@@ -30,21 +30,14 @@ export const useAddFood = ({ initialFood, foodLocation }: Props) => {
   const changeFoodInfo = (info: FoodInfo) =>
     setNewFood({ ...newFood, ...info });
 
-  const onAddSubmit = (setModalVisible: (visible: boolean) => void) => {
+  const onAddSubmit = (
+    setModalVisible: (visible: boolean) => void,
+    modalVisible: boolean
+  ) => {
     const { name, category, expiredDate, purchaseDate, memo } = newFood;
     const { noName, wrongDate, noMemo } = alertPhrase;
 
-    const allFoods = [...fridgeFoods, ...pantryFoods];
-    const existFood = allFoods.find((food) => food.name === name);
-
-    if (existFood) {
-      const {
-        exist: { title, msg },
-      } = alertPhraseWithFood(existFood);
-      dispatch(toggleAlertModal(true));
-      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
-      return;
-    }
+    if (!modalVisible) return;
 
     if (name === '') {
       const { title, msg } = noName;
@@ -62,6 +55,18 @@ export const useAddFood = ({ initialFood, foodLocation }: Props) => {
 
     if (isMemoOpen && memo === '') {
       const { title, msg } = noMemo;
+      dispatch(toggleAlertModal(true));
+      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      return;
+    }
+
+    const allFoods = [...fridgeFoods, ...pantryFoods];
+    const existFood = allFoods.find((food) => food.name === name);
+
+    if (existFood) {
+      const {
+        exist: { title, msg },
+      } = alertPhraseWithFood(existFood);
       dispatch(toggleAlertModal(true));
       dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
       return;

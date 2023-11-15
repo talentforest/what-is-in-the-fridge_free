@@ -1,8 +1,8 @@
 import { Text, TouchableOpacity } from './native-component';
 import { View } from 'react-native';
+import { MEDIUM_GRAY } from '../../constant/colors';
 import CheckBox from './CheckBox';
 import tw from 'twrnc';
-import { BLUE, MEDIUM_GRAY } from '../../constant/colors';
 
 interface Props {
   onPress: () => void;
@@ -22,12 +22,13 @@ export default function CheckBoxItem({
   return (
     <TouchableOpacity
       disabled={disabled}
-      style={tw`flex-row items-center gap-1`}
+      style={tw`flex-row items-center gap-1 py-0.5 pr-1`}
       onPress={onPress}
     >
       <View>
         <CheckBox checked={checked} inActiveColor={inActiveColor} />
       </View>
+
       <Text
         style={tw`${checked ? 'text-blue-700' : `text-[${inActiveColor}]`}`}
       >

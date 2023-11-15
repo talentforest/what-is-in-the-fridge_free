@@ -5,7 +5,7 @@ import { entireFilterObj, expiredFilters, getCompartments } from '../util';
 import { Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/common/native-component';
-import { useGetFoodList } from '../hooks';
+import { useGetFoodList, useHandleFilter } from '../hooks';
 import { TAB_BLUE_BG_COLOR } from '../constant/colors';
 
 import Compartment from '../screen-component/compartments/Compartment';
@@ -28,9 +28,12 @@ export default function Compartments({ route }: Route) {
 
   const { getFoodList, getFilteredFoodList } = useGetFoodList();
 
+  const { initializeFilter } = useHandleFilter();
+
   const navigation = useNavigation();
 
   useEffect(() => {
+    initializeFilter();
     navigation.setOptions({
       headerTitle: () => <NavigationHeaderTitle title={space} />,
       headerStyle: {

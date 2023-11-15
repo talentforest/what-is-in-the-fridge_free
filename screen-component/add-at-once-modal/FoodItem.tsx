@@ -11,6 +11,7 @@ import { useSlideAnimation } from '../../hooks';
 import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
+import { GRAY } from '../../constant/colors';
 
 interface Props {
   food: Food;
@@ -42,23 +43,24 @@ export default function FoodItem({
           )}
           onPress={() => onFoodItemPress(food)}
         >
-          <View style={tw`flex-row flex-1 items-center gap-3`}>
+          <View style={tw`flex-row flex-1 items-center gap-2`}>
             <Icon
-              name={isEditing ? 'x' : 'edit'}
-              type='Feather'
-              size={isEditing ? 16 : 14}
+              name={isEditing ? 'x' : 'pencil'}
+              type='Octicons'
+              size={isEditing ? 17 : 13}
+              color={GRAY}
             />
             <Text style={tw`flex-1`} numberOfLines={1} ellipsizeMode='tail'>
               {food.name}
             </Text>
           </View>
 
-          <View style={tw`flex-row items-center gap-1.5 ml-0.5`}>
-            <CategoryIcon category={food.category} size={16} />
-            <View style={tw`w-15 items-end`}>
+          <View style={tw`flex-row items-center ml-0.5`}>
+            <View style={tw`justify-end items-center flex-row gap-1`}>
+              <CategoryIcon category={food.category} size={16} />
               <Text
                 style={tw.style(`text-slate-600`, {
-                  letterSpacing: -0.5,
+                  letterSpacing: 0,
                 })}
               >
                 {getFormattedDate(food.expiredDate, 'YY.MM.DD')}

@@ -3,7 +3,6 @@ import { FoodLocation } from '../../constant/fridgeInfo';
 import { FormStep } from '../../constant/formInfo';
 import { useAddFood } from '../../hooks';
 import { initialFridgeFood, initialPantryFood } from '../../constant/foodInfo';
-import { useSelector } from '../../redux/hook';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Modal from '../../components/modal/Modal';
@@ -26,8 +25,6 @@ export default function AddFoodModal({
   formSteps,
   scrollEnd,
 }: Props) {
-  const { expiredDateModal } = useSelector((state) => state.formModalVisible);
-
   const initialFood = foodLocation ? initialFridgeFood : initialPantryFood;
 
   const { newFood, changeFoodInfo, onAddSubmit } = useAddFood({
@@ -37,35 +34,38 @@ export default function AddFoodModal({
 
   const insets = useSafeAreaInsets();
 
+  const closeModal = () => {
+    changeFoodInfo({ ...initialFood });
+    setModalVisible(false);
+  };
+
+  const onSubmitPress = () => {
+    onAddSubmit(setModalVisible, modalVisible);
+    scrollEnd();
+  };
+
   return (
     <Modal
       title='새로운 식료품 추가'
       isVisible={modalVisible}
-      closeModal={() => {
-        changeFoodInfo({ ...initialFood });
-        setModalVisible(false);
-      }}
-      overlapped={!!expiredDateModal}
+      closeModal={closeModal}
     >
-      <View style={tw.style(`bg-stone-100`, { paddingBottom: insets?.bottom })}>
-        <Form
-          title='새로운 식료품 추가'
-          food={newFood}
-          changeInfo={changeFoodInfo}
-          formSteps={formSteps}
-        />
-
-        <View style={tw`mx-6 mb-5`}>
-          <SubmitBtn
-            iconName='plus'
-            color='blue'
-            btnName='식료품 추가하기'
-            onPress={() => {
-              onAddSubmit(setModalVisible);
-              scrollEnd();
-            }}
+      <View style={{ paddingBottom: insets?.bottom }}>
+        <View style={tw`-mx-4`}>
+          <Form
+            title='새로운 식료품 추가'
+            food={newFood}
+            changeInfo={changeFoodInfo}
+            formSteps={formSteps}
           />
         </View>
+
+        <SubmitBtn
+          iconName='plus'
+          color='blue'
+          btnName='식료품 추가하기'
+          onPress={onSubmitPress}
+        />
       </View>
     </Modal>
   );

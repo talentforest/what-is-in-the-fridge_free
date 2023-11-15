@@ -39,7 +39,7 @@ export default function TableSelectedHandleBox({
             inActiveColor='#333'
           />
           {!!list.length && (
-            <Text style={tw`text-base ml-5.5 -mt-1 text-blue-600`}>
+            <Text fontSize={16} style={tw`ml-5.5 text-blue-600 -mt-1`}>
               {list.length}개 선택
             </Text>
           )}

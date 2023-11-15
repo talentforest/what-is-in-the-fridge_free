@@ -1,20 +1,47 @@
-import { TextInput as Input, TextInputProps, TextStyle } from 'react-native';
-import { HSSaemaulRegular } from '../../../constant/fonts';
+import {
+  TextInput as Input,
+  TextInputProps,
+  TextStyle,
+  useWindowDimensions,
+} from 'react-native';
 import { LIGHT_GRAY } from '../../../constant/colors';
+import { baseFont, basicTextStyle, relativeSize } from './Text';
+import { useSelector } from '../../../redux/hook';
 import tw from 'twrnc';
 
 interface Props extends TextInputProps {
   style?: TextStyle;
+  fontSize?: number;
 }
 
 export const InputStyle =
-  'text-lg h-10 border border-slate-200 px-3 rounded-xl bg-white text-slate-900';
+  'h-10 border border-slate-200 px-2 rounded-xl bg-white';
 
-export function TextInput({ style, ...props }: Props) {
+export function TextInput({ style, fontSize = baseFont, ...props }: Props) {
+  const { fontFamily } = useSelector((state) => state.fontFamily);
+
+  const bigFont = fontFamily === 'NanumSquareRoundEB' || fontFamily === '';
+  const letterSpacing =
+    fontFamily === 'NanumSquareRoundEB' || fontFamily === '' ? 0 : 0.5;
+
+  const { height } = useWindowDimensions();
+
+  const relativeFontSizeByFont = bigFont ? fontSize - relativeSize : fontSize;
+  const relativeFontSize =
+    height > 900 ? relativeFontSizeByFont + 4 : relativeFontSizeByFont;
+
+  const lineHeight = 24 + 2 * (fontSize - baseFont);
+  const relativeLineHeight = height > 900 ? lineHeight + 4 * 2 : lineHeight;
+
   return (
     <Input
-      style={tw.style(`${InputStyle}`, HSSaemaulRegular, style, {
-        lineHeight: 18,
+      style={tw.style(`${InputStyle}`, {
+        ...basicTextStyle,
+        fontSize: relativeFontSize + 1,
+        letterSpacing,
+        lineHeight: relativeLineHeight,
+        fontFamily,
+        ...style,
       })}
       numberOfLines={1}
       placeholderTextColor={LIGHT_GRAY}

@@ -1,8 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import { Image, View } from 'react-native';
-import { useFonts } from 'expo-font';
-import { fonts } from '../constant/fonts';
-import { Text } from '../components/common/native-component';
 import { Persistor } from 'redux-persist';
 import { useImageLoad } from '../hooks';
 import * as SplashScreen from 'expo-splash-screen';
@@ -19,7 +16,6 @@ export default function Splash({
   setAppIsReady,
   persistor,
 }: Props) {
-  const [fontsLoaded] = useFonts(fonts);
   const { isLoaded, assets } = useImageLoad({
     images: [require('../assets/fridge.png')],
   });
@@ -39,12 +35,12 @@ export default function Splash({
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded && appIsReady && isLoaded) {
+    if (appIsReady && isLoaded) {
       await SplashScreen.hideAsync();
     }
-  }, [fontsLoaded, isLoaded]);
+  }, [isLoaded]);
 
-  if (!fontsLoaded || !isLoaded) return null;
+  if (!isLoaded) return null;
 
   return (
     <View
@@ -53,11 +49,10 @@ export default function Splash({
     >
       {assets && (
         <Image
-          source={{ uri: assets[0].localUri as string }}
+          source={{ uri: assets[0].localUri }}
           style={{ width: 200, height: 200 }}
         />
       )}
-      <Text style={tw`mt-12 text-2xl text-blue-800`}>냉장고에 뭐가 있지</Text>
     </View>
   );
 }

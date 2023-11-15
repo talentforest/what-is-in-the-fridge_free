@@ -76,14 +76,14 @@ export default function ExpiredFoods() {
           >
             <SquareIconBtn
               btnName='장보기 추가'
-              icon='basket-plus'
+              icon='basket-plus-outline'
               disabled={checkedList.length === 0}
               onPress={onAddShoppingListBtnPress}
             />
             <SquareIconBtn
               btnName='삭제'
               onPress={() => onDeleteExpiredFoodPress(animationState)}
-              icon='trash-can'
+              icon='trash-can-outline'
               disabled={checkedList.length === 0}
             />
           </TableSelectedHandleBox>

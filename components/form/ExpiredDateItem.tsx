@@ -1,5 +1,10 @@
 import { View } from 'react-native';
-import { InputStyle, Text, TouchableOpacity } from '../common/native-component';
+import {
+  InputStyle,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from '../common/native-component';
 import { getDiffDate, getFormattedDate } from '../../util';
 import { BLUE } from '../../constant/colors';
 import { controlDateBtns } from '../../constant/controlDateBtns';
@@ -35,20 +40,25 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
 
       <TouchableOpacity
         onPress={() => dispatch(toggleExpiredDateModal(true))}
-        style={tw.style(`flex-row items-center ${InputStyle}`, shadowStyle(3))}
+        style={tw.style(
+          `flex-row items-center ${InputStyle} p-0`,
+          shadowStyle(3)
+        )}
       >
-        <Text style={tw`text-slate-900 pr-2`}>
-          {getFormattedDate(date, 'YY.MM.DD')}
-        </Text>
+        <TextInput
+          editable={false}
+          value={getFormattedDate(date, 'YY.MM.DD')}
+          style={tw`border-0 w-22 h-full`}
+        />
 
         {getDiffDate(date) >= 0 && <RelativeTime date={date} />}
 
         <View style={tw`absolute right-2.5`}>
-          <Icon type='Feather' name='calendar' size={15} color={BLUE} />
+          <Icon type='Octicons' name='calendar' size={14} color={BLUE} />
         </View>
       </TouchableOpacity>
 
-      <View style={tw`mt-2 gap-1 flex-row flex-wrap items-start`}>
+      <View style={tw`mt-1.5 gap-1 flex-row flex-wrap items-start`}>
         {controlDateBtns.map((btn) => (
           <ControlDateBtn
             key={btn.label}

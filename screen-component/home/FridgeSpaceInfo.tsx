@@ -4,6 +4,7 @@ import { Space } from '../../constant/fridgeInfo';
 import { GRAY, LIGHT_BLUE } from '../../constant/colors';
 import { useGetFoodList } from '../../hooks';
 
+import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
 
@@ -34,30 +35,30 @@ export default function FridgeSpaceInfo({ space }: Props) {
   return (
     <View style={tw`h-full px-2 pt-1 bg-white rounded-lg`}>
       {/* 냉장고 공간 이름 */}
-      <View style={tw`mb-1`}>
-        <View style={tw`flex-row gap-1 items-center`}>
+      <View>
+        <View style={tw`flex-row gap-1 py-1 items-center`}>
           <Icon
             name='information-outline'
             type='MaterialCommunityIcons'
             color={GRAY}
             size={14}
           />
-          <Text style={tw`text-base`}>{space}</Text>
+          <Text fontSize={16}>{space}</Text>
         </View>
         <View style={tw`border border-slate-300 h-0.1 rounded-full w-full`} />
       </View>
 
       {/* 냉장고 공간 정보 */}
-      <View style={tw`flex-1 mt-0.5`}>
+      <View style={tw`flex-1 mt-1`}>
         {spaceInfo.map(({ name, foodList }) => (
           <View key={name} style={tw`flex-row items-center justify-between`}>
             {[name, foodList(space).length].map((info) => (
               <Text
                 key={info}
-                style={tw.style(
-                  `text-base -mt-0.5 ${getColor(foodList(space).length, name)}`,
-                  { letterSpacing: -0.5 }
-                )}
+                fontSize={15}
+                style={tw.style(`${getColor(foodList(space).length, name)}`, {
+                  letterSpacing: -0.5,
+                })}
               >
                 {info}
               </Text>
@@ -67,14 +68,12 @@ export default function FridgeSpaceInfo({ space }: Props) {
       </View>
 
       {/* 들어가기 버튼 */}
-      <View style={tw`self-end flex-row items-center -mr-1`}>
-        <Text style={tw`text-sm text-sky-300`}>들어가기</Text>
-        <Icon
-          name='chevron-right'
-          type='Feather'
-          size={14}
-          color={LIGHT_BLUE}
-        />
+      <View style={tw`self-end flex-row items-center -mr-1 mb-0.5`}>
+        <Text fontSize={13} style={tw`text-sky-300`}>
+          들어가기
+        </Text>
+
+        <IconChevronRight size={14} color={'#7dd3fc'} />
       </View>
     </View>
   );

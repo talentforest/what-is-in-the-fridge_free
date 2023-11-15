@@ -7,7 +7,7 @@ import {
 import { Text } from './native-component';
 import { formattedToday, getDateToken } from '../../util';
 import { PlatformIOS } from '../../constant/statusBarHeight';
-import { HSSaemaulRegular } from '../../constant/fonts';
+import { useSelector } from '../../redux/hook';
 import tw from 'twrnc';
 
 interface Props {
@@ -23,7 +23,10 @@ export default function DateNumTokenBox({
   setInValidDate,
   width,
 }: Props) {
+  const { fontFamily } = useSelector((state) => state.fontFamily);
   const [isFocusedItem, setIsFocusedItem] = useState(0);
+
+  const fontSize = fontFamily === 'NanumSquareRoundEB' ? 22 : 24;
 
   const textInputRefs = useRef<TextInput[]>([]);
 
@@ -89,7 +92,7 @@ export default function DateNumTokenBox({
                    isFocusedItem === idx ||
                    (isFocusedItem === 6 && idx + 1 === isFocusedItem) ||
                    (isFocusedItem === -1 && idx - 1 === isFocusedItem)
-                     ? 'bg-amber-100 border-amber-400 border-2'
+                     ? 'border-amber-400 border-2'
                      : 'border-slate-200 border-2'
                  }`
               )}
@@ -98,7 +101,7 @@ export default function DateNumTokenBox({
                 allowFontScaling={false}
                 ref={(element: TextInput) => setRef(element, idx)}
                 placeholder={getDateToken(formattedToday)[idx]}
-                placeholderTextColor='#d4d4d4'
+                placeholderTextColor='#e3e3e3'
                 keyboardType='number-pad'
                 maxLength={1}
                 selectionColor={'#f5f5f4'}
@@ -108,8 +111,9 @@ export default function DateNumTokenBox({
                 onChangeText={(text) => onChangeText(text, idx)}
                 onKeyPress={({ nativeEvent: { key } }) => onKeyPress(key, idx)}
                 style={tw.style(
-                  `h-full text-2xl rounded-md ${PlatformIOS ? '' : 'pl-2'}`,
-                  { ...HSSaemaulRegular, letterSpacing: 1 }
+                  `h-full text-[${fontSize}px] rounded-md 
+                  ${PlatformIOS ? '' : 'pl-2 pt-0.5'}`,
+                  { letterSpacing: 1, fontFamily }
                 )}
               />
             </View>

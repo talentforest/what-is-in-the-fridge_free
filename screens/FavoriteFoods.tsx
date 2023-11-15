@@ -126,13 +126,13 @@ export default function FavoriteFoods() {
             >
               <SquareIconBtn
                 btnName='장보기 추가'
-                icon='basket-plus'
+                icon='basket-plus-outline'
                 disabled={checkedList.length === 0}
                 onPress={onAddShoppingListBtnPress}
               />
               <SquareIconBtn
                 btnName='해제'
-                icon='tag-minus'
+                icon='tag-minus-outline'
                 disabled={checkedList.length === 0}
                 onPress={() => onDeleteFoodPress(animationState, favoriteFoods)}
               />
@@ -169,16 +169,16 @@ export default function FavoriteFoods() {
             </Animated.View>
           </TableFooterContainer>
 
-          <CategoryModal
-            modalVisible={categoryOpen}
-            setModalVisible={setCategoryOpen}
-            currentChecked={category}
-            onCheckBoxPress={onCategoryCheckBoxPress}
-          />
-
           <AlertModal onPress={() => onConfirmPress(setAnimationState)} />
         </Container>
       </SafeBottomAreaView>
+
+      <CategoryModal
+        modalVisible={categoryOpen}
+        setModalVisible={setCategoryOpen}
+        currentChecked={category}
+        onCheckBoxPress={onCategoryCheckBoxPress}
+      />
     </KeyboardAvoidingView>
   );
 }

@@ -67,7 +67,7 @@ export default function FoodBox({
         })}
       >
         <View
-          style={tw.style(`border border-slate-300 gap-1 h-8 rounded-lg justify-center items-center flex-row px-2.5
+          style={tw.style(`border border-slate-300 gap-1 rounded-lg justify-center items-center flex-row px-3 py-0.8 
           ${colorByFilter(currentFilter, expiredDate, 'bg')} 
           ${active ? 'border-indigo-300' : ''}`)}
         >

@@ -97,7 +97,12 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
                 shadowStyle(4)
               )}
             >
-              <Icon name={btn} type='Feather' size={16} color='#fff' />
+              <Icon
+                name={btn === 'minus' ? 'dash' : 'plus'}
+                type='Octicons'
+                size={16}
+                color='#fff'
+              />
             </TouchableOpacity>
           ))}
         </View>

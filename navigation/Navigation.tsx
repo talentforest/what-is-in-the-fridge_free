@@ -10,13 +10,14 @@ import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
 import ExpiredFoods from '../screens/ExpiredFoods';
 import FridgeSetting from '../screens/FridgeSetting';
-import HeaderBtn from '../components/buttons/HeaderBtn';
 import OnBoarding from '../screens/OnBoarding';
 import ShoppingList from '../screens/ShoppingList';
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 import Home from '../screens/Home';
 import PantryFoods from '../screens/PantryFoods';
 import Setting from '../screens/Setting';
+import FontSetting from '../screens/FontSetting';
+import HeaderBackBtn from '../components/buttons/HeaderBackBtn';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -28,6 +29,7 @@ export type RootStackParamList = {
   PantryFoods: undefined;
   Setting: undefined;
   FridgeSetting: undefined;
+  FontSetting: undefined;
 };
 
 export type RouteName = keyof RootStackParamList;
@@ -44,9 +46,7 @@ const options: NativeStackNavigationOptions = {
     backgroundColor: HEADER_BGCOLOR,
   },
   headerTitleAlign: 'center',
-  headerLeft: () => (
-    <HeaderBtn backBtn type='Feather' iconName='chevron-left' size={22} />
-  ),
+  headerLeft: () => <HeaderBackBtn />,
   headerBackVisible: false, // android
   animation: 'slide_from_right',
 };
@@ -133,6 +133,15 @@ const Navigation = () => {
           headerTitle: () => (
             <NavigationHeaderTitle title='나의 냉장고 커스텀' />
           ),
+        }}
+      />
+
+      <Stack.Screen
+        name='FontSetting'
+        component={FontSetting}
+        options={{
+          ...options,
+          headerTitle: () => <NavigationHeaderTitle title='폰트 설정' />,
         }}
       />
     </Stack.Navigator>

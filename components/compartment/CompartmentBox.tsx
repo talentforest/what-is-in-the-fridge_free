@@ -70,7 +70,7 @@ export default function CompartmentBox({
           style={tw`absolute border border-white p-2 left-0 bottom-0`}
           disabled={false}
         >
-          <Icon type='Feather' name='maximize' size={15} />
+          <Icon type='Octicons' name='screen-full' size={15} />
         </TouchableOpacity>
       )}
     </View>

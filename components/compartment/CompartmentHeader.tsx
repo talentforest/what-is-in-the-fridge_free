@@ -41,8 +41,8 @@ export default function CompartmentHeader({
     <View>
       <View style={tw`flex-row justify-between items-center pl-2.5 h-7.5`}>
         <Text
-          style={tw`${foodList.length ? 'text-blue-600' : 'text-slate-500'} 
-          text-base`}
+          fontSize={16}
+          style={tw`${foodList.length ? 'text-blue-600' : 'text-slate-500'}`}
         >
           {title} / 식료품 총 {foodList.length}개
         </Text>

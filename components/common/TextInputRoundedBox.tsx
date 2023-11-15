@@ -55,7 +55,7 @@ export default function TextInputRoundedBox({
             onChangeText={setValue}
             placeholder={placeholder}
             blurOnSubmit={false}
-            style={tw`border-0 flex-1 rounded-full items-center justify-center`}
+            style={tw`border-0 flex-1 rounded-full  items-center justify-center`}
             onSubmitEditing={onSubmitEditing}
             autoFocus={autoFocus}
           />
@@ -66,7 +66,7 @@ export default function TextInputRoundedBox({
           style={tw`h-full pl-2 pr-3 items-center justify-center`}
         >
           <Icon
-            type='Feather'
+            type='Octicons'
             name='plus'
             size={20}
             color={disabled ? LIGHT_GRAY : DEEP_GRAY}

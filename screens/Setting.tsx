@@ -16,9 +16,9 @@ export default function Setting() {
       navigate: 'FridgeSetting',
       icon: 'fridge-outline',
     },
+    { title: '폰트 설정', navigate: 'FontSetting', icon: 'cellphone-text' },
     { title: '알림', navigate: '', icon: 'bell' },
-    { title: '다크모드', navigate: '', icon: 'moon' },
-    { title: '버전', navigate: '', icon: 'smartphone' },
+    { title: '버전', navigate: '', icon: 'versions' },
   ];
 
   return (
@@ -27,7 +27,7 @@ export default function Setting() {
         style={tw`border border-blue-200 bg-white rounded-xl p-3 px-4 mb-5`}
       >
         <View>
-          <View style={tw`flex-row items-center gap-1 mb-0.5`}>
+          <View style={tw`flex-row items-center gap-1 mb-1`}>
             <Icon
               name='credit-card'
               type='MaterialCommunityIcons'
@@ -37,15 +37,16 @@ export default function Setting() {
             <Text>이용권 구매</Text>
           </View>
 
-          <Text style={tw`text-base text-slate-500 mb-2`}>
-            이용권 구매시 식료품 정보를 한도 없이 저장할 수 있어요.
+          <Text fontSize={15} style={tw`text-slate-500 mb-2`}>
+            이용권 구매시 식료품을 한도 없이 저장할 수 있어요.
           </Text>
         </View>
 
+        {/* 결제 버튼 */}
         <PaymentBtn />
       </View>
 
-      <View style={tw`gap-4.5 px-1 mt-2`}>
+      <View style={tw`gap-1 px-1 mt-2`}>
         {settings.map((setting) => (
           <SettingBox key={setting.title} setting={setting} />
         ))}

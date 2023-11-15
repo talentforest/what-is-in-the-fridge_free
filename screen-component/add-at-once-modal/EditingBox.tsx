@@ -67,7 +67,7 @@ export default function EditingBox({
           message={
             !!isFavoriteItem(selectedFood.name)
               ? '자주 먹는 식료품은 소비기한 정보만 변경 가능합니다.'
-              : '이곳에서는 소비기한과 카테고리 정보만 변경 가능합니다.'
+              : '소비기한과 카테고리 정보만 변경 가능합니다.'
           }
           color='green'
           active={true}
@@ -98,7 +98,7 @@ export default function EditingBox({
           onPress={onSubmitPress}
           style={tw`border border-slate-300 bg-indigo-600 py-1.5 items-center rounded-full`}
         >
-          <Text style={tw`text-white text-base`}>수정 완료</Text>
+          <Text style={tw`text-white`}>수정 완료</Text>
         </TouchableOpacity>
       </View>
     </Animated.View>

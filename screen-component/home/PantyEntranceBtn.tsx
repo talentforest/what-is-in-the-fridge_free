@@ -13,10 +13,12 @@ export default function PantyEntranceBtn() {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('PantryFoods')}
-      style={tw`-mb-2 gap-1 flex-row self-end border border-slate-300 bg-stone-500 h-8.5 px-3 mr-4 items-center justify-center rounded-full`}
+      style={tw`-mb-2 gap-1 flex-row self-end border border-slate-300 bg-stone-500 py-1.5 px-3 mr-4 items-center justify-center rounded-full`}
     >
-      <Icon name='box' type='Feather' color='#fff' size={14} />
-      <Text style={tw`text-white text-base`}>팬트리에 들어가기</Text>
+      <Icon name='package' type='Octicons' color='#fff' size={13} />
+      <Text fontSize={15} style={tw`text-white`}>
+        팬트리에 들어가기
+      </Text>
     </TouchableOpacity>
   );
 }

@@ -1,3 +1,4 @@
+import { useWindowDimensions } from 'react-native';
 import {
   BLUE,
   GRAY,
@@ -8,10 +9,10 @@ import {
   RED,
 } from '../../../constant/colors';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FIcon from 'react-native-vector-icons/Feather';
+import OIcon from 'react-native-vector-icons/Octicons';
 
 interface IconProps {
-  type: 'MaterialCommunityIcons' | 'Feather';
+  type: 'MaterialCommunityIcons' | 'Octicons';
   name: string;
   size?: number;
   color?: string;
@@ -23,6 +24,10 @@ export default function Icon({
   size = 16,
   color = BLUE,
 }: IconProps) {
+  const { height } = useWindowDimensions();
+
+  const iconSize = height > 900 ? size + 4 : size;
+
   const iconColor =
     color === 'amber'
       ? AMBER
@@ -43,10 +48,15 @@ export default function Icon({
   return (
     <>
       {type === 'MaterialCommunityIcons' && (
-        <MIcon name={name} size={size} color={iconColor} />
+        <MIcon name={name} size={iconSize} color={iconColor} />
       )}
-      {type === 'Feather' && (
-        <FIcon name={name} size={size} color={iconColor} />
+      {type === 'Octicons' && (
+        <OIcon
+          name={name}
+          size={iconSize}
+          color={iconColor}
+          style={{ paddingHorizontal: 2 }}
+        />
       )}
     </>
   );

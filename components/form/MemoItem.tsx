@@ -62,7 +62,7 @@ export default function MemoItem({ memo, changeInfo }: Props) {
             )}
           >
             <TextInput
-              style={tw.style(`border-0 h-full`, {
+              style={tw.style(`border-0 w-full h-full`, {
                 lineHeight: 21,
                 textAlignVertical: 'top', // android
               })}
@@ -80,7 +80,7 @@ export default function MemoItem({ memo, changeInfo }: Props) {
       </Animated.View>
 
       <FormMessage
-        active={memo.length >= MEMO_MAX_LENGTH}
+        active={memo.length >= MEMO_MAX_LENGTH && isMemoOpen}
         color='orange'
         message={`메모는 ${MEMO_MAX_LENGTH}자를 넘을 수 없습니다.`}
       />

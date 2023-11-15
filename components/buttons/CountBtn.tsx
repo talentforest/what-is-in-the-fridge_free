@@ -4,13 +4,13 @@ import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
-  type: 'minus' | 'plus';
+  type: 'plus' | 'dash';
   onPress: () => void;
   active: boolean;
 }
 
 export default function CountBtn({ type, onPress, active }: Props) {
-  const COLOR_STRING = type === 'minus' ? 'slate' : 'blue';
+  const COLOR_STRING = type === 'dash' ? 'slate' : 'blue';
   const SIZE = `h-6 w-6`;
   const ACTIVE_STYLE = active
     ? `border border-${COLOR_STRING}-200 bg-${COLOR_STRING}-600`
@@ -22,8 +22,8 @@ export default function CountBtn({ type, onPress, active }: Props) {
       onPress={onPress}
     >
       <Icon
-        type='Feather'
-        name={type === 'minus' ? 'minus' : 'plus'}
+        type='Octicons'
+        name={type === 'plus' ? 'plus' : 'dash'}
         color={active ? '#fff' : LIGHT_GRAY}
         size={14}
       />

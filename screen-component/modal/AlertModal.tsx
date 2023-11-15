@@ -6,8 +6,10 @@ import {
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { shadowStyle } from '../../constant/shadowStyle';
+
 import Modal from '../../components/modal/Modal';
 import tw from 'twrnc';
+import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 
 interface Props {
   onPress?: () => void;
@@ -29,23 +31,28 @@ export default function AlertModal({ onPress }: Props) {
   };
 
   return (
-    <Modal
+    <FadeInMiddleModal
       title='알림'
       isVisible={alertModalVisible}
       closeModal={closeModal}
-      animationIn='fadeIn'
     >
       <View
         style={tw.style(
-          `min-h-35 justify-between bg-white border-2 border-slate-600 rounded-lg pt-4 pb-3 px-4 mx-7`,
+          `justify-between bg-white border-2 border-slate-600 rounded-md py-2.5 px-4 mx-7`,
           alertModalVisible ? shadowStyle(5) : {}
         )}
       >
         <View>
-          <Text style={tw`text-xl text-slate-900`}>{title}</Text>
-          <View style={tw`h-0.5 bg-slate-800 rounded-full mt-0.5 mb-2`} />
+          <Text fontSize={18} style={tw`text-slate-900`}>
+            {title}
+          </Text>
+          <View style={tw`h-0.5 bg-slate-800 rounded-full mt-1.5 mb-2`} />
         </View>
-        <Text style={tw.style(`text-slate-600`, { lineHeight: 24 })}>
+        <Text
+          style={tw.style(`text-slate-600 mb-1`, {
+            lineHeight: 24,
+          })}
+        >
           {msg}
         </Text>
 
@@ -54,9 +61,10 @@ export default function AlertModal({ onPress }: Props) {
             <TouchableOpacity
               key={btn}
               onPress={() => onBtnPress(btn)}
-              style={tw`py-0.5 px-2.5 border-2 border-slate-600 bg-white rounded-full`}
+              style={tw`py-1 px-2.5 border-2 border-slate-600 bg-white rounded-full`}
             >
               <Text
+                fontSize={16}
                 style={tw`${
                   btn === '취소' ? 'text-slate-500' : 'text-blue-600'
                 }`}
@@ -67,6 +75,6 @@ export default function AlertModal({ onPress }: Props) {
           ))}
         </View>
       </View>
-    </Modal>
+    </FadeInMiddleModal>
   );
 }

@@ -1,6 +1,12 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/common/native-component';
-import { Animated, Image, View } from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  Image,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { useImageLoad, useSwiperAnimation } from '../hooks';
 import { onboardingSteps } from '../constant/onboardingInfo';
 import { useNavigation } from '@react-navigation/native';
@@ -8,8 +14,6 @@ import { NavigateProp } from '../navigation/Navigation';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch, useSelector } from '../redux/hook';
 import { toggleOnboarding } from '../redux/slice/onboardingSlice';
-import { DEVICE_WIDTH } from '../util';
-import { PlatformIOS } from '../constant/statusBarHeight';
 
 import StepIndicator from '../components/common/StepIndicator';
 import OnBoardingBtn from '../components/buttons/OnBoardingBtn';
@@ -55,7 +59,11 @@ export default function OnBoarding() {
 
   if (!isLoaded) return null;
 
-  const imgWidth = DEVICE_WIDTH * 0.75 > 350 ? 350 : DEVICE_WIDTH * 0.65;
+  const windowHeight = Dimensions.get('window').height;
+
+  const imgHeight =
+    windowHeight > 900 ? windowHeight * 0.5 : windowHeight * 0.65;
+
   const lastStep = onboardingSteps.length === currentStep.step;
 
   return (
@@ -72,7 +80,7 @@ export default function OnBoarding() {
           <Animated.View
             style={{
               flex: 1,
-              width: DEVICE_WIDTH,
+              width: '100%',
               transform: [{ translateX: stepTranslateX }],
             }}
             {...panResponder.panHandlers}
@@ -88,8 +96,9 @@ export default function OnBoarding() {
                     {[desc.split(', ')[0], desc.split(', ')[1]].map((desc) => (
                       <Text
                         key={desc}
+                        fontSize={20}
                         style={tw.style(`text-slate-800`, {
-                          lineHeight: 20,
+                          lineHeight: 24,
                         })}
                       >
                         {desc}
@@ -100,14 +109,15 @@ export default function OnBoarding() {
                   {/* 이미지 */}
                   {assets && (
                     <View
-                      style={tw.style(`h-[${imgWidth * 2.1}px] w-[${imgWidth}px]
+                      style={tw.style(`h-[${imgHeight}px] 
+                      w-[${imgHeight / 2.1}px] 
                       overflow-hidden justify-between`)}
                     >
                       <Image
                         source={{ uri: getImgUri(image) }}
                         style={{
-                          width: imgWidth,
-                          height: PlatformIOS ? imgWidth * 2 : imgWidth * 2.1,
+                          width: imgHeight / 2.1,
+                          height: imgHeight,
                         }}
                       />
                     </View>

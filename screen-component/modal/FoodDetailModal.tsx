@@ -20,12 +20,14 @@ import tw from 'twrnc';
 
 interface Props {
   modalVisible: boolean;
+  openAddFoodModal?: boolean;
   setModalVisible: (modalVisible: boolean) => void;
   formSteps: FormStep[];
 }
 
 export default function FoodDetailModal({
   modalVisible,
+  openAddFoodModal,
   setModalVisible,
   formSteps,
 }: Props) {
@@ -72,31 +74,26 @@ export default function FoodDetailModal({
         closeModal={closeModal}
         isVisible={modalVisible}
       >
-        <View
-          style={tw.style(`${editing ? 'bg-stone-100' : 'bg-white'}`, {
-            paddingBottom: insets?.bottom + 12,
-          })}
-        >
+        <View style={{ paddingBottom: insets?.bottom }}>
           {editing ? (
-            <View>
-              <Form
-                title='식료품 정보 수정'
-                food={editedFood}
-                changeInfo={editFoodInfo}
-                formSteps={formSteps}
-              />
-
-              <View style={tw`mx-6 mt-2`}>
-                <SubmitBtn
-                  color='blue'
-                  iconName='check-square'
-                  btnName='식료품 정보 수정 완료'
-                  onPress={() => onEditSumbit(setModalVisible)}
+            <>
+              <View style={tw`-mx-4`}>
+                <Form
+                  title='식료품 정보 수정'
+                  food={editedFood}
+                  changeInfo={editFoodInfo}
+                  formSteps={formSteps}
                 />
               </View>
-            </View>
+              <SubmitBtn
+                color='blue'
+                iconName='check'
+                btnName='식료품 정보 수정 완료'
+                onPress={() => onEditSumbit(setModalVisible)}
+              />
+            </>
           ) : (
-            <View style={tw`px-6 pt-4 gap-1`}>
+            <View style={tw`pt-4 gap-1`}>
               <View
                 style={tw`gap-1.5 self-center flex-row justify-center items-center border-slate-300 mb-4 mt-2 py-1.5 px-2.5`}
               >
@@ -110,9 +107,8 @@ export default function FoodDetailModal({
                   color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
                 />
                 <Text
-                  style={tw.style(`max-w-4/5 text-stone-800`, {
-                    lineHeight: 22,
-                  })}
+                  fontSize={18}
+                  style={tw.style(`max-w-4/5 text-stone-800`)}
                 >
                   {name}
                 </Text>
@@ -123,7 +119,7 @@ export default function FoodDetailModal({
               </View>
 
               <View>
-                <InfoBox iconName='grid' label='카테고리'>
+                <InfoBox iconName='apps' label='카테고리'>
                   <View style={tw`flex-row items-center gap-1`}>
                     <CategoryIcon category={category} size={16} />
                     <Text>{category}</Text>
@@ -143,13 +139,13 @@ export default function FoodDetailModal({
                 )}
 
                 {quantity !== '' && (
-                  <InfoBox iconName='bar-chart-2' label='수량'>
-                    <Text style={tw``}>{comma(quantity)}</Text>
+                  <InfoBox iconName='diff' label='수량'>
+                    <Text>{comma(quantity)}</Text>
                   </InfoBox>
                 )}
 
                 {memo?.length > 1 && (
-                  <InfoBox iconName='file-text' label='메모'>
+                  <InfoBox iconName='note' label='메모'>
                     <View style={tw`max-h-18`}>
                       <Text
                         numberOfLines={3}
@@ -166,13 +162,13 @@ export default function FoodDetailModal({
               <View style={tw`gap-1 mt-1`}>
                 <SubmitBtn
                   color='blue'
-                  iconName='edit'
+                  iconName='pencil'
                   btnName='식료품 정보 수정'
                   onPress={() => setEditing((prev) => !prev)}
                 />
                 <SubmitBtn
                   color='gray'
-                  iconName='trash-2'
+                  iconName='trash-can-outline'
                   btnName={`${
                     space === '팬트리' ? '팬트리에서' : '냉장고에서'
                   } 식료품 삭제`}
@@ -184,7 +180,9 @@ export default function FoodDetailModal({
         </View>
       </Modal>
 
-      <AlertModal onPress={onAlertComfirmPress} />
+      <AlertModal
+        onPress={() => onAlertComfirmPress(modalVisible, openAddFoodModal)}
+      />
     </>
   );
 }

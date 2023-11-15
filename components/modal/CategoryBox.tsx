@@ -20,9 +20,18 @@ export default function CategoryBox({
     ? 'bg-amber-200 border-amber-200'
     : 'bg-slate-50 border-slate-100';
 
-  const { width } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
 
-  const cardWidth = (width - 95) / 3;
+  const GAP = 20;
+  const paddingHorizontal = 32;
+  const marginHorizontal = 32;
+
+  const boxWidth =
+    height > 900
+      ? width * 0.8 - paddingHorizontal
+      : width - paddingHorizontal - marginHorizontal;
+
+  const cardWidth = (boxWidth - GAP) / 3;
 
   return (
     <TouchableOpacity
@@ -37,12 +46,11 @@ export default function CategoryBox({
         )}
         <View style={tw`items-center justify-center`}>
           <Text
+            fontSize={14}
             style={tw.style(
-              `text-[15px] text-center 
+              `text-center 
               ${checked ? 'text-blue-600' : 'text-slate-600'}`,
-              {
-                lineHeight: 17,
-              }
+              { lineHeight: 14 }
             )}
           >
             {category}

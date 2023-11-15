@@ -38,11 +38,14 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
   } = useSwiperAnimation({ steps: formSteps });
 
   return (
-    <View>
-      <FormStepHeader
-        formSteps={formSteps}
-        currentStep={currentStep as FormStep}
-      />
+    <View style={tw``}>
+      <View style={tw`px-4`}>
+        <FormStepHeader
+          formSteps={formSteps}
+          currentStep={currentStep as FormStep}
+        />
+      </View>
+
       <View style={tw`overflow-hidden w-full min-h-60`}>
         <Animated.View
           style={{
@@ -51,9 +54,12 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
           {...panResponder.panHandlers}
         >
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={tw`flex-row`}>
+            <View style={tw`flex-row gap-0.5`}>
               {formSteps.map(({ step, name }) => (
-                <View key={step} style={tw`w-full border border-stone-100`}>
+                <View
+                  key={step}
+                  style={tw`w-full border border-stone-100 px-4`}
+                >
                   {name === '기본정보' && (
                     <FormSectionContainer>
                       {/* 식료품 이름 */}
@@ -71,7 +77,6 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
                       <FavoriteItem food={food} title={title} />
                     </FormSectionContainer>
                   )}
-
                   {name === '위치' && (
                     <FormSectionContainer>
                       <SpaceItem
@@ -95,7 +100,7 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
                   )}
                   {name === '선택정보' && (
                     <FormSectionContainer>
-                      <View style={tw`min-h-50 gap-2`}>
+                      <View style={tw`min-h-50 gap-1`}>
                         <PurchaseDateItem
                           date={food.purchaseDate}
                           changeInfo={changeInfo}
@@ -116,11 +121,13 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
       </View>
 
       {/* 단계 */}
-      <FormStepBottom
-        moveStep={moveStep}
-        currentStep={currentStep.step}
-        stepLength={formSteps.length}
-      />
+      <View style={tw`px-4`}>
+        <FormStepBottom
+          moveStep={moveStep}
+          currentStep={currentStep.step}
+          stepLength={formSteps.length}
+        />
+      </View>
     </View>
   );
 }

@@ -24,7 +24,7 @@ export default function SquareIconBtn({
       onPress={onPress}
       disabled={disabled}
       style={tw.style(
-        `bg-white border border-slate-200 ml-1 mb-0.5 items-center justify-center rounded-2xl`,
+        `bg-white border min-h-11 border-slate-200 ml-1 mb-0.5 items-center justify-center rounded-2xl`,
         shadowStyle(4)
       )}
     >

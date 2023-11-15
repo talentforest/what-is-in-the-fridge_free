@@ -1,5 +1,5 @@
 import { Animated, Keyboard, View } from 'react-native';
-import { InputStyle, TextInput } from '../common/native-component';
+import { InputStyle, Text, TextInput } from '../common/native-component';
 import { getFormattedDate } from '../../util';
 import { useEffect, useState } from 'react';
 import { useSlideAnimation } from '../../hooks';
@@ -8,7 +8,6 @@ import { minusControlDateBtns } from '../../constant/controlDateBtns';
 
 import FormLabel from './FormLabel';
 import ControlDateBtn from '../buttons/ControlDateBtn';
-import RelativeTime from '../common/RelativeTime';
 import tw from 'twrnc';
 
 interface Props {
@@ -59,21 +58,18 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
       <Animated.View style={tw.style(`overflow-hidden -mx-1 px-1`, { height })}>
         <View
           style={tw.style(
-            `flex-row items-center ${InputStyle} pl-0`,
+            `flex-row items-center ${InputStyle} p-0`,
             shadowStyle(3)
           )}
         >
           <TextInput
-            value={formattedDate}
             editable={false}
-            pointerEvents='none'
-            style={tw`border-0 h-full my-1`}
+            value={formattedDate}
+            style={tw`border-0 w-23 h-full`}
           />
-
-          {date !== '' && <RelativeTime date={date} />}
         </View>
 
-        <View style={tw`mt-2 gap-1 flex-row flex-wrap items-start`}>
+        <View style={tw`mt-1.5 gap-1 flex-row flex-wrap items-start`}>
           {minusControlDateBtns.map((btn) => (
             <ControlDateBtn
               key={btn.label}

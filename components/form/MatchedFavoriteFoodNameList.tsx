@@ -61,20 +61,16 @@ export default function MatchedFavoriteFoodNameList({
                 >
                   <Icon
                     name={food.name === name ? 'check' : 'plus'}
-                    type='Feather'
+                    type='Octicons'
                     size={14}
                   />
-                  <Text
-                    style={tw.style(`text-blue-700 text-[15px]`, {
-                      lineHeight: 22,
-                    })}
-                  >
+                  <Text fontSize={14} style={tw.style(`text-blue-700`)}>
                     {cutLetter(food.name, 8)}
                   </Text>
                 </TouchableOpacity>
               ))}
               {matchedFoodList.length > FAV_ITEM_MAX && (
-                <Text style={tw`ml-2 text-slate-800 text-sm`}>
+                <Text fontSize={14} style={tw`ml-2 text-slate-800`}>
                   +{matchedFoodList.length - FAV_ITEM_MAX}개
                 </Text>
               )}

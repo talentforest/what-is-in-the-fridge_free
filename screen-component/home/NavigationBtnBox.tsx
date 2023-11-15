@@ -3,13 +3,11 @@ import {
   Text,
   TouchableOpacity,
 } from '../../components/common/native-component';
-import { GRAY } from '../../constant/colors';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
 import { BtnTitle } from '../../constant/navigationBtn';
-import Icon from '../../components/common/native-component/Icon';
+import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
 import tw from 'twrnc';
-import { PlatformIOS } from '../../constant/statusBarHeight';
 
 interface Props {
   uri: string;
@@ -29,19 +27,21 @@ export default function NavigationBtnBox({ uri, title, navigatonName }: Props) {
       onPress={() => navigation.navigate(navigatonName)}
       style={tw`items-center gap-1 justify-center flex-1`}
     >
-      <Image source={{ uri }} width={size} height={size} style={tw`mb-7`} />
+      <Image source={{ uri }} width={size} height={size} style={tw`mb-9`} />
 
       <View
-        style={tw`h-8 absolute bottom-0 items-center flex-row pl-2 pr-0.5 border border-slate-600 bg-white rounded-2xl`}
+        style={tw`py-1 gap-0.5 absolute bottom-0 items-center flex-row pl-2 pr-1 border border-slate-600 bg-white rounded-full`}
       >
         <Text
-          style={tw.style(`text-slate-800 text-base`, {
+          fontSize={15}
+          style={tw.style(`text-slate-800 -mr-0.5`, {
             letterSpacing: -0.5,
           })}
         >
           {title}
         </Text>
-        <Icon name='chevron-right' type='Feather' size={13} color={GRAY} />
+
+        <IconChevronRight size={14} />
       </View>
     </TouchableOpacity>
   );

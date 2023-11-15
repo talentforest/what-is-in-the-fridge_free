@@ -3,10 +3,9 @@ import { Text } from '../../components/common/native-component';
 import { Space } from '../../constant/fridgeInfo';
 import { getCompartments } from '../../util';
 import { MaxCompartmentsNumObj } from '../../redux/slice/fridgeInfoSlice';
-import { MEDIUM_GRAY } from '../../constant/colors';
 
 import CompartmentBox from './CompartmentBox';
-import Icon from '../../components/common/native-component/Icon';
+import IconChevronsRight from '../../components/svg/arrow/IconChevronsRight';
 import tw from 'twrnc';
 
 interface Props {
@@ -19,18 +18,15 @@ export default function FridgeInfo({ space, compartments }: Props) {
     <View style={tw`justify-center`}>
       <View style={tw`absolute w-full h-full opacity-70`} />
       {space.slice(-2) !== '문쪽' && (
-        <View style={tw`absolute -left-18 z-10 flex-row items-center gap-1.5`}>
+        <View style={tw`absolute -left-18 z-10 flex-row items-center gap-0.5`}>
           <Text
-            style={tw.style(`pb-1
-            ${space.includes('냉동') ? 'text-blue-600' : 'text-sky-600'}`)}
+            style={tw.style(`
+            ${space.includes('냉동') ? 'text-blue-600' : 'text-teal-600'}`)}
           >
             {space.slice(0, 3)}
           </Text>
-          <Icon
-            name='chevrons-right'
-            type='Feather'
-            size={20}
-            color={MEDIUM_GRAY}
+          <IconChevronsRight
+            color={space.includes('냉동') ? '#2563eb' : '#0d9488'}
           />
         </View>
       )}

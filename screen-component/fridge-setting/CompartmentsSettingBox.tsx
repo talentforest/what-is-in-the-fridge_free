@@ -23,7 +23,7 @@ export default function CompartmentsSettingBox({ space }: Props) {
     space === '냉동실 안쪽' || space === '냉동실 문쪽' ? 3 : 5;
 
   const spaceColor = (space: Space) => {
-    return space.includes('냉동') ? 'text-blue-600' : 'text-sky-600';
+    return space.includes('냉동') ? 'text-blue-600' : 'text-teal-600';
   };
 
   return (
@@ -32,21 +32,21 @@ export default function CompartmentsSettingBox({ space }: Props) {
         style={tw`px-2 py-2.5 gap-1 justify-center flex-1 items-center bg-white border border-slate-300 rounded-md`}
       >
         <Text style={tw`${spaceColor(space)}`}>{space}</Text>
-        <View style={tw`flex-row items-center justify-center`}>
+        <View style={tw`flex-row items-center justify-center mt-0.5`}>
           <CountBtn
             type='plus'
             onPress={onPlusPress}
             active={fridgeInfo.compartments[space] < MAX_COMPARTMENTS_NUM}
           />
 
-          <View style={tw`flex-row items-center gap-1 mx-2`}>
-            <Text style={tw.style(`text-slate-800`)}>
+          <View style={tw`flex-row items-center gap-0.5 mx-2`}>
+            <Text fontSize={20} style={tw.style(`text-slate-800`)}>
               {fridgeInfo.compartments[space]}
             </Text>
-            <Text style={tw`text-slate-500 pt-1 text-base`}>칸</Text>
+            <Text style={tw`text-slate-500 pt-0.5`}>칸</Text>
           </View>
           <CountBtn
-            type='minus'
+            type='dash'
             onPress={onMinusPress}
             active={fridgeInfo.compartments[space] > 1}
           />

@@ -5,11 +5,10 @@ import tw from 'twrnc';
 
 interface Props {
   expiredDate: string;
-  size?: 14 | 15;
   dateMark?: boolean;
 }
 
-function LeftDay({ size = 15, expiredDate, dateMark }: Props) {
+function LeftDay({ expiredDate, dateMark }: Props) {
   const textColor = getTWColorByLeftDay(expiredDate);
   const diffDate = getDiffDate(expiredDate);
 
@@ -18,21 +17,13 @@ function LeftDay({ size = 15, expiredDate, dateMark }: Props) {
   const relativeTimeSuffix = `${Math.abs(diffDate)}일 ${suffix}`;
 
   return (
-    <View>
-      <Text
-        style={tw.style(`self-end ${textColor} text-[${size}px]`, {
-          lineHeight: size === 14 ? 20 : 22,
-        })}
-      >
+    <View style={tw`items-end justify-center`}>
+      <Text fontSize={15} style={tw.style(`${textColor}`)}>
         {diffDate === 0 ? '오늘까지' : relativeTimeSuffix}
       </Text>
 
       {dateMark && (
-        <Text
-          style={tw.style(`text-[13px] self-end text-slate-500 -mt-0.5`, {
-            lineHeight: 18,
-          })}
-        >
+        <Text fontSize={14} style={tw.style(`text-slate-500 -mt-0.5`)}>
           {getFormattedDate(expiredDate, 'YY.MM.DD')}
         </Text>
       )}

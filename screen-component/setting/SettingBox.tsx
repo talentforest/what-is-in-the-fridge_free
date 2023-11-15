@@ -36,26 +36,34 @@ export default function SettingBox({ setting }: Props) {
     <TouchableOpacity
       disabled={navigate === ''}
       onPress={onNavigatePress}
-      style={tw`flex-row items-center justify-between 
+      style={tw`flex-row py-2.5 items-center justify-between 
       ${title === '버전' ? 'border-t border-slate-300 pt-2' : ''}`}
     >
       <View style={tw`flex-row items-center gap-1`}>
-        <Icon
-          name={icon}
-          color={GRAY}
-          size={navigate === 'FridgeSetting' ? 17 : 16}
-          type={
-            navigate === 'FridgeSetting' ? 'MaterialCommunityIcons' : 'Feather'
-          }
-        />
-        <Text style={tw`text-[17px]`}>{title}</Text>
+        <View style={tw`w-7 justify-center items-center`}>
+          <Icon
+            name={icon}
+            color={GRAY}
+            size={navigate === 'FridgeSetting' ? 18 : 15}
+            type={
+              navigate === 'FridgeSetting' || navigate === 'FontSetting'
+                ? 'MaterialCommunityIcons'
+                : 'Octicons'
+            }
+          />
+        </View>
+        <Text>{title}</Text>
       </View>
 
       {navigate === '' &&
         (title === '버전' ? (
-          <Text style={tw`text-base text-slate-600`}>1.0.0</Text>
+          <Text fontSize={15} style={tw`text-slate-600`}>
+            1.0.0
+          </Text>
         ) : (
-          <Text style={tw`text-sm text-slate-600`}>업데이트 예정</Text>
+          <Text fontSize={15} style={tw`text-slate-600`}>
+            업데이트 예정
+          </Text>
         ))}
     </TouchableOpacity>
   );

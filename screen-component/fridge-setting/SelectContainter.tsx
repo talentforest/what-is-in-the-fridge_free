@@ -20,16 +20,18 @@ interface Props {
 export default function SelectContainter({ title, children }: Props) {
   return (
     <View style={tw`mb-6`}>
-      <View style={tw`flex-row items-center gap-1 pb-0.5`}>
-        <Icon name='settings' type='Feather' color={GRAY} size={12} />
-        <Text style={tw`text-slate-600 text-sm`}>{title}</Text>
+      <View style={tw`flex-row items-center gap-0.5 pb-0.5 mb-1`}>
+        <Icon name='gear' type='Octicons' color={GRAY} size={13} />
+        <Text fontSize={16} style={tw`text-slate-600`}>
+          {title}
+        </Text>
       </View>
 
       <View
         style={tw`rounded-lg ${
           title === '각 공간의 칸 개수'
             ? 'gap-1.5'
-            : `px-3.5 py-2 bg-white border border-slate-300`
+            : `px-3.5 py-2.5 bg-white border border-slate-300`
         }`}
       >
         {children}

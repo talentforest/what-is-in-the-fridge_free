@@ -46,15 +46,12 @@ export default function IndicatorExist({
         style={tw`flex-row items-center ${navigate ? 'h-full' : ''} 
         ${roundedBorder ? borderStyle : ''}`}
       >
-        <Text
-          style={tw`${existFoodColor}
-          ${roundedBorder ? 'text-base' : 'text-lg'}`}
-        >
+        <Text fontSize={roundedBorder ? 14 : 16} style={tw`${existFoodColor}`}>
           {!!existFood ? '있음' : '없음'}
         </Text>
 
         {existFood && navigate && (
-          <Icon name='arrow-up-right' type='Feather' size={13} />
+          <Icon name='arrow-up-right' type='MaterialCommunityIcons' size={12} />
         )}
       </View>
     </TouchableOpacity>

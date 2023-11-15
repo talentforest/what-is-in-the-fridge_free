@@ -5,30 +5,20 @@ import {
   StyleProp,
   TouchableWithoutFeedback,
   View,
+  useWindowDimensions,
 } from 'react-native';
-import { DEVICE_HEIGHT } from '../../util';
-import { CompartmentNum } from '../../constant/fridgeInfo';
 
 import RNModal from 'react-native-modal';
 import SwipeHeader from './SwipeHeader';
 import tw from 'twrnc';
 
 export type ModalTitle =
-  | '알림'
   | '장보기 목록 식료품 추가'
   | '새로운 식료품 추가'
   | '식료품 정보 수정'
   | '식료품 상세 정보'
-  | '팬트리 식료품 추가'
-  | '팬트리 식료품 수정'
-  | '나의 식료품 찾기'
   | '카테고리별 필터링'
-  | `${CompartmentNum}칸`
-  | '카테고리 선택'
-  | '소비기한 설정'
-  | '구매날짜 설정'
-  | '한번에 추가할 공간'
-  | '추가할 식료품 정보';
+  | '식료품 검색 결과';
 
 interface Props {
   isVisible: boolean;
@@ -36,9 +26,6 @@ interface Props {
   children: ReactNode;
   title: ModalTitle;
   style?: StyleProp<any>;
-  animationIn?: 'fadeIn' | 'slideInUp';
-  hasBackdrop?: boolean;
-  overlapped?: boolean;
 }
 
 export default function Modal({
@@ -47,50 +34,49 @@ export default function Modal({
   children,
   isVisible,
   closeModal,
-  animationIn = 'slideInUp',
-  hasBackdrop = true,
-  overlapped,
 }: Props) {
-  const MODAL_HEIGHT = DEVICE_HEIGHT * 0.9;
+  const { height } = useWindowDimensions();
 
-  const positionStyle = animationIn !== 'fadeIn' ? 'justify-end' : 'mx-4';
+  const MODAL_HEIGHT = height * 0.9;
+
+  const modalBorderColor = 'border-slate-300 border';
 
   return (
     <RNModal
+      avoidKeyboard={true}
       isVisible={isVisible}
-      onBackdropPress={title === '알림' ? undefined : closeModal}
-      backdropTransitionOutTiming={0} // 안드로이드 깜박임 이슈
+      onBackdropPress={closeModal}
+      backdropTransitionOutTiming={0} // 안드로이드 깜박임 이슈 해결
       onBackButtonPress={closeModal} // 안드로이드 뒤로 가기 버튼
       onSwipeComplete={closeModal}
-      swipeDirection={animationIn === 'fadeIn' ? undefined : ['down']}
-      animationInTiming={
-        animationIn === 'fadeIn' ? (title === '알림' ? 100 : 600) : 400
-      }
-      animationOutTiming={title === '알림' ? 100 : 200}
+      swipeDirection={['down']}
       propagateSwipe={true}
-      animationIn={animationIn}
-      animationOut={animationIn === 'fadeIn' ? 'fadeOut' : 'slideOutDown'}
+      animationInTiming={400}
+      animationOutTiming={200}
+      animationIn='slideInUp'
+      animationOut='slideOutDown'
+      deviceHeight={height}
       statusBarTranslucent={true}
-      hasBackdrop={hasBackdrop}
-      backdropOpacity={title === '알림' ? 0.2 : 0.6}
-      style={tw.style(`m-0 ${positionStyle}`, style)}
+      hasBackdrop={true}
+      backdropOpacity={0.5}
+      style={tw.style(`m-0 justify-end`, style)}
     >
-      <KeyboardAvoidingView
-        enabled={!overlapped}
-        behavior='padding'
-        keyboardVerticalOffset={-100}
-      >
-        <View style={tw.style(`max-h-[${MODAL_HEIGHT}px]`)}>
-          {title !== '알림' && (
+      <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-105}>
+        <View
+          style={tw`max-h-[${MODAL_HEIGHT}px] pb-4 rounded-t-3xl ${modalBorderColor} bg-stone-100`}
+        >
+          <View style={tw`px-4`}>
             <SwipeHeader
               title={title}
               closeModal={closeModal}
-              animationIn={animationIn}
+              animationIn='slideInUp'
             />
-          )}
+          </View>
+
+          <View style={tw`border-b-2 border-stone-300 -mx-4 px-4 mb-3`} />
 
           <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View>{children}</View>
+            <View style={tw`px-4`}>{children}</View>
           </TouchableWithoutFeedback>
         </View>
       </KeyboardAvoidingView>

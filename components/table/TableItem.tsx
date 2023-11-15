@@ -1,4 +1,4 @@
-import { Animated } from 'react-native';
+import { Animated, useWindowDimensions } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { Food, initialFridgeFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
@@ -30,7 +30,8 @@ export default function TableItem({
   const slideDownIn = animationState === 'slidedown-in';
   const slideUpOut = animationState === 'slideup-out';
 
-  const ITEM_HEIGHT = 46;
+  const { height: windowDimensionHeight } = useWindowDimensions();
+  const ITEM_HEIGHT = windowDimensionHeight > 900 ? 52 : 46;
 
   const initialValue =
     isCheckedItem && slideUpOut ? ITEM_HEIGHT : slideDownIn ? 0 : ITEM_HEIGHT;
@@ -65,8 +66,8 @@ export default function TableItem({
       <TouchableOpacity
         onPress={() => onCheckBoxPress(initializedFood)}
         style={tw.style(
-          `border h-[${ITEM_HEIGHT - 5}px] ${
-            isCheckedItem ? 'border-blue-500' : 'border-slate-200'
+          `border h-[${ITEM_HEIGHT - 6}px] ${
+            isCheckedItem ? 'border-blue-600' : 'border-slate-200 '
           } bg-white flex-row items-center gap-1 pl-3 rounded-lg mx-1`,
           shadowStyle(4)
         )}

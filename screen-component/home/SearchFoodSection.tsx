@@ -9,8 +9,7 @@ import {
 import { Food } from '../../constant/foodInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { shadowStyle } from '../../constant/shadowStyle';
-import { GRAY } from '../../constant/colors';
-
+import { MEDIUM_GRAY } from '../../constant/colors';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
 
@@ -52,11 +51,11 @@ export default function SearchFoodSection({
   };
 
   return (
-    <View style={tw`h-16`}>
+    <View style={tw`h-11`}>
       <TextInput
         value={keyword}
         onChangeText={setKeyword}
-        placeholder='냉장고나 팬트리에 식료품이 있는지 찾아보세요.'
+        placeholder='식료품이 갖고 있는지 검색해보세요.'
         blurOnSubmit={false}
         style={tw.style(
           `h-10 border-2 my-0.5 pl-8 border-slate-200 items-center justify-center`,
@@ -66,10 +65,10 @@ export default function SearchFoodSection({
       />
       <TouchableOpacity
         onPress={onSubmitEditing}
-        style={tw`absolute top-3.5 left-3`}
+        style={tw`absolute top-3.2 left-2.5`}
         disabled={keyword === ''}
       >
-        <Icon name='search' type='Feather' size={16} color={GRAY} />
+        <Icon name='search' type='Octicons' size={17} color={MEDIUM_GRAY} />
       </TouchableOpacity>
     </View>
   );

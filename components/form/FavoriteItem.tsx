@@ -7,19 +7,19 @@ import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleFavorite } from '../../redux/slice/isFavoriteSlice';
 import { ModalTitle } from '../modal/Modal';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { InputStyle } from '../common/native-component';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
 import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
-import { InputStyle } from '../common/native-component';
 
 interface Props {
   food: Food;
   title: ModalTitle;
 }
 
-const TOGGLE_BTN_WIDTH = 88;
+const TOGGLE_BTN_WIDTH = 94;
 
 export default function FavoriteItem({ food, title }: Props) {
   const { isFavorite } = useSelector((state) => state.isFavorite);

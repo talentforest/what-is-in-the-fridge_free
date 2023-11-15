@@ -1,4 +1,4 @@
-import { DEVICE_HEIGHT, isValidDate } from '../../util';
+import { isValidDate } from '../../util';
 import { Animated, View, useWindowDimensions } from 'react-native';
 import { useState } from 'react';
 import { useSlideAnimation } from '../../hooks';
@@ -8,6 +8,7 @@ import Modal from '../../components/modal/Modal';
 import MessageBox from '../../components/common/MessageBox';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import tw from 'twrnc';
+import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 
 export type DateType = '년' | '월' | '일';
 
@@ -33,6 +34,10 @@ export default function DateNumInputModal({
     msg: '',
   });
 
+  const { height: windowDimensionHeight, width } = useWindowDimensions();
+
+  const tokenWidth = width > 400 ? width / 12 : width / 10;
+
   const { height } = useSlideAnimation({
     initialValue: 0,
     toValue: 28,
@@ -55,18 +60,14 @@ export default function DateNumInputModal({
     closeModal();
   };
 
-  const { width } = useWindowDimensions();
-
-  const tokenWidth = width > 390 ? width / 9 : width / 10;
-
   return (
-    <Modal
+    <FadeInMiddleModal
       title='소비기한 설정'
       isVisible={isVisible}
       closeModal={closeModal}
-      animationIn='fadeIn'
+      style={tw`justify-start mt-28`}
     >
-      <View style={tw`bg-white h-[${DEVICE_HEIGHT * 0.24}px] rounded-b-xl p-4`}>
+      <View style={tw`h-[${windowDimensionHeight * 0.2}px] `}>
         <View style={tw`w-full flex-1 flex-row items-center justify-center`}>
           <DateNumTokenBox
             dateToken={dateToken}
@@ -89,13 +90,9 @@ export default function DateNumInputModal({
         </Animated.View>
 
         <View style={tw`w-full`}>
-          <SubmitBtn
-            onPress={onSubmit}
-            iconName='check-square'
-            btnName='설정 완료'
-          />
+          <SubmitBtn onPress={onSubmit} iconName='check' btnName='설정 완료' />
         </View>
       </View>
-    </Modal>
+    </FadeInMiddleModal>
   );
 }
