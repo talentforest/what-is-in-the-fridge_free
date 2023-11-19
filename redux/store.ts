@@ -15,7 +15,6 @@ import fridgeFoodsReducer from './slice/fridgeFoodsSlice';
 import favoriteFoodsReducer from './slice/favoriteFoodsSlice';
 import shoppingListReducer from './slice/shoppingListSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import selectedFoodReducer from './slice/selectedFoodSlice';
 import fridgeInfoReducer from './slice/fridgeInfoSlice';
 import toggleOnboardingReducer from './slice/onboardingSlice';
 import changeFilterReducer from './slice/filterSlice';
@@ -27,12 +26,12 @@ import searchedFoodNameReducer from './slice/searchedFoodSlice';
 import toggleFormModalReducer from './slice/formModalSlice';
 import toggleAlertModalReducer from './slice/alertModalSlice';
 import changeFontReducer from './slice/fontSlice';
+import formFoodReducer from './slice/formFoodSlice';
 
 const reducers = {
   fridgeFoods: fridgeFoodsReducer,
   favoriteFoods: favoriteFoodsReducer,
   shoppingList: shoppingListReducer,
-  selectedFood: selectedFoodReducer,
   fridgeInfo: fridgeInfoReducer,
   onboarding: toggleOnboardingReducer,
   filter: changeFilterReducer,
@@ -44,6 +43,7 @@ const reducers = {
   formModalVisible: toggleFormModalReducer,
   alertModal: toggleAlertModalReducer,
   fontFamily: changeFontReducer,
+  formFood: formFoodReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

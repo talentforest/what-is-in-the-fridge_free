@@ -2,7 +2,7 @@ import { Text, TouchableOpacity } from '../common/native-component';
 import { ControlDateBtnType } from '../../constant/controlDateBtns';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { Operator } from '../../util';
-import { GRAY } from '../../constant/colors';
+import { AMBER, GRAY, GREEN, INDIGO, RED } from '../../constant/colors';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
@@ -15,6 +15,17 @@ interface Props {
 }
 
 export default function ControlDateBtn({ type, btn, changeDate, date }: Props) {
+  const btnColor =
+    btn.btnColor === 'amber'
+      ? AMBER
+      : btn.btnColor === 'indigo'
+      ? INDIGO
+      : btn.btnColor === 'red'
+      ? RED
+      : btn.btnColor === 'teal'
+      ? GREEN
+      : '';
+
   return (
     <TouchableOpacity
       onPress={() => changeDate(btn.calculateDate(type, new Date(date)))}
@@ -37,7 +48,7 @@ export default function ControlDateBtn({ type, btn, changeDate, date }: Props) {
           name={type === 'add' ? 'plus' : 'dash'}
           type='Octicons'
           size={14}
-          color={btn.btnColor}
+          color={btnColor}
         />
       )}
     </TouchableOpacity>

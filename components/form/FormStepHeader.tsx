@@ -3,6 +3,7 @@ import { FormStep } from '../../constant/formInfo';
 import { Text } from '../common/native-component';
 import tw from 'twrnc';
 import Icon from '../common/native-component/Icon';
+import { AMBER, GRAY } from '../../constant/colors';
 
 interface Props {
   formSteps: FormStep[];
@@ -19,7 +20,7 @@ export default function FormStepHeader({ formSteps, currentStep }: Props) {
               name='chevron-right'
               type='MaterialCommunityIcons'
               size={16}
-              color={`${currentStep.step === step - 1 ? 'amber' : 'gray'}`}
+              color={`${currentStep.step === step - 1 ? AMBER : GRAY}`}
             />
           )}
           <View style={tw`flex-row items-center gap-0.5`}>

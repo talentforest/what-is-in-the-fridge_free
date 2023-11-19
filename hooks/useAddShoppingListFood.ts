@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from '../redux/hook';
 import { removeFromShoppingList } from '../redux/slice/shoppingListSlice';
 import { addFridgeFood } from '../redux/slice/fridgeFoodsSlice';
-import { select } from '../redux/slice/selectedFoodSlice';
 import { addToPantry } from '../redux/slice/pantryFoodsSlice';
 import { Food } from '../constant/foodInfo';
-import { alertPhrase, alertPhraseWithFood } from '../constant/alertPhrase';
+import {
+  AlertObj,
+  alertPhrase,
+  alertPhraseWithFood,
+} from '../constant/alertPhrase';
 import {
   addFavorite,
   editFavorite,
@@ -12,82 +15,63 @@ import {
 } from '../redux/slice/favoriteFoodsSlice';
 import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
 import { beforePurchaseDate } from '../util';
+import { useFindFood } from './useFindFood';
+import { toggleMemoOpen } from '../redux/slice/isMemoOpenSlice';
 
 export const useAddShoppingListFood = () => {
-  const { selectedFood } = useSelector((state) => state.selectedFood);
+  const { formFood } = useSelector((state) => state.formFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
-  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
 
   const dispatch = useDispatch();
 
-  const onChange = (info: { [key: string]: string | boolean }) => {
-    dispatch(select({ ...selectedFood, ...info }));
+  const { isFavoriteItem } = useFindFood();
+
+  const showAlert = (alert: AlertObj) => {
+    const { title, msg } = alert;
+    dispatch(toggleAlertModal(true));
+    dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
   };
 
-  const isFavoriteItem = (name: string) =>
-    favoriteFoods.find((food) => food.name === name);
-
-  const { wrongDate, noMemo } = alertPhrase;
-
-  const onSubmit = (
+  const onShoppingListFoodSubmit = (
     setModalVisible: (visible: boolean) => void,
     setCheckedList: (checkedList: Food[]) => void
   ) => {
-    const { expiredDate, purchaseDate, space, memo } = selectedFood;
+    const { expiredDate, purchaseDate } = formFood;
 
     if (beforePurchaseDate(purchaseDate, expiredDate)) {
-      const { title, msg } = wrongDate;
-      dispatch(toggleAlertModal(true));
-      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      showAlert(alertPhrase.wrongDate);
       return;
     }
 
-    if (isMemoOpen && memo === '') {
-      const { title, msg } = noMemo;
-      dispatch(toggleAlertModal(true));
-      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
-      return;
-    }
-
+    // 위의 validation 통과했다면 아래 로직 진행
     isFavorite
-      ? dispatch(addFavorite(selectedFood))
-      : dispatch(removeFavorite(selectedFood.name));
+      ? dispatch(addFavorite(formFood))
+      : dispatch(removeFavorite(formFood.name));
 
-    if (isFavoriteItem(selectedFood.name)) dispatch(editFavorite(selectedFood));
+    if (isFavoriteItem(formFood.name)) dispatch(editFavorite(formFood));
 
     dispatch(
-      selectedFood.space === '팬트리'
-        ? addToPantry(selectedFood)
-        : addFridgeFood(selectedFood)
+      formFood.space === '팬트리'
+        ? addToPantry(formFood)
+        : addFridgeFood(formFood)
     );
-    dispatch(removeFromShoppingList({ name: selectedFood.name }));
 
-    const position =
-      selectedFood.space === '팬트리'
-        ? `${space}`
-        : `${space} ${selectedFood.compartmentNum}칸`;
+    dispatch(removeFromShoppingList({ name: formFood.name }));
 
-    const {
-      successAdd: { title },
-    } = alertPhraseWithFood(selectedFood);
-
-    dispatch(toggleAlertModal(true));
-    dispatch(
-      setAlertInfo({
-        title,
-        msg: `${selectedFood.name} 식료품이 ${position}에 추가되었어요.`,
-        btns: ['확인'],
-      })
-    );
+    showAlert(alertPhraseWithFood(formFood).successAdd);
 
     setModalVisible(false);
+
+    if (isMemoOpen) {
+      toggleMemoOpen(false);
+    }
+
     setCheckedList([]);
   };
 
   return {
-    selectedFood,
-    onChange,
-    onSubmit,
+    formFood,
+    onShoppingListFoodSubmit,
   };
 };

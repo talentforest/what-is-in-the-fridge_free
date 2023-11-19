@@ -1,6 +1,8 @@
+import { useDispatch, useSelector } from '../../redux/hook';
+import { editFormFood } from '../../redux/slice/formFoodSlice';
 import { Animated, Keyboard, View } from 'react-native';
-import { InputStyle, Text, TextInput } from '../common/native-component';
-import { getFormattedDate } from '../../util';
+import { InputStyle, TextInput } from '../common/native-component';
+import { closeKeyboard, getFormattedDate } from '../../util';
 import { useEffect, useState } from 'react';
 import { useSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
@@ -10,18 +12,18 @@ import FormLabel from './FormLabel';
 import ControlDateBtn from '../buttons/ControlDateBtn';
 import tw from 'twrnc';
 
-interface Props {
-  date: string;
-  changeInfo: (newInfo: { [key: string]: string }) => void;
-}
-
-export default function PurchaseDateItem({ date, changeInfo }: Props) {
-  const formattedDate = getFormattedDate(
-    date === '' ? new Date() : new Date(date),
-    'YY.MM.DD'
-  );
-
+export default function PurchaseDateItem() {
   const [purchaseOpen, setPurchaseOpen] = useState(false);
+
+  const {
+    formFood: { purchaseDate },
+  } = useSelector((state) => state.formFood);
+
+  const dispatch = useDispatch();
+
+  const setDate = purchaseDate === '' ? new Date() : new Date(purchaseDate);
+
+  const formattedDate = getFormattedDate(setDate, 'YY.MM.DD');
 
   const { height } = useSlideAnimation({
     initialValue: 0,
@@ -30,18 +32,18 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
   });
 
   useEffect(() => {
-    if (date !== '') {
+    if (purchaseDate !== '') {
       setPurchaseOpen(true);
     }
   }, []);
 
   const changeDate = (date: Date | string) => {
     const purchaseDate = date ? getFormattedDate(date, 'YYYY-MM-DD') : '';
-    return changeInfo({ purchaseDate });
+    return dispatch(editFormFood({ purchaseDate }));
   };
 
   const onPress = () => {
-    if (Keyboard.isVisible()) Keyboard.dismiss();
+    closeKeyboard();
     setPurchaseOpen((prev) => !prev);
     changeDate(!purchaseOpen ? new Date() : '');
   };
@@ -76,7 +78,7 @@ export default function PurchaseDateItem({ date, changeInfo }: Props) {
               type='minus'
               btn={btn}
               changeDate={changeDate}
-              date={date}
+              date={purchaseDate}
             />
           ))}
         </View>

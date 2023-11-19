@@ -6,7 +6,6 @@ type PhraseObjKey =
   | 'excessToAddAtOnce'
   | 'noName'
   | 'wrongDate'
-  | 'noMemo'
   | 'alreadyExist';
 
 type PhraseFnKey = 'exist' | 'successAdd' | 'modifyCategory' | 'moveStorage';
@@ -18,18 +17,20 @@ type PhraseWithCheckListKey =
   | 'addToShoppingList'
   | 'confirmAddAll';
 
-type AlertPhraseObj = {
+export type AlertPhraseObj = {
   [key in PhraseObjKey]: {
     title: string;
     msg: string;
   };
 };
 
+export type AlertObj = {
+  title: string;
+  msg: string;
+};
+
 type AlertPhraseFn = (food: Food) => {
-  [key in PhraseFnKey]: {
-    title: string;
-    msg: string;
-  };
+  [key in PhraseFnKey]: AlertObj;
 };
 
 export const MAX_NUM_ADD_AT_ONCE = 8;
@@ -51,37 +52,35 @@ export const alertPhrase: AlertPhraseObj = {
     title: '유효하지 않은 소비기한',
     msg: '소비기한은 구매일 이후여야 해요.',
   },
-  noMemo: {
-    title: '메모 미작성',
-    msg: '메모가 작성되지 않았어요. 작성하지 않는다면 생략하기 버튼을 눌러주세요.',
-  },
   alreadyExist: {
-    title: '이미 존재하는 식료품 알림',
+    title: '이미 갖고 있는 식료품',
     msg: '이미 냉장고나 팬트리에 있는 식료품은 추가할 수 없어요. 갖고 계신 식료품은 선택을 해제해주세요.',
   },
 };
 
 export const alertPhraseWithFood: AlertPhraseFn = (food: Food) => {
+  const { space, compartmentNum, name, category } = food;
+
+  const position =
+    space === '팬트리' ? `${space}` : `${space} ${compartmentNum}칸`;
+
   const exist = {
-    title: '이미 존재하는 식료품 알림',
-    msg: `${food.name} 식료품은 이미 ${
-      food.space === '팬트리'
-        ? `${food.space}`
-        : `${food.space} ${food.compartmentNum}`
-    }에 있어요.`,
+    title: '이미 갖고 있는 식료품',
+    msg: `'${name}' 식료품은 이미 ${position}에 있어요.`,
   };
+
   const successAdd = {
     title: '식료품 추가 완료',
-    msg: '',
+    msg: `${name} 식료품이 ${position}에 추가되었어요.`,
   };
   const modifyCategory = {
     title: '카테고리 변경 알림',
-    msg: `${food.space}에 있는 동일한 식료품은 "${food.category}" 카테고리로 저장되어 있어요. 기존에 갖고 계신 정보로 저장돼요.`,
+    msg: `${space}에 있는 동일한 식료품은 "${category}" 카테고리로 저장되어 있어요. 기존에 갖고 계신 정보로 저장돼요.`,
   };
 
   const moveStorage = {
     title: '식료품 이동 알림',
-    msg: `${food.name}의 위치가 ${food.space}으로 이동되었어요.`,
+    msg: `${name}의 위치가 ${position}으로 이동되었어요.`,
   };
 
   return {
@@ -126,8 +125,8 @@ export const alertPhraseWithCheckList: (food: Food[]) => {
   const listLength = checkedList.length;
 
   const unSettingFavoriteFoods = {
-    title: '자주 먹는 식료품 해제',
-    msg: `총 ${listLength}개의 식료품(${nameList})을 자주 먹는 식료품에서 해제하시겠어요?`,
+    title: '자주 먹는 식료품 삭제',
+    msg: `총 ${listLength}개의 식료품(${nameList})을 자주 먹는 식료품에서 삭제하시겠어요?`,
   };
 
   const deleteExpiredFoods = {

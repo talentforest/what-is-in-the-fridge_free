@@ -11,6 +11,7 @@ export * from './useHandleCompartments';
 export * from './useHandleTableItem';
 export * from './useImageLoad';
 export * from './useHandleFilter';
+export * from './useHandleFoodCategory';
 
 // 애니메이션
 export * from './animation/useSetAnimationState';

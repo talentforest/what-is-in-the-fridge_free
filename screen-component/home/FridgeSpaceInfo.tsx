@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { Space } from '../../constant/fridgeInfo';
-import { GRAY, LIGHT_BLUE } from '../../constant/colors';
+import { GRAY } from '../../constant/colors';
 import { useGetFoodList } from '../../hooks';
 
 import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
@@ -73,7 +73,7 @@ export default function FridgeSpaceInfo({ space }: Props) {
           들어가기
         </Text>
 
-        <IconChevronRight size={14} color={'#7dd3fc'} />
+        <IconChevronRight size={13} color={'#7dd3fc'} />
       </View>
     </View>
   );

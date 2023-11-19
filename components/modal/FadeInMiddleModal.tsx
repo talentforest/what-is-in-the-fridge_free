@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
 import {
-  Keyboard,
   StyleProp,
   TouchableWithoutFeedback,
   View,
   useWindowDimensions,
 } from 'react-native';
 import { CompartmentNum } from '../../constant/fridgeInfo';
+import { closeKeyboard } from '../../util';
 
 import RNModal from 'react-native-modal';
 import SwipeHeader from './SwipeHeader';
@@ -76,7 +76,7 @@ export default function FadeInMiddleModal({
           {/* 구분선 */}
           <View style={tw`${modalBorderColor} border-b -mx-4 px-4 mb-3`} />
 
-          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <TouchableWithoutFeedback onPress={closeKeyboard}>
             <View>{children}</View>
           </TouchableWithoutFeedback>
         </View>

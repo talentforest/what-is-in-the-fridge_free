@@ -96,9 +96,10 @@ export default function OnBoarding() {
                     {[desc.split(', ')[0], desc.split(', ')[1]].map((desc) => (
                       <Text
                         key={desc}
-                        fontSize={20}
+                        fontSize={15}
                         style={tw.style(`text-slate-800`, {
                           lineHeight: 24,
+                          fontFamily: 'NanumSquareRoundEB',
                         })}
                       >
                         {desc}

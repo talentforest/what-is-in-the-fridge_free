@@ -1,21 +1,21 @@
 import { ScrollView } from 'react-native';
 import { useRef, useState } from 'react';
-import { FoodLocation } from '../../constant/fridgeInfo';
+import { FoodPosition } from '../../constant/fridgeInfo';
 import { useGetFoodList } from '../../hooks';
-import { formFourSteps, formThreeSteps } from '../../constant/formInfo';
+import { formFourSteps } from '../../constant/formInfo';
 import { scrollToEnd } from '../../util';
 
-import FoodDetailModal from '../modal/FoodDetailModal';
-import ExpandedCompartmentModal from '../modal/ExpandedCompartmentModal';
-import CompartmentBox from '../../components/compartment/CompartmentBox';
-import AddFoodModal from '../modal/AddFoodModal';
+import FoodDetailModal from '../../screen-component/modal/FoodDetailModal';
+import ExpandedCompartmentModal from '../../screen-component/modal/ExpandedCompartmentModal';
+import CompartmentBox from './CompartmentBox';
+import AddFoodModal from '../../screen-component/modal/AddFoodModal';
 
 interface Props {
-  foodLocation: FoodLocation;
+  currPosition: FoodPosition;
 }
 
-export default function Compartment({ foodLocation }: Props) {
-  const { space, compartmentNum } = foodLocation;
+export default function Compartment({ currPosition }: Props) {
+  const { space, compartmentNum } = currPosition;
 
   const [expandCompartment, setExpandCompartment] = useState(false);
   const [openFoodDetailModal, setOpenFoodDetailModal] = useState(false);
@@ -56,11 +56,10 @@ export default function Compartment({ foodLocation }: Props) {
       />
 
       <AddFoodModal
-        scrollEnd={() => scrollToEnd(scrollViewRef)}
         modalVisible={openAddFoodModal}
         setModalVisible={setOpenAddFoodModal}
-        formSteps={formThreeSteps}
-        foodLocation={foodLocation}
+        currPosition={currPosition}
+        scrollEnd={() => scrollToEnd(scrollViewRef)}
       />
     </>
   );

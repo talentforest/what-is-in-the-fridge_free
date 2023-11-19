@@ -10,10 +10,10 @@ import {
 import { Food } from '../../constant/foodInfo';
 import { useHandleFilter, usePulseAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
-import { select } from '../../redux/slice/selectedFoodSlice';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { MutableRefObject } from 'react';
 import { INDIGO } from '../../constant/colors';
+import { saveOriginalFood, setFormFood } from '../../redux/slice/formFoodSlice';
 
 import CategoryIcon from './CategoryIcon';
 import tw from 'twrnc';
@@ -40,7 +40,7 @@ export default function FoodBox({
   const dispatch = useDispatch();
 
   const onItemLayout = (event: LayoutChangeEvent, food: Food) => {
-    if (searchedFoodName === food.name) {
+    if (active) {
       const { y } = event.nativeEvent.layout;
       scrollTo(scrollViewRef, 0, y);
     }
@@ -48,7 +48,8 @@ export default function FoodBox({
   };
 
   const onPress = () => {
-    dispatch(select(food));
+    dispatch(setFormFood(food));
+    dispatch(saveOriginalFood(food));
     setOpenFoodDetailModal(true);
   };
 
@@ -73,9 +74,8 @@ export default function FoodBox({
         >
           {getDiffDate(expiredDate) <= 7 && (
             <View
-              style={tw`w-1.7 aspect-square rounded-full absolute top-0.5 right-0.5
-              border-${getColorByLeftDay(expiredDate)}-500 border
-              bg-${getColorByLeftDay(expiredDate)}-400`}
+              style={tw`w-1.5 aspect-square rounded-full absolute top-0.5 right-0.5
+              bg-[${getColorByLeftDay(expiredDate)}]`}
             />
           )}
 

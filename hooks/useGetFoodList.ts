@@ -3,64 +3,57 @@ import { Food } from '../constant/foodInfo';
 import { CompartmentNum, Space, SpaceType } from '../constant/fridgeInfo';
 import { useSelector } from '../redux/hook';
 import { Filter, expired, getLeftDays, leftThreeDays, leftWeek } from '../util';
+import { useFindFood } from './useFindFood';
 import { useRouteName } from './useRouteName';
 
 export const useGetFoodList = () => {
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
-  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
+  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { filter } = useSelector((state) => state.filter);
 
-  const allFoods = [...fridgeFoods, ...pantryFoods];
+  const { allFoods } = useFindFood();
 
-  const orderExpirationDate = (list: Food[]) => {
+  const sortByOldDate = (list: Food[]) => {
     const copiedList = list ? [...list] : [];
 
-    const sortedList = copiedList.sort(
+    const sortedByOldDateList = copiedList.sort(
       (food1, food2) =>
         new Date(food1.expiredDate).getTime() -
         new Date(food2.expiredDate).getTime()
     );
-    return sortedList || [];
+    return sortedByOldDateList || [];
   };
 
-  const allExpiredFoods = (type?: 'fridge' | 'pantry') => {
-    const expiredFridgeFoods = fridgeFoods.filter(
-      (food) => getLeftDays(food.expiredDate) < 8
-    );
-    const expiredPantryFoods = pantryFoods.filter(
-      (food) => getLeftDays(food.expiredDate) < 8
-    );
-    if (type === 'fridge') return orderExpirationDate(expiredFridgeFoods);
-    if (type === 'pantry') return orderExpirationDate(expiredPantryFoods);
-    return orderExpirationDate([...expiredFridgeFoods, ...expiredPantryFoods]);
-  };
-
-  const matchSpaceFoods = (
+  const positionMatchedFoods = (
     food: Food,
     space: Space | SpaceType,
     compartmentNum?: CompartmentNum
   ) => {
     if (space === '냉동실') return food.space.includes('냉동실');
     if (space === '냉장실') return food.space.includes('냉장실');
-
     if (compartmentNum) {
-      const matchSpace = food.space === space;
-      const matchCompartment = food.compartmentNum === compartmentNum;
-      return matchSpace && matchCompartment;
+      const matchedSpace = food.space === space;
+      const matchedCompartment = food.compartmentNum === compartmentNum;
+      return matchedSpace && matchedCompartment;
     }
+
     return food.space === space;
   };
+
+  const expiredFoods = sortByOldDate(
+    allFoods.filter((food) => getLeftDays(food.expiredDate) < 8)
+  );
 
   const getFoodList = (
     type: 'fridgeFoods' | 'expiredFoods',
     space: SpaceType | Space,
     compartmentNum?: CompartmentNum
   ) => {
-    const foodList = type === 'fridgeFoods' ? fridgeFoods : allExpiredFoods();
+    const foodList = type === 'fridgeFoods' ? fridgeFoods : expiredFoods;
 
     return foodList.filter((food) =>
-      matchSpaceFoods(food, space, compartmentNum)
+      positionMatchedFoods(food, space, compartmentNum)
     );
   };
 
@@ -139,11 +132,10 @@ export const useGetFoodList = () => {
     fridgeFoods,
     favoriteFoods,
     pantryFoods,
-    allExpiredFoods,
+    expiredFoods,
     getFoodList,
     getFilteredFoodList,
     getExistCategoryList,
     getFilteredSortByCategoryList,
-    orderExpirationDate,
   };
 };

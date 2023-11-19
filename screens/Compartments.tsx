@@ -8,7 +8,7 @@ import { SafeBottomAreaView } from '../components/common/native-component';
 import { useGetFoodList, useHandleFilter } from '../hooks';
 import { TAB_BLUE_BG_COLOR } from '../constant/colors';
 
-import Compartment from '../screen-component/compartments/Compartment';
+import Compartment from '../components/compartment/Compartment';
 import Container from '../components/common/Container';
 import CompartmentContainer from '../components/compartment/CompartmentContainer';
 import TableFilters from '../components/table/TableFilters';
@@ -23,10 +23,11 @@ interface Route {
 }
 
 export default function Compartments({ route }: Route) {
-  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { space } = route.params as RouteParams;
 
-  const { getFoodList, getFilteredFoodList } = useGetFoodList();
+  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
+
+  const { getFoodList } = useGetFoodList();
 
   const { initializeFilter } = useHandleFilter();
 
@@ -34,6 +35,7 @@ export default function Compartments({ route }: Route) {
 
   useEffect(() => {
     initializeFilter();
+
     navigation.setOptions({
       headerTitle: () => <NavigationHeaderTitle title={space} />,
       headerStyle: {
@@ -43,22 +45,24 @@ export default function Compartments({ route }: Route) {
   }, [space]);
 
   const maxCompartmentNum = fridgeInfo.compartments[space];
+
   const compartments = getCompartments(maxCompartmentNum);
+
+  const foodList = getFoodList('fridgeFoods', space);
 
   return (
     <SafeBottomAreaView>
       <Container>
         <TableFilters
-          filterList={[entireFilterObj, ...expiredFilters]}
-          getTableList={getFilteredFoodList}
-          foodList={getFoodList('fridgeFoods', space)}
+          filterTagList={[entireFilterObj, ...expiredFilters]}
+          foodList={foodList}
         />
 
         <CompartmentContainer>
           {compartments.map((compartment) => (
             <Compartment
               key={compartment.compartmentNum}
-              foodLocation={{ ...compartment, space }}
+              currPosition={{ ...compartment, space }}
             />
           ))}
         </CompartmentContainer>

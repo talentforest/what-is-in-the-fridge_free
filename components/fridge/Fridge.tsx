@@ -7,6 +7,7 @@ import { NavigateProp } from '../../navigation/Navigation';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { FRIDGE_COLOR } from '../../constant/colors';
 import { useRouteName } from '../../hooks/useRouteName';
+import { closeKeyboard } from '../../util';
 
 import FridgeSpaceInfo from '../../screen-component/home/FridgeSpaceInfo';
 import FridgeInfo from '../../screen-component/fridge-setting/FridgeInfo';
@@ -63,7 +64,7 @@ export default function Fridge() {
                     ${space.includes('냉동') ? 'h-[40%] pb-1' : 'h-[60%] pt-1'} 
                     `}
                     onPress={() => {
-                      Keyboard.dismiss();
+                      closeKeyboard();
                       navigation.navigate('Compartments', { space });
                     }}
                   >

@@ -1,24 +1,22 @@
-import { Animated, Keyboard, View } from 'react-native';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { Animated, View } from 'react-native';
 import { useEffect, useState } from 'react';
-import {
-  InputStyle,
-  TextInput,
-  TouchableOpacity,
-} from '../common/native-component';
+import { editFormFood } from '../../redux/slice/formFoodSlice';
+import { TextInput, TouchableOpacity } from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { comma } from '../../util/commaNotation';
+import { closeKeyboard } from '../../util';
 
 import FormLabel from './FormLabel';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
-interface Props {
-  quantity: string;
-  changeInfo: (newInfo: { [key: string]: string }) => void;
-}
+export default function QuantityItem() {
+  const {
+    formFood: { quantity },
+  } = useSelector((state) => state.formFood);
 
-export default function QuantityItem({ quantity, changeInfo }: Props) {
   const [isQuanityOpen, setQuantityOpen] = useState(false);
 
   const { height } = useSlideAnimation({
@@ -33,33 +31,33 @@ export default function QuantityItem({ quantity, changeInfo }: Props) {
     }
   }, []);
 
+  const dispatch = useDispatch();
+
   const onChangeText = (value: string) => {
     const numericText = value.replace(/[^0-9]/g, '');
     const trimmedText = numericText.replace(/^0+/, '');
 
-    changeInfo({ quantity: trimmedText });
+    dispatch(editFormFood({ quantity: trimmedText }));
   };
 
   const onPress = () => {
-    if (Keyboard.isVisible()) {
-      Keyboard.dismiss();
-    }
+    closeKeyboard();
     setQuantityOpen((prev) => !prev);
     if (!isQuanityOpen) {
-      return changeInfo({ quantity: '1' });
+      return dispatch(editFormFood({ quantity: '1' }));
     }
     if (isQuanityOpen) {
-      return changeInfo({ quantity: '' });
+      return dispatch(editFormFood({ quantity: '' }));
     }
   };
 
   const onHandleCountPress = (btn: string) => {
     if (btn === 'plus') {
-      Keyboard.dismiss();
+      closeKeyboard();
       onChangeText(`${+quantity + 1}`);
     }
     if (btn === 'minus') {
-      Keyboard.dismiss();
+      closeKeyboard();
       if (+quantity <= 1) return onChangeText('1');
       onChangeText(`${+quantity - 1}`);
     }

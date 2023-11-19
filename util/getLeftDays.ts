@@ -1,3 +1,4 @@
+import { AMBER, GREEN, RED } from '../constant/colors';
 import { getFormattedDate } from './getDate';
 
 export const getLeftDays = (expiryDate: string) => {
@@ -33,10 +34,10 @@ export const getTWColorByLeftDay = (expiredDate: string) => {
 
 export const getColorByLeftDay = (expiredDate: string) => {
   return expired(expiredDate)
-    ? 'red'
+    ? RED
     : leftThreeDays(expiredDate)
-    ? 'amber'
+    ? AMBER
     : leftWeek(expiredDate)
-    ? 'green'
-    : 'green';
+    ? GREEN
+    : GREEN;
 };

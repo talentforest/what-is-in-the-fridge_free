@@ -1,7 +1,6 @@
 export * from './cutLetter';
 export * from './deduplicate';
 export * from './keyboard';
-export * from './debounce';
 export * from './getTagColor';
 export * from './getImgName';
 

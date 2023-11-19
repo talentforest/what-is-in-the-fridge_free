@@ -7,15 +7,14 @@ import { useAddAtOnce } from '../../hooks';
 import { toggleAlertModal } from '../../redux/slice/alertModalSlice';
 
 import SpaceBtn from '../../components/buttons/SpaceBtn';
-import Modal from '../../components/modal/Modal';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import CurrentPosition from '../add-at-once-modal/CurrentPositionBox';
 import FoodItem from '../add-at-once-modal/FoodItem';
 import SelectPositionBox from '../add-at-once-modal/SelectPositionBox';
 import EditingBox from '../add-at-once-modal/EditingBox';
 import AlertModal from './AlertModal';
-import tw from 'twrnc';
 import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
+import tw from 'twrnc';
 
 interface Props {
   modalVisible: boolean;
@@ -34,10 +33,10 @@ export default function AddAtOnceModal({
   setCheckedList,
   onConfirmPress,
 }: Props) {
+  const { formFood } = useSelector((state) => state.formFood);
   const {
     alertInfo: { title: alertTitle },
   } = useSelector((state) => state.alertModal);
-  const { selectedFood } = useSelector((state) => state.selectedFood);
 
   const {
     position,
@@ -65,7 +64,6 @@ export default function AddAtOnceModal({
       return;
     } else if (
       alertTitle === '추가 완료' ||
-      alertTitle === '메모 미작성' ||
       alertTitle === '유효하지 않은 소비기한' ||
       alertTitle === '식료품 개수 한도 도달'
     ) {
@@ -143,9 +141,7 @@ export default function AddAtOnceModal({
                 food={food}
                 isEditing={isEditing}
                 onFoodItemPress={onFoodItemPress}
-                active={
-                  selectedFood.name !== '' && selectedFood.name !== food.name
-                }
+                active={formFood.name !== '' && formFood.name !== food.name}
               />
             ))}
 

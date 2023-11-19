@@ -1,5 +1,7 @@
+import { useDispatch, useSelector } from '../../redux/hook';
+import { editFormFood } from '../../redux/slice/formFoodSlice';
 import { View } from 'react-native';
-import { InputStyle, TextInput } from '../common/native-component';
+import { TextInput } from '../common/native-component';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { useRouteName } from '../../hooks/useRouteName';
 
@@ -8,17 +10,21 @@ import FormMessage from './FormMessage';
 import MatchedFavoriteFoodNameList from './MatchedFavoriteFoodNameList';
 import tw from 'twrnc';
 
-interface Props {
-  name: string;
-  changeInfo: (newInfo: { [key: string]: string }) => void;
-}
-
 const NAME_MAX_LENGTH = 40;
 
-export default function NameItem({ name, changeInfo }: Props) {
-  const onChangeText = (value: string) => changeInfo({ name: value });
+export default function NameItem() {
+  const {
+    formFood: { name },
+  } = useSelector((state) => state.formFood);
+
+  const dispatch = useDispatch();
+
+  const onChangeText = (value: string) => {
+    dispatch(editFormFood({ name: value }));
+  };
 
   const { routeShoppingList } = useRouteName();
+
   const editable = !routeShoppingList;
 
   return (
@@ -44,7 +50,7 @@ export default function NameItem({ name, changeInfo }: Props) {
         color='orange'
       />
 
-      <MatchedFavoriteFoodNameList name={name} changeInfo={changeInfo} />
+      <MatchedFavoriteFoodNameList />
     </View>
   );
 }

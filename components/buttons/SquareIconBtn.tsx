@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { BLUE } from '../../constant/colors';
+import { AMBER, BLUE } from '../../constant/colors';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { Text, TouchableOpacity } from '../common/native-component';
 
@@ -10,7 +10,7 @@ interface Props {
   onPress: () => void;
   disabled: boolean;
   icon: string;
-  btnName: '삭제' | '한번에 추가' | '장보기 추가' | '해제';
+  btnName: '삭제' | '한번에 추가' | '장보기 추가';
 }
 
 export default function SquareIconBtn({
@@ -33,7 +33,7 @@ export default function SquareIconBtn({
           type='MaterialCommunityIcons'
           name={icon}
           size={16}
-          color={icon.includes('plus') ? BLUE : 'amber'}
+          color={icon.includes('plus') ? BLUE : AMBER}
         />
         <Text>{btnName}</Text>
       </View>

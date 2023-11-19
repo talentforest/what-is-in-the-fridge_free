@@ -4,18 +4,18 @@ import { useState } from 'react';
 import { useSlideAnimation } from '../../hooks';
 
 import DateNumTokenBox from '../../components/common/DateNumTokenBox';
-import Modal from '../../components/modal/Modal';
 import MessageBox from '../../components/common/MessageBox';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import tw from 'twrnc';
 import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
+import { useDispatch } from '../../redux/hook';
+import { editFormFood } from '../../redux/slice/formFoodSlice';
 
 export type DateType = '년' | '월' | '일';
 
 interface Props {
   closeModal: () => void;
   isVisible: boolean;
-  changeInfo: (newInfo: { [key: string]: string }) => void;
 }
 
 export type DateState = {
@@ -23,16 +23,14 @@ export type DateState = {
   msg: string;
 };
 
-export default function DateNumInputModal({
-  closeModal,
-  isVisible,
-  changeInfo,
-}: Props) {
+export default function DateNumInputModal({ closeModal, isVisible }: Props) {
   const [dateToken, setDateToken] = useState(['', '', '', '', '', '']);
   const [inValidDate, setInValidDate] = useState<DateState>({
     state: 'ok',
     msg: '',
   });
+
+  const dispatch = useDispatch();
 
   const { height: windowDimensionHeight, width } = useWindowDimensions();
 
@@ -56,7 +54,7 @@ export default function DateNumInputModal({
       setInValidDate({ state: 'error', msg: isValid.msg });
       return;
     }
-    changeInfo({ expiredDate: convertTokenToDate });
+    dispatch(editFormFood({ expiredDate: convertTokenToDate }));
     closeModal();
   };
 

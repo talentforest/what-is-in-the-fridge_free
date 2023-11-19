@@ -1,68 +1,64 @@
-import { BLUE, GRAY, MEDIUM_GRAY } from '../../constant/colors';
 import { useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { Filter, FilterObj } from '../../util';
+import { useGetFoodList, useHandleFilter } from '../../hooks';
+import { BLUE, GRAY } from '../../constant/colors';
 import { Category, foodCategories } from '../../constant/foodCategories';
-import { useHandleFilter } from '../../hooks';
-import { useRouteName } from '../../hooks/useRouteName';
 
 import FilterTag from '../common/FilterTag';
 import Modal from '../modal/Modal';
-import tw from 'twrnc';
 import IconChevronDown from '../svg/arrow/IconChevronDown';
+import tw from 'twrnc';
 
 interface Props {
-  filterList: FilterObj[];
+  filterTagList: FilterObj[];
   foodList: Food[];
-  getTableList: (filter: Filter, list: Food[]) => Food[];
   setCheckedList?: (foods: Food[]) => void;
   setCategory?: (category: Category) => void;
+  withFoodCategoryFilterTag?: boolean;
 }
 
 export default function TableFilters({
-  filterList,
-  getTableList,
+  filterTagList,
   foodList,
   setCheckedList,
   setCategory,
+  withFoodCategoryFilterTag,
 }: Props) {
   const [modalVisible, setModalVisible] = useState(false);
-
-  const closeModal = () => setModalVisible(false);
-
-  const { routeFavoriteFoods } = useRouteName();
 
   const scrollViewRef = useRef<ScrollView | null>(null);
 
   const {
     currentFilter,
-    changeFilterState,
-    findCategoryFilter, //
-    filterState,
-    scrollToFilter,
+    currFoodCategoryFilter,
+    onFilterTagPress, //
   } = useHandleFilter(scrollViewRef);
 
-  const getLength = (filter: Filter) => getTableList(filter, foodList).length;
-  const hasLength = getLength(filterState) || getLength('전체') === 0;
-  const categoryList = foodList.map(({ category }) => category);
-  const activeCategory = foodCategories?.find(({ category }) => {
-    return categoryList.includes(category);
-  })?.category as Filter;
+  const { getFilteredFoodList } = useGetFoodList();
 
-  const categoryFilter = hasLength ? filterState : activeCategory;
-
-  const onFilterPress = (filter: Filter, index: number) => {
-    changeFilterState(filter);
-    if (setCheckedList) setCheckedList([]);
-    return scrollToFilter(index);
+  const getLengthByFilterTag = (filter: Filter) => {
+    return getFilteredFoodList(filter, foodList).length;
   };
 
-  const onCategoryFilterPress = (filter: Filter) => {
-    onFilterPress(filter, filterList.length);
+  const onCategoryFilterTagPress = (filter: Filter) => {
+    onFilterTagPress(filter, foodList.length);
     setCategory(filter as Category);
+    if (setCheckedList) {
+      setCheckedList([]);
+    }
     return setModalVisible((prev) => !prev);
   };
+
+  const onFilterPress = (filter: Filter, index: number) => {
+    onFilterTagPress(filter, index);
+    if (setCheckedList) {
+      setCheckedList([]);
+    }
+  };
+
+  const closeModal = () => setModalVisible(false);
 
   return (
     <View>
@@ -73,48 +69,50 @@ export default function TableFilters({
         horizontal
         showsHorizontalScrollIndicator={false}
       >
-        {filterList.map(({ filter, icon }, index) => (
+        {withFoodCategoryFilterTag && (
           <FilterTag
-            key={filter}
-            filterObj={{ filter, icon }}
-            active={filter === currentFilter}
-            length={getLength(filter) || 0}
-            onFilterPress={() => onFilterPress(filter, index)}
-          />
-        ))}
-
-        {routeFavoriteFoods && (
-          <FilterTag
-            filterObj={{ filter: categoryFilter }}
-            active={!!findCategoryFilter(currentFilter)}
-            length={getLength(filterState) || getLength(activeCategory)}
-            onFilterPress={() => onCategoryFilterPress(categoryFilter)}
+            getLengthByFilterTag={getLengthByFilterTag}
+            filter={currFoodCategoryFilter}
+            onFilterPress={() => {
+              onCategoryFilterTagPress(currFoodCategoryFilter);
+            }}
           >
             <View style={tw`-mx-1`}>
               <IconChevronDown
                 size={14}
-                color={!!findCategoryFilter(currentFilter) ? BLUE : MEDIUM_GRAY}
+                color={currentFilter === currFoodCategoryFilter ? BLUE : GRAY}
               />
             </View>
           </FilterTag>
         )}
+
+        {filterTagList.map(({ filter }, index) => (
+          <FilterTag
+            key={filter}
+            filter={filter}
+            onFilterPress={() => onFilterPress(filter, index)}
+            getLengthByFilterTag={getLengthByFilterTag}
+          />
+        ))}
       </ScrollView>
 
-      {routeFavoriteFoods && (
+      {withFoodCategoryFilterTag && (
         <Modal
           title='카테고리별 필터링'
           closeModal={closeModal}
           isVisible={modalVisible}
         >
+          {/* 생각해보니 객체를 Props 로 전달하면 성능상 안좋네... */}
           <View style={tw`flex-row flex-wrap gap-1`}>
-            {foodCategories.map(({ category, icon }) => (
+            {foodCategories.map(({ category: filter }) => (
               <FilterTag
-                key={category}
+                key={filter}
+                filter={filter}
+                getLengthByFilterTag={getLengthByFilterTag}
+                onFilterPress={() => {
+                  onCategoryFilterTagPress(filter);
+                }}
                 foodIcon
-                filterObj={{ filter: category, icon }}
-                active={category === currentFilter}
-                onFilterPress={() => onCategoryFilterPress(category)}
-                length={getLength(category)}
               />
             ))}
           </View>

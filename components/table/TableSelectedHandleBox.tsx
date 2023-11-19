@@ -8,16 +8,16 @@ import CheckBoxItem from '../common/CheckBoxItem';
 import tw from 'twrnc';
 
 interface Props {
-  list: Food[];
+  checkedList: Food[];
+  foodList: () => Food[];
+  onEntirePress: (list: Food[]) => void;
   children: ReactNode;
-  entireChecked: boolean;
-  onEntirePress: () => void;
 }
 
 export default function TableSelectedHandleBox({
-  list,
+  checkedList,
+  foodList,
   children,
-  entireChecked,
   onEntirePress,
 }: Props) {
   const { showBtn } = useSelector((state) => state.showBtn);
@@ -25,22 +25,27 @@ export default function TableSelectedHandleBox({
   const { height } = useSlideAnimation({
     initialValue: 0,
     toValue: 72,
-    active: !!list.length && showBtn,
+    active: !!checkedList.length && showBtn,
   });
+
+  const entireChecked =
+    checkedList.length === foodList().length && !!checkedList.length;
+
+  const onEntireBtnPress = () => onEntirePress(foodList());
 
   return (
     <Animated.View style={tw.style(`overflow-hidden -mx-4 px-4`, { height })}>
       <View style={tw.style(`flex-row justify-between items-center h-full`)}>
         <View style={tw`justify-center`}>
           <CheckBoxItem
-            onPress={onEntirePress}
+            onPress={onEntireBtnPress}
             checked={entireChecked}
             title='전체 선택'
             inActiveColor='#333'
           />
-          {!!list.length && (
+          {!!checkedList.length && (
             <Text fontSize={16} style={tw`ml-5.5 text-blue-600 -mt-1`}>
-              {list.length}개 선택
+              {checkedList.length}개 선택
             </Text>
           )}
         </View>

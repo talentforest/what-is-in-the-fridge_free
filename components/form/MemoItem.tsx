@@ -1,4 +1,4 @@
-import { Animated, Keyboard, View } from 'react-native';
+import { Animated, View } from 'react-native';
 import { useEffect } from 'react';
 import { InputStyle, TextInput } from '../common/native-component';
 import { useSlideAnimation } from '../../hooks';
@@ -6,18 +6,20 @@ import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleMemoOpen } from '../../redux/slice/isMemoOpenSlice';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { PlatformIOS } from '../../constant/statusBarHeight';
+import { editFormFood } from '../../redux/slice/formFoodSlice';
+import { closeKeyboard } from '../../util';
+
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
 import tw from 'twrnc';
 
-interface Props {
-  memo: string;
-  changeInfo: (newInfo: { [key: string]: string }) => void;
-}
-
 const MEMO_MAX_LENGTH = 70;
 
-export default function MemoItem({ memo, changeInfo }: Props) {
+export default function MemoItem() {
+  const {
+    formFood: { memo },
+  } = useSelector((state) => state.formFood);
+
   const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
 
   const dispatch = useDispatch();
@@ -32,14 +34,13 @@ export default function MemoItem({ memo, changeInfo }: Props) {
     dispatch(toggleMemoOpen(memo !== '' ? true : false));
   }, []);
 
-  const onChangeText = (value: string) => changeInfo({ memo: value });
+  const onChangeText = (value: string) =>
+    dispatch(editFormFood({ memo: value }));
 
   const onPress = () => {
-    if (Keyboard.isVisible()) {
-      Keyboard.dismiss();
-    }
+    closeKeyboard();
     dispatch(toggleMemoOpen(!isMemoOpen));
-    if (!isMemoOpen) changeInfo({ memo: '' });
+    if (!isMemoOpen) dispatch(editFormFood({ memo: '' }));
   };
 
   return (

@@ -1,17 +1,15 @@
-import { useState } from 'react';
-import { Keyboard, View } from 'react-native';
+import { View } from 'react-native';
 import {
   InputStyle,
-  Text,
   TextInput,
   TouchableOpacity,
 } from '../common/native-component';
 import { Category } from '../../constant/foodCategories';
-import { useFindFood } from '../../hooks';
-import { ModalTitle } from '../modal/Modal';
+import { useFindFood, useHandleFoodCategory } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
-import { useDispatch } from '../../redux/hook';
+import { useDispatch, useSelector } from '../../redux/hook';
 import { editFavorite } from '../../redux/slice/favoriteFoodsSlice';
+import { editFormFood } from '../../redux/slice/formFoodSlice';
 
 import CategoryModal from '../../screen-component/modal/CategoryModal';
 import FormLabel from './FormLabel';
@@ -19,40 +17,37 @@ import CategoryIcon from '../common/CategoryIcon';
 import tw from 'twrnc';
 
 interface Props {
-  name: string;
-  fixedCategory: Category;
-  changeInfo: (newInfo: { [key: string]: string }) => void;
-  title: ModalTitle;
+  isAddNewOne?: boolean;
 }
 
-export default function CategoryItem({
-  name,
-  fixedCategory,
-  changeInfo,
-  title,
-}: Props) {
-  const [categoryOpen, setCategoryOpen] = useState(false);
+export default function CategoryItem({ isAddNewOne }: Props) {
+  const {
+    formFood: { name, category: fixedCategory },
+  } = useSelector((state) => state.formFood);
+
+  const {
+    isCategoryModalOpen,
+    setIsCategoryModalOpen,
+    onCategoryModalOpenPress,
+  } = useHandleFoodCategory();
 
   const { isFavoriteItem } = useFindFood();
-  const favoriteFoodItemCategory = isFavoriteItem(name)?.category;
-  const disabled = favoriteFoodItemCategory && !title.includes('수정');
+  const isFavoriteItemCategory = isFavoriteItem(name);
 
-  const category = disabled ? favoriteFoodItemCategory : fixedCategory;
+  // 새로 추가하는데 자주 먹는 식료품인 경우 비활성화
+  const disabled = isFavoriteItemCategory && isAddNewOne;
+
+  const category = disabled ? isFavoriteItemCategory.category : fixedCategory;
 
   const dispatch = useDispatch();
 
-  const onCheckBoxPress = (category: Category) => {
+  const onCategoryBoxPress = (category: Category) => {
     if (isFavoriteItem(name)) {
       // 자주 먹는 식료품 목록에 포함되어 있을 경우 해당 아이템의 카테고리 정보도 변경
       dispatch(editFavorite({ ...isFavoriteItem(name), category }));
     }
-    changeInfo({ category });
-    setCategoryOpen(false);
-  };
-
-  const onPress = () => {
-    if (Keyboard.isVisible()) Keyboard.dismiss();
-    setCategoryOpen((prev) => !prev);
+    dispatch(editFormFood({ category }));
+    setIsCategoryModalOpen(false);
   };
 
   return (
@@ -60,7 +55,7 @@ export default function CategoryItem({
       <FormLabel label='카테고리' />
 
       <TouchableOpacity
-        onPress={onPress}
+        onPress={onCategoryModalOpenPress}
         disabled={disabled}
         style={tw.style(`${InputStyle}`, shadowStyle(3))}
       >
@@ -70,16 +65,18 @@ export default function CategoryItem({
           <TextInput
             editable={false}
             value={category}
-            style={tw`border-0 flex-1 pl-2 h-full`}
+            style={tw`border-0 flex-1 pl-2 h-full ${
+              disabled ? 'text-slate-400' : 'text-slate-800'
+            }`}
           />
         </View>
       </TouchableOpacity>
 
       <CategoryModal
-        modalVisible={categoryOpen}
-        setModalVisible={setCategoryOpen}
+        modalVisible={isCategoryModalOpen}
+        setModalVisible={setIsCategoryModalOpen}
         currentChecked={fixedCategory}
-        onCheckBoxPress={onCheckBoxPress}
+        onCheckBoxPress={onCategoryBoxPress}
       />
     </View>
   );

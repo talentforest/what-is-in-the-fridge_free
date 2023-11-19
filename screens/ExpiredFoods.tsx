@@ -7,7 +7,7 @@ import {
   useSetAnimationState,
   useHandleFilter,
 } from '../hooks/';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import Container from '../components/common/Container';
 import TableBody from '../components/table/TableBody';
@@ -20,7 +20,7 @@ import AlertModal from '../screen-component/modal/AlertModal';
 export default function ExpiredFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
 
-  const { getFilteredFoodList, allExpiredFoods } = useGetFoodList();
+  const { getFilteredFoodList, expiredFoods } = useGetFoodList();
 
   const {
     checkedList,
@@ -43,36 +43,37 @@ export default function ExpiredFoods() {
     initializeFilter();
   }, []);
 
-  const filteredList = getFilteredFoodList(currentFilter, allExpiredFoods());
+  const foodList = useCallback(() => {
+    return getFilteredFoodList(currentFilter, expiredFoods);
+  }, [currentFilter, expiredFoods]);
 
-  const allChecked = checkedList.length === filteredList.length;
+  const afterAnimationWork = () => {
+    afterAnimation(onDeleteExpiredFoodPress, expiredFoods);
+  };
 
   return (
     <SafeBottomAreaView>
       <Container>
         <TableFilters
-          filterList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
-          getTableList={getFilteredFoodList}
+          filterTagList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
+          foodList={expiredFoods}
           setCheckedList={setCheckedList}
-          foodList={allExpiredFoods()}
         />
 
         <TableBody
           title='소비기한 주의 식료품'
-          filteredList={filteredList}
+          foodList={foodList}
           onCheckBoxPress={onCheckBoxPress}
           checkedList={checkedList}
           animationState={animationState}
-          afterAnimation={() => {
-            afterAnimation(onDeleteExpiredFoodPress, allExpiredFoods());
-          }}
+          afterAnimation={afterAnimationWork}
         />
 
         <TableFooterContainer active={!!checkedList.length}>
           <TableSelectedHandleBox
-            list={checkedList}
-            entireChecked={allChecked && !!checkedList.length}
-            onEntirePress={() => onEntireBoxPress(filteredList)}
+            checkedList={checkedList}
+            foodList={foodList}
+            onEntirePress={onEntireBoxPress}
           >
             <SquareIconBtn
               btnName='장보기 추가'

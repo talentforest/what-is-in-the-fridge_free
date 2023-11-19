@@ -12,7 +12,7 @@ import tw from 'twrnc';
 
 interface Props {
   title: '소비기한 주의 식료품' | '자주 먹는 식료품' | '장보기 식료품';
-  filteredList: Food[];
+  foodList: () => Food[];
   checkedList: Food[];
   onCheckBoxPress: (food: Food) => void;
   addToFridgePress?: (food: Food) => void;
@@ -23,7 +23,7 @@ interface Props {
 
 export default function TableBody({
   title,
-  filteredList,
+  foodList,
   checkedList,
   onCheckBoxPress,
   addToFridgePress,
@@ -35,14 +35,14 @@ export default function TableBody({
 
   return (
     <>
-      {!!filteredList.length ? (
+      {!!foodList().length ? (
         <View style={tw`flex-1 -mx-2`}>
           <FlatList
             ref={flatListRef}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={tw`pb-10 px-2`}
-            data={filteredList}
+            data={foodList()}
             renderItem={({ item }) => (
               <TableItem
                 food={item}

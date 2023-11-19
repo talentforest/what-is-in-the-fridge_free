@@ -7,7 +7,7 @@ import { useRouteName } from './useRouteName';
 export const useHandleFilter = (scrollViewRef?: any) => {
   const { filter, pantryFilter } = useSelector((state) => state.filter);
 
-  const { routePantryFoods } = useRouteName();
+  const { routePantryFoods, routeFavoriteFoods } = useRouteName();
 
   const dispatch = useDispatch();
 
@@ -23,13 +23,19 @@ export const useHandleFilter = (scrollViewRef?: any) => {
     return foodCategories?.find(({ category }) => category === filterName);
   };
 
-  const filterState =
+  const currFoodCategoryFilter =
     findCategoryFilter(currentFilter)?.category || '신선식품류';
 
   const initializeFilter = () => {
     if (routePantryFoods) {
       if (pantryFilter !== '전체') {
         dispatch(changePantryFilter('전체'));
+      }
+      return;
+    }
+    if (routeFavoriteFoods) {
+      if (filter !== '신선식품류') {
+        dispatch(changeFilter('신선식품류'));
       }
       return;
     }
@@ -63,12 +69,16 @@ export const useHandleFilter = (scrollViewRef?: any) => {
       : scrollTo(scrollViewRef, x, y);
   };
 
+  const onFilterTagPress = (filter: Filter, index: number) => {
+    changeFilterState(filter);
+
+    return scrollToFilter(index);
+  };
+
   return {
-    currentFilter,
     initializeFilter,
-    changeFilterState,
-    findCategoryFilter,
-    filterState,
-    scrollToFilter,
+    currentFilter,
+    currFoodCategoryFilter,
+    onFilterTagPress,
   };
 };

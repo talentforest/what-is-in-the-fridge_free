@@ -1,13 +1,13 @@
 import { View, Animated, Keyboard } from 'react-native';
 import { ICE_BLUE, LIGHT_INDIGO } from '../../constant/colors';
 import { useToggleAnimation, useFindFood } from '../../hooks';
-import { Food } from '../../constant/foodInfo';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleFavorite } from '../../redux/slice/isFavoriteSlice';
 import { ModalTitle } from '../modal/Modal';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { InputStyle } from '../common/native-component';
+import { closeKeyboard } from '../../util';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
@@ -15,16 +15,18 @@ import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
 
 interface Props {
-  food: Food;
   title: ModalTitle;
 }
 
 const TOGGLE_BTN_WIDTH = 94;
 
-export default function FavoriteItem({ food, title }: Props) {
+export default function FavoriteItem({ title }: Props) {
+  const {
+    formFood: { name },
+  } = useSelector((state) => state.formFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
+
   const { isFavoriteItem } = useFindFood();
-  const { name } = food;
 
   const { translateX } = useToggleAnimation({
     initialValue: 0,
@@ -35,6 +37,7 @@ export default function FavoriteItem({ food, title }: Props) {
   const dispatch = useDispatch();
 
   const onTogglePress = (btnName: string) => {
+    closeKeyboard();
     if (btnName === '맞아요') return dispatch(toggleFavorite(true));
     if (btnName === '아니에요') return dispatch(toggleFavorite(false));
   };
@@ -77,10 +80,7 @@ export default function FavoriteItem({ food, title }: Props) {
             key={btnNm}
             btnName={btnNm}
             check={btnNm === '맞아요' ? isFavorite : !isFavorite}
-            onPress={() => {
-              Keyboard.dismiss();
-              onTogglePress(btnNm);
-            }}
+            onPress={() => onTogglePress(btnNm)}
             disabled={disabledFavoriteBtn}
             width={TOGGLE_BTN_WIDTH}
           />

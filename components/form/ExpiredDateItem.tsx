@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 import {
   InputStyle,
-  Text,
   TextInput,
   TouchableOpacity,
 } from '../common/native-component';
@@ -11,6 +10,7 @@ import { controlDateBtns } from '../../constant/controlDateBtns';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleExpiredDateModal } from '../../redux/slice/formModalSlice';
+import { editFormFood } from '../../redux/slice/formFoodSlice';
 
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
@@ -19,19 +19,17 @@ import DateNumInputModal from '../../screen-component/modal/DateNumInputModal';
 import RelativeTime from '../common/RelativeTime';
 import tw from 'twrnc';
 
-interface Props {
-  date: string;
-  changeInfo: (newInfo: { [key: string]: string }) => void;
-}
-
-export default function ExpiredDateItem({ date, changeInfo }: Props) {
+export default function ExpiredDateItem() {
+  const {
+    formFood: { expiredDate },
+  } = useSelector((state) => state.formFood);
   const { expiredDateModal } = useSelector((state) => state.formModalVisible);
 
   const dispatch = useDispatch();
 
   const changeDate = (newDate: Date | string) => {
     const expiredDate = getFormattedDate(newDate, 'YYYY-MM-DD');
-    changeInfo({ expiredDate });
+    dispatch(editFormFood({ expiredDate }));
   };
 
   return (
@@ -47,11 +45,11 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
       >
         <TextInput
           editable={false}
-          value={getFormattedDate(date, 'YY.MM.DD')}
+          value={getFormattedDate(expiredDate, 'YY.MM.DD')}
           style={tw`border-0 w-22 h-full`}
         />
 
-        {getDiffDate(date) >= 0 && <RelativeTime date={date} />}
+        {getDiffDate(expiredDate) >= 0 && <RelativeTime date={expiredDate} />}
 
         <View style={tw`absolute right-2.5`}>
           <Icon type='Octicons' name='calendar' size={14} color={BLUE} />
@@ -64,7 +62,7 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
             key={btn.label}
             btn={btn}
             changeDate={changeDate}
-            date={date}
+            date={expiredDate}
             type='add'
           />
         ))}
@@ -75,7 +73,6 @@ export default function ExpiredDateItem({ date, changeInfo }: Props) {
         <DateNumInputModal
           isVisible={expiredDateModal}
           closeModal={() => dispatch(toggleExpiredDateModal(false))}
-          changeInfo={changeInfo}
         />
       )}
     </View>

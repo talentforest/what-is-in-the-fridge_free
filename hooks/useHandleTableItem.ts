@@ -4,7 +4,6 @@ import {
   addItemsToShoppingList,
   setShoppingList,
 } from '../redux/slice/shoppingListSlice';
-import { select } from '../redux/slice/selectedFoodSlice';
 import { useRoute } from '@react-navigation/native';
 import { setAllFridgeFoods } from '../redux/slice/fridgeFoodsSlice';
 import { setFavoriteList } from '../redux/slice/favoriteFoodsSlice';
@@ -14,6 +13,7 @@ import { setPantry } from '../redux/slice/pantryFoodsSlice';
 import { alertPhraseWithCheckList } from '../constant/alertPhrase';
 import { useFindFood } from './useFindFood';
 import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
+import { setFormFood } from '../redux/slice/formFoodSlice';
 
 interface Props {
   checkedList: Food[];
@@ -130,7 +130,7 @@ export const useHandleTableItem = ({
     const favoriteItem = isFavoriteItem(selectedFood.name);
     const food = favoriteItem?.id ? favoriteItem : selectedFood;
 
-    dispatch(select(food));
+    dispatch(setFormFood(food));
     setModalVisible && setModalVisible(true);
   };
 
@@ -138,7 +138,7 @@ export const useHandleTableItem = ({
     setAnimationState?: (state: AnimationState) => void
   ) => {
     if (
-      (alertTitle === '자주 먹는 식료품 해제' ||
+      (alertTitle === '자주 먹는 식료품 삭제' ||
         alertTitle === '소비기한 주의 식료품 삭제' ||
         alertTitle === '장보기 식료품 삭제') &&
       setAnimationState
@@ -158,7 +158,7 @@ export const useHandleTableItem = ({
     }
     if (
       alertTitle === '카테고리 변경 알림' ||
-      alertTitle === '이미 존재하는 식료품 알림' ||
+      alertTitle === '이미 갖고 있는 식료품' ||
       alertTitle === '식료품 개수 초과' ||
       alertTitle === '식료품 추가 완료'
     ) {

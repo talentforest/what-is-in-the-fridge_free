@@ -19,13 +19,12 @@ export type Filter =
   | FavoriteFilter
   | '전체';
 
-export type FilterObj = { filter: Filter; icon?: string };
+export type FilterObj = { filter: Filter };
 
-export const entireFilterObj: FilterObj = { filter: '전체', icon: '' };
+export const entireFilterObj: FilterObj = { filter: '전체' };
 
 export const favoriteFilterObj: FilterObj = {
   filter: '자주 먹는 식료품',
-  icon: 'tag-heart',
 };
 
 export const spaceFilters: FilterObj[] = [
@@ -34,9 +33,7 @@ export const spaceFilters: FilterObj[] = [
   { filter: '팬트리' },
 ];
 
-export const existAbsenceFilters: FilterObj[] = [
-  { filter: '없는 식료품', icon: 'food-off-outline' },
-];
+export const existAbsenceFilters: FilterObj[] = [{ filter: '없는 식료품' }];
 
 export const expiredFilters: FilterObj[] = [
   { filter: '소비기한 만료' },
@@ -45,7 +42,7 @@ export const expiredFilters: FilterObj[] = [
 ];
 
 export const categoryFilters: FilterObj[] = foodCategories.map(
-  ({ category, icon }) => {
-    return { filter: category, icon };
+  ({ category }) => {
+    return { filter: category };
   }
 );

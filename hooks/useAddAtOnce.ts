@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { Food } from '../constant/foodInfo';
-import { select, selectNone } from '../redux/slice/selectedFoodSlice';
+import { Food, initialFridgeFood } from '../constant/foodInfo';
 import { useSelector } from '../redux/hook';
 import { useState } from 'react';
 import { Space, StorageType } from '../constant/fridgeInfo';
@@ -13,6 +12,7 @@ import { addPantryFoods } from '../redux/slice/pantryFoodsSlice';
 import { addFridgeFoods } from '../redux/slice/fridgeFoodsSlice';
 import { removeShoppingListFoods } from '../redux/slice/shoppingListSlice';
 import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
+import { setFormFood } from '../redux/slice/formFoodSlice';
 
 interface Props {
   checkedList: Food[];
@@ -55,7 +55,7 @@ export const useAddAtOnce = ({
 
   const onBackStepPress = () => {
     setCurrentStep({ step: 1, name: '한번에 추가할 공간' });
-    dispatch(selectNone());
+    dispatch(setFormFood(initialFridgeFood));
     setIsEditing(false);
   };
 
@@ -112,12 +112,12 @@ export const useAddAtOnce = ({
 
   const onFoodItemPress = (selectedFood: Food) => {
     if (!isEditing && setIsEditing) {
-      dispatch(select(selectedFood));
+      dispatch(setFormFood(selectedFood));
       setIsEditing(true);
     }
     if (isEditing) {
       setIsEditing(false);
-      dispatch(selectNone());
+      dispatch(setFormFood(initialFridgeFood));
     }
   };
 
@@ -127,7 +127,7 @@ export const useAddAtOnce = ({
     setFridgePosition('냉장실 안쪽 1번');
     setCurrentStep({ step: 1, name: '한번에 추가할 공간' });
     setIsEditing(false);
-    dispatch(selectNone());
+    dispatch(setFormFood(initialFridgeFood));
   };
 
   return {

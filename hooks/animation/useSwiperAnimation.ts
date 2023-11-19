@@ -1,12 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  Animated,
-  Keyboard,
-  PanResponder,
-  useWindowDimensions,
-} from 'react-native';
+import { Animated, PanResponder, useWindowDimensions } from 'react-native';
 import { OnboardingStep } from '../../constant/onboardingInfo';
 import { FormStep } from '../../constant/formInfo';
+import { closeKeyboard } from '../../util';
 
 const DRAG_DISTANCE = 60;
 
@@ -50,11 +46,11 @@ export const useSwiperAnimation = ({ steps }: Props) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: (_, { dx, dy }) => {
-        Keyboard.dismiss();
+        closeKeyboard();
         return dx > 2 || dx < -2 || dy > 2 || dy < -2;
       },
       onMoveShouldSetPanResponderCapture: (_, { dx, dy }) => {
-        Keyboard.dismiss();
+        closeKeyboard();
         return dx > 2 || dx < -2 || dy > 2 || dy < -2;
       },
       onPanResponderGrant: () => {

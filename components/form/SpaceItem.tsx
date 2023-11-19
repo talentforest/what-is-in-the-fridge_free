@@ -1,7 +1,6 @@
 import { View } from 'react-native';
-import { Food } from '../../constant/foodInfo';
 import { getCompartments } from '../../util';
-import { useSelector } from '../../redux/hook';
+import { useDispatch, useSelector } from '../../redux/hook';
 import { Text, TouchableOpacity } from '../common/native-component';
 import {
   CompartmentNum,
@@ -12,59 +11,60 @@ import {
 } from '../../constant/fridgeInfo';
 import { isFridgeFood, isPantryFood } from '../../util/checkFoodSpace';
 import { FormLabelType } from '../../constant/formInfo';
+import { editFormFood } from '../../redux/slice/formFoodSlice';
 
 import CheckBoxItem from '../common/CheckBoxItem';
 import FormLabel from './FormLabel';
 import tw from 'twrnc';
 
 interface Props {
-  food: Food;
-  changeInfo: (newInfo: { [key: string]: string | boolean }) => void;
   label: FormLabelType;
 }
 
-export default function SpaceItem({ food, changeInfo, label }: Props) {
+export default function SpaceItem({ label }: Props) {
+  const {
+    formFood: { space, compartmentNum },
+  } = useSelector((state) => state.formFood);
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
-  const { selectedFood } = useSelector((state) => state.selectedFood);
 
-  const spaceType = food.space.slice(0, 3);
-  const spaceSide = food.space.slice(4, 6);
+  const dispatch = useDispatch();
 
-  const maxCompartmentsNum = fridgeInfo.compartments[food.space];
+  const spaceType = space.slice(0, 3);
+  const spaceSide = space.slice(4, 6);
+
+  const maxCompartmentsNum = fridgeInfo.compartments[space];
   const compartments = getCompartments(maxCompartmentsNum);
 
   const getCompartmentNum = (space: Space) => {
-    if (food.compartmentNum) {
-      const maxCompartmentNum = fridgeInfo.compartments[space];
-      const compartmentNum =
-        +food.compartmentNum.slice(0, 1) > maxCompartmentNum
-          ? `${maxCompartmentNum}번`
-          : food.compartmentNum;
-      return compartmentNum;
+    if (compartmentNum) {
+      const maxNum = fridgeInfo.compartments[space];
+
+      return +compartmentNum.slice(0, 1) > maxNum
+        ? `${maxNum}번`
+        : compartmentNum;
     }
     return '1번';
   };
 
   const onFridgeSpacePress = (space: Space) =>
-    changeInfo({ space, compartmentNum: getCompartmentNum(space) });
+    dispatch(editFormFood({ space, compartmentNum: getCompartmentNum(space) }));
 
   const onCompartmentNumPress = (compartmentNum: CompartmentNum) => {
-    changeInfo({ compartmentNum });
+    dispatch(editFormFood({ compartmentNum }));
   };
 
   const onTabPress = (storage: StorageType) => {
-    if (isPantryFood(food.space) && isPantryFood(storage)) return;
-    if (isFridgeFood(food.space) && isFridgeFood(storage)) return;
+    if (isPantryFood(space) && isPantryFood(storage)) return;
+    if (isFridgeFood(space) && isFridgeFood(storage)) return;
 
     return storage === '냉장고'
-      ? changeInfo({
-          space:
-            selectedFood.space === '팬트리'
-              ? '냉장실 안쪽'
-              : selectedFood.space,
-          compartmentNum: selectedFood.compartmentNum || '1번',
-        })
-      : changeInfo({ space: '팬트리' });
+      ? dispatch(
+          editFormFood({
+            space: space === '팬트리' ? '냉장실 안쪽' : space,
+            compartmentNum: compartmentNum || '1번',
+          })
+        )
+      : dispatch(editFormFood({ space: '팬트리' }));
   };
 
   return (
@@ -79,7 +79,7 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
           >
             <Text
               style={tw`${
-                food.space.includes(storage.slice(0, 1))
+                space.includes(storage.slice(0, 1))
                   ? 'text-slate-700'
                   : 'text-slate-400'
               }`}
@@ -89,7 +89,7 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
 
             <View
               style={tw`h-1 w-full bg-blue-600 rounded-xl ${
-                food.space.includes(storage.slice(0, 1))
+                space.includes(storage.slice(0, 1))
                   ? 'bg-blue-600'
                   : 'bg-slate-300'
               } `}
@@ -98,7 +98,7 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
         ))}
       </View>
 
-      {food.space !== '팬트리' && (
+      {space !== '팬트리' && (
         <View>
           <View style={tw`flex-row gap-4`}>
             {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
@@ -106,7 +106,7 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
                 <CheckBoxItem
                   key={spaceType}
                   title={spaceType}
-                  checked={food.space.slice(0, 3) === spaceType}
+                  checked={space.slice(0, 3) === spaceType}
                   onPress={() =>
                     onFridgeSpacePress(`${spaceType} ${spaceSide}` as Space)
                   }
@@ -120,7 +120,7 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
               <View key={spaceSide} style={tw`py-1.5`}>
                 <CheckBoxItem
                   title={spaceSide}
-                  checked={food.space.includes(spaceSide)}
+                  checked={space.includes(spaceSide)}
                   onPress={() =>
                     onFridgeSpacePress(`${spaceType} ${spaceSide}` as Space)
                   }
@@ -130,12 +130,12 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
           </View>
 
           <View style={tw`flex-row flex-wrap gap-x-4`}>
-            {compartments.map(({ compartmentNum }) => (
-              <View key={compartmentNum} style={tw`py-1`}>
+            {compartments.map(({ compartmentNum: currCompartmentNum }) => (
+              <View key={currCompartmentNum} style={tw`py-1`}>
                 <CheckBoxItem
-                  title={`${compartmentNum}칸`}
-                  checked={food.compartmentNum === compartmentNum}
-                  onPress={() => onCompartmentNumPress(compartmentNum)}
+                  title={`${currCompartmentNum}칸`}
+                  checked={compartmentNum === currCompartmentNum}
+                  onPress={() => onCompartmentNumPress(currCompartmentNum)}
                 />
               </View>
             ))}
@@ -143,11 +143,11 @@ export default function SpaceItem({ food, changeInfo, label }: Props) {
         </View>
       )}
 
-      {food.space === '팬트리' && (
+      {space === '팬트리' && (
         <View key={spaceType} style={tw`py-1.5`}>
           <CheckBoxItem
             title='팬트리'
-            checked={food.space === '팬트리'}
+            checked={space === '팬트리'}
             onPress={() => onTabPress('팬트리')}
           />
         </View>

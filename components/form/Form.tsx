@@ -1,13 +1,8 @@
 import { ModalTitle } from '../modal/Modal';
-import {
-  Animated,
-  Keyboard,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
-import { Food } from '../../constant/foodInfo';
+import { Animated, TouchableWithoutFeedback, View } from 'react-native';
 import { FormStep } from '../../constant/formInfo';
 import { useSwiperAnimation } from '../../hooks';
+import { closeKeyboard } from '../../util';
 
 import FormSectionContainer from './FormSectionContainer';
 import CategoryItem from './CategoryItem';
@@ -24,12 +19,10 @@ import tw from 'twrnc';
 
 interface Props {
   title: ModalTitle;
-  food: Food;
-  changeInfo: (newInfo: { [key: string]: string | boolean }) => void;
   formSteps: FormStep[];
 }
 
-export default function Form({ title, changeInfo, food, formSteps }: Props) {
+export default function Form({ title, formSteps }: Props) {
   const {
     moveStep,
     stepTranslateX,
@@ -38,7 +31,7 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
   } = useSwiperAnimation({ steps: formSteps });
 
   return (
-    <View style={tw``}>
+    <View>
       <View style={tw`px-4`}>
         <FormStepHeader
           formSteps={formSteps}
@@ -53,7 +46,7 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
           }}
           {...panResponder.panHandlers}
         >
-          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <TouchableWithoutFeedback onPress={closeKeyboard}>
             <View style={tw`flex-row gap-0.5`}>
               {formSteps.map(({ step, name }) => (
                 <View
@@ -62,26 +55,19 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
                 >
                   {name === '기본정보' && (
                     <FormSectionContainer>
-                      {/* 식료품 이름 */}
-                      <NameItem name={food.name} changeInfo={changeInfo} />
+                      <NameItem />
 
-                      {/* 카테고리 */}
                       <CategoryItem
-                        name={food.name}
-                        fixedCategory={food.category}
-                        changeInfo={changeInfo}
-                        title={title}
+                        isAddNewOne={title === '새로운 식료품 추가'}
                       />
 
-                      {/* 자주 먹는 식료품 */}
-                      <FavoriteItem food={food} title={title} />
+                      <FavoriteItem title={title} />
                     </FormSectionContainer>
                   )}
+
                   {name === '위치' && (
                     <FormSectionContainer>
                       <SpaceItem
-                        food={food}
-                        changeInfo={changeInfo}
                         label={
                           title === '식료품 정보 수정'
                             ? '식료품 위치 수정'
@@ -90,26 +76,21 @@ export default function Form({ title, changeInfo, food, formSteps }: Props) {
                       />
                     </FormSectionContainer>
                   )}
+
                   {name === '소비기한' && (
                     <FormSectionContainer>
-                      <ExpiredDateItem
-                        date={food.expiredDate}
-                        changeInfo={changeInfo}
-                      />
+                      <ExpiredDateItem />
                     </FormSectionContainer>
                   )}
+
                   {name === '선택정보' && (
                     <FormSectionContainer>
                       <View style={tw`min-h-50 gap-1`}>
-                        <PurchaseDateItem
-                          date={food.purchaseDate}
-                          changeInfo={changeInfo}
-                        />
-                        <QuantityItem
-                          quantity={food.quantity}
-                          changeInfo={changeInfo}
-                        />
-                        <MemoItem memo={food.memo} changeInfo={changeInfo} />
+                        <PurchaseDateItem />
+
+                        <QuantityItem />
+
+                        <MemoItem />
                       </View>
                     </FormSectionContainer>
                   )}

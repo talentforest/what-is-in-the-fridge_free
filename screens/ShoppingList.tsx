@@ -4,7 +4,7 @@ import {
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { useDispatch, useSelector } from '../redux/hook';
-import { FlatList, Keyboard } from 'react-native';
+import { FlatList } from 'react-native';
 import {
   useFindFood,
   useHandleCheckList,
@@ -12,12 +12,11 @@ import {
   useSetAnimationState,
   useSubmitFoodsFromInput,
 } from '../hooks';
-import { formFourSteps } from '../constant/formInfo';
 import { MAX_NUM_ADD_AT_ONCE, alertPhrase } from '../constant/alertPhrase';
-import { selectNone } from '../redux/slice/selectedFoodSlice';
-import { scrollToIndex } from '../util';
-import { MAX_LIMIT } from '../constant/foodInfo';
+import { closeKeyboard, scrollToIndex } from '../util';
+import { MAX_LIMIT, initialFridgeFood } from '../constant/foodInfo';
 import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
+import { setFormFood } from '../redux/slice/formFoodSlice';
 
 import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
 import Container from '../components/common/Container';
@@ -30,9 +29,9 @@ import AddAtOnceModal from '../screen-component/modal/AddAtOnceModal';
 
 export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [addAtOnceModal, setAddAtOnceModal] = useState(false);
-  const [keyword, setKeyword] = useState('');
 
   const flatListRef = useRef<FlatList | null>(null);
 
@@ -59,12 +58,16 @@ export default function ShoppingList() {
     afterAnimation, //
   } = useSetAnimationState();
 
-  const { onSubmitShoppingListItem } = useSubmitFoodsFromInput();
+  const {
+    inputValue,
+    setInputValue,
+    onSubmitShoppingListItem, //
+  } = useSubmitFoodsFromInput();
 
   const onSubmitEditing = () => {
-    if (keyword === '') return Keyboard.dismiss();
-    onSubmitShoppingListItem(keyword, setAnimationState);
-    setKeyword('');
+    if (inputValue === '') return closeKeyboard();
+    onSubmitShoppingListItem(inputValue, setAnimationState);
+    setInputValue('');
     scrollToIndex(flatListRef, shoppingList.length - 1);
   };
 
@@ -110,7 +113,7 @@ export default function ShoppingList() {
       return;
     }
 
-    dispatch(selectNone());
+    dispatch(setFormFood(initialFridgeFood));
     setAddAtOnceModal(true);
   };
 
@@ -118,7 +121,11 @@ export default function ShoppingList() {
     onDeleteFoodPress(animationState, shoppingList);
   };
 
-  const allChecked = checkedList.length === shoppingList.length;
+  const afterAnimationWork = () => {
+    afterAnimation(onDeleteFoodPress, shoppingList);
+  };
+
+  const foodList = () => shoppingList;
 
   return (
     <KeyboardAvoidingView>
@@ -126,22 +133,20 @@ export default function ShoppingList() {
         <Container>
           <TableBody
             title='장보기 식료품'
-            filteredList={shoppingList}
+            foodList={foodList}
             onCheckBoxPress={onCheckBoxPress}
             addToFridgePress={onAddToFridgePress}
             checkedList={checkedList}
             animationState={animationState}
-            afterAnimation={() =>
-              afterAnimation(onDeleteFoodPress, shoppingList)
-            }
+            afterAnimation={afterAnimationWork}
             flatListRef={flatListRef}
           />
 
           <TableFooterContainer>
             <TableSelectedHandleBox
-              list={checkedList}
-              entireChecked={allChecked && !!checkedList.length}
-              onEntirePress={() => onEntireBoxPress(shoppingList)}
+              checkedList={checkedList}
+              foodList={foodList}
+              onEntirePress={onEntireBoxPress}
             >
               <SquareIconBtn
                 btnName='한번에 추가'
@@ -158,11 +163,11 @@ export default function ShoppingList() {
             </TableSelectedHandleBox>
 
             <TextInputRoundedBox
-              value={keyword}
-              setValue={setKeyword}
+              value={inputValue}
+              setValue={setInputValue}
               placeholder='식료품 이름을 작성해주세요.'
               onSubmitEditing={onSubmitEditing}
-              disabled={keyword === ''}
+              disabled={inputValue === ''}
               checkedListLength={checkedList.length}
             />
           </TableFooterContainer>
@@ -171,7 +176,6 @@ export default function ShoppingList() {
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             setCheckedList={setCheckedList}
-            formSteps={formFourSteps}
           />
 
           <AddAtOnceModal

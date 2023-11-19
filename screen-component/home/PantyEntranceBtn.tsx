@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { NavigateProp } from '../../navigation/Navigation';
+
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
 

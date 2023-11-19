@@ -1,8 +1,7 @@
 import { View } from 'react-native';
-import { FoodLocation } from '../../constant/fridgeInfo';
-import { FormStep } from '../../constant/formInfo';
+import { FoodPosition } from '../../constant/fridgeInfo';
+import { formThreeSteps } from '../../constant/formInfo';
 import { useAddFood } from '../../hooks';
-import { initialFridgeFood, initialPantryFood } from '../../constant/foodInfo';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Modal from '../../components/modal/Modal';
@@ -13,31 +12,22 @@ import tw from 'twrnc';
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
-  formSteps: FormStep[];
-  foodLocation?: FoodLocation;
+  currPosition?: FoodPosition;
   scrollEnd: () => void;
 }
 
 export default function AddFoodModal({
-  foodLocation,
+  currPosition,
   modalVisible,
   setModalVisible,
-  formSteps,
   scrollEnd,
 }: Props) {
-  const initialFood = foodLocation ? initialFridgeFood : initialPantryFood;
-
-  const { newFood, changeFoodInfo, onAddSubmit } = useAddFood({
-    initialFood,
-    foodLocation,
+  const { onAddSubmit, closeAddFoodModal } = useAddFood({
+    setModalVisible,
+    currPosition,
   });
 
   const insets = useSafeAreaInsets();
-
-  const closeModal = () => {
-    changeFoodInfo({ ...initialFood });
-    setModalVisible(false);
-  };
 
   const onSubmitPress = () => {
     onAddSubmit(setModalVisible, modalVisible);
@@ -48,16 +38,11 @@ export default function AddFoodModal({
     <Modal
       title='새로운 식료품 추가'
       isVisible={modalVisible}
-      closeModal={closeModal}
+      closeModal={closeAddFoodModal}
     >
       <View style={{ paddingBottom: insets?.bottom }}>
         <View style={tw`-mx-4`}>
-          <Form
-            title='새로운 식료품 추가'
-            food={newFood}
-            changeInfo={changeFoodInfo}
-            formSteps={formSteps}
-          />
+          <Form title='새로운 식료품 추가' formSteps={formThreeSteps} />
         </View>
 
         <SubmitBtn

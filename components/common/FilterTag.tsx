@@ -10,34 +10,36 @@ import tw from 'twrnc';
 
 interface Props {
   onFilterPress: (filter: Filter) => void;
-  filterObj: FilterObj;
-  active: boolean;
-  length?: number;
+  filter: Filter;
+  getLengthByFilterTag: (filter: Filter) => number;
   foodIcon?: boolean;
   children?: ReactNode;
 }
 
 export default function FilterTag({
   onFilterPress,
-  filterObj,
-  length,
-  active,
+  filter,
   foodIcon,
   children,
+  getLengthByFilterTag,
 }: Props) {
-  const { filter } = filterObj;
-
   const { currentFilter } = useHandleFilter();
+
+  const active = filter === currentFilter;
+
+  const length = getLengthByFilterTag(filter);
+
+  const onPress = () => onFilterPress(filter);
 
   return (
     <TouchableOpacity
-      onPress={() => onFilterPress(filter)}
+      onPress={onPress}
+      disabled={length === 0}
       style={tw.style(
         `${getTagColor(currentFilter, active, 'bg', length)} 
-        min-w-17 flex-row items-center justify-between border py-1.5 px-3.5 gap-1.5 rounded-full`,
+        min-w-14 flex-row items-center justify-between border py-1.5 px-3.5 gap-1.5 rounded-full`,
         shadowStyle(3)
       )}
-      disabled={length === 0}
     >
       {foodIcon && (
         <CategoryIcon
@@ -51,13 +53,7 @@ export default function FilterTag({
         fontSize={16}
         style={tw`${getTagColor(currentFilter, active, 'text', length)}`}
       >
-        {filter}
-      </Text>
-      <Text
-        fontSize={16}
-        style={tw`${getTagColor(currentFilter, active, 'text', length)}`}
-      >
-        {length}개
+        {filter} {length}개
       </Text>
 
       {children}

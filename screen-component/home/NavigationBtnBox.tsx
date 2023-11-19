@@ -6,6 +6,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
 import { BtnTitle } from '../../constant/navigationBtn';
+
 import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
 import tw from 'twrnc';
 
@@ -34,7 +35,7 @@ export default function NavigationBtnBox({ uri, title, navigatonName }: Props) {
       >
         <Text
           fontSize={15}
-          style={tw.style(`text-slate-800 -mr-0.5`, {
+          style={tw.style(`text-slate-800 -mr-1`, {
             letterSpacing: -0.5,
           })}
         >

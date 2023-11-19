@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { ScrollView } from 'react-native';
 import { useSelector } from '../redux/hook';
-import { useGetFoodList, useHandleFilter } from '../hooks';
+import { useHandleFilter } from '../hooks';
 import { entireFilterObj, expiredFilters, scrollToEnd } from '../util';
-import { formFourSteps, formThreeSteps } from '../constant/formInfo';
+import { formFourSteps } from '../constant/formInfo';
 
 import Container from '../components/common/Container';
 import TableFilters from '../components/table/TableFilters';
@@ -23,12 +23,14 @@ export default function PantryFoods() {
 
   const scrollViewRef = useRef<ScrollView | null>(null);
 
-  const { getFilteredFoodList } = useGetFoodList();
-
   const { initializeFilter } = useHandleFilter();
 
   useEffect(() => {
     initializeFilter();
+  }, []);
+
+  const foodList = useCallback(() => {
+    return pantryFoods;
   }, []);
 
   return (
@@ -36,8 +38,7 @@ export default function PantryFoods() {
       <KeyboardAvoidingView>
         <Container>
           <TableFilters
-            filterList={[entireFilterObj, ...expiredFilters]}
-            getTableList={getFilteredFoodList}
+            filterTagList={[entireFilterObj, ...expiredFilters]}
             foodList={pantryFoods}
           />
 
@@ -61,7 +62,6 @@ export default function PantryFoods() {
             scrollEnd={() => scrollToEnd(scrollViewRef)}
             modalVisible={openAddFoodModal}
             setModalVisible={setOpenAddFoodModal}
-            formSteps={formThreeSteps}
           />
         </Container>
       </KeyboardAvoidingView>

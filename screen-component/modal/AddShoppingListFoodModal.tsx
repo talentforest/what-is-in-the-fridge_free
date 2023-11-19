@@ -1,4 +1,4 @@
-import { FormStep } from '../../constant/formInfo';
+import { formFourSteps } from '../../constant/formInfo';
 import { useAddShoppingListFood } from '../../hooks';
 import { Food } from '../../constant/foodInfo';
 import { View } from 'react-native';
@@ -12,17 +12,15 @@ import tw from 'twrnc';
 interface Props {
   modalVisible: boolean;
   setModalVisible: (modalVisible: boolean) => void;
-  formSteps: FormStep[];
   setCheckedList: (checkedList: Food[]) => void;
 }
 
 export default function AddShoppingListFoodModal({
   modalVisible,
   setModalVisible,
-  formSteps,
   setCheckedList,
 }: Props) {
-  const { selectedFood, onChange, onSubmit } = useAddShoppingListFood();
+  const { onShoppingListFoodSubmit } = useAddShoppingListFood();
 
   const closeModal = () => setModalVisible(false);
 
@@ -36,18 +34,15 @@ export default function AddShoppingListFoodModal({
     >
       <View style={{ paddingBottom: insets?.bottom }}>
         <View style={tw`-mx-4`}>
-          <Form
-            title='장보기 목록 식료품 추가'
-            food={selectedFood}
-            changeInfo={onChange}
-            formSteps={formSteps}
-          />
+          <Form title='장보기 목록 식료품 추가' formSteps={formFourSteps} />
         </View>
 
         <SubmitBtn
           iconName='plus'
           btnName='식료품 추가하기'
-          onPress={() => onSubmit(setModalVisible, setCheckedList)}
+          onPress={() =>
+            onShoppingListFoodSubmit(setModalVisible, setCheckedList)
+          }
           color='blue'
         />
       </View>

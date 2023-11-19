@@ -1,4 +1,3 @@
-import { Keyboard } from 'react-native';
 import { useDispatch } from '../redux/hook';
 import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
 import { initialFridgeFood } from '../constant/foodInfo';
@@ -8,24 +7,23 @@ import { AnimationState } from './animation/useSetAnimationState';
 import { alertPhraseWithFood } from '../constant/alertPhrase';
 import { useFindFood } from './useFindFood';
 import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
+import { useState } from 'react';
+import { closeKeyboard } from '../util';
 import UUIDGenerator from 'react-native-uuid';
 
 export const useSubmitFoodsFromInput = () => {
+  const [inputValue, setInputValue] = useState('');
+
   const myUuid = UUIDGenerator.v4();
 
   const dispatch = useDispatch();
 
   const { isFavoriteItem, isShoppingListItem, findFood } = useFindFood();
 
-  const onSubmitFavoriteListItem = (
-    inputValue: string,
-    category: Category,
-    setInputValue: (value: string) => void,
-    setShowCaution: (caution: boolean) => void
-  ) => {
-    if (inputValue === '') return Keyboard.dismiss();
+  const isActiveCaution = !!isFavoriteItem(inputValue);
 
-    if (isFavoriteItem(inputValue)) return setShowCaution(true);
+  const onSubmitFavoriteListItem = (category: Category) => {
+    if (inputValue === '') return closeKeyboard();
 
     const initialFavFood = {
       ...initialFridgeFood,
@@ -81,6 +79,9 @@ export const useSubmitFoodsFromInput = () => {
   };
 
   return {
+    isActiveCaution,
+    inputValue,
+    setInputValue,
     onSubmitFavoriteListItem,
     onSubmitShoppingListItem,
   };

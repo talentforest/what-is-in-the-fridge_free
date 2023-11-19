@@ -1,21 +1,13 @@
 import { View } from 'react-native';
-import { Text } from '../../components/common/native-component';
-import { useSelector } from '../../redux/hook';
 import { FormStep } from '../../constant/formInfo';
-import { getFormattedDate } from '../../util';
-import { useEditFood, useDeleteFood, useFindFood } from '../../hooks';
-import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
-import { comma } from '../../util/commaNotation';
+import { useEditFood, useDeleteFood } from '../../hooks';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import InfoBox from '../../components/modal/InfoBox';
+import Form from '../../components/form/Form';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import Modal from '../../components/modal/Modal';
-import Form from '../../components/form/Form';
-import LeftDayInfoBox from '../../components/modal/LeftDayInfoBox';
-import Icon from '../../components/common/native-component/Icon';
-import CategoryIcon from '../../components/common/CategoryIcon';
 import AlertModal from './AlertModal';
+import FoodDetail from '../../components/food-detail/FoodDetail';
 import tw from 'twrnc';
 
 interface Props {
@@ -31,41 +23,30 @@ export default function FoodDetailModal({
   setModalVisible,
   formSteps,
 }: Props) {
-  const { selectedFood } = useSelector((state) => state.selectedFood);
-
   const {
+    formFood,
     editing,
     setEditing,
-    editedFood,
-    setEditedFood,
-    editFoodInfo,
     onEditSumbit,
     onAlertComfirmPress, //
   } = useEditFood();
 
-  const {
-    name,
-    space,
-    category,
-    expiredDate,
-    purchaseDate,
-    quantity,
-    memo, //
-  } = editedFood;
-
   const insets = useSafeAreaInsets();
-
-  const { deleteFood } = useDeleteFood({ space, setModalVisible });
-
-  const { isFavoriteItem } = useFindFood();
 
   const closeModal = () => {
     if (editing) {
-      setEditedFood(selectedFood);
       setEditing(false);
     }
     setModalVisible(false);
   };
+
+  const { space, id } = formFood;
+
+  const { deleteFood } = useDeleteFood({ space, setModalVisible });
+
+  const onDeletePress = () => deleteFood(id);
+
+  const toggleEditing = () => setEditing(true);
 
   return (
     <>
@@ -78,13 +59,9 @@ export default function FoodDetailModal({
           {editing ? (
             <>
               <View style={tw`-mx-4`}>
-                <Form
-                  title='식료품 정보 수정'
-                  food={editedFood}
-                  changeInfo={editFoodInfo}
-                  formSteps={formSteps}
-                />
+                <Form title='식료품 정보 수정' formSteps={formSteps} />
               </View>
+
               <SubmitBtn
                 color='blue'
                 iconName='check'
@@ -94,77 +71,14 @@ export default function FoodDetailModal({
             </>
           ) : (
             <View style={tw`pt-4 gap-1`}>
-              <View
-                style={tw`gap-1.5 self-center flex-row justify-center items-center border-slate-300 mb-4 mt-2 py-1.5 px-2.5`}
-              >
-                <View
-                  style={tw`absolute top-0 left-0 border-t-2 border-l-2 rounded-tl-[3px] border-slate-400 w-4 h-3`}
-                />
-                <Icon
-                  type='MaterialCommunityIcons'
-                  name={!!isFavoriteItem(name) ? 'tag' : 'tag-outline'}
-                  size={16}
-                  color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
-                />
-                <Text
-                  fontSize={18}
-                  style={tw.style(`max-w-4/5 text-stone-800`)}
-                >
-                  {name}
-                </Text>
-
-                <View
-                  style={tw`absolute bottom-0 right-0 border-b-2 border-r-2 rounded-br-[3px] border-slate-400 w-4 h-3`}
-                />
-              </View>
-
-              <View>
-                <InfoBox iconName='apps' label='카테고리'>
-                  <View style={tw`flex-row items-center gap-1`}>
-                    <CategoryIcon category={category} size={16} />
-                    <Text>{category}</Text>
-                  </View>
-                </InfoBox>
-
-                <InfoBox iconName='calendar' label='소비기한'>
-                  <LeftDayInfoBox expiredDate={expiredDate} />
-                </InfoBox>
-
-                {purchaseDate !== '' && (
-                  <InfoBox iconName='calendar' label='구매날짜'>
-                    <Text style={tw`text-slate-800`}>
-                      {getFormattedDate(purchaseDate, 'YY.MM.DD')}
-                    </Text>
-                  </InfoBox>
-                )}
-
-                {quantity !== '' && (
-                  <InfoBox iconName='diff' label='수량'>
-                    <Text>{comma(quantity)}</Text>
-                  </InfoBox>
-                )}
-
-                {memo?.length > 1 && (
-                  <InfoBox iconName='note' label='메모'>
-                    <View style={tw`max-h-18`}>
-                      <Text
-                        numberOfLines={3}
-                        ellipsizeMode='tail'
-                        style={{ lineHeight: 22 }}
-                      >
-                        {memo}
-                      </Text>
-                    </View>
-                  </InfoBox>
-                )}
-              </View>
+              <FoodDetail />
 
               <View style={tw`gap-1 mt-1`}>
                 <SubmitBtn
                   color='blue'
                   iconName='pencil'
                   btnName='식료품 정보 수정'
-                  onPress={() => setEditing((prev) => !prev)}
+                  onPress={toggleEditing}
                 />
                 <SubmitBtn
                   color='gray'
@@ -172,7 +86,7 @@ export default function FoodDetailModal({
                   btnName={`${
                     space === '팬트리' ? '팬트리에서' : '냉장고에서'
                   } 식료품 삭제`}
-                  onPress={() => deleteFood(editedFood.id)}
+                  onPress={onDeletePress}
                 />
               </View>
             </View>
@@ -180,9 +94,7 @@ export default function FoodDetailModal({
         </View>
       </Modal>
 
-      <AlertModal
-        onPress={() => onAlertComfirmPress(modalVisible, openAddFoodModal)}
-      />
+      <AlertModal onPress={onAlertComfirmPress} />
     </>
   );
 }

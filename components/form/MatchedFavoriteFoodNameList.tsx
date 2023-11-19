@@ -1,25 +1,30 @@
 import { Animated, Keyboard, View } from 'react-native';
 import { useFindFood, useSlideAnimation } from '../../hooks';
-import { cutLetter, findMatchNameFoods } from '../../util';
-import { useSelector } from '../../redux/hook';
+import { closeKeyboard, cutLetter, findMatchNameFoods } from '../../util';
+import { useDispatch, useSelector } from '../../redux/hook';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { shadowStyle } from '../../constant/shadowStyle';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
-
-interface Props {
-  name: string;
-  changeInfo: (newInfo: { [key: string]: string }) => void;
-}
+import { editFormFood } from '../../redux/slice/formFoodSlice';
 
 const FAV_ITEM_MAX = 3;
 
-export default function MatchedFavoriteFoodNameList({
-  name,
-  changeInfo,
-}: Props) {
+export default function MatchedFavoriteFoodNameList() {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+  const {
+    formFood: { name },
+  } = useSelector((state) => state.formFood);
+
+  const dispatch = useDispatch();
+
+  const { isFavoriteItem } = useFindFood();
+
+  const onMatchedFoodPress = (name: string) => {
+    dispatch(editFormFood({ name }));
+    closeKeyboard();
+  };
 
   const matchedFoodList = findMatchNameFoods(favoriteFoods, name);
 
@@ -28,8 +33,6 @@ export default function MatchedFavoriteFoodNameList({
     toValue: (matchedFoodList || []).length >= 3 ? 80 : 46,
     active: !!matchedFoodList?.length,
   });
-
-  const { isFavoriteItem } = useFindFood();
 
   return (
     <>
@@ -54,10 +57,7 @@ export default function MatchedFavoriteFoodNameList({
                     `max-w-full h-7 border border-blue-200 flex-row items-center bg-blue-100 px-2 rounded-full`,
                     shadowStyle(4)
                   )}
-                  onPress={() => {
-                    changeInfo({ name: food.name });
-                    Keyboard.dismiss();
-                  }}
+                  onPress={() => onMatchedFoodPress(food.name)}
                 >
                   <Icon
                     name={food.name === name ? 'check' : 'plus'}
