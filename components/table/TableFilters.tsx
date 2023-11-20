@@ -69,6 +69,15 @@ export default function TableFilters({
         horizontal
         showsHorizontalScrollIndicator={false}
       >
+        {filterTagList.map(({ filter }, index) => (
+          <FilterTag
+            key={filter}
+            filter={filter}
+            onFilterPress={() => onFilterPress(filter, index)}
+            getLengthByFilterTag={getLengthByFilterTag}
+          />
+        ))}
+
         {withFoodCategoryFilterTag && (
           <FilterTag
             getLengthByFilterTag={getLengthByFilterTag}
@@ -85,15 +94,6 @@ export default function TableFilters({
             </View>
           </FilterTag>
         )}
-
-        {filterTagList.map(({ filter }, index) => (
-          <FilterTag
-            key={filter}
-            filter={filter}
-            onFilterPress={() => onFilterPress(filter, index)}
-            getLengthByFilterTag={getLengthByFilterTag}
-          />
-        ))}
       </ScrollView>
 
       {withFoodCategoryFilterTag && (

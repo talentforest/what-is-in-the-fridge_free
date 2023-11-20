@@ -93,7 +93,7 @@ export default function FavoriteFoods() {
       <SafeBottomAreaView>
         <Container>
           <TableFilters
-            filterTagList={existAbsenceFilters}
+            filterTagList={[entireFilterObj, ...existAbsenceFilters]}
             foodList={favoriteFoods}
             setCheckedList={setCheckedList}
             setCategory={setCategory}
