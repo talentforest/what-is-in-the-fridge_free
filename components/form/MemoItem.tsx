@@ -1,12 +1,12 @@
 import { Animated, View } from 'react-native';
 import { useEffect } from 'react';
 import { InputStyle, TextInput } from '../common/native-component';
-import { useSlideAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
-import { toggleMemoOpen } from '../../redux/slice/isMemoOpenSlice';
+import { toggleMemoOpen } from '../../redux/slice/food/isMemoOpenSlice';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { PlatformIOS } from '../../constant/statusBarHeight';
-import { editFormFood } from '../../redux/slice/formFoodSlice';
+import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 import { closeKeyboard } from '../../util';
 
 import FormLabel from './FormLabel';
@@ -24,7 +24,7 @@ export default function MemoItem() {
 
   const dispatch = useDispatch();
 
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: 0,
     toValue: 65,
     active: isMemoOpen,

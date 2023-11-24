@@ -1,28 +1,29 @@
-import { useDispatch } from '../redux/hook';
-import { addFavorite } from '../redux/slice/favoriteFoodsSlice';
+import { useDispatch, useSelector } from '../redux/hook';
+import { addFavorite } from '../redux/slice/food-list/favoriteFoodsSlice';
 import { initialFridgeFood } from '../constant/foodInfo';
-import { Category } from '../constant/foodCategories';
-import { addToShoppingList } from '../redux/slice/shoppingListSlice';
-import { AnimationState } from './animation/useSetAnimationState';
-import { alertPhraseWithFood } from '../constant/alertPhrase';
+import { addToShoppingList } from '../redux/slice/food-list/shoppingListSlice';
 import { useFindFood } from './useFindFood';
-import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
 import { useState } from 'react';
 import { closeKeyboard } from '../util';
+import { useHandleAlert } from './useHandleAlert';
 import UUIDGenerator from 'react-native-uuid';
 
 export const useSubmitFoodsFromInput = () => {
   const [inputValue, setInputValue] = useState('');
+  const { category } = useSelector((state) => state.category);
+  const { checkedList } = useSelector((state) => state.checkedList);
 
   const myUuid = UUIDGenerator.v4();
 
   const dispatch = useDispatch();
 
+  const { alertWithFood, setAlert } = useHandleAlert();
+
   const { isFavoriteItem, isShoppingListItem, findFood } = useFindFood();
 
-  const isActiveCaution = !!isFavoriteItem(inputValue);
+  const hasFood = findFood(inputValue);
 
-  const onSubmitFavoriteListItem = (category: Category) => {
+  const onSubmitFavoriteListItem = () => {
     if (inputValue === '') return closeKeyboard();
 
     const initialFavFood = {
@@ -31,19 +32,14 @@ export const useSubmitFoodsFromInput = () => {
       category,
     };
 
-    const hasFood = findFood(inputValue);
     if (hasFood) {
       if (category !== hasFood.category) {
-        const {
-          modifyCategory: { title, msg },
-        } = alertPhraseWithFood(hasFood);
-        dispatch(toggleAlertModal(true));
-        dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+        const { alertChangeCategory } = alertWithFood(hasFood);
+        setAlert(alertChangeCategory);
         dispatch(addFavorite(hasFood));
         setInputValue('');
         return;
       }
-
       dispatch(addFavorite({ ...initialFavFood, id: hasFood.id }));
       return setInputValue('');
     }
@@ -56,13 +52,11 @@ export const useSubmitFoodsFromInput = () => {
     }
 
     dispatch(addFavorite({ ...initialFavFood, id: myUuid as string }));
+
     setInputValue('');
   };
 
-  const onSubmitShoppingListItem = (
-    name: string,
-    setAnimationState: (state: AnimationState) => void
-  ) => {
+  const onSubmitShoppingListItem = (name: string) => {
     const { expiredDate, purchaseDate } = initialFridgeFood;
     const initialFood = { ...initialFridgeFood, id: myUuid as string, name };
     const hasFood = { ...findFood(name), expiredDate, purchaseDate };
@@ -75,8 +69,9 @@ export const useSubmitFoodsFromInput = () => {
       : initialFood; //
 
     dispatch(addToShoppingList(food));
-    setAnimationState('slidedown-in');
   };
+
+  const isActiveCaution = !!isFavoriteItem(inputValue) && !!!checkedList.length;
 
   return {
     isActiveCaution,

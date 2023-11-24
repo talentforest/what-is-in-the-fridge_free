@@ -22,9 +22,9 @@ export type ModalTitle =
 
 interface Props {
   isVisible: boolean;
-  closeModal: () => void;
   children: ReactNode;
   title: ModalTitle;
+  closeModal?: () => void;
   style?: StyleProp<any>;
 }
 
@@ -55,10 +55,10 @@ export default function FadeInMiddleModal({
       animationOut={'fadeOut'}
       animationInTiming={title === '알림' ? 100 : 600}
       animationOutTiming={title === '알림' ? 100 : 200}
-      deviceHeight={height}
+      deviceHeight={height * 1.2}
       statusBarTranslucent={true}
       hasBackdrop={true}
-      backdropOpacity={title === '알림' ? 0.1 : 0.8}
+      backdropOpacity={title === '알림' ? 0.2 : 0.6}
       style={tw.style(`m-0 ${positionStyle}`, style)}
     >
       {title === '알림' ? (

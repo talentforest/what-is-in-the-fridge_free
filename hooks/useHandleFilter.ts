@@ -1,13 +1,16 @@
 import { foodCategories } from '../constant/foodCategories';
 import { useDispatch, useSelector } from '../redux/hook';
 import { changeFilter, changePantryFilter } from '../redux/slice/filterSlice';
+import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
 import { Filter, scrollTo, scrollToEnd } from '../util';
 import { useRouteName } from './useRouteName';
 
 export const useHandleFilter = (scrollViewRef?: any) => {
   const { filter, pantryFilter } = useSelector((state) => state.filter);
+  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+  const { category } = useSelector((state) => state.category);
 
-  const { routePantryFoods, routeFavoriteFoods } = useRouteName();
+  const { routePantryFoods } = useRouteName();
 
   const dispatch = useDispatch();
 
@@ -19,12 +22,14 @@ export const useHandleFilter = (scrollViewRef?: any) => {
       : dispatch(changeFilter(filterName));
   };
 
-  const findCategoryFilter = (filterName: Filter) => {
-    return foodCategories?.find(({ category }) => category === filterName);
+  const findCategoryFilter = (filter: Filter) => {
+    return foodCategories?.find(({ category }) => category === filter);
   };
 
-  const currFoodCategoryFilter =
-    findCategoryFilter(currentFilter)?.category || '신선식품류';
+  const categoryFilter =
+    findCategoryFilter(currentFilter)?.category ||
+    favoriteFoods[0]?.category ||
+    '신선식품류';
 
   const initializeFilter = () => {
     if (routePantryFoods) {
@@ -33,18 +38,12 @@ export const useHandleFilter = (scrollViewRef?: any) => {
       }
       return;
     }
-    if (routeFavoriteFoods) {
-      if (filter !== '신선식품류') {
-        dispatch(changeFilter('신선식품류'));
-      }
-      return;
-    }
     if (filter !== '전체') {
       dispatch(changeFilter('전체'));
     }
   };
 
-  const scrollToFilter = (index: number) => {
+  const scrollToFilter = (index: number | 'end') => {
     const x =
       index === 0
         ? 0
@@ -64,21 +63,28 @@ export const useHandleFilter = (scrollViewRef?: any) => {
 
     const y = 0;
 
-    return index === 7
+    return index === 'end'
       ? scrollToEnd(scrollViewRef)
       : scrollTo(scrollViewRef, x, y);
   };
 
-  const onFilterTagPress = (filter: Filter, index: number) => {
+  const onFilterTagPress = (filter: Filter, index?: number | 'end') => {
     changeFilterState(filter);
-
+    dispatch(setCheckedList([]));
     return scrollToFilter(index);
   };
+
+  const isCategoryFilter = findCategoryFilter(currentFilter)?.category;
+
+  const diffCategory = isCategoryFilter && isCategoryFilter !== category;
 
   return {
     initializeFilter,
     currentFilter,
-    currFoodCategoryFilter,
+    categoryFilter,
     onFilterTagPress,
+    findCategoryFilter,
+    isCategoryFilter,
+    diffCategory,
   };
 };

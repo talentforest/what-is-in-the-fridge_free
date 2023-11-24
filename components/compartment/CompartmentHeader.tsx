@@ -2,43 +2,33 @@ import { View } from 'react-native';
 import { Text } from '../common/native-component';
 import { Food, MAX_LIMIT, initialFridgeFood } from '../../constant/foodInfo';
 import { useDispatch } from '../../redux/hook';
-import {
-  setAlertInfo,
-  toggleAlertModal,
-} from '../../redux/slice/alertModalSlice';
-import { alertPhrase } from '../../constant/alertPhrase';
-import { useFindFood } from '../../hooks';
-import { setFormFood } from '../../redux/slice/formFoodSlice';
+import { useFindFood, useHandleAlert } from '../../hooks';
+import { setFormFood } from '../../redux/slice/food/formFoodSlice';
+import { showOpenAddFoodModal } from '../../redux/slice/modalVisibleSlice';
+import { CompartmentNum } from '../../constant/fridgeInfo';
 
 import AddIconBtn from '../buttons/AddIconBtn';
 import tw from 'twrnc';
 
 interface Props {
-  title: string;
+  compartmentNum?: CompartmentNum;
   foodList: Food[];
-  setOpenAddFoodModal: (modal: boolean) => void;
 }
 
-export default function CompartmentHeader({
-  title,
-  foodList,
-  setOpenAddFoodModal,
-}: Props) {
+export default function CompartmentHeader({ compartmentNum, foodList }: Props) {
   const { allFoods } = useFindFood();
+
+  const { alertReachedLimit, setAlert } = useHandleAlert();
 
   const dispatch = useDispatch();
 
   const onPress = () => {
     if (allFoods.length >= MAX_LIMIT) {
-      const {
-        excessTotal: { title, msg },
-      } = alertPhrase;
-      dispatch(toggleAlertModal(true));
-      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      setAlert(alertReachedLimit);
       return;
     }
     dispatch(setFormFood(initialFridgeFood));
-    setOpenAddFoodModal(true);
+    dispatch(showOpenAddFoodModal({ modalVisible: true, compartmentNum }));
   };
 
   return (
@@ -48,7 +38,8 @@ export default function CompartmentHeader({
           fontSize={16}
           style={tw`${foodList.length ? 'text-blue-600' : 'text-slate-500'}`}
         >
-          {title} / 식료품 총 {foodList.length}개
+          {compartmentNum ? `${compartmentNum}칸` : '팬트리'} / 식료품 총{' '}
+          {foodList.length}개
         </Text>
 
         <AddIconBtn onPress={onPress} />

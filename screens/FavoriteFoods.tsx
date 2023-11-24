@@ -1,18 +1,18 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { entireFilterObj, existAbsenceFilters, scrollToIndex } from '../util';
 import { FlatList, View } from 'react-native';
+import { useDispatch, useSelector } from '../redux/hook';
+import { changeCategory } from '../redux/slice/food/categorySlice';
+import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
 import {
-  useHandleTableItem,
-  useSetAnimationState,
-  useHandleCheckList,
+  useHandleTableFooterBtns,
   useSubmitFoodsFromInput,
   useGetFoodList,
   useHandleFilter,
-  useHandleFoodCategory,
 } from '../hooks';
 
 import Container from '../components/common/Container';
@@ -28,35 +28,17 @@ import TableBody from '../components/table/TableBody';
 import AlertModal from '../screen-component/modal/AlertModal';
 
 export default function FavoriteFoods() {
+  const { category } = useSelector((state) => state.category);
+
   const flatListRef = useRef<FlatList | null>(null);
 
-  const { currentFilter, initializeFilter } = useHandleFilter();
-
-  useEffect(() => {
-    initializeFilter();
-  }, []);
-
-  // 테이블 아이템들 다루는 커스텀 훅
-  const {
-    checkedList,
-    setCheckedList,
-    onCheckBoxPress,
-    onEntireBoxPress, //
-  } = useHandleCheckList();
-
-  const {
-    animationState,
-    setAnimationState,
-    afterAnimation, //
-  } = useSetAnimationState();
+  const { currentFilter, initializeFilter, diffCategory } = useHandleFilter();
 
   const {
     onAddShoppingListBtnPress,
-    onDeleteFoodPress,
-    onConfirmPress, //
-  } = useHandleTableItem({ checkedList, setCheckedList });
+    onDeleteBtnPress, //
+  } = useHandleTableFooterBtns();
 
-  // input과 관련된 커스텀 훅
   const {
     inputValue,
     setInputValue,
@@ -64,28 +46,25 @@ export default function FavoriteFoods() {
     onSubmitFavoriteListItem, //
   } = useSubmitFoodsFromInput();
 
-  const {
-    category,
-    setCategory,
-    isCategoryModalOpen,
-    setIsCategoryModalOpen,
-    onCategoryChangePress,
-  } = useHandleFoodCategory();
-
   const { favoriteFoods, getFilteredFoodList } = useGetFoodList();
 
-  const foodList = useCallback(() => {
-    return getFilteredFoodList(currentFilter, favoriteFoods);
-  }, [currentFilter, favoriteFoods]);
+  const dispatch = useDispatch();
 
-  const afterAnimationWork = () => {
-    afterAnimation(onDeleteFoodPress, favoriteFoods);
-  };
+  useEffect(() => {
+    initializeFilter();
+    return () => {
+      dispatch(changeCategory('신선식품류'));
+      dispatch(setCheckedList([]));
+    };
+  }, []);
+
+  const foodList = getFilteredFoodList(currentFilter, favoriteFoods);
 
   const onSubmitEditing = () => {
-    onSubmitFavoriteListItem(category);
-    setAnimationState('slidedown-in');
-    scrollToIndex(flatListRef, foodList().length - 1);
+    onSubmitFavoriteListItem();
+    // 카테고리별 필터일 때 카테고리 설정 정보가 다른 경우 스크롤 안하고 리턴
+    if (diffCategory) return;
+    scrollToIndex(flatListRef, foodList.length - 1);
   };
 
   return (
@@ -95,38 +74,26 @@ export default function FavoriteFoods() {
           <TableFilters
             filterTagList={[entireFilterObj, ...existAbsenceFilters]}
             foodList={favoriteFoods}
-            setCheckedList={setCheckedList}
-            setCategory={setCategory}
-            withFoodCategoryFilterTag
+            withCategoryFilterTag
           />
 
           <TableBody
             title='자주 먹는 식료품'
             foodList={foodList}
-            onCheckBoxPress={onCheckBoxPress}
-            checkedList={checkedList}
-            animationState={animationState}
-            afterAnimation={afterAnimationWork}
             flatListRef={flatListRef}
           />
 
           <TableFooterContainer>
-            <TableSelectedHandleBox
-              checkedList={checkedList}
-              foodList={foodList}
-              onEntirePress={onEntireBoxPress}
-            >
+            <TableSelectedHandleBox foodList={foodList}>
               <SquareIconBtn
                 btnName='장보기 추가'
                 icon='basket-plus-outline'
-                disabled={checkedList.length === 0}
                 onPress={onAddShoppingListBtnPress}
               />
               <SquareIconBtn
                 btnName='삭제'
                 icon='tag-minus-outline'
-                disabled={checkedList.length === 0}
-                onPress={() => onDeleteFoodPress(animationState, favoriteFoods)}
+                onPress={onDeleteBtnPress}
               />
             </TableSelectedHandleBox>
 
@@ -136,16 +103,17 @@ export default function FavoriteFoods() {
               placeholder='자주 먹는 식료품을 추가하세요.'
               onSubmitEditing={onSubmitEditing}
               disabled={inputValue === '' || isActiveCaution}
-              checkedListLength={checkedList.length}
             >
-              <InputCategoryBtn
-                category={category}
-                setCategoryOpen={setIsCategoryModalOpen}
-              />
+              <InputCategoryBtn />
             </TextInputRoundedBox>
 
             <View
-              style={{ marginTop: isActiveCaution ? -12 : 0, marginLeft: 6 }}
+              style={{
+                marginTop: isActiveCaution ? -14 : 0,
+                marginLeft: 6,
+                marginBottom:
+                  diffCategory && !!inputValue && isActiveCaution ? 10 : 0,
+              }}
             >
               <FormMessage
                 active={isActiveCaution}
@@ -153,18 +121,26 @@ export default function FavoriteFoods() {
                 color='orange'
               />
             </View>
+
+            <View
+              style={{
+                marginTop: diffCategory && !!inputValue ? -14 : 0,
+                marginLeft: 6,
+              }}
+            >
+              <FormMessage
+                active={diffCategory && !!inputValue}
+                message={`${category} 카테고리에 저장됩니다.`}
+                color='green'
+              />
+            </View>
           </TableFooterContainer>
 
-          <AlertModal onPress={() => onConfirmPress(setAnimationState)} />
+          <AlertModal />
         </Container>
       </SafeBottomAreaView>
 
-      <CategoryModal
-        modalVisible={isCategoryModalOpen}
-        setModalVisible={setIsCategoryModalOpen}
-        currentChecked={category}
-        onCheckBoxPress={onCategoryChangePress}
-      />
+      <CategoryModal />
     </KeyboardAvoidingView>
   );
 }

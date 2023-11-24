@@ -1,4 +1,4 @@
-import { View, useWindowDimensions } from 'react-native';
+import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { GRAY } from '../../constant/colors';
 

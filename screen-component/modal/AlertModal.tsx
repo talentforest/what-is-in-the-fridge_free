@@ -1,41 +1,27 @@
 import { View } from 'react-native';
-import { useDispatch, useSelector } from '../../redux/hook';
-import { AlertBtns, toggleAlertModal } from '../../redux/slice/alertModalSlice';
+import { useSelector } from '../../redux/hook';
 import {
   Text,
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { BLUE } from '../../constant/colors';
+import { useHandleAlert } from '../../hooks';
 
-import Modal from '../../components/modal/Modal';
-import tw from 'twrnc';
 import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
+import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
+import tw from 'twrnc';
 
-interface Props {
-  onPress?: () => void;
-}
-
-export default function AlertModal({ onPress }: Props) {
+export default function AlertModal() {
   const {
     alertModalVisible,
     alertInfo: { title, msg, btns },
   } = useSelector((state) => state.alertModal);
 
-  const dispatch = useDispatch();
-
-  const closeModal = () => dispatch(toggleAlertModal(false));
-
-  const onBtnPress = (btn: AlertBtns) => {
-    if (btn === '취소') return closeModal();
-    onPress && onPress();
-  };
+  const { onAlertBtnPress } = useHandleAlert();
 
   return (
-    <FadeInMiddleModal
-      title='알림'
-      isVisible={alertModalVisible}
-      closeModal={closeModal}
-    >
+    <FadeInMiddleModal title='알림' isVisible={alertModalVisible}>
       <View
         style={tw.style(
           `justify-between bg-white border-2 border-slate-600 rounded-md py-2.5 px-4 mx-7`,
@@ -60,17 +46,30 @@ export default function AlertModal({ onPress }: Props) {
           {btns.map((btn) => (
             <TouchableOpacity
               key={btn}
-              onPress={() => onBtnPress(btn)}
-              style={tw`py-1 px-2.5 border-2 border-slate-600 bg-white rounded-full`}
+              onPress={() => onAlertBtnPress(title, btn)}
+              style={tw`py-1.5 px-3 flex-row items-center border-2 rounded-full
+              ${
+                btn === '취소' || btn === '닫기'
+                  ? 'border-slate-600'
+                  : 'border-blue-600'
+              }`}
             >
               <Text
                 fontSize={16}
                 style={tw`${
-                  btn === '취소' ? 'text-slate-500' : 'text-blue-600'
+                  btn === '취소' || btn === '닫기'
+                    ? 'text-slate-500'
+                    : 'text-blue-700'
                 }`}
               >
                 {btn}
               </Text>
+
+              {btn === '이용권 구매하러 가기' ? (
+                <View style={tw`-mr-1`}>
+                  <IconChevronRight size={16} color={BLUE} />
+                </View>
+              ) : null}
             </TouchableOpacity>
           ))}
         </View>

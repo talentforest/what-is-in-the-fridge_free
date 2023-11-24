@@ -1,29 +1,27 @@
 import { useDispatch, useSelector } from '../redux/hook';
 import { initialFridgeFood, initialPantryFood } from '../constant/foodInfo';
-import { addFridgeFood } from '../redux/slice/fridgeFoodsSlice';
+import { addFridgeFood } from '../redux/slice/food-list/fridgeFoodsSlice';
 import { FoodPosition } from '../constant/fridgeInfo';
-import { addToPantry } from '../redux/slice/pantryFoodsSlice';
+import { addToPantry } from '../redux/slice/food-list/pantryFoodsSlice';
 import {
-  AlertObj,
-  alertPhrase,
-  alertPhraseWithFood,
-} from '../constant/alertPhrase';
-import { addFavorite, editFavorite } from '../redux/slice/favoriteFoodsSlice';
-import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
+  addFavorite,
+  editFavorite,
+} from '../redux/slice/food-list/favoriteFoodsSlice';
 import { beforePurchaseDate } from '../util';
-import { toggleMemoOpen } from '../redux/slice/isMemoOpenSlice';
-import { setFormFood } from '../redux/slice/formFoodSlice';
+import { toggleMemoOpen } from '../redux/slice/food/isMemoOpenSlice';
+import { setFormFood } from '../redux/slice/food/formFoodSlice';
 import { useFindFood } from './useFindFood';
+import { useHandleAlert } from './useHandleAlert';
+import { showOpenAddFoodModal } from '../redux/slice/modalVisibleSlice';
+import { changeCategory } from '../redux/slice/food/categorySlice';
 import UUIDGenerator from 'react-native-uuid';
 
-interface Props {
-  setModalVisible: (modalVisible: boolean) => void;
-  currPosition?: FoodPosition;
-}
-
-export const useAddFood = ({ currPosition, setModalVisible }: Props) => {
+export const useAddFood = (currPosition?: FoodPosition) => {
   const initialFood = currPosition ? initialFridgeFood : initialPantryFood;
 
+  const {
+    openAddFoodModal: { modalVisible },
+  } = useSelector((state) => state.modalVisible);
   const { formFood } = useSelector((state) => state.formFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
   const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
@@ -33,32 +31,31 @@ export const useAddFood = ({ currPosition, setModalVisible }: Props) => {
 
   const { isFavoriteItem, findFood } = useFindFood();
 
-  const showAlert = (alert: AlertObj) => {
-    const { title, msg } = alert;
-    dispatch(toggleAlertModal(true));
-    dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
-  };
+  const food = findFood(formFood.name);
 
-  const onAddSubmit = (
-    setModalVisible: (visible: boolean) => void,
-    modalVisible: boolean
-  ) => {
+  const {
+    alertNoNameInForm,
+    alertWrongDateInForm,
+    alertWithFood,
+    setAlert, //
+  } = useHandleAlert();
+
+  const onAddSubmit = () => {
     if (!modalVisible) return;
 
     const { name, category, expiredDate, purchaseDate } = formFood;
 
-    const { noName, wrongDate } = alertPhrase;
-
     if (name === '') {
-      showAlert(noName);
+      setAlert(alertNoNameInForm);
       return;
     }
     if (beforePurchaseDate(purchaseDate, expiredDate)) {
-      showAlert(wrongDate);
+      setAlert(alertWrongDateInForm);
       return;
     }
     if (findFood(name)) {
-      showAlert(alertPhraseWithFood(findFood(name)).exist);
+      const { alertFoodPosition } = alertWithFood(food);
+      setAlert(alertFoodPosition);
       return;
     }
 
@@ -86,18 +83,20 @@ export const useAddFood = ({ currPosition, setModalVisible }: Props) => {
       dispatch(addToPantry(foodToAdd));
     }
 
-    setModalVisible(false);
+    dispatch(showOpenAddFoodModal(false));
 
     if (isMemoOpen) {
       toggleMemoOpen(false);
     }
 
     dispatch(setFormFood(initialFood));
+    dispatch(changeCategory('신선식품류'));
   };
 
   const closeAddFoodModal = () => {
     dispatch(setFormFood({ ...initialFood }));
-    setModalVisible(false);
+    dispatch(showOpenAddFoodModal(false));
+    dispatch(changeCategory('신선식품류'));
   };
 
   return {

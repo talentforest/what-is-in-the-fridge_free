@@ -1,12 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from '../components/common/native-component';
-import {
-  Animated,
-  Dimensions,
-  Image,
-  View,
-  useWindowDimensions,
-} from 'react-native';
+import { Animated, Dimensions, Image, View } from 'react-native';
 import { useImageLoad, useSwiperAnimation } from '../hooks';
 import { onboardingSteps } from '../constant/onboardingInfo';
 import { useNavigation } from '@react-navigation/native';
@@ -23,6 +17,7 @@ export default function OnBoarding() {
   const { onboarding } = useSelector((state) => state.onboarding);
 
   const navigation = useNavigation<NavigateProp>();
+
   const dispatch = useDispatch();
 
   const { isLoaded, assets, getImgUri } = useImageLoad({

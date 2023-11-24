@@ -1,11 +1,10 @@
 import { ScrollView } from 'react-native';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { FoodPosition } from '../../constant/fridgeInfo';
 import { useGetFoodList } from '../../hooks';
-import { formFourSteps } from '../../constant/formInfo';
 import { scrollToEnd } from '../../util';
+import { useSelector } from '../../redux/hook';
 
-import FoodDetailModal from '../../screen-component/modal/FoodDetailModal';
 import ExpandedCompartmentModal from '../../screen-component/modal/ExpandedCompartmentModal';
 import CompartmentBox from './CompartmentBox';
 import AddFoodModal from '../../screen-component/modal/AddFoodModal';
@@ -17,50 +16,40 @@ interface Props {
 export default function Compartment({ currPosition }: Props) {
   const { space, compartmentNum } = currPosition;
 
-  const [expandCompartment, setExpandCompartment] = useState(false);
-  const [openFoodDetailModal, setOpenFoodDetailModal] = useState(false);
-  const [openAddFoodModal, setOpenAddFoodModal] = useState(false);
+  const { expandCompartmentModal, openAddFoodModal } = useSelector(
+    (state) => state.modalVisible
+  );
 
   const scrollViewRef = useRef<ScrollView | null>(null);
 
   const { getFoodList } = useGetFoodList();
+
   const foodListByCompartment = getFoodList(
     'fridgeFoods',
     space,
     compartmentNum
   );
 
+  const scrollEnd = () => scrollToEnd(scrollViewRef);
+
   return (
     <>
       <CompartmentBox
-        scrollViewRef={scrollViewRef}
-        title={`${compartmentNum}칸`}
-        foodList={foodListByCompartment}
-        setOpenFoodDetailModal={setOpenFoodDetailModal}
-        setExpandCompartment={setExpandCompartment}
-        setOpenAddFoodModal={setOpenAddFoodModal}
-      />
-
-      <ExpandedCompartmentModal
         compartmentNum={compartmentNum}
         foodList={foodListByCompartment}
-        expandCompartment={expandCompartment}
-        setExpandCompartment={setExpandCompartment}
+        scrollViewRef={scrollViewRef}
       />
 
-      <FoodDetailModal
-        modalVisible={openFoodDetailModal}
-        openAddFoodModal={openAddFoodModal}
-        setModalVisible={setOpenFoodDetailModal}
-        formSteps={formFourSteps}
-      />
+      {compartmentNum === expandCompartmentModal?.compartmentNum && (
+        <ExpandedCompartmentModal
+          compartmentNum={compartmentNum}
+          foodList={foodListByCompartment}
+        />
+      )}
 
-      <AddFoodModal
-        modalVisible={openAddFoodModal}
-        setModalVisible={setOpenAddFoodModal}
-        currPosition={currPosition}
-        scrollEnd={() => scrollToEnd(scrollViewRef)}
-      />
+      {compartmentNum === openAddFoodModal?.compartmentNum && (
+        <AddFoodModal currPosition={currPosition} scrollEnd={scrollEnd} />
+      )}
     </>
   );
 }

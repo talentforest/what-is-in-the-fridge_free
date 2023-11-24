@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Easing } from 'react-native';
 import { useDispatch } from '../../redux/hook';
-import { search } from '../../redux/slice/searchedFoodSlice';
+import { search } from '../../redux/slice/food/searchedFoodSlice';
 
 export const usePulseAnimation = ({ active }: { active: boolean }) => {
   const opacity = useRef(new Animated.Value(1)).current;

@@ -1,51 +1,50 @@
-import { useFindFood } from '../../hooks';
+import { useFindFood, useHandleAlert } from '../../hooks';
 import { View } from 'react-native';
 import { useRouteName } from '../../hooks/useRouteName';
 import { Food, MAX_LIMIT } from '../../constant/foodInfo';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { setFormFood } from '../../redux/slice/food/formFoodSlice';
+import { showFormModal } from '../../redux/slice/modalVisibleSlice';
 
 import LeftDay from '../common/LeftDay';
 import AddIconBtn from '../buttons/AddIconBtn';
 import IndicatorExist from '../common/IndicatorExist';
 import tw from 'twrnc';
-import { useDispatch, useSelector } from '../../redux/hook';
-import { alertPhrase } from '../../constant/alertPhrase';
-import {
-  setAlertInfo,
-  toggleAlertModal,
-} from '../../redux/slice/alertModalSlice';
 
 interface Props {
   title: string;
   food: Food;
-  addToFridgePress: (food: Food) => void;
-  isCheckList: boolean;
 }
 
-export default function TableItemEnd({
-  title,
-  food,
-  addToFridgePress,
-  isCheckList,
-}: Props) {
+export default function TableItemEnd({ title, food }: Props) {
+  const { checkedList } = useSelector((state) => state.checkedList);
+
   const { routeShoppingList } = useRouteName();
-  const { findFood, allFoods } = useFindFood();
+
+  const { findFood, allFoods, isFavoriteItem } = useFindFood();
+
+  const { alertReachedLimit, setAlert } = useHandleAlert();
 
   const dispatch = useDispatch();
+
+  const onAddToFridgePress = () => {
+    const favoriteItem = isFavoriteItem(food.name);
+    const formFood = favoriteItem?.id ? favoriteItem : food;
+    dispatch(setFormFood(formFood));
+    dispatch(showFormModal(true));
+  };
+
   const onPress = () => {
     if (allFoods.length >= MAX_LIMIT) {
-      const {
-        excessTotal: { title, msg },
-      } = alertPhrase;
-      dispatch(toggleAlertModal(true));
-      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      setAlert(alertReachedLimit);
       return;
     }
-    addToFridgePress(food);
+    onAddToFridgePress();
   };
 
   return (
     <>
-      {title === '장보기 식료품' && addToFridgePress && (
+      {title === '장보기 식료품' && (
         <>
           {routeShoppingList && findFood(food.name) && (
             <IndicatorExist
@@ -57,7 +56,7 @@ export default function TableItemEnd({
           )}
           <AddIconBtn
             onPress={onPress}
-            disabled={!!(isCheckList || findFood(food.name))}
+            disabled={!!(checkedList.length || findFood(food.name))}
           />
         </>
       )}

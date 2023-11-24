@@ -11,39 +11,43 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import fridgeFoodsReducer from './slice/fridgeFoodsSlice';
-import favoriteFoodsReducer from './slice/favoriteFoodsSlice';
-import shoppingListReducer from './slice/shoppingListSlice';
+import fridgeFoodsReducer from './slice/food-list/fridgeFoodsSlice';
+import favoriteFoodsReducer from './slice/food-list/favoriteFoodsSlice';
+import shoppingListReducer from './slice/food-list/shoppingListSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fridgeInfoReducer from './slice/fridgeInfoSlice';
 import toggleOnboardingReducer from './slice/onboardingSlice';
 import changeFilterReducer from './slice/filterSlice';
-import toggleShowBtnReducer from './slice/showBtnSlice';
-import pantryFoodsReducer from './slice/pantryFoodsSlice';
-import toggleFavoriteReducer from './slice/isFavoriteSlice';
-import toggleMemoReducer from './slice/isMemoOpenSlice';
-import searchedFoodNameReducer from './slice/searchedFoodSlice';
-import toggleFormModalReducer from './slice/formModalSlice';
+import pantryFoodsReducer from './slice/food-list/pantryFoodsSlice';
+import toggleFavoriteReducer from './slice/food/isFavoriteSlice';
+import toggleMemoReducer from './slice/food/isMemoOpenSlice';
+import searchedFoodNameReducer from './slice/food/searchedFoodSlice';
 import toggleAlertModalReducer from './slice/alertModalSlice';
 import changeFontReducer from './slice/fontSlice';
-import formFoodReducer from './slice/formFoodSlice';
+import formFoodReducer from './slice/food/formFoodSlice';
+import checkedListReducer from './slice/food-list/checkListSlice';
+import categoryReducer from './slice/food/categorySlice';
+import afterAnimationReducer from './slice/afterAnimationSlice';
+import modalVisibleReducer from './slice/modalVisibleSlice';
 
 const reducers = {
   fridgeFoods: fridgeFoodsReducer,
   favoriteFoods: favoriteFoodsReducer,
   shoppingList: shoppingListReducer,
+  checkedList: checkedListReducer,
   fridgeInfo: fridgeInfoReducer,
   onboarding: toggleOnboardingReducer,
   filter: changeFilterReducer,
-  showBtn: toggleShowBtnReducer,
   pantryFoods: pantryFoodsReducer,
   isFavorite: toggleFavoriteReducer,
   isMemoOpen: toggleMemoReducer,
   searchedFoodName: searchedFoodNameReducer,
-  formModalVisible: toggleFormModalReducer,
+  modalVisible: modalVisibleReducer,
   alertModal: toggleAlertModalReducer,
   fontFamily: changeFontReducer,
   formFood: formFoodReducer,
+  category: categoryReducer,
+  afterAnimation: afterAnimationReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

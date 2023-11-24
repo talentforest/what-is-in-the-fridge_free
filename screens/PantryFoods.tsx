@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   KeyboardAvoidingView,
   SafeBottomAreaView,
@@ -18,8 +18,6 @@ import AddFoodModal from '../screen-component/modal/AddFoodModal';
 
 export default function PantryFoods() {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
-  const [openFoodDetailModal, setOpenFoodDetailModal] = useState(false);
-  const [openAddFoodModal, setOpenAddFoodModal] = useState(false);
 
   const scrollViewRef = useRef<ScrollView | null>(null);
 
@@ -29,9 +27,7 @@ export default function PantryFoods() {
     initializeFilter();
   }, []);
 
-  const foodList = useCallback(() => {
-    return pantryFoods;
-  }, []);
+  const scrollEnd = () => scrollToEnd(scrollViewRef);
 
   return (
     <SafeBottomAreaView>
@@ -41,28 +37,16 @@ export default function PantryFoods() {
             filterTagList={[entireFilterObj, ...expiredFilters]}
             foodList={pantryFoods}
           />
-
           <CompartmentContainer>
             <CompartmentBox
               scrollViewRef={scrollViewRef}
-              title='팬트리'
               foodList={pantryFoods}
-              setOpenFoodDetailModal={setOpenFoodDetailModal}
-              setOpenAddFoodModal={setOpenAddFoodModal}
             />
           </CompartmentContainer>
 
-          <FoodDetailModal
-            modalVisible={openFoodDetailModal}
-            setModalVisible={setOpenFoodDetailModal}
-            formSteps={formFourSteps}
-          />
+          <FoodDetailModal formSteps={formFourSteps} />
 
-          <AddFoodModal
-            scrollEnd={() => scrollToEnd(scrollViewRef)}
-            modalVisible={openAddFoodModal}
-            setModalVisible={setOpenAddFoodModal}
-          />
+          <AddFoodModal scrollEnd={scrollEnd} />
         </Container>
       </KeyboardAvoidingView>
     </SafeBottomAreaView>

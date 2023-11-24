@@ -3,7 +3,8 @@ import { TextInput, TouchableOpacity } from './native-component';
 import { DEEP_GRAY, LIGHT_GRAY } from '../../constant/colors';
 import { ReactNode } from 'react';
 import { shadowStyle } from '../../constant/shadowStyle';
-import { useSlideAnimation } from '../../hooks';
+import { useSelector } from '../../redux/hook';
+import { useItemSlideAnimation } from '../../hooks';
 
 import Icon from './native-component/Icon';
 import tw from 'twrnc';
@@ -16,7 +17,6 @@ interface Props {
   children?: ReactNode;
   autoFocus?: boolean;
   disabled?: boolean;
-  checkedListLength: number;
 }
 
 export default function TextInputRoundedBox({
@@ -27,12 +27,13 @@ export default function TextInputRoundedBox({
   children,
   autoFocus,
   disabled,
-  checkedListLength,
 }: Props) {
-  const { height } = useSlideAnimation({
+  const { checkedList } = useSelector((state) => state.checkedList);
+
+  const { height } = useItemSlideAnimation({
     initialValue: 66,
     toValue: 0,
-    active: !!checkedListLength,
+    active: checkedList.length > 0,
   });
 
   return (
@@ -44,18 +45,19 @@ export default function TextInputRoundedBox({
     >
       <View
         style={tw.style(
-          `flex-1 mt-3 mb-4 rounded-full items-center flex-row bg-white `,
+          `flex-1 mt-3 mb-4 rounded-full items-center flex-row bg-white`,
           shadowStyle(3)
         )}
       >
         {children}
         <View style={tw`flex-1 ${!!children ? '' : 'ml-2'}`}>
           <TextInput
+            fontSize={18}
             value={value}
             onChangeText={setValue}
             placeholder={placeholder}
             blurOnSubmit={false}
-            style={tw`border-0 flex-1 rounded-full  items-center justify-center`}
+            style={tw`border-0 flex-1 rounded-full items-center justify-center`}
             onSubmitEditing={onSubmitEditing}
             autoFocus={autoFocus}
           />

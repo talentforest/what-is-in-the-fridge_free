@@ -49,7 +49,7 @@ export default function FridgeSpaceInfo({ space }: Props) {
       </View>
 
       {/* 냉장고 공간 정보 */}
-      <View style={tw`flex-1 mt-1`}>
+      <View style={tw`flex-1 mt-1 gap-0.5`}>
         {spaceInfo.map(({ name, foodList }) => (
           <View key={name} style={tw`flex-row items-center justify-between`}>
             {[name, foodList(space).length].map((info) => (

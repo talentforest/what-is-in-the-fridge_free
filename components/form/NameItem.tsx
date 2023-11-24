@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from '../../redux/hook';
-import { editFormFood } from '../../redux/slice/formFoodSlice';
+import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 import { View } from 'react-native';
 import { TextInput } from '../common/native-component';
 import { shadowStyle } from '../../constant/shadowStyle';

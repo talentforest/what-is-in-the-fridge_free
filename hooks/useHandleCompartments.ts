@@ -4,8 +4,7 @@ import {
   plusCompartment,
 } from '../redux/slice/fridgeInfoSlice';
 import { CompartmentNum, Space } from '../constant/fridgeInfo';
-import { alertPhraseDeleteCompartment } from '../constant/alertPhrase';
-import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
+import { useHandleAlert } from './useHandleAlert';
 
 interface Props {
   space: Space;
@@ -14,7 +13,10 @@ interface Props {
 export const useHandleCompartments = ({ space }: Props) => {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
+
   const dispatch = useDispatch();
+
+  const { alertDeleteCompartment, setAlert } = useHandleAlert();
 
   const MAX_COMPARTMENTS_NUM = space.includes('냉동실') ? 3 : 5;
 
@@ -27,15 +29,14 @@ export const useHandleCompartments = ({ space }: Props) => {
     });
 
   const onMinusPress = () => {
-    if (fridgeInfo.compartments[space] <= 1) return;
-    const guide = alertPhraseDeleteCompartment(
-      `${fridgeInfo.compartments[space]}번` as CompartmentNum
-    );
-    const { title, msg } = guide;
+    const num = fridgeInfo.compartments[space];
+    if (num <= 1) return;
+
+    const compartmentNum = `${num}번` as CompartmentNum;
 
     if (existFoodInLastCompartment.length !== 0) {
-      dispatch(toggleAlertModal(true));
-      dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+      const guide = alertDeleteCompartment(compartmentNum);
+      setAlert(guide);
       return;
     }
 
@@ -47,13 +48,8 @@ export const useHandleCompartments = ({ space }: Props) => {
     dispatch(plusCompartment(space));
   };
 
-  const onConfirmPress = () => {
-    dispatch(toggleAlertModal(false));
-  };
-
   return {
     onMinusPress,
     onPlusPress,
-    onConfirmPress,
   };
 };

@@ -5,6 +5,7 @@ export const useFindFood = () => {
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { shoppingList } = useSelector((state) => state.shoppingList);
+  const { checkedList } = useSelector((state) => state.checkedList);
 
   const findFoodInFridge = (name: string) => {
     return fridgeFoods.find((food) => food.name === name);
@@ -26,6 +27,10 @@ export const useFindFood = () => {
     return shoppingList.find((food) => food.name === name);
   };
 
+  const isCheckedItem = (id: string) => {
+    return checkedList.find((food) => food.id === id);
+  };
+
   const allFoods = [...fridgeFoods, ...pantryFoods];
 
   return {
@@ -34,6 +39,7 @@ export const useFindFood = () => {
     findFood,
     isFavoriteItem,
     isShoppingListItem,
+    isCheckedItem,
     allFoods,
   };
 };

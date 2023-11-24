@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from '../../redux/hook';
-import { editFormFood } from '../../redux/slice/formFoodSlice';
+import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 import { Animated, Keyboard, View } from 'react-native';
 import { InputStyle, TextInput } from '../common/native-component';
 import { closeKeyboard, getFormattedDate } from '../../util';
 import { useEffect, useState } from 'react';
-import { useSlideAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { minusControlDateBtns } from '../../constant/controlDateBtns';
 
@@ -25,7 +25,7 @@ export default function PurchaseDateItem() {
 
   const formattedDate = getFormattedDate(setDate, 'YY.MM.DD');
 
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: 0,
     toValue: 82,
     active: purchaseOpen,

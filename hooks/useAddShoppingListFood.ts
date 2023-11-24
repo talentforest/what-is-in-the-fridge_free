@@ -1,46 +1,45 @@
 import { useDispatch, useSelector } from '../redux/hook';
-import { removeFromShoppingList } from '../redux/slice/shoppingListSlice';
-import { addFridgeFood } from '../redux/slice/fridgeFoodsSlice';
-import { addToPantry } from '../redux/slice/pantryFoodsSlice';
-import { Food } from '../constant/foodInfo';
-import {
-  AlertObj,
-  alertPhrase,
-  alertPhraseWithFood,
-} from '../constant/alertPhrase';
+import { removeFromShoppingList } from '../redux/slice/food-list/shoppingListSlice';
+import { addFridgeFood } from '../redux/slice/food-list/fridgeFoodsSlice';
+import { addToPantry } from '../redux/slice/food-list/pantryFoodsSlice';
 import {
   addFavorite,
   editFavorite,
   removeFavorite,
-} from '../redux/slice/favoriteFoodsSlice';
-import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
+} from '../redux/slice/food-list/favoriteFoodsSlice';
 import { beforePurchaseDate } from '../util';
 import { useFindFood } from './useFindFood';
-import { toggleMemoOpen } from '../redux/slice/isMemoOpenSlice';
+import { toggleMemoOpen } from '../redux/slice/food/isMemoOpenSlice';
+import { useHandleAlert } from './useHandleAlert';
+import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
+import { showFormModal } from '../redux/slice/modalVisibleSlice';
+import { changeCategory } from '../redux/slice/food/categorySlice';
 
 export const useAddShoppingListFood = () => {
   const { formFood } = useSelector((state) => state.formFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
   const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
 
-  const dispatch = useDispatch();
-
   const { isFavoriteItem } = useFindFood();
 
-  const showAlert = (alert: AlertObj) => {
-    const { title, msg } = alert;
-    dispatch(toggleAlertModal(true));
-    dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+  const closeFormModal = () => {
+    dispatch(showFormModal(false));
+    dispatch(changeCategory('신선식품류'));
   };
 
-  const onShoppingListFoodSubmit = (
-    setModalVisible: (visible: boolean) => void,
-    setCheckedList: (checkedList: Food[]) => void
-  ) => {
+  const {
+    alertWrongDateInForm,
+    setAlert,
+    alertWithFood, //
+  } = useHandleAlert();
+
+  const dispatch = useDispatch();
+
+  const onShoppingListFoodSubmit = () => {
     const { expiredDate, purchaseDate } = formFood;
 
     if (beforePurchaseDate(purchaseDate, expiredDate)) {
-      showAlert(alertPhrase.wrongDate);
+      setAlert(alertWrongDateInForm);
       return;
     }
 
@@ -59,19 +58,22 @@ export const useAddShoppingListFood = () => {
 
     dispatch(removeFromShoppingList({ name: formFood.name }));
 
-    showAlert(alertPhraseWithFood(formFood).successAdd);
+    const { alertSuccessAddFood } = alertWithFood(formFood);
+    setAlert(alertSuccessAddFood);
 
-    setModalVisible(false);
+    dispatch(showFormModal(false));
 
     if (isMemoOpen) {
       toggleMemoOpen(false);
     }
 
-    setCheckedList([]);
+    dispatch(setCheckedList([]));
+    dispatch(changeCategory('신선식품류'));
   };
 
   return {
     formFood,
+    closeFormModal,
     onShoppingListFoodSubmit,
   };
 };

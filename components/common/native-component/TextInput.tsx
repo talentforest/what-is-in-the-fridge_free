@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { LIGHT_GRAY } from '../../../constant/colors';
-import { baseFont, basicTextStyle, relativeSize } from './Text';
+import { baseFont, basicTextStyle } from './Text';
 import { useSelector } from '../../../redux/hook';
 import tw from 'twrnc';
 
@@ -20,25 +20,24 @@ export const InputStyle =
 export function TextInput({ style, fontSize = baseFont, ...props }: Props) {
   const { fontFamily } = useSelector((state) => state.fontFamily);
 
-  const bigFont = fontFamily === 'NanumSquareRoundEB' || fontFamily === '';
-  const letterSpacing =
-    fontFamily === 'NanumSquareRoundEB' || fontFamily === '' ? 0 : 0.5;
-
   const { height } = useWindowDimensions();
 
-  const relativeFontSizeByFont = bigFont ? fontSize - relativeSize : fontSize;
+  const relativeFontSizeByFont =
+    fontFamily === 'NanumSquareRoundEB' ? fontSize - 3 : fontSize;
+
   const relativeFontSize =
     height > 900 ? relativeFontSizeByFont + 4 : relativeFontSizeByFont;
 
   const lineHeight = 24 + 2 * (fontSize - baseFont);
+
   const relativeLineHeight = height > 900 ? lineHeight + 4 * 2 : lineHeight;
 
   return (
     <Input
       style={tw.style(`${InputStyle}`, {
         ...basicTextStyle,
-        fontSize: relativeFontSize + 1,
-        letterSpacing,
+        fontSize: relativeFontSize,
+        letterSpacing: fontFamily === 'HsSaemaul' ? 0.5 : 0,
         lineHeight: relativeLineHeight,
         fontFamily,
         ...style,

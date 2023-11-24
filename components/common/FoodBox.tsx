@@ -10,25 +10,23 @@ import {
 import { Food } from '../../constant/foodInfo';
 import { useHandleFilter, usePulseAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
-import { shadowStyle } from '../../constant/shadowStyle';
 import { MutableRefObject } from 'react';
 import { INDIGO } from '../../constant/colors';
-import { saveOriginalFood, setFormFood } from '../../redux/slice/formFoodSlice';
+import {
+  saveOriginalFood,
+  setFormFood,
+} from '../../redux/slice/food/formFoodSlice';
+import { showOpenFoodDetailModal } from '../../redux/slice/modalVisibleSlice';
 
 import CategoryIcon from './CategoryIcon';
 import tw from 'twrnc';
 
 interface Props {
   food: Food;
-  setOpenFoodDetailModal: (open: boolean) => void;
   scrollViewRef?: MutableRefObject<ScrollView>;
 }
 
-export default function FoodBox({
-  food,
-  setOpenFoodDetailModal,
-  scrollViewRef,
-}: Props) {
+export default function FoodBox({ food, scrollViewRef }: Props) {
   const { expiredDate } = food;
   const { searchedFoodName } = useSelector((state) => state.searchedFoodName);
 
@@ -50,13 +48,13 @@ export default function FoodBox({
   const onPress = () => {
     dispatch(setFormFood(food));
     dispatch(saveOriginalFood(food));
-    setOpenFoodDetailModal(true);
+    dispatch(showOpenFoodDetailModal(true));
   };
 
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw.style(`rounded-lg bg-white`, shadowStyle(3))}
+      style={tw.style(`rounded-lg bg-white`)}
       onLayout={(event: LayoutChangeEvent) => onItemLayout(event, food)}
     >
       <Animated.View

@@ -1,51 +1,39 @@
-import { Animated, useWindowDimensions } from 'react-native';
+import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { Food, initialFridgeFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
-import { AnimationState, useSlideAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
+import { useDispatch, useSelector } from '../../redux/hook';
 import { shadowStyle } from '../../constant/shadowStyle';
+import { setCheckedList } from '../../redux/slice/food-list/checkListSlice';
 
 import CheckBox from '../common/CheckBox';
 import tw from 'twrnc';
 
 interface Props {
+  food: Food;
   endChildren?: ReactNode;
   frontChildren?: ReactNode;
-  food: Food;
-  onCheckBoxPress: (food: Food) => void;
-  isCheckedItem: boolean;
-  animationState: AnimationState;
-  afterAnimation: () => void;
 }
 
-export default function TableItem({
-  food,
-  onCheckBoxPress,
-  isCheckedItem,
-  frontChildren,
-  endChildren,
-  animationState,
-  afterAnimation,
-}: Props) {
-  const slideDownIn = animationState === 'slidedown-in';
-  const slideUpOut = animationState === 'slideup-out';
+export default function TableItem({ food, frontChildren, endChildren }: Props) {
+  const { afterAnimation } = useSelector((state) => state.afterAnimation);
+  const { checkedList } = useSelector((state) => state.checkedList);
 
-  const { height: windowDimensionHeight } = useWindowDimensions();
-  const ITEM_HEIGHT = windowDimensionHeight > 900 ? 52 : 46;
+  const isCheckedItem = (ID: string) => checkedList.find(({ id }) => id === ID);
 
-  const initialValue =
-    isCheckedItem && slideUpOut ? ITEM_HEIGHT : slideDownIn ? 0 : ITEM_HEIGHT;
+  const checkedItem = !!isCheckedItem(food.id);
 
-  const toValue = isCheckedItem && slideUpOut ? 0 : ITEM_HEIGHT;
+  const ITEM_HEIGHT = 46;
 
-  const { height, interpolatedOpacity } = useSlideAnimation({
-    initialValue,
-    toValue,
-    active: slideDownIn || slideUpOut,
-    afterAnimation,
+  const { height, interpolatedOpacity } = useItemSlideAnimation({
+    initialValue: ITEM_HEIGHT,
+    toValue: 0,
+    active: checkedItem && afterAnimation === 'slideup-out',
   });
 
   const { id, name, category, space } = food;
+
   const initializedFood = {
     ...initialFridgeFood,
     id,
@@ -54,38 +42,49 @@ export default function TableItem({
     space,
   };
 
+  const dispatch = useDispatch();
+
+  const onCheckBoxPress = () => {
+    const unselectItem = checkedList.filter((item) => item.id !== id);
+    const selectItem = [...checkedList, initializedFood];
+    const toggleItem = isCheckedItem(id) ? unselectItem : selectItem;
+    dispatch(setCheckedList(toggleItem));
+  };
+
   return (
-    <Animated.View
-      style={{
-        height,
-        opacity: interpolatedOpacity,
-        overflow: 'hidden',
-        marginHorizontal: -4,
-      }}
-    >
-      <TouchableOpacity
-        onPress={() => onCheckBoxPress(initializedFood)}
-        style={tw.style(
-          `border h-[${ITEM_HEIGHT - 6}px] ${
-            isCheckedItem ? 'border-blue-600' : 'border-slate-200 '
-          } bg-white flex-row items-center gap-1 pl-3 rounded-lg mx-1`,
-          shadowStyle(4)
-        )}
+    <View>
+      <Animated.View
+        style={{
+          height,
+          opacity: interpolatedOpacity,
+          overflow: 'hidden',
+          marginHorizontal: -4,
+        }}
       >
-        <CheckBox checked={!!isCheckedItem} />
-
-        {frontChildren}
-
-        <Text
-          numberOfLines={1}
-          ellipsizeMode='tail'
-          style={tw`text-slate-800 flex-1`}
+        <TouchableOpacity
+          onPress={onCheckBoxPress}
+          style={tw.style(
+            `border h-[${ITEM_HEIGHT - 6}px] ${
+              checkedItem ? 'border-blue-600' : 'border-slate-200 '
+            } bg-white flex-row items-center gap-1 pl-3 rounded-lg mx-1`,
+            shadowStyle(4)
+          )}
         >
-          {initializedFood.name}
-        </Text>
+          <CheckBox checked={checkedItem} />
 
-        {endChildren}
-      </TouchableOpacity>
-    </Animated.View>
+          {frontChildren}
+
+          <Text
+            numberOfLines={1}
+            ellipsizeMode='tail'
+            style={tw`text-slate-800 flex-1`}
+          >
+            {initializedFood.name}
+          </Text>
+
+          {endChildren}
+        </TouchableOpacity>
+      </Animated.View>
+    </View>
   );
 }

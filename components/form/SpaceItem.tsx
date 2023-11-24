@@ -11,7 +11,7 @@ import {
 } from '../../constant/fridgeInfo';
 import { isFridgeFood, isPantryFood } from '../../util/checkFoodSpace';
 import { FormLabelType } from '../../constant/formInfo';
-import { editFormFood } from '../../redux/slice/formFoodSlice';
+import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 
 import CheckBoxItem from '../common/CheckBoxItem';
 import FormLabel from './FormLabel';

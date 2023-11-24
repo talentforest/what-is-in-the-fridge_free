@@ -2,6 +2,8 @@ import { View } from 'react-native';
 import { FormStep } from '../../constant/formInfo';
 import { useEditFood, useDeleteFood } from '../../hooks';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { showOpenFoodDetailModal } from '../../redux/slice/modalVisibleSlice';
 
 import Form from '../../components/form/Form';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
@@ -11,38 +13,28 @@ import FoodDetail from '../../components/food-detail/FoodDetail';
 import tw from 'twrnc';
 
 interface Props {
-  modalVisible: boolean;
-  openAddFoodModal?: boolean;
-  setModalVisible: (modalVisible: boolean) => void;
   formSteps: FormStep[];
 }
 
-export default function FoodDetailModal({
-  modalVisible,
-  openAddFoodModal,
-  setModalVisible,
-  formSteps,
-}: Props) {
-  const {
-    formFood,
-    editing,
-    setEditing,
-    onEditSumbit,
-    onAlertComfirmPress, //
-  } = useEditFood();
+export default function FoodDetailModal({ formSteps }: Props) {
+  const { openFoodDetailModal } = useSelector((state) => state.modalVisible);
+
+  const { formFood, editing, setEditing, onEditSumbit } = useEditFood();
 
   const insets = useSafeAreaInsets();
+
+  const dispatch = useDispatch();
 
   const closeModal = () => {
     if (editing) {
       setEditing(false);
     }
-    setModalVisible(false);
+    dispatch(showOpenFoodDetailModal(false));
   };
 
   const { space, id } = formFood;
 
-  const { deleteFood } = useDeleteFood({ space, setModalVisible });
+  const { deleteFood } = useDeleteFood(space);
 
   const onDeletePress = () => deleteFood(id);
 
@@ -53,7 +45,7 @@ export default function FoodDetailModal({
       <Modal
         title={editing ? '식료품 정보 수정' : '식료품 상세 정보'}
         closeModal={closeModal}
-        isVisible={modalVisible}
+        isVisible={openFoodDetailModal}
       >
         <View style={{ paddingBottom: insets?.bottom }}>
           {editing ? (
@@ -66,7 +58,7 @@ export default function FoodDetailModal({
                 color='blue'
                 iconName='check'
                 btnName='식료품 정보 수정 완료'
-                onPress={() => onEditSumbit(setModalVisible)}
+                onPress={onEditSumbit}
               />
             </>
           ) : (
@@ -94,7 +86,7 @@ export default function FoodDetailModal({
         </View>
       </Modal>
 
-      <AlertModal onPress={onAlertComfirmPress} />
+      <AlertModal />
     </>
   );
 }

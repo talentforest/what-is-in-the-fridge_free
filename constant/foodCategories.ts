@@ -12,7 +12,7 @@ export type Category =
   | '생수/음료수/커피/주류'
   | '베이커리/잼';
 
-export interface FoodCategory {
+export interface CategoryInfo {
   id: number;
   category: Category;
   image: string;
@@ -20,7 +20,7 @@ export interface FoodCategory {
   color: string;
 }
 
-export const foodCategories: FoodCategory[] = [
+export const foodCategories: CategoryInfo[] = [
   {
     id: 1,
     category: '신선식품류',
@@ -67,8 +67,8 @@ export const foodCategories: FoodCategory[] = [
     id: 7,
     category: '간식류',
     image: 'category-dessert.png',
-    icon: 'dessert',
-    color: '#ff6565',
+    icon: 'cookie',
+    color: '#8B2424',
   },
   {
     id: 8,

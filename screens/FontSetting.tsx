@@ -22,19 +22,14 @@ const fonts: FontStyle[] = [
     fontSize: 15,
     fontName: '나눔스퀘어라운드체',
   },
-  { fontFamily: '', fontSize: 15, fontName: '시스템' },
 ];
 
 export default function FontSetting() {
-  const { fontFamily: currFontFamily } = useSelector(
-    (state) => state.fontFamily
-  );
+  const { fontFamily: currFont } = useSelector((state) => state.fontFamily);
 
   const dispatch = useDispatch();
 
-  const onChangeFontPress = (font: Fonts) => {
-    dispatch(changeFont(font));
-  };
+  const onChangeFontPress = (font: Fonts) => dispatch(changeFont(font));
 
   return (
     <Container>
@@ -50,25 +45,22 @@ export default function FontSetting() {
         <View style={tw`pl-2`}>
           {fonts.map(({ fontFamily, fontSize, fontName }) => (
             <TouchableOpacity
-              key={fontFamily}
+              key={fontName}
               onPress={() => onChangeFontPress(fontFamily)}
               style={tw`flex-row items-center gap-1.5 h-10`}
             >
               <Icon
-                name={
-                  currFontFamily === fontFamily ? 'check-circle-fill' : 'circle'
-                }
+                name={currFont === fontFamily ? 'check-circle-fill' : 'circle'}
+                color={currFont === fontFamily ? DEEP_GRAY : MEDIUM_GRAY}
                 type='Octicons'
                 size={14}
-                color={currFontFamily === fontFamily ? DEEP_GRAY : MEDIUM_GRAY}
               />
               <Text
                 style={{
-                  fontFamily: fontFamily === '' ? undefined : fontFamily,
+                  fontFamily,
                   fontSize,
+                  letterSpacing: fontFamily === 'HsSaemaul' ? 0.5 : 0,
                   lineHeight: 24,
-                  letterSpacing: 0,
-                  fontWeight: fontFamily === '' ? '900' : undefined,
                 }}
               >
                 {fontName}

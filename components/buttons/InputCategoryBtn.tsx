@@ -1,21 +1,21 @@
+import { useDispatch, useSelector } from '../../redux/hook';
 import { View } from 'react-native';
-import { Category } from '../../constant/foodCategories';
 import { TouchableOpacity } from '../common/native-component';
+import { showCategoryModal } from '../../redux/slice/modalVisibleSlice';
 
 import CategoryIcon from '../common/CategoryIcon';
 import tw from 'twrnc';
 
-interface Props {
-  category: Category;
-  setCategoryOpen: (open: boolean) => void;
-}
+export default function InputCategoryBtn() {
+  const { category } = useSelector((state) => state.category);
 
-export default function InputCategoryBtn({ category, setCategoryOpen }: Props) {
-  const onPress = () => setCategoryOpen(true);
+  const dispatch = useDispatch();
+
+  const onOpenModalPress = () => dispatch(showCategoryModal(true));
 
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={onOpenModalPress}
       style={tw`h-full border-r border-slate-200 flex-row items-center justify-center`}
     >
       <View style={tw`pl-3.5 pr-2.5 pb-0.5`}>

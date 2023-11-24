@@ -1,15 +1,15 @@
-import { Animated, Keyboard, View } from 'react-native';
-import { useFindFood, useSlideAnimation } from '../../hooks';
+import { Animated, View } from 'react-native';
+import { useFindFood, useItemSlideAnimation } from '../../hooks';
 import { closeKeyboard, cutLetter, findMatchNameFoods } from '../../util';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { Text, TouchableOpacity } from '../common/native-component';
+import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 import { shadowStyle } from '../../constant/shadowStyle';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
-import { editFormFood } from '../../redux/slice/formFoodSlice';
 
-const FAV_ITEM_MAX = 3;
+const FAV_ITEM_MAX = 2;
 
 export default function MatchedFavoriteFoodNameList() {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
@@ -28,33 +28,27 @@ export default function MatchedFavoriteFoodNameList() {
 
   const matchedFoodList = findMatchNameFoods(favoriteFoods, name);
 
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: (matchedFoodList || []).length >= 3 ? 80 : 46,
+    toValue: 46,
     active: !!matchedFoodList?.length,
   });
 
   return (
     <>
       {!isFavoriteItem(name) && (
-        <Animated.View
-          style={{
-            height,
-            overflow: 'hidden',
-            marginBottom: !!matchedFoodList?.length ? -15 : 0,
-          }}
-        >
+        <Animated.View style={{ height, overflow: 'hidden' }}>
           {!!matchedFoodList?.length && (
             <View
               style={tw.style(
-                `flex-row flex-wrap items-center mt-2 gap-1 px-0.5`
+                `flex-wrap flex-row items-center mt-2 gap-1 px-0.5`
               )}
             >
               {matchedFoodList.slice(0, FAV_ITEM_MAX).map((food) => (
                 <TouchableOpacity
                   key={food.id}
                   style={tw.style(
-                    `max-w-full h-7 border border-blue-200 flex-row items-center bg-blue-100 px-2 rounded-full`,
+                    `max-w-full h-8 border border-blue-200 flex-row items-center bg-blue-100 px-2 rounded-full`,
                     shadowStyle(4)
                   )}
                   onPress={() => onMatchedFoodPress(food.name)}
@@ -62,15 +56,16 @@ export default function MatchedFavoriteFoodNameList() {
                   <Icon
                     name={food.name === name ? 'check' : 'plus'}
                     type='Octicons'
-                    size={14}
+                    size={13}
                   />
                   <Text fontSize={14} style={tw.style(`text-blue-700`)}>
                     {cutLetter(food.name, 8)}
                   </Text>
                 </TouchableOpacity>
               ))}
+
               {matchedFoodList.length > FAV_ITEM_MAX && (
-                <Text fontSize={14} style={tw`ml-2 text-slate-800`}>
+                <Text fontSize={15} style={tw`ml-1 text-slate-800`}>
                   +{matchedFoodList.length - FAV_ITEM_MAX}개
                 </Text>
               )}

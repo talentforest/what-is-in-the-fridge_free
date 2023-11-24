@@ -7,9 +7,9 @@ interface Props {
 }
 
 export default function IconNoodles({ size, inActive }: Props) {
-  const BOWL_COLOR = '#6e6e6e';
-  const CHOPSTICK_COLOR = '#494949';
-  const NOODLE_COLOR = '#8c8c8c';
+  const BOWL_COLOR = '#ED4C00';
+  const CHOPSTICK_COLOR = '#ED4C00';
+  const NOODLE_COLOR = '#ff3f3f';
 
   return (
     <Svg width={size} height={size} viewBox='0 0 12 12' fill='none'>

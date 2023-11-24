@@ -4,28 +4,28 @@ import {
   addFridgeFood,
   editFridgeFood,
   removeFridgeFood,
-} from '../redux/slice/fridgeFoodsSlice';
+} from '../redux/slice/food-list/fridgeFoodsSlice';
 import {
   addToPantry,
   editPantryFood,
   removePantryFood,
-} from '../redux/slice/pantryFoodsSlice';
+} from '../redux/slice/food-list/pantryFoodsSlice';
 import {
-  AlertObj,
-  AlertPhraseObj,
-  alertPhrase,
-  alertPhraseWithFood,
-} from '../constant/alertPhrase';
-import { addFavorite, removeFavorite } from '../redux/slice/favoriteFoodsSlice';
-import { search } from '../redux/slice/searchedFoodSlice';
+  addFavorite,
+  removeFavorite,
+} from '../redux/slice/food-list/favoriteFoodsSlice';
+import { search } from '../redux/slice/food/searchedFoodSlice';
 import { useFindFood } from './useFindFood';
 import {
   checkSameStorage,
   isFridgeFood,
   isPantryFood,
 } from '../util/checkFoodSpace';
-import { setAlertInfo, toggleAlertModal } from '../redux/slice/alertModalSlice';
 import { beforePurchaseDate } from '../util';
+import { useNavigation } from '@react-navigation/native';
+import { NavigateProp } from '../navigation/Navigation';
+import { useHandleAlert } from './useHandleAlert';
+import { showOpenFoodDetailModal } from '../redux/slice/modalVisibleSlice';
 import UUIDGenerator from 'react-native-uuid';
 
 export const useEditFood = () => {
@@ -39,26 +39,26 @@ export const useEditFood = () => {
 
   const myUuid = UUIDGenerator.v4();
 
+  const navigation = useNavigation<NavigateProp>();
+
   const dispatch = useDispatch();
 
   const { isFavoriteItem } = useFindFood();
 
+  const {
+    alertWithFood,
+    alertNoNameInForm,
+    alertWrongDateInForm,
+    setAlert,
+    //
+  } = useHandleAlert();
+
   const afterChangedPositionAlert = () => {
-    const {
-      moveStorage: { title, msg },
-    } = alertPhraseWithFood(formFood);
-
-    dispatch(toggleAlertModal(true));
-    dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
+    const { alertMoveStorage } = alertWithFood(formFood);
+    setAlert(alertMoveStorage);
   };
 
-  const showAlert = (alert: AlertObj) => {
-    const { title, msg } = alert;
-    dispatch(toggleAlertModal(true));
-    dispatch(setAlertInfo({ title, msg, btns: ['확인'] }));
-  };
-
-  const onEditSumbit = (setModalVisible: (visible: boolean) => void) => {
+  const onEditSumbit = () => {
     const {
       id,
       expiredDate,
@@ -67,13 +67,12 @@ export const useEditFood = () => {
       space: newSpace,
     } = formFood;
 
-    const { noName, wrongDate } = alertPhrase;
     if (newName === '') {
-      showAlert(noName);
+      setAlert(alertNoNameInForm);
       return;
     }
     if (beforePurchaseDate(purchaseDate, expiredDate)) {
-      showAlert(wrongDate);
+      setAlert(alertWrongDateInForm);
       return;
     }
 
@@ -115,7 +114,7 @@ export const useEditFood = () => {
 
     setEditing(false);
 
-    setModalVisible(false);
+    dispatch(showOpenFoodDetailModal(false));
 
     // 위치가 변경된 경우에만 search 세팅 후 navigation 이동
     const sameSpace = originSpace === newSpace;
@@ -131,27 +130,10 @@ export const useEditFood = () => {
     }
   };
 
-  const onAlertComfirmPress = () => {
-    if (
-      alertTitle === '이미 갖고 있는 식료품' ||
-      alertTitle === '식료품 이름 미작성' ||
-      alertTitle === '유효하지 않은 소비기한'
-    ) {
-      return dispatch(toggleAlertModal(false));
-    }
-    if (
-      alertTitle === '식료품 이동 알림' ||
-      alertTitle === '식료품 개수 한도 도달'
-    ) {
-      return dispatch(toggleAlertModal(false));
-    }
-  };
-
   return {
     formFood,
     editing,
     setEditing,
     onEditSumbit,
-    onAlertComfirmPress,
   };
 };

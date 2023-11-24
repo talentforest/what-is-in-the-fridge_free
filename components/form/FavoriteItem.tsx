@@ -3,7 +3,7 @@ import { ICE_BLUE, LIGHT_INDIGO } from '../../constant/colors';
 import { useToggleAnimation, useFindFood } from '../../hooks';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from '../../redux/hook';
-import { toggleFavorite } from '../../redux/slice/isFavoriteSlice';
+import { toggleFavorite } from '../../redux/slice/food/isFavoriteSlice';
 import { ModalTitle } from '../modal/Modal';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { InputStyle } from '../common/native-component';

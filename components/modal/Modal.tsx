@@ -58,7 +58,7 @@ export default function Modal({
       deviceHeight={height}
       statusBarTranslucent={true}
       hasBackdrop={true}
-      backdropOpacity={0.5}
+      backdropOpacity={0.6}
       style={tw.style(`m-0 justify-end`, style)}
     >
       <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-105}>

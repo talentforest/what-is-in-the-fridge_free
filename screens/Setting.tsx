@@ -4,7 +4,8 @@ import SettingBox, {
   SettingInfo,
 } from '../screen-component/setting/SettingBox';
 import { Text } from '../components/common/native-component';
-import { LIGHT_BLUE } from '../constant/colors';
+import { GRAY, LIGHT_BLUE } from '../constant/colors';
+
 import PaymentBtn from '../screen-component/setting/PaymentBtn';
 import Icon from '../components/common/native-component/Icon';
 import tw from 'twrnc';
@@ -38,12 +39,24 @@ export default function Setting() {
           </View>
 
           <Text fontSize={15} style={tw`text-slate-500 mb-2`}>
-            이용권 구매시 식료품을 한도 없이 저장할 수 있어요.
+            한번만 구매하면 식료품을 한도 없이 저장할 수 있어요.
           </Text>
         </View>
 
         {/* 결제 버튼 */}
         <PaymentBtn />
+
+        <View style={tw`flex-row items-center mt-3 gap-1`}>
+          <Icon
+            name='information-outline'
+            type='MaterialCommunityIcons'
+            size={15}
+            color={GRAY}
+          />
+          <Text fontSize={15} style={tw`text-slate-700 mt-0.1`}>
+            이용권 구매는 곧 업데이트될 예정입니다.
+          </Text>
+        </View>
       </View>
 
       <View style={tw`gap-1 px-1 mt-2`}>

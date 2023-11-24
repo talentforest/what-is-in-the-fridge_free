@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Food, initialFridgeFood } from '../../constant/foodInfo';
+import { Food, initialFridgeFood } from '../../../constant/foodInfo';
 
 export const initialState: { formFood: Food; originalFood: Food } = {
   formFood: initialFridgeFood,

@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
 import { Food } from '../../constant/foodInfo';
 import { useDispatch } from '../../redux/hook';
-import { search } from '../../redux/slice/searchedFoodSlice';
+import { search } from '../../redux/slice/food/searchedFoodSlice';
 import { MEDIUM_GRAY } from '../../constant/colors';
 
 import CategoryIcon from '../../components/common/CategoryIcon';
@@ -37,7 +37,7 @@ export default function SearchedItem({ food }: Props) {
   return (
     <TouchableOpacity
       onPress={() => onNavigatePress(space)}
-      style={tw`h-13 bg-blue-50 shadow-md rounded-xl px-2.5 py-0.5 justify-between`}
+      style={tw`h-13 bg-blue-50 shadow-md rounded-xl px-2.5 py-1 justify-between`}
     >
       <View style={tw`flex-row items-center gap-1`}>
         <CategoryIcon category={category} size={12} />

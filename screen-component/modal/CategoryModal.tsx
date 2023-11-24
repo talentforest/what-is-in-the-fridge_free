@@ -1,24 +1,17 @@
 import { View } from 'react-native';
 import { Category, foodCategories } from '../../constant/foodCategories';
 import { useImageLoad } from '../../hooks';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { showCategoryModal } from '../../redux/slice/modalVisibleSlice';
 
 import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 import CategoryBox from '../../components/modal/CategoryBox';
 import tw from 'twrnc';
 
-interface Props {
-  modalVisible: boolean;
-  setModalVisible: (modalVisible: boolean) => void;
-  currentChecked?: string;
-  onCheckBoxPress?: (category: Category) => void;
-}
+export default function CategoryModal() {
+  const { category: currCategory } = useSelector((state) => state.category);
+  const { categoryModalVisible } = useSelector((state) => state.modalVisible);
 
-export default function CategoryModal({
-  modalVisible,
-  setModalVisible,
-  currentChecked,
-  onCheckBoxPress,
-}: Props) {
   const { isLoaded, assets } = useImageLoad({
     images: [
       require('../../assets/category/category-fresh.png'),
@@ -44,24 +37,25 @@ export default function CategoryModal({
     return asset?.localUri;
   };
 
-  const closeModal = () => setModalVisible(false);
+  const dispatch = useDispatch();
+
+  const closeModal = () => dispatch(showCategoryModal(false));
 
   if (!isLoaded) return null;
 
   return (
     <FadeInMiddleModal
       title='카테고리 선택'
-      isVisible={modalVisible}
+      isVisible={categoryModalVisible}
       closeModal={closeModal}
     >
-      {onCheckBoxPress && assets && (
+      {assets && (
         <View style={tw`flex-row flex-wrap gap-1.5 gap-y-2.5 justify-between`}>
           {foodCategories.map(({ category }) => (
             <CategoryBox
               key={category}
-              checked={category === currentChecked}
               category={category}
-              onCheckBoxPress={onCheckBoxPress}
+              checked={category === currCategory}
               localUri={getMatchURI(category) || assets[0].uri}
             />
           ))}

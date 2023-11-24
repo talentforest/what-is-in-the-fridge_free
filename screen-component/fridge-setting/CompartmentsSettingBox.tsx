@@ -15,9 +15,7 @@ interface Props {
 export default function CompartmentsSettingBox({ space }: Props) {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
-  const { onMinusPress, onPlusPress, onConfirmPress } = useHandleCompartments({
-    space,
-  });
+  const { onMinusPress, onPlusPress } = useHandleCompartments({ space });
 
   const MAX_COMPARTMENTS_NUM =
     space === '냉동실 안쪽' || space === '냉동실 문쪽' ? 3 : 5;
@@ -52,7 +50,7 @@ export default function CompartmentsSettingBox({ space }: Props) {
           />
         </View>
       </View>
-      <AlertModal onPress={onConfirmPress} />
+      <AlertModal />
     </>
   );
 }

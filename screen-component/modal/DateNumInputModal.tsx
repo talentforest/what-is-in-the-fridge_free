@@ -1,34 +1,35 @@
-import { isValidDate } from '../../util';
+import { closeKeyboard, isValidDate } from '../../util';
 import { Animated, View, useWindowDimensions } from 'react-native';
 import { useState } from 'react';
-import { useSlideAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { editFormFood } from '../../redux/slice/food/formFoodSlice';
+import { showExpiredDateModal } from '../../redux/slice/modalVisibleSlice';
+import { Text } from '../../components/common/native-component';
 
 import DateNumTokenBox from '../../components/common/DateNumTokenBox';
-import MessageBox from '../../components/common/MessageBox';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
-import tw from 'twrnc';
 import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
-import { useDispatch } from '../../redux/hook';
-import { editFormFood } from '../../redux/slice/formFoodSlice';
+import tw from 'twrnc';
 
 export type DateType = '년' | '월' | '일';
-
-interface Props {
-  closeModal: () => void;
-  isVisible: boolean;
-}
 
 export type DateState = {
   state: 'ok' | 'error';
   msg: string;
 };
 
-export default function DateNumInputModal({ closeModal, isVisible }: Props) {
-  const [dateToken, setDateToken] = useState(['', '', '', '', '', '']);
-  const [inValidDate, setInValidDate] = useState<DateState>({
-    state: 'ok',
-    msg: '',
-  });
+const initialDateToken = ['', '', '', '', '', ''];
+
+const initialMsg: DateState = {
+  state: 'ok',
+  msg: '',
+};
+
+export default function DateNumInputModal() {
+  const [dateToken, setDateToken] = useState(initialDateToken);
+  const [inValidDate, setInValidDate] = useState<DateState>(initialMsg);
+  const { expiredDateModal } = useSelector((state) => state.modalVisible);
 
   const dispatch = useDispatch();
 
@@ -36,7 +37,7 @@ export default function DateNumInputModal({ closeModal, isVisible }: Props) {
 
   const tokenWidth = width > 400 ? width / 12 : width / 10;
 
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: 0,
     toValue: 28,
     active: inValidDate.state === 'error',
@@ -48,6 +49,13 @@ export default function DateNumInputModal({ closeModal, isVisible }: Props) {
   const convertTokenToDate = `20${year}-${month}-${day}`;
 
   const isValid = isValidDate(convertTokenToDate);
+
+  const closeModal = () => {
+    closeKeyboard();
+    dispatch(showExpiredDateModal(false));
+    setDateToken(initialDateToken);
+    setInValidDate(initialMsg);
+  };
 
   const onSubmit = () => {
     if (isValid.state === 'error') {
@@ -61,7 +69,7 @@ export default function DateNumInputModal({ closeModal, isVisible }: Props) {
   return (
     <FadeInMiddleModal
       title='소비기한 설정'
-      isVisible={isVisible}
+      isVisible={expiredDateModal}
       closeModal={closeModal}
       style={tw`justify-start mt-28`}
     >
@@ -79,12 +87,14 @@ export default function DateNumInputModal({ closeModal, isVisible }: Props) {
           style={{
             height,
             overflow: 'hidden',
-            marginTop: 10,
+            marginTop: 5,
             width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
             alignItems: 'center',
           }}
         >
-          <MessageBox color='red' message={inValidDate.msg} />
+          <Text style={tw`text-red-500 flex-1`}>{inValidDate.msg}</Text>
         </Animated.View>
 
         <View style={tw`w-full`}>

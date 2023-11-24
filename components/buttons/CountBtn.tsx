@@ -13,12 +13,12 @@ export default function CountBtn({ type, onPress, active }: Props) {
   const COLOR_STRING = type === 'dash' ? 'slate' : 'blue';
   const SIZE = `h-6 w-6`;
   const ACTIVE_STYLE = active
-    ? `border border-${COLOR_STRING}-200 bg-${COLOR_STRING}-600`
-    : 'border border-slate-300 bg-slate-100';
+    ? `border-${COLOR_STRING}-500 bg-${COLOR_STRING}-600`
+    : 'border-slate-200 bg-slate-100';
 
   return (
     <TouchableOpacity
-      style={tw`items-center shadow-sm justify-center rounded-md ${SIZE} ${ACTIVE_STYLE}`}
+      style={tw`items-center shadow-sm justify-center rounded-md ${SIZE} border ${ACTIVE_STYLE}`}
       onPress={onPress}
     >
       <Icon

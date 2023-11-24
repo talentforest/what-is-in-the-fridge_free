@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { ReactNode } from 'react';
-import { GRAY } from '../../constant/colors';
+import { MEDIUM_GRAY } from '../../constant/colors';
 
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
@@ -20,8 +20,8 @@ interface Props {
 export default function SelectContainter({ title, children }: Props) {
   return (
     <View style={tw`mb-6`}>
-      <View style={tw`flex-row items-center gap-0.5 pb-0.5 mb-1`}>
-        <Icon name='gear' type='Octicons' color={GRAY} size={13} />
+      <View style={tw`flex-row items-center gap-1 pb-0.5 mb-1`}>
+        <Icon name='tools' type='Octicons' color={MEDIUM_GRAY} size={12} />
         <Text fontSize={16} style={tw`text-slate-600`}>
           {title}
         </Text>

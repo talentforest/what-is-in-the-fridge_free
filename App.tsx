@@ -5,12 +5,12 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as ReduxProvider } from 'react-redux';
 import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { useFonts } from 'expo-font';
+import { fonts } from './constant/fonts';
 import Navigation from './navigation/Navigation';
 import Splash from './screens/Splash';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
-import { useFonts } from 'expo-font';
-import { fonts } from './constant/fonts';
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);

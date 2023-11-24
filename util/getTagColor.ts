@@ -5,7 +5,7 @@ export const DISABLED_BG_COLOR = 'bg-white border-slate-200';
 export const DISABLED_TEXT_COLOR = 'text-slate-400';
 
 export const INACTIVE_BG_COLOR = 'bg-white border-slate-200';
-export const INACTIVE_TEXT_COLOR = 'text-slate-700';
+export const INACTIVE_TEXT_COLOR = 'text-slate-600';
 
 export const ACTIVE_BG_COLOR = 'bg-blue-50 border-blue-200';
 export const ACTIVE_TEXT_COLOR = 'text-blue-600';
@@ -42,22 +42,12 @@ const activeTextColorByFilter = (filter: Filter) => {
 export const getTagColor = (
   filter: Filter,
   active: boolean,
-  type?: 'bg' | 'text',
-  length?: number
+  type?: 'bg' | 'text'
 ) => {
   if (type === 'text') {
-    return active
-      ? activeTextColorByFilter(filter)
-      : length === 0
-      ? DISABLED_TEXT_COLOR
-      : INACTIVE_TEXT_COLOR;
+    return active ? activeTextColorByFilter(filter) : INACTIVE_TEXT_COLOR;
   }
-
-  return active
-    ? activeBgColorByFilter(filter)
-    : length === 0
-    ? DISABLED_BG_COLOR
-    : INACTIVE_BG_COLOR;
+  return active ? activeBgColorByFilter(filter) : INACTIVE_BG_COLOR;
 };
 
 export const colorByFilter = (

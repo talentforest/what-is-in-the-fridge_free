@@ -1,10 +1,8 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
-import { Food } from '../../constant/foodInfo';
 import { StorageType, Space, CompartmentNum } from '../../constant/fridgeInfo';
-import { useDispatch, useSelector } from '../../redux/hook';
+import { useSelector } from '../../redux/hook';
 import { useAddAtOnce } from '../../hooks';
-import { toggleAlertModal } from '../../redux/slice/alertModalSlice';
 
 import SpaceBtn from '../../components/buttons/SpaceBtn';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
@@ -16,27 +14,12 @@ import AlertModal from './AlertModal';
 import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 import tw from 'twrnc';
 
-interface Props {
-  modalVisible: boolean;
-  setModalVisible: (visible: boolean) => void;
-  checkedList: Food[];
-  setCheckedList: React.Dispatch<React.SetStateAction<Food[]>>;
-  onConfirmPress: () => void;
-}
-
 export type Position = `${Space} ${CompartmentNum}`;
 
-export default function AddAtOnceModal({
-  modalVisible,
-  setModalVisible,
-  checkedList,
-  setCheckedList,
-  onConfirmPress,
-}: Props) {
+export default function AddAtOnceModal() {
+  const { checkedList } = useSelector((state) => state.checkedList);
   const { formFood } = useSelector((state) => state.formFood);
-  const {
-    alertInfo: { title: alertTitle },
-  } = useSelector((state) => state.alertModal);
+  const { addAtOnceModal } = useSelector((state) => state.modalVisible);
 
   const {
     position,
@@ -52,32 +35,13 @@ export default function AddAtOnceModal({
     onNextStepPress,
     onBackStepPress,
     closeModal,
-    onAlertPress,
-  } = useAddAtOnce({ checkedList, setCheckedList, setModalVisible });
-
-  const dispatch = useDispatch();
-
-  // ShoppingList의 Alert 설정
-  const onPress = () => {
-    if (alertTitle === '식료품 한번에 추가') {
-      onAlertPress();
-      return;
-    } else if (
-      alertTitle === '추가 완료' ||
-      alertTitle === '유효하지 않은 소비기한' ||
-      alertTitle === '식료품 개수 한도 도달'
-    ) {
-      return dispatch(toggleAlertModal(false));
-    } else {
-      onConfirmPress();
-    }
-  };
+  } = useAddAtOnce();
 
   return (
     <>
       <FadeInMiddleModal
         title={currentStep.name}
-        isVisible={modalVisible}
+        isVisible={addAtOnceModal}
         closeModal={closeModal}
       >
         {/* 1단계 */}
@@ -145,11 +109,7 @@ export default function AddAtOnceModal({
               />
             ))}
 
-            <EditingBox
-              isEditing={isEditing}
-              setIsEditing={setIsEditing}
-              setCheckedList={setCheckedList}
-            />
+            <EditingBox isEditing={isEditing} setIsEditing={setIsEditing} />
 
             {!isEditing && (
               <View style={tw`gap-2 mt-6`}>
@@ -165,7 +125,7 @@ export default function AddAtOnceModal({
         )}
       </FadeInMiddleModal>
 
-      <AlertModal onPress={onPress} />
+      <AlertModal />
     </>
   );
 }

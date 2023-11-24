@@ -8,21 +8,14 @@ import tw from 'twrnc';
 
 interface Props {
   onPress: () => void;
-  disabled: boolean;
   icon: string;
   btnName: '삭제' | '한번에 추가' | '장보기 추가';
 }
 
-export default function SquareIconBtn({
-  onPress,
-  disabled,
-  icon,
-  btnName,
-}: Props) {
+export default function SquareIconBtn({ onPress, icon, btnName }: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      disabled={disabled}
       style={tw.style(
         `bg-white border min-h-11 border-slate-200 ml-1 mb-0.5 items-center justify-center rounded-2xl`,
         shadowStyle(4)

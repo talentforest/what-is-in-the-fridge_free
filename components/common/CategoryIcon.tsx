@@ -1,21 +1,20 @@
 import {
   Category,
-  FoodCategory,
+  CategoryInfo,
   foodCategories,
 } from '../../constant/foodCategories';
 import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 import Icon from './native-component/Icon';
-import IconMeatFishEgg from '../svg/foodCategory/IconMeatFishEgg';
-import IconDairyEgg from '../svg/foodCategory/IconDairyEgg';
-import IconCan from '../svg/foodCategory/IconCan';
-import IconPeanutGrain from '../svg/foodCategory/IconPeanutGrain';
-import IconLeaf from '../svg/foodCategory/IconLeaf';
-import IconInstantBox from '../svg/foodCategory/IconInstantBox';
-import IconNoodles from '../svg/foodCategory/IconNoodles';
-import IconSideDish from '../svg/foodCategory/IconSideDish';
-import IconGlassCupFill from '../svg/foodCategory/IconGlassCupFill';
-import IconIceCream2Fill from '../svg/foodCategory/IconIceCream2Fill';
-import IconWineFill from '../svg/foodCategory/IconWineFill';
+import IconMeatFishEgg from '../svg/category/IconMeatFishEgg';
+import IconDairyEgg from '../svg/category/IconDairyEgg';
+import IconCan from '../svg/category/IconCan';
+import IconPeanutGrain from '../svg/category/IconPeanutGrain';
+import IconLeaf from '../svg/category/IconLeaf';
+import IconInstantBox from '../svg/category/IconInstantBox';
+import IconNoodles from '../svg/category/IconNoodles';
+import IconSideDish from '../svg/category/IconSideDish';
+import IconGlassCupFill from '../svg/category/IconGlassCupFill';
+import IconWineFill from '../svg/category/IconWineFill';
 
 interface Props {
   category: Category;
@@ -31,14 +30,12 @@ export default function CategoryIcon({ category, size, inActive }: Props) {
     return categoryName || '신선식품류';
   };
 
-  const { icon, color } = findCategory(category) as FoodCategory;
+  const { icon, color } = findCategory(category) as CategoryInfo;
 
   return (
     <>
       {icon === 'sauce' ? (
         <IconWineFill size={size} color={inActive ? LIGHT_GRAY : color} />
-      ) : icon === 'dessert' ? (
-        <IconIceCream2Fill size={size} color={inActive ? LIGHT_GRAY : color} />
       ) : icon === 'cup-water' ? (
         <IconGlassCupFill size={size} color={inActive ? LIGHT_GRAY : BLUE} />
       ) : icon === 'sidedish' ? (

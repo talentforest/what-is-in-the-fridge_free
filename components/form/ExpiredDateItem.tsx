@@ -9,8 +9,8 @@ import { BLUE } from '../../constant/colors';
 import { controlDateBtns } from '../../constant/controlDateBtns';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { useDispatch, useSelector } from '../../redux/hook';
-import { toggleExpiredDateModal } from '../../redux/slice/formModalSlice';
-import { editFormFood } from '../../redux/slice/formFoodSlice';
+import { showExpiredDateModal } from '../../redux/slice/modalVisibleSlice';
+import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 
 import Icon from '../common/native-component/Icon';
 import FormLabel from './FormLabel';
@@ -23,7 +23,6 @@ export default function ExpiredDateItem() {
   const {
     formFood: { expiredDate },
   } = useSelector((state) => state.formFood);
-  const { expiredDateModal } = useSelector((state) => state.formModalVisible);
 
   const dispatch = useDispatch();
 
@@ -32,12 +31,15 @@ export default function ExpiredDateItem() {
     dispatch(editFormFood({ expiredDate }));
   };
 
+  const onItemPress = () => {
+    dispatch(showExpiredDateModal(true));
+  };
+
   return (
     <View>
       <FormLabel label='소비기한' />
-
       <TouchableOpacity
-        onPress={() => dispatch(toggleExpiredDateModal(true))}
+        onPress={onItemPress}
         style={tw.style(
           `flex-row items-center ${InputStyle} p-0`,
           shadowStyle(3)
@@ -46,7 +48,7 @@ export default function ExpiredDateItem() {
         <TextInput
           editable={false}
           value={getFormattedDate(expiredDate, 'YY.MM.DD')}
-          style={tw`border-0 w-22 h-full`}
+          style={tw`border-0 w-22 h-full bg-transparent`}
         />
 
         {getDiffDate(expiredDate) >= 0 && <RelativeTime date={expiredDate} />}
@@ -55,7 +57,6 @@ export default function ExpiredDateItem() {
           <Icon type='Octicons' name='calendar' size={14} color={BLUE} />
         </View>
       </TouchableOpacity>
-
       <View style={tw`mt-1.5 gap-1 flex-row flex-wrap items-start`}>
         {controlDateBtns.map((btn) => (
           <ControlDateBtn
@@ -69,12 +70,7 @@ export default function ExpiredDateItem() {
       </View>
 
       {/* 날짜 숫자 입력 모달 */}
-      {expiredDateModal && (
-        <DateNumInputModal
-          isVisible={expiredDateModal}
-          closeModal={() => dispatch(toggleExpiredDateModal(false))}
-        />
-      )}
+      <DateNumInputModal />
     </View>
   );
 }

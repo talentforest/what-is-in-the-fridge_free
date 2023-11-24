@@ -1,38 +1,38 @@
 import { ScrollView, View, useWindowDimensions } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { CompartmentNum } from '../../constant/fridgeInfo';
-import { formFourSteps } from '../../constant/formInfo';
-import { useState } from 'react';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { showExpandCompartmentModal } from '../../redux/slice/modalVisibleSlice';
 
 import EmptySign from '../../components/common/EmptySign';
 import FoodBox from '../../components/common/FoodBox';
-import FoodDetailModal from './FoodDetailModal';
 import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 import tw from 'twrnc';
 
 interface Props {
   compartmentNum: CompartmentNum;
   foodList: Food[];
-  expandCompartment: boolean;
-  setExpandCompartment: (visible: boolean) => void;
 }
 
 export default function ExpandedCompartmentModal({
   compartmentNum,
   foodList,
-  expandCompartment,
-  setExpandCompartment,
 }: Props) {
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const closeModal = () => setExpandCompartment(false);
+  const { expandCompartmentModal } = useSelector((state) => state.modalVisible);
 
   const { height } = useWindowDimensions();
+
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+    const expandCompartmentInfo = { modalVisible: false, compartmentNum };
+    dispatch(showExpandCompartmentModal(expandCompartmentInfo));
+  };
 
   return (
     <FadeInMiddleModal
       title={`${compartmentNum}칸 크게 보기`}
-      isVisible={expandCompartment}
+      isVisible={expandCompartmentModal?.modalVisible}
       closeModal={closeModal}
     >
       {!!foodList.length ? (
@@ -42,11 +42,7 @@ export default function ExpandedCompartmentModal({
           showsVerticalScrollIndicator={false}
         >
           {foodList.map((food: Food) => (
-            <FoodBox
-              key={food.id}
-              food={food}
-              setOpenFoodDetailModal={setModalVisible}
-            />
+            <FoodBox key={food.id} food={food} />
           ))}
         </ScrollView>
       ) : (
@@ -61,12 +57,6 @@ export default function ExpandedCompartmentModal({
           />
         </View>
       )}
-
-      <FoodDetailModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        formSteps={formFourSteps}
-      />
     </FadeInMiddleModal>
   );
 }

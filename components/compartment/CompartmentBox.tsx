@@ -3,6 +3,9 @@ import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { TouchableOpacity } from '../common/native-component';
 import { CompartmentNum } from '../../constant/fridgeInfo';
+import { useDispatch } from '../../redux/hook';
+import { useRouteName } from '../../hooks/useRouteName';
+import { showExpandCompartmentModal } from '../../redux/slice/modalVisibleSlice';
 
 import CompartmentHeader from './CompartmentHeader';
 import EmptySign from '../common/EmptySign';
@@ -11,31 +14,28 @@ import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
-  title: string;
   foodList: Food[];
-  setOpenFoodDetailModal?: (modal: boolean) => void;
-  setExpandCompartment?: (modal: boolean) => void;
-  setOpenAddFoodModal: (modal: boolean) => void;
   scrollViewRef: MutableRefObject<ScrollView>;
+  compartmentNum?: CompartmentNum;
 }
 
 export default function CompartmentBox({
-  title,
+  compartmentNum,
   foodList,
-  setOpenFoodDetailModal,
-  setExpandCompartment,
-  setOpenAddFoodModal,
   scrollViewRef,
 }: Props) {
-  const compartmentNum = title.slice(0, 2) as CompartmentNum;
+  const { routePantryFoods } = useRouteName();
+
+  const dispatch = useDispatch();
+
+  const openExpandCompartmentPress = () =>
+    dispatch(
+      showExpandCompartmentModal({ modalVisible: true, compartmentNum })
+    );
 
   return (
     <View style={tw`flex-1 border border-slate-200 bg-white rounded-lg`}>
-      <CompartmentHeader
-        title={title}
-        foodList={foodList}
-        setOpenAddFoodModal={setOpenAddFoodModal}
-      />
+      <CompartmentHeader compartmentNum={compartmentNum} foodList={foodList} />
 
       {!!foodList.length ? (
         <ScrollView
@@ -46,12 +46,7 @@ export default function CompartmentBox({
           showsVerticalScrollIndicator={false}
         >
           {foodList.map((food: Food) => (
-            <FoodBox
-              key={food.id}
-              food={food}
-              scrollViewRef={scrollViewRef}
-              setOpenFoodDetailModal={setOpenFoodDetailModal}
-            />
+            <FoodBox key={food.id} food={food} scrollViewRef={scrollViewRef} />
           ))}
         </ScrollView>
       ) : (
@@ -64,9 +59,9 @@ export default function CompartmentBox({
         </View>
       )}
 
-      {setExpandCompartment && (
+      {!routePantryFoods && (
         <TouchableOpacity
-          onPress={() => setExpandCompartment(true)}
+          onPress={openExpandCompartmentPress}
           style={tw`absolute border border-white p-2 left-0 bottom-0`}
           disabled={false}
         >

@@ -1,4 +1,4 @@
-export type Fonts = keyof typeof fonts | '';
+export type Fonts = keyof typeof fonts;
 
 export const fonts = {
   HsSaemaul: require('../assets/fonts/HSSaemaulRegular.ttf'),

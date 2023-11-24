@@ -69,11 +69,6 @@ export const useGetFoodList = () => {
       );
     }
 
-    if (filter === '자주 먹는 식료품')
-      return foodList.filter((food) =>
-        favoriteFoods.find((favFood) => food.name === favFood.name)
-      );
-
     if (filter === '소비기한 만료')
       return foodList.filter((food) => expired(food.expiredDate));
 
@@ -116,12 +111,6 @@ export const useGetFoodList = () => {
       const allFoods = [...fridgeFoods, ...pantryFoods];
       return sortByCategory.filter(
         (food) => !!!allFoods.find((allFood) => allFood.name === food.name)
-      );
-    }
-
-    if (filter === '자주 먹는 식료품') {
-      return sortByCategory.filter((food) =>
-        favoriteFoods.find((favFood) => food.name === favFood.name)
       );
     }
 

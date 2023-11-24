@@ -1,13 +1,13 @@
 import { SafeBottomAreaView } from '../components/common/native-component';
 import { entireFilterObj, expiredFilters, spaceFilters } from '../util';
 import {
-  useHandleCheckList,
-  useHandleTableItem,
+  useHandleTableFooterBtns,
   useGetFoodList,
-  useSetAnimationState,
   useHandleFilter,
 } from '../hooks/';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from '../redux/hook';
+import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
 
 import Container from '../components/common/Container';
 import TableBody from '../components/table/TableBody';
@@ -23,33 +23,20 @@ export default function ExpiredFoods() {
   const { getFilteredFoodList, expiredFoods } = useGetFoodList();
 
   const {
-    checkedList,
-    setCheckedList,
-    onEntireBoxPress,
-    onCheckBoxPress, //
-  } = useHandleCheckList();
+    onDeleteBtnPress,
+    onAddShoppingListBtnPress, //
+  } = useHandleTableFooterBtns();
 
-  const {
-    onDeleteExpiredFoodPress,
-    onAddShoppingListBtnPress,
-    onConfirmPress,
-  } = useHandleTableItem({ checkedList, setCheckedList });
-
-  const { animationState, setAnimationState, afterAnimation } =
-    useSetAnimationState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setCheckedList([]);
     initializeFilter();
+    return () => {
+      dispatch(setCheckedList([]));
+    };
   }, []);
 
-  const foodList = useCallback(() => {
-    return getFilteredFoodList(currentFilter, expiredFoods);
-  }, [currentFilter, expiredFoods]);
-
-  const afterAnimationWork = () => {
-    afterAnimation(onDeleteExpiredFoodPress, expiredFoods);
-  };
+  const foodList = getFilteredFoodList(currentFilter, expiredFoods);
 
   return (
     <SafeBottomAreaView>
@@ -57,40 +44,26 @@ export default function ExpiredFoods() {
         <TableFilters
           filterTagList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
           foodList={expiredFoods}
-          setCheckedList={setCheckedList}
         />
 
-        <TableBody
-          title='소비기한 주의 식료품'
-          foodList={foodList}
-          onCheckBoxPress={onCheckBoxPress}
-          checkedList={checkedList}
-          animationState={animationState}
-          afterAnimation={afterAnimationWork}
-        />
+        <TableBody title='소비기한 주의 식료품' foodList={foodList} />
 
-        <TableFooterContainer active={!!checkedList.length}>
-          <TableSelectedHandleBox
-            checkedList={checkedList}
-            foodList={foodList}
-            onEntirePress={onEntireBoxPress}
-          >
+        <TableFooterContainer>
+          <TableSelectedHandleBox foodList={foodList}>
             <SquareIconBtn
               btnName='장보기 추가'
               icon='basket-plus-outline'
-              disabled={checkedList.length === 0}
               onPress={onAddShoppingListBtnPress}
             />
             <SquareIconBtn
               btnName='삭제'
-              onPress={() => onDeleteExpiredFoodPress(animationState)}
+              onPress={onDeleteBtnPress}
               icon='trash-can-outline'
-              disabled={checkedList.length === 0}
             />
           </TableSelectedHandleBox>
         </TableFooterContainer>
 
-        <AlertModal onPress={() => onConfirmPress(setAnimationState)} />
+        <AlertModal />
       </Container>
     </SafeBottomAreaView>
   );

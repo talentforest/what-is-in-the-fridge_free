@@ -6,16 +6,14 @@ export * from './useAddShoppingListFood';
 export * from './useDeleteFood';
 export * from './useEditFood';
 export * from './useGetFoodList';
-export * from './useHandleCheckList';
 export * from './useHandleCompartments';
-export * from './useHandleTableItem';
+export * from './useHandleTableFooterBtns';
 export * from './useImageLoad';
 export * from './useHandleFilter';
-export * from './useHandleFoodCategory';
+export * from './useHandleAlert';
 
 // 애니메이션
-export * from './animation/useSetAnimationState';
-export * from './animation/useSlideAnimation';
+export * from './animation/useItemSlideAnimation';
 export * from './animation/useToggleAnimation';
 export * from './animation/useShakingAnimation';
 export * from './animation/usePulseAnimation';

@@ -4,32 +4,28 @@ import {
   Text,
   TouchableOpacity,
 } from '../../components/common/native-component';
-import { Food, initialFridgeFood } from '../../constant/foodInfo';
+import { initialFridgeFood } from '../../constant/foodInfo';
 import { useDispatch, useSelector } from '../../redux/hook';
-import { useFindFood, useSlideAnimation } from '../../hooks';
+import { useFindFood, useItemSlideAnimation } from '../../hooks';
+import { setFormFood } from '../../redux/slice/food/formFoodSlice';
+import { setCheckedList } from '../../redux/slice/food-list/checkListSlice';
 
 import CategoryItem from '../../components/form/CategoryItem';
 import ExpiredDateItem from '../../components/form/ExpiredDateItem';
-import FormMessage from '../../components/form/FormMessage';
 import tw from 'twrnc';
-import { setFormFood } from '../../redux/slice/formFoodSlice';
 
 interface Props {
   isEditing: boolean;
   setIsEditing: (isEditing: boolean) => void;
-  setCheckedList: React.Dispatch<React.SetStateAction<Food[]>>;
 }
 
-export default function EditingBox({
-  isEditing,
-  setIsEditing,
-  setCheckedList,
-}: Props) {
+export default function EditingBox({ isEditing, setIsEditing }: Props) {
   const { formFood } = useSelector((state) => state.formFood);
+  const { checkedList } = useSelector((state) => state.checkedList);
   const { isFavoriteItem } = useFindFood();
   const favoriteFood = isFavoriteItem(formFood.name);
 
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: 0,
     toValue: favoriteFood ? 204 : 282,
     active: isEditing,
@@ -44,12 +40,11 @@ export default function EditingBox({
       category: formFood.category,
     };
 
-    setCheckedList((prev) =>
-      prev.map((food) => {
-        return food.name === formFood.name ? { ...food, ...editedInfo } : food;
-      })
-    );
+    const list = checkedList.map((food) => {
+      return food.name === formFood.name ? { ...food, ...editedInfo } : food;
+    });
 
+    dispatch(setCheckedList(list));
     dispatch(setFormFood(initialFridgeFood));
   };
 

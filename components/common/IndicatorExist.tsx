@@ -4,7 +4,7 @@ import { useFindFood } from '../../hooks';
 import { Space } from '../../constant/fridgeInfo';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from '../../redux/hook';
-import { search } from '../../redux/slice/searchedFoodSlice';
+import { search } from '../../redux/slice/food/searchedFoodSlice';
 import { NavigateProp } from '../../navigation/Navigation';
 import Icon from './native-component/Icon';
 import tw from 'twrnc';

@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from '../../redux/hook';
 import { Animated, View } from 'react-native';
 import { useEffect, useState } from 'react';
-import { editFormFood } from '../../redux/slice/formFoodSlice';
+import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 import { TextInput, TouchableOpacity } from '../common/native-component';
-import { useSlideAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { comma } from '../../util/commaNotation';
 import { closeKeyboard } from '../../util';
@@ -19,7 +19,7 @@ export default function QuantityItem() {
 
   const [isQuanityOpen, setQuantityOpen] = useState(false);
 
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: 0,
     toValue: 48,
     active: isQuanityOpen,

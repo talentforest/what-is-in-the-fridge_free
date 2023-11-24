@@ -26,7 +26,7 @@ export default function DateNumTokenBox({
   const { fontFamily } = useSelector((state) => state.fontFamily);
   const [isFocusedItem, setIsFocusedItem] = useState(0);
 
-  const fontSize = fontFamily === 'NanumSquareRoundEB' ? 22 : 24;
+  const fontSize = fontFamily === 'NanumSquareRoundEB' ? 21 : 24;
 
   const textInputRefs = useRef<TextInput[]>([]);
 
@@ -98,15 +98,15 @@ export default function DateNumTokenBox({
               )}
             >
               <TextInput
-                allowFontScaling={false}
                 ref={(element: TextInput) => setRef(element, idx)}
+                allowFontScaling={false}
                 placeholder={getDateToken(formattedToday)[idx]}
                 placeholderTextColor='#e3e3e3'
                 keyboardType='number-pad'
                 maxLength={1}
                 selectionColor={'#f5f5f4'}
                 value={dateToken[idx]}
-                autoFocus={idx === isFocusedItem}
+                autoFocus={idx === isFocusedItem - 1}
                 onFocus={() => changeFocus(idx)}
                 onChangeText={(text) => onChangeText(text, idx)}
                 onKeyPress={({ nativeEvent: { key } }) => onKeyPress(key, idx)}

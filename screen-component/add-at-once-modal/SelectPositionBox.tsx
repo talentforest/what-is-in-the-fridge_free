@@ -5,7 +5,7 @@ import {
   SpaceSide,
   SpaceType,
 } from '../../constant/fridgeInfo';
-import { useSlideAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
 import { getCompartments } from '../../util';
 import { useSelector } from '../../redux/hook';
 import { Position } from '../modal/AddAtOnceModal';
@@ -29,7 +29,7 @@ export default function SelectPositionBox({
   const maxCompartmentsNum = fridgeInfo.compartments[currentSpace];
   const compartments = getCompartments(maxCompartmentsNum);
 
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: 0,
     toValue: maxCompartmentsNum === 5 ? 172 : 152,
     active,

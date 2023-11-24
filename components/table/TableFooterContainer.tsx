@@ -1,15 +1,19 @@
 import { ReactNode } from 'react';
 import { View } from 'react-native';
+import { useSelector } from '../../redux/hook';
 import { useRouteName } from '../../hooks/useRouteName';
 import tw from 'twrnc';
 
 interface Props {
   children: ReactNode;
-  active?: boolean;
 }
 
-export default function TableFooterContainer({ children, active }: Props) {
+export default function TableFooterContainer({ children }: Props) {
   const { routeExpiredFoods } = useRouteName();
+
+  const { checkedList } = useSelector((state) => state.checkedList);
+
+  const active = !!checkedList.length;
 
   return (
     <View

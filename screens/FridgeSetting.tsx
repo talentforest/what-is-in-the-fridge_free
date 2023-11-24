@@ -10,7 +10,7 @@ import { changeSetting } from '../redux/slice/fridgeInfoSlice';
 import SelectContainter from '../screen-component/fridge-setting/SelectContainter';
 import CompartmentsSettingBox from '../screen-component/fridge-setting/CompartmentsSettingBox';
 import CheckBoxItem from '../components/common/CheckBoxItem';
-import AndroidFridge from '../components/fridge/Fridge';
+import Fridge from '../components/fridge/Fridge';
 import tw from 'twrnc';
 
 export default function FridgeSetting() {
@@ -36,7 +36,7 @@ export default function FridgeSetting() {
       >
         <SelectContainter title='나의 냉장고 모습'>
           <View style={tw`py-2`}>
-            <AndroidFridge />
+            <Fridge />
           </View>
         </SelectContainter>
 

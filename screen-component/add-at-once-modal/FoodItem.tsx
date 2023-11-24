@@ -6,12 +6,12 @@ import {
 } from '../../components/common/native-component';
 import { getFormattedDate } from '../../util';
 import { Food } from '../../constant/foodInfo';
-import { useSlideAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
+import { GRAY } from '../../constant/colors';
 
 import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
-import { GRAY } from '../../constant/colors';
 
 interface Props {
   food: Food;
@@ -26,7 +26,7 @@ export default function FoodItem({
   onFoodItemPress,
   active,
 }: Props) {
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: 44,
     toValue: 0,
     active,

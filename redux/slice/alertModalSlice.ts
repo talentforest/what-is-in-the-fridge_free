@@ -1,16 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export type AlertBtns =
+export type AlertTitle =
+  | '식료품 개수 한도 도달'
+  | '식료품 개수 초과'
+  | '식료품 이름 미작성'
+  | '유효하지 않은 소비기한'
+  | '이미 갖고 있는 식료품'
+  | '카테고리 변경 알림'
+  | '식료품 이동 알림'
+  | '식료품 존재 안내'
+  | '식료품 한번에 추가'
+  | '자주 먹는 식료품 삭제'
+  | '소비기한 주의 식료품 삭제'
+  | '장보기 식료품 삭제'
+  | '장보기 목록 추가'
+  | '식료품 추가 완료'
+  | '모든 식료품 추가 완료';
+
+export type AlertBtnName =
+  | '닫기'
   | '취소'
+  | '삭제'
   | '확인'
-  | '삭제 후 다시 추가'
   | '한번에 추가'
-  | '삭제';
+  | '이용권 구매하러 가기';
 
 export interface AlertInfo {
-  title: string;
+  title: AlertTitle;
   msg: string;
-  btns: AlertBtns[];
+  btns: AlertBtnName[];
 }
 
 interface Props {
@@ -21,7 +39,7 @@ interface Props {
 export const initialState: Props = {
   alertModalVisible: false,
   alertInfo: {
-    title: '',
+    title: '식료품 존재 안내',
     msg: '',
     btns: ['취소', '확인'],
   },
@@ -34,7 +52,8 @@ const alertModalSlice = createSlice({
     toggleAlertModal: (state, action: { payload: boolean }) => {
       state.alertModalVisible = action.payload;
     },
-    setAlertInfo: (state, action: { payload: AlertInfo }) => {
+    alert: (state, action: { payload: AlertInfo }) => {
+      state.alertModalVisible = true;
       state.alertInfo = action.payload;
     },
   },
@@ -42,6 +61,6 @@ const alertModalSlice = createSlice({
 
 const { reducer: toggleAlertModalReducer } = alertModalSlice;
 
-export const { toggleAlertModal, setAlertInfo } = alertModalSlice.actions;
+export const { toggleAlertModal, alert } = alertModalSlice.actions;
 
 export default toggleAlertModalReducer;

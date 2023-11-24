@@ -1,6 +1,6 @@
 import { Animated, View } from 'react-native';
 import { Text } from '../common/native-component';
-import { useSlideAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
 import tw from 'twrnc';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function FormMessage({ active, message, color }: Props) {
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: 0,
     toValue: 24,
     active,

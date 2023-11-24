@@ -47,12 +47,12 @@ export default function SearchFoodSection() {
           onChangeText={setKeyword}
           placeholder='식료품을 갖고 있는지 검색해보세요.'
           blurOnSubmit={false}
-          fontSize={16}
+          fontSize={17}
+          onSubmitEditing={onSubmitEditing}
           style={tw.style(
             `h-10 border-2 my-0.5 pl-8.5 border-slate-200 items-center justify-center`,
             shadowStyle(8)
           )}
-          onSubmitEditing={onSubmitEditing}
         />
         <TouchableOpacity
           onPress={onSubmitEditing}

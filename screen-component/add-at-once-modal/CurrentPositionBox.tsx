@@ -3,11 +3,11 @@ import {
   Text,
   TouchableOpacity,
 } from '../../components/common/native-component';
-import { useSlideAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
 import { Animated } from 'react-native';
+import { GRAY } from '../../constant/colors';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
-import { GRAY } from '../../constant/colors';
 
 interface Props {
   position: string;
@@ -20,7 +20,7 @@ export default function CurrentPositionBox({
   onBackPress,
   active,
 }: Props) {
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: 0,
     toValue: 46,
     active,

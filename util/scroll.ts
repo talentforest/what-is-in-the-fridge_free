@@ -5,7 +5,11 @@ export const scrollToIndex = (
   flatListRef: MutableRefObject<FlatList>,
   index: number
 ) => {
-  flatListRef?.current?.scrollToIndex({ animated: true, index });
+  flatListRef?.current?.scrollToIndex({
+    animated: true,
+    index,
+    viewOffset: 10,
+  });
 };
 
 export const scrollToEnd = (scrollViewRef: MutableRefObject<ScrollView>) => {

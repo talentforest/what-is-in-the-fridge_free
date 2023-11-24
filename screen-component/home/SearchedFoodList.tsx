@@ -1,7 +1,7 @@
 import { Animated, ScrollView } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { Food } from '../../constant/foodInfo';
-import { useSlideAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
 
 import SearchedItem from './SearchedItem';
@@ -12,7 +12,7 @@ export default function SearchedFoodList({ keyword, searchedFoods }) {
 
   const active = !!searchLength && !!keyword.length;
 
-  const { height } = useSlideAnimation({
+  const { height } = useItemSlideAnimation({
     initialValue: !!keyword.length && !searchLength ? 30 : 0,
     toValue: 87,
     active,

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deduplicate } from '../../util/deduplicate';
-import { getFormattedDate } from '../../util';
-import { Food } from '../../constant/foodInfo';
+import { deduplicate } from '../../../util/deduplicate';
+import { getFormattedDate } from '../../../util';
+import { Food } from '../../../constant/foodInfo';
 
 export const initialState: { pantryFoods: Food[] } = {
   pantryFoods: [
