@@ -30,7 +30,7 @@ export type AlertObj = {
   btns: AlertBtns[];
 };
 type AlertObjFunction = (compartmentNum: CompartmentNum) => AlertObj;
-type AlertDoubleObjFunction = (food: Food | Food[]) => {
+type AlertDoubleObjFunction = (food: Food) => {
   [key in string]: AlertObj;
 };
 
@@ -75,7 +75,7 @@ export const useHandleAlert = () => {
     dispatch(showAddAtOnceModal(false));
     dispatch(setCheckedList([]));
 
-    const { alertSuccessAddAllFoods } = alertWithCheckList(checkedList);
+    const { alertSuccessAddAllFoods } = alertWithCheckList();
     setAlert(alertSuccessAddAllFoods);
     return;
   };
@@ -172,7 +172,7 @@ export const useHandleAlert = () => {
   };
 
   // Alert With CheckList Info
-  const alertWithCheckList: AlertDoubleObjFunction = (checkedList: Food[]) => {
+  const alertWithCheckList = () => {
     const listLength = checkedList.length;
 
     const food = checkedList[0];
@@ -267,7 +267,7 @@ export const useHandleAlert = () => {
       alertDeleteExpiredFoods,
       alertDeleteFromShoppingList,
       alertAddToShoppingList,
-    } = alertWithCheckList([]);
+    } = alertWithCheckList();
 
     const alerts: AlertObj[] = [
       alertReachedLimit,

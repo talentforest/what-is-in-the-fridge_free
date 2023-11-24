@@ -80,7 +80,7 @@ export const useAddAtOnce = () => {
     currentStorage === '팬트리' ? `${currentStorage}` : `${fridgePosition}칸`;
 
   const onSubmitPress = () => {
-    const { alertConfirmAddAll } = alertWithCheckList(checkedList);
+    const { alertConfirmAddAll } = alertWithCheckList();
     setAlert(alertConfirmAddAll);
   };
 
