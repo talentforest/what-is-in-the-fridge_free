@@ -18,9 +18,9 @@ export default function EmptySign({
 }: Props) {
   const { isLoaded, assets } = useImageLoad({
     images: [
-      require('../../assets/shoppinglist.png'),
+      require('../../assets/empty-shoppinglist.png'),
       require('../../assets/expired-foods.png'),
-      require('../../assets/favorite-foods.png'),
+      require('../../assets/empty-favorite-foods.png'),
       require('../../assets/food/apple.png'),
       require('../../assets/food/meat.png'),
       require('../../assets/food/carrot.png'),

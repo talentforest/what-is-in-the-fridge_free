@@ -2,9 +2,9 @@ import { Asset } from 'expo-asset';
 import { CompartmentNum } from '../constant/fridgeInfo';
 
 export type AssetName =
-  | 'shoppinglist'
+  | 'empty-shoppinglist'
   | 'expired-foods'
-  | 'favorite-foods'
+  | 'empty-favorite-foods'
   | 'apple'
   | 'meat'
   | 'carrot'
@@ -16,9 +16,9 @@ export const getImgName: (
   compartmentNum?: CompartmentNum
 ) => AssetName = (title: string, compartmentNum?: CompartmentNum) => {
   const assetName = title.includes('장보기 식료품')
-    ? 'shoppinglist'
+    ? 'empty-shoppinglist'
     : title.includes('자주 먹는 식료품')
-    ? 'favorite-foods'
+    ? 'empty-favorite-foods'
     : title.includes('소비기한 주의 식료품')
     ? 'expired-foods'
     : compartmentNum === '1번'

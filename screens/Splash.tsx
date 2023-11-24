@@ -24,9 +24,9 @@ export default function Splash({
     async function prepareApp() {
       try {
         await new Promise((resolve) => setTimeout(resolve, 2000));
-        // persistor.purge();
+        persistor.purge();
       } catch (e) {
-        console.warn(e);
+        // console.warn(e);
       } finally {
         setAppIsReady(true);
       }
@@ -44,7 +44,7 @@ export default function Splash({
 
   return (
     <View
-      style={tw`flex-1 items-center justify-center bg-[#D7F0FF]`}
+      style={tw`flex-1 items-center justify-center bg-[#DADDFF]`}
       onLayout={onLayoutRootView}
     >
       {assets && (
