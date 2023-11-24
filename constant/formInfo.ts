@@ -25,14 +25,3 @@ export const formFourSteps: FormStep[] = [
   { step: 3, name: '위치' },
   { step: 4, name: '선택정보' },
 ];
-
-export type AddAtOneStepName = '한번에 추가할 공간' | '추가할 식료품 정보';
-export interface AddAtOnceStep {
-  step: number;
-  name: AddAtOneStepName;
-}
-
-export const addAtOnceStep: AddAtOnceStep[] = [
-  { step: 1, name: '한번에 추가할 공간' },
-  { step: 2, name: '추가할 식료품 정보' },
-];

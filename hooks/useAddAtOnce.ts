@@ -4,13 +4,15 @@ import { useSelector } from '../redux/hook';
 import { useState } from 'react';
 import { Space, StorageType } from '../constant/fridgeInfo';
 import { Position } from '../screen-component/modal/AddAtOnceModal';
-import { addAtOnceStep } from '../constant/formInfo';
 import { useFindFood } from './useFindFood';
 import { validFoodObj } from '../util/validFoodObj';
 import { setFormFood } from '../redux/slice/food/formFoodSlice';
 import { useHandleAlert } from './useHandleAlert';
 import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
-import { showAddAtOnceModal } from '../redux/slice/modalVisibleSlice';
+import {
+  changeAddAtOnceStep,
+  showAddAtOnceModal,
+} from '../redux/slice/modalVisibleSlice';
 import { changeCategory } from '../redux/slice/food/categorySlice';
 
 export const useAddAtOnce = () => {
@@ -20,7 +22,7 @@ export const useAddAtOnce = () => {
   const [currentStorage, setCurrentStorage] = useState<StorageType | ''>('');
   const [fridgePosition, setFridgePosition] =
     useState<Position>('냉장실 안쪽 1번');
-  const [currentStep, setCurrentStep] = useState(addAtOnceStep[0]);
+
   const [isEditing, setIsEditing] = useState(false);
 
   const { isFavoriteItem } = useFindFood();
@@ -45,8 +47,12 @@ export const useAddAtOnce = () => {
     setFridgePosition(`${space} ${compartmentNum}` as Position);
   };
 
+  const returnStepOne = () => {
+    dispatch(changeAddAtOnceStep({ step: 1, name: '한번에 추가할 공간' }));
+  };
+
   const onBackStepPress = () => {
-    setCurrentStep({ step: 1, name: '한번에 추가할 공간' });
+    returnStepOne();
     dispatch(setFormFood(initialFridgeFood));
     setIsEditing(false);
   };
@@ -67,7 +73,7 @@ export const useAddAtOnce = () => {
     });
 
     dispatch(setCheckedList(editedCheckList));
-    setCurrentStep({ step: 2, name: '추가할 식료품 정보' });
+    dispatch(changeAddAtOnceStep({ step: 2, name: '추가할 식료품 정보' }));
   };
 
   const position =
@@ -93,7 +99,7 @@ export const useAddAtOnce = () => {
     dispatch(showAddAtOnceModal(false));
     setCurrentStorage('');
     setFridgePosition('냉장실 안쪽 1번');
-    setCurrentStep({ step: 1, name: '한번에 추가할 공간' });
+    dispatch(changeAddAtOnceStep({ step: 1, name: '한번에 추가할 공간' }));
     setIsEditing(false);
     dispatch(setFormFood(initialFridgeFood));
     dispatch(changeCategory('신선식품류'));
@@ -102,7 +108,6 @@ export const useAddAtOnce = () => {
   return {
     position,
     fridgePosition,
-    currentStep,
     currentStorage,
     setCurrentStorage,
     isEditing,

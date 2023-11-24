@@ -19,12 +19,13 @@ export type Position = `${Space} ${CompartmentNum}`;
 export default function AddAtOnceModal() {
   const { checkedList } = useSelector((state) => state.checkedList);
   const { formFood } = useSelector((state) => state.formFood);
-  const { addAtOnceModal } = useSelector((state) => state.modalVisible);
+  const {
+    addAtOnceModal: { currentStep, modalVisible },
+  } = useSelector((state) => state.modalVisible);
 
   const {
     position,
     fridgePosition,
-    currentStep,
     currentStorage,
     setCurrentStorage,
     isEditing,
@@ -40,11 +41,11 @@ export default function AddAtOnceModal() {
   return (
     <>
       <FadeInMiddleModal
-        title={currentStep.name}
-        isVisible={addAtOnceModal}
+        title={currentStep?.name}
+        isVisible={modalVisible}
         closeModal={closeModal}
       >
-        {/* 1단계 */}
+        {/* 1단계*/}
         {currentStep.step === 1 && (
           <View>
             <View style={tw`flex-row gap-1`}>

@@ -190,7 +190,12 @@ export const useHandleAlert = () => {
       msg: `총 ${listLength}개의 식료품을 ${foodPosition}에 한번에 추가하시겠어요?`,
       btns: [
         { name: '취소', fn: closeAlertModal },
-        { name: '한번에 추가', fn: () => onAddAtOncePress(foodPosition) },
+        {
+          name: '한번에 추가',
+          fn: () => {
+            onAddAtOncePress(foodPosition);
+          },
+        },
       ],
     };
 

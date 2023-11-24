@@ -6,10 +6,27 @@ type CompartmentModal = {
   compartmentNum?: CompartmentNum;
 };
 
+export type AddAtOneStepName = '한번에 추가할 공간' | '추가할 식료품 정보';
+
+export interface AddAtOnceStep {
+  step: number;
+  name: AddAtOneStepName;
+}
+
+export const addAtOnceStep: AddAtOnceStep[] = [
+  { step: 1, name: '한번에 추가할 공간' },
+  { step: 2, name: '추가할 식료품 정보' },
+];
+
+type AddAtOnceModal = {
+  modalVisible: boolean;
+  currentStep: AddAtOnceStep;
+};
+
 export const initialState: {
   formModal: boolean;
   expiredDateModal: boolean;
-  addAtOnceModal: boolean;
+  addAtOnceModal: AddAtOnceModal;
   categoryModalVisible: boolean;
   categoryFilterModalVisible: boolean;
   openFoodDetailModal: boolean;
@@ -17,7 +34,10 @@ export const initialState: {
   openAddFoodModal: CompartmentModal;
 } = {
   formModal: false,
-  addAtOnceModal: false,
+  addAtOnceModal: {
+    modalVisible: false,
+    currentStep: { step: 1, name: '한번에 추가할 공간' },
+  },
   expiredDateModal: false,
   categoryModalVisible: false,
   categoryFilterModalVisible: false,
@@ -33,8 +53,21 @@ const modalVisibleSlice = createSlice({
     showFormModal: (state, action: { payload: boolean }) => {
       state.formModal = action.payload;
     },
-    showAddAtOnceModal: (state, action: { payload: boolean }) => {
-      state.addAtOnceModal = action.payload;
+    showAddAtOnceModal: (
+      state,
+      { payload }: { payload: boolean | AddAtOnceModal }
+    ) => {
+      if (typeof payload === 'boolean') {
+        state.addAtOnceModal = {
+          modalVisible: payload,
+          currentStep: { step: 1, name: '한번에 추가할 공간' },
+        };
+      } else {
+        state.addAtOnceModal = payload;
+      }
+    },
+    changeAddAtOnceStep: (state, { payload }: { payload: AddAtOnceStep }) => {
+      state.addAtOnceModal = { ...state.addAtOnceModal, currentStep: payload };
     },
     showExpiredDateModal: (state, action: { payload: boolean }) => {
       state.expiredDateModal = action.payload;
@@ -76,6 +109,7 @@ export const {
   showExpiredDateModal,
   showFormModal,
   showAddAtOnceModal,
+  changeAddAtOnceStep,
   showCategoryModal,
   showCategoryFilterModal,
   showOpenFoodDetailModal,

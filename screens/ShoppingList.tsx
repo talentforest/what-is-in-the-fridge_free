@@ -20,7 +20,6 @@ import AddAtOnceModal from '../screen-component/modal/AddAtOnceModal';
 
 export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
-  const { checkedList } = useSelector((state) => state.checkedList);
 
   const flatListRef = useRef<FlatList | null>(null);
 
