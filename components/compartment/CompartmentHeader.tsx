@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '../common/native-component';
 import { Food, MAX_LIMIT, initialFridgeFood } from '../../constant/foodInfo';
-import { useDispatch } from '../../redux/hook';
+import { useDispatch, useSelector } from '../../redux/hook';
 import { useFindFood, useHandleAlert } from '../../hooks';
 import { setFormFood } from '../../redux/slice/food/formFoodSlice';
 import { showOpenAddFoodModal } from '../../redux/slice/modalVisibleSlice';
@@ -16,6 +16,8 @@ interface Props {
 }
 
 export default function CompartmentHeader({ compartmentNum, foodList }: Props) {
+  const { limit } = useSelector((state) => state.limit);
+
   const { allFoods } = useFindFood();
 
   const { alertReachedLimit, setAlert } = useHandleAlert();
@@ -23,7 +25,7 @@ export default function CompartmentHeader({ compartmentNum, foodList }: Props) {
   const dispatch = useDispatch();
 
   const onPress = () => {
-    if (allFoods.length >= MAX_LIMIT) {
+    if (limit && allFoods.length >= MAX_LIMIT) {
       setAlert(alertReachedLimit);
       return;
     }

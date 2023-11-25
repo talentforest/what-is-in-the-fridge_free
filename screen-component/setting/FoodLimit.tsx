@@ -2,8 +2,8 @@ import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { MAX_LIMIT } from '../../constant/foodInfo';
 import { useFindFood } from '../../hooks';
-import tw from 'twrnc';
 import { BG_COLOR } from '../../components/common/Container';
+import tw from 'twrnc';
 
 export default function FoodLimit() {
   const { allFoods } = useFindFood();
@@ -26,15 +26,15 @@ export default function FoodLimit() {
         ${limitGauge === 0 ? 'rounded-lg' : 'rounded-r-lg'}`}
       />
       <View style={tw`flex-row items-center justify-between w-full px-3`}>
-        <Text fontSize={15} style={tw`text-slate-700`}>
+        <Text fontSize={15} style={tw`text-slate-700 leading-4`}>
           식료품 저장 한도
         </Text>
         <View style={tw`flex-row items-center gap-1`}>
-          <Text fontSize={16} style={tw`text-${limitGaugeColor}-700`}>
+          <Text fontSize={16} style={tw`text-${limitGaugeColor}-700 leading-4`}>
             {allFoods.length}
           </Text>
 
-          <Text fontSize={16} style={tw`text-slate-700`}>
+          <Text fontSize={16} style={tw`text-slate-700 leading-4`}>
             / {MAX_LIMIT}
           </Text>
         </View>

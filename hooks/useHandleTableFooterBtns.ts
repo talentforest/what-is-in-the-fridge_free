@@ -11,6 +11,7 @@ import {
 
 export const useHandleTableFooterBtns = () => {
   const { checkedList } = useSelector((state) => state.checkedList);
+  const { limit } = useSelector((state) => state.limit);
 
   const { isFavoriteItem, allFoods, findFood } = useFindFood();
 
@@ -38,7 +39,7 @@ export const useHandleTableFooterBtns = () => {
     alertAddToShoppingList,
     alertDeleteFromShoppingList,
     alertDeleteFavoriteFoods,
-  } = alertWithCheckList(checkedList);
+  } = alertWithCheckList();
 
   const deleteAlert = routeShoppingList
     ? alertDeleteFromShoppingList
@@ -51,7 +52,7 @@ export const useHandleTableFooterBtns = () => {
   const onAddShoppingListBtnPress = () => setAlert(alertAddToShoppingList);
 
   const onAddAtOnceBtnPress = () => {
-    if (allFoods.length + checkedList.length > MAX_LIMIT) {
+    if (limit && allFoods.length + checkedList.length > MAX_LIMIT) {
       const limitReached = MAX_LIMIT === allFoods.length;
       const canAddNum = MAX_LIMIT - allFoods.length;
       const msg =

@@ -4,7 +4,7 @@ import { useSelector } from '../../redux/hook';
 import { MutableRefObject } from 'react';
 import { closeKeyboard } from '../../util';
 
-import TableItem from './TableItem';
+import TableItem, { TABLE_ITEM_HEIGHT } from './TableItem';
 import TableItemFront from './TableItemFront';
 import TableItemEnd from './TableItemEnd';
 import EmptySign from '../common/EmptySign';
@@ -32,8 +32,8 @@ export default function TableBody({ title, foodList, flatListRef }: Props) {
             contentContainerStyle={tw`pb-4 px-2`}
             data={foodList}
             getItemLayout={(_, index) => ({
-              length: 46,
-              offset: 46 * index,
+              length: TABLE_ITEM_HEIGHT,
+              offset: TABLE_ITEM_HEIGHT * index,
               index,
             })}
             renderItem={({ item }) => (

@@ -3,14 +3,18 @@ import Container from '../components/common/Container';
 import SettingBox, {
   SettingInfo,
 } from '../screen-component/setting/SettingBox';
-import { Text } from '../components/common/native-component';
+import { Text, TouchableOpacity } from '../components/common/native-component';
 import { GRAY, LIGHT_BLUE } from '../constant/colors';
+import { useDispatch, useSelector } from '../redux/hook';
 
 import PaymentBtn from '../screen-component/setting/PaymentBtn';
 import Icon from '../components/common/native-component/Icon';
 import tw from 'twrnc';
+import { makeLimit } from '../redux/slice/limitSlice';
 
 export default function Setting() {
+  const { limit } = useSelector((state) => state.limit);
+
   const settings: SettingInfo[] = [
     {
       title: '나의 냉장고 커스텀',
@@ -22,42 +26,50 @@ export default function Setting() {
     { title: '버전', navigate: '', icon: 'versions' },
   ];
 
+  const dispatch = useDispatch();
+
   return (
     <Container>
-      <View
-        style={tw`border border-blue-200 bg-white rounded-xl p-3 px-4 mb-5`}
-      >
-        <View>
-          <View style={tw`flex-row items-center gap-1 mb-1`}>
-            <Icon
-              name='credit-card'
-              type='MaterialCommunityIcons'
-              color={LIGHT_BLUE}
-              size={20}
-            />
-            <Text>이용권 구매</Text>
+      {limit ? (
+        <View
+          style={tw`border border-blue-200 bg-white rounded-xl p-3 px-4 mb-5`}
+        >
+          <View>
+            <View style={tw`flex-row items-center gap-1 mb-1`}>
+              <Icon
+                name='credit-card'
+                type='MaterialCommunityIcons'
+                color={LIGHT_BLUE}
+                size={20}
+              />
+              <Text>이용권 구매</Text>
+            </View>
+
+            <Text fontSize={15} style={tw`text-slate-500 mb-2`}>
+              한번만 구매하면 식료품을 한도 없이 저장할 수 있어요.
+            </Text>
           </View>
 
-          <Text fontSize={15} style={tw`text-slate-500 mb-2`}>
-            한번만 구매하면 식료품을 한도 없이 저장할 수 있어요.
-          </Text>
-        </View>
+          {/* 결제 버튼 */}
+          <PaymentBtn />
 
-        {/* 결제 버튼 */}
-        <PaymentBtn />
-
-        <View style={tw`flex-row items-center mt-3 gap-1`}>
-          <Icon
-            name='information-outline'
-            type='MaterialCommunityIcons'
-            size={15}
-            color={GRAY}
-          />
-          <Text fontSize={15} style={tw`text-slate-700 mt-0.1`}>
-            이용권 구매는 곧 업데이트될 예정입니다.
-          </Text>
+          <View style={tw`flex-row items-center mt-3 gap-1`}>
+            <Icon
+              name='information-outline'
+              type='MaterialCommunityIcons'
+              size={15}
+              color={GRAY}
+            />
+            <Text fontSize={15} style={tw`text-slate-700 mt-0.1`}>
+              이용권 구매는 곧 업데이트될 예정입니다.
+            </Text>
+          </View>
         </View>
-      </View>
+      ) : (
+        <TouchableOpacity onPress={() => dispatch(makeLimit())}>
+          <Text>다시 제한</Text>
+        </TouchableOpacity>
+      )}
 
       <View style={tw`gap-1 px-1 mt-2`}>
         {settings.map((setting) => (

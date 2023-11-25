@@ -17,6 +17,7 @@ interface Props {
 }
 
 export default function TableItemEnd({ title, food }: Props) {
+  const { limit } = useSelector((state) => state.limit);
   const { checkedList } = useSelector((state) => state.checkedList);
 
   const { routeShoppingList } = useRouteName();
@@ -35,7 +36,7 @@ export default function TableItemEnd({ title, food }: Props) {
   };
 
   const onPress = () => {
-    if (allFoods.length >= MAX_LIMIT) {
+    if (limit && allFoods.length >= MAX_LIMIT) {
       setAlert(alertReachedLimit);
       return;
     }

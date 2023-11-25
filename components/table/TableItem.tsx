@@ -16,6 +16,8 @@ interface Props {
   frontChildren?: ReactNode;
 }
 
+export const TABLE_ITEM_HEIGHT = 45;
+
 export default function TableItem({ food, frontChildren, endChildren }: Props) {
   const { afterAnimation } = useSelector((state) => state.afterAnimation);
   const { checkedList } = useSelector((state) => state.checkedList);
@@ -24,10 +26,8 @@ export default function TableItem({ food, frontChildren, endChildren }: Props) {
 
   const checkedItem = !!isCheckedItem(food.id);
 
-  const ITEM_HEIGHT = 46;
-
   const { height, interpolatedOpacity } = useItemSlideAnimation({
-    initialValue: ITEM_HEIGHT,
+    initialValue: TABLE_ITEM_HEIGHT,
     toValue: 0,
     active: checkedItem && afterAnimation === 'slideup-out',
   });
@@ -64,7 +64,7 @@ export default function TableItem({ food, frontChildren, endChildren }: Props) {
         <TouchableOpacity
           onPress={onCheckBoxPress}
           style={tw.style(
-            `border h-[${ITEM_HEIGHT - 6}px] ${
+            `border h-[${TABLE_ITEM_HEIGHT - 4}px] ${
               checkedItem ? 'border-blue-600' : 'border-slate-200 '
             } bg-white flex-row items-center gap-1 pl-3 rounded-lg mx-1`,
             shadowStyle(4)

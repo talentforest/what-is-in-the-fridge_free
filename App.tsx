@@ -12,7 +12,7 @@ import Splash from './screens/Splash';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
-export default function App() {
+const App = () => {
   const [appIsReady, setAppIsReady] = useState(false);
   const [fontsLoaded] = useFonts(fonts);
 
@@ -40,4 +40,6 @@ export default function App() {
       </PersistGate>
     </ReduxProvider>
   );
-}
+};
+
+export default App;

@@ -17,6 +17,7 @@ import PantyEntranceBtn from '../../screen-component/home/PantyEntranceBtn';
 import tw from 'twrnc';
 
 export default function Fridge() {
+  const { limit } = useSelector((state) => state.limit);
   const {
     fridgeInfo: { compartments, freezer },
   } = useSelector((state) => state.fridgeInfo);
@@ -87,7 +88,7 @@ export default function Fridge() {
         </View>
       </View>
 
-      {!routeFridgeSetting && <FoodLimit />}
+      {limit && !routeFridgeSetting && <FoodLimit />}
     </View>
   );
 }
