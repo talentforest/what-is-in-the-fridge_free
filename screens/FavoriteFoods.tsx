@@ -6,7 +6,6 @@ import {
 import { entireFilterObj, existAbsenceFilters, scrollToIndex } from '../util';
 import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
-import { changeCategory } from '../redux/slice/food/categorySlice';
 import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
 import {
   useHandleTableFooterBtns,
@@ -26,6 +25,7 @@ import FormMessage from '../components/form/FormMessage';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableBody from '../components/table/TableBody';
 import AlertModal from '../screen-component/modal/AlertModal';
+import { changeCategory } from '../redux/slice/food/categorySlice';
 
 export default function FavoriteFoods() {
   const { category } = useSelector((state) => state.category);

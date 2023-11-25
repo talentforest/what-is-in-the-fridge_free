@@ -13,7 +13,6 @@ import {
   changeAddAtOnceStep,
   showAddAtOnceModal,
 } from '../redux/slice/modalVisibleSlice';
-import { changeCategory } from '../redux/slice/food/categorySlice';
 
 export const useAddAtOnce = () => {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
@@ -102,7 +101,6 @@ export const useAddAtOnce = () => {
     dispatch(changeAddAtOnceStep({ step: 1, name: '한번에 추가할 공간' }));
     setIsEditing(false);
     dispatch(setFormFood(initialFridgeFood));
-    dispatch(changeCategory('신선식품류'));
   };
 
   return {

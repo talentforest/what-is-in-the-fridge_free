@@ -13,7 +13,6 @@ import { setFormFood } from '../redux/slice/food/formFoodSlice';
 import { useFindFood } from './useFindFood';
 import { useHandleAlert } from './useHandleAlert';
 import { showOpenAddFoodModal } from '../redux/slice/modalVisibleSlice';
-import { changeCategory } from '../redux/slice/food/categorySlice';
 import UUIDGenerator from 'react-native-uuid';
 
 export const useAddFood = (currPosition?: FoodPosition) => {
@@ -90,13 +89,11 @@ export const useAddFood = (currPosition?: FoodPosition) => {
     }
 
     dispatch(setFormFood(initialFood));
-    dispatch(changeCategory('신선식품류'));
   };
 
   const closeAddFoodModal = () => {
     dispatch(setFormFood({ ...initialFood }));
     dispatch(showOpenAddFoodModal(false));
-    dispatch(changeCategory('신선식품류'));
   };
 
   return {

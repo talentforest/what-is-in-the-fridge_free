@@ -58,7 +58,10 @@ export default function Form({ title, formSteps }: Props) {
                       <NameItem isEditing={title === '식료품 정보 수정'} />
 
                       <CategoryItem
-                        isAddNewOne={title === '새로운 식료품 추가'}
+                        isAddNewOne={
+                          title === '새로운 식료품 추가' ||
+                          title === '장보기 목록 식료품 추가'
+                        }
                       />
 
                       <FavoriteItem isEditing={title === '식료품 정보 수정'} />

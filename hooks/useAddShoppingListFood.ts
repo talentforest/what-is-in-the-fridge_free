@@ -13,7 +13,6 @@ import { toggleMemoOpen } from '../redux/slice/food/isMemoOpenSlice';
 import { useHandleAlert } from './useHandleAlert';
 import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
 import { showFormModal } from '../redux/slice/modalVisibleSlice';
-import { changeCategory } from '../redux/slice/food/categorySlice';
 
 export const useAddShoppingListFood = () => {
   const { formFood } = useSelector((state) => state.formFood);
@@ -24,7 +23,6 @@ export const useAddShoppingListFood = () => {
 
   const closeFormModal = () => {
     dispatch(showFormModal(false));
-    dispatch(changeCategory('신선식품류'));
   };
 
   const {
@@ -68,7 +66,6 @@ export const useAddShoppingListFood = () => {
     }
 
     dispatch(setCheckedList([]));
-    dispatch(changeCategory('신선식품류'));
   };
 
   return {
