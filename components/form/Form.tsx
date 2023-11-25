@@ -55,13 +55,13 @@ export default function Form({ title, formSteps }: Props) {
                 >
                   {name === '기본정보' && (
                     <FormSectionContainer>
-                      <NameItem />
+                      <NameItem isEditing={title === '식료품 정보 수정'} />
 
                       <CategoryItem
                         isAddNewOne={title === '새로운 식료품 추가'}
                       />
 
-                      <FavoriteItem title={title} />
+                      <FavoriteItem isEditing={title === '식료품 정보 수정'} />
                     </FormSectionContainer>
                   )}
 

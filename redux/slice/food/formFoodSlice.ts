@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Food, initialFridgeFood } from '../../../constant/foodInfo';
 
-export const initialState: { formFood: Food; originalFood: Food } = {
+export const initialState: { formFood: Food; originFood: Food } = {
   formFood: initialFridgeFood,
-  originalFood: initialFridgeFood,
+  originFood: initialFridgeFood,
 };
 
 type FormFoodPayload = { payload: Food };
@@ -22,15 +22,15 @@ const formFoodSlice = createSlice({
     editFormFood: (state, { payload }: NewFormInfoPayload) => {
       state.formFood = { ...state.formFood, ...payload };
     },
-    saveOriginalFood: (state, { payload }: FormFoodPayload) => {
-      state.originalFood = payload;
+    saveOriginFood: (state, { payload }: FormFoodPayload) => {
+      state.originFood = payload;
     },
   },
 });
 
 const { reducer: formFoodReducer } = formFoodSlice;
 
-export const { setFormFood, editFormFood, saveOriginalFood } =
+export const { setFormFood, editFormFood, saveOriginFood } =
   formFoodSlice.actions;
 
 export default formFoodReducer;

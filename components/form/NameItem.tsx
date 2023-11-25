@@ -12,7 +12,11 @@ import tw from 'twrnc';
 
 const NAME_MAX_LENGTH = 40;
 
-export default function NameItem() {
+interface Props {
+  isEditing: boolean;
+}
+
+export default function NameItem({ isEditing }: Props) {
   const {
     formFood: { name },
   } = useSelector((state) => state.formFood);
@@ -50,7 +54,7 @@ export default function NameItem() {
         color='orange'
       />
 
-      <MatchedFavoriteFoodNameList />
+      {!isEditing ? <MatchedFavoriteFoodNameList /> : null}
     </View>
   );
 }

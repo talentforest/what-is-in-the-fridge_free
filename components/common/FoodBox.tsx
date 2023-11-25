@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from '../../redux/hook';
 import { MutableRefObject } from 'react';
 import { INDIGO } from '../../constant/colors';
 import {
-  saveOriginalFood,
+  saveOriginFood,
   setFormFood,
 } from '../../redux/slice/food/formFoodSlice';
 import { showOpenFoodDetailModal } from '../../redux/slice/modalVisibleSlice';
@@ -47,7 +47,7 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
 
   const onPress = () => {
     dispatch(setFormFood(food));
-    dispatch(saveOriginalFood(food));
+    dispatch(saveOriginFood(food));
     dispatch(showOpenFoodDetailModal(true));
   };
 

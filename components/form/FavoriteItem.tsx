@@ -1,10 +1,9 @@
-import { View, Animated, Keyboard } from 'react-native';
+import { View, Animated } from 'react-native';
 import { ICE_BLUE, LIGHT_INDIGO } from '../../constant/colors';
 import { useToggleAnimation, useFindFood } from '../../hooks';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleFavorite } from '../../redux/slice/food/isFavoriteSlice';
-import { ModalTitle } from '../modal/Modal';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { InputStyle } from '../common/native-component';
 import { closeKeyboard } from '../../util';
@@ -15,16 +14,19 @@ import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
 
 interface Props {
-  title: ModalTitle;
+  isEditing: boolean;
 }
 
 const TOGGLE_BTN_WIDTH = 94;
 
-export default function FavoriteItem({ title }: Props) {
+export default function FavoriteItem({ isEditing }: Props) {
   const {
-    formFood: { name },
+    formFood: { name: newName },
+    originFood: { name: originName },
   } = useSelector((state) => state.formFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
+
+  const name = isEditing ? originName : newName;
 
   const { isFavoriteItem } = useFindFood();
 
@@ -51,7 +53,7 @@ export default function FavoriteItem({ title }: Props) {
   }, [name]);
 
   // 식료품에 대한 정보 "수정"에서만 자주 먹는 식료품 설정을 변경할 수 있다.
-  const disabledFavoriteBtn = isFavoriteItem(name) && !title.includes('수정');
+  const disabledFavoriteBtn = isFavoriteItem(name) && !isEditing;
   const backgroundColor = disabledFavoriteBtn ? ICE_BLUE : LIGHT_INDIGO;
 
   return (
@@ -88,7 +90,7 @@ export default function FavoriteItem({ title }: Props) {
       </View>
 
       <FormMessage
-        active={!title.includes('수정') && !!isFavoriteItem(name)}
+        active={!isEditing && !!isFavoriteItem(name)}
         message='자주 먹는 식료품이므로 위의 정보가 자동으로 적용돼요.'
         color='green'
       />
@@ -97,6 +99,12 @@ export default function FavoriteItem({ title }: Props) {
         active={isFavorite && !isFavoriteItem(name)}
         message={'자주 먹는 식료품 목록에 추가돼요.'}
         color='green'
+      />
+
+      <FormMessage
+        active={!isFavorite && !!isFavoriteItem(name) && originName !== newName}
+        message={`'${originName}' 식료품이 자주 먹는 식료품 목록에서 삭제됩니다.`}
+        color='orange'
       />
     </View>
   );

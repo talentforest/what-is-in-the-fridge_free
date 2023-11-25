@@ -23,6 +23,7 @@ export type AlertBtnName =
   | '삭제'
   | '확인'
   | '한번에 추가'
+  | '비로 이동하기'
   | '이용권 구매하러 가기';
 
 export interface AlertInfo {

@@ -18,6 +18,7 @@ import {
 import { addPantryFoods } from '../redux/slice/food-list/pantryFoodsSlice';
 import { addFridgeFoods } from '../redux/slice/food-list/fridgeFoodsSlice';
 import { showAddAtOnceModal } from '../redux/slice/modalVisibleSlice';
+import { search } from '../redux/slice/food/searchedFoodSlice';
 
 export type AlertBtns = {
   name: AlertBtnName;
@@ -38,6 +39,7 @@ export const MAX_NUM_ADD_AT_ONCE = 8;
 
 export const useHandleAlert = () => {
   const { checkedList } = useSelector((state) => state.checkedList);
+  const { formFood } = useSelector((state) => state.formFood);
 
   const dispatch = useDispatch();
 
@@ -78,6 +80,16 @@ export const useHandleAlert = () => {
     const { alertSuccessAddAllFoods } = alertWithCheckList();
     setAlert(alertSuccessAddAllFoods);
     return;
+  };
+
+  const goChangedPosition = () => {
+    // 공간이 변경된 경우 이동하는 경우에만 search 세팅 후 navigation 이동
+    const { space, name } = formFood;
+    dispatch(search(name));
+    space === '팬트리'
+      ? navigation.navigate('PantryFoods')
+      : navigation.navigate('Compartments', { space });
+    closeAlertModal();
   };
 
   // Alert
@@ -160,7 +172,10 @@ export const useHandleAlert = () => {
     const alertMoveStorage: AlertObj = {
       title: '식료품 이동 알림',
       msg: `${name}의 위치가 ${position}으로 이동되었어요.`,
-      btns: [{ name: '확인', fn: closeAlertModal }],
+      btns: [
+        { name: '닫기', fn: closeAlertModal },
+        { name: '비로 이동하기', fn: goChangedPosition },
+      ],
     };
 
     return {

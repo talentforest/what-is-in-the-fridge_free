@@ -12,14 +12,14 @@ interface Props {
 export default function FormMessage({ active, message, color }: Props) {
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: 24,
+    toValue: 35,
     active,
   });
 
   return (
     <Animated.View style={{ height }}>
-      <View style={tw`flex-row items-start mt-0.5`}>
-        <Text fontSize={15} style={tw`text-${color}-600 flex-1`}>
+      <View style={tw`flex-row items-start mt-1`}>
+        <Text fontSize={15} style={tw`text-${color}-600 leading-4 flex-1`}>
           {message}
         </Text>
       </View>
