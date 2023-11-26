@@ -40,3 +40,5 @@ export const initialPantryFood: Food = {
 };
 
 export const MAX_LIMIT = 30;
+
+export const NAME_MAX_LENGTH = 30;

@@ -26,6 +26,7 @@ import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableBody from '../components/table/TableBody';
 import AlertModal from '../screen-component/modal/AlertModal';
 import { changeCategory } from '../redux/slice/food/categorySlice';
+import { NAME_MAX_LENGTH } from '../constant/foodInfo';
 
 export default function FavoriteFoods() {
   const { category } = useSelector((state) => state.category);
@@ -132,6 +133,19 @@ export default function FavoriteFoods() {
                 active={diffCategory && !!inputValue}
                 message={`${category} 카테고리에 저장됩니다.`}
                 color='green'
+              />
+            </View>
+
+            <View
+              style={{
+                marginTop: inputValue.length >= 40 ? -14 : 0,
+                marginLeft: 6,
+              }}
+            >
+              <FormMessage
+                active={inputValue.length >= 40}
+                message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요.`}
+                color='orange'
               />
             </View>
           </TableFooterContainer>

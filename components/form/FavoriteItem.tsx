@@ -103,13 +103,13 @@ export default function FavoriteItem({ isEditing }: Props) {
 
       <FormMessage
         active={!isFavorite && !!isFavoriteItem(name) && originName !== newName}
-        message={`'${originName}' 식료품이 자주 먹는 식료품 목록에서 삭제돼요.`}
+        message={`"${originName}" 식료품이 자주 먹는 식료품 목록에서 삭제돼요.`}
         color='orange'
       />
 
       <FormMessage
         active={isFavorite && !!isFavoriteItem(name) && originName !== newName}
-        message={`자주 먹는 식료품 목록에서도 '${originName}' 아름이 변경돼요.`}
+        message={`자주 먹는 식료품 목록에서도 "${originName}" 이름이 변경돼요.`}
         color='orange'
       />
     </View>

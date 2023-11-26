@@ -4,13 +4,12 @@ import { View } from 'react-native';
 import { TextInput } from '../common/native-component';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { useRouteName } from '../../hooks/useRouteName';
+import { NAME_MAX_LENGTH } from '../../constant/foodInfo';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
 import MatchedFavoriteFoodNameList from './MatchedFavoriteFoodNameList';
 import tw from 'twrnc';
-
-const NAME_MAX_LENGTH = 40;
 
 interface Props {
   isEditing: boolean;
@@ -44,13 +43,13 @@ export default function NameItem({ isEditing }: Props) {
         value={name}
         placeholder='식료품 이름을 작성해주세요'
         focusable={false}
-        maxLength={40}
+        maxLength={NAME_MAX_LENGTH}
         editable={editable}
       />
 
       <FormMessage
-        active={name.length >= 40}
-        message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없습니다.`}
+        active={name.length >= 40 && editable}
+        message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요.`}
         color='orange'
       />
 

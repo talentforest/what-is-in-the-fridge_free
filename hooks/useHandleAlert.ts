@@ -159,7 +159,7 @@ export const useHandleAlert = () => {
 
     const alertFoodPosition: AlertObj = {
       title: '이미 갖고 있는 식료품',
-      msg: `'${name}' 식료품은 이미 ${position}에 있어요.`,
+      msg: `"${name}" 식료품은 이미 ${position}에 있어요.`,
       btns: [{ name: '확인', fn: closeAlertModal }],
     };
 
@@ -171,7 +171,7 @@ export const useHandleAlert = () => {
 
     const alertChangeCategory: AlertObj = {
       title: '카테고리 변경 알림',
-      msg: `${position}에 있는 동일한 식료품은 '${category}' 카테고리로 저장되어 있어요. 기존에 저장된 카테고리로 추가되었어요.`,
+      msg: `${position}에 있는 동일한 식료품은 "${category}" 카테고리로 저장되어 있어요. 기존에 저장된 카테고리로 추가되었어요.`,
       btns: [{ name: '확인', fn: closeAlertModal }],
     };
 

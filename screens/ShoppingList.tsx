@@ -8,6 +8,7 @@ import { FlatList, View } from 'react-native';
 import { closeKeyboard, scrollToIndex } from '../util';
 import { useHandleTableFooterBtns, useSubmitFoodsFromInput } from '../hooks';
 import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
+import { NAME_MAX_LENGTH } from '../constant/foodInfo';
 
 import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
 import Container from '../components/common/Container';
@@ -89,6 +90,19 @@ export default function ShoppingList() {
               <FormMessage
                 active={existCaution}
                 message='이미 목록에 있는 식료품이에요.'
+                color='orange'
+              />
+            </View>
+
+            <View
+              style={{
+                marginTop: inputValue.length >= 40 ? -14 : 0,
+                marginLeft: 6,
+              }}
+            >
+              <FormMessage
+                active={inputValue.length >= 40}
+                message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요.`}
                 color='orange'
               />
             </View>
