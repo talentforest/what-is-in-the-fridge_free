@@ -37,11 +37,17 @@ export default function MemoItem() {
   const onChangeText = (value: string) =>
     dispatch(editFormFood({ memo: value }));
 
-  const onPress = () => {
-    closeKeyboard();
-    dispatch(toggleMemoOpen(!isMemoOpen));
-    if (!isMemoOpen) dispatch(editFormFood({ memo: '' }));
+  const onOpenPress = () => {
+    dispatch(toggleMemoOpen(true));
   };
+
+  const onClosePress = () => {
+    closeKeyboard();
+    dispatch(toggleMemoOpen(false));
+    dispatch(editFormFood({ memo: '' }));
+  };
+
+  const onPress = isMemoOpen ? onClosePress : onOpenPress;
 
   return (
     <View>
