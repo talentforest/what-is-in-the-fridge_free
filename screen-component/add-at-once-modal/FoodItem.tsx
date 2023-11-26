@@ -32,6 +32,8 @@ export default function FoodItem({
     active,
   });
 
+  const onItemPress = () => onFoodItemPress(food);
+
   return (
     <Animated.View style={{ height, overflow: 'hidden' }}>
       <View style={tw`mb-1`}>
@@ -41,7 +43,7 @@ export default function FoodItem({
             `bg-white border border-slate-200 rounded-xl h-full flex-row items-center px-2.5 justify-between`,
             shadowStyle(3)
           )}
-          onPress={() => onFoodItemPress(food)}
+          onPress={onItemPress}
         >
           <View style={tw`flex-row flex-1 items-center gap-2`}>
             <Icon
@@ -58,11 +60,7 @@ export default function FoodItem({
           <View style={tw`flex-row items-center ml-0.5`}>
             <View style={tw`justify-end items-center flex-row gap-1`}>
               <CategoryIcon category={food.category} size={16} />
-              <Text
-                style={tw.style(`text-slate-600`, {
-                  letterSpacing: 0,
-                })}
-              >
+              <Text style={tw.style(`text-slate-600`)}>
                 {getFormattedDate(food.expiredDate, 'YY.MM.DD')}
               </Text>
             </View>

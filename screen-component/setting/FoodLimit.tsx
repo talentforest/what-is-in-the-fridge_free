@@ -26,15 +26,15 @@ export default function FoodLimit() {
         ${limitGauge === 0 ? 'rounded-lg' : 'rounded-r-lg'}`}
       />
       <View style={tw`flex-row items-center justify-between w-full px-3`}>
-        <Text fontSize={15} style={tw`text-slate-700 leading-4`}>
+        <Text fontSize={15} style={tw`text-slate-700`}>
           식료품 저장 한도
         </Text>
         <View style={tw`flex-row items-center gap-1`}>
-          <Text fontSize={16} style={tw`text-${limitGaugeColor}-700 leading-4`}>
+          <Text fontSize={16} style={tw`text-${limitGaugeColor}-700`}>
             {allFoods.length}
           </Text>
 
-          <Text fontSize={16} style={tw`text-slate-700 leading-4`}>
+          <Text fontSize={16} style={tw`text-slate-700`}>
             / {MAX_LIMIT}
           </Text>
         </View>

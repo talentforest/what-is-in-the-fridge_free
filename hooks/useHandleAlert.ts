@@ -102,6 +102,12 @@ export const useHandleAlert = () => {
     ],
   };
 
+  const alertChangeFont: AlertObj = {
+    title: '폰트 변경 완료',
+    msg: `폰트가 변경되었어요!`,
+    btns: [{ name: '확인', fn: closeAlertModal }],
+  };
+
   const alertAddAtOnceLimit: AlertObj = {
     title: '식료품 개수 초과',
     msg: `최대 ${MAX_NUM_ADD_AT_ONCE}개까지 한번에 추가할 수 있어요.`,
@@ -265,6 +271,7 @@ export const useHandleAlert = () => {
     };
   };
 
+  // 위에서 정의한 Alert객체들을 모두 여기에 모아두기
   const getAllAlertsArr = () => {
     const alertDeleteCompartmentObj = alertDeleteCompartment('1번');
 
@@ -290,6 +297,8 @@ export const useHandleAlert = () => {
       alertAlreadyHasFood,
       alertNoNameInForm,
       alertWrongDateInForm,
+      alertChangeFont,
+
       // compartmentNum
       alertDeleteCompartmentObj,
       // food
@@ -329,6 +338,7 @@ export const useHandleAlert = () => {
     alertAlreadyHasFood,
     alertNoNameInForm,
     alertWrongDateInForm,
+    alertChangeFont,
 
     alertDeleteCompartment,
     alertWithFood,
@@ -336,5 +346,6 @@ export const useHandleAlert = () => {
 
     setAlert,
     onAlertBtnPress,
+    closeAlertModal,
   };
 };

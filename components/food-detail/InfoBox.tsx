@@ -21,17 +21,15 @@ export default function InfoBox({ label, iconName, children }: Props) {
       }`}
     >
       {/* 표 제목 */}
-      <View style={tw`flex-row gap-1 items-center pr-3 w-24`}>
+      <View style={tw`flex-row gap-1 items-center w-23`}>
         <View style={tw`w-5.5 items-center`}>
           <Icon type='Octicons' name={iconName} size={14} color={MEDIUM_GRAY} />
         </View>
-        <Text style={tw.style(`text-slate-500`, { letterSpacing: 0 })}>
-          {label} :
-        </Text>
+        <Text style={tw.style(`text-slate-500`)}>{label} :</Text>
       </View>
 
       {/* 표 내용 */}
-      <View style={tw`flex-1 pr-2`}>{children}</View>
+      <View style={tw`flex-1 pr-1`}>{children}</View>
     </View>
   );
 }

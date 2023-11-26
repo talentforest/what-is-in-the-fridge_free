@@ -14,10 +14,10 @@ export default function CheckBox({
 }: Props) {
   return (
     <Icon
-      type='MaterialCommunityIcons'
-      name={checked ? 'checkbox-marked' : 'checkbox-blank-outline'}
+      type='Octicons'
+      name={checked ? 'check-circle-fill' : 'circle'}
       color={checked ? BLUE : inActiveColor}
-      size={size}
+      size={size - 3}
     />
   );
 }

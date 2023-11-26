@@ -80,6 +80,7 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
           <CategoryIcon category={food.category} size={14} />
 
           <Text
+            fontSize={17}
             style={tw`${colorByFilter(currentFilter, expiredDate, 'text')} 
             ${active ? 'text-indigo-600' : ''} text-center`}
           >

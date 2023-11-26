@@ -34,7 +34,7 @@ export default function NavigationBtnBox({ uri, btn }: Props) {
       style={tw`items-center gap-1 justify-center flex-1`}
     >
       <View style={tw.style(`bg-white mb-5 rounded-full`, shadowStyle(3))}>
-        <View style={tw`bg-white p-4.5 rounded-full`}>
+        <View style={tw`bg-white p-4 rounded-full`}>
           <Image source={{ uri }} width={size} height={size} />
         </View>
       </View>
@@ -54,7 +54,7 @@ export default function NavigationBtnBox({ uri, btn }: Props) {
         </Text>
 
         <IconChevronRight
-          size={16}
+          size={15}
           color={
             color === 'blue'
               ? BLUE

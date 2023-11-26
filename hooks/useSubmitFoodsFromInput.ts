@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { closeKeyboard } from '../util';
 import { useHandleAlert } from './useHandleAlert';
 import UUIDGenerator from 'react-native-uuid';
+import { useRouteName } from './useRouteName';
 
 export const useSubmitFoodsFromInput = () => {
   const [inputValue, setInputValue] = useState('');
@@ -16,6 +17,8 @@ export const useSubmitFoodsFromInput = () => {
   const myUuid = UUIDGenerator.v4();
 
   const dispatch = useDispatch();
+
+  const { routeFavoriteFoods } = useRouteName();
 
   const { alertWithFood, setAlert } = useHandleAlert();
 
@@ -45,7 +48,6 @@ export const useSubmitFoodsFromInput = () => {
     }
 
     const isShoppingListFood = isShoppingListItem(inputValue);
-
     if (isShoppingListFood) {
       dispatch(addFavorite({ ...initialFavFood, id: isShoppingListFood.id }));
       return setInputValue('');
@@ -71,10 +73,12 @@ export const useSubmitFoodsFromInput = () => {
     dispatch(addToShoppingList(food));
   };
 
-  const isActiveCaution = !!isFavoriteItem(inputValue) && !!!checkedList.length;
+  const existCaution = routeFavoriteFoods
+    ? !!isFavoriteItem(inputValue) && !!!checkedList.length
+    : !!isShoppingListItem(inputValue);
 
   return {
-    isActiveCaution,
+    existCaution,
     inputValue,
     setInputValue,
     onSubmitFavoriteListItem,

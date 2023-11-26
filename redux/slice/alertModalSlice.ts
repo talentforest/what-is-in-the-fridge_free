@@ -15,6 +15,7 @@ export type AlertTitle =
   | '장보기 식료품 삭제'
   | '장보기 목록 추가'
   | '식료품 추가 완료'
+  | '폰트 변경 완료'
   | '모든 식료품 추가 완료';
 
 export type AlertBtnName =

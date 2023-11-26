@@ -42,7 +42,7 @@ export default function FavoriteFoods() {
   const {
     inputValue,
     setInputValue,
-    isActiveCaution,
+    existCaution,
     onSubmitFavoriteListItem, //
   } = useSubmitFoodsFromInput();
 
@@ -102,21 +102,21 @@ export default function FavoriteFoods() {
               setValue={setInputValue}
               placeholder='자주 먹는 식료품을 추가하세요.'
               onSubmitEditing={onSubmitEditing}
-              disabled={inputValue === '' || isActiveCaution}
+              disabled={inputValue === '' || existCaution}
             >
               <InputCategoryBtn />
             </TextInputRoundedBox>
 
             <View
               style={{
-                marginTop: isActiveCaution ? -14 : 0,
+                marginTop: existCaution ? -14 : 0,
                 marginLeft: 6,
                 marginBottom:
-                  diffCategory && !!inputValue && isActiveCaution ? 10 : 0,
+                  diffCategory && !!inputValue && existCaution ? 10 : 0,
               }}
             >
               <FormMessage
-                active={isActiveCaution}
+                active={existCaution}
                 message='이미 목록에 있는 식료품이에요.'
                 color='orange'
               />

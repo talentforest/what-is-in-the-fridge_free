@@ -4,7 +4,7 @@ import {
   SafeBottomAreaView,
 } from '../components/common/native-component';
 import { useDispatch, useSelector } from '../redux/hook';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { closeKeyboard, scrollToIndex } from '../util';
 import { useHandleTableFooterBtns, useSubmitFoodsFromInput } from '../hooks';
 import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
@@ -17,6 +17,7 @@ import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
 import AddAtOnceModal from '../screen-component/modal/AddAtOnceModal';
+import FormMessage from '../components/form/FormMessage';
 
 export default function ShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
@@ -34,6 +35,7 @@ export default function ShoppingList() {
   const { onDeleteBtnPress, onAddAtOnceBtnPress } = useHandleTableFooterBtns();
 
   const {
+    existCaution,
     inputValue,
     setInputValue,
     onSubmitShoppingListItem, //
@@ -75,8 +77,21 @@ export default function ShoppingList() {
               setValue={setInputValue}
               placeholder='식료품 이름을 작성해주세요.'
               onSubmitEditing={onSubmitEditing}
-              disabled={inputValue === ''}
+              disabled={inputValue === '' || existCaution}
             />
+
+            <View
+              style={{
+                marginTop: existCaution ? -14 : 0,
+                marginLeft: 6,
+              }}
+            >
+              <FormMessage
+                active={existCaution}
+                message='이미 목록에 있는 식료품이에요.'
+                color='orange'
+              />
+            </View>
           </TableFooterContainer>
 
           <AddShoppingListFoodModal />

@@ -32,16 +32,16 @@ const PaymentBtn = () => {
             <View style={tw`items-center`}>
               <Icon name='unlock' type='Octicons' size={20} />
             </View>
-            <Text style={tw`text-blue-700`}>식료품 개수 한도 해제</Text>
+            <Text fontSize={17} style={tw`text-blue-700`}>
+              식료품 개수 한도 해제
+            </Text>
           </View>
 
           <View style={tw`flex-row items-center`}>
-            <Text
-              style={tw.style(`text-sm`, { fontFamily: 'NanumSquareRoundEB' })}
-            >
+            <Text style={tw.style(`text-sm`, { fontFamily: 'LocusSangSang' })}>
               ₩
             </Text>
-            <Text> 2,000</Text>
+            <Text fontSize={17}> 2,000</Text>
           </View>
         </View>
       </TouchableOpacity>

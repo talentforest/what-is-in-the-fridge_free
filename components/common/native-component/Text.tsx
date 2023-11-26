@@ -5,6 +5,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useSelector } from '../../../redux/hook';
+import { Fonts } from '../../../constant/fonts';
 
 interface Props extends TextProps {
   style?: TextStyle;
@@ -15,20 +16,27 @@ export const basicTextStyle = {
   color: '#333',
 };
 
-export const baseFont = 17;
+export const baseFontSize = 16;
 
-export function Text({ style, fontSize = baseFont, ...props }: Props) {
+export const getRelativeFontSize = (font: Fonts, fontSize: number) => {
+  return font === 'KotraHope'
+    ? fontSize
+    : font === 'LocusSangsang'
+    ? fontSize - 2
+    : fontSize - 3;
+};
+
+export function Text({ style, fontSize = baseFontSize, ...props }: Props) {
   const { fontFamily } = useSelector((state) => state.fontFamily);
 
   const { height } = useWindowDimensions();
 
-  const relativeFontSizeByFont =
-    fontFamily === 'NanumSquareRoundEB' ? fontSize - 3 : fontSize;
-
   const relativeFontSize =
-    height > 900 ? relativeFontSizeByFont + 2 : relativeFontSizeByFont;
+    height > 900
+      ? getRelativeFontSize(fontFamily, fontSize) + 2
+      : getRelativeFontSize(fontFamily, fontSize);
 
-  const lineHeight = 24 + 2 * (fontSize - baseFont);
+  const lineHeight = 24 + 2 * (relativeFontSize - baseFontSize);
 
   const relativeLineHeight = height > 900 ? lineHeight + 2 * 2 : lineHeight;
 
@@ -37,10 +45,9 @@ export function Text({ style, fontSize = baseFont, ...props }: Props) {
       allowFontScaling={false}
       style={{
         ...basicTextStyle,
+        fontFamily,
         fontSize: relativeFontSize,
-        fontFamily: fontFamily,
         lineHeight: relativeLineHeight,
-        letterSpacing: fontFamily === 'HsSaemaul' ? 0.5 : 0,
         ...style,
       }}
       {...props}

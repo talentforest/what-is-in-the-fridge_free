@@ -18,10 +18,14 @@ export default function AlertModal() {
     alertInfo: { title, msg, btns },
   } = useSelector((state) => state.alertModal);
 
-  const { onAlertBtnPress } = useHandleAlert();
+  const { onAlertBtnPress, closeAlertModal } = useHandleAlert();
 
   return (
-    <FadeInMiddleModal title='알림' isVisible={alertModalVisible}>
+    <FadeInMiddleModal
+      title='알림'
+      isVisible={alertModalVisible}
+      closeModal={closeAlertModal}
+    >
       <View
         style={tw.style(
           `justify-between bg-white border-2 border-slate-600 rounded-md py-2.5 px-4 mx-7`,

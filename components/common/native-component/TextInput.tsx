@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { LIGHT_GRAY } from '../../../constant/colors';
-import { baseFont, basicTextStyle } from './Text';
+import { baseFontSize, basicTextStyle, getRelativeFontSize } from './Text';
 import { useSelector } from '../../../redux/hook';
 import tw from 'twrnc';
 
@@ -17,18 +17,17 @@ interface Props extends TextInputProps {
 export const InputStyle =
   'h-10 border border-slate-200 px-2 rounded-xl bg-white';
 
-export function TextInput({ style, fontSize = baseFont, ...props }: Props) {
+export function TextInput({ style, fontSize = baseFontSize, ...props }: Props) {
   const { fontFamily } = useSelector((state) => state.fontFamily);
 
   const { height } = useWindowDimensions();
 
-  const relativeFontSizeByFont =
-    fontFamily === 'NanumSquareRoundEB' ? fontSize - 3 : fontSize;
-
   const relativeFontSize =
-    height > 900 ? relativeFontSizeByFont + 4 : relativeFontSizeByFont;
+    height > 900
+      ? getRelativeFontSize(fontFamily, fontSize) + 2
+      : getRelativeFontSize(fontFamily, fontSize);
 
-  const lineHeight = 24 + 2 * (fontSize - baseFont);
+  const lineHeight = 24 + 2 * (relativeFontSize - baseFontSize);
 
   const relativeLineHeight = height > 900 ? lineHeight + 4 * 2 : lineHeight;
 
@@ -36,10 +35,9 @@ export function TextInput({ style, fontSize = baseFont, ...props }: Props) {
     <Input
       style={tw.style(`${InputStyle}`, {
         ...basicTextStyle,
-        fontSize: relativeFontSize,
-        letterSpacing: fontFamily === 'HsSaemaul' ? 0.5 : 0,
-        lineHeight: relativeLineHeight,
         fontFamily,
+        fontSize: relativeFontSize,
+        lineHeight: relativeLineHeight,
         ...style,
       })}
       numberOfLines={1}

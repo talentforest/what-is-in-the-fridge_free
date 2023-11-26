@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Fonts } from '../../constant/fonts';
 
 export const initialState: { fontFamily: Fonts } = {
-  fontFamily: 'HsSaemaul',
+  fontFamily: 'LocusSangsang',
 };
 
 const fontSlice = createSlice({
