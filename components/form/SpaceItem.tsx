@@ -12,10 +12,12 @@ import {
 import { isFridgeFood, isPantryFood } from '../../util/checkFoodSpace';
 import { FormLabelType } from '../../constant/formInfo';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
+import { BLUE, LIGHT_GRAY } from '../../constant/colors';
 
 import CheckBoxItem from '../common/CheckBoxItem';
 import FormLabel from './FormLabel';
 import tw from 'twrnc';
+import Icon from '../common/native-component/Icon';
 
 interface Props {
   label: FormLabelType;
@@ -70,13 +72,24 @@ export default function SpaceItem({ label }: Props) {
   return (
     <View>
       <FormLabel label={label} />
-      <View style={tw`flex-row items-center pb-0.5`}>
+      <View style={tw`flex-row items-center pb-0.5 gap-1`}>
         {['냉장고', '팬트리'].map((storage) => (
           <TouchableOpacity
             onPress={() => onTabPress(storage as StorageType)}
             key={storage}
-            style={tw`w-13 mt-0.5`}
+            style={tw`mt-0.5 gap-1 py-1.5 px-2 rounded-lg border
+             ${
+               space.includes(storage.slice(0, 1))
+                 ? 'border-blue-600 bg-blue-50'
+                 : 'border-slate-300'
+             } flex-row items-center`}
           >
+            <Icon
+              type='Octicons'
+              name='location'
+              size={14}
+              color={space.includes(storage.slice(0, 1)) ? BLUE : LIGHT_GRAY}
+            />
             <Text
               style={tw`${
                 space.includes(storage.slice(0, 1))
@@ -86,14 +99,6 @@ export default function SpaceItem({ label }: Props) {
             >
               {storage}
             </Text>
-
-            <View
-              style={tw`h-1 w-full bg-blue-600 rounded-xl ${
-                space.includes(storage.slice(0, 1))
-                  ? 'bg-blue-600'
-                  : 'bg-slate-300'
-              } `}
-            />
           </TouchableOpacity>
         ))}
       </View>

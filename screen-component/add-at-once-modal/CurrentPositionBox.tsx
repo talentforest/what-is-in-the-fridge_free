@@ -22,14 +22,14 @@ export default function CurrentPositionBox({
 }: Props) {
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: 46,
+    toValue: 42,
     active,
   });
 
   return (
     <View>
       {onBackPress && (
-        <View style={tw`flex-row items-center gap-1`}>
+        <View style={tw`flex-row items-center gap-1 mb-1`}>
           <Text fontSize={14} style={tw`text-blue-600`}>
             한번에 추가할 공간
           </Text>
@@ -38,9 +38,9 @@ export default function CurrentPositionBox({
 
       <Animated.View style={{ height, overflow: 'hidden' }}>
         <View
-          style={tw`bg-blue-100 border border-blue-200 rounded-xl mt-1 p-1 pl-2 flex-row justify-between items-center gap-1`}
+          style={tw`bg-blue-100 border border-blue-200 rounded-xl p-1 pl-2 flex-row justify-between items-center gap-1`}
         >
-          <View style={tw`flex-row items-center gap-0.5`}>
+          <View style={tw`flex-row items-center gap-0.5 py-1`}>
             {!onBackPress && (
               <Text style={tw`text-slate-700`}>선택한 공간 : </Text>
             )}

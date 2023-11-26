@@ -60,17 +60,16 @@ export default function AddAtOnceModal() {
             </View>
 
             {!!currentStorage && (
-              <View style={tw`mt-0.5`}>
+              <View style={tw`mt-1`}>
                 <View>
-                  <CurrentPosition position={position} active={true} />
-
                   <SelectPositionBox
                     active={currentStorage === '냉장고'}
                     fridgePosition={fridgePosition}
                     onFridgePositionPress={onFridgePositionPress}
                   />
+                  <CurrentPosition position={position} active={true} />
                 </View>
-                <View style={tw`mt-4`}>
+                <View style={tw`mt-2`}>
                   <SubmitBtn
                     btnName='다음 단계'
                     color='gray'

@@ -31,7 +31,7 @@ export default function SelectPositionBox({
 
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: maxCompartmentsNum === 5 ? 172 : 152,
+    toValue: maxCompartmentsNum === 5 ? 162 : 134,
     active,
   });
 
