@@ -58,7 +58,7 @@ export default function FoodDetail() {
               <Text
                 numberOfLines={3}
                 ellipsizeMode='tail'
-                style={{ lineHeight: 22 }}
+                style={tw`leading-5`}
               >
                 {memo}
               </Text>

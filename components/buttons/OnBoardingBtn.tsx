@@ -35,7 +35,7 @@ export default function OnBoardingBtn({ name, onPress }: Props) {
         style={tw`bg-blue-600 shadow-md rounded-lg py-2 pl-4 pr-2`}
       >
         <View style={tw`flex-row justify-center gap-1 items-center`}>
-          <Text fontSize={20} style={tw`text-white`}>
+          <Text fontSize={18} style={tw`text-white`}>
             {name}
           </Text>
           <IconChevronRight size={20} color='#fff' />

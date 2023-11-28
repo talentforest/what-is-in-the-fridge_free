@@ -40,7 +40,7 @@ export default function NavigationBtnBox({ uri, btn }: Props) {
       </View>
       <View
         style={tw.style(
-          `flex-row absolute border border-slate-300 bottom-0 py-1.5 pl-2 pr-0.5 items-center bg-white rounded-xl`,
+          `flex-row absolute border border-slate-300 bottom-0 py-2 pl-2 pr-0.5 items-center bg-white rounded-xl`,
           shadowStyle(3)
         )}
       >

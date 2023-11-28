@@ -15,9 +15,9 @@ interface Props {
 
 export default function FormLabel({ label, option, isOpen, onPress }: Props) {
   return (
-    <View style={tw`flex-row items-center justify-between pb-0.5`}>
+    <View style={tw`flex-row items-center justify-between pb-1`}>
       <View style={tw`flex-row items-center`}>
-        <Text fontSize={label === '수량' ? 16 : 15} style={tw`text-blue-600`}>
+        <Text fontSize={15} style={tw`text-blue-600`}>
           {label}
         </Text>
       </View>

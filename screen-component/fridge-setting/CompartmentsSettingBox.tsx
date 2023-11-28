@@ -27,7 +27,7 @@ export default function CompartmentsSettingBox({ space }: Props) {
   return (
     <>
       <View
-        style={tw`px-2 py-2.5 gap-1 justify-center flex-1 items-center bg-white border border-slate-300 rounded-md`}
+        style={tw`px-2 py-2.5 gap-2 justify-center flex-1 items-center bg-white border border-slate-300 rounded-md`}
       >
         <Text style={tw`${spaceColor(space)}`}>{space}</Text>
         <View style={tw`flex-row items-center justify-center mt-0.5`}>

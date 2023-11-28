@@ -37,7 +37,7 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
 
   const dispatch = useDispatch();
 
-  const onItemLayout = (event: LayoutChangeEvent, food: Food) => {
+  const onItemLayout = (event: LayoutChangeEvent) => {
     if (active) {
       const { y } = event.nativeEvent.layout;
       scrollTo(scrollViewRef, 0, y);
@@ -55,7 +55,7 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
     <TouchableOpacity
       onPress={onPress}
       style={tw.style(`rounded-lg bg-white`)}
-      onLayout={(event: LayoutChangeEvent) => onItemLayout(event, food)}
+      onLayout={(event: LayoutChangeEvent) => onItemLayout(event)}
     >
       <Animated.View
         style={tw.style(`rounded-lg`, {
@@ -66,7 +66,7 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
         })}
       >
         <View
-          style={tw.style(`border border-slate-300 gap-1 rounded-lg justify-center items-center flex-row px-3 py-0.8 
+          style={tw.style(`border border-slate-300 gap-1 rounded-lg justify-center items-center flex-row px-3 py-1.5
           ${colorByFilter(currentFilter, expiredDate, 'bg')} 
           ${active ? 'border-indigo-300' : ''}`)}
         >
@@ -80,7 +80,6 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
           <CategoryIcon category={food.category} size={14} />
 
           <Text
-            fontSize={17}
             style={tw`${colorByFilter(currentFilter, expiredDate, 'text')} 
             ${active ? 'text-indigo-600' : ''} text-center`}
           >

@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Button, View } from 'react-native';
 import {
   Text,
   TouchableOpacity,
@@ -9,22 +9,59 @@ import { useDispatch } from '../../redux/hook';
 
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
+import { requestPurchase, useIAP, withIAPContext } from 'react-native-iap';
+import { useEffect } from 'react';
 
 const PaymentBtn = () => {
   const dispatch = useDispatch();
 
-  const onBtnPress = () => {
-    console.log('이용권 구매!');
-    dispatch(changeNoLimit());
-  };
+  const {
+    connected,
+    products,
+    subscriptions,
+    availablePurchases,
+    currentPurchase,
+    currentPurchaseError,
+    initConnectionError,
+    finishTransaction,
+    getProducts,
+    getSubscriptions,
+    getAvailablePurchases,
+  } = useIAP();
+
+  useEffect(() => {
+    // ... listen to currentPurchaseError, to check if any error happened
+  }, [currentPurchaseError]);
+
+  // console.log(initConnectionError, 'con');
+
+  useEffect(() => {
+    // ... listen to currentPurchase, to check if the purchase went through
+    // console.log(currentPurchase);
+  }, [currentPurchase]);
+
+  const ID = 'com.ellie0501.whatisinmyfridge_test';
 
   return (
     <>
+      <Button
+        title='Get the products'
+        onPress={() => {
+          getProducts({
+            skus: [ID],
+          }).then((res) => {
+            console.log(res, '상품 응답');
+          });
+        }}
+      />
       <TouchableOpacity
-        onPress={onBtnPress}
+        onPress={() => {
+          console.log(availablePurchases);
+          console.log('이용권 구매');
+        }}
         style={tw.style(
           `bg-blue-50 border border-blue-200 py-3.5 px-4 rounded-2xl`,
-          shadowStyle(3)
+          shadowStyle(15)
         )}
       >
         <View style={tw`flex-row items-center justify-between`}>
@@ -33,7 +70,7 @@ const PaymentBtn = () => {
               <Icon name='unlock' type='Octicons' size={20} />
             </View>
             <Text fontSize={17} style={tw`text-blue-700`}>
-              식료품 개수 한도 해제
+              식료품 개수 한도 해제 버튼
             </Text>
           </View>
 
@@ -49,4 +86,4 @@ const PaymentBtn = () => {
   );
 };
 
-export default PaymentBtn;
+export default withIAPContext(PaymentBtn);

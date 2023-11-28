@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export type AlertTitle =
   | '식료품 개수 한도 도달'
-  | '식료품 개수 초과'
+  | '한번에 추가할 식료품 개수 초과'
   | '식료품 이름 미작성'
   | '유효하지 않은 소비기한'
   | '이미 갖고 있는 식료품'

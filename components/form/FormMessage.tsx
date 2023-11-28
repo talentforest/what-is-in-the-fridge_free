@@ -12,7 +12,7 @@ interface Props {
 export default function FormMessage({ active, message, color }: Props) {
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: 40,
+    toValue: message.length < 32 ? 22 : 40,
     active,
   });
 

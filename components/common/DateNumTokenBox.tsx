@@ -4,7 +4,7 @@ import {
   DateState,
   DateType,
 } from '../../screen-component/modal/DateNumInputModal';
-import { Text } from './native-component';
+import { Text, getRelativeFontSize } from './native-component';
 import { formattedToday, getDateToken } from '../../util';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 import { useSelector } from '../../redux/hook';
@@ -25,8 +25,6 @@ export default function DateNumTokenBox({
 }: Props) {
   const { fontFamily } = useSelector((state) => state.fontFamily);
   const [isFocusedItem, setIsFocusedItem] = useState(0);
-
-  const fontSize = fontFamily === 'NanumSquareRoundEB' ? 21 : 24;
 
   const textInputRefs = useRef<TextInput[]>([]);
 
@@ -111,9 +109,9 @@ export default function DateNumTokenBox({
                 onChangeText={(text) => onChangeText(text, idx)}
                 onKeyPress={({ nativeEvent: { key } }) => onKeyPress(key, idx)}
                 style={tw.style(
-                  `h-full text-[${fontSize}px] rounded-md 
-                  ${PlatformIOS ? '' : 'pl-2 pt-0.5'}`,
-                  { letterSpacing: 1, fontFamily }
+                  `text-[${getRelativeFontSize(fontFamily, 23)}px] rounded-md
+                  ${PlatformIOS ? '' : 'pl-2 pt-0.5'} h-full`,
+                  { fontFamily }
                 )}
               />
             </View>

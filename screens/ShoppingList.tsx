@@ -96,12 +96,12 @@ export default function ShoppingList() {
 
             <View
               style={{
-                marginTop: inputValue.length >= 40 ? -14 : 0,
+                marginTop: inputValue.length >= NAME_MAX_LENGTH ? -14 : 0,
                 marginLeft: 6,
               }}
             >
               <FormMessage
-                active={inputValue.length >= 40}
+                active={inputValue.length >= NAME_MAX_LENGTH}
                 message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요.`}
                 color='orange'
               />

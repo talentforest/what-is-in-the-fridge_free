@@ -66,9 +66,7 @@ export default function CategoryBox({ checked, category, localUri }: Props) {
           <Text
             fontSize={14}
             style={tw.style(
-              `text-center 
-              ${checked ? 'text-blue-600' : 'text-slate-600'}`,
-              { lineHeight: 14 }
+              `text-center ${checked ? 'text-blue-600' : 'text-slate-600'}`
             )}
           >
             {category}

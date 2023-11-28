@@ -70,7 +70,7 @@ export default function MemoItem() {
           >
             <TextInput
               style={tw.style(`border-0 w-full h-full`, {
-                lineHeight: 21,
+                lineHeight: 20,
                 textAlignVertical: 'top', // android
               })}
               onChangeText={onChangeText}

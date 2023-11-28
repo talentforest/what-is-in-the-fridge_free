@@ -16,7 +16,7 @@ export const basicTextStyle = {
   color: '#333',
 };
 
-export const baseFontSize = 16;
+export const baseFontSize = 17;
 
 export const getRelativeFontSize = (font: Fonts, fontSize: number) => {
   return font === 'KotraHope'
@@ -36,10 +36,6 @@ export function Text({ style, fontSize = baseFontSize, ...props }: Props) {
       ? getRelativeFontSize(fontFamily, fontSize) + 2
       : getRelativeFontSize(fontFamily, fontSize);
 
-  const lineHeight = 24 + 2 * (relativeFontSize - baseFontSize);
-
-  const relativeLineHeight = height > 900 ? lineHeight + 2 * 2 : lineHeight;
-
   return (
     <RNText
       allowFontScaling={false}
@@ -47,7 +43,6 @@ export function Text({ style, fontSize = baseFontSize, ...props }: Props) {
         ...basicTextStyle,
         fontFamily,
         fontSize: relativeFontSize,
-        lineHeight: relativeLineHeight,
         ...style,
       }}
       {...props}

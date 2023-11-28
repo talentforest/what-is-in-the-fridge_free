@@ -17,7 +17,7 @@ export default function PantyEntranceBtn() {
   return (
     <TouchableOpacity
       onPress={onNavigatePress}
-      style={tw`-mb-3 self-end bg-gray-600 flex-row py-1.5 pl-3 pr-2 items-center justify-center rounded-full`}
+      style={tw`-mb-3 self-end bg-gray-600 flex-row py-2 pl-3 pr-2 items-center justify-center rounded-full`}
     >
       <Icon name='package' type='Octicons' color={'#fff'} size={13} />
       <Text fontSize={15} style={tw`text-white ml-0.5`}>

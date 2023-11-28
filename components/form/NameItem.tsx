@@ -48,7 +48,7 @@ export default function NameItem({ isEditing }: Props) {
       />
 
       <FormMessage
-        active={name.length >= 40 && editable}
+        active={name.length >= NAME_MAX_LENGTH && editable}
         message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요.`}
         color='orange'
       />

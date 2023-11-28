@@ -1,6 +1,6 @@
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
-import { useSelector } from '../redux/hook';
+import { useDispatch, useSelector } from '../redux/hook';
 import { entireFilterObj, expiredFilters, getCompartments } from '../util';
 import { Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
@@ -15,6 +15,11 @@ import CompartmentContainer from '../components/compartment/CompartmentContainer
 import TableFilters from '../components/table/TableFilters';
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
+import {
+  showCategoryModal,
+  showExpiredDateModal,
+  showOpenAddFoodModal,
+} from '../redux/slice/modalVisibleSlice';
 
 type RouteParams = {
   space: Space;
@@ -28,6 +33,8 @@ export default function Compartments({ route }: Route) {
   const { space } = route.params as RouteParams;
 
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
+  const { categoryModalVisible, expiredDateModal, openAddFoodModal } =
+    useSelector((state) => state.modalVisible);
 
   const { getFoodList } = useGetFoodList();
 
@@ -35,8 +42,19 @@ export default function Compartments({ route }: Route) {
 
   const navigation = useNavigation();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     initializeFilter();
+    if (categoryModalVisible) {
+      dispatch(showCategoryModal(false));
+    }
+    if (expiredDateModal) {
+      dispatch(showExpiredDateModal(false));
+    }
+    if (openAddFoodModal) {
+      dispatch(showOpenAddFoodModal(false));
+    }
 
     navigation.setOptions({
       headerTitle: () => <NavigationHeaderTitle title={space} />,

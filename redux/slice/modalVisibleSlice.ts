@@ -50,6 +50,26 @@ const modalVisibleSlice = createSlice({
   name: 'modalVisible',
   initialState,
   reducers: {
+    closeAllModal: (state) => {
+      (state.formModal = false),
+        (state.addAtOnceModal = {
+          modalVisible: false,
+          currentStep: { step: 1, name: '한번에 추가할 공간' },
+        }),
+        (state.expiredDateModal = false),
+        (state.categoryModalVisible = false),
+        (state.categoryFilterModalVisible = false),
+        (state.openFoodDetailModal = false),
+        (state.expandCompartmentModal = {
+          modalVisible: false,
+          compartmentNum: '1번',
+        }),
+        (state.openAddFoodModal = {
+          modalVisible: false,
+          compartmentNum: '1번',
+        });
+    },
+
     showFormModal: (state, action: { payload: boolean }) => {
       state.formModal = action.payload;
     },
@@ -106,6 +126,7 @@ const modalVisibleSlice = createSlice({
 const { reducer: modalVisibleReducer } = modalVisibleSlice;
 
 export const {
+  closeAllModal,
   showExpiredDateModal,
   showFormModal,
   showAddAtOnceModal,

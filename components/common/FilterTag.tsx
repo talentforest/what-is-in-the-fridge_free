@@ -46,7 +46,7 @@ export default function FilterTag({
       onPress={onPress}
       style={tw.style(
         `${getTagColor(currentFilter, active, 'bg')} 
-        min-w-14 flex-row items-center justify-between border py-1.5 px-3.5 gap-1.5 rounded-full`,
+        min-w-14 flex-row items-center justify-between border py-2 px-3.5 gap-1.5 rounded-full`,
         shadowStyle(3)
       )}
     >

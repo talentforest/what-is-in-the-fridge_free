@@ -17,13 +17,13 @@ function LeftDay({ expiredDate, dateMark }: Props) {
   const relativeTimeSuffix = `${Math.abs(diffDate)}일 ${suffix}`;
 
   return (
-    <View style={tw`items-end justify-center`}>
+    <View style={tw`items-end justify-between gap-0.5`}>
       <Text fontSize={15} style={tw.style(`${textColor}`)}>
         {diffDate === 0 ? '오늘까지' : relativeTimeSuffix}
       </Text>
 
       {dateMark && (
-        <Text fontSize={14} style={tw.style(`text-slate-500 -mt-0.5`)}>
+        <Text fontSize={14} style={tw.style(`text-slate-600`)}>
           {getFormattedDate(expiredDate, 'YY.MM.DD')}
         </Text>
       )}

@@ -37,14 +37,14 @@ export default function SearchedItem({ food }: Props) {
   return (
     <TouchableOpacity
       onPress={() => onNavigatePress(space)}
-      style={tw`h-13 bg-blue-50 shadow-md rounded-xl px-2.5 py-1 justify-between`}
+      style={tw`h-13 bg-blue-50 shadow-md rounded-xl px-2.5 py-1.5 justify-between`}
     >
       <View style={tw`flex-row items-center gap-1`}>
         <CategoryIcon category={category} size={12} />
         <Text style={tw`text-slate-700`}>{cutLetter(name, 11)}</Text>
       </View>
 
-      <View style={tw`flex-row items-center pb-0.5`}>
+      <View style={tw`flex-row items-center`}>
         <Text fontSize={14} style={tw`text-slate-500`}>
           {space}
         </Text>

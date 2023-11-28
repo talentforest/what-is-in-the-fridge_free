@@ -24,12 +24,20 @@ interface FontStyle {
 }
 
 const fonts: FontStyle[] = [
-  { fontFamily: 'LocusSangsang', fontSize: 15, fontName: '로커스상상고딕체' },
-  { fontFamily: 'KotraHope', fontSize: 17, fontName: '코트라희망체' },
+  {
+    fontFamily: 'LocusSangsang',
+    fontSize: getRelativeFontSize('LocusSangsang', baseFontSize),
+    fontName: '로커스상상고딕체',
+  },
   {
     fontFamily: 'NanumSquareRoundEB',
-    fontSize: 15,
+    fontSize: getRelativeFontSize('NanumSquareRoundEB', baseFontSize),
     fontName: '나눔스퀘어라운드체',
+  },
+  {
+    fontFamily: 'KotraHope',
+    fontSize: getRelativeFontSize('KotraHope', baseFontSize),
+    fontName: '코트라희망체',
   },
 ];
 
@@ -56,23 +64,17 @@ export default function FontSetting() {
           <View
             style={tw`h-8 items-center justify-center border border-slate-300 rounded-full px-2.5`}
           >
-            <Text
-              style={tw.style(`text-slate-600`, {
-                lineHeight: 24,
-                fontSize: getRelativeFontSize(currFont, 15),
-              })}
-            >
+            <Text fontSize={15} style={tw.style(`text-slate-600`)}>
               예시문구
             </Text>
           </View>
           <Text
-            style={tw.style(`text-center mb-2`, {
+            style={tw.style(`text-center mb-0.5`, {
               fontFamily: font,
-              lineHeight: 24,
               fontSize: getRelativeFontSize(font, baseFontSize),
             })}
           >
-            이번 주말에 장을 한번 보러 갈까요?
+            이번 주말에는 냉장고 속 식료품을 관리해볼까요?
           </Text>
         </View>
 
@@ -81,7 +83,7 @@ export default function FontSetting() {
             <TouchableOpacity
               key={fontName}
               onPress={() => setFont(fontFamily)}
-              style={tw`flex-row items-center gap-1.5 h-10`}
+              style={tw`text-sm flex-row items-center gap-1.5 h-10`}
             >
               <Icon
                 name={font === fontFamily ? 'check-circle-fill' : 'circle'}
@@ -89,13 +91,7 @@ export default function FontSetting() {
                 type='Octicons'
                 size={14}
               />
-              <Text
-                style={{
-                  fontFamily,
-                  fontSize,
-                  lineHeight: 24,
-                }}
-              >
+              <Text style={{ fontFamily, fontSize, lineHeight: 20 }}>
                 {fontName}
               </Text>
             </TouchableOpacity>

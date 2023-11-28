@@ -109,8 +109,8 @@ export const useHandleAlert = () => {
   };
 
   const alertAddAtOnceLimit: AlertObj = {
-    title: '식료품 개수 초과',
-    msg: `최대 ${MAX_NUM_ADD_AT_ONCE}개까지 한번에 추가할 수 있어요.`,
+    title: '한번에 추가할 식료품 개수 초과',
+    msg: `최대 ${MAX_NUM_ADD_AT_ONCE}개까지 한 공간에 한번에 추가할 수 있어요.`,
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 

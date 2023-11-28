@@ -22,7 +22,10 @@ export default function FoodDetailName({ name }: { name: string }) {
         size={16}
         color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
       />
-      <Text fontSize={18} style={tw.style(`max-w-4/5 text-stone-800`)}>
+      <Text
+        fontSize={18}
+        style={tw.style(`max-w-4/5 text-stone-800 leading-5`)}
+      >
         {name}
       </Text>
 

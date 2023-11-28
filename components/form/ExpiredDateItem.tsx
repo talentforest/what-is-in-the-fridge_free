@@ -48,7 +48,7 @@ export default function ExpiredDateItem() {
         <TextInput
           editable={false}
           value={getFormattedDate(expiredDate, 'YY.MM.DD')}
-          style={tw`border-0 w-22 h-full bg-transparent`}
+          style={tw`border-0 h-full bg-transparent`}
         />
 
         {getDiffDate(expiredDate) >= 0 && <RelativeTime date={expiredDate} />}

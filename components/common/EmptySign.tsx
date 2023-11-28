@@ -37,7 +37,7 @@ export default function EmptySign({
 
   return (
     <View style={tw`items-center justify-center gap-2`}>
-      <Text fontSize={16} style={tw`text-slate-400 text-center`}>
+      <Text fontSize={15} style={tw`text-slate-400 text-center`}>
         {message}
       </Text>
 

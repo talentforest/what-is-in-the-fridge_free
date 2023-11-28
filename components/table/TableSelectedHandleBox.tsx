@@ -44,7 +44,7 @@ export default function TableSelectedHandleBox({ foodList, children }: Props) {
             inActiveColor='#333'
           />
           {!!checkedList.length && (
-            <Text fontSize={16} style={tw`ml-5.5 text-blue-600 -mt-1`}>
+            <Text style={tw`ml-5.5 text-slate-800 mt-0.5`}>
               {checkedList.length}개 선택
             </Text>
           )}

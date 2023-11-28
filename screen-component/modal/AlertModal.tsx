@@ -33,18 +33,12 @@ export default function AlertModal() {
         )}
       >
         <View>
-          <Text fontSize={18} style={tw`text-slate-900`}>
+          <Text fontSize={18} style={tw`text-slate-900 mt-0.5`}>
             {title}
           </Text>
           <View style={tw`h-0.5 bg-slate-800 rounded-full mt-1.5 mb-2`} />
         </View>
-        <Text
-          style={tw.style(`text-slate-600 mb-1`, {
-            lineHeight: 24,
-          })}
-        >
-          {msg}
-        </Text>
+        <Text style={tw.style(`text-slate-600 mb-1 leading-5`)}>{msg}</Text>
 
         <View style={tw`flex-row self-end gap-1 mt-2`}>
           {btns.map((btn) => (

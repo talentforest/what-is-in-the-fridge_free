@@ -27,17 +27,12 @@ export function TextInput({ style, fontSize = baseFontSize, ...props }: Props) {
       ? getRelativeFontSize(fontFamily, fontSize) + 2
       : getRelativeFontSize(fontFamily, fontSize);
 
-  const lineHeight = 24 + 2 * (relativeFontSize - baseFontSize);
-
-  const relativeLineHeight = height > 900 ? lineHeight + 4 * 2 : lineHeight;
-
   return (
     <Input
       style={tw.style(`${InputStyle}`, {
         ...basicTextStyle,
         fontFamily,
         fontSize: relativeFontSize,
-        lineHeight: relativeLineHeight,
         ...style,
       })}
       numberOfLines={1}

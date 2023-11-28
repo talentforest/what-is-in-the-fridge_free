@@ -4,7 +4,11 @@ import { Food, MAX_LIMIT, initialFridgeFood } from '../../constant/foodInfo';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { useFindFood, useHandleAlert } from '../../hooks';
 import { setFormFood } from '../../redux/slice/food/formFoodSlice';
-import { showOpenAddFoodModal } from '../../redux/slice/modalVisibleSlice';
+import {
+  showCategoryModal,
+  showExpiredDateModal,
+  showOpenAddFoodModal,
+} from '../../redux/slice/modalVisibleSlice';
 import { CompartmentNum } from '../../constant/fridgeInfo';
 
 import AddIconBtn from '../buttons/AddIconBtn';
