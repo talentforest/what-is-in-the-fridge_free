@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -8,25 +8,28 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { useFonts } from 'expo-font';
 import { fonts } from './constant/fonts';
 import Navigation from './navigation/Navigation';
-import Splash from './screens/Splash';
+import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
 const App = () => {
-  const [appIsReady, setAppIsReady] = useState(false);
   const [fontsLoaded] = useFonts(fonts);
 
-  if (!fontsLoaded) return null;
+  const prepareApp = async () => {
+    try {
+      await SplashScreen.preventAutoHideAsync();
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await SplashScreen.hideAsync();
+    } catch (e) {
+      console.warn(e);
+    }
+  };
 
-  if (!appIsReady) {
-    return (
-      <Splash
-        appIsReady={appIsReady}
-        setAppIsReady={setAppIsReady}
-        persistor={persistor}
-      />
-    );
-  }
+  useEffect(() => {
+    prepareApp();
+  }, []);
+
+  if (!fontsLoaded) return null;
 
   return (
     <ReduxProvider store={store}>

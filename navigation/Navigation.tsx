@@ -1,4 +1,4 @@
-import { useSelector } from '../redux/hook';
+import { useDispatch, useSelector } from '../redux/hook';
 import {
   NativeStackNavigationOptions,
   createNativeStackNavigator,
@@ -18,6 +18,8 @@ import PantryFoods from '../screens/PantryFoods';
 import Setting from '../screens/Setting';
 import FontSetting from '../screens/FontSetting';
 import HeaderBackBtn from '../components/buttons/HeaderBackBtn';
+import { useEffect } from 'react';
+import { closeAllModal } from '../redux/slice/modalVisibleSlice';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -53,6 +55,12 @@ const options: NativeStackNavigationOptions = {
 
 const Navigation = () => {
   const { onboarding } = useSelector((state) => state.onboarding);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(closeAllModal());
+  }, []);
 
   return (
     <Stack.Navigator>
