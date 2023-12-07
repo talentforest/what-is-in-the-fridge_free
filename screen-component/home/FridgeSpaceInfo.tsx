@@ -41,11 +41,11 @@ export default function FridgeSpaceInfo({ space }: Props) {
             name='information-outline'
             type='MaterialCommunityIcons'
             color={GRAY}
-            size={14}
+            size={15}
           />
-          <Text fontSize={15}>{space}</Text>
+          <Text fontSize={16}>{space}</Text>
         </View>
-        <View style={tw`border border-slate-300 h-0.1 rounded-full w-full`} />
+        <View style={tw`border border-gray-300 h-0.1 rounded-full w-full`} />
       </View>
 
       {/* 냉장고 공간 정보 */}
