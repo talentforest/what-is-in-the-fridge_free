@@ -8,6 +8,7 @@ import { NavigateProp } from '../navigation/Navigation';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch, useSelector } from '../redux/hook';
 import { toggleOnboarding } from '../redux/slice/onboardingSlice';
+import { LocusSangsang } from '../constant/fonts';
 
 import StepIndicator from '../components/common/StepIndicator';
 import OnBoardingBtn from '../components/buttons/OnBoardingBtn';
@@ -91,9 +92,10 @@ export default function OnBoarding() {
                     {[desc.split(', ')[0], desc.split(', ')[1]].map((desc) => (
                       <Text
                         key={desc}
-                        fontSize={17}
+                        fontSize={18}
                         style={tw.style(`text-slate-800`, {
-                          fontFamily: 'LocusSangsang',
+                          fontFamily: LocusSangsang,
+                          lineHeight: 24,
                         })}
                       >
                         {desc}
