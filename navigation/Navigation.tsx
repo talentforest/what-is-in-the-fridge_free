@@ -5,6 +5,8 @@ import {
 } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
 import { DEEP_GRAY, HEADER_BGCOLOR } from '../constant/colors';
+import { useEffect } from 'react';
+import { closeAllModal } from '../redux/slice/modalVisibleSlice';
 
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
@@ -18,8 +20,6 @@ import PantryFoods from '../screens/PantryFoods';
 import Setting from '../screens/Setting';
 import FontSetting from '../screens/FontSetting';
 import HeaderBackBtn from '../components/buttons/HeaderBackBtn';
-import { useEffect } from 'react';
-import { closeAllModal } from '../redux/slice/modalVisibleSlice';
 
 export type RootStackParamList = {
   Home: undefined;

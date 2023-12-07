@@ -5,3 +5,7 @@ export const fonts = {
   NanumSquareRoundEB: require('../assets/fonts/NanumSquareRoundEB.ttf'),
   LocusSangsang: require('../assets/fonts/LocusSangsang.ttf'),
 };
+
+export const LocusSangsang = 'LocusSangsang';
+export const NanumSquareRoundEB = 'NanumSquareRoundEB';
+export const KotraHope = 'KotraHope';

@@ -8,7 +8,12 @@ import {
 import { useDispatch, useSelector } from '../redux/hook';
 import { changeFont } from '../redux/slice/fontSlice';
 import { BLUE, LIGHT_GRAY } from '../constant/colors';
-import { Fonts } from '../constant/fonts';
+import {
+  Fonts,
+  KotraHope,
+  LocusSangsang,
+  NanumSquareRoundEB,
+} from '../constant/fonts';
 import { useState } from 'react';
 import { useHandleAlert } from '../hooks';
 import AlertModal from '../screen-component/modal/AlertModal';
@@ -25,18 +30,18 @@ interface FontStyle {
 
 const fonts: FontStyle[] = [
   {
-    fontFamily: 'LocusSangsang',
-    fontSize: getRelativeFontSize('LocusSangsang', baseFontSize),
+    fontFamily: LocusSangsang,
+    fontSize: getRelativeFontSize(LocusSangsang, baseFontSize),
     fontName: '로커스상상고딕체',
   },
   {
-    fontFamily: 'NanumSquareRoundEB',
-    fontSize: getRelativeFontSize('NanumSquareRoundEB', baseFontSize),
+    fontFamily: NanumSquareRoundEB,
+    fontSize: getRelativeFontSize(NanumSquareRoundEB, baseFontSize),
     fontName: '나눔스퀘어라운드체',
   },
   {
-    fontFamily: 'KotraHope',
-    fontSize: getRelativeFontSize('KotraHope', baseFontSize),
+    fontFamily: KotraHope,
+    fontSize: getRelativeFontSize(KotraHope, baseFontSize),
     fontName: '코트라희망체',
   },
 ];

@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { useSelector } from '../../../redux/hook';
-import { Fonts } from '../../../constant/fonts';
+import { Fonts, KotraHope, LocusSangsang } from '../../../constant/fonts';
 
 interface Props extends TextProps {
   style?: TextStyle;
@@ -19,9 +19,9 @@ export const basicTextStyle = {
 export const baseFontSize = 17;
 
 export const getRelativeFontSize = (font: Fonts, fontSize: number) => {
-  return font === 'KotraHope'
+  return font === KotraHope
     ? fontSize
-    : font === 'LocusSangsang'
+    : font === LocusSangsang
     ? fontSize - 2
     : fontSize - 3;
 };

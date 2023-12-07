@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Fonts } from '../../constant/fonts';
+import { Fonts, LocusSangsang } from '../../constant/fonts';
 
 export const initialState: { fontFamily: Fonts } = {
-  fontFamily: 'LocusSangsang',
+  fontFamily: LocusSangsang,
 };
 
 const fontSlice = createSlice({
