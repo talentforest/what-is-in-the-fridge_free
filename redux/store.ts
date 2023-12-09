@@ -29,7 +29,7 @@ import checkedListReducer from './slice/food-list/checkListSlice';
 import categoryReducer from './slice/food/categorySlice';
 import afterAnimationReducer from './slice/afterAnimationSlice';
 import modalVisibleReducer from './slice/modalVisibleSlice';
-import limitReducer from './slice/limitSlice';
+import purchaseReducer from './slice/purchaseSlice';
 
 const reducers = {
   fridgeFoods: fridgeFoodsReducer,
@@ -49,7 +49,7 @@ const reducers = {
   formFood: formFoodReducer,
   category: categoryReducer,
   afterAnimation: afterAnimationReducer,
-  limit: limitReducer,
+  purchaseState: purchaseReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

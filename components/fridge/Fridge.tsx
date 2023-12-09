@@ -5,19 +5,21 @@ import { Space, SpaceSide } from '../../constant/fridgeInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
 import { shadowStyle } from '../../constant/shadowStyle';
-import { FRIDGE_COLOR } from '../../constant/colors';
 import { useRouteName } from '../../hooks/useRouteName';
 import { closeKeyboard } from '../../util';
 
 import FridgeSpaceInfo from '../../screen-component/home/FridgeSpaceInfo';
 import FridgeInfo from '../../screen-component/fridge-setting/FridgeInfo';
-import SvgFridgeContainer from './SvgFridgeContainer';
+import SvgFridgeContainer, {
+  fridgeBorderColor,
+  fridgeColor,
+} from './SvgFridgeContainer';
 import FoodLimit from '../../screen-component/setting/FoodLimit';
 import PantyEntranceBtn from '../../screen-component/home/PantyEntranceBtn';
 import tw from 'twrnc';
 
 export default function Fridge() {
-  const { limit } = useSelector((state) => state.limit);
+  const { purchased } = useSelector((state) => state.purchaseState);
   const {
     fridgeInfo: { compartments, freezer },
   } = useSelector((state) => state.fridgeInfo);
@@ -49,6 +51,7 @@ export default function Fridge() {
       {!routeFridgeSetting && <PantyEntranceBtn />}
       <View style={tw`h-[${fridgeHeight}px]`}>
         <View style={tw`flex-row flex-1 justify-end items-end`}>
+          {/* 냉장고 그림 컨테이너 */}
           <View style={tw`absolute`}>
             <SvgFridgeContainer height={fridgeHeight} />
           </View>
@@ -58,9 +61,9 @@ export default function Fridge() {
               <View
                 key={side}
                 style={tw.style(
-                  `h-[91%] flex-1 rounded-lg border
-                ${freezer === 'top' ? '' : 'flex-col-reverse'}
-                ${routeFridgeSetting ? '' : 'p-0.5'} ${FRIDGE_COLOR} `,
+                  `h-[91%] flex-1 rounded-lg border border-[${fridgeBorderColor}] bg-[${fridgeColor}]
+                  ${freezer === 'top' ? '' : 'flex-col-reverse'}
+                  ${routeFridgeSetting ? '' : 'p-0.5'} `,
                   shadowStyle(8)
                 )}
               >
@@ -69,9 +72,9 @@ export default function Fridge() {
                     <TouchableOpacity
                       key={space}
                       disabled={routeFridgeSetting}
-                      style={tw`${routeFridgeSetting ? 'p-0.8' : 'p-1.2'} 
-                    ${space.includes('냉동') ? 'h-[40%] pb-1' : 'h-[60%] pt-1'} 
-                    `}
+                      style={tw`${routeFridgeSetting ? 'p-0.8' : 'p-1.2'} ${
+                        space.includes('냉동') ? 'h-[40%] pb-1' : 'h-[60%] pt-1'
+                      }`}
                       onPress={() => onSpacePress(space)}
                     >
                       {!routeFridgeSetting ? (
@@ -88,7 +91,7 @@ export default function Fridge() {
         </View>
       </View>
 
-      {limit && !routeFridgeSetting && <FoodLimit />}
+      {!purchased && !routeFridgeSetting && <FoodLimit />}
     </View>
   );
 }

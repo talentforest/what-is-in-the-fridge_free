@@ -3,68 +3,91 @@ import {
   Text,
   TouchableOpacity,
 } from '../../components/common/native-component';
-import { NavigateProp, RootStackParamList } from '../../navigation/Navigation';
-import { GRAY } from '../../constant/colors';
+import { NavigateProp } from '../../navigation/Navigation';
+import { GRAY, MEDIUM_GRAY } from '../../constant/colors';
+import { View } from 'react-native';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { togglePurchaseState } from '../../redux/slice/purchaseSlice';
+import { useHandleAlert } from '../../hooks';
+import { SettingInfo } from '../../constant/settingBtns';
 
+import * as RNIap from 'react-native-iap';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
-import { View } from 'react-native';
-
-export interface SettingInfo {
-  title: string;
-  navigate: keyof RootStackParamList | '';
-  icon: string;
-}
 
 interface Props {
   setting: SettingInfo;
 }
 
 export default function SettingBox({ setting }: Props) {
-  const navigation = useNavigation<NavigateProp>();
+  const { purchased } = useSelector((state) => state.purchaseState);
 
   const { title, navigate, icon } = setting;
 
-  const onNavigatePress = () => {
-    if (navigate !== '') {
-      navigation.navigate(navigate);
+  const { setAlert, alertRestoreIAP, alertHasReceipt } = useHandleAlert();
+
+  const navigation = useNavigation<NavigateProp>();
+
+  const dispatch = useDispatch();
+
+  const onRestoreBtnPress = async () => {
+    if (purchased) {
+      return setAlert(alertHasReceipt);
     }
-    return;
+
+    const availableProducts = await RNIap.getAvailablePurchases();
+    const receipt = availableProducts[0];
+
+    if (receipt?.purchaseToken) {
+      dispatch(
+        togglePurchaseState({
+          purchased: true,
+          purchaseToken: receipt.purchaseToken,
+        })
+      );
+    } else {
+      setAlert(alertRestoreIAP); // 토큰이 없는 경우
+    }
   };
 
-  return (
-    <TouchableOpacity
-      disabled={navigate === ''}
-      onPress={onNavigatePress}
-      style={tw`flex-row py-2.5 items-center justify-between 
-      ${title === '버전' ? 'border-t border-slate-300 pt-2' : ''}`}
-    >
-      <View style={tw`flex-row items-center gap-1`}>
-        <View style={tw`w-7 justify-center items-center`}>
-          <Icon
-            name={icon}
-            color={GRAY}
-            size={navigate === 'FridgeSetting' ? 18 : 15}
-            type={
-              navigate === 'FridgeSetting' || navigate === 'FontSetting'
-                ? 'MaterialCommunityIcons'
-                : 'Octicons'
-            }
-          />
-        </View>
-        <Text>{title}</Text>
-      </View>
+  const onNavigatePress = () => {
+    if (navigate !== '') {
+      return navigation.navigate(navigate);
+    }
+  };
 
-      {navigate === '' &&
-        (title === '버전' ? (
-          <Text fontSize={15} style={tw`text-slate-600`}>
-            1.0.0
+  const disabled = title === '버전';
+
+  return (
+    <>
+      <TouchableOpacity
+        disabled={disabled}
+        onPress={title === '복원' ? onRestoreBtnPress : onNavigatePress}
+        style={tw`flex-row py-3.5 items-center justify-between`}
+      >
+        <View style={tw`flex-row items-center gap-1`}>
+          <View style={tw`w-7 justify-center items-center`}>
+            <Icon
+              name={icon}
+              color={disabled ? MEDIUM_GRAY : GRAY}
+              size={navigate === 'FridgeSetting' ? 18 : 15}
+              type={
+                navigate === 'FridgeSetting'
+                  ? 'MaterialCommunityIcons'
+                  : 'Octicons'
+              }
+            />
+          </View>
+
+          <Text style={tw`${disabled ? 'text-gray-500' : 'text-gray-800'}`}>
+            {title}
           </Text>
-        ) : (
-          <Text fontSize={15} style={tw`text-slate-600`}>
-            업데이트 예정
-          </Text>
-        ))}
-    </TouchableOpacity>
+        </View>
+
+        {title === '버전' ? (
+          <Text style={tw`text-slate-400`}>1.0.3</Text>
+        ) : null}
+      </TouchableOpacity>
+    </>
   );
 }

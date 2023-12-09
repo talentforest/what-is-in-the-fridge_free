@@ -19,5 +19,3 @@ export const ORANGE_RED = '#ff6c47';
 export const HEADER_BGCOLOR = '#eee';
 export const TAB_BG_COLOR = '#f5f5f5';
 export const TAB_BLUE_BG_COLOR = '#eff6ff';
-
-export const FRIDGE_COLOR = 'bg-[#D9D9D9] border-[#c5c5c5]';

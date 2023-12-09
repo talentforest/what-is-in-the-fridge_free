@@ -4,11 +4,7 @@ import { Food, MAX_LIMIT, initialFridgeFood } from '../../constant/foodInfo';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { useFindFood, useHandleAlert } from '../../hooks';
 import { setFormFood } from '../../redux/slice/food/formFoodSlice';
-import {
-  showCategoryModal,
-  showExpiredDateModal,
-  showOpenAddFoodModal,
-} from '../../redux/slice/modalVisibleSlice';
+import { showOpenAddFoodModal } from '../../redux/slice/modalVisibleSlice';
 import { CompartmentNum } from '../../constant/fridgeInfo';
 
 import AddIconBtn from '../buttons/AddIconBtn';
@@ -20,7 +16,7 @@ interface Props {
 }
 
 export default function CompartmentHeader({ compartmentNum, foodList }: Props) {
-  const { limit } = useSelector((state) => state.limit);
+  const { purchased } = useSelector((state) => state.purchaseState);
 
   const { allFoods } = useFindFood();
 
@@ -29,7 +25,7 @@ export default function CompartmentHeader({ compartmentNum, foodList }: Props) {
   const dispatch = useDispatch();
 
   const onPress = () => {
-    if (limit && allFoods.length >= MAX_LIMIT) {
+    if (!purchased && allFoods.length >= MAX_LIMIT) {
       setAlert(alertReachedLimit);
       return;
     }

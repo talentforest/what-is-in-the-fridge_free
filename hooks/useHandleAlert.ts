@@ -132,6 +132,24 @@ export const useHandleAlert = () => {
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 
+  const alertIAP: AlertObj = {
+    title: '이용권 구매 오류',
+    msg: '이용권을 구매하는 과정에서 오류가 발생했습니다. 조금 있다가 다시 한번 시도해주세요.',
+    btns: [{ name: '확인', fn: closeAlertModal }],
+  };
+
+  const alertRestoreIAP: AlertObj = {
+    title: '이용권 복원 실패',
+    msg: '복원 가능한 이용권이 없습니다.',
+    btns: [{ name: '확인', fn: closeAlertModal }],
+  };
+
+  const alertHasReceipt: AlertObj = {
+    title: '이용권 이용중 안내',
+    msg: '이미 무제한 저장 이용권을 이용중이에요.',
+    btns: [{ name: '확인', fn: closeAlertModal }],
+  };
+
   //  Alert With CompartmentNum
   const alertDeleteCompartment: AlertObjFunction = (
     compartmentNum: CompartmentNum
@@ -298,6 +316,9 @@ export const useHandleAlert = () => {
       alertNoNameInForm,
       alertWrongDateInForm,
       alertChangeFont,
+      alertIAP,
+      alertRestoreIAP,
+      alertHasReceipt,
 
       // compartmentNum
       alertDeleteCompartmentObj,
@@ -339,6 +360,9 @@ export const useHandleAlert = () => {
     alertNoNameInForm,
     alertWrongDateInForm,
     alertChangeFont,
+    alertIAP,
+    alertRestoreIAP,
+    alertHasReceipt,
 
     alertDeleteCompartment,
     alertWithFood,
