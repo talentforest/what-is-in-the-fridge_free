@@ -41,7 +41,7 @@ export default function FadeInMiddleModal({
 
   const modalBorderColor = 'border-slate-300 border';
 
-  const MODAL_HEIGHT = height * 0.8;
+  const MODAL_HEIGHT = height * 0.9;
 
   return (
     <RNModal

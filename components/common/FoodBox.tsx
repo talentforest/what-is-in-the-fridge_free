@@ -66,7 +66,7 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
         })}
       >
         <View
-          style={tw.style(`border border-slate-300 gap-1 rounded-lg justify-center items-center flex-row px-3 py-1.5
+          style={tw.style(`border border-slate-300 gap-0.5 rounded-lg justify-center items-center flex-row px-2 py-1.5
           ${colorByFilter(currentFilter, expiredDate, 'bg')} 
           ${active ? 'border-indigo-300' : ''}`)}
         >

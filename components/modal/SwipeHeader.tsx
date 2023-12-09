@@ -18,7 +18,7 @@ export default function SwipeHeader({ title, closeModal, animationIn }: Props) {
     <View>
       {/* 스와이퍼 기능이 있는 슬라이드용 헤더 */}
       {animationIn === 'slideInUp' ? (
-        <View style={tw`pt-2 pb-1 rounded-t-3xl border border-stone-100`}>
+        <View style={tw`py-2 rounded-t-3xl border border-stone-100`}>
           {/* 터치바 */}
           <View
             style={tw`mb-3 bg-slate-500 w-15 self-center h-1.5 rounded-2xl`}
