@@ -4,6 +4,7 @@ import { LIGHT_BLUE } from '../constant/colors';
 import { shadowStyle } from '../constant/shadowStyle';
 import { useSelector } from '../redux/hook';
 import { settingBtns } from '../constant/settingBtns';
+import { PlatformIOS } from '../constant/statusBarHeight';
 
 import Container from '../components/common/Container';
 import SettingBox from '../screen-component/setting/SettingBox';
@@ -17,7 +18,7 @@ export default function Setting() {
 
   return (
     <Container>
-      {!purchased ? (
+      {!purchased && !PlatformIOS ? (
         <View
           style={tw.style(
             `border border-blue-100 bg-white rounded-xl py-4 px-3.5 mb-6`,

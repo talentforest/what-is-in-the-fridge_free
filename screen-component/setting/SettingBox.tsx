@@ -14,6 +14,8 @@ import { SettingInfo } from '../../constant/settingBtns';
 import * as RNIap from 'react-native-iap';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
+import IconFridge from '../../components/svg/IconFridge';
+import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
 
 interface Props {
   setting: SettingInfo;
@@ -24,13 +26,18 @@ export default function SettingBox({ setting }: Props) {
 
   const { title, navigate, icon } = setting;
 
-  const { setAlert, alertRestoreIAP, alertHasReceipt } = useHandleAlert();
+  const {
+    setAlert,
+    alertRestoreIAP,
+    alertHasReceipt,
+    alertInitializeData, //
+  } = useHandleAlert();
 
   const navigation = useNavigation<NavigateProp>();
 
   const dispatch = useDispatch();
 
-  const onRestoreBtnPress = async () => {
+  const onRestorePurchaseBtnPress = async () => {
     if (purchased) {
       return setAlert(alertHasReceipt);
     }
@@ -50,6 +57,10 @@ export default function SettingBox({ setting }: Props) {
     }
   };
 
+  const onOpenResetDataAlertPress = async () => {
+    setAlert(alertInitializeData);
+  };
+
   const onNavigatePress = () => {
     if (navigate !== '') {
       return navigation.navigate(navigate);
@@ -60,23 +71,33 @@ export default function SettingBox({ setting }: Props) {
 
   return (
     <>
+      {title === '버전' ? (
+        <View style={tw`border-t-2 border-gray-200`} />
+      ) : null}
+
       <TouchableOpacity
         disabled={disabled}
-        onPress={title === '복원' ? onRestoreBtnPress : onNavigatePress}
+        onPress={
+          title === '데이터 초기화'
+            ? onOpenResetDataAlertPress
+            : title === '복원'
+            ? onRestorePurchaseBtnPress
+            : onNavigatePress
+        }
         style={tw`flex-row py-3.5 items-center justify-between`}
       >
         <View style={tw`flex-row items-center gap-1`}>
           <View style={tw`w-7 justify-center items-center`}>
-            <Icon
-              name={icon}
-              color={disabled ? MEDIUM_GRAY : GRAY}
-              size={navigate === 'FridgeSetting' ? 18 : 15}
-              type={
-                navigate === 'FridgeSetting'
-                  ? 'MaterialCommunityIcons'
-                  : 'Octicons'
-              }
-            />
+            {icon === 'fridge' ? (
+              <IconFridge size={17} color={GRAY} />
+            ) : (
+              <Icon
+                name={icon}
+                color={disabled ? MEDIUM_GRAY : GRAY}
+                size={15}
+                type='Octicons'
+              />
+            )}
           </View>
 
           <Text style={tw`${disabled ? 'text-gray-500' : 'text-gray-800'}`}>
@@ -86,6 +107,10 @@ export default function SettingBox({ setting }: Props) {
 
         {title === '버전' ? (
           <Text style={tw`text-slate-400`}>1.0.3</Text>
+        ) : null}
+
+        {navigate !== '' ? (
+          <IconChevronRight size={16} color={MEDIUM_GRAY} />
         ) : null}
       </TouchableOpacity>
     </>

@@ -14,11 +14,19 @@ import { setAfterAnimation } from '../redux/slice/afterAnimationSlice';
 import {
   addItemsToShoppingList,
   removeShoppingListFoods,
+  setShoppingList,
 } from '../redux/slice/food-list/shoppingListSlice';
-import { addPantryFoods } from '../redux/slice/food-list/pantryFoodsSlice';
-import { addFridgeFoods } from '../redux/slice/food-list/fridgeFoodsSlice';
+import {
+  addPantryFoods,
+  setAllPantryFoods,
+} from '../redux/slice/food-list/pantryFoodsSlice';
+import {
+  addFridgeFoods,
+  setAllFridgeFoods,
+} from '../redux/slice/food-list/fridgeFoodsSlice';
 import { showAddAtOnceModal } from '../redux/slice/modalVisibleSlice';
 import { search } from '../redux/slice/food/searchedFoodSlice';
+import { setFavoriteList } from '../redux/slice/food-list/favoriteFoodsSlice';
 
 export type AlertBtns = {
   name: AlertBtnName;
@@ -92,6 +100,14 @@ export const useHandleAlert = () => {
     closeAlertModal();
   };
 
+  const onResetDataPress = async () => {
+    dispatch(setAllFridgeFoods([]));
+    dispatch(setAllPantryFoods([]));
+    dispatch(setFavoriteList([]));
+    dispatch(setShoppingList([]));
+    setAlert(alertDoneInitializeData);
+  };
+
   // Alert
   const alertReachedLimit: AlertObj = {
     title: '식료품 개수 한도 도달',
@@ -148,6 +164,21 @@ export const useHandleAlert = () => {
     title: '이용권 이용중 안내',
     msg: '이미 무제한 저장 이용권을 이용중이에요.',
     btns: [{ name: '확인', fn: closeAlertModal }],
+  };
+
+  const alertInitializeData: AlertObj = {
+    title: '데이터 초기화',
+    msg: '모든 데이터를 삭제하시겠습니까?',
+    btns: [
+      { name: '취소', fn: closeAlertModal },
+      { name: '확인', fn: onResetDataPress },
+    ],
+  };
+
+  const alertDoneInitializeData: AlertObj = {
+    title: '데이터 초기화 완료',
+    msg: `데이터 모두 초기화되었습니다.`,
+    btns: [{ name: '닫기', fn: closeAlertModal }],
   };
 
   //  Alert With CompartmentNum
@@ -319,6 +350,8 @@ export const useHandleAlert = () => {
       alertIAP,
       alertRestoreIAP,
       alertHasReceipt,
+      alertInitializeData,
+      alertDoneInitializeData,
 
       // compartmentNum
       alertDeleteCompartmentObj,
@@ -363,6 +396,8 @@ export const useHandleAlert = () => {
     alertIAP,
     alertRestoreIAP,
     alertHasReceipt,
+    alertInitializeData,
+    alertDoneInitializeData,
 
     alertDeleteCompartment,
     alertWithFood,
