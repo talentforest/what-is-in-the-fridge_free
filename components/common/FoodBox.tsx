@@ -20,6 +20,7 @@ import { showOpenFoodDetailModal } from '../../redux/slice/modalVisibleSlice';
 
 import CategoryIcon from './CategoryIcon';
 import tw from 'twrnc';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   food: Food;
@@ -63,12 +64,15 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
           backgroundColor: active ? INDIGO : '#fff',
           transform: [{ translateY }],
           opacity,
+          ...shadowStyle(3),
         })}
       >
         <View
-          style={tw.style(`border border-slate-300 gap-0.5 rounded-lg justify-center items-center flex-row px-2 py-1.5
+          style={tw.style(
+            `border border-slate-300 gap-0.5 rounded-lg justify-center items-center flex-row px-2 py-1.5
           ${colorByFilter(currentFilter, expiredDate, 'bg')} 
-          ${active ? 'border-indigo-300' : ''}`)}
+          ${active ? 'border-indigo-300' : ''}`
+          )}
         >
           {getDiffDate(expiredDate) <= 7 && (
             <View
@@ -77,9 +81,10 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
             />
           )}
 
-          <CategoryIcon category={food.category} size={14} />
+          <CategoryIcon category={food.category} size={15} />
 
           <Text
+            fontSize={18}
             style={tw`${colorByFilter(currentFilter, expiredDate, 'text')} 
             ${active ? 'text-indigo-600' : ''} text-center`}
           >

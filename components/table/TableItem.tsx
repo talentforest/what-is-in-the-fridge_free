@@ -6,6 +6,11 @@ import { useItemSlideAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { setCheckedList } from '../../redux/slice/food-list/checkListSlice';
+import { showOpenFoodDetailModal } from '../../redux/slice/modalVisibleSlice';
+import {
+  saveOriginFood,
+  setFormFood,
+} from '../../redux/slice/food/formFoodSlice';
 
 import CheckBox from '../common/CheckBox';
 import tw from 'twrnc';
@@ -14,11 +19,17 @@ interface Props {
   food: Food;
   endChildren?: ReactNode;
   frontChildren?: ReactNode;
+  checkBox?: boolean;
 }
 
 export const TABLE_ITEM_HEIGHT = 45;
 
-export default function TableItem({ food, frontChildren, endChildren }: Props) {
+export default function TableItem({
+  food,
+  frontChildren,
+  endChildren,
+  checkBox,
+}: Props) {
   const { afterAnimation } = useSelector((state) => state.afterAnimation);
   const { checkedList } = useSelector((state) => state.checkedList);
 
@@ -44,11 +55,21 @@ export default function TableItem({ food, frontChildren, endChildren }: Props) {
 
   const dispatch = useDispatch();
 
+  const onOpenFoodDetailPress = () => {
+    dispatch(setFormFood(food));
+    dispatch(saveOriginFood(food));
+    dispatch(showOpenFoodDetailModal(true));
+  };
+
   const onCheckBoxPress = () => {
     const unselectItem = checkedList.filter((item) => item.id !== id);
     const selectItem = [...checkedList, initializedFood];
     const toggleItem = isCheckedItem(id) ? unselectItem : selectItem;
     dispatch(setCheckedList(toggleItem));
+  };
+
+  const onItemPress = () => {
+    return checkBox ? onCheckBoxPress() : onOpenFoodDetailPress();
   };
 
   return (
@@ -62,7 +83,7 @@ export default function TableItem({ food, frontChildren, endChildren }: Props) {
         }}
       >
         <TouchableOpacity
-          onPress={onCheckBoxPress}
+          onPress={onItemPress}
           style={tw.style(
             `border h-[${TABLE_ITEM_HEIGHT - 4}px] ${
               checkedItem ? 'border-blue-600' : 'border-slate-200 '
@@ -70,14 +91,14 @@ export default function TableItem({ food, frontChildren, endChildren }: Props) {
             shadowStyle(4)
           )}
         >
-          <CheckBox checked={checkedItem} />
+          {checkBox && <CheckBox checked={checkedItem} />}
 
           {frontChildren}
 
           <Text
             numberOfLines={1}
             ellipsizeMode='tail'
-            style={tw`text-slate-800 flex-1`}
+            style={tw`text-slate-800 flex-1 pl-0.5`}
           >
             {initializedFood.name}
           </Text>

@@ -12,7 +12,7 @@ import tw from 'twrnc';
 
 interface Props {
   currPosition?: FoodPosition;
-  scrollEnd: () => void;
+  scrollEnd?: () => void;
 }
 
 export default function AddFoodModal({ currPosition, scrollEnd }: Props) {
@@ -25,7 +25,9 @@ export default function AddFoodModal({ currPosition, scrollEnd }: Props) {
 
   const onSubmitPress = () => {
     onAddSubmit();
-    scrollEnd();
+    if (scrollEnd) {
+      scrollEnd();
+    }
   };
 
   return (

@@ -6,6 +6,7 @@ import { CompartmentNum } from '../../constant/fridgeInfo';
 import { useDispatch } from '../../redux/hook';
 import { useRouteName } from '../../hooks/useRouteName';
 import { showExpandCompartmentModal } from '../../redux/slice/modalVisibleSlice';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import CompartmentHeader from './CompartmentHeader';
 import EmptySign from '../common/EmptySign';
@@ -34,7 +35,12 @@ export default function CompartmentBox({
     );
 
   return (
-    <View style={tw`flex-1 border border-slate-200 bg-white rounded-lg`}>
+    <View
+      style={tw.style(
+        `flex-1 border border-slate-200 bg-white rounded-lg`,
+        shadowStyle(5)
+      )}
+    >
       <CompartmentHeader compartmentNum={compartmentNum} foodList={foodList} />
 
       {!!foodList.length ? (
@@ -62,7 +68,7 @@ export default function CompartmentBox({
       {!routePantryFoods && (
         <TouchableOpacity
           onPress={openExpandCompartmentPress}
-          style={tw`absolute border border-white p-2 left-0 bottom-0`}
+          style={tw`absolute border border-white rounded-lg p-2 left-0 bottom-0`}
           disabled={false}
         >
           <Icon type='Octicons' name='screen-full' size={15} />

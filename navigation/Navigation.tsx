@@ -19,7 +19,9 @@ import Home from '../screens/Home';
 import PantryFoods from '../screens/PantryFoods';
 import Setting from '../screens/Setting';
 import FontSetting from '../screens/FontSetting';
-import HeaderBackBtn from '../components/buttons/HeaderBackBtn';
+import FridgeOutSideSetting from '../screens/FridgeOutsideSetting';
+import FridgeInsideSetting from '../screens/FridgeInsideSetting';
+import HeaderBtn from '../components/buttons/HeaderBtn';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -30,8 +32,10 @@ export type RootStackParamList = {
   ShoppingList: undefined;
   PantryFoods: undefined;
   Setting: undefined;
-  FridgeSetting: undefined;
   FontSetting: undefined;
+  FridgeSetting: undefined;
+  FridgeOutsideSetting: undefined;
+  FridgeInsideSetting: undefined;
 };
 
 export type RouteName = keyof RootStackParamList;
@@ -48,7 +52,7 @@ const options: NativeStackNavigationOptions = {
     backgroundColor: HEADER_BGCOLOR,
   },
   headerTitleAlign: 'center',
-  headerLeft: () => <HeaderBackBtn />,
+  headerLeft: () => <HeaderBtn btn='back' />,
   headerBackVisible: false, // android
   animation: 'slide_from_right',
 };
@@ -81,7 +85,7 @@ const Navigation = () => {
       <Stack.Screen
         name='Compartments'
         component={Compartments}
-        options={{ ...options }}
+        options={{ ...options, headerRight: () => <HeaderBtn btn='setting' /> }}
       />
 
       <Stack.Screen
@@ -90,6 +94,7 @@ const Navigation = () => {
         options={{
           ...options,
           headerTitle: () => <NavigationHeaderTitle title='팬트리 식료품' />,
+          headerRight: () => <HeaderBtn btn='setting' />,
         }}
       />
 
@@ -134,6 +139,15 @@ const Navigation = () => {
       />
 
       <Stack.Screen
+        name='FontSetting'
+        component={FontSetting}
+        options={{
+          ...options,
+          headerTitle: () => <NavigationHeaderTitle title='폰트 설정' />,
+        }}
+      />
+
+      <Stack.Screen
         name='FridgeSetting'
         component={FridgeSetting}
         options={{
@@ -145,11 +159,20 @@ const Navigation = () => {
       />
 
       <Stack.Screen
-        name='FontSetting'
-        component={FontSetting}
+        name='FridgeOutsideSetting'
+        component={FridgeOutSideSetting}
         options={{
           ...options,
-          headerTitle: () => <NavigationHeaderTitle title='폰트 설정' />,
+          headerTitle: () => <NavigationHeaderTitle title='냉장고 외부 설정' />,
+        }}
+      />
+
+      <Stack.Screen
+        name='FridgeInsideSetting'
+        component={FridgeInsideSetting}
+        options={{
+          ...options,
+          headerTitle: () => <NavigationHeaderTitle title='냉장고 내부 설정' />,
         }}
       />
     </Stack.Navigator>

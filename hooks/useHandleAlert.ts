@@ -229,7 +229,7 @@ export const useHandleAlert = () => {
       msg: `${name}의 위치가 ${position}으로 이동되었어요.`,
       btns: [
         { name: '닫기', fn: closeAlertModal },
-        { name: '비로 이동하기', fn: goChangedPosition },
+        { name: '바로 이동하기', fn: goChangedPosition },
       ],
     };
 

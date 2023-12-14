@@ -5,10 +5,12 @@ import { Food, MAX_LIMIT } from '../../constant/foodInfo';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { setFormFood } from '../../redux/slice/food/formFoodSlice';
 import { showFormModal } from '../../redux/slice/modalVisibleSlice';
+import { MEDIUM_INDIGO } from '../../constant/colors';
 
 import LeftDay from '../common/LeftDay';
 import AddIconBtn from '../buttons/AddIconBtn';
 import IndicatorExist from '../common/IndicatorExist';
+import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
@@ -62,11 +64,19 @@ export default function TableItemEnd({ title, food }: Props) {
         </>
       )}
 
-      {title === '소비기한 주의 식료품' && (
-        <View style={tw`items-end w-20 mr-3`}>
-          <LeftDay expiredDate={food.expiredDate} dateMark />
-        </View>
-      )}
+      <View style={tw`flex-row items-center justify-between gap-2 mr-2.5`}>
+        {title === '식료품' && (
+          <View style={tw`w-14`}>
+            <LeftDay expiredDate={food.expiredDate} />
+          </View>
+        )}
+
+        {title === '소비기한 주의 식료품' && (
+          <View style={tw`items-end w-16`}>
+            <LeftDay expiredDate={food.expiredDate} dateMark isSuffix />
+          </View>
+        )}
+      </View>
 
       {title === '자주 먹는 식료품' && (
         <View style={tw`ml-2 mr-3`}>

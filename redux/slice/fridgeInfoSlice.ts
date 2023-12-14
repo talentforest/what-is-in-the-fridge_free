@@ -3,12 +3,15 @@ import { Space } from '../../constant/fridgeInfo';
 
 export type FreezerLocation = 'top' | 'bottom';
 
+export type InsideDisplayType = '칸별로 보기' | '목록으로 보기';
+
 export type MaxCompartmentsNumObj = { [key in Space]: number };
 
 interface FridgeInfo {
   type: '일반형 냉장고' | '냉장고 타입 설정 없음';
   freezer: FreezerLocation;
   compartments: MaxCompartmentsNumObj;
+  insideDisplayType: InsideDisplayType;
 }
 
 export const initialState: { fridgeInfo: FridgeInfo } = {
@@ -22,6 +25,7 @@ export const initialState: { fridgeInfo: FridgeInfo } = {
       '냉장실 문쪽': 3,
       팬트리: 1,
     },
+    insideDisplayType: '칸별로 보기',
   },
 };
 

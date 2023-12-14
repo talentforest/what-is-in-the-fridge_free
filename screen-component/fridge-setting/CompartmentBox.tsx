@@ -18,8 +18,8 @@ export default function CompartmentBox({ space, compartmentNum }: Props) {
       {space.includes('문쪽') && (
         <View
           style={tw.style(
-            `w-full absolute left-0 bottom-0 border border-slate-300 h-[60%] max-h-7 rounded-b-[3px] bg-slate-200`,
-            shadowStyle(8)
+            `w-full absolute left-0 bottom-0 border border-slate-200 h-[60%] max-h-7 rounded-b-[3px] bg-slate-100`,
+            shadowStyle(4)
           )}
         />
       )}

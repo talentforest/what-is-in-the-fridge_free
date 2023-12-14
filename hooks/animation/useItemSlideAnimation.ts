@@ -7,7 +7,7 @@ import { useRouteName } from '../useRouteName';
 import { setShoppingList } from '../../redux/slice/food-list/shoppingListSlice';
 import { setCheckedList } from '../../redux/slice/food-list/checkListSlice';
 import { Food } from '../../constant/foodInfo';
-import { setPantry } from '../../redux/slice/food-list/pantryFoodsSlice';
+import { setAllPantryFoods } from '../../redux/slice/food-list/pantryFoodsSlice';
 import { setAllFridgeFoods } from '../../redux/slice/food-list/fridgeFoodsSlice';
 
 interface Props {
@@ -67,7 +67,7 @@ export const useItemSlideAnimation = ({
       (pantryFood) => !findPantryFoodInCheckList(pantryFood)
     );
 
-    dispatch(setPantry(filteredPantry));
+    dispatch(setAllPantryFoods(filteredPantry));
     dispatch(setAllFridgeFoods(filteredFridge));
   };
 

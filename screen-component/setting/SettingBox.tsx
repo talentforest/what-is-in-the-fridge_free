@@ -78,9 +78,9 @@ export default function SettingBox({ setting }: Props) {
       <TouchableOpacity
         disabled={disabled}
         onPress={
-          title === '데이터 초기화'
+          title === '전체 데이터 초기화'
             ? onOpenResetDataAlertPress
-            : title === '복원'
+            : title === '구매 복원'
             ? onRestorePurchaseBtnPress
             : onNavigatePress
         }

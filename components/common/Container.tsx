@@ -6,7 +6,11 @@ import tw from 'twrnc';
 
 export const BG_COLOR = 'bg-[#f5f5f5]';
 
-export default function Container({ children }: { children: ReactNode }) {
+interface Props {
+  children: ReactNode;
+}
+
+export default function Container({ children }: Props) {
   const { routeCompartments } = useRouteName();
 
   const { height } = useWindowDimensions();
@@ -17,7 +21,7 @@ export default function Container({ children }: { children: ReactNode }) {
 
   return (
     <View
-      style={tw`flex-1 px-${paddingValue} py-${paddingValue - 1} ${bgColor}`}
+      style={tw`flex-1 ${bgColor} px-${paddingValue} py-${paddingValue - 2} `}
     >
       {children}
     </View>

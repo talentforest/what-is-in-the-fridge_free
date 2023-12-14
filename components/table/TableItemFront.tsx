@@ -1,5 +1,6 @@
 import { Food } from '../../constant/foodInfo';
 import { useRouteName } from '../../hooks/useRouteName';
+
 import CategoryIcon from '../common/CategoryIcon';
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
 }
 
 export default function TableItemFront({ food }: Props) {
-  const { routeShoppingList } = useRouteName();
+  const { routeShoppingList, routeCompartments } = useRouteName();
 
   return (
     <>

@@ -11,7 +11,11 @@ import EmptySign from '../common/EmptySign';
 import tw from 'twrnc';
 
 interface Props {
-  title: '소비기한 주의 식료품' | '자주 먹는 식료품' | '장보기 식료품';
+  title:
+    | '소비기한 주의 식료품'
+    | '자주 먹는 식료품'
+    | '장보기 식료품'
+    | '식료품';
   foodList: Food[];
   flatListRef?: MutableRefObject<FlatList>;
 }
@@ -29,7 +33,7 @@ export default function TableBody({ title, foodList, flatListRef }: Props) {
             disableVirtualization={false}
             initialNumToRender={15}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={tw`pb-4 px-2`}
+            contentContainerStyle={tw`pb-20 px-2`}
             data={foodList}
             getItemLayout={(_, index) => ({
               length: TABLE_ITEM_HEIGHT,
@@ -39,6 +43,7 @@ export default function TableBody({ title, foodList, flatListRef }: Props) {
             renderItem={({ item }) => (
               <TableItem
                 food={item}
+                checkBox={title !== '식료품'}
                 frontChildren={<TableItemFront food={item} />}
                 endChildren={<TableItemEnd food={item} title={title} />}
               />

@@ -15,7 +15,7 @@ export default function FoodLimit() {
 
   return (
     <View
-      style={tw`mt-3 mx-2 flex-row items-center justify-between ${BG_COLOR} border border-${limitGaugeColor}-500 p-1 h-7 rounded-full`}
+      style={tw`mt-3 mx-4 flex-row items-center justify-between ${BG_COLOR} border border-${limitGaugeColor}-500 p-1 h-7 rounded-full`}
     >
       <View
         style={tw`absolute w-full rounded-full bg-${limitGaugeColor}-300 h-full left-1`}

@@ -3,7 +3,7 @@ import { GREEN, LIGHT_GRAY } from '../../../constant/colors';
 
 interface Props {
   size: number;
-  inActive: boolean;
+  inActive?: boolean;
 }
 
 export default function IconLeaf({ size, inActive }: Props) {
