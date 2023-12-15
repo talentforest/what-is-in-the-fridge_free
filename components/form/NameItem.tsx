@@ -26,9 +26,9 @@ export default function NameItem({ isEditing }: Props) {
     dispatch(editFormFood({ name: value }));
   };
 
-  const { routeShoppingList } = useRouteName();
+  const { routeHome } = useRouteName();
 
-  const editable = !routeShoppingList;
+  const editable = !routeHome;
 
   return (
     <View>

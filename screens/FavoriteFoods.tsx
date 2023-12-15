@@ -1,8 +1,5 @@
 import { useEffect, useRef } from 'react';
-import {
-  KeyboardAvoidingView,
-  SafeBottomAreaView,
-} from '../components/common/native-component';
+import { KeyboardAvoidingView } from '../components/common/native-component';
 import { entireFilterObj, existAbsenceFilters, scrollToIndex } from '../util';
 import { FlatList, View } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
@@ -13,8 +10,11 @@ import {
   useGetFoodList,
   useHandleFilter,
 } from '../hooks';
+import { changeCategory } from '../redux/slice/food/categorySlice';
+import { NAME_MAX_LENGTH } from '../constant/foodInfo';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Container from '../components/common/Container';
+import Container, { BG_COLOR } from '../components/common/Container';
 import TableFooterContainer from '../components/table/TableFooterContainer';
 import TableFilters from '../components/table/TableFilters';
 import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
@@ -25,8 +25,8 @@ import FormMessage from '../components/form/FormMessage';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableBody from '../components/table/TableBody';
 import AlertModal from '../screen-component/modal/AlertModal';
-import { changeCategory } from '../redux/slice/food/categorySlice';
-import { NAME_MAX_LENGTH } from '../constant/foodInfo';
+import StepIndicator from '../components/common/StepIndicator';
+import tw from 'twrnc';
 
 export default function FavoriteFoods() {
   const { category } = useSelector((state) => state.category);
@@ -69,8 +69,8 @@ export default function FavoriteFoods() {
   };
 
   return (
-    <KeyboardAvoidingView>
-      <SafeBottomAreaView>
+    <SafeAreaView edges={['bottom']} style={tw`${BG_COLOR} flex-1`}>
+      <KeyboardAvoidingView>
         <Container>
           <TableFilters
             filterTagList={[entireFilterObj, ...existAbsenceFilters]}
@@ -152,9 +152,9 @@ export default function FavoriteFoods() {
 
           <AlertModal />
         </Container>
-      </SafeBottomAreaView>
 
-      <CategoryModal />
-    </KeyboardAvoidingView>
+        <CategoryModal />
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }

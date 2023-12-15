@@ -8,13 +8,9 @@ interface Props {
 }
 
 export default function TableItemFront({ food }: Props) {
-  const { routeShoppingList, routeCompartments } = useRouteName();
+  const { routeHome } = useRouteName();
 
   return (
-    <>
-      {!routeShoppingList && (
-        <CategoryIcon size={15} category={food.category} />
-      )}
-    </>
+    <>{!routeHome && <CategoryIcon size={15} category={food.category} />}</>
   );
 }

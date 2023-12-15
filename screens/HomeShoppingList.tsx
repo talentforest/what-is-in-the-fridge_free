@@ -1,17 +1,15 @@
 import { useEffect, useRef } from 'react';
-import {
-  KeyboardAvoidingView,
-  SafeBottomAreaView,
-} from '../components/common/native-component';
+import { KeyboardAvoidingView } from '../components/common/native-component';
 import { useDispatch, useSelector } from '../redux/hook';
 import { FlatList, View } from 'react-native';
 import { closeKeyboard, scrollToIndex } from '../util';
 import { useHandleTableFooterBtns, useSubmitFoodsFromInput } from '../hooks';
 import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
 import { NAME_MAX_LENGTH } from '../constant/foodInfo';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
-import Container from '../components/common/Container';
+import Container, { BG_COLOR } from '../components/common/Container';
 import TableBody from '../components/table/TableBody';
 import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
 import TextInputRoundedBox from '../components/common/TextInputRoundedBox';
@@ -19,8 +17,12 @@ import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
 import AddAtOnceModal from '../screen-component/modal/AddAtOnceModal';
 import FormMessage from '../components/form/FormMessage';
+import HomeHeader from '../screen-component/home/HomeHeader';
+import tw from 'twrnc';
+import StepIndicator from '../components/common/StepIndicator';
+import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
 
-export default function ShoppingList() {
+export default function HomeShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
 
   const flatListRef = useRef<FlatList | null>(null);
@@ -50,9 +52,13 @@ export default function ShoppingList() {
   };
 
   return (
-    <KeyboardAvoidingView>
-      <SafeBottomAreaView>
+    <SafeAreaView edges={['bottom']} style={tw`${BG_COLOR} flex-1`}>
+      <KeyboardAvoidingView>
         <Container>
+          <HomeHeader title='장볼게 뭐가 있지'>
+            <HeaderIconBtn btn='tag' />
+          </HomeHeader>
+
           <TableBody
             title='장보기 식료품'
             foodList={shoppingList}
@@ -112,7 +118,7 @@ export default function ShoppingList() {
 
           <AddAtOnceModal />
         </Container>
-      </SafeBottomAreaView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }

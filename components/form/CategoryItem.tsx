@@ -49,12 +49,17 @@ export default function CategoryItem({ isAddNewOne }: Props) {
         style={tw.style(`${InputStyle}`, shadowStyle(3))}
       >
         <View style={tw`flex-row items-center h-full`}>
-          <CategoryIcon category={formCategory} size={16} inActive={disabled} />
-
+          <View style={tw`pl-1 pb-0.5`}>
+            <CategoryIcon
+              category={formCategory}
+              size={16}
+              inActive={disabled}
+            />
+          </View>
           <TextInput
             editable={false}
             value={formCategory}
-            style={tw`border-0 flex-1 pl-2 h-full bg-transparent ${
+            style={tw`border-0 flex-1 pl-1.5 h-full bg-transparent ${
               disabled ? 'text-slate-400' : 'text-slate-800'
             }`}
           />

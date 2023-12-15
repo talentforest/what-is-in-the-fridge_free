@@ -14,19 +14,16 @@ import SvgFridgeContainer, {
   fridgeBorderColor,
   fridgeColor,
 } from './SvgFridgeContainer';
-import FoodLimit from '../../screen-component/setting/FoodLimit';
-import PantyEntranceBtn from '../../screen-component/home/PantyEntranceBtn';
 import tw from 'twrnc';
 
 export default function Fridge() {
-  const { purchased } = useSelector((state) => state.purchaseState);
   const {
     fridgeInfo: { compartments, freezer },
   } = useSelector((state) => state.fridgeInfo);
 
   const navigation = useNavigation<NavigateProp>();
 
-  const { routeFridgeSetting } = useRouteName();
+  const { routeHome } = useRouteName();
 
   const { height, width } = useWindowDimensions();
 
@@ -36,10 +33,10 @@ export default function Fridge() {
         ? 440
         : 500
       : height * 0.5 >= 400
-      ? 370
+      ? 360
       : height * 0.45;
 
-  const fridgeHeight = routeFridgeSetting ? 160 : homeFridgeHeight;
+  const fridgeHeight = routeHome ? homeFridgeHeight : 160;
 
   const onSpacePress = (space: Space) => {
     closeKeyboard();
@@ -47,8 +44,7 @@ export default function Fridge() {
   };
 
   return (
-    <View style={tw`w-[${fridgeHeight / 1.2}px] self-center gap-0`}>
-      {!routeFridgeSetting && <PantyEntranceBtn />}
+    <View style={tw`w-[${fridgeHeight / 1.2}px] self-center`}>
       <View style={tw`h-[${fridgeHeight}px]`}>
         <View style={tw`flex-row flex-1 justify-end items-end`}>
           {/* 냉장고 그림 컨테이너 */}
@@ -63,7 +59,7 @@ export default function Fridge() {
                 style={tw.style(
                   `h-[91%] flex-1 rounded-lg border border-[${fridgeBorderColor}] bg-[${fridgeColor}]
                   ${freezer === 'top' ? '' : 'flex-col-reverse'}
-                  ${routeFridgeSetting ? '' : 'p-0.5'} `,
+                  ${routeHome ? 'p-0.5' : ''} `,
                   shadowStyle(8)
                 )}
               >
@@ -71,13 +67,13 @@ export default function Fridge() {
                   (space) => (
                     <TouchableOpacity
                       key={space}
-                      disabled={routeFridgeSetting}
-                      style={tw`${routeFridgeSetting ? 'p-0.8' : 'p-1.2'} ${
+                      disabled={!routeHome}
+                      style={tw`${!routeHome ? 'p-0.8' : 'p-1.2'} ${
                         space.includes('냉동') ? 'h-[40%] pb-1' : 'h-[60%] pt-1'
                       }`}
                       onPress={() => onSpacePress(space)}
                     >
-                      {!routeFridgeSetting ? (
+                      {routeHome ? (
                         <FridgeSpaceInfo space={space} />
                       ) : (
                         <FridgeInfo space={space} compartments={compartments} />
@@ -90,8 +86,6 @@ export default function Fridge() {
           </View>
         </View>
       </View>
-
-      {!purchased && !routeFridgeSetting && <FoodLimit />}
     </View>
   );
 }

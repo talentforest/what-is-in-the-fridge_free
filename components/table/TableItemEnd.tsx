@@ -22,7 +22,7 @@ export default function TableItemEnd({ title, food }: Props) {
   const { purchased } = useSelector((state) => state.purchaseState);
   const { checkedList } = useSelector((state) => state.checkedList);
 
-  const { routeShoppingList } = useRouteName();
+  const { routeHome } = useRouteName();
 
   const { findFood, allFoods, isFavoriteItem } = useFindFood();
 
@@ -47,9 +47,9 @@ export default function TableItemEnd({ title, food }: Props) {
 
   return (
     <>
-      {title === '장보기 식료품' && (
+      {title === '장보기 식료품' ? (
         <>
-          {routeShoppingList && findFood(food.name) && (
+          {routeHome && findFood(food.name) && (
             <IndicatorExist
               name={food.name}
               roundedBorder
@@ -62,26 +62,28 @@ export default function TableItemEnd({ title, food }: Props) {
             disabled={!!(checkedList.length || findFood(food.name))}
           />
         </>
-      )}
+      ) : (
+        <>
+          <View style={tw`flex-row items-center justify-between gap-2 mr-2.5`}>
+            {title === '식료품' && (
+              <View style={tw`w-14`}>
+                <LeftDay expiredDate={food.expiredDate} />
+              </View>
+            )}
 
-      <View style={tw`flex-row items-center justify-between gap-2 mr-2.5`}>
-        {title === '식료품' && (
-          <View style={tw`w-14`}>
-            <LeftDay expiredDate={food.expiredDate} />
+            {title === '소비기한 주의 식료품' && (
+              <View style={tw`items-end w-16`}>
+                <LeftDay expiredDate={food.expiredDate} dateMark isSuffix />
+              </View>
+            )}
           </View>
-        )}
 
-        {title === '소비기한 주의 식료품' && (
-          <View style={tw`items-end w-16`}>
-            <LeftDay expiredDate={food.expiredDate} dateMark isSuffix />
-          </View>
-        )}
-      </View>
-
-      {title === '자주 먹는 식료품' && (
-        <View style={tw`ml-2 mr-3`}>
-          <IndicatorExist name={food.name} space={food.space} />
-        </View>
+          {title === '자주 먹는 식료품' && (
+            <View style={tw`ml-2 mr-3`}>
+              <IndicatorExist name={food.name} space={food.space} />
+            </View>
+          )}
+        </>
       )}
     </>
   );

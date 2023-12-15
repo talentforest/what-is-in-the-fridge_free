@@ -1,61 +1,47 @@
-import { Pressable, View, useWindowDimensions } from 'react-native';
+import { useState } from 'react';
+import { useWindowDimensions } from 'react-native';
+import { SceneMap, TabView } from 'react-native-tab-view';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useImageLoad } from '../hooks';
-import { navigationBtns } from '../constant/navigationBtn';
-import { closeKeyboard, findAsset } from '../util';
+import { BG_COLOR } from '../components/common/Container';
 
-import Container, { BG_COLOR } from '../components/common/Container';
-import SearchFoodSection from '../screen-component/home/SearchFoodSection';
-import Fridge from '../components/fridge/Fridge';
-import NavigationBtnBox from '../screen-component/home/NavigationBtnBox';
-import HomeHeader from '../screen-component/home/HomeHeader';
+import ShoppingList from './HomeShoppingList';
+import HomeFridge from './HomeFridge';
+import StepIndicator from '../components/common/StepIndicator';
 import tw from 'twrnc';
 
-const Home = () => {
-  const { isLoaded, assets } = useImageLoad({
-    images: [
-      require('../assets/shoppinglist.png'),
-      require('../assets/expired-foods.png'),
-      require('../assets/favorite-foods.png'),
-    ],
-  });
+const renderScene = SceneMap({
+  first: HomeFridge,
+  second: ShoppingList,
+});
 
-  const { height } = useWindowDimensions();
+export default function Home() {
+  const layout = useWindowDimensions();
 
-  if (!isLoaded) return null;
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: 'first', title: '냉장고에 뭐가 있지' },
+    { key: 'second', title: '장볼게 뭐가 있지' },
+  ]);
 
   return (
-    <SafeAreaView edges={['top', 'bottom']} style={tw`${BG_COLOR} flex-1`}>
-      <Pressable style={tw`flex-1`} onPress={closeKeyboard}>
-        <Container>
-          <View style={tw`flex-1 mt-1`}>
-            <HomeHeader />
-
-            <View
-              style={tw`items-center justify-center mt-12 flex-1 
-                min-h-[${height * 0.6}px]`}
-            >
-              <Fridge />
-            </View>
-
-            <SearchFoodSection />
-
-            {assets && (
-              <View style={tw`gap-1 flex-row justify-between mb-10`}>
-                {navigationBtns.map((btn) => (
-                  <NavigationBtnBox
-                    key={btn.title}
-                    btn={btn}
-                    uri={findAsset(assets, btn.assetName).localUri}
-                  />
-                ))}
-              </View>
-            )}
-          </View>
-        </Container>
-      </Pressable>
-    </SafeAreaView>
+    <TabView
+      renderTabBar={() => (
+        <SafeAreaView
+          edges={['top']}
+          style={tw`${BG_COLOR} items-start pt-3 pl-6 w-full`}
+        >
+          <StepIndicator
+            stepLength={routes.length}
+            currentStepId={index + 1}
+            size={2}
+            color={'indigo'}
+          />
+        </SafeAreaView>
+      )}
+      navigationState={{ index, routes }}
+      renderScene={renderScene}
+      onIndexChange={setIndex}
+      initialLayout={{ width: layout.width }}
+    />
   );
-};
-
-export default Home;
+}

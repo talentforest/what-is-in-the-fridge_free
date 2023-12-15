@@ -21,7 +21,8 @@ export default function Container({ children }: Props) {
 
   return (
     <View
-      style={tw`flex-1 ${bgColor} px-${paddingValue} py-${paddingValue - 2} `}
+      style={tw`flex-1 ${bgColor} px-${paddingValue} 
+      py-${paddingValue - 2}`}
     >
       {children}
     </View>

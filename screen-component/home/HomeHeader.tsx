@@ -1,32 +1,47 @@
 import { View, useWindowDimensions } from 'react-native';
-import {
-  Text,
-  TouchableOpacity,
-} from '../../components/common/native-component';
-import { useNavigation } from '@react-navigation/native';
-import { NavigateProp } from '../../navigation/Navigation';
-import IconGear from '../../components/svg/IconGear';
+import { Text } from '../../components/common/native-component';
+import { GRAY } from '../../constant/colors';
+import { ReactNode } from 'react';
+
+import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
 
-export default function HomeHeader() {
-  const navigation = useNavigation<NavigateProp>();
+export type HomeScreenTitle = '냉장고에 뭐가 있지' | '장볼게 뭐가 있지';
 
+interface Props {
+  title: HomeScreenTitle;
+  children?: ReactNode;
+}
+
+export default function HomeHeader({ title, children }: Props) {
   const { height } = useWindowDimensions();
 
-  const iconSize = height > 900 ? 30 : 22;
   const fontSize = height > 900 ? 23 : 20;
 
   return (
-    <View style={tw`flex-row h-9 justify-between items-center gap-0.5 my-2`}>
-      <Text fontSize={fontSize} style={tw`ml-0.5`}>
-        냉장고에 뭐가 있지
-      </Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Setting')}
-        style={tw`flex-row items-center rounded-xl px-1 py-0.5 gap-1 pr-1.5`}
+    <View style={tw`mt-1`}>
+      <View
+        style={tw`flex-row h-11 justify-between items-center gap-0.5 m-1 mt-0`}
       >
-        <IconGear size={iconSize} />
-      </TouchableOpacity>
+        <View style={tw`flex-row items-center gap-1`}>
+          {title === '냉장고에 뭐가 있지' ? (
+            <Icon name='home' type='Octicons' size={16} color={GRAY} />
+          ) : title === '장볼게 뭐가 있지' ? (
+            <Icon
+              name='cart-outline'
+              type='MaterialCommunityIcons'
+              size={18}
+              color={GRAY}
+            />
+          ) : null}
+
+          <Text fontSize={fontSize} style={tw`ml-0.5`}>
+            {title}
+          </Text>
+        </View>
+
+        {children}
+      </View>
     </View>
   );
 }

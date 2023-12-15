@@ -15,7 +15,7 @@ export const useHandleTableFooterBtns = () => {
 
   const { isFavoriteItem, allFoods, findFood } = useFindFood();
 
-  const { routeShoppingList, routeFavoriteFoods } = useRouteName();
+  const { routeHome, routeFavoriteFoods } = useRouteName();
 
   const dispatch = useDispatch();
 
@@ -41,7 +41,7 @@ export const useHandleTableFooterBtns = () => {
     alertDeleteFavoriteFoods,
   } = alertWithCheckList();
 
-  const deleteAlert = routeShoppingList
+  const deleteAlert = routeHome
     ? alertDeleteFromShoppingList
     : routeFavoriteFoods
     ? alertDeleteFavoriteFoods

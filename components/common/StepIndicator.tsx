@@ -1,21 +1,24 @@
 import { View } from 'react-native';
 import tw from 'twrnc';
+import { BLUE } from '../../constant/colors';
 
 interface Props {
   stepLength: number;
   currentStepId: number;
   size?: number;
+  color?: string;
 }
 
 export default function StepIndicator({
   stepLength,
   currentStepId,
   size = 2.5,
+  color = 'blue',
 }: Props) {
   const activeStyle = (stepId: number) => {
     return currentStepId === stepId
-      ? `bg-blue-700 w-${size} h-${size}`
-      : `bg-blue-300 w-${size - 0.5} h-${size - 0.5}`;
+      ? `bg-${color}-500 w-${size} h-${size}`
+      : `bg-${color}-300 w-${size - 0.3} h-${size - 0.3}`;
   };
 
   const stepNumLength = Array.from(

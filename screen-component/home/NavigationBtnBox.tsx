@@ -1,70 +1,44 @@
-import { Image, View, useWindowDimensions } from 'react-native';
+import { View } from 'react-native';
 import {
   Text,
   TouchableOpacity,
 } from '../../components/common/native-component';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
-import { NavigationBtns } from '../../constant/navigationBtn';
 import { shadowStyle } from '../../constant/shadowStyle';
-import { BLUE, GRAY, INDIGO } from '../../constant/colors';
+import { INDIGO } from '../../constant/colors';
 
 import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
+import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
 
-interface Props {
-  uri: string;
-  btn: NavigationBtns;
-}
-
-export default function NavigationBtnBox({ uri, btn }: Props) {
+export default function NavigationBtnBox() {
   const navigation = useNavigation<NavigateProp>();
 
-  const { title, navigationName, color } = btn;
-
-  const { width } = useWindowDimensions();
-
-  const size = width / 6;
-
-  const onNavigatePress = () => navigation.navigate(navigationName);
+  const onNavigatePress = () => navigation.navigate('ExpiredFoods');
 
   return (
     <TouchableOpacity
       onPress={onNavigatePress}
-      style={tw`items-center gap-1 justify-center flex-1`}
+      style={tw.style(
+        `self-end px-3 py-2 -mb-3 border-2 border-indigo-300 bg-indigo-50 flex-row gap-1 items-center justify-between rounded-full`,
+        shadowStyle(4)
+      )}
     >
-      <View style={tw.style(`bg-white mb-5 rounded-full`, shadowStyle(3))}>
-        <View style={tw`bg-white p-4 rounded-full`}>
-          <Image source={{ uri }} width={size} height={size} />
-        </View>
-      </View>
-      <View
-        style={tw.style(
-          `flex-row absolute border border-slate-300 bottom-0 py-2 pl-2 pr-0.5 items-center bg-white rounded-xl`,
-          shadowStyle(3)
-        )}
-      >
+      {/* 이미지 */}
+      <View style={tw`flex-row gap-1 items-center pr-2`}>
+        <Icon name='archive' type='Octicons' size={14} color={INDIGO} />
         <Text
-          fontSize={15}
-          style={tw.style(`text-${color}-600 text-center`, {
-            letterSpacing: -1,
-          })}
+          fontSize={16}
+          style={tw.style(`text-slate-800`, { letterSpacing: -0.5 })}
         >
-          {title}
+          전체 식료품 보기
         </Text>
+      </View>
 
-        <IconChevronRight
-          size={15}
-          color={
-            color === 'blue'
-              ? BLUE
-              : color === 'gray'
-              ? GRAY
-              : color === 'indigo'
-              ? INDIGO
-              : color
-          }
-        />
+      {/* 이름 */}
+      <View style={tw`-mr-1`}>
+        <IconChevronRight size={15} color={'#333'} />
       </View>
     </TouchableOpacity>
   );

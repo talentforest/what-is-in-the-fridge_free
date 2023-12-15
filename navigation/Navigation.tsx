@@ -13,23 +13,25 @@ import FavoriteFoods from '../screens/FavoriteFoods';
 import ExpiredFoods from '../screens/ExpiredFoods';
 import FridgeSetting from '../screens/FridgeSetting';
 import OnBoarding from '../screens/OnBoarding';
-import ShoppingList from '../screens/ShoppingList';
+import HomeShoppingList from '../screens/HomeShoppingList';
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
-import Home from '../screens/Home';
+import HomeFridge from '../screens/HomeFridge';
 import PantryFoods from '../screens/PantryFoods';
 import Setting from '../screens/Setting';
 import FontSetting from '../screens/FontSetting';
 import FridgeOutSideSetting from '../screens/FridgeOutsideSetting';
 import FridgeInsideSetting from '../screens/FridgeInsideSetting';
-import HeaderBtn from '../components/buttons/HeaderBtn';
+import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
+import Home from '../screens/Home';
 
 export type RootStackParamList = {
-  Home: undefined;
   OnBoarding: undefined;
+  Home: undefined;
+  HomeFridge: undefined;
+  HomeShoppingList: undefined;
   Compartments: undefined | object;
   FavoriteFoods: undefined;
   ExpiredFoods: undefined;
-  ShoppingList: undefined;
   PantryFoods: undefined;
   Setting: undefined;
   FontSetting: undefined;
@@ -52,7 +54,7 @@ const options: NativeStackNavigationOptions = {
     backgroundColor: HEADER_BGCOLOR,
   },
   headerTitleAlign: 'center',
-  headerLeft: () => <HeaderBtn btn='back' />,
+  headerLeft: () => <HeaderIconBtn btn='goBack' />,
   headerBackVisible: false, // android
   animation: 'slide_from_right',
 };
@@ -83,9 +85,27 @@ const Navigation = () => {
       />
 
       <Stack.Screen
+        name='HomeFridge'
+        component={HomeFridge}
+        options={{ ...options, headerShown: false }}
+      />
+
+      <Stack.Screen
+        name='HomeShoppingList'
+        component={HomeShoppingList}
+        options={{
+          ...options,
+          headerTitle: () => <NavigationHeaderTitle title='장보기 목록 관리' />,
+        }}
+      />
+
+      <Stack.Screen
         name='Compartments'
         component={Compartments}
-        options={{ ...options, headerRight: () => <HeaderBtn btn='setting' /> }}
+        options={{
+          ...options,
+          headerRight: () => <HeaderIconBtn btn='fridgeSetting' />,
+        }}
       />
 
       <Stack.Screen
@@ -94,7 +114,7 @@ const Navigation = () => {
         options={{
           ...options,
           headerTitle: () => <NavigationHeaderTitle title='팬트리 식료품' />,
-          headerRight: () => <HeaderBtn btn='setting' />,
+          headerRight: () => <HeaderIconBtn btn='setting' />,
         }}
       />
 
@@ -117,15 +137,6 @@ const Navigation = () => {
           headerTitle: () => (
             <NavigationHeaderTitle title='소비기한 주의 식료품 관리' />
           ),
-        }}
-      />
-
-      <Stack.Screen
-        name='ShoppingList'
-        component={ShoppingList}
-        options={{
-          ...options,
-          headerTitle: () => <NavigationHeaderTitle title='장보기 목록 관리' />,
         }}
       />
 

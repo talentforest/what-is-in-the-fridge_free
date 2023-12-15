@@ -22,7 +22,7 @@ import TableHeader from '../components/table/TableHeader';
 export default function PantryFoods() {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
-  const { filter, pantryFilter } = useSelector((state) => state.filter);
+  const { pantryFilter } = useSelector((state) => state.filter);
 
   const scrollViewRef = useRef<ScrollView | null>(null);
 
