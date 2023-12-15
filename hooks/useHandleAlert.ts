@@ -154,9 +154,15 @@ export const useHandleAlert = () => {
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 
-  const alertRestoreIAP: AlertObj = {
+  const alertFailRestoreIAP: AlertObj = {
     title: '이용권 복원 실패',
     msg: '복원 가능한 이용권이 없습니다.',
+    btns: [{ name: '확인', fn: closeAlertModal }],
+  };
+
+  const alertSucessRestoreIAP: AlertObj = {
+    title: '이용권 복원 성공',
+    msg: '성공적으로 인앱 상품을 복원했어요. 이제 무제한으로 식료품을 저장할 수 있어요.',
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 
@@ -167,8 +173,8 @@ export const useHandleAlert = () => {
   };
 
   const alertInitializeData: AlertObj = {
-    title: '데이터 초기화',
-    msg: '모든 데이터를 삭제하시겠습니까?',
+    title: '식료품 데이터 초기화',
+    msg: '모든 식료품 데이터를 삭제하시겠습니까?',
     btns: [
       { name: '취소', fn: closeAlertModal },
       { name: '확인', fn: onResetDataPress },
@@ -177,7 +183,7 @@ export const useHandleAlert = () => {
 
   const alertDoneInitializeData: AlertObj = {
     title: '데이터 초기화 완료',
-    msg: `데이터 모두 초기화되었습니다.`,
+    msg: `모든 식료품 데이터가 초기화되었습니다.`,
     btns: [{ name: '닫기', fn: closeAlertModal }],
   };
 
@@ -348,7 +354,8 @@ export const useHandleAlert = () => {
       alertWrongDateInForm,
       alertChangeFont,
       alertIAP,
-      alertRestoreIAP,
+      alertFailRestoreIAP,
+      alertSucessRestoreIAP,
       alertHasReceipt,
       alertInitializeData,
       alertDoneInitializeData,
@@ -394,7 +401,8 @@ export const useHandleAlert = () => {
     alertWrongDateInForm,
     alertChangeFont,
     alertIAP,
-    alertRestoreIAP,
+    alertFailRestoreIAP,
+    alertSucessRestoreIAP,
     alertHasReceipt,
     alertInitializeData,
     alertDoneInitializeData,

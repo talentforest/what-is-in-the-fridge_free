@@ -1,29 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type PurchasedState = {
-  purchased: true;
-  purchaseToken: string;
+type PurchaseState = {
+  purchased: boolean;
+  purchaseToken: string | null;
 };
-
-type NotPurchasedState = {
-  purchased: false;
-};
-
-type PurchaseState = PurchasedState | NotPurchasedState;
 
 export const initialState: PurchaseState = {
   purchased: false,
+  purchaseToken: null,
 };
 
 const purchaseSlice = createSlice({
   name: 'purchaseState',
   initialState,
   reducers: {
-    togglePurchaseState: (
-      state: PurchaseState,
-      { payload }: { payload: PurchaseState }
-    ) => {
-      state = payload;
+    togglePurchaseState: (state, action: { payload: PurchaseState }) => {
+      state.purchased = action.payload.purchased;
+      state.purchaseToken = action.payload.purchaseToken;
     },
   },
 });
