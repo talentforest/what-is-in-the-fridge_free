@@ -1,5 +1,5 @@
 import { SafeBottomAreaView } from '../components/common/native-component';
-import { entireFilterObj, expiredFilters, spaceFilters } from '../util';
+import { entireFilterObj, expiredFilters, sortByOldDate } from '../util';
 import {
   useHandleTableFooterBtns,
   useGetFoodList,
@@ -16,7 +16,6 @@ import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
 import AlertModal from '../screen-component/modal/AlertModal';
-import { sortByOldDate } from '../util/sortByOldDate';
 import TableHeader from '../components/table/TableHeader';
 
 export default function AllFoods() {
@@ -46,7 +45,7 @@ export default function AllFoods() {
         {allFoods.length ? (
           <>
             <TableFilters
-              filterTagList={[entireFilterObj, ...spaceFilters]}
+              filterTagList={[entireFilterObj, ...expiredFilters]}
               foodList={allFoods}
             />
             {foodList.length ? <TableHeader /> : <></>}

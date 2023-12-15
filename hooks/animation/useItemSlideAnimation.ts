@@ -28,7 +28,7 @@ export const useItemSlideAnimation = ({
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
 
-  const { routeFavoriteFoods, routeExpiredFoods } = useRouteName();
+  const { routeFavoriteFoods, routeAllFoods } = useRouteName();
 
   const table = routeFavoriteFoods
     ? {
@@ -80,7 +80,7 @@ export const useItemSlideAnimation = ({
       duration: 300,
     }).start(() => {
       if (afterAnimation === 'slideup-out') {
-        routeExpiredFoods ? deleteExpiredFoodItem() : deleteItem();
+        routeAllFoods ? deleteExpiredFoodItem() : deleteItem();
         dispatch(setCheckedList([]));
         dispatch(setAfterAnimation('none'));
       }

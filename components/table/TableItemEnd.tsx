@@ -5,6 +5,7 @@ import { Food, MAX_LIMIT } from '../../constant/foodInfo';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { setFormFood } from '../../redux/slice/food/formFoodSlice';
 import { showFormModal } from '../../redux/slice/modalVisibleSlice';
+import { Text } from '../common/native-component';
 
 import LeftDay from '../common/LeftDay';
 import AddIconBtn from '../buttons/AddIconBtn';
@@ -69,15 +70,21 @@ export default function TableItemEnd({ title, food }: Props) {
       ) : (
         <>
           <View style={tw`flex-row items-center justify-between gap-2 mr-2.5`}>
-            {/* {(title === '식료품' || title === '전체 식료품') && (
-              <View style={tw`w-14`}>
-                <LeftDay expiredDate={food.expiredDate} />
-              </View>
-            )} */}
-
-            {(title === '식료품' || title === '전체 식료품') && (
+            {title === '식료품' && (
               <View style={tw`items-end w-16`}>
-                <LeftDay expiredDate={food.expiredDate} dateMark isSuffix />
+                <LeftDay expiredDate={food.expiredDate} dateMark />
+              </View>
+            )}
+
+            {title === '전체 식료품' && (
+              <View style={tw`gap-2 flex-row items-center`}>
+                <Text fontSize={14} style={tw`text-slate-600 w-15 leading-4`}>
+                  {food.space}
+                </Text>
+
+                <View style={tw`items-end w-16`}>
+                  <LeftDay expiredDate={food.expiredDate} />
+                </View>
               </View>
             )}
           </View>

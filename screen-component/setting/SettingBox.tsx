@@ -13,22 +13,23 @@ import { SettingInfo } from '../../constant/settingBtns';
 
 import * as RNIap from 'react-native-iap';
 import Icon from '../../components/common/native-component/Icon';
-import tw from 'twrnc';
 import IconFridge from '../../components/svg/IconFridge';
 import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
+import tw from 'twrnc';
 
 interface Props {
   setting: SettingInfo;
 }
 
 export default function SettingBox({ setting }: Props) {
-  const { purchased } = useSelector((state) => state.purchaseState);
+  const purchase = useSelector((state) => state.purchaseState);
 
   const { title, navigate, icon } = setting;
 
   const {
     setAlert,
-    alertRestoreIAP,
+    alertFailRestoreIAP,
+    alertSucessRestoreIAP,
     alertHasReceipt,
     alertInitializeData, //
   } = useHandleAlert();
@@ -38,10 +39,9 @@ export default function SettingBox({ setting }: Props) {
   const dispatch = useDispatch();
 
   const onRestorePurchaseBtnPress = async () => {
-    if (purchased) {
+    if (purchase.purchased) {
       return setAlert(alertHasReceipt);
     }
-
     const availableProducts = await RNIap.getAvailablePurchases();
     const receipt = availableProducts[0];
 
@@ -52,8 +52,9 @@ export default function SettingBox({ setting }: Props) {
           purchaseToken: receipt.purchaseToken,
         })
       );
+      setAlert(alertSucessRestoreIAP);
     } else {
-      setAlert(alertRestoreIAP); // 토큰이 없는 경우
+      setAlert(alertFailRestoreIAP); // 토큰이 없는 경우
     }
   };
 

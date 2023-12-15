@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function TableFooterContainer({ children }: Props) {
-  const { routeExpiredFoods } = useRouteName();
+  const { routeAllFoods } = useRouteName();
 
   const { checkedList } = useSelector((state) => state.checkedList);
 
@@ -19,7 +19,7 @@ export default function TableFooterContainer({ children }: Props) {
     <View
       style={tw.style(
         `bg-stone-100 ${
-          !routeExpiredFoods || active ? 'border-t border-gray-300' : ''
+          !routeAllFoods || active ? 'border-t border-gray-300' : ''
         } px-4 -mx-4 -mb-3`,
         {
           shadowColor: '#aaa',
