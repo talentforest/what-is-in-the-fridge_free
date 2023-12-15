@@ -6,22 +6,19 @@ import { closeKeyboard } from '../../util';
 
 import TableItem, { TABLE_ITEM_HEIGHT } from './TableItem';
 import TableItemFront from './TableItemFront';
-import TableItemEnd from './TableItemEnd';
+import TableItemEnd, { TableTitle } from './TableItemEnd';
 import EmptySign from '../common/EmptySign';
 import tw from 'twrnc';
+import { useHandleFilter } from '../../hooks';
 
 interface Props {
-  title:
-    | '소비기한 주의 식료품'
-    | '자주 먹는 식료품'
-    | '장보기 식료품'
-    | '식료품';
+  title: TableTitle;
   foodList: Food[];
   flatListRef?: MutableRefObject<FlatList>;
 }
 
 export default function TableBody({ title, foodList, flatListRef }: Props) {
-  const { filter } = useSelector((state) => state.filter);
+  const { currentFilter } = useHandleFilter();
 
   return (
     <>
@@ -55,9 +52,11 @@ export default function TableBody({ title, foodList, flatListRef }: Props) {
           <View style={tw`pt-24 flex-1 -mx-4`}>
             <EmptySign
               message={
-                title === '장보기 식료품' || filter === '전체'
-                  ? `${title}이 없어요`
-                  : `${filter}에 ${title}이 없어요.`
+                title === '장 볼 식료품' || currentFilter === '전체'
+                  ? `아직 ${
+                      title === '전체 식료품' ? '식료품' : title
+                    }이 없어요`
+                  : `${currentFilter}에 식료품이 없어요.`
               }
               assetSize={100}
             />

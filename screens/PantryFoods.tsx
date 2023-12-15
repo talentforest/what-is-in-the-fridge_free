@@ -42,10 +42,15 @@ export default function PantryFoods() {
     <SafeBottomAreaView>
       <KeyboardAvoidingView>
         <Container>
-          <TableFilters
-            filterTagList={[entireFilterObj, ...expiredFilters]}
-            foodList={pantryFoods}
-          />
+          {pantryFoods.length ? (
+            <TableFilters
+              filterTagList={[entireFilterObj, ...expiredFilters]}
+              foodList={pantryFoods}
+            />
+          ) : (
+            <></>
+          )}
+
           {fridgeInfo.insideDisplayType === '칸별로 보기' ? (
             <CompartmentContainer>
               <CompartmentBox

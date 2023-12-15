@@ -18,9 +18,8 @@ import TableFooterContainer from '../components/table/TableFooterContainer';
 import AddAtOnceModal from '../screen-component/modal/AddAtOnceModal';
 import FormMessage from '../components/form/FormMessage';
 import HomeHeader from '../screen-component/home/HomeHeader';
-import tw from 'twrnc';
-import StepIndicator from '../components/common/StepIndicator';
 import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
+import tw from 'twrnc';
 
 export default function HomeShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
@@ -60,7 +59,7 @@ export default function HomeShoppingList() {
           </HomeHeader>
 
           <TableBody
-            title='장보기 식료품'
+            title='장 볼 식료품'
             foodList={shoppingList}
             flatListRef={flatListRef}
           />

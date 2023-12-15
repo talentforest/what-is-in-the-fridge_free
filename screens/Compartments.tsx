@@ -24,6 +24,8 @@ import TableBody from '../components/table/TableBody';
 import AddCircleBtn from '../components/buttons/AddCircleBtn';
 import AddFoodModal from '../screen-component/modal/AddFoodModal';
 import TableHeader from '../components/table/TableHeader';
+import { View } from 'react-native';
+import tw from 'twrnc';
 
 type RouteParams = {
   space: Space;
@@ -41,7 +43,7 @@ export default function Compartments({ route }: Route) {
     useSelector((state) => state.modalVisible);
   const { filter } = useSelector((state) => state.filter);
 
-  const { getFoodList } = useGetFoodList();
+  const { getMatchedPositionFoods } = useGetFoodList();
 
   const { initializeFilter } = useHandleFilter();
 
@@ -64,7 +66,7 @@ export default function Compartments({ route }: Route) {
     }
 
     navigation.setOptions({
-      headerTitle: () => <NavigationHeaderTitle title={space} />,
+      headerTitle: () => <NavigationHeaderTitle title={`${space} 식료품`} />,
       headerStyle: {
         backgroundColor: TAB_BLUE_BG_COLOR,
       },
@@ -75,43 +77,45 @@ export default function Compartments({ route }: Route) {
 
   const compartments = getCompartments(maxCompartmentNum);
 
-  const foodList = getFoodList('fridgeFoods', space);
+  const foodList = getMatchedPositionFoods('allFoods', space);
 
   const foods = getFilteredFoodList(filter, foodList);
 
   return (
     <SafeBottomAreaView>
       <Container>
-        {fridgeInfo.insideDisplayType === '칸별로 보기' ? (
-          <>
-            <TableFilters
-              filterTagList={[entireFilterObj, ...expiredFilters]}
-              foodList={foodList}
-            />
-            <CompartmentContainer>
-              {compartments.map((compartment) => (
-                <Compartment
-                  key={compartment.compartmentNum}
-                  currPosition={{ ...compartment, space }}
-                />
-              ))}
-            </CompartmentContainer>
-          </>
-        ) : null}
+        <View style={tw`flex-1 -mt-2`}>
+          {fridgeInfo.insideDisplayType === '칸별로 보기' ? (
+            <>
+              <TableFilters
+                filterTagList={[entireFilterObj, ...expiredFilters]}
+                foodList={foodList}
+              />
+              <CompartmentContainer>
+                {compartments.map((compartment) => (
+                  <Compartment
+                    key={compartment.compartmentNum}
+                    currPosition={{ ...compartment, space }}
+                  />
+                ))}
+              </CompartmentContainer>
+            </>
+          ) : null}
 
-        {fridgeInfo.insideDisplayType === '목록으로 보기' ? (
-          <>
-            {foods.length ? <TableHeader /> : <></>}
+          {fridgeInfo.insideDisplayType === '목록으로 보기' ? (
+            <>
+              {foods.length ? <TableHeader /> : <></>}
 
-            <TableBody title='식료품' foodList={foods} />
+              <TableBody title='식료품' foodList={foods} />
 
-            <AddCircleBtn />
+              <AddCircleBtn />
 
-            <AddFoodModal currPosition={{ space, compartmentNum: '1번' }} />
-          </>
-        ) : null}
+              <AddFoodModal currPosition={{ space, compartmentNum: '1번' }} />
+            </>
+          ) : null}
 
-        <FoodDetailModal formSteps={formFourSteps} />
+          <FoodDetailModal formSteps={formFourSteps} />
+        </View>
       </Container>
     </SafeBottomAreaView>
   );

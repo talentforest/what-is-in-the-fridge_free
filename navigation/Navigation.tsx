@@ -10,7 +10,6 @@ import { closeAllModal } from '../redux/slice/modalVisibleSlice';
 
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
-import ExpiredFoods from '../screens/ExpiredFoods';
 import FridgeSetting from '../screens/FridgeSetting';
 import OnBoarding from '../screens/OnBoarding';
 import HomeShoppingList from '../screens/HomeShoppingList';
@@ -23,6 +22,7 @@ import FridgeOutSideSetting from '../screens/FridgeOutsideSetting';
 import FridgeInsideSetting from '../screens/FridgeInsideSetting';
 import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
 import Home from '../screens/Home';
+import AllFoods from '../screens/AllFoods';
 
 export type RootStackParamList = {
   OnBoarding: undefined;
@@ -31,7 +31,7 @@ export type RootStackParamList = {
   HomeShoppingList: undefined;
   Compartments: undefined | object;
   FavoriteFoods: undefined;
-  ExpiredFoods: undefined;
+  AllFoods: undefined;
   PantryFoods: undefined;
   Setting: undefined;
   FontSetting: undefined;
@@ -102,10 +102,7 @@ const Navigation = () => {
       <Stack.Screen
         name='Compartments'
         component={Compartments}
-        options={{
-          ...options,
-          headerRight: () => <HeaderIconBtn btn='fridgeSetting' />,
-        }}
+        options={{ ...options }}
       />
 
       <Stack.Screen
@@ -113,8 +110,7 @@ const Navigation = () => {
         component={PantryFoods}
         options={{
           ...options,
-          headerTitle: () => <NavigationHeaderTitle title='팬트리 식료품' />,
-          headerRight: () => <HeaderIconBtn btn='setting' />,
+          headerTitle: () => <NavigationHeaderTitle title='실온보관 식료품' />,
         }}
       />
 
@@ -130,13 +126,11 @@ const Navigation = () => {
       />
 
       <Stack.Screen
-        name='ExpiredFoods'
-        component={ExpiredFoods}
+        name='AllFoods'
+        component={AllFoods}
         options={{
           ...options,
-          headerTitle: () => (
-            <NavigationHeaderTitle title='소비기한 주의 식료품 관리' />
-          ),
+          headerTitle: () => <NavigationHeaderTitle title='전체 식료품 관리' />,
         }}
       />
 

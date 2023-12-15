@@ -22,10 +22,10 @@ export default function Compartment({ currPosition }: Props) {
 
   const scrollViewRef = useRef<ScrollView | null>(null);
 
-  const { getFoodList } = useGetFoodList();
+  const { getMatchedPositionFoods } = useGetFoodList();
 
-  const foodListByCompartment = getFoodList(
-    'fridgeFoods',
+  const foodListByCompartment = getMatchedPositionFoods(
+    'allFoods',
     space,
     compartmentNum
   );

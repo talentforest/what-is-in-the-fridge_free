@@ -28,17 +28,19 @@ export default function HomeFridge() {
             </HomeHeader>
 
             <View
-              style={tw`items-center gap-3 mt-12 mb-10 flex-1 overflow-hidden
-              pt-${!purchased ? 12 : 16}  min-h-[${height * 0.55}px]`}
+              style={tw`h-[${height * 0.78}px] 
+              mt-12 justify-center pb-2
+              items-center gap-1.5 overflow-hidden`}
             >
-              {!purchased && <FoodLimit />}
-
-              <View style={tw`mt-4`}>
+              <View style={tw`py-2 gap-1 min-h-[${height * 0.6}px] `}>
                 <NavigationBtnBox />
+
                 <Fridge />
+
+                <PantryEntranceBtn />
               </View>
 
-              <PantryEntranceBtn />
+              {!purchased && <FoodLimit />}
             </View>
 
             <SearchFoodSection />

@@ -23,7 +23,7 @@ function LeftDay({ expiredDate, dateMark, isSuffix }: Props) {
 
   return (
     <View style={tw`items-end justify-center gap-1`}>
-      <Text fontSize={16} style={tw.style(`${textColor}`)}>
+      <Text fontSize={15} style={tw.style(`${textColor}`)}>
         {diffDate === 0 ? today : relativeTime}
       </Text>
 

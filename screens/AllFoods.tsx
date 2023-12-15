@@ -4,7 +4,7 @@ import {
   useHandleTableFooterBtns,
   useGetFoodList,
   useHandleFilter,
-} from '../hooks/';
+} from '../hooks';
 import { useEffect } from 'react';
 import { useDispatch } from '../redux/hook';
 import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
@@ -16,11 +16,13 @@ import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
 import AlertModal from '../screen-component/modal/AlertModal';
+import { sortByOldDate } from '../util/sortByOldDate';
+import TableHeader from '../components/table/TableHeader';
 
-export default function ExpiredFoods() {
+export default function AllFoods() {
   const { currentFilter, initializeFilter } = useHandleFilter();
 
-  const { getFilteredFoodList, expiredFoods } = useGetFoodList();
+  const { getFilteredFoodList, allFoods } = useGetFoodList();
 
   const {
     onDeleteBtnPress,
@@ -36,17 +38,24 @@ export default function ExpiredFoods() {
     };
   }, []);
 
-  const foodList = getFilteredFoodList(currentFilter, expiredFoods);
+  const foodList = sortByOldDate(getFilteredFoodList(currentFilter, allFoods));
 
   return (
     <SafeBottomAreaView>
       <Container>
-        <TableFilters
-          filterTagList={[entireFilterObj, ...expiredFilters, ...spaceFilters]}
-          foodList={expiredFoods}
-        />
+        {allFoods.length ? (
+          <>
+            <TableFilters
+              filterTagList={[entireFilterObj, ...spaceFilters]}
+              foodList={allFoods}
+            />
+            {foodList.length ? <TableHeader /> : <></>}
+          </>
+        ) : (
+          <></>
+        )}
 
-        <TableBody title='소비기한 주의 식료품' foodList={foodList} />
+        <TableBody title='전체 식료품' foodList={foodList} />
 
         <TableFooterContainer>
           <TableSelectedHandleBox foodList={foodList}>

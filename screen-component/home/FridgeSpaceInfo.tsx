@@ -1,12 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '../../components/common/native-component';
 import { Space } from '../../constant/fridgeInfo';
-import {
-  ICE_BLUE,
-  LIGHT_BLUE,
-  LIGHT_GRAY,
-  MEDIUM_GRAY,
-} from '../../constant/colors';
+import { ICE_BLUE, LIGHT_BLUE, MEDIUM_GRAY } from '../../constant/colors';
 import { useGetFoodList } from '../../hooks';
 
 import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
@@ -18,7 +13,7 @@ interface Props {
 }
 
 export default function FridgeSpaceInfo({ space }: Props) {
-  const { getFoodList } = useGetFoodList();
+  const { getMatchedPositionFoods } = useGetFoodList();
 
   const getColor = (listLength: number, name: string) => {
     const activeColor = name === '총 식료품' ? 'text-blue-700' : 'text-red-600';
@@ -29,32 +24,35 @@ export default function FridgeSpaceInfo({ space }: Props) {
   const spaceInfo = [
     {
       name: '총 식료품',
-      foodList: (space: Space) => getFoodList('fridgeFoods', space),
+      foodList: (space: Space) => getMatchedPositionFoods('allFoods', space),
     },
     {
       name: '소비기한 주의',
-      foodList: (space: Space) => getFoodList('expiredFoods', space),
+      foodList: (space: Space) =>
+        getMatchedPositionFoods('expiredFoods', space),
     },
   ];
 
   return (
-    <View style={tw`h-full px-2 pt-1 bg-white rounded-lg`}>
+    <View style={tw`h-full px-1.5 pt-1 bg-white rounded-lg`}>
       {/* 냉장고 공간 이름 */}
       <View>
-        <View style={tw`flex-row gap-1 py-1 items-center justify-between`}>
-          <View style={tw`flex-row gap-1 py-1 items-center`}>
+        <View style={tw`flex-row py-1 items-center justify-between`}>
+          <View style={tw`flex-row gap-1 py-0.5 items-center`}>
             <Icon
               name='information-outline'
               type='MaterialCommunityIcons'
               color={LIGHT_BLUE}
-              size={15}
+              size={14}
             />
-            <Text fontSize={15}>{space}</Text>
+            <Text fontSize={15} style={tw`text-slate-900`}>
+              {space}
+            </Text>
           </View>
-          <View style={tw`-mr-1`}>
-            <IconChevronRight size={14} color={MEDIUM_GRAY} />
-          </View>
+
+          <IconChevronRight size={15} color={MEDIUM_GRAY} />
         </View>
+
         <View
           style={tw`border border-[${ICE_BLUE}] h-0.1 rounded-full w-full`}
         />

@@ -10,7 +10,7 @@ import { GRAY } from '../../constant/colors';
 import Icon from '../common/native-component/Icon';
 
 interface Props {
-  btn: 'goBack' | 'setting' | 'fridgeSetting' | 'tag';
+  btn: 'goBack' | 'setting' | 'tag';
 }
 
 export default function HeaderIconBtn({ btn }: Props) {
@@ -18,15 +18,13 @@ export default function HeaderIconBtn({ btn }: Props) {
 
   const onBackBtnPress = () => navigation.goBack();
 
-  const onFridgeSettingBtnPress = () => navigation.navigate('FridgeSetting');
-
   const onSettingBtnPress = () => navigation.navigate('Setting');
 
   const onTagBtnPress = () => navigation.navigate('FavoriteFoods');
 
   const { height } = useWindowDimensions();
 
-  const iconSize = height > 900 ? 30 : 20;
+  const iconSize = height > 900 ? 30 : 21;
 
   return (
     <View style={tw`p-2`}>
@@ -37,10 +35,6 @@ export default function HeaderIconBtn({ btn }: Props) {
       ) : btn === 'setting' ? (
         <TouchableOpacity onPress={onSettingBtnPress}>
           <IconGear size={iconSize} />
-        </TouchableOpacity>
-      ) : btn === 'fridgeSetting' ? (
-        <TouchableOpacity onPress={onFridgeSettingBtnPress}>
-          <IconFridge size={iconSize - 2} color={GRAY} />
         </TouchableOpacity>
       ) : btn === 'tag' ? (
         <TouchableOpacity onPress={onTagBtnPress}>

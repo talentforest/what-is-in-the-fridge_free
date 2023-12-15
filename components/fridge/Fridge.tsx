@@ -33,8 +33,8 @@ export default function Fridge() {
         ? 440
         : 500
       : height * 0.5 >= 400
-      ? 360
-      : height * 0.45;
+      ? 372
+      : height * 0.48;
 
   const fridgeHeight = routeHome ? homeFridgeHeight : 160;
 
@@ -44,7 +44,7 @@ export default function Fridge() {
   };
 
   return (
-    <View style={tw`w-[${fridgeHeight / 1.2}px] self-center`}>
+    <View style={tw`w-[${fridgeHeight / 1.2}px]  self-center`}>
       <View style={tw`h-[${fridgeHeight}px]`}>
         <View style={tw`flex-row flex-1 justify-end items-end`}>
           {/* 냉장고 그림 컨테이너 */}
@@ -68,7 +68,7 @@ export default function Fridge() {
                     <TouchableOpacity
                       key={space}
                       disabled={!routeHome}
-                      style={tw`${!routeHome ? 'p-0.8' : 'p-1.2'} ${
+                      style={tw`${!routeHome ? 'p-0.8' : 'p-1.5'} ${
                         space.includes('냉동') ? 'h-[40%] pb-1' : 'h-[60%] pt-1'
                       }`}
                       onPress={() => onSpacePress(space)}

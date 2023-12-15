@@ -12,61 +12,44 @@ export const useGetFoodList = () => {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { filter } = useSelector((state) => state.filter);
 
-  const { allFoods } = useFindFood();
+  const { findFood } = useFindFood();
 
-  const sortByOldDate = (list: Food[]) => {
-    const copiedList = list ? [...list] : [];
+  const { routeFavoriteFoods } = useRouteName();
 
-    const sortedByOldDateList = copiedList.sort(
-      (food1, food2) =>
-        new Date(food1.expiredDate).getTime() -
-        new Date(food2.expiredDate).getTime()
-    );
-    return sortedByOldDateList || [];
-  };
+  const allFoods = [...fridgeFoods, ...pantryFoods];
 
-  const positionMatchedFoods = (
-    food: Food,
-    space: Space | SpaceType,
-    compartmentNum?: CompartmentNum
-  ) => {
-    if (space === '냉동실') return food.space.includes('냉동실');
-    if (space === '냉장실') return food.space.includes('냉장실');
-    if (compartmentNum) {
-      const matchedSpace = food.space === space;
-      const matchedCompartment = food.compartmentNum === compartmentNum;
-      return matchedSpace && matchedCompartment;
-    }
-
-    return food.space === space;
-  };
-
-  const expiredFoods = sortByOldDate(
-    allFoods.filter((food) => getLeftDays(food.expiredDate) < 8)
+  const expiredFoods = allFoods.filter(
+    (food) => getLeftDays(food.expiredDate) < 8
   );
 
-  const getFoodList = (
-    type: 'fridgeFoods' | 'expiredFoods',
+  const getMatchedPositionFoods = (
+    type: 'allFoods' | 'expiredFoods',
     space: SpaceType | Space,
     compartmentNum?: CompartmentNum
   ) => {
-    const foodList = type === 'fridgeFoods' ? fridgeFoods : expiredFoods;
+    const foodList = type === 'expiredFoods' ? expiredFoods : allFoods;
 
-    return foodList.filter((food) =>
-      positionMatchedFoods(food, space, compartmentNum)
-    );
+    return foodList.filter((food) => {
+      if (space === '냉동실') return food.space.includes('냉동실');
+      if (space === '냉장실') return food.space.includes('냉장실');
+      if (compartmentNum) {
+        const matchedSpace = food.space === space;
+        const matchedCompartment = food.compartmentNum === compartmentNum;
+        return matchedSpace && matchedCompartment;
+      }
+
+      return food.space === space;
+    });
   };
 
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
     if (filter === '전체') return foodList;
 
     if (filter === '냉동실' || filter === '냉장실' || filter === '팬트리')
-      return getFoodList('expiredFoods', filter);
+      return getMatchedPositionFoods('allFoods', filter);
 
     if (filter === '없는 식료품') {
-      return foodList.filter(
-        (food) => !!!allFoods.find((allFood) => allFood.name === food.name)
-      );
+      return foodList.filter(({ name }) => !!!findFood(name));
     }
 
     if (filter === '소비기한 만료')
@@ -80,8 +63,6 @@ export const useGetFoodList = () => {
 
     return foodList.filter((food) => food.category === filter);
   };
-
-  const { routeFavoriteFoods } = useRouteName();
 
   const foodList = routeFavoriteFoods ? favoriteFoods : pantryFoods;
 
@@ -118,11 +99,12 @@ export const useGetFoodList = () => {
   };
 
   return {
+    allFoods,
     fridgeFoods,
     favoriteFoods,
     pantryFoods,
     expiredFoods,
-    getFoodList,
+    getMatchedPositionFoods,
     getFilteredFoodList,
     getExistCategoryList,
     getFilteredSortByCategoryList,

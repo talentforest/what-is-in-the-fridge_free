@@ -4,8 +4,8 @@ interface Props {
   height: number;
 }
 
-export const fridgeColor = '#d7d7d7'; // e7e7e7
-export const fridgeBorderColor = '#c9c9c9';
+export const fridgeColor = '#e2e2e2'; // e7e7e7
+export const fridgeBorderColor = '#d6d6d6';
 
 export default function SvgFridgeContainer({ height }: Props) {
   return (

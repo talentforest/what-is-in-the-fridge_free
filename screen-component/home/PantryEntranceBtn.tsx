@@ -5,7 +5,6 @@ import {
 } from '../../components/common/native-component';
 import { NavigateProp } from '../../navigation/Navigation';
 import { Image, View } from 'react-native';
-import { shadowStyle } from '../../constant/shadowStyle';
 import { useImageLoad } from '../../hooks';
 
 import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
@@ -14,7 +13,10 @@ import tw from 'twrnc';
 
 export default function PantryEntranceBtn() {
   const { isLoaded, assets } = useImageLoad({
-    images: [require('../../assets/food/banana.png')],
+    images: [
+      require('../../assets/food/banana.png'),
+      require('../../assets/food/apple.png'),
+    ],
   });
 
   const navigation = useNavigation<NavigateProp>();
@@ -23,43 +25,43 @@ export default function PantryEntranceBtn() {
 
   if (!isLoaded) return null;
 
-  const uri = assets[0].localUri;
+  const bananaLocalUri = assets[0]?.localUri;
+  const appleLocalUri = assets[1]?.localUri;
 
   return (
-    <View style={tw`-mt-1 mb-5 mr-5 self-end justify-end items-end flex-row`}>
-      <PantryBox size={110} color={'#afafaf'} />
-      <TouchableOpacity
-        onPress={onNavigatePress}
-        style={tw.style(
-          `absolute items-center justify-between left-0 bottom-0.5 bg-neutral-300 w-21 h-21 p-3 pt-2 rounded-xl`,
-          shadowStyle(6)
-        )}
-      >
-        {/* 손잡이 부분 */}
+    <View style={tw`mr-3 mt-3 -gap-3 flex-row self-end justify-end items-end`}>
+      <PantryBox size={90} />
+
+      <TouchableOpacity onPress={onNavigatePress}>
+        <PantryBox size={110} />
+
         <View
-          style={tw`border border-slate-500 h-2 w-8 rounded-full bg-gray-700`}
-        />
+          style={tw.style(
+            `absolute bottom-1 pb-3 left-1 w-22.5 items-center justify-end h-12`
+          )}
+        >
+          <View style={tw`flex-row items-center gap-1`}>
+            <Text fontSize={15} style={tw`text-slate-800`}>
+              실온보관
+            </Text>
 
-        <View style={tw`flex-row self-center`}>
-          <Text fontSize={15} style={tw`text-neutral-800`}>
-            팬트리
-          </Text>
-          <IconChevronRight size={14} color={'#333'} />
+            <IconChevronRight size={15} color={'#333'} />
+          </View>
         </View>
+
+        {assets.length ? (
+          <View
+            style={tw.style(
+              `flex-row -gap-4 absolute -top-7 right-2 self-end items-end`
+            )}
+          >
+            <Image source={{ uri: appleLocalUri }} width={45} height={45} />
+            <Image source={{ uri: bananaLocalUri }} width={65} height={65} />
+          </View>
+        ) : (
+          <></>
+        )}
       </TouchableOpacity>
-
-      {assets[0] ? (
-        <View style={tw.style(`absolute -top-8 right-4`)}>
-          <Image
-            source={{ uri }}
-            width={60}
-            height={60}
-            style={{ ...shadowStyle(3) }}
-          />
-        </View>
-      ) : (
-        <></>
-      )}
     </View>
   );
 }

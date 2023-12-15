@@ -72,11 +72,15 @@ export default function FavoriteFoods() {
     <SafeAreaView edges={['bottom']} style={tw`${BG_COLOR} flex-1`}>
       <KeyboardAvoidingView>
         <Container>
-          <TableFilters
-            filterTagList={[entireFilterObj, ...existAbsenceFilters]}
-            foodList={favoriteFoods}
-            withCategoryFilterTag
-          />
+          {favoriteFoods.length ? (
+            <TableFilters
+              filterTagList={[entireFilterObj, ...existAbsenceFilters]}
+              foodList={favoriteFoods}
+              withCategoryFilterTag
+            />
+          ) : (
+            <></>
+          )}
 
           <TableBody
             title='자주 먹는 식료품'
