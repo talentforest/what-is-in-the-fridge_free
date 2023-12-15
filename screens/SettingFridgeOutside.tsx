@@ -14,7 +14,7 @@ import CheckBoxItem from '../components/common/CheckBoxItem';
 import Fridge from '../components/fridge/Fridge';
 import tw from 'twrnc';
 
-export default function FridgeOutSideSetting() {
+export default function SettingFridgeOutside() {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
   const dispatch = useDispatch();

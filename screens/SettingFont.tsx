@@ -46,7 +46,7 @@ const fonts: FontStyle[] = [
   },
 ];
 
-export default function FontSetting() {
+export default function SettingFont() {
   const { fontFamily: currFont } = useSelector((state) => state.fontFamily);
   const [font, setFont] = useState(currFont);
 

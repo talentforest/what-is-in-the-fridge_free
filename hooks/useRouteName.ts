@@ -8,7 +8,7 @@ export const useRouteName = () => {
   const routeFavoriteFoods = route.name === 'FavoriteFoods';
   const routeCompartments = route.name === 'Compartments';
   const routePantryFoods = route.name === 'PantryFoods';
-  const routeFridgeSetting = route.name === 'FridgeSetting';
+  const routeSettingFridge = route.name === 'SettingFridge';
 
   return {
     routeHome,
@@ -16,6 +16,6 @@ export const useRouteName = () => {
     routeFavoriteFoods,
     routeCompartments,
     routePantryFoods,
-    routeFridgeSetting,
+    routeSettingFridge,
   };
 };

@@ -10,19 +10,20 @@ import { closeAllModal } from '../redux/slice/modalVisibleSlice';
 
 import Compartments from '../screens/Compartments';
 import FavoriteFoods from '../screens/FavoriteFoods';
-import FridgeSetting from '../screens/FridgeSetting';
+import SettingFridge from '../screens/SettingFridge';
 import OnBoarding from '../screens/OnBoarding';
 import HomeShoppingList from '../screens/HomeShoppingList';
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 import HomeFridge from '../screens/HomeFridge';
 import PantryFoods from '../screens/PantryFoods';
 import Setting from '../screens/Setting';
-import FontSetting from '../screens/FontSetting';
-import FridgeOutSideSetting from '../screens/FridgeOutsideSetting';
-import FridgeInsideSetting from '../screens/FridgeInsideSetting';
+import SettingFont from '../screens/SettingFont';
+import SettingFridgeOutside from '../screens/SettingFridgeOutside';
+import SettingFridgeInside from '../screens/SettingFridgeInside';
 import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
 import Home from '../screens/Home';
 import AllFoods from '../screens/AllFoods';
+import SettingNotification from '../screens/SettingNotification';
 
 export type RootStackParamList = {
   OnBoarding: undefined;
@@ -34,10 +35,11 @@ export type RootStackParamList = {
   AllFoods: undefined;
   PantryFoods: undefined;
   Setting: undefined;
-  FontSetting: undefined;
-  FridgeSetting: undefined;
-  FridgeOutsideSetting: undefined;
-  FridgeInsideSetting: undefined;
+  SettingFont: undefined;
+  SettingFridge: undefined;
+  SettingFridgeOutside: undefined;
+  SettingFridgeInside: undefined;
+  SettingNotification: undefined;
 };
 
 export type RouteName = keyof RootStackParamList;
@@ -144,8 +146,8 @@ const Navigation = () => {
       />
 
       <Stack.Screen
-        name='FontSetting'
-        component={FontSetting}
+        name='SettingFont'
+        component={SettingFont}
         options={{
           ...options,
           headerTitle: () => <NavigationHeaderTitle title='폰트 설정' />,
@@ -153,8 +155,8 @@ const Navigation = () => {
       />
 
       <Stack.Screen
-        name='FridgeSetting'
-        component={FridgeSetting}
+        name='SettingFridge'
+        component={SettingFridge}
         options={{
           ...options,
           headerTitle: () => (
@@ -164,8 +166,8 @@ const Navigation = () => {
       />
 
       <Stack.Screen
-        name='FridgeOutsideSetting'
-        component={FridgeOutSideSetting}
+        name='SettingFridgeOutside'
+        component={SettingFridgeOutside}
         options={{
           ...options,
           headerTitle: () => <NavigationHeaderTitle title='냉장고 외부 설정' />,
@@ -173,11 +175,20 @@ const Navigation = () => {
       />
 
       <Stack.Screen
-        name='FridgeInsideSetting'
-        component={FridgeInsideSetting}
+        name='SettingFridgeInside'
+        component={SettingFridgeInside}
         options={{
           ...options,
           headerTitle: () => <NavigationHeaderTitle title='냉장고 내부 설정' />,
+        }}
+      />
+
+      <Stack.Screen
+        name='SettingNotification'
+        component={SettingNotification}
+        options={{
+          ...options,
+          headerTitle: () => <NavigationHeaderTitle title='알림 설정' />,
         }}
       />
     </Stack.Navigator>

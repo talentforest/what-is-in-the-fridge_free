@@ -14,7 +14,7 @@ import CategoryIcon from '../components/common/CategoryIcon';
 import Icon from '../components/common/native-component/Icon';
 import tw from 'twrnc';
 
-export default function FridgeInsideSetting() {
+export default function SettingFridgeInside() {
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
   const dispatch = useDispatch();
