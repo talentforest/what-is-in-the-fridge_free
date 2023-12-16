@@ -1,13 +1,19 @@
 import { View } from 'react-native';
-import { Text } from '../common/native-component';
+import { Text, TouchableOpacity } from '../common/native-component';
 import { getFormattedDate } from '../../util';
 import { comma } from '../../util/commaNotation';
-import { useSelector } from '../../redux/hook';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { BLUE, ORANGE_RED } from '../../constant/colors';
+import { shadowStyle } from '../../constant/shadowStyle';
+import { handleQuantityPantryFood } from '../../redux/slice/food-list/pantryFoodsSlice';
+import { handleQuantityFridgeFood } from '../../redux/slice/food-list/fridgeFoodsSlice';
+import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 
 import InfoBox from './InfoBox';
 import LeftDayInfoBox from '../modal/LeftDayInfoBox';
 import CategoryIcon from '../common/CategoryIcon';
 import FoodDetailName from './FoodDetailName';
+import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 export default function FoodDetail() {
@@ -19,8 +25,31 @@ export default function FoodDetail() {
     quantity,
     expiredDate,
     purchaseDate,
-    memo, //
+    memo,
+    id,
+    space,
   } = formFood;
+
+  const dispatch = useDispatch();
+
+  const onHandleCountPress = (direction: string) => {
+    const newQuantity =
+      direction === 'up'
+        ? `${+quantity + 1}`
+        : direction === 'down'
+        ? `${+quantity - 1}`
+        : quantity;
+
+    const newInfo = { id, quantity: newQuantity };
+
+    dispatch(editFormFood({ quantity: newQuantity }));
+
+    dispatch(
+      space === '팬트리'
+        ? handleQuantityPantryFood(newInfo)
+        : handleQuantityFridgeFood(newInfo)
+    );
+  };
 
   return (
     <>
@@ -48,7 +77,27 @@ export default function FoodDetail() {
 
         {quantity !== '' && (
           <InfoBox iconName='diff' label='수량'>
-            <Text>{comma(quantity)}</Text>
+            <View style={tw`flex-row items-center justify-between gap-2`}>
+              <Text>{comma(quantity)}</Text>
+              <View style={tw`flex-row items-center gap-2`}>
+                {['up', 'down'].map((direction) => (
+                  <TouchableOpacity
+                    onPress={() => onHandleCountPress(direction)}
+                    style={tw.style(
+                      `border border-slate-300 bg-white items-center justify-center rounded-lg w-6 aspect-square`,
+                      shadowStyle(2)
+                    )}
+                  >
+                    <Icon
+                      name={`triangle-${direction}`}
+                      type='Octicons'
+                      size={18}
+                      color={direction === 'up' ? BLUE : ORANGE_RED}
+                    />
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
           </InfoBox>
         )}
 

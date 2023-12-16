@@ -49,6 +49,16 @@ const pantryFoodsSlice = createSlice({
         );
       }
     },
+    handleQuantityPantryFood: (
+      state,
+      action: { payload: { id: string; quantity: string } }
+    ) => {
+      const { id, quantity } = action.payload;
+
+      state.pantryFoods = state.pantryFoods.map((pantryFood) =>
+        pantryFood.id === id ? { ...pantryFood, quantity } : pantryFood
+      );
+    },
   },
 });
 
@@ -58,8 +68,9 @@ export const {
   setAllPantryFoods,
   addToPantry,
   addPantryFoods,
-  removePantryFood, //
+  removePantryFood,
   editPantryFood,
+  handleQuantityPantryFood,
 } = pantryFoodsSlice.actions;
 
 export default pantryFoodsReducer;

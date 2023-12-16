@@ -32,6 +32,16 @@ const fridgeFoodsSlice = createSlice({
         return fridgeFood.id === id ? food : fridgeFood;
       });
     },
+    handleQuantityFridgeFood: (
+      state,
+      action: { payload: { id: string; quantity: string } }
+    ) => {
+      const { id, quantity } = action.payload;
+
+      state.fridgeFoods = state.fridgeFoods.map((fridgeFood) =>
+        fridgeFood.id === id ? { ...fridgeFood, quantity } : fridgeFood
+      );
+    },
   },
 });
 
@@ -43,6 +53,7 @@ export const {
   addFridgeFoods,
   removeFridgeFood,
   editFridgeFood,
+  handleQuantityFridgeFood,
 } = fridgeFoodsSlice.actions;
 
 export default fridgeFoodsReducer;
