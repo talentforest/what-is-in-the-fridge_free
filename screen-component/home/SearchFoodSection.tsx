@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Dispatch, useCallback, useEffect, useState } from 'react';
 import { findMatchNameFoods } from '../../util';
 import { View } from 'react-native';
 import {
@@ -15,7 +15,15 @@ import Icon from '../../components/common/native-component/Icon';
 import SearchedFoodList from './SearchedFoodList';
 import tw from 'twrnc';
 
-export default function SearchFoodSection() {
+interface Props {
+  closeSearchedList: boolean;
+  setCloseSearchList: Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function SearchFoodSection({
+  closeSearchedList,
+  setCloseSearchList,
+}: Props) {
   const [keyword, setKeyword] = useState('');
   const [searchedFoods, setSearchedFoods] = useState<Food[]>([]);
 
@@ -43,6 +51,7 @@ export default function SearchFoodSection() {
     <View style={tw`absolute top-12 w-full`}>
       <View style={tw`h-11`}>
         <TextInput
+          onFocus={() => setCloseSearchList(false)}
           value={keyword}
           onChangeText={setKeyword}
           placeholder='식료품을 갖고 있는지 검색해보세요.'
@@ -63,7 +72,11 @@ export default function SearchFoodSection() {
         </TouchableOpacity>
       </View>
 
-      <SearchedFoodList keyword={keyword} searchedFoods={searchedFoods} />
+      <SearchedFoodList
+        keyword={keyword}
+        searchedFoods={searchedFoods}
+        closeSearchedList={closeSearchedList}
+      />
     </View>
   );
 }

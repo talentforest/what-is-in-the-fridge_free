@@ -2,6 +2,7 @@ import { Pressable, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { closeKeyboard } from '../util';
 import { useSelector } from '../redux/hook';
+import { useState } from 'react';
 
 import Container, { BG_COLOR } from '../components/common/Container';
 import SearchFoodSection from '../screen-component/home/SearchFoodSection';
@@ -15,12 +16,18 @@ import tw from 'twrnc';
 
 export default function HomeFridge() {
   const { purchased } = useSelector((state) => state.purchaseState);
+  const [closeSearchedList, setCloseSearchList] = useState(false);
 
   const { height } = useWindowDimensions();
 
+  const onEmptySpacePress = () => {
+    closeKeyboard();
+    setCloseSearchList(true);
+  };
+
   return (
     <SafeAreaView edges={['bottom']} style={tw`${BG_COLOR} flex-1`}>
-      <Pressable style={tw`flex-1`} onPress={closeKeyboard}>
+      <Pressable style={tw`flex-1`} onPress={onEmptySpacePress}>
         <Container>
           <View style={tw`flex-1`}>
             <HomeHeader title='냉장고에 뭐가 있지'>
@@ -29,8 +36,7 @@ export default function HomeFridge() {
 
             <View
               style={tw`h-[${height * 0.78}px] 
-              mt-12 justify-center pb-2
-              items-center gap-1.5 overflow-hidden`}
+              mt-12 justify-center pb-2 items-center gap-1.5 overflow-hidden`}
             >
               <View style={tw`py-2 gap-1 min-h-[${height * 0.6}px] `}>
                 <NavigationBtnBox />
@@ -43,7 +49,10 @@ export default function HomeFridge() {
               {!purchased && <FoodLimit />}
             </View>
 
-            <SearchFoodSection />
+            <SearchFoodSection
+              closeSearchedList={closeSearchedList}
+              setCloseSearchList={setCloseSearchList}
+            />
           </View>
         </Container>
       </Pressable>

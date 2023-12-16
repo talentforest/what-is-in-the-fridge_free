@@ -7,10 +7,20 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import SearchedItem from './SearchedItem';
 import tw from 'twrnc';
 
-export default function SearchedFoodList({ keyword, searchedFoods }) {
+interface Props {
+  closeSearchedList: boolean;
+  keyword: string;
+  searchedFoods: Food[];
+}
+
+export default function SearchedFoodList({
+  keyword,
+  searchedFoods,
+  closeSearchedList,
+}: Props) {
   const searchLength = searchedFoods?.length;
 
-  const active = !!searchLength && !!keyword.length;
+  const active = !!searchLength && !!keyword.length && !closeSearchedList;
 
   const { height } = useItemSlideAnimation({
     initialValue: !!keyword.length && !searchLength ? 30 : 0,
