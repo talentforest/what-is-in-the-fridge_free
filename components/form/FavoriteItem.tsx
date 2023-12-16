@@ -1,23 +1,19 @@
-import { View, Animated } from 'react-native';
-import { ICE_BLUE, LIGHT_INDIGO } from '../../constant/colors';
-import { useToggleAnimation, useFindFood } from '../../hooks';
+import { View } from 'react-native';
+import { useFindFood } from '../../hooks';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleFavorite } from '../../redux/slice/food/isFavoriteSlice';
-import { shadowStyle } from '../../constant/shadowStyle';
-import { InputStyle } from '../common/native-component';
 import { closeKeyboard } from '../../util';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
 import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
+import { LIGHT_INDIGO, MEDIUM_INDIGO } from '../../constant/colors';
 
 interface Props {
   isEditing: boolean;
 }
-
-const TOGGLE_BTN_WIDTH = 94;
 
 export default function FavoriteItem({ isEditing }: Props) {
   const {
@@ -30,18 +26,12 @@ export default function FavoriteItem({ isEditing }: Props) {
 
   const { isFavoriteItem } = useFindFood();
 
-  const { translateX } = useToggleAnimation({
-    initialValue: 0,
-    toValue: TOGGLE_BTN_WIDTH,
-    active: isFavorite,
-  });
-
   const dispatch = useDispatch();
 
-  const onTogglePress = (btnName: string) => {
+  const onTogglePress = (idx: number) => {
     closeKeyboard();
-    if (btnName === '맞아요') return dispatch(toggleFavorite(true));
-    if (btnName === '아니에요') return dispatch(toggleFavorite(false));
+    if (idx === 0) return dispatch(toggleFavorite(true));
+    if (idx === 1) return dispatch(toggleFavorite(false));
   };
 
   useEffect(() => {
@@ -54,39 +44,20 @@ export default function FavoriteItem({ isEditing }: Props) {
 
   // 식료품에 대한 정보 "수정"에서만 자주 먹는 식료품 설정을 변경할 수 있다.
   const disabledFavoriteBtn = isFavoriteItem(name) && !isEditing;
-  const backgroundColor = disabledFavoriteBtn ? ICE_BLUE : LIGHT_INDIGO;
 
   return (
     <View>
       <FormLabel label='자주 먹는 식료품' />
-      <View
-        style={tw.style(
-          `${InputStyle} flex-row items-center p-1 rounded-full self-start`,
-          shadowStyle(3)
-        )}
-      >
-        <Animated.View
-          style={{
-            transform: [{ translateX }],
-            width: TOGGLE_BTN_WIDTH,
-            position: 'absolute',
-            left: 4,
-            height: '100%',
-            borderRadius: 100,
-            backgroundColor,
-          }}
+      <View style={tw`h-10`}>
+        <ToggleBtn
+          toggleBtnName={['맞아요', '아니에요']}
+          width={94}
+          active={isFavorite}
+          disabled={disabledFavoriteBtn}
+          onTogglePress={onTogglePress}
+          activeColor={LIGHT_INDIGO}
+          inActiveColor={LIGHT_INDIGO}
         />
-
-        {['맞아요', '아니에요'].map((btnNm) => (
-          <ToggleBtn
-            key={btnNm}
-            btnName={btnNm}
-            check={btnNm === '맞아요' ? isFavorite : !isFavorite}
-            onPress={() => onTogglePress(btnNm)}
-            disabled={disabledFavoriteBtn}
-            width={TOGGLE_BTN_WIDTH}
-          />
-        ))}
       </View>
 
       <FormMessage

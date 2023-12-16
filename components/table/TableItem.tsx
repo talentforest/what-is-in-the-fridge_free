@@ -98,7 +98,7 @@ export default function TableItem({
           <Text
             numberOfLines={1}
             ellipsizeMode='tail'
-            style={tw`text-slate-800 flex-1 pl-0.5`}
+            style={tw`text-slate-800 flex-1 pl-0.5 pr-1`}
           >
             {initializedFood.name}
           </Text>

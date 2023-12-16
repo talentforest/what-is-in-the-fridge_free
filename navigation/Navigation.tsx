@@ -150,7 +150,7 @@ const Navigation = () => {
         component={SettingFont}
         options={{
           ...options,
-          headerTitle: () => <NavigationHeaderTitle title='폰트 설정' />,
+          headerTitle: () => <NavigationHeaderTitle title='폰트' />,
         }}
       />
 

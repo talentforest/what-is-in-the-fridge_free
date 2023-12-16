@@ -12,7 +12,7 @@ export const settingBtns: SettingInfo[] = [
     icon: 'fridge',
     navigate: 'SettingFridge',
   },
-  { title: '폰트 설정', icon: 'typography', navigate: 'SettingFont' },
+  { title: '폰트', icon: 'typography', navigate: 'SettingFont' },
   { title: '알림', icon: 'bell', navigate: 'SettingNotification' },
   { title: '전체 데이터 초기화', icon: 'skip', navigate: '' },
   { title: '구매 복원', icon: 'history', navigate: '' },

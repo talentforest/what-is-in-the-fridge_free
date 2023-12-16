@@ -43,7 +43,7 @@ export default function Setting() {
         </View>
       ) : null}
 
-      <View style={tw`px-1`}>
+      <View>
         {settingBtns.map((setting) => (
           <SettingBox key={setting.title} setting={setting} />
         ))}
