@@ -1,3 +1,4 @@
+import { View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from '../redux/hook';
@@ -24,8 +25,8 @@ import TableBody from '../components/table/TableBody';
 import AddCircleBtn from '../components/buttons/AddCircleBtn';
 import AddFoodModal from '../screen-component/modal/AddFoodModal';
 import TableHeader from '../components/table/TableHeader';
-import { View } from 'react-native';
 import tw from 'twrnc';
+import { search } from '../redux/slice/food/searchedFoodSlice';
 
 type RouteParams = {
   space: Space;
@@ -71,6 +72,10 @@ export default function Compartments({ route }: Route) {
         backgroundColor: TAB_BLUE_BG_COLOR,
       },
     });
+
+    return () => {
+      dispatch(search(''));
+    };
   }, [space]);
 
   const maxCompartmentNum = fridgeInfo.compartments[space];
