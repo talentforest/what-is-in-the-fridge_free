@@ -11,11 +11,13 @@ import LeftDay from '../common/LeftDay';
 import AddIconBtn from '../buttons/AddIconBtn';
 import IndicatorExist from '../common/IndicatorExist';
 import tw from 'twrnc';
+import { Space } from '../../constant/fridgeInfo';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 export type TableTitle =
   | '전체 식료품'
   | '자주 먹는 식료품'
-  | '장 볼 식료품'
+  | '장볼 식료품'
   | '식료품';
 
 interface Props {
@@ -50,9 +52,19 @@ export default function TableItemEnd({ title, food }: Props) {
     onAddToFridgePress();
   };
 
+  const positionTagColor = (position: Space) => {
+    const tagColor = position.includes('냉동실')
+      ? 'blue'
+      : position.includes('냉장실')
+      ? 'green'
+      : 'red';
+
+    return tagColor;
+  };
+
   return (
     <>
-      {title === '장 볼 식료품' ? (
+      {title === '장볼 식료품' ? (
         <>
           {routeHome && findFood(food.name) && (
             <IndicatorExist
@@ -77,10 +89,26 @@ export default function TableItemEnd({ title, food }: Props) {
             )}
 
             {title === '전체 식료품' && (
-              <View style={tw`gap-2 flex-row items-center`}>
-                <Text fontSize={14} style={tw`text-slate-600 w-15 leading-4`}>
-                  {food.space}
-                </Text>
+              <View style={tw`gap-1 flex-row items-center`}>
+                <View style={tw`w-17`}>
+                  <View
+                    style={tw.style(
+                      `border border-${positionTagColor(food.space)}-300 
+                      bg-${positionTagColor(food.space)}-50 
+                      self-start rounded-full py-0.5 px-1.5`
+                    )}
+                  >
+                    <Text
+                      fontSize={13}
+                      style={tw.style(
+                        `text-${positionTagColor(food.space)}-800 leading-4`,
+                        { letterSpacing: -0.5 }
+                      )}
+                    >
+                      {food.space}
+                    </Text>
+                  </View>
+                </View>
 
                 <View style={tw`items-end w-16`}>
                   <LeftDay expiredDate={food.expiredDate} />

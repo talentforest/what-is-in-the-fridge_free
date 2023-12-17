@@ -23,7 +23,7 @@ export default function SettingNotification() {
     Notifications.scheduleNotificationAsync({
       content: {
         title: '소비기한 만료 식료품 안내',
-        body: '소비기한이 만료된 식료품이 있습니다.',
+        body: '소비기한이 만료된 식료품이 있습니다',
       },
       trigger: {
         seconds: 2,

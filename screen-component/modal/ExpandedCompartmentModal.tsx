@@ -51,7 +51,7 @@ export default function ExpandedCompartmentModal({
             flex-row items-center justify-center`}
         >
           <EmptySign
-            message='식료품이 아직 없어요.'
+            message='식료품이 아직 없어요'
             assetSize={60}
             compartmentNum={compartmentNum}
           />

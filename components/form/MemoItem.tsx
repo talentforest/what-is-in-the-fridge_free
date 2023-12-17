@@ -75,7 +75,7 @@ export default function MemoItem() {
               })}
               onChangeText={onChangeText}
               value={memo}
-              placeholder='또다른 추가정보는 메모로 작성해주세요.'
+              placeholder='또다른 추가정보는 메모로 작성해주세요'
               multiline
               numberOfLines={3}
               returnKeyType='done'
@@ -89,7 +89,7 @@ export default function MemoItem() {
       <FormMessage
         active={memo.length >= MEMO_MAX_LENGTH && isMemoOpen}
         color='orange'
-        message={`메모는 ${MEMO_MAX_LENGTH}자를 넘을 수 없습니다.`}
+        message={`메모는 ${MEMO_MAX_LENGTH}자를 넘을 수 없습니다`}
       />
     </View>
   );

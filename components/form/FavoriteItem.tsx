@@ -9,7 +9,11 @@ import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
 import ToggleBtn from '../buttons/ToggleBtn';
 import tw from 'twrnc';
-import { LIGHT_INDIGO, MEDIUM_INDIGO } from '../../constant/colors';
+import {
+  LIGHT_INDIGO,
+  LIGHT_YELLOW,
+  MEDIUM_INDIGO,
+} from '../../constant/colors';
 
 interface Props {
   isEditing: boolean;
@@ -55,26 +59,26 @@ export default function FavoriteItem({ isEditing }: Props) {
           active={isFavorite}
           disabled={disabledFavoriteBtn}
           onTogglePress={onTogglePress}
-          activeColor={LIGHT_INDIGO}
-          inActiveColor={LIGHT_INDIGO}
+          activeColor={LIGHT_YELLOW}
+          inActiveColor={LIGHT_YELLOW}
         />
       </View>
 
       <FormMessage
         active={!isEditing && !!isFavoriteItem(name)}
-        message='자주 먹는 식료품이므로 위의 정보가 자동으로 적용돼요.'
+        message='자주 먹는 식료품이므로 위의 정보가 자동으로 적용돼요'
         color='green'
       />
 
       <FormMessage
         active={isFavorite && !isFavoriteItem(name)}
-        message={'자주 먹는 식료품 목록에 추가돼요.'}
+        message={'자주 먹는 식료품 목록에 추가돼요'}
         color='green'
       />
 
       <FormMessage
         active={!isFavorite && !!isFavoriteItem(name) && originName !== newName}
-        message={`"${originName}" 식료품이 자주 먹는 식료품 목록에서 삭제돼요.`}
+        message={`"${originName}" 식료품이 자주 먹는 식료품 목록에서 삭제돼요`}
         color='orange'
       />
 
@@ -85,7 +89,7 @@ export default function FavoriteItem({ isEditing }: Props) {
           !!isFavoriteItem(name) &&
           originName !== newName
         }
-        message={`자주 먹는 식료품 목록에서도 "${originName}" 이름이 변경돼요.`}
+        message={`자주 먹는 식료품 목록에서도 "${originName}" 이름이 변경돼요`}
         color='orange'
       />
     </View>

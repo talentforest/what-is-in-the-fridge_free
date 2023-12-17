@@ -2,9 +2,19 @@ import { Animated, View } from 'react-native';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { InputStyle, Text, TouchableOpacity } from '../common/native-component';
 import { useToggleAnimation } from '../../hooks';
-import { ICE_BLUE, INDIGO, MEDIUM_INDIGO } from '../../constant/colors';
+import {
+  AMBER,
+  DARK_WHITE,
+  ICE_BLUE,
+  INDIGO,
+  LIGHT_GRAY,
+  MEDIUM_GRAY,
+  MEDIUM_INDIGO,
+  YELLOW,
+} from '../../constant/colors';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
+import { DISABLED_BG_COLOR } from '../../util';
 
 interface Props {
   width: number;
@@ -33,18 +43,20 @@ export default function ToggleBtn({
 
   const toggleActive = (index: number) => (index === 0 ? active : !active);
 
-  const iconColor = disabled ? MEDIUM_INDIGO : INDIGO;
+  const iconColor = disabled ? LIGHT_GRAY : YELLOW;
 
-  const textColor = disabled ? 'text-indigo-300' : 'text-indigo-600';
+  const textColor = disabled ? 'text-slate-400' : 'text-yellow-800';
 
   const activeBtnColor = active ? activeColor : inActiveColor;
+
+  const borderColor = disabled
+    ? 'border-slate-200'
+    : `border-[${active ? activeColor : inActiveColor}]`;
 
   return (
     <View
       style={tw.style(
-        `${InputStyle} border-[${
-          active ? activeColor : inActiveColor
-        }] h-full flex-row items-center p-1 rounded-full self-start`,
+        `${InputStyle} ${borderColor} h-full flex-row items-center p-1 rounded-full self-start`,
         shadowStyle(3)
       )}
     >
@@ -56,7 +68,7 @@ export default function ToggleBtn({
           left: 4,
           height: '100%',
           borderRadius: 100,
-          backgroundColor: disabled ? ICE_BLUE : activeBtnColor,
+          backgroundColor: disabled ? DARK_WHITE : activeBtnColor,
         }}
       />
 
@@ -70,14 +82,14 @@ export default function ToggleBtn({
           {toggleBtnName ? (
             <>
               <Icon
-                type='MaterialCommunityIcons'
-                name={index === 0 ? 'tag' : 'tag-outline'}
+                type='Octicons'
+                name={index === 0 ? 'star-fill' : 'star'}
                 size={14}
-                color={toggleActive(index) ? iconColor : MEDIUM_INDIGO}
+                color={toggleActive(index) ? iconColor : LIGHT_GRAY}
               />
               <Text
                 style={tw`${
-                  toggleActive(index) ? textColor : 'text-indigo-300'
+                  toggleActive(index) ? textColor : 'text-slate-400'
                 }`}
               >
                 {btnName}

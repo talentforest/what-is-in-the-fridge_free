@@ -55,11 +55,11 @@ export default function HomeShoppingList() {
       <KeyboardAvoidingView>
         <Container>
           <HomeHeader title='장볼게 뭐가 있지'>
-            <HeaderIconBtn btn='tag' />
+            <HeaderIconBtn btn='goFavoriteList' />
           </HomeHeader>
 
           <TableBody
-            title='장 볼 식료품'
+            title='장볼 식료품'
             foodList={shoppingList}
             flatListRef={flatListRef}
           />
@@ -81,7 +81,7 @@ export default function HomeShoppingList() {
             <TextInputRoundedBox
               value={inputValue}
               setValue={setInputValue}
-              placeholder='식료품 이름을 작성해주세요.'
+              placeholder='식료품 이름을 작성해주세요'
               onSubmitEditing={onSubmitEditing}
               disabled={inputValue === '' || existCaution}
             />
@@ -94,7 +94,7 @@ export default function HomeShoppingList() {
             >
               <FormMessage
                 active={existCaution}
-                message='이미 목록에 있는 식료품이에요.'
+                message='이미 목록에 있는 식료품이에요'
                 color='orange'
               />
             </View>
@@ -107,7 +107,7 @@ export default function HomeShoppingList() {
             >
               <FormMessage
                 active={inputValue.length >= NAME_MAX_LENGTH}
-                message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요.`}
+                message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요`}
                 color='orange'
               />
             </View>

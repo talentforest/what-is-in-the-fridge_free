@@ -79,7 +79,7 @@ export default function SettingFont() {
               fontSize: getRelativeFontSize(font, baseFontSize),
             })}
           >
-            이번 주말에는 냉장고 속 식료품을 관리해볼까요?
+            이번 주말에는 냉장고를 정리해볼까요?
           </Text>
         </View>
 

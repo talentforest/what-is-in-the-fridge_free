@@ -63,7 +63,7 @@ export const isValidDate = (dateString: string): DateState => {
   if (
     !(!isNaN(date.getTime()) && dateString === date.toISOString().slice(0, 10))
   ) {
-    return { state: 'error', msg: '날짜 형식이 맞지 않아요.' };
+    return { state: 'error', msg: '날짜 형식이 맞지 않아요' };
   }
   if (getDiffDate(dateString) < 0) {
     return { state: 'error', msg: '소비기한은 오늘 이전일 수 없어요' };

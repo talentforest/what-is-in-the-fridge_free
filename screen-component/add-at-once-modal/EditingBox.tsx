@@ -53,8 +53,8 @@ export default function EditingBox({ isEditing, setIsEditing }: Props) {
       <View style={tw`mt-1 mb-1 ml-1`}>
         <Text fontSize={15} style={tw`text-green-600 leading-4`}>
           {!!isFavoriteItem(formFood.name)
-            ? '자주 먹는 식료품은 소비기한 정보만 변경 가능합니다.'
-            : '소비기한과 카테고리 정보만 변경 가능합니다.'}
+            ? '자주 먹는 식료품은 소비기한 정보만 변경 가능합니다'
+            : '소비기한과 카테고리 정보만 변경 가능합니다'}
         </Text>
       </View>
       <Animated.View style={{ height, overflow: 'hidden' }}>

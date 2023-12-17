@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { Text } from '../common/native-component';
 import { useFindFood } from '../../hooks';
-import { INDIGO, LIGHT_GRAY } from '../../constant/colors';
+import { LIGHT_GRAY, YELLOW } from '../../constant/colors';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
@@ -17,10 +17,10 @@ export default function FoodDetailName({ name }: { name: string }) {
         style={tw`absolute top-0 left-0 border-t-2 border-l-2 rounded-tl-[3px] border-slate-400 w-4 h-3`}
       />
       <Icon
-        type='MaterialCommunityIcons'
-        name={!!isFavoriteItem(name) ? 'tag' : 'tag-outline'}
-        size={16}
-        color={!!isFavoriteItem(name) ? INDIGO : LIGHT_GRAY}
+        type='Octicons'
+        name={!!isFavoriteItem(name) ? 'star-fill' : 'star'}
+        size={15}
+        color={!!isFavoriteItem(name) ? YELLOW : LIGHT_GRAY}
       />
       <Text
         fontSize={18}

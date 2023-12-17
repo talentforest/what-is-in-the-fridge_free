@@ -15,11 +15,11 @@ export const getImgName: (
   title: string,
   compartmentNum?: CompartmentNum
 ) => AssetName = (title: string, compartmentNum?: CompartmentNum) => {
-  const assetName = title.includes('장보기 식료품')
+  const assetName = title.includes('장볼 식료품')
     ? 'empty-shoppinglist'
     : title.includes('자주 먹는 식료품')
     ? 'empty-favorite-foods'
-    : title.includes('소비기한 주의 식료품')
+    : title.includes('소비기한')
     ? 'expired-foods'
     : compartmentNum === '1번'
     ? 'meat'

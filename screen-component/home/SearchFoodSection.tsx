@@ -54,7 +54,7 @@ export default function SearchFoodSection({
           onFocus={() => setCloseSearchList(false)}
           value={keyword}
           onChangeText={setKeyword}
-          placeholder='식료품을 갖고 있는지 검색해보세요.'
+          placeholder='식료품을 갖고 있는지 검색해보세요'
           blurOnSubmit={false}
           fontSize={17}
           onSubmitEditing={onSubmitEditing}

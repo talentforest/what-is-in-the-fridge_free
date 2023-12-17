@@ -97,7 +97,7 @@ export default function FavoriteFoods() {
               />
               <SquareIconBtn
                 btnName='삭제'
-                icon='tag-minus-outline'
+                icon='trash-can-outline'
                 onPress={onDeleteBtnPress}
               />
             </TableSelectedHandleBox>
@@ -105,7 +105,7 @@ export default function FavoriteFoods() {
             <TextInputRoundedBox
               value={inputValue}
               setValue={setInputValue}
-              placeholder='자주 먹는 식료품을 추가하세요.'
+              placeholder='자주 먹는 식료품을 추가하세요'
               onSubmitEditing={onSubmitEditing}
               disabled={inputValue === '' || existCaution}
             >
@@ -122,7 +122,7 @@ export default function FavoriteFoods() {
             >
               <FormMessage
                 active={existCaution}
-                message='이미 목록에 있는 식료품이에요.'
+                message='이미 목록에 있는 식료품이에요'
                 color='orange'
               />
             </View>
@@ -135,7 +135,7 @@ export default function FavoriteFoods() {
             >
               <FormMessage
                 active={diffCategory && !!inputValue}
-                message={`${category} 카테고리에 저장됩니다.`}
+                message={`${category} 카테고리에 저장됩니다`}
                 color='green'
               />
             </View>
@@ -148,7 +148,7 @@ export default function FavoriteFoods() {
             >
               <FormMessage
                 active={inputValue.length >= NAME_MAX_LENGTH}
-                message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요.`}
+                message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요`}
                 color='orange'
               />
             </View>

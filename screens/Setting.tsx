@@ -35,7 +35,7 @@ export default function Setting() {
             <Text fontSize={18}>이용권 구매</Text>
           </View>
           <Text fontSize={15} style={tw`text-slate-600 mb-2 leading-4`}>
-            이용권을 한번만 구매하면 식료품을 계속 무제한으로 저장할 수 있어요.
+            이용권을 한번만 구매하면 식료품을 계속 무제한으로 저장할 수 있어요
           </Text>
 
           {/* 결제 버튼 */}

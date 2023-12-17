@@ -27,6 +27,8 @@ import AddFoodModal from '../screen-component/modal/AddFoodModal';
 import TableHeader from '../components/table/TableHeader';
 import tw from 'twrnc';
 import { search } from '../redux/slice/food/searchedFoodSlice';
+import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
+import { changeSetting } from '../redux/slice/fridgeInfoSlice';
 
 type RouteParams = {
   space: Space;
@@ -54,6 +56,18 @@ export default function Compartments({ route }: Route) {
 
   const dispatch = useDispatch();
 
+  const onChangePress = () => {
+    dispatch(
+      changeSetting({
+        ...fridgeInfo,
+        insideDisplayType:
+          fridgeInfo.insideDisplayType === '칸별로 보기'
+            ? '목록으로 보기'
+            : '칸별로 보기',
+      })
+    );
+  };
+
   useEffect(() => {
     initializeFilter();
     if (categoryModalVisible) {
@@ -71,6 +85,12 @@ export default function Compartments({ route }: Route) {
       headerStyle: {
         backgroundColor: TAB_BLUE_BG_COLOR,
       },
+      headerRight: () => (
+        <HeaderIconBtn
+          btn={fridgeInfo.insideDisplayType}
+          onPress={onChangePress}
+        />
+      ),
     });
 
     return () => {

@@ -40,7 +40,7 @@ export default function CompartmentHeader({ compartmentNum, foodList }: Props) {
           fontSize={16}
           style={tw`${foodList.length ? 'text-blue-600' : 'text-slate-500'}`}
         >
-          {compartmentNum ? `${compartmentNum}칸` : '팬트리'} / 식료품 총{' '}
+          {compartmentNum ? `${compartmentNum}칸` : '실온보관'} / 식료품 총{' '}
           {foodList.length}개
         </Text>
 

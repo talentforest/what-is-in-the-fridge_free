@@ -58,7 +58,7 @@ export default function CompartmentBox({
       ) : (
         <View style={tw`flex-1 mb-2 flex-row items-center justify-center`}>
           <EmptySign
-            message={'식료품이 아직 없어요.'}
+            message={'식료품이 아직 없어요'}
             assetSize={32}
             compartmentNum={compartmentNum}
           />

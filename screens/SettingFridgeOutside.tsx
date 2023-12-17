@@ -57,7 +57,7 @@ export default function SettingFridgeOutside() {
             />
           ))}
           <Text fontSize={15} style={tw`mt-1.5 text-slate-500`}>
-            현재 일반형 냉장고만 지원하고 있어요.
+            현재 일반형 냉장고만 지원하고 있어요
           </Text>
         </SelectContainter>
 

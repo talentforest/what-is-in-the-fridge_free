@@ -1,15 +1,14 @@
 import { Food } from '../../constant/foodInfo';
 import { FlatList, TouchableWithoutFeedback, View } from 'react-native';
-import { useSelector } from '../../redux/hook';
 import { MutableRefObject } from 'react';
 import { closeKeyboard } from '../../util';
+import { useHandleFilter } from '../../hooks';
 
 import TableItem, { TABLE_ITEM_HEIGHT } from './TableItem';
 import TableItemFront from './TableItemFront';
 import TableItemEnd, { TableTitle } from './TableItemEnd';
 import EmptySign from '../common/EmptySign';
 import tw from 'twrnc';
-import { useHandleFilter } from '../../hooks';
 
 interface Props {
   title: TableTitle;
@@ -52,11 +51,13 @@ export default function TableBody({ title, foodList, flatListRef }: Props) {
           <View style={tw`pt-24 flex-1 -mx-4`}>
             <EmptySign
               message={
-                title === '장 볼 식료품' || currentFilter === '전체'
+                title === '장볼 식료품' || currentFilter === '전체'
                   ? `아직 ${
                       title === '전체 식료품' ? '식료품' : title
                     }이 없어요`
-                  : `${currentFilter}에 식료품이 없어요.`
+                  : `${currentFilter}에 ${
+                      title === '전체 식료품' ? '식료품' : title
+                    }이 없어요`
               }
               assetSize={100}
             />
