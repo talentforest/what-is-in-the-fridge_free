@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from '../common/native-component';
 import { NavigateProp } from '../../navigation/Navigation';
-import { View, useWindowDimensions } from 'react-native';
-import { GRAY, YELLOW } from '../../constant/colors';
+import { useWindowDimensions } from 'react-native';
+import { LIGHT_GRAY, YELLOW } from '../../constant/colors';
 
 import Icon from '../common/native-component/Icon';
 import IconChevronLeft from '../svg/arrow/IconChevronLeft';
@@ -10,11 +10,16 @@ import IconGear from '../svg/IconGear';
 import tw from 'twrnc';
 
 interface Props {
-  btn: 'goBack' | 'setting' | 'goFavoriteList' | 'showList';
+  iconName: string;
+  iconSize?: number;
   onPress?: () => void;
 }
 
-export default function HeaderIconBtn({ btn, onPress }: Props) {
+export default function HeaderIconBtn({
+  iconName,
+  iconSize = 18,
+  onPress,
+}: Props) {
   const navigation = useNavigation<NavigateProp>();
 
   const onBackBtnPress = () => navigation.goBack();
@@ -25,43 +30,31 @@ export default function HeaderIconBtn({ btn, onPress }: Props) {
 
   const { height } = useWindowDimensions();
 
-  const iconSize = height > 900 ? 30 : 21;
+  const onIconPress =
+    iconName === 'goBack'
+      ? onBackBtnPress
+      : iconName === 'setting'
+      ? onSettingBtnPress
+      : iconName === 'star-fill'
+      ? onTagBtnPress
+      : onPress;
+
+  const size = height > 900 ? iconSize + 12 : iconSize;
 
   return (
-    <View style={tw`p-2`}>
-      {btn === 'goBack' && (
-        <TouchableOpacity onPress={onBackBtnPress}>
-          <IconChevronLeft size={iconSize} />
-        </TouchableOpacity>
+    <TouchableOpacity onPress={onIconPress} style={tw`p-2`}>
+      {iconName === 'goBack' ? (
+        <IconChevronLeft size={size} />
+      ) : iconName === 'setting' ? (
+        <IconGear size={size} />
+      ) : (
+        <Icon
+          name={iconName}
+          type='Octicons'
+          size={size}
+          color={iconName === 'star-fill' ? YELLOW : LIGHT_GRAY}
+        />
       )}
-
-      {btn === 'setting' && (
-        <TouchableOpacity onPress={onSettingBtnPress}>
-          <IconGear size={iconSize} />
-        </TouchableOpacity>
-      )}
-
-      {btn === 'goFavoriteList' && (
-        <TouchableOpacity onPress={onTagBtnPress}>
-          <Icon
-            name='star-fill'
-            type='Octicons'
-            size={iconSize - 3}
-            color={YELLOW}
-          />
-        </TouchableOpacity>
-      )}
-
-      {btn === 'showList' && (
-        <TouchableOpacity onPress={onPress}>
-          <Icon
-            name='list-unordered'
-            type='Octicons'
-            size={iconSize - 6}
-            color={GRAY}
-          />
-        </TouchableOpacity>
-      )}
-    </View>
+    </TouchableOpacity>
   );
 }

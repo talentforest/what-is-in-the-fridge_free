@@ -52,7 +52,7 @@ const options: NativeStackNavigationOptions = {
     backgroundColor: HEADER_BGCOLOR,
   },
   headerTitleAlign: 'center',
-  headerLeft: () => <HeaderIconBtn btn='goBack' />,
+  headerLeft: () => <HeaderIconBtn iconName='goBack' />,
   headerBackVisible: false, // android
   animation: 'slide_from_right',
 };

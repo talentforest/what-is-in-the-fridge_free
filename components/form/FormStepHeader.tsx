@@ -1,9 +1,10 @@
 import { View } from 'react-native';
 import { FormStep } from '../../constant/formInfo';
-import { Text } from '../common/native-component';
-import tw from 'twrnc';
-import Icon from '../common/native-component/Icon';
 import { AMBER, GRAY } from '../../constant/colors';
+import { Text } from '../common/native-component';
+
+import Icon from '../common/native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
   formSteps: FormStep[];

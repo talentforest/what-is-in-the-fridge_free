@@ -31,7 +31,7 @@ export default function HomeFridge() {
         <Container>
           <View style={tw`flex-1`}>
             <HomeHeader title='냉장고에 뭐가 있지'>
-              <HeaderIconBtn btn='setting' />
+              <HeaderIconBtn iconName='setting' iconSize={21} />
             </HomeHeader>
 
             <View

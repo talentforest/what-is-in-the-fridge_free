@@ -16,11 +16,11 @@ import {
   saveOriginFood,
   setFormFood,
 } from '../../redux/slice/food/formFoodSlice';
+import { shadowStyle } from '../../constant/shadowStyle';
 import { showOpenFoodDetailModal } from '../../redux/slice/modalVisibleSlice';
 
 import CategoryIcon from './CategoryIcon';
 import tw from 'twrnc';
-import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   food: Food;
@@ -28,6 +28,9 @@ interface Props {
 }
 
 export default function FoodBox({ food, scrollViewRef }: Props) {
+  const {
+    expandCompartmentModal: { modalVisible },
+  } = useSelector((state) => state.modalVisible);
   const { expiredDate } = food;
   const { searchedFoodName } = useSelector((state) => state.searchedFoodName);
 
@@ -63,7 +66,7 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
           backgroundColor: active ? INDIGO : '#fff',
           transform: [{ translateY }],
           opacity,
-          ...shadowStyle(3),
+          ...shadowStyle(modalVisible ? 3 : 0),
         })}
       >
         <View

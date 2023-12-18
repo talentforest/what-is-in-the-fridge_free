@@ -2,12 +2,12 @@ import { MutableRefObject } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
 import { TouchableOpacity } from '../common/native-component';
-import { CompartmentNum } from '../../constant/fridgeInfo';
-import { useDispatch } from '../../redux/hook';
+import { FoodPosition } from '../../constant/fridgeInfo';
+import { useDispatch, useSelector } from '../../redux/hook';
 import { useRouteName } from '../../hooks/useRouteName';
 import { showExpandCompartmentModal } from '../../redux/slice/modalVisibleSlice';
-import { shadowStyle } from '../../constant/shadowStyle';
 import { LIGHT_BLUE } from '../../constant/colors';
+import { useGetFoodList } from '../../hooks';
 
 import CompartmentHeader from './CompartmentHeader';
 import EmptySign from '../common/EmptySign';
@@ -16,19 +16,23 @@ import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
-  foodList: Food[];
+  position: FoodPosition;
   scrollViewRef: MutableRefObject<ScrollView>;
-  compartmentNum?: CompartmentNum;
 }
 
-export default function CompartmentBox({
-  compartmentNum,
-  foodList,
-  scrollViewRef,
-}: Props) {
+export default function CompartmentBox({ position, scrollViewRef }: Props) {
+  const dispatch = useDispatch();
+
+  const { pantryFoods } = useSelector((state) => state.pantryFoods);
+  const { space, compartmentNum } = position;
+
   const { routePantryFoods } = useRouteName();
 
-  const dispatch = useDispatch();
+  const { getMatchedPositionFoods } = useGetFoodList();
+
+  const foodList = getMatchedPositionFoods('allFoods', space, compartmentNum);
+
+  const foods = space === '팬트리' ? pantryFoods : foodList;
 
   const openExpandCompartmentPress = () =>
     dispatch(
@@ -39,9 +43,9 @@ export default function CompartmentBox({
     <View
       style={tw.style(`flex-1 border border-slate-200 bg-white rounded-xl`)}
     >
-      <CompartmentHeader compartmentNum={compartmentNum} foodList={foodList} />
+      <CompartmentHeader compartmentNum={compartmentNum} foodList={foods} />
 
-      {!!foodList.length ? (
+      {!!foods.length ? (
         <ScrollView
           ref={scrollViewRef}
           scrollEnabled
@@ -49,7 +53,7 @@ export default function CompartmentBox({
           contentContainerStyle={tw`flex-row px-1 pt-0.5 pb-12 flex-wrap gap-1.2 items-center`}
           showsVerticalScrollIndicator={false}
         >
-          {foodList.map((food: Food) => (
+          {foods.map((food: Food) => (
             <FoodBox key={food.id} food={food} scrollViewRef={scrollViewRef} />
           ))}
         </ScrollView>

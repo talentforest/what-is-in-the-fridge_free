@@ -1,8 +1,7 @@
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from '../redux/hook';
-import { entireFilterObj, expiredFilters, getCompartments } from '../util';
 import { Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/common/native-component';
@@ -14,21 +13,18 @@ import {
   showExpiredDateModal,
   showOpenAddFoodModal,
 } from '../redux/slice/modalVisibleSlice';
+import { search } from '../redux/slice/food/searchedFoodSlice';
+import { viewingArr } from '../constant/viewing';
 
-import Compartment from '../components/compartment/Compartment';
-import Container from '../components/common/Container';
-import CompartmentContainer from '../components/compartment/CompartmentContainer';
-import TableFilters from '../components/table/TableFilters';
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
 import TableBody from '../components/table/TableBody';
-import AddCircleBtn from '../components/buttons/AddCircleBtn';
 import AddFoodModal from '../screen-component/modal/AddFoodModal';
 import TableHeader from '../components/table/TableHeader';
+import Swiper from '../components/common/Swiper';
+import ViewByCompartment from '../screen-component/compartments/ViewByCompartment';
 import tw from 'twrnc';
-import { search } from '../redux/slice/food/searchedFoodSlice';
-import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
-import { changeSetting } from '../redux/slice/fridgeInfoSlice';
+import { sortByOldDate } from '../util';
 
 type RouteParams = {
   space: Space;
@@ -41,38 +37,46 @@ interface Route {
 export default function Compartments({ route }: Route) {
   const { space } = route.params as RouteParams;
 
-  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
-  const { categoryModalVisible, expiredDateModal, openAddFoodModal } =
-    useSelector((state) => state.modalVisible);
-  const { filter } = useSelector((state) => state.filter);
+  const {
+    categoryModalVisible,
+    expiredDateModal,
+    openAddFoodModal: { modalVisible, compartmentNum },
+  } = useSelector((state) => state.modalVisible);
+
+  const scrollViewRef = useRef<ScrollView | null>(null);
 
   const { getMatchedPositionFoods } = useGetFoodList();
 
-  const { initializeFilter } = useHandleFilter();
+  const foodList = getMatchedPositionFoods('allFoods', space);
 
-  const { getFilteredFoodList } = useGetFoodList();
+  const sortedList = sortByOldDate(foodList);
+
+  const { initializeFilter } = useHandleFilter();
 
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    initializeFilter();
+  const closeAllModals = () => {
     if (categoryModalVisible) {
       dispatch(showCategoryModal(false));
     }
     if (expiredDateModal) {
       dispatch(showExpiredDateModal(false));
     }
-    if (openAddFoodModal) {
+    if (modalVisible) {
       dispatch(showOpenAddFoodModal(false));
     }
+  };
+
+  useEffect(() => {
+    initializeFilter();
+
+    closeAllModals();
 
     navigation.setOptions({
       headerTitle: () => <NavigationHeaderTitle title={`${space} 식료품`} />,
-      headerStyle: {
-        backgroundColor: TAB_BLUE_BG_COLOR,
-      },
+      headerStyle: { backgroundColor: TAB_BLUE_BG_COLOR },
     });
 
     return () => {
@@ -80,44 +84,35 @@ export default function Compartments({ route }: Route) {
     };
   }, [space]);
 
-  const maxCompartmentNum = fridgeInfo.compartments[space];
-
-  const compartments = getCompartments(maxCompartmentNum);
-
-  const foodList = getMatchedPositionFoods('allFoods', space);
-
-  const foods = getFilteredFoodList(filter, foodList);
-
   return (
     <SafeBottomAreaView>
-      <Container>
-        <View style={tw`flex-1 -mt-2`}>
-          <TableFilters
-            filterTagList={[entireFilterObj, ...expiredFilters]}
-            foodList={foodList}
-          />
-          <CompartmentContainer>
-            {compartments.map((compartment) => (
-              <Compartment
-                key={compartment.compartmentNum}
-                currPosition={{ ...compartment, space }}
+      <Swiper headerIcon steps={viewingArr}>
+        {viewingArr.map(({ step, name }) => (
+          <View key={step} style={tw`w-full px-4 pb-4 pt-2`}>
+            {name === '칸별로 보기' && (
+              <ViewByCompartment
+                foodList={foodList}
+                space={space}
+                scrollViewRef={scrollViewRef}
               />
-            ))}
-          </CompartmentContainer>
+            )}
 
-          {/* <>
-              {foods.length ? <TableHeader /> : <></>}
+            {name === '목록으로 보기' && (
+              <>
+                {foodList.length ? <TableHeader /> : <></>}
+                <TableBody title='식료품' foodList={sortedList} />
+              </>
+            )}
+          </View>
+        ))}
+      </Swiper>
 
-              <TableBody title='식료품' foodList={foods} />
+      <FoodDetailModal formSteps={formFourSteps} />
 
-              <AddCircleBtn />
-
-              <AddFoodModal currPosition={{ space, compartmentNum: '1번' }} />
-            </> */}
-
-          <FoodDetailModal formSteps={formFourSteps} />
-        </View>
-      </Container>
+      <AddFoodModal
+        position={{ space, compartmentNum }}
+        scrollViewRef={scrollViewRef}
+      />
     </SafeBottomAreaView>
   );
 }

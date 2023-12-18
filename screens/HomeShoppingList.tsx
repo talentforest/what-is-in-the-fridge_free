@@ -55,7 +55,7 @@ export default function HomeShoppingList() {
       <KeyboardAvoidingView>
         <Container>
           <HomeHeader title='장볼게 뭐가 있지'>
-            <HeaderIconBtn btn='goFavoriteList' />
+            <HeaderIconBtn iconName='star-fill' />
           </HomeHeader>
 
           <TableBody
