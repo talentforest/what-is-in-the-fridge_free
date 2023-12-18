@@ -20,7 +20,6 @@ import TableBody from '../components/table/TableBody';
 import TableHeader from '../components/table/TableHeader';
 
 export default function PantryFoods() {
-  const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
   const { pantryFilter } = useSelector((state) => state.filter);
 
@@ -51,24 +50,20 @@ export default function PantryFoods() {
             <></>
           )}
 
-          {fridgeInfo.insideDisplayType === '칸별로 보기' ? (
-            <CompartmentContainer>
-              <CompartmentBox
-                scrollViewRef={scrollViewRef}
-                foodList={pantryFoods}
-              />
-            </CompartmentContainer>
-          ) : null}
+          <CompartmentContainer>
+            <CompartmentBox
+              scrollViewRef={scrollViewRef}
+              foodList={pantryFoods}
+            />
+          </CompartmentContainer>
 
-          {fridgeInfo.insideDisplayType === '목록으로 보기' ? (
-            <>
-              {foods.length ? <TableHeader /> : <></>}
+          <>
+            {foods.length ? <TableHeader /> : <></>}
 
-              <TableBody title='식료품' foodList={foods} />
+            <TableBody title='식료품' foodList={foods} />
 
-              <AddCircleBtn />
-            </>
-          ) : null}
+            <AddCircleBtn />
+          </>
 
           <FoodDetailModal formSteps={formFourSteps} />
 

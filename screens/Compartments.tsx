@@ -56,18 +56,6 @@ export default function Compartments({ route }: Route) {
 
   const dispatch = useDispatch();
 
-  const onChangePress = () => {
-    dispatch(
-      changeSetting({
-        ...fridgeInfo,
-        insideDisplayType:
-          fridgeInfo.insideDisplayType === '칸별로 보기'
-            ? '목록으로 보기'
-            : '칸별로 보기',
-      })
-    );
-  };
-
   useEffect(() => {
     initializeFilter();
     if (categoryModalVisible) {
@@ -85,12 +73,6 @@ export default function Compartments({ route }: Route) {
       headerStyle: {
         backgroundColor: TAB_BLUE_BG_COLOR,
       },
-      headerRight: () => (
-        <HeaderIconBtn
-          btn={fridgeInfo.insideDisplayType}
-          onPress={onChangePress}
-        />
-      ),
     });
 
     return () => {
@@ -110,25 +92,20 @@ export default function Compartments({ route }: Route) {
     <SafeBottomAreaView>
       <Container>
         <View style={tw`flex-1 -mt-2`}>
-          {fridgeInfo.insideDisplayType === '칸별로 보기' ? (
-            <>
-              <TableFilters
-                filterTagList={[entireFilterObj, ...expiredFilters]}
-                foodList={foodList}
+          <TableFilters
+            filterTagList={[entireFilterObj, ...expiredFilters]}
+            foodList={foodList}
+          />
+          <CompartmentContainer>
+            {compartments.map((compartment) => (
+              <Compartment
+                key={compartment.compartmentNum}
+                currPosition={{ ...compartment, space }}
               />
-              <CompartmentContainer>
-                {compartments.map((compartment) => (
-                  <Compartment
-                    key={compartment.compartmentNum}
-                    currPosition={{ ...compartment, space }}
-                  />
-                ))}
-              </CompartmentContainer>
-            </>
-          ) : null}
+            ))}
+          </CompartmentContainer>
 
-          {fridgeInfo.insideDisplayType === '목록으로 보기' ? (
-            <>
+          {/* <>
               {foods.length ? <TableHeader /> : <></>}
 
               <TableBody title='식료품' foodList={foods} />
@@ -136,8 +113,7 @@ export default function Compartments({ route }: Route) {
               <AddCircleBtn />
 
               <AddFoodModal currPosition={{ space, compartmentNum: '1번' }} />
-            </>
-          ) : null}
+            </> */}
 
           <FoodDetailModal formSteps={formFourSteps} />
         </View>

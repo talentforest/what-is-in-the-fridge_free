@@ -23,7 +23,7 @@ export default function SubmitBtn({
     <TouchableOpacity
       onPress={onPress}
       style={tw.style(
-        `bg-${color}-600 h-11 flex-row items-center justify-center gap-1.5 rounded-lg`,
+        `bg-${color}-600 h-11 flex-row items-center justify-center gap-1.5 rounded-xl`,
         shadowStyle(3)
       )}
     >

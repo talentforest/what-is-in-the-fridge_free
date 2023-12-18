@@ -8,6 +8,7 @@ import { editFavorite } from '../../redux/slice/food-list/favoriteFoodsSlice';
 import { useFindFood } from '../../hooks';
 import { showCategoryModal } from '../../redux/slice/modalVisibleSlice';
 import tw from 'twrnc';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   checked: boolean;
@@ -55,7 +56,8 @@ export default function CategoryBox({ checked, category, localUri }: Props) {
     <TouchableOpacity
       onPress={onCategoryBoxPress}
       style={tw.style(
-        `w-[${cardWidth}px] ${checkedColor} flex-row h-22 gap-0.5 items-center justify-center border rounded-lg pt-2 pb-1 px-1.5`
+        `w-[${cardWidth}px] ${checkedColor} flex-row h-22 gap-0.5 items-center justify-center border rounded-xl pt-2 pb-1 px-1.5`,
+        shadowStyle(3)
       )}
     >
       <View style={tw`items-center justify-center gap-1`}>

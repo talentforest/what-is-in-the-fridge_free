@@ -18,16 +18,3 @@ export const settingBtns: SettingInfo[] = [
   { title: '구매 복원', icon: 'history', navigate: '' },
   { title: '버전', icon: 'versions', navigate: '' },
 ];
-
-export const fridgeSettingBtns: SettingInfo[] = [
-  {
-    title: '냉장고 외부 설정',
-    icon: 'fridge',
-    navigate: 'SettingFridgeOutside',
-  },
-  {
-    title: '냉장고 내부 보기 설정',
-    icon: 'eye',
-    navigate: 'SettingFridgeInside',
-  },
-];

@@ -82,10 +82,11 @@ export default function FoodDetail() {
               <View style={tw`flex-row items-center gap-2`}>
                 {['up', 'down'].map((direction) => (
                   <TouchableOpacity
+                    key={direction}
                     onPress={() => onHandleCountPress(direction)}
                     style={tw.style(
-                      `border border-slate-300 bg-white items-center justify-center rounded-lg w-6 aspect-square`,
-                      shadowStyle(2)
+                      `border border-slate-300 bg-white items-center justify-center rounded-xl w-6 aspect-square`,
+                      shadowStyle(3)
                     )}
                   >
                     <Icon

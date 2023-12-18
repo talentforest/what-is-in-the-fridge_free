@@ -8,22 +8,20 @@ import { DEEP_GRAY, HEADER_BGCOLOR } from '../constant/colors';
 import { useEffect } from 'react';
 import { closeAllModal } from '../redux/slice/modalVisibleSlice';
 
-import Compartments from '../screens/Compartments';
-import FavoriteFoods from '../screens/FavoriteFoods';
-import SettingFridge from '../screens/SettingFridge';
 import OnBoarding from '../screens/OnBoarding';
+import Home from '../screens/Home';
 import HomeShoppingList from '../screens/HomeShoppingList';
-import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
+import Compartments from '../screens/Compartments';
+import AllFoods from '../screens/AllFoods';
+import FavoriteFoods from '../screens/FavoriteFoods';
 import HomeFridge from '../screens/HomeFridge';
 import PantryFoods from '../screens/PantryFoods';
 import Setting from '../screens/Setting';
+import SettingFridge from '../screens/SettingFridge';
 import SettingFont from '../screens/SettingFont';
-import SettingFridgeOutside from '../screens/SettingFridgeOutside';
-import SettingFridgeInside from '../screens/SettingFridgeInside';
-import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
-import Home from '../screens/Home';
-import AllFoods from '../screens/AllFoods';
 import SettingNotification from '../screens/SettingNotification';
+import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
+import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 
 export type RootStackParamList = {
   OnBoarding: undefined;
@@ -37,8 +35,6 @@ export type RootStackParamList = {
   Setting: undefined;
   SettingFont: undefined;
   SettingFridge: undefined;
-  SettingFridgeOutside: undefined;
-  SettingFridgeInside: undefined;
   SettingNotification: undefined;
 };
 
@@ -162,24 +158,6 @@ const Navigation = () => {
           headerTitle: () => (
             <NavigationHeaderTitle title='나의 냉장고 커스텀' />
           ),
-        }}
-      />
-
-      <Stack.Screen
-        name='SettingFridgeOutside'
-        component={SettingFridgeOutside}
-        options={{
-          ...options,
-          headerTitle: () => <NavigationHeaderTitle title='냉장고 외부 설정' />,
-        }}
-      />
-
-      <Stack.Screen
-        name='SettingFridgeInside'
-        component={SettingFridgeInside}
-        options={{
-          ...options,
-          headerTitle: () => <NavigationHeaderTitle title='냉장고 내부 설정' />,
         }}
       />
 

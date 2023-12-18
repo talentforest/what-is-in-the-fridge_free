@@ -10,6 +10,7 @@ import { useImageLoad } from '../../hooks';
 import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
 import PantryBox from './PantryBox';
 import tw from 'twrnc';
+import { GRAY } from '../../constant/colors';
 
 export default function PantryEntranceBtn() {
   const { isLoaded, assets } = useImageLoad({
@@ -37,15 +38,15 @@ export default function PantryEntranceBtn() {
 
         <View
           style={tw.style(
-            `absolute bottom-1 pb-3 left-1 w-22.5 items-center justify-end h-12`
+            `absolute bottom-1 pb-3 left-1 w-19 items-center justify-end h-12`
           )}
         >
-          <View style={tw`flex-row items-center gap-1`}>
+          <View style={tw`flex-row items-center`}>
             <Text fontSize={15} style={tw`text-slate-800`}>
               실온보관
             </Text>
 
-            <IconChevronRight size={15} color={'#333'} />
+            <IconChevronRight size={14} color={GRAY} />
           </View>
         </View>
 

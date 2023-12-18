@@ -34,7 +34,7 @@ export default function FridgeSpaceInfo({ space }: Props) {
   ];
 
   return (
-    <View style={tw`h-full px-1.5 pt-1 bg-white rounded-lg`}>
+    <View style={tw`h-full px-1.5 pt-1`}>
       {/* 냉장고 공간 이름 */}
       <View>
         <View style={tw`flex-row py-1 items-center justify-between`}>

@@ -55,7 +55,6 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw.style(`rounded-lg bg-white`)}
       onLayout={(event: LayoutChangeEvent) => onItemLayout(event)}
     >
       <Animated.View

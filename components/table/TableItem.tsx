@@ -98,7 +98,7 @@ export default function TableItem({
                 ? 'border-blue-600'
                 : 'border-slate-200'
             } 
-            bg-white flex-row items-center gap-1 pl-3 rounded-lg mx-1`,
+            bg-white flex-row items-center gap-1 pl-3 rounded-xl mx-1`,
             shadowStyle(4)
           )}
         >

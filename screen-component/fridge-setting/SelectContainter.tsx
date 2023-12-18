@@ -26,7 +26,7 @@ export default function SelectContainter({ title, children, icon }: Props) {
       </View>
 
       <View
-        style={tw`rounded-lg ${
+        style={tw`rounded-xl ${
           title === '각 공간의 칸 개수' || title === '내부 식료품 보기 설정'
             ? 'gap-1.5'
             : `px-3.5 py-2.5 bg-white border border-slate-300`

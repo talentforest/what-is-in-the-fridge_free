@@ -12,7 +12,7 @@ export default function AddIconBtn({ onPress, disabled }: Props) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={tw`h-full justify-center w-[12%] border border-white rounded-xl items-end pr-3`}
+      style={tw`h-full justify-center w-[12%] border border-white rounded-xl items-end pr-2`}
       disabled={disabled}
     >
       <Icon

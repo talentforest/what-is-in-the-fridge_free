@@ -77,7 +77,7 @@ export default function SpaceItem({ label }: Props) {
           <TouchableOpacity
             onPress={() => onTabPress(storage as StorageType)}
             key={storage}
-            style={tw`mt-0.5 gap-1 py-1.5 px-2 rounded-lg border
+            style={tw`my-1 gap-1 py-2 px-2.5 rounded-xl border
              ${
                space.includes(storage.slice(0, 1))
                  ? 'border-blue-600 bg-blue-50'

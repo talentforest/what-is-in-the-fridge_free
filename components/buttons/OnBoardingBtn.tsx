@@ -32,7 +32,7 @@ export default function OnBoardingBtn({ name, onPress }: Props) {
     <Animated.View style={{ width }}>
       <TouchableOpacity
         onPress={onPress}
-        style={tw`bg-blue-600 shadow-md rounded-lg py-3 pl-4 pr-2`}
+        style={tw`bg-blue-600 shadow-md rounded-xl py-3 pl-4 pr-2`}
       >
         <View style={tw`flex-row justify-center gap-1 items-center`}>
           <Text fontSize={18} style={tw`text-white`}>

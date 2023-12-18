@@ -3,7 +3,6 @@ import { TouchableOpacity } from '../common/native-component';
 import { NavigateProp } from '../../navigation/Navigation';
 import { View, useWindowDimensions } from 'react-native';
 import { GRAY, YELLOW } from '../../constant/colors';
-import { InsideDisplayType } from '../../redux/slice/fridgeInfoSlice';
 
 import Icon from '../common/native-component/Icon';
 import IconChevronLeft from '../svg/arrow/IconChevronLeft';
@@ -11,7 +10,7 @@ import IconGear from '../svg/IconGear';
 import tw from 'twrnc';
 
 interface Props {
-  btn: 'goBack' | 'setting' | 'goFavoriteList' | InsideDisplayType;
+  btn: 'goBack' | 'setting' | 'goFavoriteList' | 'showList';
   onPress?: () => void;
 }
 
@@ -53,7 +52,7 @@ export default function HeaderIconBtn({ btn, onPress }: Props) {
         </TouchableOpacity>
       )}
 
-      {(btn === '칸별로 보기' || btn === '목록으로 보기') && (
+      {btn === 'showList' && (
         <TouchableOpacity onPress={onPress}>
           <Icon
             name='list-unordered'

@@ -38,9 +38,9 @@ export default function CompartmentHeader({ compartmentNum, foodList }: Props) {
       <View style={tw`flex-row justify-between items-center pl-2.5 h-7.5`}>
         <Text
           fontSize={16}
-          style={tw`${foodList.length ? 'text-blue-600' : 'text-slate-500'}`}
+          style={tw`${foodList.length ? 'text-blue-600' : 'text-slate-400'}`}
         >
-          {compartmentNum ? `${compartmentNum}칸` : '실온보관'} / 식료품 총{' '}
+          {compartmentNum ? `${compartmentNum}칸` : '실온보관'} / 식료품{' '}
           {foodList.length}개
         </Text>
 
