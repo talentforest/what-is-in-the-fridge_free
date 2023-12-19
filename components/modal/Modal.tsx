@@ -61,7 +61,7 @@ export default function Modal({
       backdropOpacity={0.6}
       style={tw.style(`m-0 justify-end`, style)}
     >
-      <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-105}>
+      <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-125}>
         <View
           style={tw`max-h-[${MODAL_HEIGHT}px] pb-4 rounded-t-3xl ${modalBorderColor} bg-stone-100`}
         >

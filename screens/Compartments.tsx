@@ -7,7 +7,7 @@ import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/common/native-component';
 import { useGetFoodList, useHandleFilter } from '../hooks';
 import { TAB_BLUE_BG_COLOR } from '../constant/colors';
-import { formFourSteps } from '../constant/formInfo';
+import { formThreeSteps } from '../constant/formInfo';
 import {
   showCategoryModal,
   showExpiredDateModal,
@@ -107,7 +107,7 @@ export default function Compartments({ route }: Route) {
         ))}
       </Swiper>
 
-      <FoodDetailModal formSteps={formFourSteps} />
+      <FoodDetailModal formSteps={formThreeSteps} />
 
       <AddFoodModal
         position={{ space, compartmentNum }}

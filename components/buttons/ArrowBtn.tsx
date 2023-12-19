@@ -24,7 +24,10 @@ export default function ArrowBtn({ type, moveStep, active }: Props) {
           <IconChevronLeft size={14} color={active ? BLUE : LIGHT_GRAY} />
         )}
 
-        <Text style={tw`${active ? 'text-blue-600' : 'text-slate-400'}`}>
+        <Text
+          fontSize={15}
+          style={tw`${active ? 'text-blue-600' : 'text-slate-400'}`}
+        >
           {type === 'previous' ? '이전' : '다음'}
         </Text>
 

@@ -6,7 +6,7 @@ import {
 import { ScrollView, View } from 'react-native';
 import { useSelector } from '../redux/hook';
 import { useHandleFilter } from '../hooks';
-import { formFourSteps } from '../constant/formInfo';
+import { formTwoSteps } from '../constant/formInfo';
 import { viewingArr } from '../constant/viewing';
 import { sortByOldDate } from '../util';
 
@@ -54,7 +54,7 @@ export default function PantryFoods() {
             </View>
           ))}
         </Swiper>
-        <FoodDetailModal formSteps={formFourSteps} />
+        <FoodDetailModal formSteps={formTwoSteps} />
 
         <AddFoodModal scrollViewRef={scrollViewRef} />
       </KeyboardAvoidingView>

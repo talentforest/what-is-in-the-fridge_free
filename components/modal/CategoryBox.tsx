@@ -17,6 +17,7 @@ interface Props {
 }
 
 export default function CategoryBox({ checked, category, localUri }: Props) {
+  const { categoryModalVisible } = useSelector((state) => state.modalVisible);
   const {
     formFood: { name },
   } = useSelector((state) => state.formFood);
@@ -57,7 +58,7 @@ export default function CategoryBox({ checked, category, localUri }: Props) {
       onPress={onCategoryBoxPress}
       style={tw.style(
         `w-[${cardWidth}px] ${checkedColor} flex-row h-22 gap-0.5 items-center justify-center border rounded-xl pt-2 pb-1 px-1.5`,
-        shadowStyle(3)
+        shadowStyle(categoryModalVisible ? 3 : 0)
       )}
     >
       <View style={tw`items-center justify-center gap-1`}>

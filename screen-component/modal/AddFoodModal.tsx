@@ -1,6 +1,6 @@
 import { ScrollView, View } from 'react-native';
 import { FoodPosition } from '../../constant/fridgeInfo';
-import { formThreeSteps } from '../../constant/formInfo';
+import { formTwoSteps } from '../../constant/formInfo';
 import { useAddFood } from '../../hooks';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from '../../redux/hook';
@@ -42,7 +42,7 @@ export default function AddFoodModal({ position, scrollViewRef }: Props) {
     >
       <View style={{ paddingBottom: insets?.bottom }}>
         <View style={tw`-mx-4`}>
-          <Form title='새로운 식료품 추가' formSteps={formThreeSteps} />
+          <Form title='새로운 식료품 추가' formSteps={formTwoSteps} />
         </View>
 
         <SubmitBtn

@@ -8,14 +8,18 @@ import { closeKeyboard } from '../../util';
 
 import HeaderIconBtn from '../buttons/HeaderIconBtn';
 import tw from 'twrnc';
+import { FormStep } from '../../constant/formInfo';
+import FormStepBottom from '../form/FormStepBottom';
+import FormStepHeader from '../form/FormStepHeader';
 
 interface Props {
-  steps: ViewingStep[];
+  steps: ViewingStep[] | FormStep[];
   children: ReactNode;
   headerIcon?: boolean;
+  isForm?: boolean;
 }
 
-export default function Swiper({ steps, children, headerIcon }: Props) {
+export default function Swiper({ steps, children, headerIcon, isForm }: Props) {
   const {
     moveStep,
     stepTranslateX,
@@ -44,18 +48,39 @@ export default function Swiper({ steps, children, headerIcon }: Props) {
   }, [currentStep.step]);
 
   return (
-    <View style={tw`overflow-hidden w-full flex-1`}>
-      <Animated.View
-        style={{
-          flex: 1,
-          transform: [{ translateX: stepTranslateX }],
-        }}
-        {...panResponder.panHandlers}
-      >
-        <TouchableWithoutFeedback onPress={closeKeyboard}>
-          <View style={tw`flex-row flex-1`}>{children}</View>
-        </TouchableWithoutFeedback>
-      </Animated.View>
-    </View>
+    <>
+      {isForm && (
+        <View style={tw`px-4`}>
+          <FormStepHeader
+            formSteps={steps as FormStep[]}
+            currentStep={currentStep as FormStep}
+          />
+        </View>
+      )}
+
+      <View style={tw`overflow-hidden w-full flex-1`}>
+        <Animated.View
+          style={{
+            flex: 1,
+            transform: [{ translateX: stepTranslateX }],
+          }}
+          {...panResponder.panHandlers}
+        >
+          <TouchableWithoutFeedback onPress={closeKeyboard}>
+            <View style={tw`flex-row flex-1`}>{children}</View>
+          </TouchableWithoutFeedback>
+        </Animated.View>
+      </View>
+
+      {isForm && (
+        <View style={tw`px-2`}>
+          <FormStepBottom
+            moveStep={moveStep}
+            currentStep={currentStep.step}
+            stepLength={steps.length}
+          />
+        </View>
+      )}
+    </>
   );
 }

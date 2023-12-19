@@ -13,7 +13,7 @@ interface Props {
 
 export default function FormStepHeader({ formSteps, currentStep }: Props) {
   return (
-    <View style={tw`flex-row items-start min-h-9`}>
+    <View style={tw`flex-row items-start h-7`}>
       {formSteps.map(({ step, name }) => (
         <View key={step} style={tw`flex-row items-center justify-center`}>
           {step !== 1 && (

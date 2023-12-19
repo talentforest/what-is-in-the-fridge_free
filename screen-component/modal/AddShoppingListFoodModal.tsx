@@ -1,4 +1,4 @@
-import { formFourSteps } from '../../constant/formInfo';
+import { formThreeSteps } from '../../constant/formInfo';
 import { useAddShoppingListFood } from '../../hooks';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -24,7 +24,7 @@ export default function AddShoppingListFoodModal() {
     >
       <View style={{ paddingBottom: insets?.bottom }}>
         <View style={tw`-mx-4`}>
-          <Form title='장보기 목록 식료품 추가' formSteps={formFourSteps} />
+          <Form title='장보기 목록 식료품 추가' formSteps={formThreeSteps} />
         </View>
 
         <SubmitBtn

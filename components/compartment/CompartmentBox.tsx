@@ -60,7 +60,7 @@ export default function CompartmentBox({ position, scrollViewRef }: Props) {
       ) : (
         <View style={tw`flex-1 mb-2 flex-row items-center justify-center`}>
           <EmptySign
-            message={'식료품이 아직 없어요'}
+            message={'아직 식료품이 없어요'}
             assetSize={32}
             compartmentNum={compartmentNum}
           />

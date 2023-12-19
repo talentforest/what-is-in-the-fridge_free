@@ -57,7 +57,7 @@ export default function TableItemEnd({ title, food }: Props) {
       ? 'blue'
       : position.includes('냉장실')
       ? 'green'
-      : 'red';
+      : 'indigo';
 
     return tagColor;
   };
@@ -101,7 +101,7 @@ export default function TableItemEnd({ title, food }: Props) {
                     <Text
                       fontSize={13}
                       style={tw.style(
-                        `text-${positionTagColor(food.space)}-800 leading-4`,
+                        `text-${positionTagColor(food.space)}-600 leading-4`,
                         { letterSpacing: -0.5 }
                       )}
                     >

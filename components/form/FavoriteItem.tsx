@@ -1,19 +1,14 @@
-import { View } from 'react-native';
 import { useFindFood } from '../../hooks';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleFavorite } from '../../redux/slice/food/isFavoriteSlice';
 import { closeKeyboard } from '../../util';
+import { shadowStyle } from '../../constant/shadowStyle';
+import { TouchableOpacity } from '../common/native-component';
+import { DARK_WHITE, YELLOW } from '../../constant/colors';
 
-import FormLabel from './FormLabel';
-import FormMessage from './FormMessage';
-import ToggleBtn from '../buttons/ToggleBtn';
+import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
-import {
-  LIGHT_INDIGO,
-  LIGHT_YELLOW,
-  MEDIUM_INDIGO,
-} from '../../constant/colors';
 
 interface Props {
   isEditing: boolean;
@@ -32,10 +27,9 @@ export default function FavoriteItem({ isEditing }: Props) {
 
   const dispatch = useDispatch();
 
-  const onTogglePress = (idx: number) => {
+  const onTogglePress = () => {
     closeKeyboard();
-    if (idx === 0) return dispatch(toggleFavorite(true));
-    if (idx === 1) return dispatch(toggleFavorite(false));
+    return dispatch(toggleFavorite(!isFavorite));
   };
 
   useEffect(() => {
@@ -50,48 +44,24 @@ export default function FavoriteItem({ isEditing }: Props) {
   const disabledFavoriteBtn = isFavoriteItem(name) && !isEditing;
 
   return (
-    <View>
-      <FormLabel label='자주 먹는 식료품' />
-      <View style={tw`h-10`}>
-        <ToggleBtn
-          toggleBtnName={['맞아요', '아니에요']}
-          width={94}
-          active={isFavorite}
-          disabled={disabledFavoriteBtn}
-          onTogglePress={onTogglePress}
-          activeColor={LIGHT_YELLOW}
-          inActiveColor={LIGHT_YELLOW}
-        />
-      </View>
-
-      <FormMessage
-        active={!isEditing && !!isFavoriteItem(name)}
-        message='자주 먹는 식료품이므로 위의 정보가 자동으로 적용돼요'
-        color='green'
-      />
-
-      <FormMessage
-        active={isFavorite && !isFavoriteItem(name)}
-        message={'자주 먹는 식료품 목록에 추가돼요'}
-        color='green'
-      />
-
-      <FormMessage
-        active={!isFavorite && !!isFavoriteItem(name) && originName !== newName}
-        message={`"${originName}" 식료품이 자주 먹는 식료품 목록에서 삭제돼요`}
-        color='orange'
-      />
-
-      <FormMessage
-        active={
-          isFavorite &&
-          isEditing &&
-          !!isFavoriteItem(name) &&
-          originName !== newName
+    <TouchableOpacity
+      disabled={disabledFavoriteBtn}
+      onPress={onTogglePress}
+      style={tw.style(
+        ` h-10 border border-slate-100 bg-white ${
+          disabledFavoriteBtn ? 'border-slate-200 bg-gray-50' : ''
+        } aspect-square items-center justify-center rounded-xl`,
+        shadowStyle(3)
+      )}
+    >
+      <Icon
+        name={isFavorite ? 'star-fill' : 'star'}
+        type='Octicons'
+        size={16}
+        color={
+          disabledFavoriteBtn ? '#b1b1b1' : isFavorite ? YELLOW : DARK_WHITE
         }
-        message={`자주 먹는 식료품 목록에서도 "${originName}" 이름이 변경돼요`}
-        color='orange'
       />
-    </View>
+    </TouchableOpacity>
   );
 }
