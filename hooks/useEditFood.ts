@@ -154,6 +154,7 @@ export const useEditFood = () => {
 
   return {
     formFood,
+    originName,
     editing,
     setEditing,
     onEditSumbit,

@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { FormStep } from '../../constant/formInfo';
-import { useEditFood, useDeleteFood } from '../../hooks';
+import { useEditFood, useDeleteFood, useFindFood } from '../../hooks';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { showOpenFoodDetailModal } from '../../redux/slice/modalVisibleSlice';
@@ -19,7 +19,8 @@ interface Props {
 export default function FoodDetailModal({ formSteps }: Props) {
   const { openFoodDetailModal } = useSelector((state) => state.modalVisible);
 
-  const { formFood, editing, setEditing, onEditSumbit } = useEditFood();
+  const { formFood, originName, editing, setEditing, onEditSumbit } =
+    useEditFood();
 
   const insets = useSafeAreaInsets();
 
@@ -32,13 +33,19 @@ export default function FoodDetailModal({ formSteps }: Props) {
     dispatch(showOpenFoodDetailModal(false));
   };
 
-  const { space, id } = formFood;
+  const { space, id, name } = formFood;
 
   const { deleteFood } = useDeleteFood(space);
 
   const onDeletePress = () => deleteFood(id);
 
   const toggleEditing = () => setEditing(true);
+
+  const { findFood } = useFindFood();
+
+  const hasFood = findFood(name);
+
+  const editedName = name !== originName;
 
   return (
     <>
@@ -59,6 +66,7 @@ export default function FoodDetailModal({ formSteps }: Props) {
                 iconName='check'
                 btnName='식료품 정보 수정 완료'
                 onPress={onEditSumbit}
+                disabled={!!hasFood && editedName}
               />
             </>
           ) : (

@@ -6,12 +6,12 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import { useRouteName } from '../../hooks/useRouteName';
 import { NAME_MAX_LENGTH } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
+import { useFindFood } from '../../hooks';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
 import MatchedFavoriteFoodNameList from './MatchedFavoriteFoodNameList';
 import tw from 'twrnc';
-import { useFindFood } from '../../hooks';
 
 interface Props {
   isEditing: boolean;
@@ -25,11 +25,9 @@ export default function NameItem({ isEditing, children }: Props) {
   } = useSelector((state) => state.formFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
 
-  const name = isEditing ? originName : newName;
-
-  const { isFavoriteItem } = useFindFood();
-
   const dispatch = useDispatch();
+
+  const { findFood } = useFindFood();
 
   const onChangeText = (value: string) => {
     dispatch(editFormFood({ name: value }));
@@ -39,11 +37,24 @@ export default function NameItem({ isEditing, children }: Props) {
 
   const editable = !routeHome;
 
+  const { isFavoriteItem } = useFindFood();
+
+  const name = isEditing ? originName : newName;
+
+  const hasFood = findFood(newName);
+
+  const editedName = newName !== originName;
+
+  const foodPosition =
+    hasFood?.space === '팬트리'
+      ? hasFood?.space
+      : `${hasFood?.space} ${hasFood?.compartmentNum}`;
+
   return (
     <View>
       <FormLabel label='식료품 이름' />
 
-      <View style={tw``}>
+      <View>
         <View style={tw`flex-row gap-0.5`}>
           {children}
 
@@ -53,7 +64,7 @@ export default function NameItem({ isEditing, children }: Props) {
               shadowStyle(3)
             )}
             onChangeText={onChangeText}
-            value={name}
+            value={newName}
             placeholder='식료품 이름을 작성해주세요'
             focusable={false}
             maxLength={NAME_MAX_LENGTH}
@@ -64,6 +75,16 @@ export default function NameItem({ isEditing, children }: Props) {
         <FormMessage
           active={newName.length >= NAME_MAX_LENGTH && editable}
           message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요`}
+          color='orange'
+        />
+
+        <FormMessage
+          active={!!hasFood?.space && editedName}
+          message={
+            !!hasFood?.space
+              ? `위의 식료품은 이미 ${foodPosition}에 있어요.`
+              : ''
+          }
           color='orange'
         />
 
@@ -80,9 +101,7 @@ export default function NameItem({ isEditing, children }: Props) {
         />
 
         <FormMessage
-          active={
-            !isFavorite && !!isFavoriteItem(name) && originName !== newName
-          }
+          active={!isFavorite && !!isFavoriteItem(name) && editedName}
           message={`"${originName}" 식료품이 자주 먹는 식료품 목록에서 삭제돼요`}
           color='orange'
         />
@@ -91,8 +110,9 @@ export default function NameItem({ isEditing, children }: Props) {
           active={
             isFavorite &&
             isEditing &&
+            !hasFood &&
             !!isFavoriteItem(name) &&
-            originName !== newName
+            editedName
           }
           message={`자주 먹는 식료품 목록에서도 "${originName}" 이름이 변경돼요`}
           color='orange'

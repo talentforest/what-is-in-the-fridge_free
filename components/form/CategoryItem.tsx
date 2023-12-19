@@ -26,10 +26,10 @@ export default function CategoryItem({ isAddNewOne }: Props) {
   } = useSelector((state) => state.formFood);
 
   const { isFavoriteItem } = useFindFood();
-  const favoriteItemCategory = isFavoriteItem(name);
+  const favoriteItem = isFavoriteItem(name);
 
   // 새로 추가하는데 자주 먹는 식료품인 경우 비활성화
-  const disabled = favoriteItemCategory && isAddNewOne;
+  const disabled = favoriteItem && isAddNewOne;
 
   const dispatch = useDispatch();
 
@@ -51,14 +51,15 @@ export default function CategoryItem({ isAddNewOne }: Props) {
         <View style={tw`flex-row items-center h-full`}>
           <View style={tw`pl-1 pb-0.5`}>
             <CategoryIcon
-              category={formCategory}
+              category={disabled ? favoriteItem.category : formCategory}
               size={16}
               inActive={disabled}
             />
           </View>
+
           <TextInput
             editable={false}
-            value={formCategory}
+            value={disabled ? favoriteItem.category : formCategory}
             style={tw`border-0 flex-1 pl-1.5 h-full bg-transparent ${
               disabled ? 'text-slate-400' : 'text-slate-800'
             }`}

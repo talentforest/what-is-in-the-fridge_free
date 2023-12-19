@@ -23,53 +23,60 @@ interface Props {
 export default function Form({ title, formSteps }: Props) {
   return (
     <View>
-      <View style={tw`min-h-95 `}>
+      <View style={tw`min-h-95`}>
         <TouchableWithoutFeedback onPress={closeKeyboard}>
           <Swiper steps={formSteps} isForm>
-            {formSteps.map(({ step, name }) => (
-              <View key={step} style={tw`w-full border border-stone-100 px-4`}>
-                {name === '필수정보' && (
-                  <FormSectionContainer>
-                    <NameItem isEditing={title === '식료품 정보 수정'}>
-                      <FavoriteItem isEditing={title === '식료품 정보 수정'} />
-                    </NameItem>
+            <View style={tw`gap-0.5 flex-1 flex-row`}>
+              {formSteps.map(({ step, name }) => (
+                <View
+                  key={step}
+                  style={tw`w-full border border-stone-100 px-4`}
+                >
+                  {name === '필수정보' && (
+                    <FormSectionContainer>
+                      <NameItem isEditing={title === '식료품 정보 수정'}>
+                        <FavoriteItem
+                          isEditing={title === '식료품 정보 수정'}
+                        />
+                      </NameItem>
 
-                    <CategoryItem
-                      isAddNewOne={
-                        title === '새로운 식료품 추가' ||
-                        title === '장보기 목록 식료품 추가'
-                      }
-                    />
+                      <CategoryItem
+                        isAddNewOne={
+                          title === '새로운 식료품 추가' ||
+                          title === '장보기 목록 식료품 추가'
+                        }
+                      />
 
-                    <ExpiredDateItem />
-                  </FormSectionContainer>
-                )}
+                      <ExpiredDateItem />
+                    </FormSectionContainer>
+                  )}
 
-                {name === '위치' && (
-                  <FormSectionContainer>
-                    <SpaceItem
-                      label={
-                        title === '식료품 정보 수정'
-                          ? '식료품 위치 수정'
-                          : '추가할 식료품의 위치'
-                      }
-                    />
-                  </FormSectionContainer>
-                )}
+                  {name === '위치' && (
+                    <FormSectionContainer>
+                      <SpaceItem
+                        label={
+                          title === '식료품 정보 수정'
+                            ? '식료품 위치 수정'
+                            : '추가할 식료품의 위치'
+                        }
+                      />
+                    </FormSectionContainer>
+                  )}
 
-                {name === '추가정보' && (
-                  <FormSectionContainer>
-                    <View style={tw`min-h-50 gap-1`}>
-                      <PurchaseDateItem />
+                  {name === '추가정보' && (
+                    <FormSectionContainer>
+                      <View style={tw`min-h-50 gap-1`}>
+                        <PurchaseDateItem />
 
-                      <QuantityItem />
+                        <QuantityItem />
 
-                      <MemoItem />
-                    </View>
-                  </FormSectionContainer>
-                )}
-              </View>
-            ))}
+                        <MemoItem />
+                      </View>
+                    </FormSectionContainer>
+                  )}
+                </View>
+              ))}
+            </View>
           </Swiper>
         </TouchableWithoutFeedback>
       </View>

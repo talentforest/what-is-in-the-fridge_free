@@ -33,12 +33,11 @@ export default function FoodDetail() {
   const dispatch = useDispatch();
 
   const onHandleCountPress = (direction: string) => {
-    const newQuantity =
-      direction === 'up'
-        ? `${+quantity + 1}`
-        : direction === 'down'
-        ? `${+quantity - 1}`
-        : quantity;
+    if (direction === 'down' && quantity === '1') return;
+
+    const handleCount = direction === 'up' ? 1 : -1;
+
+    const newQuantity = `${+quantity + handleCount}`;
 
     const newInfo = { id, quantity: newQuantity };
 
@@ -85,7 +84,7 @@ export default function FoodDetail() {
                     key={direction}
                     onPress={() => onHandleCountPress(direction)}
                     style={tw.style(
-                      `border border-slate-300 bg-white items-center justify-center rounded-xl w-6 aspect-square`,
+                      `border border-slate-200 bg-white items-center justify-center rounded-xl w-6.5 aspect-square`,
                       shadowStyle(3)
                     )}
                   >
