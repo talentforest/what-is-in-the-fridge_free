@@ -18,13 +18,13 @@ export default function SearchedFoodList({
   searchedFoods,
   closeSearchedList,
 }: Props) {
-  const searchLength = searchedFoods?.length;
+  const searchedItemsLength = searchedFoods?.length;
 
-  const active = !!searchLength && !!keyword.length && !closeSearchedList;
+  const active = !!keyword.length && !closeSearchedList;
 
   const { height } = useItemSlideAnimation({
-    initialValue: !!keyword.length && !searchLength ? 30 : 0,
-    toValue: 87,
+    initialValue: 0,
+    toValue: !searchedItemsLength ? 30 : 87,
     active,
   });
 
@@ -37,8 +37,8 @@ export default function SearchedFoodList({
       )}
     >
       <Text style={tw`text-sm text-blue-600 pl-2 pt-1`}>
-        {!!searchLength
-          ? `${searchLength}건의 검색결과`
+        {!!searchedItemsLength
+          ? `${searchedItemsLength}건의 검색결과`
           : '검색결과가 없습니다'}
       </Text>
 
@@ -49,7 +49,7 @@ export default function SearchedFoodList({
         contentContainerStyle={tw`px-0.5 pb-2 py-1 gap-1.5`}
         showsHorizontalScrollIndicator={false}
       >
-        {!!searchLength &&
+        {!!searchedItemsLength &&
           searchedFoods.map((food: Food) => (
             <SearchedItem key={food.id} food={food} />
           ))}

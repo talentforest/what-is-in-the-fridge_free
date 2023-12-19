@@ -54,9 +54,10 @@ export default function ExpiredDateItem() {
         {getDiffDate(expiredDate) >= 0 && <RelativeTime date={expiredDate} />}
 
         <View style={tw`absolute right-2.5`}>
-          <Icon type='Octicons' name='calendar' size={14} color={BLUE} />
+          <Icon type='Octicons' name='pencil' size={14} color={BLUE} />
         </View>
       </TouchableOpacity>
+
       <View style={tw`mt-1.5 gap-1 flex-row flex-wrap items-start`}>
         {controlDateBtns.map((btn) => (
           <ControlDateBtn
