@@ -32,10 +32,10 @@ export default function SettingFridge() {
     <SafeBottomAreaView>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={tw`p-4`}
+        style={tw`py-4`}
         contentContainerStyle={tw`pb-12`}
       >
-        <View style={tw`py-3 mb-7 gap-3`}>
+        <View style={tw`py-3 mb-7 gap-2`}>
           <View
             style={tw.style(
               `border border-slate-400 bg-white px-3 py-1.5 self-center rounded-full`,
@@ -56,7 +56,7 @@ export default function SettingFridge() {
               checked={fridgeInfo.type === type}
             />
           ))}
-          <Text fontSize={15} style={tw`mt-1.5 text-slate-500`}>
+          <Text fontSize={15} style={tw`my-1 text-slate-500`}>
             현재 일반형 냉장고만 지원하고 있어요
           </Text>
         </SelectContainter>

@@ -44,7 +44,7 @@ export default function FoodDetail() {
     dispatch(editFormFood({ quantity: newQuantity }));
 
     dispatch(
-      space === '팬트리'
+      space === '실온보관'
         ? handleQuantityPantryFood(newInfo)
         : handleQuantityFridgeFood(newInfo)
     );
@@ -84,7 +84,7 @@ export default function FoodDetail() {
                     key={direction}
                     onPress={() => onHandleCountPress(direction)}
                     style={tw.style(
-                      `border border-slate-200 bg-white items-center justify-center rounded-xl w-6.5 aspect-square`,
+                      `border border-slate-200 bg-white items-center justify-center rounded-xl w-6 aspect-square`,
                       shadowStyle(3)
                     )}
                   >
@@ -103,7 +103,7 @@ export default function FoodDetail() {
 
         {memo?.length >= 1 && (
           <InfoBox iconName='note' label='메모'>
-            <View style={tw`max-h-18`}>
+            <View style={tw`max-h-16`}>
               <Text
                 numberOfLines={3}
                 ellipsizeMode='tail'

@@ -20,7 +20,7 @@ export const initialState: { fridgeInfo: FridgeInfo } = {
       '냉동실 문쪽': 2,
       '냉장실 안쪽': 3,
       '냉장실 문쪽': 3,
-      팬트리: 1,
+      실온보관: 1,
     },
   },
 };

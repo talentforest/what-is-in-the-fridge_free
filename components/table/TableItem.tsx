@@ -95,7 +95,7 @@ export default function TableItem({
               searchedItem
                 ? 'border-indigo-600'
                 : checkedItem
-                ? 'border-blue-600'
+                ? 'border-blue-400'
                 : 'border-slate-200'
             } 
             bg-white flex-row items-center gap-1 pl-3 rounded-xl mx-1`,
@@ -109,7 +109,9 @@ export default function TableItem({
           <Text
             numberOfLines={1}
             ellipsizeMode='tail'
-            style={tw`text-slate-800 flex-1 pl-0.5 pr-1`}
+            style={tw`${
+              checkedItem ? 'text-blue-700' : 'text-slate-800'
+            } flex-1 pl-0.5 pr-1`}
           >
             {initializedFood.name}
           </Text>

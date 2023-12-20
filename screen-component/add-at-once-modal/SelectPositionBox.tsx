@@ -11,6 +11,7 @@ import { useSelector } from '../../redux/hook';
 import { Position } from '../modal/AddAtOnceModal';
 import CheckBoxItem from '../../components/common/CheckBoxItem';
 import tw from 'twrnc';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   active: boolean;
@@ -31,7 +32,7 @@ export default function SelectPositionBox({
 
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: maxCompartmentsNum === 5 ? 162 : 134,
+    toValue: maxCompartmentsNum === 5 ? 170 : 134,
     active,
   });
 
@@ -63,10 +64,15 @@ export default function SelectPositionBox({
         borderRadius: 8,
       }}
     >
-      <View style={tw`px-4 bg-white border border-slate-300 rounded-lg`}>
-        <View style={tw`flex-row gap-4`}>
+      <View
+        style={tw.style(
+          `px-4 bg-white border border-slate-200 rounded-xl`,
+          shadowStyle(3)
+        )}
+      >
+        <View style={tw`flex-row gap-4 py-1`}>
           {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
-            <View key={spaceType} style={tw`py-2`}>
+            <View key={spaceType}>
               <CheckBoxItem
                 key={spaceType}
                 title={spaceType}
@@ -80,9 +86,11 @@ export default function SelectPositionBox({
             </View>
           ))}
         </View>
-        <View style={tw`flex-row gap-4 border-t border-b border-slate-300`}>
+        <View
+          style={tw`flex-row gap-4 py-0.5 border-t border-b border-slate-300`}
+        >
           {(['안쪽', '문쪽'] as SpaceSide[]).map((spaceSide) => (
-            <View key={spaceSide} style={tw`py-2`}>
+            <View key={spaceSide}>
               <CheckBoxItem
                 key={spaceSide}
                 title={spaceSide}
@@ -94,10 +102,9 @@ export default function SelectPositionBox({
             </View>
           ))}
         </View>
-
-        <View style={tw`flex-row gap-x-4 flex-wrap py-2`}>
+        <View style={tw`flex-row gap-x-4 py-1 flex-wrap`}>
           {compartments.map(({ compartmentNum }) => (
-            <View key={compartmentNum} style={tw`py-0.5`}>
+            <View key={compartmentNum}>
               <CheckBoxItem
                 key={compartmentNum}
                 title={`${compartmentNum}칸`}

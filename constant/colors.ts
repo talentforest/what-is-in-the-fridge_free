@@ -19,5 +19,6 @@ export const ORANGE_RED = '#ff6c47';
 
 export const DARK_WHITE = '#e1e1e1';
 export const HEADER_BGCOLOR = '#f0f0f0';
+export const BACKGROUND_COLOR = '#f9f9f9';
 export const TAB_BG_COLOR = '#f5f5f5';
 export const TAB_BLUE_BG_COLOR = '#eff6ff';

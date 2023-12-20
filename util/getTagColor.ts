@@ -7,8 +7,8 @@ export const DISABLED_TEXT_COLOR = 'text-slate-400';
 export const INACTIVE_BG_COLOR = 'bg-white border-slate-200';
 export const INACTIVE_TEXT_COLOR = 'text-slate-600';
 
-export const ACTIVE_BG_COLOR = 'bg-blue-50 border-blue-200';
-export const ACTIVE_TEXT_COLOR = 'text-blue-600';
+export const ACTIVE_BG_COLOR = 'bg-blue-100 border-blue-100';
+export const ACTIVE_TEXT_COLOR = 'text-blue-700';
 
 export const EXPIRED_BG_COLOR = 'bg-red-50 border-red-200';
 export const EXPIRED_TEXT_COLOR = 'text-red-600';

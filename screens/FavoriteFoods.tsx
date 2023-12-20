@@ -25,7 +25,6 @@ import FormMessage from '../components/form/FormMessage';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableBody from '../components/table/TableBody';
 import AlertModal from '../screen-component/modal/AlertModal';
-import StepIndicator from '../components/common/StepIndicator';
 import tw from 'twrnc';
 
 export default function FavoriteFoods() {

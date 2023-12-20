@@ -4,22 +4,31 @@ import { useSwiperAnimation } from '../../hooks';
 import { ViewingStep } from '../../constant/viewing';
 import { ReactNode, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { closeKeyboard } from '../../util';
+import { closeKeyboard, entireFilterObj, expiredFilters } from '../../util';
 
 import HeaderIconBtn from '../buttons/HeaderIconBtn';
 import tw from 'twrnc';
 import { FormStep } from '../../constant/formInfo';
 import FormStepBottom from '../form/FormStepBottom';
 import FormStepHeader from '../form/FormStepHeader';
+import TableFilters from '../table/TableFilters';
+import { Food } from '../../constant/foodInfo';
 
 interface Props {
   steps: ViewingStep[] | FormStep[];
   children: ReactNode;
   headerIcon?: boolean;
   isForm?: boolean;
+  foodList?: Food[];
 }
 
-export default function Swiper({ steps, children, headerIcon, isForm }: Props) {
+export default function Swiper({
+  steps,
+  children,
+  headerIcon,
+  isForm,
+  foodList,
+}: Props) {
   const {
     moveStep,
     stepTranslateX,

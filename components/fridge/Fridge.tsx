@@ -56,9 +56,10 @@ export default function Fridge() {
               <View
                 key={side}
                 style={tw.style(
-                  `h-[91%] flex-1 rounded-xl border border-[${fridgeBorderColor}] bg-[${fridgeColor}]
+                  `h-[${routeHome ? '90%' : '89%'}] 
+                  gap-2 flex-1 border border-[${fridgeBorderColor}] bg-[${fridgeColor}]
                   ${freezer === 'top' ? '' : 'flex-col-reverse'}
-                  ${routeHome ? 'p-0.5' : ''} `
+                  ${routeHome ? 'p-2 rounded-xl' : 'p-0.8 rounded-md'} `
                 )}
               >
                 {([`냉동실 ${side}`, `냉장실 ${side}`] as Space[]).map(
@@ -66,23 +67,14 @@ export default function Fridge() {
                     <TouchableOpacity
                       key={space}
                       disabled={!routeHome}
-                      style={tw`${!routeHome ? 'p-0.8' : 'p-1.5'} ${
-                        space.includes('냉동') ? 'h-[37%] pb-1' : 'h-[63%] pt-1'
-                      }`}
+                      style={tw`h-[${space.includes('냉동') ? '37%' : '63%'}]`}
                       onPress={() => onSpacePress(space)}
                     >
-                      <View
-                        style={tw`bg-white rounded-xl border border-gray-300`}
-                      >
-                        {routeHome ? (
-                          <FridgeSpaceInfo space={space} />
-                        ) : (
-                          <FridgeInfo
-                            space={space}
-                            compartments={compartments}
-                          />
-                        )}
-                      </View>
+                      {routeHome ? (
+                        <FridgeSpaceInfo space={space} />
+                      ) : (
+                        <FridgeInfo space={space} compartments={compartments} />
+                      )}
                     </TouchableOpacity>
                   )
                 )}

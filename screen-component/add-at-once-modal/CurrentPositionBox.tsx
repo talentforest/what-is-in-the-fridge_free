@@ -8,6 +8,7 @@ import { Animated } from 'react-native';
 import { GRAY } from '../../constant/colors';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   position: string;
@@ -38,9 +39,12 @@ export default function CurrentPositionBox({
 
       <Animated.View style={{ height, overflow: 'hidden' }}>
         <View
-          style={tw`bg-blue-100 border border-blue-200 rounded-xl p-1 pl-2 flex-row justify-between items-center gap-1`}
+          style={tw.style(
+            `py-0.5 px-2 bg-blue-100 border-2 border-blue-200 rounded-full flex-row justify-between items-center`,
+            shadowStyle(3)
+          )}
         >
-          <View style={tw`flex-row items-center gap-0.5 py-1`}>
+          <View style={tw`flex-row items-center gap-0.5 py-1.5 px-2`}>
             {!onBackPress && (
               <Text style={tw`text-slate-700`}>선택한 공간 : </Text>
             )}

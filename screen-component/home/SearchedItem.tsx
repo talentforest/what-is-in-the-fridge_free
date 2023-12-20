@@ -29,7 +29,7 @@ export default function SearchedItem({ food }: Props) {
 
   const onNavigatePress = (space: Space) => {
     dispatch(search(name));
-    return space === '팬트리'
+    return space === '실온보관'
       ? navigation.navigate('PantryFoods')
       : navigation.navigate('Compartments', { space });
   };

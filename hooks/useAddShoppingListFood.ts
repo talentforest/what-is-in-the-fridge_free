@@ -49,7 +49,7 @@ export const useAddShoppingListFood = () => {
     if (isFavoriteItem(formFood.name)) dispatch(editFavorite(formFood));
 
     dispatch(
-      formFood.space === '팬트리'
+      formFood.space === '실온보관'
         ? addToPantry(formFood)
         : addFridgeFood(formFood)
     );

@@ -84,7 +84,7 @@ export default function FoodDetailModal({ formSteps }: Props) {
                   color='gray'
                   iconName='trash-can-outline'
                   btnName={`${
-                    space === '팬트리' ? '팬트리에서' : '냉장고에서'
+                    space === '실온보관' ? '실온보관에서' : '냉장고에서'
                   } 식료품 삭제`}
                   onPress={onDeletePress}
                 />

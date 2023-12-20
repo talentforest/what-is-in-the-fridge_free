@@ -28,35 +28,38 @@ export default function AlertModal() {
     >
       <View
         style={tw.style(
-          `justify-between bg-white border-2 border-slate-600 rounded-md py-2.5 px-4 mx-7`,
+          `justify-between bg-white border-2 border-slate-200 rounded-lg py-2.5 px-4 mx-7`,
           alertModalVisible ? shadowStyle(5) : {}
         )}
       >
         <View>
-          <Text fontSize={18} style={tw`text-slate-900 mt-0.5`}>
+          <Text fontSize={18} style={tw`text-slate-700 mt-0.5`}>
             {title}
           </Text>
-          <View style={tw`h-0.5 bg-slate-800 rounded-full mt-1.5 mb-2`} />
+          <View style={tw`h-0.3 bg-slate-300 rounded-full mt-1.5 mb-2`} />
         </View>
         <Text style={tw.style(`text-slate-600 mb-1 leading-5`)}>{msg}</Text>
 
-        <View style={tw`flex-row self-end gap-1 mt-2`}>
+        <View style={tw`flex-row self-end gap-1 mt-5`}>
           {btns.map((btn) => (
             <TouchableOpacity
               key={btn}
               onPress={() => onAlertBtnPress(title, btn)}
-              style={tw`py-1.5 px-3 flex-row items-center border-2 rounded-full
+              style={tw.style(
+                `py-1.5 px-3 flex-row items-center border-2 rounded-full bg-white
               ${
                 btn === '취소' || btn === '닫기'
-                  ? 'border-slate-600'
-                  : 'border-blue-600'
-              }`}
+                  ? 'border-slate-100'
+                  : 'border-blue-100 bg-blue-100'
+              }`,
+                shadowStyle(3)
+              )}
             >
               <Text
                 fontSize={16}
                 style={tw`${
                   btn === '취소' || btn === '닫기'
-                    ? 'text-slate-500'
+                    ? 'text-slate-600'
                     : 'text-blue-700'
                 }`}
               >

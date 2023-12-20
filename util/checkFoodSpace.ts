@@ -9,7 +9,7 @@ export const isFridgeFood = (space: Space | StorageType) => {
 };
 
 export const isPantryFood = (space: Space | StorageType) => {
-  return space.includes('팬트리');
+  return space.includes('실온보관');
 };
 
 export const checkSameStorage = (originSpace: Space, newSpace: Space) => {

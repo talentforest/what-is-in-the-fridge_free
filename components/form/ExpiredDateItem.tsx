@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
 } from '../common/native-component';
 import { getDiffDate, getFormattedDate } from '../../util';
-import { BLUE } from '../../constant/colors';
+import { LIGHT_BLUE } from '../../constant/colors';
 import { controlDateBtns } from '../../constant/controlDateBtns';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { useDispatch, useSelector } from '../../redux/hook';
@@ -54,7 +54,7 @@ export default function ExpiredDateItem() {
         {getDiffDate(expiredDate) >= 0 && <RelativeTime date={expiredDate} />}
 
         <View style={tw`absolute right-2.5`}>
-          <Icon type='Octicons' name='pencil' size={14} color={BLUE} />
+          <Icon name='pencil' type='Octicons' size={14} color={LIGHT_BLUE} />
         </View>
       </TouchableOpacity>
 

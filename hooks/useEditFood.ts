@@ -85,7 +85,7 @@ export const useEditFood = () => {
 
     if (checkSameStorage(originSpace, newSpace)) {
       dispatch(
-        originSpace === '팬트리'
+        originSpace === '실온보관'
           ? editPantryFood({ id, food })
           : editFridgeFood({ id, food })
       );

@@ -23,13 +23,13 @@ export default function OnBoarding() {
 
   const { isLoaded, assets, getImgUri } = useImageLoad({
     images: [
+      require('../assets/onboarding/android-fridge-setting.png'),
+      require('../assets/onboarding/android-home.png'),
       require('../assets/onboarding/android-compartments.png'),
-      require('../assets/onboarding/android-expired-list.png'),
       require('../assets/onboarding/android-favorite-list.png'),
       require('../assets/onboarding/android-food-detail.png'),
-      require('../assets/onboarding/android-fridge-setting.png'),
       require('../assets/onboarding/android-shopping-list.png'),
-      require('../assets/onboarding/android-home.png'),
+      require('../assets/onboarding/android-allFoods.png'),
     ],
   });
 

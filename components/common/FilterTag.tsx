@@ -59,7 +59,7 @@ export default function FilterTag({
       )}
 
       <Text
-        fontSize={16}
+        fontSize={15}
         style={tw`${getTagColor(currentFilter, active, 'text')}`}
       >
         {filter}

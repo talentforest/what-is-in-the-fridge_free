@@ -9,15 +9,15 @@ interface Props {
 
 export default function CheckBox({
   checked,
-  inActiveColor = '#bbb',
-  size = 17,
+  inActiveColor = '#dddddd',
+  size = 13,
 }: Props) {
   return (
     <Icon
       type='Octicons'
       name={checked ? 'check-circle-fill' : 'circle'}
       color={checked ? BLUE : inActiveColor}
-      size={size - 3}
+      size={size}
     />
   );
 }

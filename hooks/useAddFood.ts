@@ -63,11 +63,11 @@ export const useAddFood = (currPosition?: FoodPosition) => {
       ...formFood,
       id: isFavoriteItem(name)?.id || (myUuid as string),
       category: isFavoriteItem(name)?.category || category,
-      space: currPosition?.space || '팬트리',
+      space: currPosition?.space || '실온보관',
     };
 
     if (isFavoriteItem(name)) {
-      // 자주 먹는 식료품인 식품을 냉장고나 팬트리에 추가할 때 자주 먹는 식료품 공간 정보도 변경.
+      // 자주 먹는 식료품인 식품을 냉장고나 실온보관에 추가할 때 자주 먹는 식료품 공간 정보도 변경.
       dispatch(editFavorite(foodToAdd));
     }
 

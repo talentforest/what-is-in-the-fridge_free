@@ -8,6 +8,7 @@ import { search } from '../../redux/slice/food/searchedFoodSlice';
 import { NavigateProp } from '../../navigation/Navigation';
 import Icon from './native-component/Icon';
 import tw from 'twrnc';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   name: string;
@@ -31,11 +32,11 @@ export default function IndicatorExist({
 
   const existFoodColor = existFood ? 'text-blue-600' : 'text-red-500';
   const borderStyle =
-    'border h-7 border-blue-400 px-2 rounded-full items-center';
+    'border h-6.5 border-indigo-100 bg-indigo-50 px-2 rounded-full items-center';
 
   const onNavigatePress = () => {
     dispatch(search(name));
-    return space === '팬트리'
+    return space === '실온보관'
       ? navigation.navigate('PantryFoods')
       : navigation.navigate('Compartments', { space });
   };
@@ -43,8 +44,11 @@ export default function IndicatorExist({
   return (
     <TouchableOpacity disabled={!navigate} onPress={onNavigatePress}>
       <View
-        style={tw`flex-row items-center ${navigate ? 'h-full' : ''} 
-        ${roundedBorder ? borderStyle : ''}`}
+        style={tw.style(
+          `flex-row items-center ${navigate ? 'h-full' : ''} 
+          ${roundedBorder ? borderStyle : ''}`,
+          borderStyle ? shadowStyle(3) : null
+        )}
       >
         <Text fontSize={roundedBorder ? 14 : 16} style={tw`${existFoodColor}`}>
           {!!existFood ? '있음' : '없음'}

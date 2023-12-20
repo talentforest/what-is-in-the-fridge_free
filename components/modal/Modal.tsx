@@ -65,15 +65,11 @@ export default function Modal({
         <View
           style={tw`max-h-[${MODAL_HEIGHT}px] pb-4 rounded-t-3xl ${modalBorderColor} bg-stone-100`}
         >
-          <View style={tw`px-4`}>
-            <SwipeHeader
-              title={title}
-              closeModal={closeModal}
-              animationIn='slideInUp'
-            />
-          </View>
-
-          <View style={tw`border-b-2 border-stone-300 -mx-4 px-4 mb-3`} />
+          <SwipeHeader
+            title={title}
+            closeModal={closeModal}
+            animationIn='slideInUp'
+          />
 
           <TouchableWithoutFeedback onPress={closeKeyboard}>
             <View style={tw`px-4`}>{children}</View>

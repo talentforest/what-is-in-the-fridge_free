@@ -69,7 +69,9 @@ export default function DateNumTokenBox({
 
   const onChangeText = (text: string, index: number) => {
     if (index < 0 || index > 5) return;
+
     if (text.length === 1) handleInputText(index, text);
+
     if (text.length === 0 && dateToken[index].length === 1)
       removeInputText(index);
   };

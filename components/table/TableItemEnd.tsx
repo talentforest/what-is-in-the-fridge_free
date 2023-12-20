@@ -93,9 +93,10 @@ export default function TableItemEnd({ title, food }: Props) {
                 <View style={tw`w-17`}>
                   <View
                     style={tw.style(
-                      `border border-${positionTagColor(food.space)}-300 
-                      bg-${positionTagColor(food.space)}-50 
-                      self-start rounded-full py-0.5 px-1.5`
+                      `border border-${positionTagColor(food.space)}-100 
+                      bg-${positionTagColor(food.space)}-100 
+                      self-start rounded-full py-0.5 px-1.5`,
+                      shadowStyle(3)
                     )}
                   >
                     <Text

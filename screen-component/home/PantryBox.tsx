@@ -5,10 +5,10 @@ interface Props {
 }
 
 export default function PantryBox({ size }: Props) {
-  const coverColor = '#adc4ff'; // '#ffde3a';
-  const boxColor = '#d4e0ff'; // '#fff36d';
-  const lineColor = '#ffffff';
-  const holeColor = '#9a9a9a';
+  const coverColor = '#c7d2fe';
+  const boxColor = '#dbeafe';
+  const lineColor = '#030202';
+  const holeColor = '#373737';
 
   return (
     <Svg width={size} height={size} viewBox='0 0 406 400' fill='none'>
@@ -47,7 +47,7 @@ export default function PantryBox({ size }: Props) {
         stroke-width='10'
         stroke-linecap='round'
       />
-      <Rect x='86' y='168' width='136' height='27' rx='13.5' fill={holeColor} />
+      <Rect x='86' y='168' width='120' height='22' rx='13.5' fill={holeColor} />
     </Svg>
   );
 }

@@ -31,7 +31,7 @@ export default function ControlDateBtn({ type, btn, changeDate, date }: Props) {
       onPress={() => changeDate(btn.calculateDate(type, new Date(date)))}
       style={tw.style(
         `pl-2.2 pr-1.2 h-8 rounded-3xl flex-row items-center justify-center 
-        bg-${btn.btnColor}-50 border border-${btn.btnColor}-200`,
+        bg-${btn.btnColor}-100 border border-${btn.btnColor}-200`,
         shadowStyle(3)
       )}
     >

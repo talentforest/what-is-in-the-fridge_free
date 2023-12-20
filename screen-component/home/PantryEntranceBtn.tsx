@@ -6,11 +6,11 @@ import {
 import { NavigateProp } from '../../navigation/Navigation';
 import { Image, View } from 'react-native';
 import { useImageLoad } from '../../hooks';
+import { MEDIUM_GRAY } from '../../constant/colors';
 
 import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
 import PantryBox from './PantryBox';
 import tw from 'twrnc';
-import { GRAY } from '../../constant/colors';
 
 export default function PantryEntranceBtn() {
   const { isLoaded, assets } = useImageLoad({
@@ -34,26 +34,26 @@ export default function PantryEntranceBtn() {
       <PantryBox size={90} />
 
       <TouchableOpacity onPress={onNavigatePress}>
-        <PantryBox size={110} />
+        <PantryBox size={105} />
 
         <View
           style={tw.style(
-            `absolute bottom-1 pb-3 left-1 w-19 items-center justify-end h-12`
+            `absolute bottom-1 pb-3 left-0.5 w-19 items-center justify-end h-12`
           )}
         >
           <View style={tw`flex-row items-center`}>
-            <Text fontSize={15} style={tw`text-slate-800`}>
+            <Text fontSize={15} style={tw`text-slate-700`}>
               실온보관
             </Text>
 
-            <IconChevronRight size={14} color={GRAY} />
+            <IconChevronRight size={14} color={MEDIUM_GRAY} />
           </View>
         </View>
 
         {assets.length ? (
           <View
             style={tw.style(
-              `flex-row -gap-4 absolute -top-7 right-2 self-end items-end`
+              `flex-row -gap-4 absolute -top-9 right-1 self-end items-end`
             )}
           >
             <Image source={{ uri: appleLocalUri }} width={45} height={45} />

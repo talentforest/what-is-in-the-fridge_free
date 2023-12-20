@@ -45,7 +45,7 @@ export const useGetFoodList = () => {
   const getFilteredFoodList = (filter: Filter, foodList: Food[]) => {
     if (filter === '전체') return foodList;
 
-    if (filter === '냉동실' || filter === '냉장실' || filter === '팬트리')
+    if (filter === '냉동실' || filter === '냉장실' || filter === '실온보관')
       return getMatchedPositionFoods('allFoods', filter);
 
     if (filter === '없는 식료품') {

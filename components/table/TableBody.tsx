@@ -29,7 +29,7 @@ export default function TableBody({ title, foodList, flatListRef }: Props) {
             disableVirtualization={false}
             initialNumToRender={15}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={tw`pb-20 px-2`}
+            contentContainerStyle={tw`pb-10 px-2`}
             data={foodList}
             getItemLayout={(_, index) => ({
               length: TABLE_ITEM_HEIGHT,

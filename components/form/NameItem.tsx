@@ -46,7 +46,7 @@ export default function NameItem({ isEditing, children }: Props) {
   const editedName = newName !== originName;
 
   const foodPosition =
-    hasFood?.space === '팬트리'
+    hasFood?.space === '실온보관'
       ? hasFood?.space
       : `${hasFood?.space} ${hasFood?.compartmentNum}`;
 
@@ -55,7 +55,7 @@ export default function NameItem({ isEditing, children }: Props) {
       <FormLabel label='식료품 이름' />
 
       <View>
-        <View style={tw`flex-row gap-0.5`}>
+        <View style={tw`flex-row gap-1`}>
           {children}
 
           <TextInput
@@ -89,13 +89,13 @@ export default function NameItem({ isEditing, children }: Props) {
         />
 
         <FormMessage
-          active={!isEditing && !!isFavoriteItem(name)}
+          active={!isEditing && !!isFavoriteItem(name) && !hasFood}
           message='자주 먹는 식료품이므로 자동으로 정보가 적용되었어요'
           color='green'
         />
 
         <FormMessage
-          active={isFavorite && !isFavoriteItem(name)}
+          active={isFavorite && !isFavoriteItem(name) && !hasFood}
           message={'자주 먹는 식료품 목록에 추가돼요'}
           color='green'
         />

@@ -8,7 +8,9 @@ export const useDeleteFood = (space: Space) => {
   const dispatch = useDispatch();
 
   const deleteFood = (id: string) => {
-    dispatch(space === '팬트리' ? removePantryFood(id) : removeFridgeFood(id));
+    dispatch(
+      space === '실온보관' ? removePantryFood(id) : removeFridgeFood(id)
+    );
     dispatch(showOpenFoodDetailModal(false));
   };
 

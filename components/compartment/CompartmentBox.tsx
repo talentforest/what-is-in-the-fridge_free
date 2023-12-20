@@ -32,7 +32,7 @@ export default function CompartmentBox({ position, scrollViewRef }: Props) {
 
   const foodList = getMatchedPositionFoods('allFoods', space, compartmentNum);
 
-  const foods = space === '팬트리' ? pantryFoods : foodList;
+  const foods = space === '실온보관' ? pantryFoods : foodList;
 
   const openExpandCompartmentPress = () =>
     dispatch(

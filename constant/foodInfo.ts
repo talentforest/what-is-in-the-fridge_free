@@ -7,7 +7,7 @@ export type FoodInfo = { [key: string]: string | boolean | Date };
 export interface Food {
   id: string;
   name: string;
-  space: Space | '팬트리';
+  space: Space | '실온보관';
   category: Category;
   purchaseDate: string;
   expiredDate: string;
@@ -34,7 +34,7 @@ export const initialPantryFood: Food = {
   name: '',
   expiredDate: getFormattedDate(new Date(), 'YYYY-MM-DD'),
   purchaseDate: '',
-  space: '팬트리',
+  space: '실온보관',
   quantity: '',
   memo: '',
 };
@@ -46,7 +46,7 @@ export const examplePantryFoods: Food[] = [
     category: '간편/즉석식품류',
     purchaseDate: '',
     expiredDate: getFormattedDate(new Date(), 'YYYY-MM-DD'),
-    space: '팬트리',
+    space: '실온보관',
     quantity: '',
     memo: '',
   },
@@ -56,7 +56,7 @@ export const examplePantryFoods: Food[] = [
     category: '국/반찬류',
     purchaseDate: '2023-04-02',
     expiredDate: getFormattedDate(new Date(), 'YYYY-MM-DD'),
-    space: '팬트리',
+    space: '실온보관',
     quantity: '2',
     memo: '',
   },

@@ -38,6 +38,8 @@ export default function HomeFridge() {
               style={tw`h-[${height * 0.78}px] 
               mt-12 justify-center pb-2 items-center gap-1.5 overflow-hidden`}
             >
+              {!purchased && <FoodLimit />}
+
               <View style={tw`py-2 gap-1 min-h-[${height * 0.6}px] `}>
                 <NavigationBtnBox />
 
@@ -45,8 +47,6 @@ export default function HomeFridge() {
 
                 <PantryEntranceBtn />
               </View>
-
-              {!purchased && <FoodLimit />}
             </View>
 
             <SearchFoodSection

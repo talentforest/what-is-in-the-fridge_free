@@ -32,7 +32,7 @@ export default function FridgeInfo({ space, compartments }: Props) {
           />
         </View>
       )}
-      <View style={tw`h-full gap-0.7`}>
+      <View style={tw`h-full gap-1`}>
         {getCompartments(compartments[space]).map(({ compartmentNum }) => (
           <CompartmentBox
             key={compartmentNum}

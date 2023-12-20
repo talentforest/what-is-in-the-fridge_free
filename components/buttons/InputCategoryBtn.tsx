@@ -11,15 +11,17 @@ export default function InputCategoryBtn() {
 
   const dispatch = useDispatch();
 
-  const onOpenModalPress = () => dispatch(showCategoryModal(true));
+  const onOpenModalPress = () => {
+    dispatch(showCategoryModal(true));
+  };
 
   return (
     <TouchableOpacity
       onPress={onOpenModalPress}
-      style={tw`h-full border-r border-slate-200 flex-row items-center justify-center`}
+      style={tw`h-full -mr-2 border-r border-slate-100 flex-row items-center justify-center`}
     >
-      <View style={tw`pl-3.5 pr-2.5 pb-0.5`}>
-        <CategoryIcon category={category} size={18} />
+      <View style={tw`pl-3.5 pr-2.5`}>
+        <CategoryIcon category={category} size={20} />
       </View>
     </TouchableOpacity>
   );

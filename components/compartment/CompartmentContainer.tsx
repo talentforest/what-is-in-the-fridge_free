@@ -12,7 +12,7 @@ export default function CompartmentContainer({ children }: Props) {
     <View
       style={tw.style(
         `bg-stone-100 border border-stone-200 p-2.5 gap-2.5 flex-1 w-full justify-center rounded-2xl`,
-        shadowStyle(8)
+        shadowStyle(4)
       )}
     >
       {children}

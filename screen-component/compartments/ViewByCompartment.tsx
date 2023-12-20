@@ -1,5 +1,5 @@
 import { useSelector } from '../../redux/hook';
-import { entireFilterObj, expiredFilters, getCompartments } from '../../util';
+import { getCompartments } from '../../util';
 import { Space } from '../../constant/fridgeInfo';
 import { Food } from '../../constant/foodInfo';
 import { MutableRefObject } from 'react';
@@ -7,7 +7,6 @@ import { ScrollView } from 'react-native';
 
 import CompartmentBox from '../../components/compartment/CompartmentBox';
 import CompartmentContainer from '../../components/compartment/CompartmentContainer';
-import TableFilters from '../../components/table/TableFilters';
 import ExpandedCompartmentModal from '../modal/ExpandedCompartmentModal';
 
 interface Props {
@@ -33,13 +32,8 @@ export default function ViewByCompartment({
 
   return (
     <>
-      <TableFilters
-        filterTagList={[entireFilterObj, ...expiredFilters]}
-        foodList={foodList}
-      />
-
       <CompartmentContainer>
-        {space === '팬트리' ? (
+        {space === '실온보관' ? (
           <CompartmentBox
             position={{ space, compartmentNum }}
             scrollViewRef={scrollViewRef}
@@ -55,7 +49,7 @@ export default function ViewByCompartment({
         )}
       </CompartmentContainer>
 
-      {space !== '팬트리' && (
+      {space !== '실온보관' && (
         <ExpandedCompartmentModal position={{ space, compartmentNum }} />
       )}
     </>

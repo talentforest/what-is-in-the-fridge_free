@@ -42,19 +42,24 @@ export default function SettingBox({ setting }: Props) {
     if (purchase.purchased) {
       return setAlert(alertHasReceipt);
     }
-    const availableProducts = await RNIap.getAvailablePurchases();
-    const receipt = availableProducts[0];
 
-    if (receipt?.purchaseToken) {
-      dispatch(
-        togglePurchaseState({
-          purchased: true,
-          purchaseToken: receipt.purchaseToken,
-        })
-      );
-      setAlert(alertSucessRestoreIAP);
-    } else {
-      setAlert(alertFailRestoreIAP); // 토큰이 없는 경우
+    try {
+      const availableProducts = await RNIap.getAvailablePurchases();
+      const receipt = availableProducts[0];
+
+      if (receipt?.purchaseToken) {
+        dispatch(
+          togglePurchaseState({
+            purchased: true,
+            purchaseToken: receipt.purchaseToken,
+          })
+        );
+        setAlert(alertSucessRestoreIAP);
+      } else {
+        setAlert(alertFailRestoreIAP); // 토큰이 없는 경우
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

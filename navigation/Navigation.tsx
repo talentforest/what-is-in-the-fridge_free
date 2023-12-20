@@ -4,7 +4,12 @@ import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
-import { DEEP_GRAY, HEADER_BGCOLOR } from '../constant/colors';
+import {
+  BACKGROUND_COLOR,
+  DEEP_GRAY,
+  HEADER_BGCOLOR,
+  TAB_BLUE_BG_COLOR,
+} from '../constant/colors';
 import { useEffect } from 'react';
 import { closeAllModal } from '../redux/slice/modalVisibleSlice';
 
@@ -100,7 +105,10 @@ const Navigation = () => {
       <Stack.Screen
         name='Compartments'
         component={Compartments}
-        options={{ ...options }}
+        options={{
+          ...options,
+          headerStyle: { backgroundColor: TAB_BLUE_BG_COLOR },
+        }}
       />
 
       <Stack.Screen
@@ -109,6 +117,7 @@ const Navigation = () => {
         options={{
           ...options,
           headerTitle: () => <NavigationHeaderTitle title='실온보관 식료품' />,
+          headerStyle: { backgroundColor: BACKGROUND_COLOR },
         }}
       />
 

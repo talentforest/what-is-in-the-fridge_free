@@ -48,8 +48,8 @@ export default function AddAtOnceModal() {
         {/* 1단계*/}
         {currentStep.step === 1 && (
           <View>
-            <View style={tw`flex-row gap-1`}>
-              {(['냉장고', '팬트리'] as StorageType[]).map((storage) => (
+            <View style={tw`flex-row gap-1 mb-1.5`}>
+              {(['냉장고', '실온보관'] as StorageType[]).map((storage) => (
                 <SpaceBtn
                   key={storage}
                   btnName={storage}
@@ -60,15 +60,15 @@ export default function AddAtOnceModal() {
             </View>
 
             {!!currentStorage && (
-              <View style={tw`mt-1`}>
-                <View>
-                  <SelectPositionBox
-                    active={currentStorage === '냉장고'}
-                    fridgePosition={fridgePosition}
-                    onFridgePositionPress={onFridgePositionPress}
-                  />
-                  <CurrentPosition position={position} active={true} />
-                </View>
+              <>
+                <SelectPositionBox
+                  active={currentStorage === '냉장고'}
+                  fridgePosition={fridgePosition}
+                  onFridgePositionPress={onFridgePositionPress}
+                />
+
+                <CurrentPosition position={position} active={true} />
+
                 <View style={tw`mt-2`}>
                   <SubmitBtn
                     btnName='다음 단계'
@@ -77,7 +77,7 @@ export default function AddAtOnceModal() {
                     tailIcon
                   />
                 </View>
-              </View>
+              </>
             )}
           </View>
         )}
@@ -112,7 +112,7 @@ export default function AddAtOnceModal() {
             <EditingBox isEditing={isEditing} setIsEditing={setIsEditing} />
 
             {!isEditing && (
-              <View style={tw`gap-2 mt-6`}>
+              <View style={tw`gap-2 mt-3`}>
                 <SubmitBtn
                   iconName='plus'
                   btnName='한번에 추가'

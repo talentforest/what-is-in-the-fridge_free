@@ -15,7 +15,7 @@ interface Props extends TextInputProps {
 }
 
 export const InputStyle =
-  'h-10 border border-slate-200 px-2 rounded-xl bg-white';
+  'h-10 border border-slate-100 px-2.5 rounded-xl bg-white';
 
 export function TextInput({ style, fontSize = baseFontSize, ...props }: Props) {
   const { fontFamily } = useSelector((state) => state.fontFamily);

@@ -13,6 +13,7 @@ import { setCheckedList } from '../../redux/slice/food-list/checkListSlice';
 import CategoryItem from '../../components/form/CategoryItem';
 import ExpiredDateItem from '../../components/form/ExpiredDateItem';
 import tw from 'twrnc';
+import Icon from '../../components/common/native-component/Icon';
 
 interface Props {
   isEditing: boolean;
@@ -27,7 +28,7 @@ export default function EditingBox({ isEditing, setIsEditing }: Props) {
 
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: favoriteFood ? 204 : 282,
+    toValue: favoriteFood ? 204 : 276,
     active: isEditing,
   });
 
@@ -60,8 +61,8 @@ export default function EditingBox({ isEditing, setIsEditing }: Props) {
       <Animated.View style={{ height, overflow: 'hidden' }}>
         <View
           style={tw.style(
-            `p-2.5 pt-0.5 bg-stone-200 border border-slate-300 rounded-xl`,
-            shadowStyle(3)
+            `p-2.5 pt-0.5 bg-slate-300 border border-slate-200 rounded-xl`,
+            shadowStyle(4)
           )}
         >
           <View style={tw`my-2 gap-3`}>
@@ -74,9 +75,15 @@ export default function EditingBox({ isEditing, setIsEditing }: Props) {
 
           <TouchableOpacity
             onPress={onSubmitPress}
-            style={tw`border border-slate-300 bg-indigo-600 py-1.5 items-center rounded-full`}
+            style={tw.style(
+              `flex-row justify-center gap-1.5 border border-indigo-300 bg-indigo-500 py-2.5 items-center rounded-full`,
+              shadowStyle(4)
+            )}
           >
-            <Text style={tw`text-white`}>수정 완료</Text>
+            <Icon name='check' type='Octicons' size={15} color={'#fff'} />
+            <Text fontSize={16} style={tw`text-white`}>
+              수정 완료
+            </Text>
           </TouchableOpacity>
         </View>
       </Animated.View>

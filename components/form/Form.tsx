@@ -23,7 +23,7 @@ interface Props {
 export default function Form({ title, formSteps }: Props) {
   return (
     <View>
-      <View style={tw`min-h-95`}>
+      <View style={tw`min-h-95 mt-3`}>
         <TouchableWithoutFeedback onPress={closeKeyboard}>
           <Swiper steps={formSteps} isForm>
             <View style={tw`gap-0.5 flex-1 flex-row`}>

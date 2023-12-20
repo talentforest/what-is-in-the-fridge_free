@@ -5,10 +5,10 @@ import { ReactNode } from 'react';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { useSelector } from '../../redux/hook';
 import { useItemSlideAnimation } from '../../hooks';
+import { NAME_MAX_LENGTH } from '../../constant/foodInfo';
 
 import Icon from './native-component/Icon';
 import tw from 'twrnc';
-import { NAME_MAX_LENGTH } from '../../constant/foodInfo';
 
 interface Props {
   value: string;
@@ -51,7 +51,8 @@ export default function TextInputRoundedBox({
         )}
       >
         {children}
-        <View style={tw`flex-1 ${!!children ? '' : 'ml-2'}`}>
+
+        <View style={tw`flex-1 ml-2`}>
           <TextInput
             fontSize={baseFontSize + 1}
             maxLength={NAME_MAX_LENGTH}
@@ -59,11 +60,12 @@ export default function TextInputRoundedBox({
             onChangeText={setValue}
             placeholder={placeholder}
             blurOnSubmit={false}
-            style={tw`border-0 flex-1 rounded-full items-center justify-center`}
+            style={tw`border-0 flex-1 my-0.5 rounded-full items-center justify-center`}
             onSubmitEditing={onSubmitEditing}
             autoFocus={autoFocus}
           />
         </View>
+
         <TouchableOpacity
           disabled={disabled}
           onPress={onSubmitEditing}

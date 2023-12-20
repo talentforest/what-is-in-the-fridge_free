@@ -39,7 +39,7 @@ export default function FadeInMiddleModal({
 
   const positionStyle = height > 900 ? 'w-4/5 self-center' : 'mx-4';
 
-  const modalBorderColor = 'border-slate-300 border';
+  const modalBorderColor = 'border-slate-200 border';
 
   const MODAL_HEIGHT = height * 0.9;
 
@@ -65,7 +65,7 @@ export default function FadeInMiddleModal({
         <View>{children}</View>
       ) : (
         <View
-          style={tw`max-h-[${MODAL_HEIGHT}px] p-4 rounded-3xl ${modalBorderColor} bg-slate-200`}
+          style={tw`max-h-[${MODAL_HEIGHT}px] p-4 rounded-3xl ${modalBorderColor} bg-slate-100`}
         >
           <SwipeHeader
             title={title}

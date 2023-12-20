@@ -15,6 +15,8 @@ import CategoryModal from '../../screen-component/modal/CategoryModal';
 import FormLabel from './FormLabel';
 import CategoryIcon from '../common/CategoryIcon';
 import tw from 'twrnc';
+import Icon from '../common/native-component/Icon';
+import { GRAY, LIGHT_BLUE } from '../../constant/colors';
 
 interface Props {
   isAddNewOne?: boolean;
@@ -48,8 +50,8 @@ export default function CategoryItem({ isAddNewOne }: Props) {
         disabled={disabled}
         style={tw.style(`${InputStyle}`, shadowStyle(3))}
       >
-        <View style={tw`flex-row items-center h-full`}>
-          <View style={tw`pl-1 pb-0.5`}>
+        <View style={tw`flex-row items-center h-full px-0.5`}>
+          <View style={tw`pb-0.5`}>
             <CategoryIcon
               category={disabled ? favoriteItem.category : formCategory}
               size={16}
@@ -60,10 +62,11 @@ export default function CategoryItem({ isAddNewOne }: Props) {
           <TextInput
             editable={false}
             value={disabled ? favoriteItem.category : formCategory}
-            style={tw`border-0 flex-1 pl-1.5 h-full bg-transparent ${
+            style={tw`border-0 flex-1 pl-1 h-full bg-transparent ${
               disabled ? 'text-slate-400' : 'text-slate-800'
             }`}
           />
+          <Icon name='apps' type='Octicons' size={14} color={LIGHT_BLUE} />
         </View>
       </TouchableOpacity>
 

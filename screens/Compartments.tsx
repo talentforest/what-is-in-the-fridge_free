@@ -6,7 +6,6 @@ import { Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/common/native-component';
 import { useGetFoodList, useHandleFilter } from '../hooks';
-import { TAB_BLUE_BG_COLOR } from '../constant/colors';
 import { formThreeSteps } from '../constant/formInfo';
 import {
   showCategoryModal,
@@ -15,6 +14,7 @@ import {
 } from '../redux/slice/modalVisibleSlice';
 import { search } from '../redux/slice/food/searchedFoodSlice';
 import { viewingArr } from '../constant/viewing';
+import { entireFilterObj, expiredFilters, sortByOldDate } from '../util';
 
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
@@ -23,8 +23,8 @@ import AddFoodModal from '../screen-component/modal/AddFoodModal';
 import TableHeader from '../components/table/TableHeader';
 import Swiper from '../components/common/Swiper';
 import ViewByCompartment from '../screen-component/compartments/ViewByCompartment';
+import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
-import { sortByOldDate } from '../util';
 
 type RouteParams = {
   space: Space;
@@ -37,6 +37,8 @@ interface Route {
 export default function Compartments({ route }: Route) {
   const { space } = route.params as RouteParams;
 
+  const { filter } = useSelector((state) => state.filter);
+
   const {
     categoryModalVisible,
     expiredDateModal,
@@ -45,11 +47,13 @@ export default function Compartments({ route }: Route) {
 
   const scrollViewRef = useRef<ScrollView | null>(null);
 
-  const { getMatchedPositionFoods } = useGetFoodList();
+  const { getMatchedPositionFoods, getFilteredFoodList } = useGetFoodList();
 
   const foodList = getMatchedPositionFoods('allFoods', space);
 
-  const sortedList = sortByOldDate(foodList);
+  const filteredList = getFilteredFoodList(filter, foodList);
+
+  const sortedFilterList = sortByOldDate(filteredList);
 
   const { initializeFilter } = useHandleFilter();
 
@@ -76,7 +80,6 @@ export default function Compartments({ route }: Route) {
 
     navigation.setOptions({
       headerTitle: () => <NavigationHeaderTitle title={`${space} 식료품`} />,
-      headerStyle: { backgroundColor: TAB_BLUE_BG_COLOR },
     });
 
     return () => {
@@ -86,9 +89,16 @@ export default function Compartments({ route }: Route) {
 
   return (
     <SafeBottomAreaView>
-      <Swiper headerIcon steps={viewingArr}>
+      <View style={tw`px-4`}>
+        <TableFilters
+          filterTagList={[entireFilterObj, ...expiredFilters]}
+          foodList={foodList}
+        />
+      </View>
+
+      <Swiper headerIcon steps={viewingArr} foodList={foodList}>
         {viewingArr.map(({ step, name }) => (
-          <View key={step} style={tw`w-full px-4 pb-4 pt-2`}>
+          <View key={step} style={tw`w-full px-4 pb-4`}>
             {name === '칸별로 보기' && (
               <ViewByCompartment
                 foodList={foodList}
@@ -99,8 +109,8 @@ export default function Compartments({ route }: Route) {
 
             {name === '목록으로 보기' && (
               <>
-                {foodList.length ? <TableHeader /> : <></>}
-                <TableBody title='식료품' foodList={sortedList} />
+                {sortedFilterList?.length ? <TableHeader /> : <></>}
+                <TableBody title='식료품' foodList={sortedFilterList} />
               </>
             )}
           </View>

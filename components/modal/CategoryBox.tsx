@@ -7,8 +7,8 @@ import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 import { editFavorite } from '../../redux/slice/food-list/favoriteFoodsSlice';
 import { useFindFood } from '../../hooks';
 import { showCategoryModal } from '../../redux/slice/modalVisibleSlice';
-import tw from 'twrnc';
 import { shadowStyle } from '../../constant/shadowStyle';
+import tw from 'twrnc';
 
 interface Props {
   checked: boolean;

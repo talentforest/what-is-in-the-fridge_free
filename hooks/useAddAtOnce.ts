@@ -66,8 +66,8 @@ export const useAddAtOnce = () => {
         ...food,
         category: isFavoriteFood?.category || food.category,
       };
-      return currentStorage === '팬트리'
-        ? validFoodObj({ ...editedFood, space: '팬트리' })
+      return currentStorage === '실온보관'
+        ? validFoodObj({ ...editedFood, space: '실온보관' })
         : ({ ...editedFood, space, compartmentNum } as Food);
     });
 
@@ -76,7 +76,7 @@ export const useAddAtOnce = () => {
   };
 
   const position =
-    currentStorage === '팬트리' ? `${currentStorage}` : `${fridgePosition}칸`;
+    currentStorage === '실온보관' ? `${currentStorage}` : `${fridgePosition}칸`;
 
   const onSubmitPress = () => {
     const { alertConfirmAddAll } = alertWithCheckList();

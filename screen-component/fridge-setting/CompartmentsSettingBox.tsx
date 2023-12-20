@@ -7,6 +7,7 @@ import { useHandleCompartments } from '../../hooks';
 import CountBtn from '../../components/buttons/CountBtn';
 import AlertModal from '../modal/AlertModal';
 import tw from 'twrnc';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   space: Space;
@@ -27,7 +28,10 @@ export default function CompartmentsSettingBox({ space }: Props) {
   return (
     <>
       <View
-        style={tw`px-2 py-2.5 gap-2 justify-center flex-1 items-center bg-white border border-slate-300 rounded-md`}
+        style={tw.style(
+          `px-2 py-3 gap-2 justify-center flex-1 items-center bg-white border border-slate-200 rounded-xl`,
+          shadowStyle(3)
+        )}
       >
         <Text style={tw`${spaceColor(space)}`}>{space}</Text>
         <View style={tw`flex-row items-center justify-center mt-0.5`}>

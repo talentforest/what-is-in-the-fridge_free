@@ -10,16 +10,18 @@ interface Props {
 }
 
 export default function CompartmentBox({ space, compartmentNum }: Props) {
+  const borderRadius = 'rounded-[6px]';
+
   return (
     <View
       key={compartmentNum}
-      style={tw`flex-1 w-full mx-auto rounded-[4px] justify-end border border-slate-300 bg-white`}
+      style={tw`flex-1 w-full mx-auto ${borderRadius} justify-end border border-[#dadada] bg-white`}
     >
       {space.includes('문쪽') && (
         <View
           style={tw.style(
-            `w-full absolute left-0 bottom-0 border border-slate-200 h-[60%] max-h-7 rounded-b-[3px] bg-slate-100`,
-            shadowStyle(4)
+            `${borderRadius} rounded-t-sm w-full absolute left-0 bottom-0 h-[55%] max-h-7 bg-gray-100`,
+            shadowStyle(2)
           )}
         />
       )}

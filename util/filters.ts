@@ -1,6 +1,6 @@
 import { Category, foodCategories } from '../constant/foodCategories';
 
-export type SpaceFilter = '냉장실' | '냉동실' | '팬트리';
+export type SpaceFilter = '냉장실' | '냉동실' | '실온보관';
 
 export type AbsenceFilter = '없는 식료품';
 
@@ -24,7 +24,7 @@ export const entireFilterObj: FilterObj = { filter: '전체' };
 export const spaceFilters: FilterObj[] = [
   { filter: '냉장실' },
   { filter: '냉동실' },
-  { filter: '팬트리' },
+  { filter: '실온보관' },
 ];
 
 export const existAbsenceFilters: FilterObj[] = [{ filter: '없는 식료품' }];

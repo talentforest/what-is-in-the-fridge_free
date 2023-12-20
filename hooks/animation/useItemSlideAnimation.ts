@@ -52,12 +52,12 @@ export const useItemSlideAnimation = ({
   const deleteExpiredFoodItem = () => {
     const findFridgeFoodInCheckList = (fridgeFood: Food) => {
       return checkedList
-        .filter((checkedFood) => checkedFood.space !== '팬트리')
+        .filter((checkedFood) => checkedFood.space !== '실온보관')
         .find((checkedfood) => checkedfood.name === fridgeFood.name);
     };
     const findPantryFoodInCheckList = (pantryFood: Food) => {
       return checkedList
-        .filter((checkedFood) => checkedFood.space === '팬트리')
+        .filter((checkedFood) => checkedFood.space === '실온보관')
         .find((checkedfood) => checkedfood.name === pantryFood.name);
     };
     const filteredFridge = fridgeFoods.filter(

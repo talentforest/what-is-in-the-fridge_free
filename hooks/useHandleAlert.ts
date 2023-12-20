@@ -76,7 +76,7 @@ export const useHandleAlert = () => {
 
   const onAddAtOncePress = (foodPosition: string) => {
     dispatch(
-      foodPosition === '팬트리'
+      foodPosition === '실온보관'
         ? addPantryFoods(checkedList)
         : addFridgeFoods(checkedList)
     );
@@ -94,7 +94,7 @@ export const useHandleAlert = () => {
     // 공간이 변경된 경우 이동하는 경우에만 search 세팅 후 navigation 이동
     const { space, name } = formFood;
     dispatch(search(name));
-    space === '팬트리'
+    space === '실온보관'
       ? navigation.navigate('PantryFoods')
       : navigation.navigate('Compartments', { space });
     closeAlertModal();
@@ -132,7 +132,7 @@ export const useHandleAlert = () => {
 
   const alertAlreadyHasFood: AlertObj = {
     title: '이미 갖고 있는 식료품',
-    msg: '이미 냉장고나 팬트리에 있는 식료품은 추가할 수 없어요. 갖고 계신 식료품은 선택을 해제해주세요.',
+    msg: '이미 냉장고나 실온보관에 있는 식료품은 추가할 수 없어요. 갖고 계신 식료품은 선택을 해제해주세요.',
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 
@@ -174,7 +174,7 @@ export const useHandleAlert = () => {
 
   const alertInitializeData: AlertObj = {
     title: '식료품 데이터 초기화',
-    msg: '모든 식료품 데이터를 삭제하시겠습니까?',
+    msg: '모든 식료품 관련 데이터를 삭제하시겠습니까?',
     btns: [
       { name: '취소', fn: closeAlertModal },
       { name: '확인', fn: onResetDataPress },
@@ -201,7 +201,7 @@ export const useHandleAlert = () => {
   const getFoodPosition = (food: Food) => {
     if (food?.space) {
       const { space, compartmentNum } = food;
-      return space === '팬트리' ? `${space}` : `${space} ${compartmentNum}칸`;
+      return space === '실온보관' ? `${space}` : `${space} ${compartmentNum}칸`;
     }
     return '공간';
   };
@@ -291,7 +291,7 @@ export const useHandleAlert = () => {
 
     const alertDeleteExpiredFoods: AlertObj = {
       title: '소비기한 주의 식료품 삭제',
-      msg: `총 ${listLength}개의 식료품(${namesStr})을 삭제하시겠어요? 냉장고나 팬트리 공간에서도 삭제돼요.`,
+      msg: `총 ${listLength}개의 식료품(${namesStr})을 삭제하시겠어요? 냉장고나 실온보관 공간에서도 삭제돼요.`,
       btns: [
         { name: '취소', fn: closeAlertModal },
         { name: '삭제', fn: onDeleteBtnPress },

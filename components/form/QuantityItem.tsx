@@ -89,7 +89,7 @@ export default function QuantityItem() {
               key={btn}
               onPress={() => onHandleCountPress(btn)}
               style={tw.style(
-                `h-10 w-11 flex-row border border-slate-300 
+                `h-10 w-11 flex-row border border-slate-400 
                 ${btn === 'plus' ? 'bg-stone-700' : 'bg-slate-500'}
                 rounded-xl justify-center items-center`,
                 shadowStyle(4)

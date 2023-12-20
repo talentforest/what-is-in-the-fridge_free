@@ -16,16 +16,22 @@ interface Props {
 export default function InfoBox({ label, iconName, children }: Props) {
   return (
     <View
-      style={tw`h-10 flex-row items-center border-slate-300 ${
+      style={tw`py-2.5 flex-row items-center border-slate-300 ${
         label === '카테고리' ? '' : 'border-t'
       }`}
     >
       {/* 표 제목 */}
-      <View style={tw`flex-row gap-1 items-center w-23`}>
+      <View
+        style={tw`${
+          label === '메모' ? 'self-start mt-0.5' : ''
+        } flex-row gap-1 items-center w-23`}
+      >
         <View style={tw`w-5.5 items-center`}>
           <Icon type='Octicons' name={iconName} size={14} color={MEDIUM_GRAY} />
         </View>
-        <Text style={tw.style(`text-slate-500`)}>{label} :</Text>
+        <Text fontSize={16} style={tw.style(`text-slate-500`)}>
+          {label} :
+        </Text>
       </View>
 
       {/* 표 내용 */}

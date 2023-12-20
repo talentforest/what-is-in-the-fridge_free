@@ -91,7 +91,7 @@ export default function TableFilters({
           closeModal={closeModal}
           isVisible={categoryFilterModalVisible}
         >
-          <View style={tw`flex-row flex-wrap gap-1`}>
+          <View style={tw`flex-row flex-wrap gap-1 pt-2`}>
             {foodCategories.map(({ category }) => (
               <FilterTag
                 key={category}

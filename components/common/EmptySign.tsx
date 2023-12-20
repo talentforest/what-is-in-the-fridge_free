@@ -37,10 +37,6 @@ export default function EmptySign({
 
   return (
     <View style={tw`items-center justify-center gap-2`}>
-      <Text fontSize={15} style={tw`text-slate-400 text-center`}>
-        {message}
-      </Text>
-
       {assets && assetSize && (
         <Image
           source={{ uri: asset?.localUri }}
@@ -49,6 +45,10 @@ export default function EmptySign({
           style={tw`opacity-50`}
         />
       )}
+
+      <Text fontSize={15} style={tw`text-slate-400 text-center`}>
+        {message}
+      </Text>
     </View>
   );
 }
