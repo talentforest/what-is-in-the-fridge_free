@@ -8,7 +8,11 @@ import {
   editFavorite,
 } from '../redux/slice/food-list/favoriteFoodsSlice';
 import { beforePurchaseDate } from '../util';
-import { toggleMemoOpen } from '../redux/slice/food/isMemoOpenSlice';
+import {
+  toggleExpiredItemClosed,
+  toggleMemoOpen,
+  togglePurchaseItemOpen,
+} from '../redux/slice/food/isMemoOpenSlice';
 import { setFormFood } from '../redux/slice/food/formFoodSlice';
 import { useFindFood } from './useFindFood';
 import { useHandleAlert } from './useHandleAlert';
@@ -23,7 +27,9 @@ export const useAddFood = (currPosition?: FoodPosition) => {
   } = useSelector((state) => state.modalVisible);
   const { formFood } = useSelector((state) => state.formFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
-  const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
+  const { isMemoOpen, isExpiredItemClosed, isPurchaseItemOpen } = useSelector(
+    (state) => state.isFormItemOpen
+  );
 
   const dispatch = useDispatch();
   const myUuid = UUIDGenerator.v4();
@@ -85,7 +91,15 @@ export const useAddFood = (currPosition?: FoodPosition) => {
     dispatch(showOpenAddFoodModal(false));
 
     if (isMemoOpen) {
-      toggleMemoOpen(false);
+      dispatch(toggleMemoOpen(false));
+    }
+
+    if (isExpiredItemClosed) {
+      dispatch(toggleExpiredItemClosed(false));
+    }
+
+    if (isPurchaseItemOpen) {
+      dispatch(togglePurchaseItemOpen(false));
     }
 
     dispatch(setFormFood(initialFood));

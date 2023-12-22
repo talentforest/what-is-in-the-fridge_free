@@ -96,7 +96,7 @@ export default function Compartments({ route }: Route) {
         />
       </View>
 
-      <Swiper headerIcon steps={viewingArr} foodList={foodList}>
+      <Swiper headerIcon steps={viewingArr}>
         {viewingArr.map(({ step, name }) => (
           <View key={step} style={tw`w-full px-4 pb-4`}>
             {name === '칸별로 보기' && (

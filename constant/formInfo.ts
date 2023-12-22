@@ -1,4 +1,4 @@
-export type FormStepName = '필수정보' | '위치' | '추가정보';
+export type FormStepName = '기본정보' | '위치' | '추가정보';
 
 export type FormStep = { step: number; name: FormStepName };
 
@@ -13,12 +13,12 @@ export type FormLabelType =
   | '메모';
 
 export const formTwoSteps: FormStep[] = [
-  { step: 1, name: '필수정보' },
+  { step: 1, name: '기본정보' },
   { step: 2, name: '추가정보' },
 ];
 
 export const formThreeSteps: FormStep[] = [
-  { step: 1, name: '필수정보' },
+  { step: 1, name: '기본정보' },
   { step: 2, name: '위치' },
   { step: 3, name: '추가정보' },
 ];

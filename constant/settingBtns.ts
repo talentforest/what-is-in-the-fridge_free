@@ -12,6 +12,7 @@ export const settingBtns: SettingInfo[] = [
     icon: 'fridge',
     navigate: 'SettingFridge',
   },
+  { title: '날짜 입력 방식', icon: 'eye', navigate: 'SettingDatePicker' },
   { title: '폰트', icon: 'typography', navigate: 'SettingFont' },
   { title: '알림', icon: 'bell', navigate: 'SettingNotification' },
   { title: '전체 데이터 초기화', icon: 'skip', navigate: '' },

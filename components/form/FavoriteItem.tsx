@@ -11,23 +11,23 @@ import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
-  isEditing: boolean;
+  isEditing?: boolean;
 }
 
 export default function FavoriteItem({ isEditing }: Props) {
   const {
-    formFood: { name: newName },
+    formFood,
     originFood: { name: originName },
   } = useSelector((state) => state.formFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
 
-  const name = isEditing ? originName : newName;
+  const name = isEditing ? originName : formFood.name;
 
   const { isFavoriteItem } = useFindFood();
 
   const dispatch = useDispatch();
 
-  const onTogglePress = () => {
+  const onTogglePress = (isFavorite: boolean) => {
     closeKeyboard();
     return dispatch(toggleFavorite(!isFavorite));
   };
@@ -46,9 +46,9 @@ export default function FavoriteItem({ isEditing }: Props) {
   return (
     <TouchableOpacity
       disabled={disabledFavoriteBtn}
-      onPress={onTogglePress}
+      onPress={() => onTogglePress(isFavorite)}
       style={tw.style(
-        ` h-10 border border-slate-100 bg-white ${
+        `h-10 border border-slate-100 bg-white ${
           disabledFavoriteBtn ? 'border-slate-200 bg-gray-50' : ''
         } aspect-square items-center justify-center rounded-xl`,
         shadowStyle(3)

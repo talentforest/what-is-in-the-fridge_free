@@ -1,23 +1,25 @@
 import { useDispatch, useSelector } from '../../redux/hook';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
-import { Animated, Keyboard, View } from 'react-native';
+import { Animated, View } from 'react-native';
 import { InputStyle, TextInput } from '../common/native-component';
 import { closeKeyboard, getFormattedDate } from '../../util';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useItemSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { minusControlDateBtns } from '../../constant/controlDateBtns';
+import { DEEP_GRAY } from '../../constant/colors';
 
 import FormLabel from './FormLabel';
 import ControlDateBtn from '../buttons/ControlDateBtn';
+import CheckBoxItem from '../common/CheckBoxItem';
 import tw from 'twrnc';
+import { togglePurchaseItemOpen } from '../../redux/slice/food/isMemoOpenSlice';
 
 export default function PurchaseDateItem() {
-  const [purchaseOpen, setPurchaseOpen] = useState(false);
-
   const {
     formFood: { purchaseDate },
   } = useSelector((state) => state.formFood);
+  const { isPurchaseItemOpen } = useSelector((state) => state.isFormItemOpen);
 
   const dispatch = useDispatch();
 
@@ -28,12 +30,12 @@ export default function PurchaseDateItem() {
   const { height } = useItemSlideAnimation({
     initialValue: 0,
     toValue: 82,
-    active: purchaseOpen,
+    active: isPurchaseItemOpen,
   });
 
   useEffect(() => {
     if (purchaseDate !== '') {
-      setPurchaseOpen(true);
+      dispatch(togglePurchaseItemOpen(true));
     }
   }, []);
 
@@ -44,18 +46,20 @@ export default function PurchaseDateItem() {
 
   const onPress = () => {
     closeKeyboard();
-    setPurchaseOpen((prev) => !prev);
-    changeDate(!purchaseOpen ? new Date() : '');
+    dispatch(togglePurchaseItemOpen(!isPurchaseItemOpen));
+    changeDate(!isPurchaseItemOpen ? new Date() : '');
   };
 
   return (
     <View>
-      <FormLabel
-        label='구매날짜'
-        option
-        isOpen={purchaseOpen}
-        onPress={onPress}
-      />
+      <FormLabel label='구매날짜'>
+        <CheckBoxItem
+          onPress={onPress}
+          checked={!isPurchaseItemOpen}
+          title='구매날짜가 중요하지 않아요'
+          activeColor={DEEP_GRAY}
+        />
+      </FormLabel>
 
       <Animated.View style={tw.style(`overflow-hidden -mx-1 px-1`, { height })}>
         <View

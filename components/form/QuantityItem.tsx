@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from '../../redux/hook';
 import { Animated, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
-import { TextInput, TouchableOpacity } from '../common/native-component';
+import { Text, TextInput, TouchableOpacity } from '../common/native-component';
 import { useItemSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { comma } from '../../util/commaNotation';
@@ -11,6 +11,9 @@ import { closeKeyboard } from '../../util';
 import FormLabel from './FormLabel';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
+import IconChevronUp from '../svg/arrow/IconChevronUp';
+import IconChevronDown from '../svg/arrow/IconChevronDown';
+import { MEDIUM_GRAY } from '../../constant/colors';
 
 export default function QuantityItem() {
   const {
@@ -65,7 +68,22 @@ export default function QuantityItem() {
 
   return (
     <View>
-      <FormLabel label='수량' option isOpen={isQuanityOpen} onPress={onPress} />
+      <FormLabel label='수량'>
+        <TouchableOpacity
+          onPress={onPress}
+          style={tw`gap-0.5 pl-4 flex-row items-center justify-end`}
+        >
+          {isQuanityOpen ? (
+            <IconChevronUp size={14} color={MEDIUM_GRAY} />
+          ) : (
+            <IconChevronDown size={14} color={MEDIUM_GRAY} />
+          )}
+
+          <Text fontSize={15} style={tw`text-slate-600`}>
+            {isQuanityOpen ? '생략하기' : '추가하기'}
+          </Text>
+        </TouchableOpacity>
+      </FormLabel>
 
       <Animated.View
         style={{

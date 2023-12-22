@@ -18,6 +18,7 @@ import CheckBoxItem from '../common/CheckBoxItem';
 import FormLabel from './FormLabel';
 import tw from 'twrnc';
 import Icon from '../common/native-component/Icon';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   label: FormLabelType;
@@ -77,17 +78,20 @@ export default function SpaceItem({ label }: Props) {
           <TouchableOpacity
             onPress={() => onTabPress(storage as StorageType)}
             key={storage}
-            style={tw`mt-1 gap-1 py-2 px-3 rounded-xl border
+            style={tw.style(
+              `mt-1 gap-1 py-2 px-3 rounded-xl border
              ${
                storage.includes(space.slice(0, 1))
-                 ? 'border-blue-300 bg-blue-600'
-                 : 'border-slate-300 bg-white'
-             } flex-row items-center`}
+                 ? 'border-blue-200 bg-blue-600'
+                 : 'border-gray-200 bg-gray-50'
+             } flex-row items-center`,
+              shadowStyle(3)
+            )}
           >
             <Icon
               type='Octicons'
               name='location'
-              size={14}
+              size={13}
               color={storage.includes(space.slice(0, 1)) ? '#fff' : LIGHT_GRAY}
             />
             <Text
@@ -107,49 +111,59 @@ export default function SpaceItem({ label }: Props) {
         <View style={tw`px-1`}>
           <View style={tw`flex-row gap-4`}>
             {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
-              <CheckBoxItem
-                key={spaceType}
-                title={spaceType}
-                checked={space.slice(0, 3) === spaceType}
-                onPress={() =>
-                  onFridgeSpacePress(`${spaceType} ${spaceSide}` as Space)
-                }
-              />
+              <View style={tw`h-9`}>
+                <CheckBoxItem
+                  key={spaceType}
+                  title={spaceType}
+                  checked={space.slice(0, 3) === spaceType}
+                  onPress={() =>
+                    onFridgeSpacePress(`${spaceType} ${spaceSide}` as Space)
+                  }
+                  size={17}
+                />
+              </View>
             ))}
           </View>
 
           <View style={tw`flex-row gap-4 border-b border-t border-slate-300`}>
             {(['안쪽', '문쪽'] as SpaceSide[]).map((spaceSide) => (
-              <CheckBoxItem
-                key={spaceSide}
-                title={spaceSide}
-                checked={space.includes(spaceSide)}
-                onPress={() =>
-                  onFridgeSpacePress(`${spaceType} ${spaceSide}` as Space)
-                }
-              />
+              <View style={tw`h-9`}>
+                <CheckBoxItem
+                  key={spaceSide}
+                  title={spaceSide}
+                  checked={space.includes(spaceSide)}
+                  onPress={() =>
+                    onFridgeSpacePress(`${spaceType} ${spaceSide}` as Space)
+                  }
+                  size={17}
+                />
+              </View>
             ))}
           </View>
 
           <View style={tw`flex-row flex-wrap gap-x-4`}>
             {compartments.map(({ compartmentNum: currCompartmentNum }) => (
-              <CheckBoxItem
-                key={currCompartmentNum}
-                title={`${currCompartmentNum}칸`}
-                checked={compartmentNum === currCompartmentNum}
-                onPress={() => onCompartmentNumPress(currCompartmentNum)}
-              />
+              <View style={tw`h-9`}>
+                <CheckBoxItem
+                  key={currCompartmentNum}
+                  title={`${currCompartmentNum}칸`}
+                  checked={compartmentNum === currCompartmentNum}
+                  onPress={() => onCompartmentNumPress(currCompartmentNum)}
+                  size={17}
+                />
+              </View>
             ))}
           </View>
         </View>
       )}
 
       {space === '실온보관' && (
-        <View key={spaceType} style={tw`py-1.5`}>
+        <View key={spaceType} style={tw`py-1.5 h-9 px-1`}>
           <CheckBoxItem
             title='실온보관'
             checked={space === '실온보관'}
             onPress={() => onTabPress('실온보관')}
+            size={17}
           />
         </View>
       )}

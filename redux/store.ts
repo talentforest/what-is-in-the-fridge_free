@@ -20,7 +20,6 @@ import toggleOnboardingReducer from './slice/onboardingSlice';
 import changeFilterReducer from './slice/filterSlice';
 import pantryFoodsReducer from './slice/food-list/pantryFoodsSlice';
 import toggleFavoriteReducer from './slice/food/isFavoriteSlice';
-import toggleMemoReducer from './slice/food/isMemoOpenSlice';
 import searchedFoodNameReducer from './slice/food/searchedFoodSlice';
 import toggleAlertModalReducer from './slice/alertModalSlice';
 import changeFontReducer from './slice/fontSlice';
@@ -30,6 +29,7 @@ import categoryReducer from './slice/food/categorySlice';
 import afterAnimationReducer from './slice/afterAnimationSlice';
 import modalVisibleReducer from './slice/modalVisibleSlice';
 import purchaseReducer from './slice/purchaseSlice';
+import toggleFormItemOpenReducer from './slice/food/isMemoOpenSlice';
 
 const reducers = {
   fridgeFoods: fridgeFoodsReducer,
@@ -41,7 +41,7 @@ const reducers = {
   filter: changeFilterReducer,
   pantryFoods: pantryFoodsReducer,
   isFavorite: toggleFavoriteReducer,
-  isMemoOpen: toggleMemoReducer,
+  isFormItemOpen: toggleFormItemOpenReducer,
   searchedFoodName: searchedFoodNameReducer,
   modalVisible: modalVisibleReducer,
   alertModal: toggleAlertModalReducer,

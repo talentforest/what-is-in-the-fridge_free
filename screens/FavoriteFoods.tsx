@@ -52,8 +52,8 @@ export default function FavoriteFoods() {
 
   useEffect(() => {
     initializeFilter();
+    dispatch(changeCategory('신선식품류'));
     return () => {
-      dispatch(changeCategory('신선식품류'));
       dispatch(setCheckedList([]));
     };
   }, []);

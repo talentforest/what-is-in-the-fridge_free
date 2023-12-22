@@ -19,7 +19,7 @@ export default function SelectContainter({ title, children }: Props) {
   return (
     <View style={tw`mb-7 px-4`}>
       <View style={tw`flex-row items-center gap-1 pb-0.5 mb-1`}>
-        <Text fontSize={16} style={tw`text-slate-700`}>
+        <Text fontSize={16} style={tw`text-slate-500`}>
           {title}
         </Text>
       </View>

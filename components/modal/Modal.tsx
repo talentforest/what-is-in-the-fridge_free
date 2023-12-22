@@ -11,6 +11,7 @@ import { closeKeyboard } from '../../util';
 import RNModal from 'react-native-modal';
 import SwipeHeader from './SwipeHeader';
 import tw from 'twrnc';
+import { useSelector } from '../../redux/hook';
 
 export type ModalTitle =
   | '장보기 목록 식료품 추가'
@@ -36,6 +37,8 @@ export default function Modal({
   closeModal,
 }: Props) {
   const { height } = useWindowDimensions();
+
+  const { isPurchaseItemOpen } = useSelector((state) => state.isFormItemOpen);
 
   const MODAL_HEIGHT = height * 0.9;
 

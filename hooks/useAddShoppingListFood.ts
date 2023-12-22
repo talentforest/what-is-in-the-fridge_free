@@ -17,7 +17,7 @@ import { showFormModal } from '../redux/slice/modalVisibleSlice';
 export const useAddShoppingListFood = () => {
   const { formFood } = useSelector((state) => state.formFood);
   const { isFavorite } = useSelector((state) => state.isFavorite);
-  const { isMemoOpen } = useSelector((state) => state.isMemoOpen);
+  const { isMemoOpen } = useSelector((state) => state.isFormItemOpen);
 
   const { isFavoriteItem } = useFindFood();
 

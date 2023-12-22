@@ -8,6 +8,7 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import { handleQuantityPantryFood } from '../../redux/slice/food-list/pantryFoodsSlice';
 import { handleQuantityFridgeFood } from '../../redux/slice/food-list/fridgeFoodsSlice';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
+import { ModalTitle } from '../modal/Modal';
 
 import InfoBox from './InfoBox';
 import LeftDayInfoBox from '../modal/LeftDayInfoBox';
@@ -62,9 +63,11 @@ export default function FoodDetail() {
           </View>
         </InfoBox>
 
-        <InfoBox iconName='calendar' label='소비기한'>
-          <LeftDayInfoBox expiredDate={expiredDate} />
-        </InfoBox>
+        {expiredDate !== '' && (
+          <InfoBox iconName='calendar' label='소비기한'>
+            <LeftDayInfoBox expiredDate={expiredDate} />
+          </InfoBox>
+        )}
 
         {purchaseDate !== '' && (
           <InfoBox iconName='calendar' label='구매날짜'>

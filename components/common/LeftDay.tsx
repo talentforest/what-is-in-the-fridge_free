@@ -23,13 +23,21 @@ function LeftDay({ expiredDate, dateMark, isSuffix }: Props) {
 
   return (
     <View style={tw`items-end justify-center gap-1`}>
-      <Text fontSize={15} style={tw.style(`${textColor}`)}>
-        {diffDate === 0 ? today : relativeTime}
-      </Text>
+      {expiredDate !== '' ? (
+        <>
+          <Text fontSize={15} style={tw.style(`${textColor}`)}>
+            {diffDate === 0 ? today : relativeTime}
+          </Text>
 
-      {dateMark && (
-        <Text fontSize={13} style={tw.style(`text-slate-600 -mt-0.5`)}>
-          {getFormattedDate(expiredDate, 'YY.MM.DD')}
+          {dateMark && (
+            <Text fontSize={13} style={tw.style(`text-slate-600 -mt-0.5`)}>
+              {getFormattedDate(expiredDate, 'YY.MM.DD')}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Text fontSize={15} style={tw.style(`text-slate-400`)}>
+          정보 없음
         </Text>
       )}
     </View>

@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from '../../redux/hook';
 import { setFormFood } from '../../redux/slice/food/formFoodSlice';
 import { showFormModal } from '../../redux/slice/modalVisibleSlice';
 import { Text } from '../common/native-component';
+import { Space } from '../../constant/fridgeInfo';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import LeftDay from '../common/LeftDay';
 import AddIconBtn from '../buttons/AddIconBtn';
 import IndicatorExist from '../common/IndicatorExist';
 import tw from 'twrnc';
-import { Space } from '../../constant/fridgeInfo';
-import { shadowStyle } from '../../constant/shadowStyle';
 
 export type TableTitle =
   | '전체 식료품'

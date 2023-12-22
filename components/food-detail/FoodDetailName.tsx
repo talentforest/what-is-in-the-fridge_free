@@ -1,13 +1,22 @@
 import { View } from 'react-native';
-import { Text } from '../common/native-component';
+import { Text, TouchableOpacity } from '../common/native-component';
 import { useFindFood } from '../../hooks';
 import { LIGHT_GRAY, YELLOW } from '../../constant/colors';
-
+import { useDispatch, useSelector } from '../../redux/hook';
+import {
+  addFavorite,
+  removeFavorite,
+} from '../../redux/slice/food-list/favoriteFoodsSlice';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 export default function FoodDetailName({ name }: { name: string }) {
+  const { formFood } = useSelector((state) => state.formFood);
   const { isFavoriteItem } = useFindFood();
+
+  const dispatch = useDispatch();
+
+  const favFood = isFavoriteItem(name);
 
   return (
     <View
@@ -15,20 +24,28 @@ export default function FoodDetailName({ name }: { name: string }) {
     >
       <LineDeco />
 
-      <>
+      <TouchableOpacity
+        style={tw`p-0.5`}
+        onPress={() => {
+          !!favFood
+            ? dispatch(removeFavorite(favFood.name))
+            : dispatch(addFavorite({ ...formFood }));
+        }}
+      >
         <Icon
           type='Octicons'
-          name={!!isFavoriteItem(name) ? 'star-fill' : 'star'}
+          name={favFood ? 'star-fill' : 'star'}
           size={15}
-          color={!!isFavoriteItem(name) ? YELLOW : LIGHT_GRAY}
+          color={favFood ? YELLOW : LIGHT_GRAY}
         />
-        <Text
-          fontSize={18}
-          style={tw.style(`max-w-4/5 text-stone-800 leading-5`)}
-        >
-          {name}
-        </Text>
-      </>
+      </TouchableOpacity>
+
+      <Text
+        fontSize={18}
+        style={tw.style(`max-w-4/5 text-stone-800 leading-5`)}
+      >
+        {name}
+      </Text>
 
       <LineDeco reverse />
     </View>

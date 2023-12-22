@@ -35,19 +35,19 @@ export default function ControlDateBtn({ type, btn, changeDate, date }: Props) {
         shadowStyle(3)
       )}
     >
-      <Text fontSize={16} style={tw`pr-0.5 text-${btn.btnColor}-700`}>
+      <Text fontSize={15} style={tw`pr-0.5 text-${btn.btnColor}-700`}>
         {btn.label}
       </Text>
 
       {btn.label === '오늘' && (
-        <Icon name='sync' type='Octicons' size={12} color={GRAY} />
+        <Icon name='sync' type='Octicons' size={11} color={GRAY} />
       )}
 
       {btn.label !== '오늘' && (
         <Icon
           name={type === 'add' ? 'plus' : 'dash'}
           type='Octicons'
-          size={14}
+          size={13}
           color={btnColor}
         />
       )}

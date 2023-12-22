@@ -27,6 +27,7 @@ import SettingFont from '../screens/SettingFont';
 import SettingNotification from '../screens/SettingNotification';
 import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
+import SettingDatePicker from '../screens/SettingDatePicker';
 
 export type RootStackParamList = {
   OnBoarding: undefined;
@@ -41,6 +42,7 @@ export type RootStackParamList = {
   SettingFont: undefined;
   SettingFridge: undefined;
   SettingNotification: undefined;
+  SettingDatePicker: undefined;
 };
 
 export type RouteName = keyof RootStackParamList;
@@ -156,6 +158,15 @@ const Navigation = () => {
         options={{
           ...options,
           headerTitle: () => <NavigationHeaderTitle title='폰트' />,
+        }}
+      />
+
+      <Stack.Screen
+        name='SettingDatePicker'
+        component={SettingDatePicker}
+        options={{
+          ...options,
+          headerTitle: () => <NavigationHeaderTitle title='날짜 입력 방식' />,
         }}
       />
 
