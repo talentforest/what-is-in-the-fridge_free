@@ -9,9 +9,17 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
-const FAV_ITEM_MAX = 2;
+const FAV_ITEM_MAX = 4;
 
-export default function MatchedFavoriteFoodNameList() {
+interface Props {
+  recommendListHeight: number;
+  setRecommendListHeight: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export default function MatchedFavoriteFoodNameList({
+  recommendListHeight,
+  setRecommendListHeight,
+}: Props) {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const {
     formFood: { name },
@@ -30,16 +38,32 @@ export default function MatchedFavoriteFoodNameList() {
 
   const { height } = useItemSlideAnimation({
     initialValue: 0,
+<<<<<<< HEAD
     toValue: 46,
     active: !!matchedFoodList?.length,
+=======
+    toValue: recommendListHeight + 14,
+    active: !!recommendFoodList?.length,
+>>>>>>> f0f5642 (UI fix: 추천 식료품 개수 늘리기)
   });
 
   return (
     <>
       {!isFavoriteItem(name) && (
+<<<<<<< HEAD
         <Animated.View style={{ height, overflow: 'hidden' }}>
           {!!matchedFoodList?.length && (
+=======
+        <Animated.View style={tw.style(`overflow-hidden`, { height })}>
+          {!!recommendFoodList?.length && (
+>>>>>>> f0f5642 (UI fix: 추천 식료품 개수 늘리기)
             <View
+              onLayout={(e) => {
+                console.log(recommendFoodList.length, 'length');
+                if (recommendFoodList.length === 0)
+                  return setRecommendListHeight(0);
+                setRecommendListHeight(e.nativeEvent.layout.height);
+              }}
               style={tw.style(
                 `flex-wrap flex-row items-center mt-2 gap-1 px-0.5`
               )}

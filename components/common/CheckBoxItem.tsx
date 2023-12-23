@@ -19,7 +19,7 @@ export default function CheckBoxItem({
   onPress,
   checked,
   title,
-  size = 15,
+  size = 17,
   activeColor = BLUE,
   inActiveColor = MEDIUM_GRAY,
 }: Props) {

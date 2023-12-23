@@ -1,10 +1,11 @@
 import { ModalTitle } from '../modal/Modal';
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { FormStep } from '../../constant/formInfo';
-import { closeKeyboard } from '../../util';
+import { closeKeyboard, findMatchNameFoods } from '../../util';
 import { useState } from 'react';
-import { useItemSlideAnimation } from '../../hooks';
+import { useFindFood, useItemSlideAnimation } from '../../hooks';
 import { Animated } from 'react-native';
+import { useSelector } from '../../redux/hook';
 
 import FormSectionContainer from './FormSectionContainer';
 import CategoryItem from './CategoryItem';
@@ -17,7 +18,6 @@ import QuantityItem from './QuantityItem';
 import MemoItem from './MemoItem';
 import Swiper from '../common/Swiper';
 import tw from 'twrnc';
-import { useSelector } from '../../redux/hook';
 
 interface Props {
   title: ModalTitle;
@@ -25,23 +25,40 @@ interface Props {
 }
 
 export default function Form({ title, formSteps }: Props) {
+  const { isFavorite } = useSelector((state) => state.isFavorite);
+  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { isExpiredItemClosed, isPurchaseItemOpen } = useSelector(
     (state) => state.isFormItemOpen
   );
-  const allDateItemsOpen = isExpiredItemClosed && !isPurchaseItemOpen;
+
+  const {
+    formFood: { name },
+  } = useSelector((state) => state.formFood);
+  const [recommendListHeight, setRecommendListHeight] = useState(0);
+
+  const { findFood } = useFindFood();
+
+  const allDateItemsClosed = isExpiredItemClosed && !isPurchaseItemOpen;
   const oneDateItemOpen = isExpiredItemClosed || !isPurchaseItemOpen;
 
+  const recommendFoodList = findMatchNameFoods(favoriteFoods, name).filter(
+    (food) => !findFood(food.name)
+  );
+
+  const formHeight = allDateItemsClosed ? 320 : oneDateItemOpen ? 400 : 475;
+  const recommendHeight =
+    !!recommendFoodList.length && !isFavorite ? recommendListHeight : 0;
+
   const { height } = useItemSlideAnimation({
-    initialValue: allDateItemsOpen ? 320 : oneDateItemOpen ? 400 : 450,
-    toValue: allDateItemsOpen ? 340 : oneDateItemOpen ? 420 : 470,
-    active: isPurchaseItemOpen,
+    initialValue: formHeight,
+    toValue: formHeight + recommendHeight,
+    active:
+      isPurchaseItemOpen || isExpiredItemClosed || recommendListHeight !== 0,
   });
 
   return (
     <Animated.View
-      style={tw.style(`mt-2.5 overflow-hidden -mx-1 px-1`, {
-        height,
-      })}
+      style={tw.style(`mt-2.5 overflow-hidden -mx-1 px-1`, { height })}
     >
       <TouchableWithoutFeedback onPress={closeKeyboard}>
         <Swiper steps={formSteps} isForm>
@@ -50,7 +67,11 @@ export default function Form({ title, formSteps }: Props) {
               <View key={step} style={tw`w-full border border-stone-100 px-4`}>
                 {name === '기본정보' && (
                   <FormSectionContainer>
-                    <NameItem isEditing={title === '식료품 정보 수정'}>
+                    <NameItem
+                      isEditing={title === '식료품 정보 수정'}
+                      recommendListHeight={recommendListHeight}
+                      setRecommendListHeight={setRecommendListHeight}
+                    >
                       <FavoriteItem isEditing={title === '식료품 정보 수정'} />
                     </NameItem>
 

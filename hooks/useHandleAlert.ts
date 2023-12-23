@@ -162,7 +162,7 @@ export const useHandleAlert = () => {
 
   const alertSucessRestoreIAP: AlertObj = {
     title: '이용권 복원 성공',
-    msg: '성공적으로 인앱 상품을 복원했어요. 이제 무제한으로 식료품을 저장할 수 있어요.',
+    msg: '이전에 구매하셨던 이용권을 성공적으로 복원했어요. 이제 무제한으로 식료품을 저장할 수 있어요.',
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 

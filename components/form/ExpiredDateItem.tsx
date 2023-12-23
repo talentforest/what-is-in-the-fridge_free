@@ -85,6 +85,7 @@ export default function ExpiredDateItem() {
           checked={isExpiredItemClosed}
           title='소비기한이 중요하지 않아요'
           activeColor={DEEP_GRAY}
+          size={15}
         />
       </FormLabel>
 

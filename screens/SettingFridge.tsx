@@ -49,12 +49,14 @@ export default function SettingFridge() {
 
         <SelectContainter title='나의 냉장고 타입'>
           {['일반형 냉장고'].map((type) => (
-            <CheckBoxItem
-              key={type}
-              title={type}
-              onPress={() => onChangePress({ type })}
-              checked={fridgeInfo.type === type}
-            />
+            <View style={tw`h-9`}>
+              <CheckBoxItem
+                key={type}
+                title={type}
+                onPress={() => onChangePress({ type })}
+                checked={fridgeInfo.type === type}
+              />
+            </View>
           ))}
           <Text fontSize={15} style={tw`my-1 text-slate-500`}>
             현재 일반형 냉장고만 지원하고 있어요
@@ -64,14 +66,16 @@ export default function SettingFridge() {
         <SelectContainter title='냉동실 위치'>
           <View style={tw`flex-row gap-4`}>
             {['상단', '하단'].map((name) => (
-              <CheckBoxItem
-                key={name}
-                title={name}
-                onPress={() => onPress(name)}
-                checked={
-                  fridgeInfo.freezer === (name === '상단' ? 'top' : 'bottom')
-                }
-              />
+              <View style={tw`h-9`}>
+                <CheckBoxItem
+                  key={name}
+                  title={name}
+                  onPress={() => onPress(name)}
+                  checked={
+                    fridgeInfo.freezer === (name === '상단' ? 'top' : 'bottom')
+                  }
+                />
+              </View>
             ))}
           </View>
         </SelectContainter>

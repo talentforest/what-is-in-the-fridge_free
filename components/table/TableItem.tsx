@@ -2,7 +2,7 @@ import { Animated, View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { Food, initialFridgeFood } from '../../constant/foodInfo';
 import { ReactNode } from 'react';
-import { useItemSlideAnimation, usePulseAnimation } from '../../hooks';
+import { useItemSlideAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { setCheckedList } from '../../redux/slice/food-list/checkListSlice';
@@ -30,7 +30,6 @@ export default function TableItem({
   endChildren,
   checkBox,
 }: Props) {
-  const { searchedFoodName } = useSelector((state) => state.searchedFoodName);
   const { afterAnimation } = useSelector((state) => state.afterAnimation);
   const { checkedList } = useSelector((state) => state.checkedList);
 
@@ -43,10 +42,6 @@ export default function TableItem({
     toValue: 0,
     active: checkedItem && afterAnimation === 'slideup-out',
   });
-
-  const searchedItem = searchedFoodName === food.name;
-
-  const {} = usePulseAnimation({ active: searchedItem });
 
   const { id, name, category, space } = food;
 
@@ -91,13 +86,7 @@ export default function TableItem({
           onPress={onItemPress}
           style={tw.style(
             `border h-[${TABLE_ITEM_HEIGHT - 4}px] 
-            ${
-              searchedItem
-                ? 'border-indigo-600'
-                : checkedItem
-                ? 'border-blue-400'
-                : 'border-slate-200'
-            } 
+            ${checkedItem ? 'border-blue-400' : 'border-slate-200'} 
             bg-white flex-row items-center gap-1 pl-3 rounded-xl mx-1`,
             shadowStyle(4)
           )}

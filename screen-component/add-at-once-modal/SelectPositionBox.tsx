@@ -72,7 +72,7 @@ export default function SelectPositionBox({
       >
         <View style={tw`flex-row gap-4 py-1`}>
           {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
-            <View key={spaceType}>
+            <View key={spaceType} style={tw`h-8`}>
               <CheckBoxItem
                 key={spaceType}
                 title={spaceType}
@@ -90,7 +90,7 @@ export default function SelectPositionBox({
           style={tw`flex-row gap-4 py-0.5 border-t border-b border-slate-300`}
         >
           {(['안쪽', '문쪽'] as SpaceSide[]).map((spaceSide) => (
-            <View key={spaceSide}>
+            <View key={spaceSide} style={tw`h-8`}>
               <CheckBoxItem
                 key={spaceSide}
                 title={spaceSide}
@@ -104,7 +104,7 @@ export default function SelectPositionBox({
         </View>
         <View style={tw`flex-row gap-x-4 py-1 flex-wrap`}>
           {compartments.map(({ compartmentNum }) => (
-            <View key={compartmentNum}>
+            <View key={compartmentNum} style={tw`h-8`}>
               <CheckBoxItem
                 key={compartmentNum}
                 title={`${compartmentNum}칸`}

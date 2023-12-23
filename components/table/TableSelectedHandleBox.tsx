@@ -37,12 +37,14 @@ export default function TableSelectedHandleBox({ foodList, children }: Props) {
     <Animated.View style={tw.style(`overflow-hidden -mx-4 px-4`, { height })}>
       <View style={tw.style(`flex-row justify-between items-center h-full`)}>
         <View style={tw`justify-center`}>
-          <CheckBoxItem
-            onPress={onAllCheckBtnPress}
-            checked={entireChecked}
-            title='전체 선택'
-            inActiveColor='#333'
-          />
+          <View style={tw`h-9`}>
+            <CheckBoxItem
+              onPress={onAllCheckBtnPress}
+              checked={entireChecked}
+              title='전체 선택'
+              inActiveColor='#333'
+            />
+          </View>
           {!!checkedList.length && (
             <Text fontSize={15} style={tw`ml-5.5 text-slate-800 -mt-1`}>
               {checkedList.length}개 선택

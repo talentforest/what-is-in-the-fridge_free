@@ -3,6 +3,7 @@ import { useRouteName } from '../../hooks/useRouteName';
 import ArrowBtn from '../buttons/ArrowBtn';
 import StepIndicator from '../common/StepIndicator';
 import tw from 'twrnc';
+import { GRAY } from '../../constant/colors';
 
 interface Props {
   moveStep: (direction: 'prev' | 'next', step: number) => void;
@@ -26,7 +27,11 @@ export default function FormStepBottom({
             moveStep={() => moveStep('prev', currentStep)}
             active={currentStep > 1}
           />
-          <StepIndicator stepLength={stepLength} currentStepId={currentStep} />
+          <StepIndicator
+            stepLength={stepLength}
+            currentStepId={currentStep}
+            color='gray'
+          />
           <ArrowBtn
             type='next'
             moveStep={() => moveStep('next', currentStep)}

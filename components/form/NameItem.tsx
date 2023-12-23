@@ -16,9 +16,16 @@ import tw from 'twrnc';
 interface Props {
   isEditing: boolean;
   children?: ReactNode;
+  recommendListHeight?: number;
+  setRecommendListHeight?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function NameItem({ isEditing, children }: Props) {
+export default function NameItem({
+  isEditing,
+  children,
+  recommendListHeight,
+  setRecommendListHeight,
+}: Props) {
   const {
     formFood: { name: newName },
     originFood: { name: originName },
@@ -119,7 +126,12 @@ export default function NameItem({ isEditing, children }: Props) {
         />
       </View>
 
-      {!isEditing && !isFavorite ? <MatchedFavoriteFoodNameList /> : null}
+      {!isEditing && !isFavorite ? (
+        <MatchedFavoriteFoodNameList
+          recommendListHeight={recommendListHeight}
+          setRecommendListHeight={setRecommendListHeight}
+        />
+      ) : null}
     </View>
   );
 }

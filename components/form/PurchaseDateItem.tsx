@@ -8,12 +8,12 @@ import { useItemSlideAnimation } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { minusControlDateBtns } from '../../constant/controlDateBtns';
 import { DEEP_GRAY } from '../../constant/colors';
+import { togglePurchaseItemOpen } from '../../redux/slice/food/isMemoOpenSlice';
 
 import FormLabel from './FormLabel';
 import ControlDateBtn from '../buttons/ControlDateBtn';
 import CheckBoxItem from '../common/CheckBoxItem';
 import tw from 'twrnc';
-import { togglePurchaseItemOpen } from '../../redux/slice/food/isMemoOpenSlice';
 
 export default function PurchaseDateItem() {
   const {
@@ -58,6 +58,7 @@ export default function PurchaseDateItem() {
           checked={!isPurchaseItemOpen}
           title='구매날짜가 중요하지 않아요'
           activeColor={DEEP_GRAY}
+          size={15}
         />
       </FormLabel>
 

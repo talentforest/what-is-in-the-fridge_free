@@ -76,8 +76,8 @@ export default function SpaceItem({ label }: Props) {
       <View style={tw`flex-row items-center pb-0.5 gap-1`}>
         {['냉장고', '실온보관'].map((storage) => (
           <TouchableOpacity
-            onPress={() => onTabPress(storage as StorageType)}
             key={storage}
+            onPress={() => onTabPress(storage as StorageType)}
             style={tw.style(
               `mt-1 gap-1 py-2 px-3 rounded-xl border
              ${
@@ -111,15 +111,13 @@ export default function SpaceItem({ label }: Props) {
         <View style={tw`px-1`}>
           <View style={tw`flex-row gap-4`}>
             {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
-              <View style={tw`h-9`}>
+              <View style={tw`h-9`} key={spaceType}>
                 <CheckBoxItem
-                  key={spaceType}
                   title={spaceType}
                   checked={space.slice(0, 3) === spaceType}
                   onPress={() =>
                     onFridgeSpacePress(`${spaceType} ${spaceSide}` as Space)
                   }
-                  size={17}
                 />
               </View>
             ))}
@@ -127,15 +125,13 @@ export default function SpaceItem({ label }: Props) {
 
           <View style={tw`flex-row gap-4 border-b border-t border-slate-300`}>
             {(['안쪽', '문쪽'] as SpaceSide[]).map((spaceSide) => (
-              <View style={tw`h-9`}>
+              <View key={spaceSide} style={tw`h-9`}>
                 <CheckBoxItem
-                  key={spaceSide}
                   title={spaceSide}
                   checked={space.includes(spaceSide)}
                   onPress={() =>
                     onFridgeSpacePress(`${spaceType} ${spaceSide}` as Space)
                   }
-                  size={17}
                 />
               </View>
             ))}
@@ -143,13 +139,11 @@ export default function SpaceItem({ label }: Props) {
 
           <View style={tw`flex-row flex-wrap gap-x-4`}>
             {compartments.map(({ compartmentNum: currCompartmentNum }) => (
-              <View style={tw`h-9`}>
+              <View key={currCompartmentNum} style={tw`h-9`}>
                 <CheckBoxItem
-                  key={currCompartmentNum}
                   title={`${currCompartmentNum}칸`}
                   checked={compartmentNum === currCompartmentNum}
                   onPress={() => onCompartmentNumPress(currCompartmentNum)}
-                  size={17}
                 />
               </View>
             ))}
@@ -163,7 +157,6 @@ export default function SpaceItem({ label }: Props) {
             title='실온보관'
             checked={space === '실온보관'}
             onPress={() => onTabPress('실온보관')}
-            size={17}
           />
         </View>
       )}
