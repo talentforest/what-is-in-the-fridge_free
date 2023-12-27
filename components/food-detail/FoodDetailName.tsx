@@ -20,7 +20,7 @@ export default function FoodDetailName({ name }: { name: string }) {
 
   return (
     <View
-      style={tw`gap-1.5 self-center flex-row justify-center items-center border-slate-300 mb-4 mt-2 py-1.5 px-2.5`}
+      style={tw`gap-1.5 self-center flex-row justify-center items-center border-slate-300 py-1.5 px-2.5`}
     >
       <LineDeco />
 

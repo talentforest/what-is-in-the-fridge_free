@@ -22,14 +22,14 @@ export default function TableBody({ title, foodList, flatListRef }: Props) {
   return (
     <>
       {!!foodList.length ? (
-        <View style={tw`flex-1 -mx-2`}>
+        <View style={tw`flex-1 -mx-2 overflow-hidden`}>
           <FlatList
             ref={flatListRef}
             keyExtractor={(item) => item.id}
             disableVirtualization={false}
             initialNumToRender={15}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={tw`pb-10 px-2`}
+            contentContainerStyle={tw`pb-22 px-2`}
             data={foodList}
             getItemLayout={(_, index) => ({
               length: TABLE_ITEM_HEIGHT,

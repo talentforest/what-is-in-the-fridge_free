@@ -17,7 +17,9 @@ import TableHeader from '../components/table/TableHeader';
 import ViewByCompartment from '../screen-component/compartments/ViewByCompartment';
 import Swiper from '../components/common/Swiper';
 import TableFilters from '../components/table/TableFilters';
+import Container from '../components/common/Container';
 import tw from 'twrnc';
+import { BGCOLOR_PANTRYFOODS, LIGHT_GREEN } from '../constant/colors';
 
 export default function PantryFoods() {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
@@ -35,33 +37,37 @@ export default function PantryFoods() {
   return (
     <SafeBottomAreaView>
       <KeyboardAvoidingView>
-        <View style={tw`px-4`}>
-          <TableFilters
-            filterTagList={[entireFilterObj, ...expiredFilters]}
-            foodList={foodList}
-          />
-        </View>
-
-        <Swiper steps={viewingArr} headerIcon>
-          {viewingArr.map(({ step, name }) => (
-            <View key={step} style={tw`w-full px-4 pb-4`}>
-              {name === '칸별로 보기' && (
-                <ViewByCompartment
-                  space='실온보관'
-                  foodList={pantryFoods}
-                  scrollViewRef={scrollViewRef}
-                />
-              )}
-
-              {name === '목록으로 보기' && (
-                <>
-                  {pantryFoods.length ? <TableHeader /> : <></>}
-                  <TableBody title='식료품' foodList={foodList} />
-                </>
-              )}
+        <Container bgColor={BGCOLOR_PANTRYFOODS}>
+          <View style={tw`flex-1 -mx-4`}>
+            <View style={tw`px-4`}>
+              <TableFilters
+                filterTagList={[entireFilterObj, ...expiredFilters]}
+                foodList={foodList}
+              />
             </View>
-          ))}
-        </Swiper>
+
+            <Swiper steps={viewingArr} headerIcon>
+              {viewingArr.map(({ step, name }) => (
+                <View key={step} style={tw`w-full px-4 pb-4`}>
+                  {name === '칸별로 보기' && (
+                    <ViewByCompartment
+                      space='실온보관'
+                      foodList={pantryFoods}
+                      scrollViewRef={scrollViewRef}
+                    />
+                  )}
+
+                  {name === '목록으로 보기' && (
+                    <>
+                      {pantryFoods.length ? <TableHeader /> : <></>}
+                      <TableBody title='식료품' foodList={foodList} />
+                    </>
+                  )}
+                </View>
+              ))}
+            </Swiper>
+          </View>
+        </Container>
         <FoodDetailModal formSteps={formThreeSteps} />
 
         <AddFoodModal scrollViewRef={scrollViewRef} />

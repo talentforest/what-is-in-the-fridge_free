@@ -8,13 +8,20 @@ import {
 import IconChevronsRight from '../svg/arrow/IconChevronsRight';
 import tw from 'twrnc';
 
-export default function RelativeTime({ date }: { date: string }) {
+export default function RelativeTime({
+  date,
+  type,
+}: {
+  date: string;
+  type: '소비기한' | '구매날짜';
+}) {
   return (
-    <View style={tw`gap-0.5 h-10 flex-row items-center`}>
-      <IconChevronsRight size={16} color={getColorByLeftDay(date)} />
+    <View style={tw`h-10 pl-1 flex-row items-center`}>
+      <IconChevronsRight size={15} color={getColorByLeftDay(date)} />
 
       <Text fontSize={15} style={tw`${getTWColorByLeftDay(date)}`}>
-        {getRelativeTime(date)}까지
+        {getRelativeTime(date)}
+        {type === '소비기한' ? '까지' : ''}
       </Text>
     </View>
   );

@@ -1,9 +1,7 @@
-import { View, useWindowDimensions } from 'react-native';
-import { useRouteName } from '../../hooks/useRouteName';
+import { View } from 'react-native';
 import ArrowBtn from '../buttons/ArrowBtn';
 import StepIndicator from '../common/StepIndicator';
 import tw from 'twrnc';
-import { GRAY } from '../../constant/colors';
 
 interface Props {
   moveStep: (direction: 'prev' | 'next', step: number) => void;
@@ -16,33 +14,23 @@ export default function FormStepBottom({
   currentStep,
   stepLength,
 }: Props) {
-  const { routePantryFoods } = useRouteName();
-
   return (
-    <View style={tw`h-10`}>
-      {!routePantryFoods ? (
-        <View style={tw`items-center flex-row justify-between`}>
-          <ArrowBtn
-            type='previous'
-            moveStep={() => moveStep('prev', currentStep)}
-            active={currentStep > 1}
-          />
-          <StepIndicator
-            stepLength={stepLength}
-            currentStepId={currentStep}
-            color='gray'
-          />
-          <ArrowBtn
-            type='next'
-            moveStep={() => moveStep('next', currentStep)}
-            active={stepLength > currentStep}
-          />
-        </View>
-      ) : (
-        <View style={tw`py-5`}>
-          <StepIndicator stepLength={stepLength} currentStepId={currentStep} />
-        </View>
-      )}
+    <View style={tw`h-8 items-center flex-row justify-between`}>
+      <ArrowBtn
+        type='previous'
+        moveStep={() => moveStep('prev', currentStep)}
+        active={currentStep > 1}
+      />
+      <StepIndicator
+        stepLength={stepLength}
+        currentStepId={currentStep}
+        color='gray'
+      />
+      <ArrowBtn
+        type='next'
+        moveStep={() => moveStep('next', currentStep)}
+        active={stepLength > currentStep}
+      />
     </View>
   );
 }

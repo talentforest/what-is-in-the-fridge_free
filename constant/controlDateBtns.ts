@@ -4,7 +4,6 @@ import {
   controlMonth,
   controlWeek,
   controlYear,
-  formattedToday,
 } from '../util';
 
 export interface ControlDateBtnType {
@@ -14,11 +13,6 @@ export interface ControlDateBtnType {
 }
 
 export const controlDateBtns: ControlDateBtnType[] = [
-  {
-    label: '오늘',
-    calculateDate: () => new Date(formattedToday),
-    btnColor: 'stone',
-  },
   {
     label: '일년',
     calculateDate: controlYear,
@@ -42,11 +36,6 @@ export const controlDateBtns: ControlDateBtnType[] = [
 ];
 
 export const minusControlDateBtns: ControlDateBtnType[] = [
-  {
-    label: '오늘',
-    calculateDate: () => new Date(formattedToday),
-    btnColor: 'stone',
-  },
   {
     label: '일주일',
     calculateDate: controlWeek,

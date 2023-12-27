@@ -18,16 +18,25 @@ export const useGetFoodList = () => {
 
   const allFoods = [...fridgeFoods, ...pantryFoods];
 
-  const expiredFoods = allFoods.filter(
+  const allCautionFoods = allFoods.filter(
     (food) => getLeftDays(food.expiredDate) < 8
   );
 
+  const threeLeftDaysFoods = allFoods.filter(
+    (food) =>
+      0 <= getLeftDays(food.expiredDate) && getLeftDays(food.expiredDate) < 4
+  );
+
+  const expiredFoods = allFoods.filter(
+    (food) => getLeftDays(food.expiredDate) < 0
+  );
+
   const getMatchedPositionFoods = (
-    type: 'allFoods' | 'expiredFoods',
+    type: 'allFoods' | 'allCautionFoods',
     space: SpaceType | Space,
     compartmentNum?: CompartmentNum
   ) => {
-    const foodList = type === 'expiredFoods' ? expiredFoods : allFoods;
+    const foodList = type === 'allCautionFoods' ? allCautionFoods : allFoods;
 
     return foodList.filter((food) => {
       if (space === '냉동실') return food.space.includes('냉동실');
@@ -103,6 +112,8 @@ export const useGetFoodList = () => {
     fridgeFoods,
     favoriteFoods,
     pantryFoods,
+    allCautionFoods,
+    threeLeftDaysFoods,
     expiredFoods,
     getMatchedPositionFoods,
     getFilteredFoodList,

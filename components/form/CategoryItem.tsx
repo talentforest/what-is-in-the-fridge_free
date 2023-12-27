@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import {
   InputStyle,
   TextInput,
@@ -17,6 +17,8 @@ import CategoryIcon from '../common/CategoryIcon';
 import tw from 'twrnc';
 import Icon from '../common/native-component/Icon';
 import { GRAY, LIGHT_BLUE } from '../../constant/colors';
+import { foodCategories } from '../../constant/foodCategories';
+import FilterTag from '../common/FilterTag';
 
 interface Props {
   isAddNewOne?: boolean;

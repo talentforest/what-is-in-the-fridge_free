@@ -5,7 +5,6 @@ import { ViewingStep } from '../../constant/viewing';
 import { ReactNode, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { closeKeyboard } from '../../util';
-import { Food } from '../../constant/foodInfo';
 import { FormStep } from '../../constant/formInfo';
 
 import HeaderIconBtn from '../buttons/HeaderIconBtn';
@@ -18,15 +17,22 @@ interface Props {
   children: ReactNode;
   headerIcon?: boolean;
   isForm?: boolean;
+  swiperWidth?: number;
 }
 
-export default function Swiper({ steps, children, headerIcon, isForm }: Props) {
+export default function Swiper({
+  steps,
+  children,
+  headerIcon,
+  isForm,
+  swiperWidth,
+}: Props) {
   const {
     moveStep,
     stepTranslateX,
     currentStep,
     panResponder, //
-  } = useSwiperAnimation({ steps });
+  } = useSwiperAnimation({ steps, swiperWidth });
 
   const navigation = useNavigation();
 

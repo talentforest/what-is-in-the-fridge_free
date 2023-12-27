@@ -7,7 +7,7 @@ import {
 import { getFormattedDate } from '../../util';
 import { Food } from '../../constant/foodInfo';
 import { useItemSlideAnimation } from '../../hooks';
-import { GRAY } from '../../constant/colors';
+import { MEDIUM_GRAY } from '../../constant/colors';
 
 import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/native-component/Icon';
@@ -49,8 +49,8 @@ export default function FoodItem({
             <Icon
               name={isEditing ? 'x' : 'pencil'}
               type='Octicons'
-              size={isEditing ? 17 : 13}
-              color={GRAY}
+              size={isEditing ? 17 : 12}
+              color={MEDIUM_GRAY}
             />
             <Text style={tw`flex-1`} numberOfLines={1} ellipsizeMode='tail'>
               {food.name}

@@ -1,35 +1,44 @@
 import { ReactNode } from 'react';
 import { View } from 'react-native';
-import { useSelector } from '../../redux/hook';
-import { useRouteName } from '../../hooks/useRouteName';
+import { useDispatch, useSelector } from '../../redux/hook';
+import { setCheckedList } from '../../redux/slice/food-list/checkListSlice';
+import { TouchableOpacity } from '../common/native-component';
+import { MEDIUM_GRAY } from '../../constant/colors';
+
+import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
 interface Props {
   children: ReactNode;
+  color?: 'stone' | 'indigo' | 'yellow';
 }
 
-export default function TableFooterContainer({ children }: Props) {
-  const { routeAllFoods } = useRouteName();
-
+export default function TableFooterContainer({ children, color }: Props) {
   const { checkedList } = useSelector((state) => state.checkedList);
 
   const active = !!checkedList.length;
 
+  const dispatch = useDispatch();
+
+  const onAllUncheckBtnPress = () => dispatch(setCheckedList([]));
+
   return (
-    <View
-      style={tw.style(
-        `bg-stone-100 ${
-          !routeAllFoods || active ? 'border-t border-gray-300' : ''
-        } px-4 -mx-4 -mb-3`,
-        {
-          shadowColor: '#aaa',
-          shadowOpacity: 0.2,
-          shadowRadius: 10,
-          shadowOffset: { height: -10, width: 0 },
-        }
-      )}
-    >
+    <View style={tw.style(`w-full bg-${color}-200 rounded-t-3xl -mt-3`)}>
       {children}
+
+      {active && (
+        <TouchableOpacity
+          onPress={onAllUncheckBtnPress}
+          style={tw`absolute -top-11 p-2 right-4 rounded-full`}
+        >
+          <Icon
+            name='x-circle-fill'
+            type='Octicons'
+            size={28}
+            color={MEDIUM_GRAY}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }

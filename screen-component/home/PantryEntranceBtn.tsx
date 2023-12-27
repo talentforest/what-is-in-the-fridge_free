@@ -53,11 +53,16 @@ export default function PantryEntranceBtn() {
         {assets.length ? (
           <View
             style={tw.style(
-              `flex-row -gap-4 absolute -top-9 right-1 self-end items-end`
+              `flex-row -gap-4 absolute -top-8.5 right-0 self-end items-end`
             )}
           >
             <Image source={{ uri: appleLocalUri }} width={45} height={45} />
-            <Image source={{ uri: bananaLocalUri }} width={65} height={65} />
+            <Image
+              source={{ uri: bananaLocalUri }}
+              width={65}
+              height={65}
+              style={{ transform: [{ rotate: '15deg' }] }}
+            />
           </View>
         ) : (
           <></>

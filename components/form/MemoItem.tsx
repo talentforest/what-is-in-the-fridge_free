@@ -20,6 +20,7 @@ import FormMessage from './FormMessage';
 import IconChevronUp from '../svg/arrow/IconChevronUp';
 import IconChevronDown from '../svg/arrow/IconChevronDown';
 import tw from 'twrnc';
+import ChevronToggleBtn from '../buttons/ChevronToggleBtn';
 
 const MEMO_MAX_LENGTH = 70;
 
@@ -60,20 +61,7 @@ export default function MemoItem() {
   return (
     <View>
       <FormLabel label='메모'>
-        <TouchableOpacity
-          onPress={onPress}
-          style={tw`gap-0.5 pl-4 flex-row items-center justify-end`}
-        >
-          {isMemoOpen ? (
-            <IconChevronUp size={14} color={MEDIUM_GRAY} />
-          ) : (
-            <IconChevronDown size={14} color={MEDIUM_GRAY} />
-          )}
-
-          <Text fontSize={15} style={tw`text-slate-600`}>
-            {isMemoOpen ? '생략하기' : '추가하기'}
-          </Text>
-        </TouchableOpacity>
+        <ChevronToggleBtn onPress={onPress} isOpen={isMemoOpen} />
       </FormLabel>
 
       <Animated.View

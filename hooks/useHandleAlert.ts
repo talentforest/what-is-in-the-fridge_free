@@ -27,6 +27,7 @@ import {
 import { showAddAtOnceModal } from '../redux/slice/modalVisibleSlice';
 import { search } from '../redux/slice/food/searchedFoodSlice';
 import { setFavoriteList } from '../redux/slice/food-list/favoriteFoodsSlice';
+import { getNameListCanMarkEtc } from '../util';
 
 export type AlertBtns = {
   name: AlertBtnName;
@@ -275,14 +276,11 @@ export const useHandleAlert = () => {
       ],
     };
 
-    const namesStr = `${checkedList
-      .map((food) => food.name)
-      .slice(0, 8)
-      .join(', ')}${listLength > 8 ? ' 등...' : ''}`;
+    const foodNames = getNameListCanMarkEtc(checkedList, 8);
 
     const alertDeleteFavoriteFoods: AlertObj = {
       title: '자주 먹는 식료품 삭제',
-      msg: `총 ${listLength}개의 식료품(${namesStr})을 자주 먹는 식료품에서 삭제하시겠어요?`,
+      msg: `총 ${listLength}개의 식료품(${foodNames})을 자주 먹는 식료품에서 삭제하시겠어요?`,
       btns: [
         { name: '취소', fn: closeAlertModal },
         { name: '삭제', fn: onDeleteBtnPress },
@@ -291,7 +289,7 @@ export const useHandleAlert = () => {
 
     const alertDeleteExpiredFoods: AlertObj = {
       title: '소비기한 주의 식료품 삭제',
-      msg: `총 ${listLength}개의 식료품(${namesStr})을 삭제하시겠어요? 냉장고나 실온보관 공간에서도 삭제돼요.`,
+      msg: `총 ${listLength}개의 식료품(${foodNames})을 삭제하시겠어요? 냉장고나 실온보관 공간에서도 삭제돼요.`,
       btns: [
         { name: '취소', fn: closeAlertModal },
         { name: '삭제', fn: onDeleteBtnPress },
@@ -300,7 +298,7 @@ export const useHandleAlert = () => {
 
     const alertDeleteFromShoppingList: AlertObj = {
       title: '장보기 식료품 삭제',
-      msg: `총 ${listLength}개의 식료품(${namesStr})을 장보기 목록에서 삭제하시겠어요?`,
+      msg: `총 ${listLength}개의 식료품(${foodNames})을 장보기 목록에서 삭제하시겠어요?`,
       btns: [
         { name: '취소', fn: closeAlertModal },
         { name: '삭제', fn: onDeleteBtnPress },
@@ -309,7 +307,7 @@ export const useHandleAlert = () => {
 
     const alertAddToShoppingList: AlertObj = {
       title: '장보기 목록 추가',
-      msg: `총 ${listLength}개의 식료품(${namesStr})을 장보기 목록에 추가합니다.`,
+      msg: `총 ${listLength}개의 식료품(${foodNames})을 장보기 목록에 추가합니다.`,
       btns: [
         { name: '취소', fn: closeAlertModal },
         { name: '확인', fn: onAddShoppingListBtnPress },

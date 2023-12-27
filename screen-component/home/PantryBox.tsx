@@ -5,8 +5,8 @@ interface Props {
 }
 
 export default function PantryBox({ size }: Props) {
-  const coverColor = '#c7d2fe';
-  const boxColor = '#dbeafe';
+  const coverColor = '#bfd090';
+  const boxColor = '#ffe8a8';
   const lineColor = '#030202';
   const holeColor = '#373737';
 

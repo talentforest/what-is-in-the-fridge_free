@@ -1,12 +1,12 @@
 import { View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   InputStyle,
   TextInput,
   TouchableOpacity,
 } from '../common/native-component';
 import { getDiffDate, getFormattedDate } from '../../util';
-import { BLUE, DEEP_GRAY, LIGHT_BLUE } from '../../constant/colors';
+import { BLUE, LIGHT_BLUE } from '../../constant/colors';
 import { controlDateBtns } from '../../constant/controlDateBtns';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { useDispatch, useSelector } from '../../redux/hook';
@@ -23,14 +23,14 @@ import FormLabel from './FormLabel';
 import ControlDateBtn from '../buttons/ControlDateBtn';
 import DateNumInputModal from '../../screen-component/modal/DateNumInputModal';
 import RelativeTime from '../common/RelativeTime';
-import CheckBoxItem from '../common/CheckBoxItem';
+import RestoreDateBtn from '../buttons/RestoreDateBtn';
 import tw from 'twrnc';
-import { toggleExpiredItemClosed } from '../../redux/slice/food/isMemoOpenSlice';
 
 export default function ExpiredDateItem() {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const { datePickerViewing } = useSelector((state) => state.datePickerViewing);
   const { isExpiredItemClosed } = useSelector((state) => state.isFormItemOpen);
+  const { expiredDateModal } = useSelector((state) => state.modalVisible);
 
   const {
     formFood: { expiredDate },
@@ -43,12 +43,6 @@ export default function ExpiredDateItem() {
   });
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (expiredDate === '') {
-      dispatch(toggleExpiredItemClosed(true));
-    }
-  }, []);
 
   const changeDate = (newDate: Date | string) => {
     const expiredDate = newDate ? getFormattedDate(newDate, 'YYYY-MM-DD') : '';
@@ -72,49 +66,45 @@ export default function ExpiredDateItem() {
     }
   };
 
-  const toggleExpiredItemOpen = () => {
-    changeDate(isExpiredItemClosed ? new Date() : '');
-    dispatch(toggleExpiredItemClosed(!isExpiredItemClosed));
-  };
-
   return (
     <View>
-      <FormLabel label='소비기한'>
-        <CheckBoxItem
-          onPress={toggleExpiredItemOpen}
-          checked={isExpiredItemClosed}
-          title='소비기한이 중요하지 않아요'
-          activeColor={DEEP_GRAY}
-          size={15}
-        />
-      </FormLabel>
+      <FormLabel label='소비기한' />
 
       <Animated.View style={{ height, overflow: 'hidden' }}>
-        <TouchableOpacity
-          onPress={onInputBoxPress}
-          style={tw.style(
-            `flex-row items-center ${InputStyle} p-0`,
-            shadowStyle(3)
-          )}
-        >
-          {expiredDate && (
-            <>
-              <TextInput
-                editable={false}
-                value={getFormattedDate(expiredDate, 'YY.MM.DD')}
-                style={tw`border-0 h-full bg-transparent pr-0.5`}
+        <View style={tw`flex-row items-center gap-1`}>
+          <RestoreDateBtn changeDate={changeDate} />
+
+          <TouchableOpacity
+            onPress={onInputBoxPress}
+            style={tw.style(
+              `flex-1 flex-row items-center ${InputStyle} p-0`,
+              shadowStyle(3)
+            )}
+          >
+            <TextInput
+              editable={false}
+              value={getFormattedDate(expiredDate, 'YY.MM.DD')}
+              style={tw`border-0 h-full bg-transparent pr-0.5`}
+            />
+
+            {getDiffDate(expiredDate) >= 0 && (
+              <RelativeTime date={expiredDate} type='소비기한' />
+            )}
+
+            <View style={tw`absolute right-2`}>
+              <Icon
+                name={
+                  datePickerViewing === '숫자로 날짜 입력'
+                    ? 'pencil'
+                    : 'calendar'
+                }
+                type='Octicons'
+                size={14}
+                color={LIGHT_BLUE}
               />
-
-              {getDiffDate(expiredDate) >= 0 && (
-                <RelativeTime date={expiredDate} />
-              )}
-            </>
-          )}
-
-          <View style={tw`absolute right-2`}>
-            <Icon name='pencil' type='Octicons' size={14} color={LIGHT_BLUE} />
-          </View>
-        </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </View>
 
         <View style={tw`mt-1.5 gap-1 flex-row flex-wrap items-start`}>
           {controlDateBtns.map((btn) => (
@@ -130,7 +120,9 @@ export default function ExpiredDateItem() {
       </Animated.View>
 
       {/* 날짜 숫자 입력 모달 */}
-      {datePickerViewing === '숫자로 날짜 입력' && <DateNumInputModal />}
+      {datePickerViewing === '숫자로 날짜 입력' && expiredDateModal && (
+        <DateNumInputModal />
+      )}
 
       {datePickerViewing === '달력으로 날짜 입력' && datePickerVisible && (
         <RNDateTimePicker

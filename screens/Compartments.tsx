@@ -25,6 +25,8 @@ import Swiper from '../components/common/Swiper';
 import ViewByCompartment from '../screen-component/compartments/ViewByCompartment';
 import TableFilters from '../components/table/TableFilters';
 import tw from 'twrnc';
+import Container from '../components/common/Container';
+import { BGCOLOR_COMPARTMENTS, TAB_BLUE_BG_COLOR } from '../constant/colors';
 
 type RouteParams = {
   space: Space;
@@ -89,33 +91,37 @@ export default function Compartments({ route }: Route) {
 
   return (
     <SafeBottomAreaView>
-      <View style={tw`px-4`}>
-        <TableFilters
-          filterTagList={[entireFilterObj, ...expiredFilters]}
-          foodList={foodList}
-        />
-      </View>
-
-      <Swiper headerIcon steps={viewingArr}>
-        {viewingArr.map(({ step, name }) => (
-          <View key={step} style={tw`w-full px-4 pb-4`}>
-            {name === '칸별로 보기' && (
-              <ViewByCompartment
-                foodList={foodList}
-                space={space}
-                scrollViewRef={scrollViewRef}
-              />
-            )}
-
-            {name === '목록으로 보기' && (
-              <>
-                {sortedFilterList?.length ? <TableHeader /> : <></>}
-                <TableBody title='식료품' foodList={sortedFilterList} />
-              </>
-            )}
+      <Container bgColor={BGCOLOR_COMPARTMENTS}>
+        <View style={tw`-mx-4 flex-1`}>
+          <View style={tw`px-4`}>
+            <TableFilters
+              filterTagList={[entireFilterObj, ...expiredFilters]}
+              foodList={foodList}
+            />
           </View>
-        ))}
-      </Swiper>
+
+          <Swiper headerIcon steps={viewingArr}>
+            {viewingArr.map(({ step, name }) => (
+              <View key={step} style={tw`w-full px-4`}>
+                {name === '칸별로 보기' && (
+                  <ViewByCompartment
+                    foodList={foodList}
+                    space={space}
+                    scrollViewRef={scrollViewRef}
+                  />
+                )}
+
+                {name === '목록으로 보기' && (
+                  <>
+                    {sortedFilterList?.length ? <TableHeader /> : <></>}
+                    <TableBody title='식료품' foodList={sortedFilterList} />
+                  </>
+                )}
+              </View>
+            ))}
+          </Swiper>
+        </View>
+      </Container>
 
       <FoodDetailModal formSteps={formThreeSteps} />
 

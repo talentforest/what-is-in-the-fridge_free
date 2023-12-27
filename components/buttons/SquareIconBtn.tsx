@@ -17,15 +17,15 @@ export default function SquareIconBtn({ onPress, icon, btnName }: Props) {
     <TouchableOpacity
       onPress={onPress}
       style={tw.style(
-        `bg-white border min-h-11 border-slate-200 ml-1 mb-0.5 items-center justify-center rounded-2xl`,
+        `bg-white border-2 border-indigo-200 items-center justify-center rounded-xl`,
         shadowStyle(4)
       )}
     >
-      <View style={tw`px-3 py-1.5 flex-row items-center gap-1`}>
+      <View style={tw`p-2.5 flex-row items-center gap-1`}>
         <Icon
           type='MaterialCommunityIcons'
           name={icon}
-          size={16}
+          size={15}
           color={icon.includes('plus') ? BLUE : AMBER}
         />
         <Text>{btnName}</Text>

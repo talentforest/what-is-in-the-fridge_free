@@ -5,9 +5,15 @@ import {
 } from '@react-navigation/native-stack';
 import { NavigationProp } from '@react-navigation/native';
 import {
-  BACKGROUND_COLOR,
+  BGCOLOR_COMPARTMENTS,
+  BGCOLOR_DEFAULT,
+  BGCOLOR_FAVORITELIST,
+  BGCOLOR_PANTRYFOODS,
   DEEP_GRAY,
   HEADER_BGCOLOR,
+  LIGHTEST_INDIGO,
+  LIGHT_GREEN,
+  LIGHT_YELLOW,
   TAB_BLUE_BG_COLOR,
 } from '../constant/colors';
 import { useEffect } from 'react';
@@ -109,7 +115,7 @@ const Navigation = () => {
         component={Compartments}
         options={{
           ...options,
-          headerStyle: { backgroundColor: TAB_BLUE_BG_COLOR },
+          headerStyle: { backgroundColor: BGCOLOR_COMPARTMENTS },
         }}
       />
 
@@ -119,7 +125,7 @@ const Navigation = () => {
         options={{
           ...options,
           headerTitle: () => <NavigationHeaderTitle title='실온보관 식료품' />,
-          headerStyle: { backgroundColor: BACKGROUND_COLOR },
+          headerStyle: { backgroundColor: BGCOLOR_PANTRYFOODS },
         }}
       />
 
@@ -131,6 +137,7 @@ const Navigation = () => {
           headerTitle: () => (
             <NavigationHeaderTitle title='자주 먹는 식료품 관리' />
           ),
+          headerStyle: { backgroundColor: BGCOLOR_FAVORITELIST },
         }}
       />
 
@@ -140,6 +147,7 @@ const Navigation = () => {
         options={{
           ...options,
           headerTitle: () => <NavigationHeaderTitle title='전체 식료품 관리' />,
+          headerStyle: { backgroundColor: BGCOLOR_DEFAULT },
         }}
       />
 

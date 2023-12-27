@@ -54,10 +54,10 @@ export default function TableItemEnd({ title, food }: Props) {
 
   const positionTagColor = (position: Space) => {
     const tagColor = position.includes('냉동실')
-      ? 'blue'
+      ? 'cyan'
       : position.includes('냉장실')
-      ? 'green'
-      : 'indigo';
+      ? 'blue'
+      : 'green';
 
     return tagColor;
   };

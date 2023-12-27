@@ -32,21 +32,16 @@ export default function TextInputRoundedBox({
   const { checkedList } = useSelector((state) => state.checkedList);
 
   const { height } = useItemSlideAnimation({
-    initialValue: 66,
+    initialValue: 70,
     toValue: 0,
     active: checkedList.length > 0,
   });
 
   return (
-    <Animated.View
-      style={{
-        height,
-        overflow: 'hidden',
-      }}
-    >
+    <Animated.View style={{ height, overflow: 'hidden' }}>
       <View
         style={tw.style(
-          `flex-1 mt-3 mb-4 rounded-full items-center flex-row bg-white`,
+          `flex-1 my-4 rounded-full items-center flex-row bg-white`,
           shadowStyle(3)
         )}
       >

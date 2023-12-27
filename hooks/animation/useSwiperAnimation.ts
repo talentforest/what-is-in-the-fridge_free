@@ -9,11 +9,12 @@ const DRAG_DISTANCE = 60;
 
 interface Props {
   steps: OnboardingStep[] | FormStep[] | ViewingStep[];
+  swiperWidth?: number;
 }
 
 type Step = OnboardingStep | FormStep | ViewingStep;
 
-export const useSwiperAnimation = ({ steps }: Props) => {
+export const useSwiperAnimation = ({ steps, swiperWidth }: Props) => {
   const [currentStep, setCurrentStep] = useState<Step>(steps[0]);
 
   const currentStepRef = useRef(steps[0]);
@@ -25,7 +26,7 @@ export const useSwiperAnimation = ({ steps }: Props) => {
 
   const { width } = useWindowDimensions();
 
-  const formWidth = -width;
+  const formWidth = -swiperWidth || -width;
 
   const animatedForm = (stepId: number) => {
     Animated.spring(stepTranslateX, {

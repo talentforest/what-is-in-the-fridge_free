@@ -51,7 +51,7 @@ export default function HomeShoppingList() {
   };
 
   return (
-    <SafeAreaView edges={['bottom']} style={tw`${BG_COLOR} flex-1`}>
+    <SafeAreaView edges={[]} style={tw`flex-1`}>
       <KeyboardAvoidingView>
         <Container>
           <HomeHeader title='장볼게 뭐가 있지'>
@@ -64,7 +64,49 @@ export default function HomeShoppingList() {
             flatListRef={flatListRef}
           />
 
-          <TableFooterContainer>
+          <AddShoppingListFoodModal />
+
+          <AddAtOnceModal />
+        </Container>
+
+        <View
+          style={{
+            marginTop: existCaution ? -14 : 0,
+            marginLeft: 6,
+          }}
+        >
+          <FormMessage
+            active={existCaution}
+            message='이미 목록에 있는 식료품이에요'
+            color='orange'
+          />
+        </View>
+
+        <View
+          style={{
+            marginTop: inputValue.length >= NAME_MAX_LENGTH ? -14 : 0,
+            marginLeft: 6,
+          }}
+        >
+          <FormMessage
+            active={inputValue.length >= NAME_MAX_LENGTH}
+            message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요`}
+            color='orange'
+          />
+        </View>
+
+        <SafeAreaView edges={['bottom']} style={tw`bg-stone-200`}>
+          <TableFooterContainer color='stone'>
+            <View style={tw`px-4`}>
+              <TextInputRoundedBox
+                value={inputValue}
+                setValue={setInputValue}
+                placeholder='식료품 이름을 작성해주세요'
+                onSubmitEditing={onSubmitEditing}
+                disabled={inputValue === '' || existCaution}
+              />
+            </View>
+
             <TableSelectedHandleBox foodList={shoppingList}>
               <SquareIconBtn
                 btnName='한번에 추가'
@@ -77,46 +119,8 @@ export default function HomeShoppingList() {
                 onPress={onDeleteBtnPress}
               />
             </TableSelectedHandleBox>
-
-            <TextInputRoundedBox
-              value={inputValue}
-              setValue={setInputValue}
-              placeholder='식료품 이름을 작성해주세요'
-              onSubmitEditing={onSubmitEditing}
-              disabled={inputValue === '' || existCaution}
-            />
-
-            <View
-              style={{
-                marginTop: existCaution ? -14 : 0,
-                marginLeft: 6,
-              }}
-            >
-              <FormMessage
-                active={existCaution}
-                message='이미 목록에 있는 식료품이에요'
-                color='orange'
-              />
-            </View>
-
-            <View
-              style={{
-                marginTop: inputValue.length >= NAME_MAX_LENGTH ? -14 : 0,
-                marginLeft: 6,
-              }}
-            >
-              <FormMessage
-                active={inputValue.length >= NAME_MAX_LENGTH}
-                message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요`}
-                color='orange'
-              />
-            </View>
           </TableFooterContainer>
-
-          <AddShoppingListFoodModal />
-
-          <AddAtOnceModal />
-        </Container>
+        </SafeAreaView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

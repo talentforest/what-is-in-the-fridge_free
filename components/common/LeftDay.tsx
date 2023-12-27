@@ -22,7 +22,7 @@ function LeftDay({ expiredDate, dateMark, isSuffix }: Props) {
     : `${diffDate > 0 ? '+' : ''}${diffDate}일`;
 
   return (
-    <View style={tw`items-end justify-center gap-1`}>
+    <View style={tw`items-end justify-center gap-0.5`}>
       {expiredDate !== '' ? (
         <>
           <Text fontSize={15} style={tw.style(`${textColor}`)}>
@@ -30,7 +30,7 @@ function LeftDay({ expiredDate, dateMark, isSuffix }: Props) {
           </Text>
 
           {dateMark && (
-            <Text fontSize={13} style={tw.style(`text-slate-600 -mt-0.5`)}>
+            <Text fontSize={13} style={tw.style(`text-slate-500 -mt-0.5`)}>
               {getFormattedDate(expiredDate, 'YY.MM.DD')}
             </Text>
           )}

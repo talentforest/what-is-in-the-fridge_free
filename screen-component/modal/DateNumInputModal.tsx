@@ -1,10 +1,13 @@
 import { closeKeyboard, isValidDate } from '../../util';
-import { Animated, View, useWindowDimensions } from 'react-native';
-import { useState } from 'react';
+import { Animated, TextInput, View, useWindowDimensions } from 'react-native';
+import { useRef, useState } from 'react';
 import { useItemSlideAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
-import { showExpiredDateModal } from '../../redux/slice/modalVisibleSlice';
+import {
+  showExpiredDateModal,
+  showPurchaseDateModal,
+} from '../../redux/slice/modalVisibleSlice';
 import { Text } from '../../components/common/native-component';
 
 import DateNumTokenBox from '../../components/common/DateNumTokenBox';
@@ -29,7 +32,11 @@ const initialMsg: DateState = {
 export default function DateNumInputModal() {
   const [dateToken, setDateToken] = useState(initialDateToken);
   const [inValidDate, setInValidDate] = useState<DateState>(initialMsg);
-  const { expiredDateModal } = useSelector((state) => state.modalVisible);
+  const { expiredDateModal, purchaseDateModal } = useSelector(
+    (state) => state.modalVisible
+  );
+
+  const textInputRefs = useRef<TextInput[]>([]);
 
   const dispatch = useDispatch();
 
@@ -48,11 +55,18 @@ export default function DateNumInputModal() {
   const day = `${dateToken[4]}${dateToken[5]}`;
   const convertTokenToDate = `20${year}-${month}-${day}`;
 
-  const isValid = isValidDate(convertTokenToDate);
+  const isValid = isValidDate(
+    expiredDateModal ? '소비기한' : '구매날짜',
+    convertTokenToDate
+  );
 
   const closeModal = () => {
     closeKeyboard();
-    dispatch(showExpiredDateModal(false));
+    dispatch(
+      expiredDateModal
+        ? showExpiredDateModal(false)
+        : showPurchaseDateModal(false)
+    );
     setDateToken(initialDateToken);
     setInValidDate(initialMsg);
   };
@@ -66,16 +80,23 @@ export default function DateNumInputModal() {
     closeModal();
   };
 
+  const showKeyboard = () => {
+    textInputRefs.current[0].blur();
+    textInputRefs.current[0].focus();
+  };
+
   return (
     <FadeInMiddleModal
-      title='소비기한 설정'
-      isVisible={expiredDateModal}
+      title={expiredDateModal ? '소비기한 설정' : '구매날짜 설정'}
+      isVisible={expiredDateModal || purchaseDateModal}
       closeModal={closeModal}
       style={tw`justify-start mt-28`}
+      onModalShow={showKeyboard}
     >
       <View style={tw`h-[${windowDimensionHeight * 0.2}px] `}>
         <View style={tw`w-full flex-1 flex-row items-center justify-center`}>
           <DateNumTokenBox
+            textInputRefs={textInputRefs}
             dateToken={dateToken}
             setDateToken={setDateToken}
             setInValidDate={setInValidDate}

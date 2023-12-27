@@ -17,8 +17,14 @@ export type ModalTitle =
   | `${CompartmentNum}칸 크게 보기`
   | '카테고리 선택'
   | '소비기한 설정'
+  | '구매날짜 설정'
   | '한번에 추가할 공간'
-  | '추가할 식료품 정보';
+  | '추가할 식료품 정보'
+  | '식료품 상세 정보'
+  | '장보기 목록 식료품 추가'
+  | '식료품 정보 수정'
+  | '식료품 위치 수정'
+  | '새로운 식료품 추가';
 
 interface Props {
   isVisible: boolean;
@@ -26,6 +32,7 @@ interface Props {
   title: ModalTitle;
   closeModal?: () => void;
   style?: StyleProp<any>;
+  onModalShow?: () => void;
 }
 
 export default function FadeInMiddleModal({
@@ -34,6 +41,7 @@ export default function FadeInMiddleModal({
   children,
   isVisible,
   closeModal,
+  onModalShow,
 }: Props) {
   const { height } = useWindowDimensions();
 
@@ -45,6 +53,7 @@ export default function FadeInMiddleModal({
 
   return (
     <RNModal
+      onModalShow={onModalShow}
       isVisible={isVisible}
       onBackdropPress={title === '알림' ? undefined : closeModal}
       backdropTransitionOutTiming={0} // 안드로이드 깜박임 이슈

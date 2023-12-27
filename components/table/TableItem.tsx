@@ -22,7 +22,7 @@ interface Props {
   checkBox?: boolean;
 }
 
-export const TABLE_ITEM_HEIGHT = 45;
+export const TABLE_ITEM_HEIGHT = 44;
 
 export default function TableItem({
   food,
@@ -85,10 +85,12 @@ export default function TableItem({
         <TouchableOpacity
           onPress={onItemPress}
           style={tw.style(
-            `border h-[${TABLE_ITEM_HEIGHT - 4}px] 
-            ${checkedItem ? 'border-blue-400' : 'border-slate-200'} 
-            bg-white flex-row items-center gap-1 pl-3 rounded-xl mx-1`,
-            shadowStyle(4)
+            `bg-white border h-[${TABLE_ITEM_HEIGHT - 6}px] 
+            ${
+              checkedItem ? 'border-slate-200 bg-blue-100' : 'border-slate-100'
+            } 
+            flex-row items-center gap-1 pl-3 rounded-xl mx-1`,
+            shadowStyle(3)
           )}
         >
           {checkBox && <CheckBox checked={checkedItem} />}

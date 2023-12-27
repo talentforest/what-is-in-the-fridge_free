@@ -45,7 +45,7 @@ export default function FridgeSpaceInfo({ space }: Props) {
       iconName: 'alert-rhombus-outline',
       name: '소비기한 주의',
       foodList: (space: Space) =>
-        getMatchedPositionFoods('expiredFoods', space),
+        getMatchedPositionFoods('allCautionFoods', space),
     },
   ];
 

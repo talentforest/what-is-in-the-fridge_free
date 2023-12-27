@@ -30,19 +30,11 @@ export default function ControlDateBtn({ type, btn, changeDate, date }: Props) {
     <TouchableOpacity
       onPress={() => changeDate(btn.calculateDate(type, new Date(date)))}
       style={tw.style(
-        `pl-2.2 pr-1.2 h-8 rounded-3xl flex-row items-center justify-center 
-        bg-${btn.btnColor}-100 border border-${btn.btnColor}-200`,
+        `px-1.5 gap-0.5 h-7.5 rounded-3xl flex-row items-center justify-center 
+        bg-${btn.btnColor}-50 border border-${btn.btnColor}-100`,
         shadowStyle(3)
       )}
     >
-      <Text fontSize={15} style={tw`pr-0.5 text-${btn.btnColor}-700`}>
-        {btn.label}
-      </Text>
-
-      {btn.label === '오늘' && (
-        <Icon name='sync' type='Octicons' size={11} color={GRAY} />
-      )}
-
       {btn.label !== '오늘' && (
         <Icon
           name={type === 'add' ? 'plus' : 'dash'}
@@ -51,6 +43,10 @@ export default function ControlDateBtn({ type, btn, changeDate, date }: Props) {
           color={btnColor}
         />
       )}
+
+      <Text fontSize={14} style={tw`pr-0.5 text-${btn.btnColor}-700`}>
+        {btn.label}
+      </Text>
     </TouchableOpacity>
   );
 }

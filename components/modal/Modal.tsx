@@ -38,9 +38,7 @@ export default function Modal({
 }: Props) {
   const { height } = useWindowDimensions();
 
-  const { isPurchaseItemOpen } = useSelector((state) => state.isFormItemOpen);
-
-  const MODAL_HEIGHT = height * 0.9;
+  const MODAL_HEIGHT = height * 0.95;
 
   const modalBorderColor = 'border-slate-300 border';
 

@@ -23,27 +23,33 @@ type AddAtOnceModal = {
   currentStep: AddAtOnceStep;
 };
 
-export const initialState: {
+type ModalState = {
   formModal: boolean;
   expiredDateModal: boolean;
+  purchaseDateModal: boolean;
   addAtOnceModal: AddAtOnceModal;
   categoryModalVisible: boolean;
   categoryFilterModalVisible: boolean;
   openFoodDetailModal: boolean;
   expandCompartmentModal: CompartmentModal;
   openAddFoodModal: CompartmentModal;
-} = {
+  openFoodPositionModal: boolean;
+};
+
+export const initialState: ModalState = {
   formModal: false,
   addAtOnceModal: {
     modalVisible: false,
     currentStep: { step: 1, name: '한번에 추가할 공간' },
   },
   expiredDateModal: false,
+  purchaseDateModal: false,
   categoryModalVisible: false,
   categoryFilterModalVisible: false,
   openFoodDetailModal: false,
   expandCompartmentModal: { modalVisible: false, compartmentNum: '1번' },
   openAddFoodModal: { modalVisible: false, compartmentNum: '1번' },
+  openFoodPositionModal: false,
 };
 
 const modalVisibleSlice = createSlice({
@@ -92,6 +98,9 @@ const modalVisibleSlice = createSlice({
     showExpiredDateModal: (state, action: { payload: boolean }) => {
       state.expiredDateModal = action.payload;
     },
+    showPurchaseDateModal: (state, action: { payload: boolean }) => {
+      state.purchaseDateModal = action.payload;
+    },
     showCategoryModal: (state, { payload }: { payload: boolean }) => {
       state.categoryModalVisible = payload;
     },
@@ -100,6 +109,9 @@ const modalVisibleSlice = createSlice({
     },
     showOpenFoodDetailModal: (state, { payload }: { payload: boolean }) => {
       state.openFoodDetailModal = payload;
+    },
+    showOpenFoodPositionModal: (state, { payload }: { payload: boolean }) => {
+      state.openFoodPositionModal = payload;
     },
     showExpandCompartmentModal: (
       state,
@@ -128,6 +140,7 @@ const { reducer: modalVisibleReducer } = modalVisibleSlice;
 export const {
   closeAllModal,
   showExpiredDateModal,
+  showPurchaseDateModal,
   showFormModal,
   showAddAtOnceModal,
   changeAddAtOnceStep,
@@ -136,6 +149,7 @@ export const {
   showOpenFoodDetailModal,
   showExpandCompartmentModal,
   showOpenAddFoodModal,
+  showOpenFoodPositionModal,
 } = modalVisibleSlice.actions;
 
 export default modalVisibleReducer;

@@ -30,6 +30,7 @@ import afterAnimationReducer from './slice/afterAnimationSlice';
 import modalVisibleReducer from './slice/modalVisibleSlice';
 import purchaseReducer from './slice/purchaseSlice';
 import toggleFormItemOpenReducer from './slice/food/isMemoOpenSlice';
+import notificationReducer from './slice/notificationSlice';
 
 const reducers = {
   fridgeFoods: fridgeFoodsReducer,
@@ -50,6 +51,7 @@ const reducers = {
   category: categoryReducer,
   afterAnimation: afterAnimationReducer,
   purchaseState: purchaseReducer,
+  notification: notificationReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

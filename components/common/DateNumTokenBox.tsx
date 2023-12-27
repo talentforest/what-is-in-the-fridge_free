@@ -1,5 +1,5 @@
 import { TextInput, View } from 'react-native';
-import { useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 import {
   DateState,
   DateType,
@@ -11,13 +11,17 @@ import { useSelector } from '../../redux/hook';
 import tw from 'twrnc';
 
 interface Props {
+  textInputRefs: MutableRefObject<TextInput[]>;
   dateToken: string[];
   setDateToken: (tokens: string[]) => void;
   setInValidDate: React.Dispatch<React.SetStateAction<DateState>>;
   width: number;
 }
 
+// 2. 이후 칸부터 적는 경우 앞의 칸들은 오늘 날짜와 같은 숫자들로 채워지기
+
 export default function DateNumTokenBox({
+  textInputRefs,
   dateToken,
   setDateToken,
   setInValidDate,
@@ -26,7 +30,9 @@ export default function DateNumTokenBox({
   const { fontFamily } = useSelector((state) => state.fontFamily);
   const [isFocusedItem, setIsFocusedItem] = useState(0);
 
-  const textInputRefs = useRef<TextInput[]>([]);
+  useEffect(() => {
+    textInputRefs.current[0].focus();
+  }, []);
 
   const setRef = (ele: TextInput, index: number) =>
     (textInputRefs.current[index] = ele);
@@ -92,7 +98,7 @@ export default function DateNumTokenBox({
                    isFocusedItem === idx ||
                    (isFocusedItem === 6 && idx + 1 === isFocusedItem) ||
                    (isFocusedItem === -1 && idx - 1 === isFocusedItem)
-                     ? 'border-amber-400 border-2'
+                     ? 'border-blue-600 border-2'
                      : 'border-slate-200 border-2'
                  }`
               )}
@@ -106,7 +112,6 @@ export default function DateNumTokenBox({
                 maxLength={1}
                 selectionColor={'#f5f5f4'}
                 value={dateToken[idx]}
-                autoFocus={idx === isFocusedItem - 1}
                 onFocus={() => changeFocus(idx)}
                 onChangeText={(text) => onChangeText(text, idx)}
                 onKeyPress={({ nativeEvent: { key } }) => onKeyPress(key, idx)}

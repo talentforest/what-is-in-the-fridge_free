@@ -9,17 +9,9 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
-const FAV_ITEM_MAX = 4;
+const FAV_ITEM_MAX = 2;
 
-interface Props {
-  recommendListHeight: number;
-  setRecommendListHeight: React.Dispatch<React.SetStateAction<number>>;
-}
-
-export default function MatchedFavoriteFoodNameList({
-  recommendListHeight,
-  setRecommendListHeight,
-}: Props) {
+export default function MatchedFavoriteFoodNameList() {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const {
     formFood: { name },
@@ -38,11 +30,15 @@ export default function MatchedFavoriteFoodNameList({
 
   const { height } = useItemSlideAnimation({
     initialValue: 0,
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     toValue: 46,
     active: !!matchedFoodList?.length,
 =======
     toValue: recommendListHeight + 14,
+=======
+    toValue: 36,
+>>>>>>> Stashed changes
     active: !!recommendFoodList?.length,
 >>>>>>> f0f5642 (UI fix: 추천 식료품 개수 늘리기)
   });
@@ -56,6 +52,7 @@ export default function MatchedFavoriteFoodNameList({
 =======
         <Animated.View style={tw.style(`overflow-hidden`, { height })}>
           {!!recommendFoodList?.length && (
+<<<<<<< Updated upstream
 >>>>>>> f0f5642 (UI fix: 추천 식료품 개수 늘리기)
             <View
               onLayout={(e) => {
@@ -69,10 +66,14 @@ export default function MatchedFavoriteFoodNameList({
               )}
             >
               {matchedFoodList.slice(0, FAV_ITEM_MAX).map((food) => (
+=======
+            <View style={tw`flex-wrap flex-row gap-1 mt-1.5 items-center`}>
+              {recommendFoodList.slice(0, FAV_ITEM_MAX).map((food) => (
+>>>>>>> Stashed changes
                 <TouchableOpacity
                   key={food.id}
                   style={tw.style(
-                    `max-w-full h-8 border border-blue-200 flex-row items-center bg-blue-100 px-2 rounded-full`,
+                    `max-w-full h-7.5 border border-blue-200 flex-row items-center bg-blue-100 px-2 rounded-full`,
                     shadowStyle(4)
                   )}
                   onPress={() => onMatchedFoodPress(food.name)}

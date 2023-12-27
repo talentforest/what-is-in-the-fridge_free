@@ -14,8 +14,9 @@ interface Props {
   filter: Filter;
   index?: number;
   onFilterPress: (filter: Filter, index?: number) => void;
-  getLengthByFilterTag: (filter: Filter) => number;
+  getLengthByFilterTag?: (filter: Filter) => number;
   foodIcon?: boolean;
+  checked?: boolean;
 }
 
 export default function FilterTag({
@@ -24,14 +25,18 @@ export default function FilterTag({
   onFilterPress,
   getLengthByFilterTag,
   foodIcon,
+  checked,
 }: Props) {
   const { currentFilter, isCategoryFilter } = useHandleFilter();
 
   const byCategory = filter === '카테고리별';
 
-  const active = byCategory ? !!isCategoryFilter : filter === currentFilter;
+  const active =
+    checked || (byCategory ? !!isCategoryFilter : filter === currentFilter);
 
-  const length = byCategory
+  const length = !getLengthByFilterTag
+    ? 0
+    : byCategory
     ? getLengthByFilterTag(isCategoryFilter)
     : getLengthByFilterTag(filter);
 
@@ -46,29 +51,41 @@ export default function FilterTag({
       onPress={onPress}
       style={tw.style(
         `${getTagColor(currentFilter, active, 'bg')} 
-        min-w-14 flex-row items-center justify-between border py-2 px-3.5 gap-1.5 rounded-full`,
+        min-w-14 flex-row items-center justify-between border py-2 px-2.5 gap-1 rounded-full`,
         shadowStyle(3)
       )}
     >
       {foodIcon && (
         <CategoryIcon
           category={filter as Category}
-          size={16}
+          size={15}
           inActive={!active && length === 0}
         />
       )}
 
-      <Text
-        fontSize={15}
-        style={tw`${getTagColor(currentFilter, active, 'text')}`}
-      >
-        {filter}
-        {byCategory ? byCategoryFilter : ` ${length}개`}
-      </Text>
+      <View style={tw`flex-row items-center`}>
+        <Text
+          fontSize={15}
+          style={tw`${getTagColor(currentFilter, active, 'text')}`}
+        >
+          {filter}
+        </Text>
+
+        <Text
+          fontSize={15}
+          style={tw`${getTagColor(currentFilter, active, 'text')}`}
+        >
+          {!getLengthByFilterTag
+            ? ''
+            : byCategory
+            ? byCategoryFilter
+            : ` ${length}개`}
+        </Text>
+      </View>
 
       {byCategory && (
-        <View style={tw`-mx-1`}>
-          <IconChevronDown size={14} color={byCategoryFilter ? BLUE : GRAY} />
+        <View style={tw`-mr-1`}>
+          <IconChevronDown size={13} color={byCategoryFilter ? BLUE : GRAY} />
         </View>
       )}
     </TouchableOpacity>

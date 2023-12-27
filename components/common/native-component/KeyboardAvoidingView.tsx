@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function KeyboardAvoidingView({ children }: Props) {
-  const tabOffset = 5;
+  const tabOffset = -0;
   const iosOffset = tabOffset + (statusBarHeight || 0);
 
   return (

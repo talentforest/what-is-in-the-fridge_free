@@ -28,7 +28,7 @@ export default function EditingBox({ isEditing, setIsEditing }: Props) {
 
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: favoriteFood ? 204 : 276,
+    toValue: favoriteFood ? 180 : 258,
     active: isEditing,
   });
 

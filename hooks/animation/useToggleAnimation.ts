@@ -23,9 +23,9 @@ export const useToggleAnimation = ({
 
   useEffect(() => {
     if (active) {
-      animatedToggle(0);
-    } else {
       animatedToggle(toValue);
+    } else {
+      animatedToggle(initialValue);
     }
   }, [active]);
 

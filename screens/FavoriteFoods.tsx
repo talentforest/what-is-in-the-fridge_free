@@ -13,8 +13,9 @@ import {
 import { changeCategory } from '../redux/slice/food/categorySlice';
 import { NAME_MAX_LENGTH } from '../constant/foodInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { BGCOLOR_FAVORITELIST } from '../constant/colors';
 
-import Container, { BG_COLOR } from '../components/common/Container';
+import Container from '../components/common/Container';
 import TableFooterContainer from '../components/table/TableFooterContainer';
 import TableFilters from '../components/table/TableFilters';
 import TableSelectedHandleBox from '../components/table/TableSelectedHandleBox';
@@ -68,9 +69,9 @@ export default function FavoriteFoods() {
   };
 
   return (
-    <SafeAreaView edges={['bottom']} style={tw`${BG_COLOR} flex-1`}>
+    <SafeAreaView edges={[]} style={tw`flex-1`}>
       <KeyboardAvoidingView>
-        <Container>
+        <Container bgColor={BGCOLOR_FAVORITELIST}>
           {favoriteFoods.length ? (
             <TableFilters
               filterTagList={[entireFilterObj, ...existAbsenceFilters]}
@@ -86,8 +87,22 @@ export default function FavoriteFoods() {
             foodList={foodList}
             flatListRef={flatListRef}
           />
+        </Container>
 
-          <TableFooterContainer>
+        <SafeAreaView edges={['bottom']} style={tw`bg-indigo-200`}>
+          <TableFooterContainer color='indigo'>
+            <View style={tw`px-4`}>
+              <TextInputRoundedBox
+                value={inputValue}
+                setValue={setInputValue}
+                placeholder='자주 먹는 식료품을 추가하세요'
+                onSubmitEditing={onSubmitEditing}
+                disabled={inputValue === '' || existCaution}
+              >
+                <InputCategoryBtn />
+              </TextInputRoundedBox>
+            </View>
+
             <TableSelectedHandleBox foodList={foodList}>
               <SquareIconBtn
                 btnName='장보기 추가'
@@ -101,60 +116,52 @@ export default function FavoriteFoods() {
               />
             </TableSelectedHandleBox>
 
-            <TextInputRoundedBox
-              value={inputValue}
-              setValue={setInputValue}
-              placeholder='자주 먹는 식료품을 추가하세요'
-              onSubmitEditing={onSubmitEditing}
-              disabled={inputValue === '' || existCaution}
-            >
-              <InputCategoryBtn />
-            </TextInputRoundedBox>
+            <View style={tw`px-4`}>
+              <View
+                style={{
+                  marginTop: existCaution ? -14 : 0,
+                  marginLeft: 6,
+                  marginBottom:
+                    diffCategory && !!inputValue && existCaution ? 10 : 0,
+                }}
+              >
+                <FormMessage
+                  active={existCaution}
+                  message='이미 목록에 있는 식료품이에요'
+                  color='orange'
+                />
+              </View>
 
-            <View
-              style={{
-                marginTop: existCaution ? -14 : 0,
-                marginLeft: 6,
-                marginBottom:
-                  diffCategory && !!inputValue && existCaution ? 10 : 0,
-              }}
-            >
-              <FormMessage
-                active={existCaution}
-                message='이미 목록에 있는 식료품이에요'
-                color='orange'
-              />
-            </View>
+              <View
+                style={{
+                  marginTop: diffCategory && !!inputValue ? -14 : 0,
+                  marginLeft: 6,
+                }}
+              >
+                <FormMessage
+                  active={diffCategory && !!inputValue}
+                  message={`${category} 카테고리에 저장됩니다`}
+                  color='green'
+                />
+              </View>
 
-            <View
-              style={{
-                marginTop: diffCategory && !!inputValue ? -14 : 0,
-                marginLeft: 6,
-              }}
-            >
-              <FormMessage
-                active={diffCategory && !!inputValue}
-                message={`${category} 카테고리에 저장됩니다`}
-                color='green'
-              />
-            </View>
-
-            <View
-              style={{
-                marginTop: inputValue.length >= NAME_MAX_LENGTH ? -14 : 0,
-                marginLeft: 6,
-              }}
-            >
-              <FormMessage
-                active={inputValue.length >= NAME_MAX_LENGTH}
-                message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요`}
-                color='orange'
-              />
+              <View
+                style={{
+                  marginTop: inputValue.length >= NAME_MAX_LENGTH ? -14 : 0,
+                  marginLeft: 6,
+                }}
+              >
+                <FormMessage
+                  active={inputValue.length >= NAME_MAX_LENGTH}
+                  message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요`}
+                  color='orange'
+                />
+              </View>
             </View>
           </TableFooterContainer>
+        </SafeAreaView>
 
-          <AlertModal />
-        </Container>
+        <AlertModal />
 
         <CategoryModal />
       </KeyboardAvoidingView>

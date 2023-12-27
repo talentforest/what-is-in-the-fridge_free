@@ -56,23 +56,23 @@ export default function AllFoods() {
 
         <TableBody title='전체 식료품' foodList={foodList} />
 
-        <TableFooterContainer>
-          <TableSelectedHandleBox foodList={foodList}>
-            <SquareIconBtn
-              btnName='장보기 추가'
-              icon='basket-plus-outline'
-              onPress={onAddShoppingListBtnPress}
-            />
-            <SquareIconBtn
-              btnName='삭제'
-              onPress={onDeleteBtnPress}
-              icon='trash-can-outline'
-            />
-          </TableSelectedHandleBox>
-        </TableFooterContainer>
-
         <AlertModal />
       </Container>
+
+      <TableFooterContainer color='yellow'>
+        <TableSelectedHandleBox foodList={foodList}>
+          <SquareIconBtn
+            btnName='장보기 추가'
+            icon='basket-plus-outline'
+            onPress={onAddShoppingListBtnPress}
+          />
+          <SquareIconBtn
+            btnName='삭제'
+            onPress={onDeleteBtnPress}
+            icon='trash-can-outline'
+          />
+        </TableSelectedHandleBox>
+      </TableFooterContainer>
     </SafeBottomAreaView>
   );
 }

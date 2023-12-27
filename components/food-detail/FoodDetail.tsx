@@ -3,84 +3,171 @@ import { Text, TouchableOpacity } from '../common/native-component';
 import { getFormattedDate } from '../../util';
 import { comma } from '../../util/commaNotation';
 import { useDispatch, useSelector } from '../../redux/hook';
-import { BLUE, ORANGE_RED } from '../../constant/colors';
+import { BLUE, INDIGO, ORANGE_RED } from '../../constant/colors';
 import { shadowStyle } from '../../constant/shadowStyle';
-import { handleQuantityPantryFood } from '../../redux/slice/food-list/pantryFoodsSlice';
-import { handleQuantityFridgeFood } from '../../redux/slice/food-list/fridgeFoodsSlice';
-import { editFormFood } from '../../redux/slice/food/formFoodSlice';
-import { ModalTitle } from '../modal/Modal';
+import {
+  addToPantry,
+  editPantryFood,
+  handleQuantityPantryFood,
+  removePantryFood,
+} from '../../redux/slice/food-list/pantryFoodsSlice';
+import {
+  addFridgeFood,
+  editFridgeFood,
+  handleQuantityFridgeFood,
+  removeFridgeFood,
+} from '../../redux/slice/food-list/fridgeFoodsSlice';
+import {
+  editFormFood,
+  setFormFood,
+} from '../../redux/slice/food/formFoodSlice';
+import {
+  showOpenFoodDetailModal,
+  showOpenFoodPositionModal,
+} from '../../redux/slice/modalVisibleSlice';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { search } from '../../redux/slice/food/searchedFoodSlice';
+import { useHandleAlert } from '../../hooks';
+import {
+  checkSameStorage,
+  isFridgeFood,
+  isPantryFood,
+} from '../../util/checkFoodSpace';
 
 import InfoBox from './InfoBox';
 import LeftDayInfoBox from '../modal/LeftDayInfoBox';
 import CategoryIcon from '../common/CategoryIcon';
 import FoodDetailName from './FoodDetailName';
 import Icon from '../common/native-component/Icon';
+import FadeInMiddleModal from '../modal/FadeInMiddleModal';
+import SubmitBtn from '../buttons/SubmitBtn';
+import SpaceItem from '../form/SpaceItem';
 import tw from 'twrnc';
 
 export default function FoodDetail() {
-  const { formFood } = useSelector((state) => state.formFood);
+  const { openFoodPositionModal } = useSelector((state) => state.modalVisible);
+  const { formFood, originFood } = useSelector((state) => state.formFood);
 
-  const {
-    name,
-    category,
-    quantity,
-    expiredDate,
-    purchaseDate,
-    memo,
-    id,
-    space,
-  } = formFood;
+  const insets = useSafeAreaInsets();
 
   const dispatch = useDispatch();
 
   const onHandleCountPress = (direction: string) => {
-    if (direction === 'down' && quantity === '1') return;
+    if (direction === 'down' && formFood.quantity === '1') return;
 
     const handleCount = direction === 'up' ? 1 : -1;
 
-    const newQuantity = `${+quantity + handleCount}`;
+    const newQuantity = `${+formFood.quantity + handleCount}`;
 
-    const newInfo = { id, quantity: newQuantity };
+    const newInfo = { id: formFood.id, quantity: newQuantity };
 
     dispatch(editFormFood({ quantity: newQuantity }));
 
     dispatch(
-      space === '실온보관'
+      formFood.space === '실온보관'
         ? handleQuantityPantryFood(newInfo)
         : handleQuantityFridgeFood(newInfo)
     );
   };
 
+  const onOpenFoodPostionPress = () => {
+    dispatch(showOpenFoodPositionModal(true));
+  };
+
+  const { alertWithFood, setAlert } = useHandleAlert();
+
+  const afterChangedPositionAlert = () => {
+    const { alertMoveStorage } = alertWithFood(formFood);
+    setAlert(alertMoveStorage);
+  };
+
+  const onFoodPositionSubmit = () => {
+    const { space: newSpace, id } = formFood;
+    const { space: originSpace, compartmentNum: originCompartmentNum } =
+      originFood;
+
+    const compareStorage = checkSameStorage(originSpace, newSpace);
+
+    if (compareStorage) {
+      dispatch(
+        originSpace === '실온보관'
+          ? editPantryFood({ id, food: formFood })
+          : editFridgeFood({ id, food: formFood })
+      );
+    }
+
+    if (!compareStorage) {
+      if (isPantryFood(newSpace)) {
+        dispatch(removeFridgeFood(id));
+        dispatch(addToPantry(formFood));
+      }
+      if (isFridgeFood(newSpace)) {
+        dispatch(removePantryFood(id));
+        dispatch(addFridgeFood(formFood));
+      }
+    }
+
+    dispatch(showOpenFoodDetailModal(false));
+    dispatch(showOpenFoodPositionModal(false));
+
+    const sameSpace = originSpace === newSpace;
+    const sameCompartmentNum =
+      formFood?.compartmentNum === originCompartmentNum;
+
+    //
+    if (sameSpace && !sameCompartmentNum) {
+      dispatch(search(formFood.name));
+    }
+    if (!sameSpace) {
+      afterChangedPositionAlert();
+    }
+  };
+
   return (
     <>
-      <FoodDetailName name={name} />
+      <View style={tw`my-4 gap-4`}>
+        <FoodDetailName name={formFood.name} />
+
+        <TouchableOpacity
+          onPress={onOpenFoodPostionPress}
+          style={tw.style(
+            `flex-row gap-1 items-center border border-slate-200 bg-indigo-100 rounded-full p-1.5 px-2.5 self-center`,
+            shadowStyle(3)
+          )}
+        >
+          <Icon name='pencil' type='Octicons' size={11} color={INDIGO} />
+          <Text style={tw`text-indigo-600 mr-1`} fontSize={14}>
+            {formFood.space} 식료품
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       <View>
         <InfoBox iconName='apps' label='카테고리'>
           <View style={tw`flex-row items-center gap-1`}>
-            <CategoryIcon category={category} size={16} />
-            <Text>{category}</Text>
+            <CategoryIcon category={formFood.category} size={16} />
+            <Text>{formFood.category}</Text>
           </View>
         </InfoBox>
 
-        {expiredDate !== '' && (
+        {formFood.expiredDate !== '' && (
           <InfoBox iconName='calendar' label='소비기한'>
-            <LeftDayInfoBox expiredDate={expiredDate} />
+            <LeftDayInfoBox expiredDate={formFood.expiredDate} />
           </InfoBox>
         )}
 
-        {purchaseDate !== '' && (
+        {formFood.purchaseDate !== '' && (
           <InfoBox iconName='calendar' label='구매날짜'>
             <Text style={tw`text-slate-800`}>
-              {getFormattedDate(purchaseDate, 'YY.MM.DD')}
+              {getFormattedDate(formFood.purchaseDate, 'YY.MM.DD')}
             </Text>
           </InfoBox>
         )}
 
-        {quantity !== '' && (
+        {formFood.quantity !== '' && (
           <InfoBox iconName='diff' label='수량'>
             <View style={tw`flex-row items-center justify-between gap-2`}>
-              <Text>{comma(quantity)}</Text>
+              <Text>{comma(formFood.quantity)}</Text>
               <View style={tw`flex-row items-center gap-2`}>
                 {['up', 'down'].map((direction) => (
                   <TouchableOpacity
@@ -104,7 +191,7 @@ export default function FoodDetail() {
           </InfoBox>
         )}
 
-        {memo?.length >= 1 && (
+        {formFood.memo?.length >= 1 && (
           <InfoBox iconName='note' label='메모'>
             <View style={tw`max-h-16`}>
               <Text
@@ -112,12 +199,32 @@ export default function FoodDetail() {
                 ellipsizeMode='tail'
                 style={tw`leading-5`}
               >
-                {memo}
+                {formFood.memo}
               </Text>
             </View>
           </InfoBox>
         )}
       </View>
+
+      <FadeInMiddleModal
+        isVisible={openFoodPositionModal}
+        closeModal={() => {
+          dispatch(showOpenFoodPositionModal(false));
+          dispatch(setFormFood(originFood));
+        }}
+        title='식료품 위치 수정'
+      >
+        <View style={{ gap: 8 }}>
+          <SpaceItem label={'식료품 위치 수정'} />
+
+          <SubmitBtn
+            color='blue'
+            iconName='check'
+            btnName='위치 수정 완료'
+            onPress={onFoodPositionSubmit}
+          />
+        </View>
+      </FadeInMiddleModal>
     </>
   );
 }

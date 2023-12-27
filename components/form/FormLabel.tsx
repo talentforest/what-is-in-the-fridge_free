@@ -15,12 +15,10 @@ interface Props {
 
 export default function FormLabel({ label, children }: Props) {
   return (
-    <View style={tw`flex-row items-center justify-between pt-1.5 pb-1`}>
-      <View style={tw`flex-row items-center`}>
-        <Text fontSize={15} style={tw`text-blue-600`}>
-          {label}
-        </Text>
-      </View>
+    <View style={tw`flex-row items-center justify-between h-6.5`}>
+      <Text fontSize={14} style={tw`text-blue-500`}>
+        {label}
+      </Text>
 
       {children}
     </View>

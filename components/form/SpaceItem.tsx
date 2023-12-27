@@ -27,6 +27,7 @@ interface Props {
 export default function SpaceItem({ label }: Props) {
   const {
     formFood: { space, compartmentNum },
+    originFood,
   } = useSelector((state) => state.formFood);
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 

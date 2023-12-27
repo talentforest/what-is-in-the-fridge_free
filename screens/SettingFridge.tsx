@@ -49,9 +49,8 @@ export default function SettingFridge() {
 
         <SelectContainter title='나의 냉장고 타입'>
           {['일반형 냉장고'].map((type) => (
-            <View style={tw`h-9`}>
+            <View key={type} style={tw`h-9`}>
               <CheckBoxItem
-                key={type}
                 title={type}
                 onPress={() => onChangePress({ type })}
                 checked={fridgeInfo.type === type}
@@ -66,9 +65,8 @@ export default function SettingFridge() {
         <SelectContainter title='냉동실 위치'>
           <View style={tw`flex-row gap-4`}>
             {['상단', '하단'].map((name) => (
-              <View style={tw`h-9`}>
+              <View key={name} style={tw`h-9`}>
                 <CheckBoxItem
-                  key={name}
                   title={name}
                   onPress={() => onPress(name)}
                   checked={

@@ -42,18 +42,27 @@ const activeTextColorByFilter = (filter: Filter) => {
 export const getTagColor = (
   filter: Filter,
   active: boolean,
-  type?: 'bg' | 'text'
+  type?: 'bg' | 'text',
+  disabled?: boolean
 ) => {
   if (type === 'text') {
-    return active ? activeTextColorByFilter(filter) : INACTIVE_TEXT_COLOR;
+    return disabled
+      ? DISABLED_TEXT_COLOR
+      : active
+      ? activeTextColorByFilter(filter)
+      : INACTIVE_TEXT_COLOR;
   }
-  return active ? activeBgColorByFilter(filter) : INACTIVE_BG_COLOR;
+  return disabled
+    ? DISABLED_BG_COLOR
+    : active
+    ? activeBgColorByFilter(filter)
+    : INACTIVE_BG_COLOR;
 };
 
 export const colorByFilter = (
   filter: Filter,
   date: string,
-  type: 'text' | 'bg'
+  type: 'bg' | 'text'
 ) => {
   const active =
     filter === '소비기한 만료'

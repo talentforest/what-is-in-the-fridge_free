@@ -11,6 +11,7 @@ import { showCategoryFilterModal } from '../../redux/slice/modalVisibleSlice';
 import FilterTag from '../common/FilterTag';
 import Modal from '../modal/Modal';
 import tw from 'twrnc';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Props {
   filterTagList: FilterObj[];
@@ -36,6 +37,8 @@ export default function TableFilters({
   const getLengthByFilterTag = (filter: Filter) => {
     return getFilteredFoodList(filter, foodList).length;
   };
+
+  const insets = useSafeAreaInsets();
 
   const dispatch = useDispatch();
 
@@ -91,16 +94,18 @@ export default function TableFilters({
           closeModal={closeModal}
           isVisible={categoryFilterModalVisible}
         >
-          <View style={tw`flex-row flex-wrap gap-1 pt-2`}>
-            {foodCategories.map(({ category }) => (
-              <FilterTag
-                key={category}
-                filter={category}
-                getLengthByFilterTag={getLengthByFilterTag}
-                onFilterPress={onCategoryFilterTagPress}
-                foodIcon
-              />
-            ))}
+          <View style={{ paddingBottom: insets?.bottom }}>
+            <View style={tw`flex-row flex-wrap gap-1 pt-2`}>
+              {foodCategories.map(({ category }) => (
+                <FilterTag
+                  key={category}
+                  filter={category}
+                  getLengthByFilterTag={getLengthByFilterTag}
+                  onFilterPress={onCategoryFilterTagPress}
+                  foodIcon
+                />
+              ))}
+            </View>
           </View>
         </Modal>
       )}
