@@ -28,9 +28,9 @@ export default function Setting() {
           <View style={tw`flex-row items-center gap-1 mb-1.5`}>
             <Icon
               name='credit-card'
-              type='MaterialCommunityIcons'
+              type='Octicons'
               color={LIGHT_BLUE}
-              size={21}
+              size={19}
             />
             <Text fontSize={18}>이용권 구매</Text>
           </View>

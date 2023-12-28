@@ -30,6 +30,26 @@ const PaymentBtn = () => {
     finishTransaction, //
   } = useIAP();
 
+  const switchPurchasedState = (purchaseToken: string) => {
+    return dispatch(
+      togglePurchaseState({
+        purchased: true,
+        purchaseToken,
+      })
+    );
+  };
+
+  const verifyReceipt = async () => {
+    await RNIap.getAvailablePurchases().then((items) => {
+      if (items === null) return;
+      switchPurchasedState(items[0].purchaseToken);
+    });
+  };
+
+  useEffect(() => {
+    verifyReceipt();
+  }, []);
+
   useEffect(() => {
     const checkCurrentPurchase = async (
       purchase: RNIap.Purchase
@@ -43,12 +63,7 @@ const PaymentBtn = () => {
           };
           const ackResult = await finishTransaction(receipt);
           if ((ackResult as RNIap.PurchaseResult)?.code === 'OK') {
-            dispatch(
-              togglePurchaseState({
-                purchased: true,
-                purchaseToken: purchase.purchaseToken,
-              })
-            ); //구매 상태로 전환
+            switchPurchasedState(purchase.purchaseToken); //구매 상태로 전환
           }
         } catch {
           setAlert(alertIAP);

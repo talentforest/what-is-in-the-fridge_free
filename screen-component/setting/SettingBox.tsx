@@ -73,7 +73,7 @@ export default function SettingBox({ setting }: Props) {
     }
   };
 
-  const disabled = title === '버전';
+  const disabled = title === '버전' || (purchase && title === '구매 복원');
 
   return (
     <>
