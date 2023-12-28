@@ -93,7 +93,7 @@ export const getLocalDigitTime = (date: Date) => {
 };
 
 const date = new Date();
-export const settingInitialHour = date.setHours(22, 0, 0);
+export const settingInitialHour = date.setHours(19, 0, 0);
 
 export const initialTime = getLocalDigitTime(date);
 

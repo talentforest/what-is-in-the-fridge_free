@@ -72,13 +72,8 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
         <View
           style={tw.style(
             `border border-slate-300 gap-0.5 rounded-lg justify-center items-center flex-row px-2 py-1.5
-<<<<<<< HEAD
-          ${colorByFilter(currentFilter, expiredDate, 'bg')} 
-          ${active ? 'border-indigo-300' : ''}`
-=======
             ${colorByFilter(currentFilter, expiredDate, 'bg')} 
             ${active ? 'border-indigo-100' : ''}`
->>>>>>> f0f5642 (UI fix: 추천 식료품 개수 늘리기)
           )}
         >
           {getDiffDate(expiredDate) <= 7 && (

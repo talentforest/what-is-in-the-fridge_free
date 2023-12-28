@@ -8,7 +8,7 @@ type notificationState = {
 };
 
 export const initialState: notificationState = {
-  notification: true,
+  notification: false,
   approachDate: 3,
   time: initialTime,
 };

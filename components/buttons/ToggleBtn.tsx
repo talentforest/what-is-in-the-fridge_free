@@ -39,26 +39,11 @@ export default function ToggleBtn({
   return (
     <View
       style={tw.style(
-<<<<<<< Updated upstream
-        `${InputStyle} ${borderColor} h-full flex-row items-center p-1 rounded-full self-start`,
-=======
         `${InputStyle} border-slate-200 bg-white h-full flex-row items-center p-0 rounded-full self-start`,
->>>>>>> Stashed changes
         shadowStyle(3)
       )}
     >
       <Animated.View
-<<<<<<< Updated upstream
-        style={{
-          transform: [{ translateX }],
-          width,
-          position: 'absolute',
-          left: 4,
-          height: '100%',
-          borderRadius: 100,
-          backgroundColor: disabled ? DARK_WHITE : activeBtnColor,
-        }}
-=======
         style={tw.style(
           `${disabled ? 'bg-gray-200' : activeBtnColor} 
           rounded-full h-full absolute`,
@@ -68,7 +53,6 @@ export default function ToggleBtn({
             ...shadowStyle(3),
           }
         )}
->>>>>>> Stashed changes
       />
 
       {toggleBtnNames?.map((btnName, index) => (

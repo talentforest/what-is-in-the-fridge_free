@@ -18,6 +18,10 @@ export const useGetFoodList = () => {
 
   const allFoods = [...fridgeFoods, ...pantryFoods];
 
+  const getLessLeftDayFoods = (leftDay: number) => {
+    return allFoods.filter((food) => getLeftDays(food.expiredDate) <= leftDay);
+  };
+
   const allCautionFoods = allFoods.filter(
     (food) => getLeftDays(food.expiredDate) < 8
   );
@@ -115,6 +119,7 @@ export const useGetFoodList = () => {
     allCautionFoods,
     threeLeftDaysFoods,
     expiredFoods,
+    getLessLeftDayFoods,
     getMatchedPositionFoods,
     getFilteredFoodList,
     getExistCategoryList,

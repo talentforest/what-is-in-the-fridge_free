@@ -7,10 +7,20 @@ import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { useFonts } from 'expo-font';
 import { fonts } from './constant/fonts';
-import Navigation from './navigation/Navigation';
+import {
+  PATHNAME_ALLFOODS,
+  PATHNAME_HOMEFRIDGE,
+  prefix,
+} from './constant/link';
+
 import * as SplashScreen from 'expo-splash-screen';
+import * as Linking from 'expo-linking';
+import * as Notifications from 'expo-notifications';
+import Navigation from './navigation/Navigation';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
+import { Platform } from 'react-native';
+import { NOTIFICATION_CHANNEL_ID } from './screens/SettingNotification';
 
 const App = () => {
   const [fontsLoaded] = useFonts(fonts);
@@ -25,8 +35,25 @@ const App = () => {
     }
   };
 
+  const changeChannel = async () => {
+    const existingChannel = await Notifications.getNotificationChannelAsync(
+      NOTIFICATION_CHANNEL_ID
+    );
+
+    if (Platform.OS === 'android' && existingChannel === null) {
+      Notifications.deleteNotificationChannelAsync(
+        'expo_notifications_fallback_notification_channel'
+      );
+      Notifications.setNotificationChannelAsync(NOTIFICATION_CHANNEL_ID, {
+        name: NOTIFICATION_CHANNEL_ID,
+        importance: Notifications.AndroidImportance.HIGH,
+      });
+    }
+  };
+
   useEffect(() => {
     prepareApp();
+    changeChannel();
   }, []);
 
   if (!fontsLoaded) return null;
@@ -35,7 +62,55 @@ const App = () => {
     <ReduxProvider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
-          <NavigationContainer>
+          <NavigationContainer
+            linking={{
+              prefixes: [prefix],
+              config: {
+                initialRouteName: 'HomeFridge',
+                screens: {
+                  HomeFridge: PATHNAME_HOMEFRIDGE,
+                  AllFoods: PATHNAME_ALLFOODS,
+                },
+              },
+
+              async getInitialURL() {
+                const url = await Linking.getInitialURL();
+
+                if (url != null) {
+                  return url;
+                }
+
+                const response =
+                  await Notifications.getLastNotificationResponseAsync();
+
+                return response?.notification.request.content.data.url;
+              },
+              subscribe(listener) {
+                const onReceiveURL = ({ url }: { url: string }) =>
+                  listener(url);
+
+                const eventListenerSubscription = Linking.addEventListener(
+                  'url',
+                  onReceiveURL
+                );
+
+                const subscription =
+                  Notifications.addNotificationResponseReceivedListener(
+                    (response) => {
+                      const url =
+                        response.notification.request.content.data.url;
+
+                      listener(url);
+                    }
+                  );
+
+                return () => {
+                  eventListenerSubscription.remove();
+                  subscription.remove();
+                };
+              },
+            }}
+          >
             <Navigation />
             <StatusBar style='dark' />
           </NavigationContainer>

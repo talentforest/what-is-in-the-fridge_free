@@ -2,15 +2,6 @@ export const LIGHT_GREEN = '#fafff4';
 export const GREEN = '#06c119';
 export const ICE_BLUE = '#e3f0ff';
 export const LIGHT_BLUE = '#93c5fd';
-<<<<<<< Updated upstream
-export const BLUE = '#2563eb';
-export const LIGHT_YELLOW = '#fde68a';
-export const YELLOW = '#eab308';
-export const AMBER = '#f59e0b';
-export const DEEP_YELLOW = '#d97706';
-export const LIGHT_INDIGO = '#dfd9ff';
-export const MEDIUM_INDIGO = '#6366f1';
-=======
 
 export const MEDIUM_BLUE = '#60a5fa';
 export const BLUE = '#3b82f6';
@@ -23,7 +14,6 @@ export const DEEP_YELLOW = '#d97706';
 export const LIGHTEST_INDIGO = '#f4f6ff';
 export const LIGHT_INDIGO = '#c7d2fe';
 export const MEDIUM_INDIGO = '#818cf8';
->>>>>>> Stashed changes
 export const INDIGO = '#4f46e5';
 export const DEEP_GRAY = '#333';
 export const GRAY = '#555';

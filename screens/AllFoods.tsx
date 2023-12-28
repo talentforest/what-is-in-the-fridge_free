@@ -1,4 +1,7 @@
-import { SafeBottomAreaView } from '../components/common/native-component';
+import {
+  SafeBottomAreaView,
+  Text,
+} from '../components/common/native-component';
 import { entireFilterObj, expiredFilters, sortByOldDate } from '../util';
 import {
   useHandleTableFooterBtns,

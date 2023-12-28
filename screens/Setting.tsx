@@ -21,7 +21,7 @@ export default function Setting() {
       {!purchased && !PlatformIOS ? (
         <View
           style={tw.style(
-            `border border-blue-100 bg-white rounded-xl py-4 px-3.5 mb-6`,
+            `border border-blue-100 bg-white rounded-xl py-4 px-3.5 my-2`,
             shadowStyle(4)
           )}
         >
@@ -43,7 +43,7 @@ export default function Setting() {
         </View>
       ) : null}
 
-      <View>
+      <View style={tw`mt-2`}>
         {settingBtns.map((setting) => (
           <SettingBox key={setting.title} setting={setting} />
         ))}

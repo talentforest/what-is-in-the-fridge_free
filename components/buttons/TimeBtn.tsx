@@ -12,12 +12,12 @@ import tw from 'twrnc';
 
 export default function TimeBtn() {
   const { time } = useSelector((state) => state.notification);
-  const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const [timePickerVisible, setTimePickerVisible] = useState(false);
 
   const dispatch = useDispatch();
 
   const onChange = (event: DateTimePickerEvent) => {
-    setDatePickerVisible(false);
+    setTimePickerVisible(false);
     const { timestamp } = event.nativeEvent;
     const localDigitTime = getLocalDigitTime(new Date(timestamp));
     dispatch(setTime(localDigitTime));
@@ -26,13 +26,13 @@ export default function TimeBtn() {
   return (
     <View>
       <TouchableOpacity
-        onPress={() => setDatePickerVisible((prev) => !prev)}
+        onPress={() => setTimePickerVisible((prev) => !prev)}
         style={tw`border border-slate-600 bg-white px-2.5 py-1 rounded-lg `}
       >
         <Text fontSize={16}>{time}</Text>
       </TouchableOpacity>
 
-      {datePickerVisible && (
+      {timePickerVisible && (
         <RNDateTimePicker
           value={setLocalTimeDate(time)}
           onChange={onChange}

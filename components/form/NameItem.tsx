@@ -61,10 +61,7 @@ export default function NameItem({ isEditing }: Props) {
             focusable={false}
             maxLength={NAME_MAX_LENGTH}
             editable={editable}
-<<<<<<< Updated upstream
-=======
             autoFocus={!isEditing}
->>>>>>> Stashed changes
           />
         </View>
 
