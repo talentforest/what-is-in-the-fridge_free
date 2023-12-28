@@ -5,7 +5,7 @@ import { Food, MAX_LIMIT } from '../../constant/foodInfo';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { setFormFood } from '../../redux/slice/food/formFoodSlice';
 import { showFormModal } from '../../redux/slice/modalVisibleSlice';
-import { Text } from '../common/native-component';
+import { Text, TouchableOpacity } from '../common/native-component';
 import { Space } from '../../constant/fridgeInfo';
 import { shadowStyle } from '../../constant/shadowStyle';
 
@@ -13,6 +13,11 @@ import LeftDay from '../common/LeftDay';
 import AddIconBtn from '../buttons/AddIconBtn';
 import IndicatorExist from '../common/IndicatorExist';
 import tw from 'twrnc';
+import Icon from '../common/native-component/Icon';
+import { BLUE, GREEN, MEDIUM_GRAY } from '../../constant/colors';
+import { search } from '../../redux/slice/food/searchedFoodSlice';
+import { useNavigation } from '@react-navigation/native';
+import { NavigateProp } from '../../navigation/Navigation';
 
 export type TableTitle =
   | '전체 식료품'
@@ -62,6 +67,15 @@ export default function TableItemEnd({ title, food }: Props) {
     return tagColor;
   };
 
+  const navigation = useNavigation<NavigateProp>();
+
+  const onNavigatePress = (space: Space) => {
+    dispatch(search(food.name));
+    return space === '실온보관'
+      ? navigation.navigate('PantryFoods')
+      : navigation.navigate('Compartments', { space });
+  };
+
   return (
     <>
       {title === '장볼 식료품' ? (
@@ -91,11 +105,14 @@ export default function TableItemEnd({ title, food }: Props) {
             {title === '전체 식료품' && (
               <View style={tw`gap-1 flex-row items-center`}>
                 <View style={tw`w-17`}>
-                  <View
+                  <TouchableOpacity
+                    onPress={() => onNavigatePress(food.space)}
                     style={tw.style(
-                      `border border-${positionTagColor(food.space)}-100 
+                      `flex-row items-center border border-${positionTagColor(
+                        food.space
+                      )}-100 
                       bg-${positionTagColor(food.space)}-100 
-                      self-start rounded-full py-0.5 px-1.5`,
+                      self-start rounded-full py-0.8 pl-1.5 pr-1`,
                       shadowStyle(3)
                     )}
                   >
@@ -108,7 +125,15 @@ export default function TableItemEnd({ title, food }: Props) {
                     >
                       {food.space}
                     </Text>
-                  </View>
+                    <Icon
+                      type='MaterialCommunityIcons'
+                      name='arrow-up-right'
+                      size={11}
+                      color={
+                        positionTagColor(food.space) === 'green' ? GREEN : BLUE
+                      }
+                    />
+                  </TouchableOpacity>
                 </View>
 
                 <View style={tw`items-end w-16`}>
