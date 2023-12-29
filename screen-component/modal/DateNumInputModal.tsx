@@ -87,7 +87,7 @@ export default function DateNumInputModal() {
 
   return (
     <FadeInMiddleModal
-      title={expiredDateModal ? '소비기한 설정' : '구매날짜 설정'}
+      title={purchaseDateModal ? '구매날짜 설정' : '소비기한 설정'}
       isVisible={expiredDateModal || purchaseDateModal}
       closeModal={closeModal}
       style={tw`justify-start mt-28`}

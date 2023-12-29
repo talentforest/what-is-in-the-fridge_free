@@ -19,18 +19,16 @@ export default function FoodDetailName({ name }: { name: string }) {
   const favFood = isFavoriteItem(name);
 
   return (
-    <View
-      style={tw`gap-1.5 self-center flex-row justify-center items-center border-slate-300 py-1.5 px-2.5`}
-    >
+    <View style={tw`self-center mt-2`}>
       <LineDeco />
 
       <TouchableOpacity
-        style={tw`p-0.5`}
         onPress={() => {
           !!favFood
             ? dispatch(removeFavorite(favFood.name))
             : dispatch(addFavorite({ ...formFood }));
         }}
+        style={tw`flex-row items-center gap-1 py-2 px-3`}
       >
         <Icon
           type='Octicons'
@@ -38,15 +36,14 @@ export default function FoodDetailName({ name }: { name: string }) {
           size={15}
           color={favFood ? YELLOW : LIGHT_GRAY}
         />
+
+        <Text
+          fontSize={18}
+          style={tw.style(`max-w-4/5 text-stone-800 leading-5`)}
+        >
+          {name}
+        </Text>
       </TouchableOpacity>
-
-      <Text
-        fontSize={18}
-        style={tw.style(`max-w-4/5 text-stone-800 leading-5`)}
-      >
-        {name}
-      </Text>
-
       <LineDeco reverse />
     </View>
   );

@@ -12,6 +12,8 @@ import {
   PATHNAME_HOMEFRIDGE,
   prefix,
 } from './constant/link';
+import { Platform } from 'react-native';
+import { NOTIFICATION_CHANNEL_ID } from './screens/SettingNotification';
 
 import * as SplashScreen from 'expo-splash-screen';
 import * as Linking from 'expo-linking';
@@ -19,8 +21,6 @@ import * as Notifications from 'expo-notifications';
 import Navigation from './navigation/Navigation';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
-import { Platform } from 'react-native';
-import { NOTIFICATION_CHANNEL_ID } from './screens/SettingNotification';
 
 const App = () => {
   const [fontsLoaded] = useFonts(fonts);

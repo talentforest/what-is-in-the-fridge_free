@@ -12,7 +12,7 @@ import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
 import PantryBox from './PantryBox';
 import tw from 'twrnc';
 
-export default function PantryEntranceBtn() {
+export default function EntrancePantryBtn() {
   const { isLoaded, assets } = useImageLoad({
     images: [
       require('../../assets/food/banana.png'),
@@ -30,16 +30,14 @@ export default function PantryEntranceBtn() {
   const appleLocalUri = assets[1]?.localUri;
 
   return (
-    <View style={tw`mr-3 mt-3 -gap-3 flex-row self-end justify-end items-end`}>
+    <View style={tw`mr-3 -gap-3 flex-row self-end justify-end items-end`}>
       <PantryBox size={90} />
 
       <TouchableOpacity onPress={onNavigatePress}>
         <PantryBox size={105} />
 
         <View
-          style={tw.style(
-            `absolute bottom-1 pb-3 left-0.5 w-19 items-center justify-end h-12`
-          )}
+          style={tw`absolute bottom-1 pb-3 left-0.5 w-19 items-center justify-end h-12`}
         >
           <View style={tw`flex-row items-center`}>
             <Text fontSize={15} style={tw`text-slate-700`}>

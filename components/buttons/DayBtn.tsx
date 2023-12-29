@@ -3,6 +3,7 @@ import { Text, TouchableOpacity } from '../common/native-component';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { GRAY, INDIGO } from '../../constant/colors';
 import { setApproachDate } from '../../redux/slice/notificationSlice';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
@@ -31,7 +32,10 @@ export default function DayBtn({
     <View>
       <TouchableOpacity
         onPress={toggleDayPickerVisible}
-        style={tw`flex-row items-center gap-0.5 border border-slate-600 bg-white w-13.5 pl-2.5 pr-2 py-1 rounded-lg`}
+        style={tw.style(
+          `flex-row items-center gap-0.5 border border-slate-300 bg-white w-13.5 pl-2.5 pr-2 py-1 rounded-lg`,
+          shadowStyle(3)
+        )}
       >
         <Text fontSize={16} style={tw`text-slate-600`}>
           {`${approachDate}일`}

@@ -2,7 +2,13 @@ import { Animated, View } from 'react-native';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { InputStyle, Text, TouchableOpacity } from '../common/native-component';
 import { useToggleAnimation } from '../../hooks';
-import { LIGHT_GRAY, MEDIUM_INDIGO, YELLOW } from '../../constant/colors';
+import {
+  GRAY,
+  LIGHT_GRAY,
+  MEDIUM_GRAY,
+  MEDIUM_INDIGO,
+  YELLOW,
+} from '../../constant/colors';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
@@ -24,28 +30,25 @@ export default function ToggleBtn({
   color,
 }: Props) {
   const { translateX } = useToggleAnimation({
-    initialValue: 0,
-    toValue: width,
+    initialValue: 4,
+    toValue: width + 4,
     active,
   });
 
   const toggleActive = (index: number) => (index === 1 ? active : !active);
 
-  const activeBtnColor =
-    color === 'gray'
-      ? `bg-gray-${active ? '600' : '200'}`
-      : `bg-${color}-${active ? '400' : '100'}`;
-
   return (
     <View
       style={tw.style(
-        `${InputStyle} border-slate-200 bg-white h-full flex-row items-center p-0 rounded-full self-start`,
+        `${InputStyle} border-slate-200 ${
+          active ? `bg-${color}-400` : 'bg-slate-300'
+        } h-full flex-row items-center p-1 rounded-full self-start`,
         shadowStyle(3)
       )}
     >
       <Animated.View
         style={tw.style(
-          `${disabled ? 'bg-gray-200' : activeBtnColor} 
+          `${disabled ? 'bg-gray-200' : 'bg-white'} 
           rounded-full h-full absolute`,
           {
             width,
@@ -58,7 +61,7 @@ export default function ToggleBtn({
       {toggleBtnNames?.map((btnName, index) => (
         <TouchableOpacity
           key={index}
-          style={tw`flex-row items-center justify-center gap-1 h-full w-[${width}px]`}
+          style={tw`flex-row items-center justify-center gap-0.5 h-full w-[${width}px]`}
           onPress={() => onTogglePress(index)}
           disabled={disabled}
         >
@@ -66,23 +69,23 @@ export default function ToggleBtn({
             <>
               <Icon
                 type='Octicons'
-                name={index === 0 ? 'star-fill' : 'star'}
-                size={14}
+                name={index === 1 ? 'star-fill' : 'star'}
+                size={13}
                 color={
                   disabled || !toggleActive(index)
-                    ? LIGHT_GRAY
+                    ? MEDIUM_GRAY
                     : index === 1
                     ? YELLOW
-                    : MEDIUM_INDIGO
+                    : GRAY
                 }
               />
               <Text
                 style={tw`${
                   disabled || !toggleActive(index)
-                    ? 'text-slate-400'
+                    ? 'text-slate-500'
                     : index === 1
-                    ? `text-white`
-                    : 'text-indigo-400'
+                    ? `text-indigo-600`
+                    : 'text-slate-700'
                 }`}
               >
                 {btnName}

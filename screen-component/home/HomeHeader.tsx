@@ -1,6 +1,6 @@
 import { View, useWindowDimensions } from 'react-native';
 import { Text } from '../../components/common/native-component';
-import { GRAY } from '../../constant/colors';
+import { MEDIUM_GRAY } from '../../constant/colors';
 import { ReactNode } from 'react';
 
 import Icon from '../../components/common/native-component/Icon';
@@ -25,13 +25,13 @@ export default function HomeHeader({ title, children }: Props) {
       >
         <View style={tw`flex-row items-center gap-1`}>
           {title === '냉장고에 뭐가 있지' ? (
-            <Icon name='home' type='Octicons' size={16} color={GRAY} />
+            <Icon name='home' type='Octicons' size={16} color={MEDIUM_GRAY} />
           ) : title === '장볼게 뭐가 있지' ? (
             <Icon
               name='cart-outline'
               type='MaterialCommunityIcons'
               size={18}
-              color={GRAY}
+              color={MEDIUM_GRAY}
             />
           ) : null}
 

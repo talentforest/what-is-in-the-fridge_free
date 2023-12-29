@@ -86,9 +86,7 @@ export default function TableItem({
           onPress={onItemPress}
           style={tw.style(
             `bg-white border h-[${TABLE_ITEM_HEIGHT - 6}px] 
-            ${
-              checkedItem ? 'border-slate-200 bg-blue-100' : 'border-slate-100'
-            } 
+            ${checkedItem ? 'border-slate-200 bg-blue-50' : 'border-slate-100'} 
             flex-row items-center gap-1 pl-3 rounded-xl mx-1`,
             shadowStyle(3)
           )}

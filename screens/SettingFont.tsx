@@ -14,19 +14,16 @@ import {
   LocusSangsang,
   NanumSquareRoundEB,
 } from '../constant/fonts';
-import { useState } from 'react';
 import { useHandleAlert } from '../hooks';
-import AlertModal from '../screen-component/modal/AlertModal';
 import Container from '../components/common/Container';
 import Icon from '../components/common/native-component/Icon';
-import SubmitBtn from '../components/buttons/SubmitBtn';
 import tw from 'twrnc';
 
-interface FontStyle {
+type FontStyle = {
   fontFamily: Fonts;
   fontSize: number;
   fontName: string;
-}
+};
 
 const fonts: FontStyle[] = [
   {
@@ -48,20 +45,19 @@ const fonts: FontStyle[] = [
 
 export default function SettingFont() {
   const { fontFamily: currFont } = useSelector((state) => state.fontFamily);
-  const [font, setFont] = useState(currFont);
 
   const { alertChangeFont, setAlert } = useHandleAlert();
 
   const dispatch = useDispatch();
 
-  const onChangeFontPress = () => {
-    if (currFont === font) return;
-    dispatch(changeFont(font));
+  const onChangeFontPress = (fontFamily: Fonts) => {
+    if (currFont === fontFamily) return;
+    dispatch(changeFont(fontFamily));
     setAlert(alertChangeFont);
   };
 
   return (
-    <Container>
+    <Container topPadding>
       <View style={tw`gap-1`}>
         <View
           style={tw`h-24 gap-3 border border-slate-300 bg-white items-center justify-center px-5 py-2 rounded-xl`}
@@ -74,9 +70,9 @@ export default function SettingFont() {
             </Text>
           </View>
           <Text
-            style={tw.style(`text-center mb-0.5`, {
-              fontFamily: font,
-              fontSize: getRelativeFontSize(font, baseFontSize),
+            style={tw.style(`text-center mb-1`, {
+              fontFamily: currFont,
+              fontSize: getRelativeFontSize(currFont, baseFontSize),
             })}
           >
             이번 주말에는 냉장고를 정리해볼까요?
@@ -87,12 +83,12 @@ export default function SettingFont() {
           {fonts.map(({ fontFamily, fontSize, fontName }) => (
             <TouchableOpacity
               key={fontName}
-              onPress={() => setFont(fontFamily)}
+              onPress={() => onChangeFontPress(fontFamily)}
               style={tw`text-sm flex-row items-center gap-1.5 h-10`}
             >
               <Icon
-                name={font === fontFamily ? 'check-circle-fill' : 'circle'}
-                color={font === fontFamily ? BLUE : LIGHT_GRAY}
+                name={currFont === fontFamily ? 'check-circle-fill' : 'circle'}
+                color={currFont === fontFamily ? BLUE : LIGHT_GRAY}
                 type='Octicons'
                 size={14}
               />
@@ -103,12 +99,6 @@ export default function SettingFont() {
           ))}
         </View>
       </View>
-
-      <View style={tw`mt-4`}>
-        <SubmitBtn btnName='폰트 변경하기' onPress={onChangeFontPress} />
-      </View>
-
-      <AlertModal />
     </Container>
   );
 }

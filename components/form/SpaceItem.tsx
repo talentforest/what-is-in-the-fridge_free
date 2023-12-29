@@ -27,7 +27,6 @@ interface Props {
 export default function SpaceItem({ label }: Props) {
   const {
     formFood: { space, compartmentNum },
-    originFood,
   } = useSelector((state) => state.formFood);
   const { fridgeInfo } = useSelector((state) => state.fridgeInfo);
 
@@ -73,7 +72,8 @@ export default function SpaceItem({ label }: Props) {
 
   return (
     <View>
-      <FormLabel label={label} />
+      {label !== '식료품 위치 수정' && <FormLabel label={label} />}
+
       <View style={tw`flex-row items-center pb-0.5 gap-1`}>
         {['냉장고', '실온보관'].map((storage) => (
           <TouchableOpacity

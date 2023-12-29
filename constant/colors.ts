@@ -4,7 +4,7 @@ export const ICE_BLUE = '#e3f0ff';
 export const LIGHT_BLUE = '#93c5fd';
 
 export const MEDIUM_BLUE = '#60a5fa';
-export const BLUE = '#3b82f6';
+export const BLUE = '#2563eb';
 
 export const LIGHT_YELLOW = '#fefce8';
 export const YELLOW = '#eab308';
@@ -30,5 +30,5 @@ export const TAB_BLUE_BG_COLOR = '#eff6ff';
 
 export const BGCOLOR_DEFAULT = '#f9f9f9';
 export const BGCOLOR_COMPARTMENTS = '#eff6ff';
-export const BGCOLOR_PANTRYFOODS = '#fafff4';
+export const BGCOLOR_PANTRYFOODS = '#ecf6ec';
 export const BGCOLOR_FAVORITELIST = '#eef2ff';

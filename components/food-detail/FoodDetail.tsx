@@ -3,7 +3,14 @@ import { Text, TouchableOpacity } from '../common/native-component';
 import { getFormattedDate } from '../../util';
 import { comma } from '../../util/commaNotation';
 import { useDispatch, useSelector } from '../../redux/hook';
-import { BLUE, INDIGO, ORANGE_RED } from '../../constant/colors';
+import {
+  BLUE,
+  GRAY,
+  INDIGO,
+  LIGHT_GRAY,
+  MEDIUM_INDIGO,
+  ORANGE_RED,
+} from '../../constant/colors';
 import { shadowStyle } from '../../constant/shadowStyle';
 import {
   addToPantry,
@@ -125,21 +132,26 @@ export default function FoodDetail() {
 
   return (
     <>
-      <View style={tw`my-4 gap-4`}>
-        <FoodDetailName name={formFood.name} />
-
+      <View style={tw`py-5`}>
         <TouchableOpacity
           onPress={onOpenFoodPostionPress}
           style={tw.style(
-            `flex-row gap-1 items-center border border-slate-200 bg-indigo-100 rounded-full p-1.5 px-2.5 self-center`,
-            shadowStyle(3)
+            `flex-row absolute border border-slate-50 bg-white pl-1.5 pr-2 py-1.5 rounded-xl right-0 gap-1 items-center justify-center`,
+            shadowStyle(2)
           )}
         >
-          <Icon name='pencil' type='Octicons' size={11} color={INDIGO} />
-          <Text style={tw`text-indigo-600 mr-1`} fontSize={14}>
-            {formFood.space} 식료품
+          <Icon
+            name='location'
+            type='Octicons'
+            size={11}
+            color={MEDIUM_INDIGO}
+          />
+          <Text fontSize={14} style={tw`text-indigo-400 mt-0.3`}>
+            위치 변경
           </Text>
         </TouchableOpacity>
+
+        <FoodDetailName name={formFood.name} />
       </View>
 
       <View>

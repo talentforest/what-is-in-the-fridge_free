@@ -37,7 +37,7 @@ export default function TableSelectedHandleBox({ foodList, children }: Props) {
 
   return (
     <Animated.View
-      style={tw.style(`overflow-hidden bg-indigo-500 rounded-t-3xl`, {
+      style={tw.style(`overflow-hidden bg-indigo-400 rounded-t-3xl`, {
         height,
         ...shadowStyle(3),
       })}

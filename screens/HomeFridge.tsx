@@ -7,9 +7,9 @@ import { useState } from 'react';
 import Container, { BG_COLOR } from '../components/common/Container';
 import SearchFoodSection from '../screen-component/home/SearchFoodSection';
 import Fridge from '../components/fridge/Fridge';
-import NavigationBtnBox from '../screen-component/home/NavigationBtnBox';
+import EntranceAllFoodsBtn from '../screen-component/home/EntranceAllFoodsBtn';
 import HomeHeader from '../screen-component/home/HomeHeader';
-import PantryEntranceBtn from '../screen-component/home/PantryEntranceBtn';
+import EntrancePantryBtn from '../screen-component/home/EntrancePantryBtn';
 import FoodLimit from '../screen-component/setting/FoodLimit';
 import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
 import tw from 'twrnc';
@@ -34,18 +34,17 @@ export default function HomeFridge() {
               <HeaderIconBtn iconName='setting' iconSize={21} />
             </HomeHeader>
 
-            <View
-              style={tw`h-[${height * 0.78}px] 
-              mt-12 justify-center pb-2 items-center gap-1.5 overflow-hidden`}
-            >
-              {!purchased && <FoodLimit />}
+            <View style={tw`h-[${height * 0.78}px] mt-12`}>
+              <View
+                style={tw`flex-1 justify-center gap-5 items-center overflow-hidden`}
+              >
+                {!purchased && <FoodLimit />}
 
-              <View style={tw`py-2 gap-1 min-h-[${height * 0.6}px] `}>
-                <NavigationBtnBox />
-
-                <Fridge />
-
-                <PantryEntranceBtn />
+                <View style={tw`min-h-[${height * 0.6}px]`}>
+                  <EntranceAllFoodsBtn />
+                  <Fridge />
+                  <EntrancePantryBtn />
+                </View>
               </View>
             </View>
 

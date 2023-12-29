@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { KeyboardAvoidingView } from '../components/common/native-component';
 import { entireFilterObj, existAbsenceFilters, scrollToIndex } from '../util';
-import { FlatList, View } from 'react-native';
+import { FlatList, Pressable, View } from 'react-native';
 import { useDispatch, useSelector } from '../redux/hook';
 import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
 import {
@@ -52,6 +52,7 @@ export default function FavoriteFoods() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(setCheckedList([]));
     initializeFilter();
     dispatch(changeCategory('신선식품류'));
     return () => {
@@ -68,28 +69,30 @@ export default function FavoriteFoods() {
     scrollToIndex(flatListRef, foodList.length - 1);
   };
 
+  const uncheckAllItems = () => dispatch(setCheckedList([]));
+
   return (
     <SafeAreaView edges={[]} style={tw`flex-1`}>
-      <KeyboardAvoidingView>
-        <Container bgColor={BGCOLOR_FAVORITELIST}>
-          {favoriteFoods.length ? (
-            <TableFilters
-              filterTagList={[entireFilterObj, ...existAbsenceFilters]}
-              foodList={favoriteFoods}
-              withCategoryFilterTag
+      <Pressable style={tw`flex-1`} onPress={uncheckAllItems}>
+        <KeyboardAvoidingView>
+          <Container bgColor={BGCOLOR_FAVORITELIST}>
+            {favoriteFoods.length ? (
+              <TableFilters
+                filterTagList={[entireFilterObj, ...existAbsenceFilters]}
+                foodList={favoriteFoods}
+                withCategoryFilterTag
+              />
+            ) : (
+              <></>
+            )}
+
+            <TableBody
+              title='자주 먹는 식료품'
+              foodList={foodList}
+              flatListRef={flatListRef}
             />
-          ) : (
-            <></>
-          )}
+          </Container>
 
-          <TableBody
-            title='자주 먹는 식료품'
-            foodList={foodList}
-            flatListRef={flatListRef}
-          />
-        </Container>
-
-        <SafeAreaView edges={['bottom']} style={tw`bg-indigo-200`}>
           <TableFooterContainer color='indigo'>
             <View style={tw`px-4`}>
               <TextInputRoundedBox
@@ -159,12 +162,12 @@ export default function FavoriteFoods() {
               </View>
             </View>
           </TableFooterContainer>
-        </SafeAreaView>
 
-        <AlertModal />
+          <AlertModal />
 
-        <CategoryModal />
-      </KeyboardAvoidingView>
+          <CategoryModal />
+        </KeyboardAvoidingView>
+      </Pressable>
     </SafeAreaView>
   );
 }

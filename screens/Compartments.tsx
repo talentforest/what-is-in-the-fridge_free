@@ -14,19 +14,18 @@ import {
 } from '../redux/slice/modalVisibleSlice';
 import { search } from '../redux/slice/food/searchedFoodSlice';
 import { viewingArr } from '../constant/viewing';
+import { BGCOLOR_COMPARTMENTS } from '../constant/colors';
 import { entireFilterObj, expiredFilters, sortByOldDate } from '../util';
 
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
 import TableBody from '../components/table/TableBody';
 import AddFoodModal from '../screen-component/modal/AddFoodModal';
-import TableHeader from '../components/table/TableHeader';
 import Swiper from '../components/common/Swiper';
 import ViewByCompartment from '../screen-component/compartments/ViewByCompartment';
 import TableFilters from '../components/table/TableFilters';
-import tw from 'twrnc';
 import Container from '../components/common/Container';
-import { BGCOLOR_COMPARTMENTS, TAB_BLUE_BG_COLOR } from '../constant/colors';
+import tw from 'twrnc';
 
 type RouteParams = {
   space: Space;
@@ -77,9 +76,7 @@ export default function Compartments({ route }: Route) {
 
   useEffect(() => {
     initializeFilter();
-
     closeAllModals();
-
     navigation.setOptions({
       headerTitle: () => <NavigationHeaderTitle title={`${space} 식료품`} />,
     });
@@ -112,10 +109,7 @@ export default function Compartments({ route }: Route) {
                 )}
 
                 {name === '목록으로 보기' && (
-                  <>
-                    {sortedFilterList?.length ? <TableHeader /> : <></>}
-                    <TableBody title='식료품' foodList={sortedFilterList} />
-                  </>
+                  <TableBody title='식료품' foodList={sortedFilterList} />
                 )}
               </View>
             ))}

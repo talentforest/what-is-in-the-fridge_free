@@ -35,7 +35,7 @@ export const expiredFilters: FilterObj[] = [
   { filter: '소비기한 일주일 이내' },
 ];
 
-export const categoryFilters: FilterObj[] = foodCategories.map(
+export const allCategoryFilters: FilterObj[] = foodCategories.map(
   ({ category }) => {
     return { filter: category };
   }

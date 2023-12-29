@@ -8,6 +8,7 @@ import { Text, TouchableOpacity } from '../common/native-component';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { setTime } from '../../redux/slice/notificationSlice';
 import { getLocalDigitTime, setLocalTimeDate } from '../../util';
+import { shadowStyle } from '../../constant/shadowStyle';
 import tw from 'twrnc';
 
 export default function TimeBtn() {
@@ -27,7 +28,10 @@ export default function TimeBtn() {
     <View>
       <TouchableOpacity
         onPress={() => setTimePickerVisible((prev) => !prev)}
-        style={tw`border border-slate-600 bg-white px-2.5 py-1 rounded-lg `}
+        style={tw.style(
+          `border border-slate-300 bg-white px-2.5 py-1 rounded-lg`,
+          shadowStyle(3)
+        )}
       >
         <Text fontSize={16}>{time}</Text>
       </TouchableOpacity>

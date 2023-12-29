@@ -20,15 +20,15 @@ export default function TableFooterContainer({ children, color }: Props) {
 
   const dispatch = useDispatch();
 
-  const onAllUncheckBtnPress = () => dispatch(setCheckedList([]));
+  const uncheckAllItems = () => dispatch(setCheckedList([]));
 
   return (
-    <View style={tw.style(`w-full bg-${color}-200 rounded-t-3xl -mt-3`)}>
+    <View style={tw.style(`w-full bg-${color}-100 rounded-t-3xl -mt-3`)}>
       {children}
 
       {active && (
         <TouchableOpacity
-          onPress={onAllUncheckBtnPress}
+          onPress={uncheckAllItems}
           style={tw`absolute -top-11 p-2 right-4 rounded-full`}
         >
           <Icon

@@ -9,17 +9,16 @@ import { useHandleFilter } from '../hooks';
 import { formThreeSteps } from '../constant/formInfo';
 import { viewingArr } from '../constant/viewing';
 import { entireFilterObj, expiredFilters, sortByOldDate } from '../util';
+import { BGCOLOR_PANTRYFOODS } from '../constant/colors';
 
 import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
 import AddFoodModal from '../screen-component/modal/AddFoodModal';
 import TableBody from '../components/table/TableBody';
-import TableHeader from '../components/table/TableHeader';
 import ViewByCompartment from '../screen-component/compartments/ViewByCompartment';
 import Swiper from '../components/common/Swiper';
 import TableFilters from '../components/table/TableFilters';
 import Container from '../components/common/Container';
 import tw from 'twrnc';
-import { BGCOLOR_PANTRYFOODS, LIGHT_GREEN } from '../constant/colors';
 
 export default function PantryFoods() {
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
@@ -37,7 +36,7 @@ export default function PantryFoods() {
   return (
     <SafeBottomAreaView>
       <KeyboardAvoidingView>
-        <Container bgColor={BGCOLOR_PANTRYFOODS}>
+        <Container bgColor={'#ecf6ec'}>
           <View style={tw`flex-1 -mx-4`}>
             <View style={tw`px-4`}>
               <TableFilters
@@ -58,10 +57,7 @@ export default function PantryFoods() {
                   )}
 
                   {name === '목록으로 보기' && (
-                    <>
-                      {pantryFoods.length ? <TableHeader /> : <></>}
-                      <TableBody title='식료품' foodList={foodList} />
-                    </>
+                    <TableBody title='식료품' foodList={foodList} />
                   )}
                 </View>
               ))}

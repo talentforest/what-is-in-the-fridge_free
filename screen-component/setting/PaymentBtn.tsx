@@ -21,7 +21,7 @@ const skus = ['com.ellie0501.whatisinmyfridge_test'];
 const PaymentBtn = () => {
   const dispatch = useDispatch();
 
-  const { setAlert, alertIAP } = useHandleAlert();
+  const { setAlert, alertSucessRestoreIAP, alertIAP } = useHandleAlert();
 
   const {
     connected,
@@ -30,31 +30,11 @@ const PaymentBtn = () => {
     finishTransaction, //
   } = useIAP();
 
-  const switchPurchasedState = (purchaseToken: string) => {
-    return dispatch(
-      togglePurchaseState({
-        purchased: true,
-        purchaseToken,
-      })
-    );
-  };
-
-  const verifyReceipt = async () => {
-    await RNIap.getAvailablePurchases().then((items) => {
-      if (items === null) return;
-      switchPurchasedState(items[0].purchaseToken);
-    });
-  };
-
-  useEffect(() => {
-    verifyReceipt();
-  }, []);
-
   useEffect(() => {
     const checkCurrentPurchase = async (
       purchase: RNIap.Purchase
     ): Promise<void> => {
-      if (purchase?.transactionReceipt) {
+      if (purchase?.transactionReceipt && connected) {
         try {
           const receipt = {
             purchase,
@@ -74,10 +54,27 @@ const PaymentBtn = () => {
     checkCurrentPurchase(currentPurchase);
   }, [currentPurchase, finishTransaction]);
 
+  const switchPurchasedState = (purchaseToken: string) => {
+    return dispatch(
+      togglePurchaseState({
+        purchased: true,
+        purchaseToken,
+      })
+    );
+  };
+
   const handleBuyBtn = async () => {
+    const availablePurchases = await RNIap.getAvailablePurchases();
+
     try {
-      await getProducts({ skus });
-      await requestPurchase({ skus });
+      if (availablePurchases && availablePurchases.length > 0) {
+        // 이미 구매한 아이템이 있다면 복원 수행
+        switchPurchasedState(availablePurchases[0].purchaseToken);
+        return setAlert(alertSucessRestoreIAP);
+      } else {
+        await getProducts({ skus });
+        await requestPurchase({ skus });
+      }
     } catch (e) {
       console.log(e);
     }

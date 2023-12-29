@@ -8,7 +8,7 @@ import {
 import { Food } from '../../constant/foodInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { shadowStyle } from '../../constant/shadowStyle';
-import { MEDIUM_INDIGO } from '../../constant/colors';
+import { INDIGO } from '../../constant/colors';
 import { useFindFood } from '../../hooks';
 
 import Icon from '../../components/common/native-component/Icon';
@@ -59,7 +59,7 @@ export default function SearchFoodSection({
           fontSize={17}
           onSubmitEditing={onSubmitEditing}
           style={tw.style(
-            `h-10 border-2 my-0.5 pl-8.5 border-indigo-200 text-slate-700 items-center justify-center`,
+            `h-10 border my-0.5 pl-8.5 border-indigo-100 text-slate-700 items-center justify-center`,
             shadowStyle(4)
           )}
         />
@@ -68,7 +68,7 @@ export default function SearchFoodSection({
           style={tw`absolute top-0 left-2.5 justify-center h-full`}
           disabled={keyword === ''}
         >
-          <Icon name='search' type='Octicons' size={16} color={MEDIUM_INDIGO} />
+          <Icon name='search' type='Octicons' size={16} color={INDIGO} />
         </TouchableOpacity>
       </View>
 
