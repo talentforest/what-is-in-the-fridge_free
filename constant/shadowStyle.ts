@@ -10,6 +10,6 @@ export const shadowStyle = (spread: number) => {
       }
     : {
         elevation: spread,
-        shadowColor: '#aaa',
+        shadowColor: '#333',
       };
 };

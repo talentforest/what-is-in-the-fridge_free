@@ -3,11 +3,11 @@ import { useSelector } from '../../redux/hook';
 import { View } from 'react-native';
 import { Space } from '../../constant/fridgeInfo';
 import { useHandleCompartments } from '../../hooks';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import CountBtn from '../../components/buttons/CountBtn';
 import AlertModal from '../modal/AlertModal';
 import tw from 'twrnc';
-import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   space: Space;

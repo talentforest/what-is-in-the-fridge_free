@@ -1,14 +1,14 @@
 import { ScrollView, View, useWindowDimensions } from 'react-native';
 import { Food } from '../../constant/foodInfo';
-import { CompartmentNum, FoodPosition, Space } from '../../constant/fridgeInfo';
+import { FoodPosition } from '../../constant/fridgeInfo';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { showExpandCompartmentModal } from '../../redux/slice/modalVisibleSlice';
+import { useGetFoodList } from '../../hooks';
 
 import EmptySign from '../../components/common/EmptySign';
 import FoodBox from '../../components/common/FoodBox';
 import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 import tw from 'twrnc';
-import { useGetFoodList } from '../../hooks';
 
 interface Props {
   position: FoodPosition;

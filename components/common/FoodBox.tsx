@@ -66,14 +66,14 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
           backgroundColor: active ? INDIGO : '#fff',
           transform: [{ translateY }],
           opacity,
-          ...shadowStyle(3),
         })}
       >
         <View
           style={tw.style(
             `border border-slate-300 gap-0.5 rounded-lg justify-center items-center flex-row px-2 py-1.5
             ${colorByFilter(currentFilter, expiredDate, 'bg')} 
-            ${active ? 'border-indigo-100' : ''}`
+            ${active ? 'border-indigo-100' : ''}`,
+            shadowStyle(3)
           )}
         >
           {getDiffDate(expiredDate) <= 7 && (

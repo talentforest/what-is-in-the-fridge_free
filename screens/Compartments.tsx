@@ -2,7 +2,6 @@ import { ScrollView, View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from '../redux/hook';
-import { Space } from '../constant/fridgeInfo';
 import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/common/native-component';
 import { useGetFoodList, useHandleFilter } from '../hooks';
@@ -44,6 +43,8 @@ export default function Compartments({ route }: Route) {
 
   const scrollViewRef = useRef<ScrollView | null>(null);
 
+  const { initializeFilter } = useHandleFilter();
+
   const { getMatchedPositionFoods, getFilteredFoodList } = useGetFoodList();
 
   const foodList = getMatchedPositionFoods('allFoods', space);
@@ -51,8 +52,6 @@ export default function Compartments({ route }: Route) {
   const filteredList = getFilteredFoodList(filter, foodList);
 
   const sortedFilterList = sortByOldDate(filteredList);
-
-  const { initializeFilter } = useHandleFilter();
 
   const navigation = useNavigation();
 

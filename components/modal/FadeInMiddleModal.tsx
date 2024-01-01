@@ -60,9 +60,9 @@ export default function FadeInMiddleModal({
       onBackButtonPress={closeModal} // 안드로이드 뒤로 가기 버튼
       onSwipeComplete={closeModal}
       propagateSwipe={true}
-      animationIn={'fadeIn'}
-      animationOut={'fadeOut'}
-      animationInTiming={title === '알림' ? 100 : 600}
+      animationIn={'zoomInUp'}
+      animationOut={'zoomOut'}
+      animationInTiming={title === '알림' ? 100 : 200}
       animationOutTiming={title === '알림' ? 100 : 200}
       deviceHeight={height * 1.2}
       statusBarTranslucent={true}
@@ -79,7 +79,7 @@ export default function FadeInMiddleModal({
           <SwipeHeader
             title={title}
             closeModal={closeModal}
-            animationIn={'fadeIn'}
+            animationIn='fadeIn'
           />
 
           {/* 구분선 */}

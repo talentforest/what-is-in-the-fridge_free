@@ -4,11 +4,10 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from '../../redux/hook';
 
-import Modal from '../../components/modal/Modal';
+import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 import Form from '../../components/form/Form';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import tw from 'twrnc';
-import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 
 export default function AddShoppingListFoodModal() {
   const { formModal } = useSelector((state) => state.modalVisible);

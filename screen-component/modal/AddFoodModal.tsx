@@ -7,11 +7,10 @@ import { useSelector } from '../../redux/hook';
 import { scrollToEnd } from '../../util';
 import { MutableRefObject } from 'react';
 
-import Modal from '../../components/modal/Modal';
+import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 import Form from '../../components/form/Form';
 import SubmitBtn from '../../components/buttons/SubmitBtn';
 import tw from 'twrnc';
-import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
 
 interface Props {
   position?: FoodPosition;
