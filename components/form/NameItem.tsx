@@ -6,6 +6,7 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import { useRouteName } from '../../hooks/useRouteName';
 import { NAME_MAX_LENGTH } from '../../constant/foodInfo';
 import { useFindFood } from '../../hooks';
+import { closeKeyboard } from '../../util';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
@@ -43,6 +44,11 @@ export default function NameItem({ isEditing }: Props) {
     hasFood?.space === '실온보관'
       ? hasFood?.space
       : `${hasFood?.space} ${hasFood?.compartmentNum}칸`;
+
+  const onMatchedFoodPress = (name: string) => {
+    dispatch(editFormFood({ name }));
+    closeKeyboard();
+  };
 
   return (
     <View>
@@ -86,7 +92,13 @@ export default function NameItem({ isEditing }: Props) {
         </View>
       </View>
 
-      {!isEditing && !isFavorite ? <MatchedFavoriteFoodNameList /> : null}
+      {!isEditing && !isFavorite ? (
+        <MatchedFavoriteFoodNameList
+          name={newName}
+          onPress={onMatchedFoodPress}
+          compareWith='addNewFood'
+        />
+      ) : null}
     </View>
   );
 }

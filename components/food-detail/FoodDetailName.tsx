@@ -19,7 +19,7 @@ export default function FoodDetailName({ name }: { name: string }) {
   const favFood = isFavoriteItem(name);
 
   return (
-    <View style={tw`self-center mt-2`}>
+    <View style={tw`self-center mt-5`}>
       <LineDeco />
 
       <TouchableOpacity
@@ -37,10 +37,7 @@ export default function FoodDetailName({ name }: { name: string }) {
           color={favFood ? YELLOW : LIGHT_GRAY}
         />
 
-        <Text
-          fontSize={18}
-          style={tw.style(`max-w-4/5 text-stone-800 leading-5`)}
-        >
+        <Text fontSize={18} style={tw.style(`text-stone-800 leading-5`)}>
           {name}
         </Text>
       </TouchableOpacity>

@@ -7,11 +7,7 @@ import { persistor, store } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { useFonts } from 'expo-font';
 import { fonts } from './constant/fonts';
-import {
-  PATHNAME_ALLFOODS,
-  PATHNAME_HOMEFRIDGE,
-  prefix,
-} from './constant/link';
+import { PATHNAME_ALLFOODS, PATHNAME_HOME, prefix } from './constant/link';
 import { Platform } from 'react-native';
 import { NOTIFICATION_CHANNEL_ID } from './screens/SettingNotification';
 
@@ -66,9 +62,9 @@ const App = () => {
             linking={{
               prefixes: [prefix],
               config: {
-                initialRouteName: 'HomeFridge',
+                initialRouteName: 'Home',
                 screens: {
-                  HomeFridge: PATHNAME_HOMEFRIDGE,
+                  Home: PATHNAME_HOME,
                   AllFoods: PATHNAME_ALLFOODS,
                 },
               },
@@ -79,12 +75,12 @@ const App = () => {
                 if (url != null) {
                   return url;
                 }
-
                 const response =
                   await Notifications.getLastNotificationResponseAsync();
 
                 return response?.notification.request.content.data.url;
               },
+
               subscribe(listener) {
                 const onReceiveURL = ({ url }: { url: string }) =>
                   listener(url);

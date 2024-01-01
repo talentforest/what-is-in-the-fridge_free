@@ -16,7 +16,7 @@ import FormLabel from './FormLabel';
 import CategoryIcon from '../common/CategoryIcon';
 import tw from 'twrnc';
 import Icon from '../common/native-component/Icon';
-import { GRAY, LIGHT_BLUE } from '../../constant/colors';
+import { GRAY, LIGHT_BLUE, LIGHT_GRAY } from '../../constant/colors';
 import { foodCategories } from '../../constant/foodCategories';
 import FilterTag from '../common/FilterTag';
 
@@ -68,7 +68,12 @@ export default function CategoryItem({ isAddNewOne }: Props) {
               disabled ? 'text-slate-400' : 'text-slate-800'
             }`}
           />
-          <Icon name='apps' type='Octicons' size={14} color={LIGHT_BLUE} />
+          <Icon
+            name='apps'
+            type='Octicons'
+            size={14}
+            color={disabled ? LIGHT_GRAY : LIGHT_BLUE}
+          />
         </View>
       </TouchableOpacity>
 

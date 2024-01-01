@@ -66,7 +66,7 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
           backgroundColor: active ? INDIGO : '#fff',
           transform: [{ translateY }],
           opacity,
-          ...shadowStyle(modalVisible ? 3 : 0),
+          ...shadowStyle(3),
         })}
       >
         <View

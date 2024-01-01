@@ -10,34 +10,38 @@ export const getLeftDays = (expiryDate: string) => {
   return Math.round(leftDays);
 };
 
-export const expired = (expiredDate: string) => {
+export const isCautionFood = (expiredDate: string) => {
+  return getLeftDays(expiredDate) < 8;
+};
+
+export const isExpiredFood = (expiredDate: string) => {
   return 0 > getLeftDays(expiredDate);
 };
 
-export const leftThreeDays = (expiredDate: string) => {
+export const isLeftThreeDaysFood = (expiredDate: string) => {
   return 0 <= getLeftDays(expiredDate) && getLeftDays(expiredDate) < 4;
 };
 
-export const leftWeek = (expiredDate: string) => {
+export const isLeftWeekFood = (expiredDate: string) => {
   return 4 <= getLeftDays(expiredDate) && getLeftDays(expiredDate) < 8;
 };
 
 export const getTWColorByLeftDay = (expiredDate: string) => {
-  return expired(expiredDate)
+  return isExpiredFood(expiredDate)
     ? 'text-red-600'
-    : leftThreeDays(expiredDate)
+    : isLeftThreeDaysFood(expiredDate)
     ? 'text-amber-500'
-    : leftWeek(expiredDate)
+    : isLeftWeekFood(expiredDate)
     ? 'text-green-600'
     : 'text-green-600';
 };
 
 export const getColorByLeftDay = (expiredDate: string) => {
-  return expired(expiredDate)
+  return isExpiredFood(expiredDate)
     ? RED
-    : leftThreeDays(expiredDate)
+    : isLeftThreeDaysFood(expiredDate)
     ? AMBER
-    : leftWeek(expiredDate)
+    : isLeftWeekFood(expiredDate)
     ? GREEN
     : GREEN;
 };

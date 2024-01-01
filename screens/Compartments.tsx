@@ -27,16 +27,12 @@ import TableFilters from '../components/table/TableFilters';
 import Container from '../components/common/Container';
 import tw from 'twrnc';
 
-type RouteParams = {
-  space: Space;
-};
-
 interface Route {
   route: RouteProp<RootStackParamList, 'Compartments'>;
 }
 
 export default function Compartments({ route }: Route) {
-  const { space } = route.params as RouteParams;
+  const { space } = route.params;
 
   const { filter } = useSelector((state) => state.filter);
 

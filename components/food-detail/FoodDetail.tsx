@@ -3,14 +3,7 @@ import { Text, TouchableOpacity } from '../common/native-component';
 import { getFormattedDate } from '../../util';
 import { comma } from '../../util/commaNotation';
 import { useDispatch, useSelector } from '../../redux/hook';
-import {
-  BLUE,
-  GRAY,
-  INDIGO,
-  LIGHT_GRAY,
-  MEDIUM_INDIGO,
-  ORANGE_RED,
-} from '../../constant/colors';
+import { BLUE, MEDIUM_INDIGO, ORANGE_RED } from '../../constant/colors';
 import { shadowStyle } from '../../constant/shadowStyle';
 import {
   addToPantry,
@@ -32,7 +25,6 @@ import {
   showOpenFoodDetailModal,
   showOpenFoodPositionModal,
 } from '../../redux/slice/modalVisibleSlice';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { search } from '../../redux/slice/food/searchedFoodSlice';
 import { useHandleAlert } from '../../hooks';
 import {
@@ -54,8 +46,6 @@ import tw from 'twrnc';
 export default function FoodDetail() {
   const { openFoodPositionModal } = useSelector((state) => state.modalVisible);
   const { formFood, originFood } = useSelector((state) => state.formFood);
-
-  const insets = useSafeAreaInsets();
 
   const dispatch = useDispatch();
 
@@ -121,7 +111,6 @@ export default function FoodDetail() {
     const sameCompartmentNum =
       formFood?.compartmentNum === originCompartmentNum;
 
-    //
     if (sameSpace && !sameCompartmentNum) {
       dispatch(search(formFood.name));
     }
@@ -133,23 +122,25 @@ export default function FoodDetail() {
   return (
     <>
       <View style={tw`py-5`}>
-        <TouchableOpacity
-          onPress={onOpenFoodPostionPress}
-          style={tw.style(
-            `flex-row absolute border border-slate-50 bg-white pl-1.5 pr-2 py-1.5 rounded-xl right-0 gap-1 items-center justify-center`,
-            shadowStyle(2)
-          )}
-        >
-          <Icon
-            name='location'
-            type='Octicons'
-            size={11}
-            color={MEDIUM_INDIGO}
-          />
-          <Text fontSize={14} style={tw`text-indigo-400 mt-0.3`}>
-            위치 변경
-          </Text>
-        </TouchableOpacity>
+        <View style={tw`absolute right-0 gap-1 justify-end items-end`}>
+          <TouchableOpacity
+            onPress={onOpenFoodPostionPress}
+            style={tw.style(
+              `flex-row border border-slate-50 bg-white pl-1.5 pr-2 py-1.5 rounded-xl gap-1 items-center justify-center`,
+              shadowStyle(2)
+            )}
+          >
+            <Icon
+              name='location'
+              type='Octicons'
+              size={11}
+              color={MEDIUM_INDIGO}
+            />
+            <Text fontSize={14} style={tw`text-indigo-400 mt-0.3`}>
+              위치 변경
+            </Text>
+          </TouchableOpacity>
+        </View>
 
         <FoodDetailName name={formFood.name} />
       </View>

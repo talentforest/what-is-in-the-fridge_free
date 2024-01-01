@@ -7,11 +7,11 @@ import { Category, foodCategories } from '../../constant/foodCategories';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { changeCategory } from '../../redux/slice/food/categorySlice';
 import { showCategoryFilterModal } from '../../redux/slice/modalVisibleSlice';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import FilterTag from '../common/FilterTag';
 import Modal from '../modal/Modal';
 import tw from 'twrnc';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Props {
   filterTagList: FilterObj[];

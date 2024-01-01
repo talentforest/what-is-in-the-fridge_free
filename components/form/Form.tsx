@@ -2,9 +2,7 @@ import { ModalTitle } from '../modal/Modal';
 import { Pressable, View, useWindowDimensions } from 'react-native';
 import { FormStep } from '../../constant/formInfo';
 import { closeKeyboard } from '../../util';
-import { useItemSlideAnimation } from '../../hooks';
 import { Animated } from 'react-native';
-import { useSelector } from '../../redux/hook';
 
 import FormSectionContainer from './FormSectionContainer';
 import CategoryItem from './CategoryItem';

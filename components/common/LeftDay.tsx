@@ -1,3 +1,4 @@
+import { useSelector } from '../../redux/hook';
 import { getDiffDate, getFormattedDate, getTWColorByLeftDay } from '../../util';
 import { Text } from './native-component';
 import { View } from 'react-native';
@@ -10,6 +11,7 @@ interface Props {
 }
 
 function LeftDay({ expiredDate, dateMark, isSuffix }: Props) {
+  const { fontFamily } = useSelector((state) => state.fontFamily);
   const textColor = getTWColorByLeftDay(expiredDate);
   const diffDate = getDiffDate(expiredDate);
 
@@ -22,21 +24,21 @@ function LeftDay({ expiredDate, dateMark, isSuffix }: Props) {
     : `${diffDate > 0 ? '+' : ''}${diffDate}일`;
 
   return (
-    <View style={tw`items-end justify-center gap-0.5`}>
+    <View style={tw`items-end justify-center gap-0.2`}>
       {expiredDate !== '' ? (
         <>
-          <Text fontSize={15} style={tw.style(`${textColor}`)}>
+          <Text fontSize={16} style={tw.style(`${textColor}`)}>
             {diffDate === 0 ? today : relativeTime}
           </Text>
 
           {dateMark && (
-            <Text fontSize={13} style={tw.style(`text-slate-500 -mt-0.5`)}>
+            <Text fontSize={14} style={tw.style(`text-slate-500`)}>
               {getFormattedDate(expiredDate, 'YY.MM.DD')}
             </Text>
           )}
         </>
       ) : (
-        <Text fontSize={15} style={tw.style(`text-slate-400`)}>
+        <Text fontSize={16} style={tw.style(`text-slate-400`)}>
           정보 없음
         </Text>
       )}

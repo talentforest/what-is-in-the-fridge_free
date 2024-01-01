@@ -1,5 +1,9 @@
 import { Filter } from './filters';
-import { expired, leftThreeDays, leftWeek } from './getLeftDays';
+import {
+  isExpiredFood,
+  isLeftThreeDaysFood,
+  isLeftWeekFood,
+} from './getLeftDays';
 
 export const DISABLED_BG_COLOR = 'bg-white border-slate-200';
 export const DISABLED_TEXT_COLOR = 'text-slate-400';
@@ -66,11 +70,11 @@ export const colorByFilter = (
 ) => {
   const active =
     filter === '소비기한 만료'
-      ? expired(date)
+      ? isExpiredFood(date)
       : filter === '소비기한 3일 이내'
-      ? leftThreeDays(date)
+      ? isLeftThreeDaysFood(date)
       : filter === '소비기한 일주일 이내'
-      ? leftWeek(date)
+      ? isLeftWeekFood(date)
       : false;
 
   return getTagColor(filter, active, type);

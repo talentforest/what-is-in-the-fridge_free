@@ -3,7 +3,11 @@ import { Text } from '../components/common/native-component';
 import { useDispatch, useSelector } from '../redux/hook';
 import { toggleNotification } from '../redux/slice/notificationSlice';
 import { useGetFoodList } from '../hooks';
-import { getLeftDays, getNameListCanMarkEtc } from '../util';
+import {
+  getNameListCanMarkEtc,
+  isExpiredFood,
+  isLeftThreeDaysFood,
+} from '../util';
 import { notificationContents } from '../constant/notificationContents';
 import { useEffect, useState } from 'react';
 import { PATHNAME_ALLFOODS, prefix } from '../constant/link';
@@ -46,12 +50,11 @@ export default function SettingNotification() {
   function getReminderFoodsState() {
     if (reminderFoods.length === 0) return;
 
-    const allExpired = reminderFoods.every(
-      (food) => getLeftDays(food.expiredDate) < 0
+    const allExpired = reminderFoods.every((food) =>
+      isExpiredFood(food.expiredDate)
     );
-    const allThreeDaysLeft = reminderFoods.every(
-      (food) =>
-        0 <= getLeftDays(food.expiredDate) && getLeftDays(food.expiredDate) < 4
+    const allThreeDaysLeft = reminderFoods.every((food) =>
+      isLeftThreeDaysFood(food.expiredDate)
     );
 
     if (allExpired && !allThreeDaysLeft) {
@@ -66,32 +69,44 @@ export default function SettingNotification() {
   const toggleNotificationSetting = () =>
     dispatch(toggleNotification(!notification));
 
+  const getNextNotificationInfo = async (hour: number, minute: number) => {
+    const nextTriggerDate = await Notifications.getNextTriggerDateAsync({
+      hour,
+      minute,
+      repeats: true,
+      channelId: NOTIFICATION_CHANNEL_ID,
+    });
+    console.log(new Date(nextTriggerDate).toLocaleString('ko'));
+  };
+
   const scheduleNotificationEveryDay = async () => {
     await Notifications.cancelAllScheduledNotificationsAsync();
 
     const content = notificationContents?.find(
       (contents) => contents.id === getReminderFoodsState()
     );
+    const { title, body } = content;
 
-    if (content) {
-      const { title, body } = content;
+    const [hour, minute] = time.split(':').map((item) => +item);
 
-      const [hour, minute] = time.split(':').map((item) => +item);
-
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title,
-          body: `${getNameListCanMarkEtc(reminderFoods, 3)}${body}`,
-          data: { url: `${prefix}${PATHNAME_ALLFOODS}` },
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title,
+        body: `${getNameListCanMarkEtc(reminderFoods, 3)}${body}`,
+        data: {
+          url: `${prefix}${PATHNAME_ALLFOODS}?filter=소비기한 주의`,
         },
-        trigger: {
-          hour,
-          minute,
-          repeats: true,
-          channelId: NOTIFICATION_CHANNEL_ID,
-        },
-      });
-    }
+      },
+      trigger: {
+        hour,
+        minute,
+        repeats: true,
+        channelId: NOTIFICATION_CHANNEL_ID,
+      },
+    });
+
+    // 다음 알림 예약 확인
+    getNextNotificationInfo(hour, minute);
   };
 
   return (

@@ -1,10 +1,9 @@
 import { useRef } from 'react';
 import { KeyboardAvoidingView } from '../components/common/native-component';
-import { useDispatch, useSelector } from '../redux/hook';
+import { useSelector } from '../redux/hook';
 import { FlatList, Pressable, View } from 'react-native';
 import { closeKeyboard, scrollToIndex } from '../util';
 import { useHandleTableFooterBtns, useSubmitFoodsFromInput } from '../hooks';
-import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
 import { NAME_MAX_LENGTH } from '../constant/foodInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -19,16 +18,14 @@ import AddAtOnceModal from '../screen-component/modal/AddAtOnceModal';
 import FormMessage from '../components/form/FormMessage';
 import HomeHeader from '../screen-component/home/HomeHeader';
 import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
+import MatchedFavoriteFoodNameList from '../components/form/MatchedFavoriteFoodNameList';
 import tw from 'twrnc';
 
 export default function HomeShoppingList() {
+  const { checkedList } = useSelector((state) => state.checkedList);
   const { shoppingList } = useSelector((state) => state.shoppingList);
 
   const flatListRef = useRef<FlatList | null>(null);
-
-  const dispatch = useDispatch();
-
-  const uncheckAllItems = () => dispatch(setCheckedList([]));
 
   const { onDeleteBtnPress, onAddAtOnceBtnPress } = useHandleTableFooterBtns();
 
@@ -46,80 +43,91 @@ export default function HomeShoppingList() {
     scrollToIndex(flatListRef, shoppingList.length - 1);
   };
 
+  const onMatchedFoodPress = (name: string) => setInputValue(name);
+
   return (
     <SafeAreaView edges={[]} style={tw`flex-1`}>
       <KeyboardAvoidingView>
-        <Pressable style={tw`flex-1`} onPress={uncheckAllItems}>
-          <>
-            <Container>
-              <HomeHeader title='장볼게 뭐가 있지'>
-                <HeaderIconBtn iconName='star-fill' />
-              </HomeHeader>
+        <Container>
+          <HomeHeader title='장볼게 뭐가 있지'>
+            <HeaderIconBtn iconName='star-fill' />
+          </HomeHeader>
 
-              <TableBody
-                title='장볼 식료품'
-                foodList={shoppingList}
-                flatListRef={flatListRef}
-              />
+          <TableBody
+            title='장볼 식료품'
+            foodList={shoppingList}
+            flatListRef={flatListRef}
+          />
+        </Container>
 
-              <AddShoppingListFoodModal />
+        <TableFooterContainer color='stone'>
+          <View style={tw`px-4`}>
+            <TextInputRoundedBox
+              value={inputValue}
+              setValue={setInputValue}
+              placeholder='식료품 이름을 작성해주세요'
+              onSubmitEditing={onSubmitEditing}
+              disabled={inputValue === '' || existCaution}
+            />
+          </View>
 
-              <AddAtOnceModal />
-            </Container>
+          <TableSelectedHandleBox foodList={shoppingList}>
+            <SquareIconBtn
+              btnName='한번에 추가'
+              icon='shape-square-rounded-plus'
+              onPress={onAddAtOnceBtnPress}
+            />
+            <SquareIconBtn
+              btnName='삭제'
+              icon='trash-can-outline'
+              onPress={onDeleteBtnPress}
+            />
+          </TableSelectedHandleBox>
 
-            <View
-              style={{
-                marginTop: existCaution ? -14 : 0,
-                marginLeft: 6,
-              }}
-            >
-              <FormMessage
-                active={existCaution}
-                message='이미 목록에 있는 식료품이에요'
-                color='orange'
-              />
-            </View>
+          <MatchedFavoriteFoodNameList
+            name={inputValue}
+            onPress={onMatchedFoodPress}
+            compareWith='shoppingList'
+          />
 
-            <View
-              style={{
-                marginTop: inputValue.length >= NAME_MAX_LENGTH ? -14 : 0,
-                marginLeft: 6,
-              }}
-            >
-              <FormMessage
-                active={inputValue.length >= NAME_MAX_LENGTH}
-                message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요`}
-                color='orange'
-              />
-            </View>
-
-            <TableFooterContainer color='stone'>
-              <View style={tw`px-4 `}>
-                <TextInputRoundedBox
-                  value={inputValue}
-                  setValue={setInputValue}
-                  placeholder='식료품 이름을 작성해주세요'
-                  onSubmitEditing={onSubmitEditing}
-                  disabled={inputValue === '' || existCaution}
+          {!checkedList.length && (
+            <>
+              <View
+                style={tw.style(`pl-6 ${existCaution ? 'py-0.5 pb-1.5' : ''}`, {
+                  marginTop: existCaution ? -14 : 0,
+                })}
+              >
+                <FormMessage
+                  active={existCaution}
+                  message='이미 목록에 있는 식료품이에요'
+                  color='orange'
                 />
               </View>
 
-              <TableSelectedHandleBox foodList={shoppingList}>
-                <SquareIconBtn
-                  btnName='한번에 추가'
-                  icon='shape-square-rounded-plus'
-                  onPress={onAddAtOnceBtnPress}
+              <View
+                style={tw.style(
+                  `pl-6 ${
+                    inputValue.length >= NAME_MAX_LENGTH ? 'py-0.5 pb-1.5' : ''
+                  }`,
+                  {
+                    marginTop: inputValue.length >= NAME_MAX_LENGTH ? -14 : 0,
+                  }
+                )}
+              >
+                <FormMessage
+                  active={inputValue.length >= NAME_MAX_LENGTH}
+                  message={`식료품 이름은 ${NAME_MAX_LENGTH}자를 넘을 수 없어요`}
+                  color='orange'
                 />
-                <SquareIconBtn
-                  btnName='삭제'
-                  icon='trash-can-outline'
-                  onPress={onDeleteBtnPress}
-                />
-              </TableSelectedHandleBox>
-            </TableFooterContainer>
-          </>
-        </Pressable>
+              </View>
+            </>
+          )}
+        </TableFooterContainer>
       </KeyboardAvoidingView>
+
+      <AddShoppingListFoodModal />
+
+      <AddAtOnceModal />
     </SafeAreaView>
   );
 }

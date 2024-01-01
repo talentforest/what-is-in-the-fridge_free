@@ -1,9 +1,9 @@
 import { shadowStyle } from '../../constant/shadowStyle';
 import { Text, TouchableOpacity } from '../common/native-component';
-import Icon from '../common/native-component/Icon';
-import tw from 'twrnc';
-import IconChevronRight from '../svg/arrow/IconChevronRight';
 import { LIGHT_GRAY } from '../../constant/colors';
+import Icon from '../common/native-component/Icon';
+import IconChevronRight from '../svg/arrow/IconChevronRight';
+import tw from 'twrnc';
 
 interface Props {
   btnName: string;
@@ -29,7 +29,7 @@ export default function SubmitBtn({
       style={tw.style(
         `${
           disabled ? 'bg-gray-300' : `bg-${color}-600`
-        } h-11 flex-row items-center justify-center gap-1.5 rounded-xl`,
+        } h-10.5 flex-row items-center justify-center gap-1.5 rounded-xl`,
         shadowStyle(3)
       )}
     >

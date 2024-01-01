@@ -21,7 +21,7 @@ export default function HomeHeader({ title, children }: Props) {
   return (
     <View style={tw`mt-1`}>
       <View
-        style={tw`flex-row h-11 justify-between items-center gap-0.5 m-1 mt-0`}
+        style={tw`flex-row h-11 justify-between items-center gap-0.5 -mr-0.5 ml-1`}
       >
         <View style={tw`flex-row items-center gap-1`}>
           {title === '냉장고에 뭐가 있지' ? (

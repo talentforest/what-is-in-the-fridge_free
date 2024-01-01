@@ -12,6 +12,8 @@ import AddIconBtn from '../buttons/AddIconBtn';
 import RoundedNavigateBtn from '../buttons/RoundedNavigateBtn';
 import IndicatorExist from '../common/IndicatorExist';
 import tw from 'twrnc';
+import Icon from '../common/native-component/Icon';
+import { INDIGO, MEDIUM_INDIGO } from '../../constant/colors';
 
 export type TableTitle =
   | '전체 식료품'
@@ -30,7 +32,8 @@ export default function TableItemEnd({ title, food }: Props) {
 
   const { routeHome } = useRouteName();
 
-  const { findFood, allFoods, isFavoriteItem } = useFindFood();
+  const { findFood, allFoods, isFavoriteItem, isShoppingListItem } =
+    useFindFood();
 
   const { alertReachedLimit, setAlert } = useHandleAlert();
 
@@ -87,7 +90,7 @@ export default function TableItemEnd({ title, food }: Props) {
             )}
 
             {title === '전체 식료품' && (
-              <View style={tw`gap-1 flex-row items-center`}>
+              <View style={tw`flex-row items-center`}>
                 <View style={tw`w-18.5 items-start`}>
                   <RoundedNavigateBtn
                     btnName={food.space}
@@ -97,7 +100,7 @@ export default function TableItemEnd({ title, food }: Props) {
                   />
                 </View>
 
-                <View style={tw`items-end w-16`}>
+                <View style={tw`items-end w-14`}>
                   <LeftDay expiredDate={food.expiredDate} dateMark />
                 </View>
               </View>
@@ -105,7 +108,16 @@ export default function TableItemEnd({ title, food }: Props) {
           </View>
 
           {title === '자주 먹는 식료품' && (
-            <View style={tw`ml-2 mr-3`}>
+            <View style={tw`ml-2 mr-3 flex-row gap-5`}>
+              {isShoppingListItem(food.name) && (
+                <Icon
+                  name={'basket-outline'}
+                  type='MaterialCommunityIcons'
+                  size={15}
+                  color={MEDIUM_INDIGO}
+                />
+              )}
+
               <IndicatorExist isExist={!!findFood(food.name)} />
             </View>
           )}

@@ -34,15 +34,16 @@ import SettingNotification from '../screens/SettingNotification';
 import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 import SettingDatePicker from '../screens/SettingDatePicker';
+import { Space } from '../constant/fridgeInfo';
 
 export type RootStackParamList = {
   OnBoarding: undefined;
   Home: undefined;
   HomeFridge: undefined;
   HomeShoppingList: undefined;
-  Compartments: undefined | object;
+  Compartments: undefined | { space: Space };
   FavoriteFoods: undefined;
-  AllFoods: undefined;
+  AllFoods: undefined | { filter: string };
   PantryFoods: undefined;
   Setting: undefined;
   SettingFont: undefined;

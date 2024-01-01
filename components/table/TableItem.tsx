@@ -22,7 +22,7 @@ interface Props {
   checkBox?: boolean;
 }
 
-export const TABLE_ITEM_HEIGHT = 44;
+export const TABLE_ITEM_HEIGHT = 45;
 
 export default function TableItem({
   food,

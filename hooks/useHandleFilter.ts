@@ -80,6 +80,7 @@ export const useHandleFilter = (scrollViewRef?: any) => {
 
   return {
     initializeFilter,
+    changeFilterState,
     currentFilter,
     categoryFilter,
     onFilterTagPress,
