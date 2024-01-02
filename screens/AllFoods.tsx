@@ -17,6 +17,7 @@ import TableFilters from '../components/table/TableFilters';
 import SquareIconBtn from '../components/buttons/SquareIconBtn';
 import TableFooterContainer from '../components/table/TableFooterContainer';
 import AlertModal from '../screen-component/modal/AlertModal';
+import { useNotification } from '../hooks/useNotification';
 
 export default function AllFoods() {
   const { currentFilter, initializeFilter, changeFilterState } =
@@ -24,13 +25,9 @@ export default function AllFoods() {
 
   const { getFilteredFoodList, allFoods } = useGetFoodList();
 
-  const route = useRoute() as { params?: { filter?: string } };
+  useNotification();
 
-  useEffect(() => {
-    if (route.params?.filter === '소비기한 주의') {
-      changeFilterState('소비기한 주의');
-    }
-  }, []);
+  const route = useRoute() as { params?: { filter?: string } };
 
   const {
     onDeleteBtnPress,
@@ -38,6 +35,12 @@ export default function AllFoods() {
   } = useHandleTableFooterBtns();
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (route.params?.filter === '소비기한 주의') {
+      changeFilterState('소비기한 주의');
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(setCheckedList([]));

@@ -25,6 +25,7 @@ import ViewByCompartment from '../screen-component/compartments/ViewByCompartmen
 import TableFilters from '../components/table/TableFilters';
 import Container from '../components/common/Container';
 import tw from 'twrnc';
+import { useNotification } from '../hooks/useNotification';
 
 interface Route {
   route: RouteProp<RootStackParamList, 'Compartments'>;
@@ -44,6 +45,8 @@ export default function Compartments({ route }: Route) {
   const scrollViewRef = useRef<ScrollView | null>(null);
 
   const { initializeFilter } = useHandleFilter();
+
+  useNotification();
 
   const { getMatchedPositionFoods, getFilteredFoodList } = useGetFoodList();
 

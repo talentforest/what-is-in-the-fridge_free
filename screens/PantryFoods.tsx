@@ -10,6 +10,7 @@ import { formThreeSteps } from '../constant/formInfo';
 import { viewingArr } from '../constant/viewing';
 import { entireFilterObj, expiredFilters, sortByOldDate } from '../util';
 import { BGCOLOR_PANTRYFOODS } from '../constant/colors';
+import { useNotification } from '../hooks/useNotification';
 
 import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
 import AddFoodModal from '../screen-component/modal/AddFoodModal';
@@ -27,6 +28,8 @@ export default function PantryFoods() {
 
   const { initializeFilter } = useHandleFilter();
 
+  useNotification();
+
   useEffect(() => {
     initializeFilter();
   }, []);
@@ -36,7 +39,7 @@ export default function PantryFoods() {
   return (
     <SafeBottomAreaView>
       <KeyboardAvoidingView>
-        <Container bgColor={'#ecf6ec'}>
+        <Container bgColor={BGCOLOR_PANTRYFOODS}>
           <View style={tw`flex-1 -mx-4`}>
             <View style={tw`px-4`}>
               <TableFilters

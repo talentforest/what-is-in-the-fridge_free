@@ -11,13 +11,10 @@ import {
   BGCOLOR_PANTRYFOODS,
   DEEP_GRAY,
   HEADER_BGCOLOR,
-  LIGHTEST_INDIGO,
-  LIGHT_GREEN,
-  LIGHT_YELLOW,
-  TAB_BLUE_BG_COLOR,
 } from '../constant/colors';
 import { useEffect } from 'react';
 import { closeAllModal } from '../redux/slice/modalVisibleSlice';
+import { Space } from '../constant/fridgeInfo';
 
 import OnBoarding from '../screens/OnBoarding';
 import Home from '../screens/Home';
@@ -34,7 +31,6 @@ import SettingNotification from '../screens/SettingNotification';
 import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 import SettingDatePicker from '../screens/SettingDatePicker';
-import { Space } from '../constant/fridgeInfo';
 
 export type RootStackParamList = {
   OnBoarding: undefined;

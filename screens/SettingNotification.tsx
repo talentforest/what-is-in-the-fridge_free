@@ -1,16 +1,11 @@
 import { Pressable, View } from 'react-native';
 import { Text } from '../components/common/native-component';
-import { useDispatch, useSelector } from '../redux/hook';
-import { toggleNotification } from '../redux/slice/notificationSlice';
-import { useGetFoodList } from '../hooks';
+import { useSelector } from '../redux/hook';
+import { useState } from 'react';
 import {
-  getNameListCanMarkEtc,
-  isExpiredFood,
-  isLeftThreeDaysFood,
-} from '../util';
-import { notificationContents } from '../constant/notificationContents';
-import { useEffect, useState } from 'react';
-import { PATHNAME_ALLFOODS, prefix } from '../constant/link';
+  NOTIFICATION_CHANNEL_ID,
+  useNotification,
+} from '../hooks/useNotification';
 
 import Container from '../components/common/Container';
 import ToggleBtn from '../components/buttons/ToggleBtn';
@@ -27,87 +22,14 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export const NOTIFICATION_CHANNEL_ID = '소비기한 주의 식료품 알림';
-
 export default function SettingNotification() {
   const [dayPickerVisible, setDayPickerVisible] = useState(false);
-  const { notification, approachDate, time } = useSelector(
+
+  const { notification, approachDate } = useSelector(
     (state) => state.notification
   );
 
-  const dispatch = useDispatch();
-
-  const { getLessLeftDayFoods } = useGetFoodList();
-
-  useEffect(() => {
-    if (notification) {
-      scheduleNotificationEveryDay();
-    }
-  }, [notification, time, approachDate]);
-
-  const reminderFoods = getLessLeftDayFoods(approachDate);
-
-  function getReminderFoodsState() {
-    if (reminderFoods.length === 0) return;
-
-    const allExpired = reminderFoods.every((food) =>
-      isExpiredFood(food.expiredDate)
-    );
-    const allThreeDaysLeft = reminderFoods.every((food) =>
-      isLeftThreeDaysFood(food.expiredDate)
-    );
-
-    if (allExpired && !allThreeDaysLeft) {
-      return '소비기한 만료';
-    }
-    if (allThreeDaysLeft && !allExpired) {
-      return '소비기한 임박';
-    }
-    return '소비기한 주의';
-  }
-
-  const toggleNotificationSetting = () =>
-    dispatch(toggleNotification(!notification));
-
-  const getNextNotificationInfo = async (hour: number, minute: number) => {
-    const nextTriggerDate = await Notifications.getNextTriggerDateAsync({
-      hour,
-      minute,
-      repeats: true,
-      channelId: NOTIFICATION_CHANNEL_ID,
-    });
-    console.log(new Date(nextTriggerDate).toLocaleString('ko'));
-  };
-
-  const scheduleNotificationEveryDay = async () => {
-    await Notifications.cancelAllScheduledNotificationsAsync();
-
-    const content = notificationContents?.find(
-      (contents) => contents.id === getReminderFoodsState()
-    );
-    const { title, body } = content;
-
-    const [hour, minute] = time.split(':').map((item) => +item);
-
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title,
-        body: `${getNameListCanMarkEtc(reminderFoods, 3)}${body}`,
-        data: {
-          url: `${prefix}${PATHNAME_ALLFOODS}?filter=소비기한 주의`,
-        },
-      },
-      trigger: {
-        hour,
-        minute,
-        repeats: true,
-        channelId: NOTIFICATION_CHANNEL_ID,
-      },
-    });
-
-    // 다음 알림 예약 확인
-    getNextNotificationInfo(hour, minute);
-  };
+  const { toggleNotiSetting } = useNotification();
 
   return (
     <Pressable style={tw`flex-1`} onPress={() => setDayPickerVisible(false)}>
@@ -119,7 +41,7 @@ export default function SettingNotification() {
             <View style={tw`h-7`}>
               <ToggleBtn
                 active={notification}
-                onTogglePress={toggleNotificationSetting}
+                onTogglePress={toggleNotiSetting}
                 width={18}
                 color='indigo'
                 toggleBtnNames={['', '']}

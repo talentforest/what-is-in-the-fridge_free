@@ -6,8 +6,10 @@ const makeNameList = (list: Food[]) => {
 
 export const getNameListCanMarkEtc = (
   foods: Food[],
-  etcCriteriaNum: number
+  etcCriteriaNum?: number
 ) => {
+  if (!etcCriteriaNum) return makeNameList(foods);
+
   return foods.length > etcCriteriaNum
     ? `${makeNameList(foods.slice(0, etcCriteriaNum))} 등`
     : makeNameList(foods);
