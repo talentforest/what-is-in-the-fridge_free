@@ -1,26 +1,17 @@
 import { Animated, View } from 'react-native';
 import { useEffect } from 'react';
-import {
-  InputStyle,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from '../common/native-component';
+import { InputStyle, TextInput } from '../common/native-component';
 import { useItemSlideAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { toggleMemoOpen } from '../../redux/slice/food/isMemoOpenSlice';
-import { shadowStyle } from '../../constant/shadowStyle';
 import { PlatformIOS } from '../../constant/statusBarHeight';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 import { closeKeyboard } from '../../util';
-import { MEDIUM_GRAY } from '../../constant/colors';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
-import IconChevronUp from '../svg/arrow/IconChevronUp';
-import IconChevronDown from '../svg/arrow/IconChevronDown';
-import tw from 'twrnc';
 import ChevronToggleBtn from '../buttons/ChevronToggleBtn';
+import tw from 'twrnc';
 
 const MEMO_MAX_LENGTH = 70;
 
@@ -35,7 +26,7 @@ export default function MemoItem() {
 
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: 65,
+    toValue: 88,
     active: isMemoOpen,
   });
 
@@ -69,14 +60,14 @@ export default function MemoItem() {
           height,
           overflow: 'hidden',
           marginHorizontal: -4,
+          marginTop: -4,
         }}
       >
-        <View style={tw`flex-row items-center gap-1 px-1`}>
+        <View style={tw`flex-row items-center gap-1 px-1 pt-1`}>
           <View
             style={tw.style(
-              `py-${PlatformIOS ? '0.5' : '2'} ${InputStyle}
-               h-16 px-0 flex-1 flex-row items-center`,
-              shadowStyle(3)
+              `py-${PlatformIOS ? '0.5' : '3'} ${InputStyle} 
+               h-17 px-0 flex-1 flex-row items-center`
             )}
           >
             <TextInput
@@ -100,7 +91,7 @@ export default function MemoItem() {
       <FormMessage
         active={memo.length >= MEMO_MAX_LENGTH && isMemoOpen}
         color='orange'
-        message={`메모는 ${MEMO_MAX_LENGTH}자를 넘을 수 없습니다`}
+        message={`메모는 ${MEMO_MAX_LENGTH}자를 넘을 수 없어요`}
       />
     </View>
   );

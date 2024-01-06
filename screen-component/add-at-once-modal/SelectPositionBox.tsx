@@ -9,9 +9,9 @@ import { useItemSlideAnimation } from '../../hooks';
 import { getCompartments } from '../../util';
 import { useSelector } from '../../redux/hook';
 import { Position } from '../modal/AddAtOnceModal';
+import { shadowStyle } from '../../constant/shadowStyle';
 import CheckBoxItem from '../../components/common/CheckBoxItem';
 import tw from 'twrnc';
-import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   active: boolean;
@@ -32,7 +32,7 @@ export default function SelectPositionBox({
 
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: maxCompartmentsNum === 5 ? 170 : 134,
+    toValue: maxCompartmentsNum === 5 ? 170 : 126,
     active,
   });
 
@@ -60,15 +60,14 @@ export default function SelectPositionBox({
     <Animated.View
       style={{
         height,
+        marginHorizontal: -4,
+        paddingHorizontal: 4,
         overflow: 'hidden',
         borderRadius: 8,
       }}
     >
       <View
-        style={tw.style(
-          `px-4 bg-white border border-slate-200 rounded-xl`,
-          shadowStyle(3)
-        )}
+        style={tw.style(`px-4 bg-white border border-slate-200 rounded-xl`)}
       >
         <View style={tw`flex-row gap-4 py-1`}>
           {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (

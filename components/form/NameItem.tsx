@@ -2,10 +2,8 @@ import { useDispatch, useSelector } from '../../redux/hook';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 import { View } from 'react-native';
 import { TextInput } from '../common/native-component';
-import { shadowStyle } from '../../constant/shadowStyle';
-import { useRouteName } from '../../hooks/useRouteName';
 import { NAME_MAX_LENGTH } from '../../constant/foodInfo';
-import { useFindFood } from '../../hooks';
+import { useFindFood, useRouteName } from '../../hooks';
 import { closeKeyboard } from '../../util';
 
 import FormLabel from './FormLabel';
@@ -57,10 +55,7 @@ export default function NameItem({ isEditing }: Props) {
       <View>
         <View style={tw`flex-row gap-1`}>
           <TextInput
-            style={tw.style(
-              `text-slate-${editable ? '900' : '400'} flex-1`,
-              shadowStyle(3)
-            )}
+            style={tw.style(`text-slate-${editable ? '900' : '400'} flex-1`)}
             onChangeText={onChangeText}
             value={newName}
             placeholder='식료품 이름을 작성해주세요'

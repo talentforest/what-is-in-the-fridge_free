@@ -2,9 +2,8 @@ import { ScrollView, View } from 'react-native';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from '../redux/hook';
-import { RootStackParamList } from '../navigation/Navigation';
 import { SafeBottomAreaView } from '../components/common/native-component';
-import { useGetFoodList, useHandleFilter } from '../hooks';
+import { useGetFoodList, useHandleFilter, useNotification } from '../hooks';
 import { formThreeSteps } from '../constant/formInfo';
 import {
   showCategoryModal,
@@ -12,20 +11,25 @@ import {
   showOpenAddFoodModal,
 } from '../redux/slice/modalVisibleSlice';
 import { search } from '../redux/slice/food/searchedFoodSlice';
-import { viewingArr } from '../constant/viewing';
 import { BGCOLOR_COMPARTMENTS } from '../constant/colors';
-import { entireFilterObj, expiredFilters, sortByOldDate } from '../util';
+import { RootStackParamList } from '../navigation/Navigation';
+import {
+  expiredSoonFilter,
+  entireFilterObj,
+  expiredFilter,
+  sortByOldDate,
+} from '../util';
 
 import NavigationHeaderTitle from '../components/common/NavigationHeaderTitle';
 import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
-import TableBody from '../components/table/TableBody';
 import AddFoodModal from '../screen-component/modal/AddFoodModal';
-import Swiper from '../components/common/Swiper';
 import ViewByCompartment from '../screen-component/compartments/ViewByCompartment';
 import TableFilters from '../components/table/TableFilters';
 import Container from '../components/common/Container';
+import PagerView from 'react-native-pager-view';
+import TableHeader from '../components/table/TableHeader';
+import TableBody from '../components/table/TableBody';
 import tw from 'twrnc';
-import { useNotification } from '../hooks/useNotification';
 
 interface Route {
   route: RouteProp<RootStackParamList, 'Compartments'>;
@@ -34,27 +38,13 @@ interface Route {
 export default function Compartments({ route }: Route) {
   const { space } = route.params;
 
-  const { filter } = useSelector((state) => state.filter);
-
   const {
     categoryModalVisible,
     expiredDateModal,
     openAddFoodModal: { modalVisible, compartmentNum },
   } = useSelector((state) => state.modalVisible);
 
-  const scrollViewRef = useRef<ScrollView | null>(null);
-
   const { initializeFilter } = useHandleFilter();
-
-  useNotification();
-
-  const { getMatchedPositionFoods, getFilteredFoodList } = useGetFoodList();
-
-  const foodList = getMatchedPositionFoods('allFoods', space);
-
-  const filteredList = getFilteredFoodList(filter, foodList);
-
-  const sortedFilterList = sortByOldDate(filteredList);
 
   const navigation = useNavigation();
 
@@ -84,34 +74,43 @@ export default function Compartments({ route }: Route) {
     };
   }, [space]);
 
+  const scrollViewRef = useRef<ScrollView | null>(null);
+
+  useNotification();
+
+  const { getMatchedPositionFoods } = useGetFoodList();
+
+  const foodList = getMatchedPositionFoods('allFoods', space);
+
+  const sortedList = sortByOldDate(foodList);
+
   return (
     <SafeBottomAreaView>
       <Container bgColor={BGCOLOR_COMPARTMENTS}>
-        <View style={tw`-mx-4 flex-1`}>
-          <View style={tw`px-4`}>
-            <TableFilters
-              filterTagList={[entireFilterObj, ...expiredFilters]}
-              foodList={foodList}
-            />
-          </View>
+        <View style={tw`-mx-4 -mb-2 flex-1`}>
+          <PagerView style={tw`flex-1`}>
+            <View key='1' style={tw`px-4 pb-2`}>
+              <TableFilters
+                filterTagList={[
+                  entireFilterObj,
+                  expiredFilter,
+                  expiredSoonFilter,
+                ]}
+                foodList={foodList}
+              />
 
-          <Swiper headerIcon steps={viewingArr}>
-            {viewingArr.map(({ step, name }) => (
-              <View key={step} style={tw`w-full px-4`}>
-                {name === '칸별로 보기' && (
-                  <ViewByCompartment
-                    foodList={foodList}
-                    space={space}
-                    scrollViewRef={scrollViewRef}
-                  />
-                )}
+              <ViewByCompartment
+                foodList={foodList}
+                space={space}
+                scrollViewRef={scrollViewRef}
+              />
+            </View>
 
-                {name === '목록으로 보기' && (
-                  <TableBody title='식료품' foodList={sortedFilterList} />
-                )}
-              </View>
-            ))}
-          </Swiper>
+            <View key='2' style={tw`px-4 pb-2 pt-0.5`}>
+              {!!foodList.length && <TableHeader length={foodList.length} />}
+              <TableBody title='식료품' foodList={sortedList} />
+            </View>
+          </PagerView>
         </View>
       </Container>
 

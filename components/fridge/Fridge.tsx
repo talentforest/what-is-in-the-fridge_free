@@ -4,7 +4,7 @@ import { useSelector } from '../../redux/hook';
 import { Space, SpaceSide } from '../../constant/fridgeInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
-import { useRouteName } from '../../hooks/useRouteName';
+import { useRouteName } from '../../hooks';
 import { closeKeyboard } from '../../util';
 
 import FridgeSpaceInfo from '../../screen-component/home/FridgeSpaceInfo';

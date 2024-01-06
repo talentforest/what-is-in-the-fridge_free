@@ -37,11 +37,12 @@ export default function TableBody({ title, foodList, flatListRef }: Props) {
     <>
       {!!foodList.length ? (
         <Pressable
-          style={tw`-mx-2 overflow-hidden flex-1`}
+          style={tw`-mx-2 pt-1 -mt-1 overflow-hidden flex-1`}
           onPress={uncheckAllItems}
         >
           <Pressable onPress={(e) => e.preventDefault()}>
             <FlatList
+              nestedScrollEnabled
               ref={flatListRef}
               keyExtractor={(item) => item.id}
               disableVirtualization={false}

@@ -9,7 +9,6 @@ import {
 import { closeKeyboard, getDiffDate, getFormattedDate } from '../../util';
 import { useEffect, useState } from 'react';
 import { useItemSlideAnimation } from '../../hooks';
-import { shadowStyle } from '../../constant/shadowStyle';
 import { minusControlDateBtns } from '../../constant/controlDateBtns';
 import { BLUE, LIGHT_BLUE } from '../../constant/colors';
 import { togglePurchaseItemOpen } from '../../redux/slice/food/isMemoOpenSlice';
@@ -44,7 +43,7 @@ export default function PurchaseDateItem() {
 
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: 82,
+    toValue: 84,
     active: isPurchaseItemOpen,
   });
 
@@ -96,10 +95,7 @@ export default function PurchaseDateItem() {
 
           <TouchableOpacity
             onPress={onInputBoxPress}
-            style={tw.style(
-              `flex-1 flex-row items-center ${InputStyle} p-0`,
-              shadowStyle(3)
-            )}
+            style={tw.style(`flex-1 flex-row items-center ${InputStyle} p-0`)}
           >
             <TextInput
               editable={false}

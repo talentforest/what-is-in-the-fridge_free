@@ -11,6 +11,9 @@ export * from './useHandleTableFooterBtns';
 export * from './useImageLoad';
 export * from './useHandleFilter';
 export * from './useHandleAlert';
+export * from './useRouteName';
+export * from './useNotification';
+export * from './useGetColor';
 
 // 애니메이션
 export * from './animation/useItemSlideAnimation';

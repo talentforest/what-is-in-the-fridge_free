@@ -48,7 +48,7 @@ export default function FavoriteItem({ isEditing }: Props) {
       <View style={tw`h-10`}>
         <ToggleBtn
           toggleBtnNames={['아니에요', '맞아요']}
-          width={84}
+          width={80}
           active={isFavorite}
           disabled={disabledFavoriteBtn}
           onTogglePress={onTogglePress}

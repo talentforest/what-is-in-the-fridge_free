@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deduplicate } from '../../../util/deduplicate';
+import { deduplicate } from '../../../util';
 import { Food, examplePantryFoods } from '../../../constant/foodInfo';
 
 export const initialState: { pantryFoods: Food[] } = {

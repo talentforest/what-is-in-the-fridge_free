@@ -5,10 +5,9 @@ import {
 } from '../../components/common/native-component';
 import { useItemSlideAnimation } from '../../hooks';
 import { Animated } from 'react-native';
-import { GRAY } from '../../constant/colors';
+import { BLUE, GREEN } from '../../constant/colors';
 import Icon from '../../components/common/native-component/Icon';
 import tw from 'twrnc';
-import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   position: string;
@@ -37,29 +36,47 @@ export default function CurrentPositionBox({
         </View>
       )}
 
-      <Animated.View style={{ height, overflow: 'hidden' }}>
+      <Animated.View
+        style={{
+          height,
+          marginHorizontal: -4,
+          paddingHorizontal: 4,
+          overflow: 'hidden',
+        }}
+      >
         <View
           style={tw.style(
-            `py-0.5 px-2 bg-blue-100 border-2 border-blue-200 rounded-full flex-row justify-between items-center`,
-            shadowStyle(3)
+            `p-1 bg-white border border-slate-200 rounded-full flex-row justify-between items-center`
           )}
         >
           <View style={tw`flex-row items-center gap-0.5 py-1.5 px-2`}>
             {!onBackPress && (
-              <Text style={tw`text-slate-700`}>선택한 공간 : </Text>
+              <Text fontSize={16} style={tw`text-slate-500`}>
+                선택한 공간 :{' '}
+              </Text>
             )}
 
-            <Icon name='location' type='Octicons' size={14} color={GRAY} />
-            <Text style={tw`text-slate-800`}>{position}</Text>
+            <Icon
+              name='location'
+              type='Octicons'
+              size={13}
+              color={position === '실온보관' ? GREEN : BLUE}
+            />
+            <Text
+              fontSize={16}
+              style={tw`text-${position === '실온보관' ? 'green' : 'blue'}-600`}
+            >
+              {position}
+            </Text>
           </View>
 
           {onBackPress && (
             <TouchableOpacity
               onPress={onBackPress}
-              style={tw`flex-row items-center gap-1 px-2.5 py-1 rounded-full bg-blue-200`}
+              style={tw`flex-row items-center gap-1 px-2.5 py-1.5 rounded-full bg-blue-100`}
             >
               <Icon name='sync' type='Octicons' size={12} />
-              <Text fontSize={15} style={tw`text-blue-700`}>
+              <Text fontSize={14} style={tw`text-blue-700`}>
                 공간 다시 선택
               </Text>
             </TouchableOpacity>

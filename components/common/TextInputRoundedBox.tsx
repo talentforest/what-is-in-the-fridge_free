@@ -1,7 +1,7 @@
-import { Animated, View } from 'react-native';
+import { Animated, TextInput as TI, View } from 'react-native';
 import { TextInput, TouchableOpacity, baseFontSize } from './native-component';
 import { DEEP_GRAY, LIGHT_GRAY } from '../../constant/colors';
-import { ReactNode } from 'react';
+import { MutableRefObject, ReactNode, useRef } from 'react';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { useSelector } from '../../redux/hook';
 import { useItemSlideAnimation } from '../../hooks';
@@ -15,9 +15,11 @@ interface Props {
   setValue: (keyword: string) => void;
   placeholder: string;
   onSubmitEditing: () => void;
+  onBlur?: () => void;
   children?: ReactNode;
   autoFocus?: boolean;
   disabled?: boolean;
+  inputRef?: MutableRefObject<TI>;
 }
 
 export default function TextInputRoundedBox({
@@ -25,9 +27,11 @@ export default function TextInputRoundedBox({
   setValue,
   placeholder,
   onSubmitEditing,
+  onBlur,
   children,
   autoFocus,
   disabled,
+  inputRef,
 }: Props) {
   const { checkedList } = useSelector((state) => state.checkedList);
 
@@ -38,17 +42,18 @@ export default function TextInputRoundedBox({
   });
 
   return (
-    <Animated.View style={{ height, overflow: 'hidden' }}>
+    <Animated.View style={tw.style('overflow-hidden -mx-1 px-1', { height })}>
       <View
         style={tw.style(
           `flex-1 my-4 rounded-full items-center flex-row bg-white`,
-          shadowStyle(3)
+          shadowStyle(2)
         )}
       >
         {children}
 
         <View style={tw`flex-1 ml-2`}>
           <TextInput
+            inputRef={inputRef}
             fontSize={baseFontSize + 1}
             maxLength={NAME_MAX_LENGTH}
             value={value}
@@ -58,6 +63,7 @@ export default function TextInputRoundedBox({
             style={tw`border-0 flex-1 my-0.5 rounded-full items-center justify-center`}
             onSubmitEditing={onSubmitEditing}
             autoFocus={autoFocus}
+            onBlur={onBlur}
           />
         </View>
 

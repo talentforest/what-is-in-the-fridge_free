@@ -75,7 +75,7 @@ export default function FavoriteFoods() {
         <Container bgColor={BGCOLOR_FAVORITELIST}>
           {favoriteFoods.length ? (
             <TableFilters
-              filterTagList={[entireFilterObj, ...existAbsenceFilters]}
+              filterTagList={[entireFilterObj, existAbsenceFilters]}
               foodList={favoriteFoods}
               withCategoryFilterTag
             />

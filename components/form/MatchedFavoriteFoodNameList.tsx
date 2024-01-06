@@ -1,15 +1,14 @@
-import { Animated, ScrollView, View } from 'react-native';
+import { Animated, View } from 'react-native';
 import { useFindFood, useItemSlideAnimation } from '../../hooks';
 import { cutLetter, findMatchNameFoods } from '../../util';
 import { useSelector } from '../../redux/hook';
 import { Text, TouchableOpacity } from '../common/native-component';
-import { shadowStyle } from '../../constant/shadowStyle';
 import { GRAY } from '../../constant/colors';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 
-const FAV_ITEM_MAX = 4;
+const FAV_ITEM_MAX = 2;
 
 interface Props {
   name: string;
@@ -44,35 +43,32 @@ export default function MatchedFavoriteFoodNameList({
     active: !!matchedFoodList?.length,
   });
 
+  const onMatchedFoodPress = (name: string) => {
+    onPress(name);
+  };
+
   return (
-    <View>
+    <>
       {!isInList && (
         <View
           style={tw`${
             !!matchedFoodList.length
               ? compareWith === 'shoppingList'
-                ? '-mt-4 px-4 w-full self-center'
+                ? 'w-full -mt-4 self-center'
                 : ''
               : ''
           }`}
         >
           <Animated.View style={tw.style(`overflow-hidden`, { height })}>
             {!!matchedFoodList?.length && (
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={tw`overflow-hidden border`}
-                contentContainerStyle={tw`gap-1 self-center pb-0.5`}
-                nestedScrollEnabled
-              >
+              <View style={tw`overflow-hidden gap-1 pt-1.5 flex-row w-full`}>
                 {matchedFoodList.slice(0, FAV_ITEM_MAX).map((food) => (
                   <TouchableOpacity
                     key={food.id}
                     style={tw.style(
-                      `h-7.5 border border-blue-200 flex-row items-center bg-blue-100 gap-0.5 px-2 rounded-full`,
-                      shadowStyle(4)
+                      `h-7.5 border border-blue-200 flex-row items-center bg-blue-200 gap-0.5 px-2 rounded-full`
                     )}
-                    onPress={() => onPress(food.name)}
+                    onPress={() => onMatchedFoodPress(food.name)}
                   >
                     <Icon
                       name={food.name === name ? 'check' : 'plus'}
@@ -80,7 +76,7 @@ export default function MatchedFavoriteFoodNameList({
                       size={13}
                     />
                     <Text fontSize={14} style={tw.style(`text-blue-700`)}>
-                      {cutLetter(food.name, 8)}
+                      {cutLetter(food.name, 10)}
                     </Text>
                   </TouchableOpacity>
                 ))}
@@ -93,11 +89,11 @@ export default function MatchedFavoriteFoodNameList({
                     </Text>
                   </View>
                 )}
-              </ScrollView>
+              </View>
             )}
           </Animated.View>
         </View>
       )}
-    </View>
+    </>
   );
 }

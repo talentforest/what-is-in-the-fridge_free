@@ -1,8 +1,7 @@
 import { Text, TouchableOpacity } from '../common/native-component';
 import { ControlDateBtnType } from '../../constant/controlDateBtns';
-import { shadowStyle } from '../../constant/shadowStyle';
 import { Operator } from '../../util';
-import { AMBER, GRAY, GREEN, INDIGO, RED } from '../../constant/colors';
+import { AMBER, GREEN, INDIGO, RED } from '../../constant/colors';
 
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
@@ -31,8 +30,7 @@ export default function ControlDateBtn({ type, btn, changeDate, date }: Props) {
       onPress={() => changeDate(btn.calculateDate(type, new Date(date)))}
       style={tw.style(
         `px-1.5 gap-0.5 h-7.5 rounded-3xl flex-row items-center justify-center 
-        bg-${btn.btnColor}-50 border border-${btn.btnColor}-100`,
-        shadowStyle(3)
+        bg-${btn.btnColor}-100 border border-${btn.btnColor}-200`
       )}
     >
       {btn.label !== '오늘' && (

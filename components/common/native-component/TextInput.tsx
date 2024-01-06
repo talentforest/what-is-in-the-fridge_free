@@ -8,16 +8,23 @@ import { LIGHT_GRAY } from '../../../constant/colors';
 import { baseFontSize, basicTextStyle, getRelativeFontSize } from './Text';
 import { useSelector } from '../../../redux/hook';
 import tw from 'twrnc';
+import { MutableRefObject, useRef } from 'react';
 
 interface Props extends TextInputProps {
   style?: TextStyle;
   fontSize?: number;
+  inputRef?: MutableRefObject<Input | null>;
 }
 
 export const InputStyle =
   'h-10 border border-slate-100 px-2.5 rounded-xl bg-white';
 
-export function TextInput({ style, fontSize = baseFontSize, ...props }: Props) {
+export function TextInput({
+  inputRef,
+  style,
+  fontSize = baseFontSize,
+  ...props
+}: Props) {
   const { fontFamily } = useSelector((state) => state.fontFamily);
 
   const { height } = useWindowDimensions();
@@ -29,6 +36,7 @@ export function TextInput({ style, fontSize = baseFontSize, ...props }: Props) {
 
   return (
     <Input
+      ref={inputRef}
       style={tw.style(`${InputStyle}`, {
         ...basicTextStyle,
         fontFamily,

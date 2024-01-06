@@ -2,14 +2,7 @@ import { Category, foodCategories } from '../constant/foodCategories';
 import { Food } from '../constant/foodInfo';
 import { CompartmentNum, Space, SpaceType } from '../constant/fridgeInfo';
 import { useSelector } from '../redux/hook';
-import {
-  Filter,
-  isCautionFood,
-  isExpiredFood,
-  getLeftDays,
-  isLeftThreeDaysFood,
-  isLeftWeekFood,
-} from '../util';
+import { Filter } from '../util';
 import { useFindFood } from './useFindFood';
 import { useRouteName } from './useRouteName';
 
@@ -19,34 +12,28 @@ export const useGetFoodList = () => {
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
   const { filter } = useSelector((state) => state.filter);
 
-  const { findFood } = useFindFood();
+  const { findFood, isExpiredSoonFood, isExpiredFood } = useFindFood();
 
   const { routeFavoriteFoods } = useRouteName();
 
   const allFoods = [...fridgeFoods, ...pantryFoods];
 
-  const getLessLeftDayFoods = (leftDay: number) => {
-    return allFoods.filter((food) => getLeftDays(food.expiredDate) <= leftDay);
-  };
-
-  const allCautionFoods = allFoods.filter((food) =>
-    isCautionFood(food.expiredDate)
-  );
-
-  const threeLeftDaysFoods = allFoods.filter((food) =>
-    isLeftThreeDaysFood(food.expiredDate)
+  const expiredSoonFoods = allFoods.filter((food) =>
+    isExpiredSoonFood(food.expiredDate)
   );
 
   const expiredFoods = allFoods.filter((food) =>
     isExpiredFood(food.expiredDate)
   );
 
+  const cautionFoods = [...expiredFoods, ...expiredSoonFoods];
+
   const getMatchedPositionFoods = (
-    type: 'allFoods' | 'allCautionFoods',
+    type: 'allFoods' | 'cautionFoods',
     space: SpaceType | Space,
     compartmentNum?: CompartmentNum
   ) => {
-    const foodList = type === 'allCautionFoods' ? allCautionFoods : allFoods;
+    const foodList = type === 'cautionFoods' ? cautionFoods : allFoods;
 
     return foodList.filter((food) => {
       if (space === '냉동실') return food.space.includes('냉동실');
@@ -71,17 +58,11 @@ export const useGetFoodList = () => {
       return foodList.filter(({ name }) => !!!findFood(name));
     }
 
-    if (filter === '소비기한 주의')
-      return foodList.filter((food) => isCautionFood(food.expiredDate));
+    if (filter === '소비기한 임박')
+      return foodList.filter((food) => isExpiredSoonFood(food.expiredDate));
 
     if (filter === '소비기한 만료')
       return foodList.filter((food) => isExpiredFood(food.expiredDate));
-
-    if (filter === '소비기한 3일 이내')
-      return foodList.filter((food) => isLeftThreeDaysFood(food.expiredDate));
-
-    if (filter === '소비기한 일주일 이내')
-      return foodList.filter((food) => isLeftWeekFood(food.expiredDate));
 
     return foodList.filter((food) => food.category === filter);
   };
@@ -125,10 +106,9 @@ export const useGetFoodList = () => {
     fridgeFoods,
     favoriteFoods,
     pantryFoods,
-    allCautionFoods,
-    threeLeftDaysFoods,
+    expiredSoonFoods,
     expiredFoods,
-    getLessLeftDayFoods,
+    cautionFoods,
     getMatchedPositionFoods,
     getFilteredFoodList,
     getExistCategoryList,

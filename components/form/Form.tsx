@@ -30,7 +30,7 @@ export default function Form({ title, formSteps }: Props) {
         <Swiper steps={formSteps} swiperWidth={width - 32} isForm>
           <View style={tw`gap-0.5 flex-1 flex-row`}>
             {formSteps.map(({ step, name }) => (
-              <View key={step} style={tw`w-full border border-stone-100 px-4`}>
+              <View key={step} style={tw`w-full border border-slate-200 px-4`}>
                 {name === '기본정보' && (
                   <FormSectionContainer>
                     <NameItem isEditing={title === '식료품 정보 수정'} />

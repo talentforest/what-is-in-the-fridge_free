@@ -45,7 +45,7 @@ export default function FridgeSpaceInfo({ space }: Props) {
       iconName: 'alert-rhombus-outline',
       name: '소비기한 주의',
       foodList: (space: Space) =>
-        getMatchedPositionFoods('allCautionFoods', space),
+        getMatchedPositionFoods('cautionFoods', space),
     },
   ];
 
@@ -101,8 +101,8 @@ export default function FridgeSpaceInfo({ space }: Props) {
               <Text
                 fontSize={14}
                 style={tw.style(
-                  `${getColor(foodList(space).length, name, 'tw')}`,
-                  { letterSpacing: -0.5 }
+                  `-ml-0.5 ${getColor(foodList(space).length, name, 'tw')}`,
+                  { letterSpacing: -1 }
                 )}
               >
                 {name}

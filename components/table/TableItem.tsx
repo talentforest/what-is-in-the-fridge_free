@@ -85,10 +85,10 @@ export default function TableItem({
         <TouchableOpacity
           onPress={onItemPress}
           style={tw.style(
-            `bg-white border h-[${TABLE_ITEM_HEIGHT - 6}px] 
+            `bg-white border h-[${TABLE_ITEM_HEIGHT - 7}px] 
             ${checkedItem ? 'border-slate-200 bg-blue-50' : 'border-slate-100'} 
             flex-row items-center gap-1 pl-3 rounded-xl mx-1`,
-            shadowStyle(3)
+            shadowStyle(2)
           )}
         >
           {checkBox && <CheckBox checked={checkedItem} />}

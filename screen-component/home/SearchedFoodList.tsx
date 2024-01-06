@@ -39,7 +39,7 @@ export default function SearchedFoodList({
       <Text style={tw`text-sm text-blue-600 pl-2 pt-1`}>
         {!!searchedItemsLength
           ? `${searchedItemsLength}건의 검색결과`
-          : '검색결과가 없습니다'}
+          : '검색결과가 없어요'}
       </Text>
 
       <ScrollView

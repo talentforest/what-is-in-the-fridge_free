@@ -5,20 +5,24 @@ import {
 } from '../components/common/native-component';
 import { ScrollView, View } from 'react-native';
 import { useSelector } from '../redux/hook';
-import { useHandleFilter } from '../hooks';
+import { useHandleFilter, useNotification } from '../hooks';
 import { formThreeSteps } from '../constant/formInfo';
-import { viewingArr } from '../constant/viewing';
-import { entireFilterObj, expiredFilters, sortByOldDate } from '../util';
+import {
+  expiredSoonFilter,
+  entireFilterObj,
+  expiredFilter,
+  sortByOldDate,
+} from '../util';
 import { BGCOLOR_PANTRYFOODS } from '../constant/colors';
-import { useNotification } from '../hooks/useNotification';
 
 import FoodDetailModal from '../screen-component/modal/FoodDetailModal';
 import AddFoodModal from '../screen-component/modal/AddFoodModal';
 import TableBody from '../components/table/TableBody';
 import ViewByCompartment from '../screen-component/compartments/ViewByCompartment';
-import Swiper from '../components/common/Swiper';
 import TableFilters from '../components/table/TableFilters';
 import Container from '../components/common/Container';
+import PagerView from 'react-native-pager-view';
+import TableHeader from '../components/table/TableHeader';
 import tw from 'twrnc';
 
 export default function PantryFoods() {
@@ -40,33 +44,33 @@ export default function PantryFoods() {
     <SafeBottomAreaView>
       <KeyboardAvoidingView>
         <Container bgColor={BGCOLOR_PANTRYFOODS}>
-          <View style={tw`flex-1 -mx-4`}>
-            <View style={tw`px-4`}>
-              <TableFilters
-                filterTagList={[entireFilterObj, ...expiredFilters]}
-                foodList={foodList}
-              />
-            </View>
+          <View style={tw`flex-1 -mx-4 -mb-2`}>
+            <PagerView style={tw`flex-1`}>
+              <View key='1' style={tw`px-4 pb-2`}>
+                <TableFilters
+                  filterTagList={[
+                    entireFilterObj,
+                    expiredFilter,
+                    expiredSoonFilter,
+                  ]}
+                  foodList={foodList}
+                />
 
-            <Swiper steps={viewingArr} headerIcon>
-              {viewingArr.map(({ step, name }) => (
-                <View key={step} style={tw`w-full px-4 pb-4`}>
-                  {name === '칸별로 보기' && (
-                    <ViewByCompartment
-                      space='실온보관'
-                      foodList={pantryFoods}
-                      scrollViewRef={scrollViewRef}
-                    />
-                  )}
+                <ViewByCompartment
+                  foodList={foodList}
+                  space='실온보관'
+                  scrollViewRef={scrollViewRef}
+                />
+              </View>
 
-                  {name === '목록으로 보기' && (
-                    <TableBody title='식료품' foodList={foodList} />
-                  )}
-                </View>
-              ))}
-            </Swiper>
+              <View key='2' style={tw`px-4 pb-2 pt-0.5`}>
+                {!!foodList.length && <TableHeader length={foodList.length} />}
+                <TableBody title='식료품' foodList={foodList} />
+              </View>
+            </PagerView>
           </View>
         </Container>
+
         <FoodDetailModal formSteps={formThreeSteps} />
 
         <AddFoodModal scrollViewRef={scrollViewRef} />

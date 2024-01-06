@@ -76,7 +76,13 @@ export default function DateNumInputModal() {
       setInValidDate({ state: 'error', msg: isValid.msg });
       return;
     }
-    dispatch(editFormFood({ expiredDate: convertTokenToDate }));
+    dispatch(
+      editFormFood(
+        purchaseDateModal
+          ? { purchaseDate: convertTokenToDate }
+          : { expiredDate: convertTokenToDate }
+      )
+    );
     closeModal();
   };
 
@@ -115,7 +121,9 @@ export default function DateNumInputModal() {
             alignItems: 'center',
           }}
         >
-          <Text style={tw`text-red-500 flex-1`}>{inValidDate.msg}</Text>
+          <Text fontSize={15} style={tw`text-red-500 flex-1`}>
+            {inValidDate.msg}
+          </Text>
         </Animated.View>
 
         <View style={tw`w-full`}>

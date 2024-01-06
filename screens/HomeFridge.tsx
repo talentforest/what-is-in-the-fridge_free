@@ -1,10 +1,8 @@
-import { Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
+import { Pressable, View, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { closeKeyboard } from '../util';
 import { useSelector } from '../redux/hook';
 import { useState } from 'react';
-import { Text } from '../components/common/native-component';
-import { GRAY } from '../constant/colors';
 
 import Container, { BG_COLOR } from '../components/common/Container';
 import SearchFoodSection from '../screen-component/home/SearchFoodSection';
@@ -14,12 +12,11 @@ import HomeHeader from '../screen-component/home/HomeHeader';
 import EntrancePantryBtn from '../screen-component/home/EntrancePantryBtn';
 import FoodLimit from '../screen-component/setting/FoodLimit';
 import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
-import Icon from '../components/common/native-component/Icon';
 import tw from 'twrnc';
 
 export default function HomeFridge() {
   const { purchased } = useSelector((state) => state.purchaseState);
-  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+
   const [closeSearchedList, setCloseSearchList] = useState(false);
 
   const { height } = useWindowDimensions();

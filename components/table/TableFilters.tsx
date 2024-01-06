@@ -61,11 +61,11 @@ export default function TableFilters({
   const closeModal = () => dispatch(showCategoryFilterModal(false));
 
   return (
-    <View>
+    <View style={tw`-mx-1`}>
       <ScrollView
         ref={scrollViewRef}
         style={tw`h-11`}
-        contentContainerStyle={tw`gap-1 items-start pr-5`}
+        contentContainerStyle={tw`pt-0.5 gap-1 items-start pl-1 pr-5`}
         horizontal
         showsHorizontalScrollIndicator={false}
       >

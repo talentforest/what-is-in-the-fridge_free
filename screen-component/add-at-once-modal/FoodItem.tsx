@@ -1,5 +1,4 @@
 import { Animated, View } from 'react-native';
-import { shadowStyle } from '../../constant/shadowStyle';
 import {
   Text,
   TouchableOpacity,
@@ -7,7 +6,7 @@ import {
 import { getFormattedDate } from '../../util';
 import { Food } from '../../constant/foodInfo';
 import { useItemSlideAnimation } from '../../hooks';
-import { MEDIUM_GRAY } from '../../constant/colors';
+import { LIGHT_GRAY, MEDIUM_GRAY } from '../../constant/colors';
 
 import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/native-component/Icon';
@@ -27,7 +26,7 @@ export default function FoodItem({
   active,
 }: Props) {
   const { height } = useItemSlideAnimation({
-    initialValue: 44,
+    initialValue: 42,
     toValue: 0,
     active,
   });
@@ -35,13 +34,12 @@ export default function FoodItem({
   const onItemPress = () => onFoodItemPress(food);
 
   return (
-    <Animated.View style={{ height, overflow: 'hidden' }}>
-      <View style={tw`mb-1`}>
+    <Animated.View style={{ height, marginHorizontal: -4, overflow: 'hidden' }}>
+      <View style={tw`mb-1 px-1`}>
         <TouchableOpacity
           key={food.id}
           style={tw.style(
-            `bg-white border border-slate-200 rounded-xl h-full flex-row items-center px-2.5 justify-between`,
-            shadowStyle(3)
+            `bg-white border border-slate-200 rounded-xl h-full flex-row items-center px-2.5 justify-between`
           )}
           onPress={onItemPress}
         >
@@ -50,7 +48,7 @@ export default function FoodItem({
               name={isEditing ? 'x' : 'pencil'}
               type='Octicons'
               size={isEditing ? 17 : 12}
-              color={MEDIUM_GRAY}
+              color={LIGHT_GRAY}
             />
             <Text style={tw`flex-1`} numberOfLines={1} ellipsizeMode='tail'>
               {food.name}
@@ -59,10 +57,14 @@ export default function FoodItem({
 
           <View style={tw`flex-row items-center ml-0.5`}>
             <View style={tw`justify-end items-center flex-row gap-1`}>
-              <CategoryIcon category={food.category} size={16} />
-              <Text style={tw.style(`text-slate-600`)}>
-                {getFormattedDate(food.expiredDate, 'YY.MM.DD')}
-              </Text>
+              <View style={tw`w-5 items-center`}>
+                <CategoryIcon category={food.category} size={15} />
+              </View>
+              <View style={tw`w-16 items-end`}>
+                <Text style={tw.style(`text-slate-600`)}>
+                  {getFormattedDate(food.expiredDate, 'YY.MM.DD')}
+                </Text>
+              </View>
             </View>
           </View>
         </TouchableOpacity>

@@ -1,6 +1,6 @@
 import { Text, TouchableOpacity } from './native-component';
-import { Filter, getTagColor } from '../../util';
-import { useHandleFilter } from '../../hooks';
+import { Filter } from '../../util';
+import { useGetColor, useHandleFilter } from '../../hooks';
 import { shadowStyle } from '../../constant/shadowStyle';
 import { Category } from '../../constant/foodCategories';
 import { View } from 'react-native';
@@ -9,6 +9,7 @@ import { BLUE, GRAY } from '../../constant/colors';
 import CategoryIcon from './CategoryIcon';
 import IconChevronDown from '../svg/arrow/IconChevronDown';
 import tw from 'twrnc';
+import { useSelector } from '../../redux/hook';
 
 interface Props {
   filter: Filter;
@@ -27,7 +28,11 @@ export default function FilterTag({
   foodIcon,
   checked,
 }: Props) {
-  const { currentFilter, isCategoryFilter } = useHandleFilter();
+  const { currentFilter, isCategoryFilter, findCategoryFilter } =
+    useHandleFilter();
+  const { expiredSoonDay } = useSelector((state) => state.notification);
+
+  const { getFilterColor } = useGetColor();
 
   const byCategory = filter === '카테고리별';
 
@@ -50,9 +55,9 @@ export default function FilterTag({
     <TouchableOpacity
       onPress={onPress}
       style={tw.style(
-        `${getTagColor(currentFilter, active, 'bg')} 
+        `${getFilterColor(currentFilter, active, 'bg')} 
         min-w-14 flex-row items-center justify-between border py-2 px-2.5 gap-1 rounded-full`,
-        shadowStyle(3)
+        shadowStyle(2)
       )}
     >
       {foodIcon && (
@@ -66,14 +71,36 @@ export default function FilterTag({
       <View style={tw`flex-row items-center`}>
         <Text
           fontSize={15}
-          style={tw`${getTagColor(currentFilter, active, 'text')}`}
+          style={tw`${
+            !active && length === 0 && findCategoryFilter(filter)
+              ? 'text-slate-400'
+              : getFilterColor(currentFilter, active, 'text')
+          }`}
         >
           {filter}
         </Text>
 
+        {filter === '소비기한 임박' && (
+          <Text
+            fontSize={15}
+            style={tw`${
+              !active && length === 0 && findCategoryFilter(filter)
+                ? 'text-slate-400'
+                : getFilterColor(currentFilter, active, 'text')
+            }`}
+          >
+            {' '}
+            ({expiredSoonDay}일 이내)
+          </Text>
+        )}
+
         <Text
           fontSize={15}
-          style={tw`${getTagColor(currentFilter, active, 'text')}`}
+          style={tw`${
+            !active && length === 0 && findCategoryFilter(filter)
+              ? 'text-slate-400'
+              : getFilterColor(currentFilter, active, 'text')
+          }`}
         >
           {!getLengthByFilterTag
             ? ''

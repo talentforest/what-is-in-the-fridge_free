@@ -5,9 +5,9 @@ import { search } from '../../redux/slice/food/searchedFoodSlice';
 import { Space } from '../../constant/fridgeInfo';
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
+import { BLUE, GREEN, MEDIUM_BLUE } from '../../constant/colors';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
-import { BLUE, GREEN, MEDIUM_BLUE } from '../../constant/colors';
 
 interface Props {
   btnName: string;
@@ -37,13 +37,13 @@ export default function RoundedNavigateBtn({
     <TouchableOpacity
       onPress={onNavigatePress}
       style={tw.style(
-        `flex-row items-center justify-center bg-${color}-100 rounded-full py-1 pl-2 pr-1.5`,
-        shadowStyle(4)
+        `flex-row items-center justify-center bg-${color}-50 rounded-full py-1.5 pl-2 pr-1.5`
+        // shadowStyle(3)
       )}
     >
       <Text
         fontSize={13}
-        style={tw.style(`text-${color}-600 leading-4`, { letterSpacing: -0.8 })}
+        style={tw.style(`text-${color}-600 leading-4`, { letterSpacing: -1 })}
       >
         {btnName}
       </Text>
@@ -51,7 +51,7 @@ export default function RoundedNavigateBtn({
       <Icon
         name='arrow-up-right'
         type='MaterialCommunityIcons'
-        size={12}
+        size={11}
         color={
           color === 'cyan' ? MEDIUM_BLUE : color === 'green' ? GREEN : BLUE
         }

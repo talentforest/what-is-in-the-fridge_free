@@ -60,7 +60,7 @@ export default function SearchFoodSection({
           onSubmitEditing={onSubmitEditing}
           style={tw.style(
             `h-10 border my-0.5 pl-8.5 border-indigo-100 text-slate-700 items-center justify-center`,
-            shadowStyle(4)
+            shadowStyle(3)
           )}
         />
         <TouchableOpacity

@@ -4,10 +4,9 @@ import { Food } from '../../constant/foodInfo';
 import { TouchableOpacity } from '../common/native-component';
 import { FoodPosition } from '../../constant/fridgeInfo';
 import { useDispatch, useSelector } from '../../redux/hook';
-import { useRouteName } from '../../hooks/useRouteName';
+import { useRouteName, useGetFoodList } from '../../hooks';
 import { showExpandCompartmentModal } from '../../redux/slice/modalVisibleSlice';
 import { LIGHT_BLUE } from '../../constant/colors';
-import { useGetFoodList } from '../../hooks';
 
 import CompartmentHeader from './CompartmentHeader';
 import EmptySign from '../common/EmptySign';

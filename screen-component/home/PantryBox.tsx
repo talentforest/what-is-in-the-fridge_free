@@ -7,7 +7,6 @@ interface Props {
 export default function PantryBox({ size }: Props) {
   const coverColor = '#bfd090';
   const boxColor = '#ffe8a8';
-  const lineColor = '#030202';
   const holeColor = '#373737';
 
   return (
@@ -37,15 +36,15 @@ export default function PantryBox({ size }: Props) {
       />
       <Path
         d='M376.479 41.25L347.023 64.114L317.567 86.978'
-        stroke={lineColor}
-        stroke-width='5'
-        stroke-linecap='round'
+        stroke={'#a7d3a5'}
+        strokeWidth='5'
+        strokeLinecap='round'
       />
       <Path
         d='M300 181V263.5V346'
-        stroke={lineColor}
-        stroke-width='10'
-        stroke-linecap='round'
+        stroke={'#edd17d'}
+        strokeWidth='3'
+        strokeLinecap='round'
       />
       <Rect x='86' y='168' width='120' height='22' rx='13.5' fill={holeColor} />
     </Svg>

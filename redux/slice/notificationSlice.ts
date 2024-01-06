@@ -3,13 +3,13 @@ import { initialTime } from '../../util';
 
 type notificationState = {
   notification: boolean;
-  approachDate: number;
+  expiredSoonDay: number;
   time: string;
 };
 
 export const initialState: notificationState = {
   notification: false,
-  approachDate: 3,
+  expiredSoonDay: 3,
   time: initialTime,
 };
 
@@ -20,8 +20,8 @@ const notificationSlice = createSlice({
     toggleNotification: (state, action: { payload: boolean }) => {
       state.notification = action.payload;
     },
-    setApproachDate: (state, action: { payload: number }) => {
-      state.approachDate = action.payload;
+    setExpiredSoonDay: (state, action: { payload: number }) => {
+      state.expiredSoonDay = action.payload;
     },
     setTime: (state, action: { payload: string }) => {
       state.time = action.payload;
@@ -31,7 +31,7 @@ const notificationSlice = createSlice({
 
 const { reducer: notificationReducer } = notificationSlice;
 
-export const { toggleNotification, setApproachDate, setTime } =
+export const { toggleNotification, setExpiredSoonDay, setTime } =
   notificationSlice.actions;
 
 export default notificationReducer;

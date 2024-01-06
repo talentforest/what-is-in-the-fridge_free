@@ -1,10 +1,14 @@
 import { View } from 'react-native';
 import { Text, TouchableOpacity } from '../common/native-component';
-import { getFormattedDate } from '../../util';
-import { comma } from '../../util/commaNotation';
+import {
+  getFormattedDate,
+  comma,
+  checkSameStorage,
+  isFridgeFood,
+  isPantryFood,
+} from '../../util';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { BLUE, MEDIUM_INDIGO, ORANGE_RED } from '../../constant/colors';
-import { shadowStyle } from '../../constant/shadowStyle';
 import {
   addToPantry,
   editPantryFood,
@@ -27,11 +31,6 @@ import {
 } from '../../redux/slice/modalVisibleSlice';
 import { search } from '../../redux/slice/food/searchedFoodSlice';
 import { useHandleAlert } from '../../hooks';
-import {
-  checkSameStorage,
-  isFridgeFood,
-  isPantryFood,
-} from '../../util/checkFoodSpace';
 
 import InfoBox from './InfoBox';
 import LeftDayInfoBox from '../modal/LeftDayInfoBox';
@@ -121,13 +120,12 @@ export default function FoodDetail() {
 
   return (
     <>
-      <View style={tw`py-5`}>
+      <View style={tw`py-3`}>
         <View style={tw`absolute right-0 gap-1 justify-end items-end`}>
           <TouchableOpacity
             onPress={onOpenFoodPostionPress}
             style={tw.style(
-              `flex-row border border-slate-50 bg-white pl-1.5 pr-2 py-1.5 rounded-xl gap-1 items-center justify-center`,
-              shadowStyle(2)
+              `flex-row border border-slate-50 bg-white pl-1.5 pr-2 py-1.5 rounded-xl gap-1 items-center justify-center`
             )}
           >
             <Icon
@@ -177,8 +175,7 @@ export default function FoodDetail() {
                     key={direction}
                     onPress={() => onHandleCountPress(direction)}
                     style={tw.style(
-                      `border border-slate-200 bg-white items-center justify-center rounded-xl w-6 aspect-square`,
-                      shadowStyle(3)
+                      `border border-slate-200 bg-white items-center justify-center rounded-xl w-6 aspect-square`
                     )}
                   >
                     <Icon

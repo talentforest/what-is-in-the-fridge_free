@@ -3,16 +3,15 @@ import { Animated, PanResponder, useWindowDimensions } from 'react-native';
 import { OnboardingStep } from '../../constant/onboardingInfo';
 import { FormStep } from '../../constant/formInfo';
 import { closeKeyboard } from '../../util';
-import { ViewingStep } from '../../constant/viewing';
 
 const DRAG_DISTANCE = 60;
 
 interface Props {
-  steps: OnboardingStep[] | FormStep[] | ViewingStep[];
+  steps: OnboardingStep[] | FormStep[];
   swiperWidth?: number;
 }
 
-type Step = OnboardingStep | FormStep | ViewingStep;
+type Step = OnboardingStep | FormStep;
 
 export const useSwiperAnimation = ({ steps, swiperWidth }: Props) => {
   const [currentStep, setCurrentStep] = useState<Step>(steps[0]);

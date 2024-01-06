@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Food } from '../../constant/foodInfo';
-import { useRouteName } from '../../hooks/useRouteName';
+import { useRouteName } from '../../hooks';
 
 import CategoryIcon from '../common/CategoryIcon';
 import tw from 'twrnc';

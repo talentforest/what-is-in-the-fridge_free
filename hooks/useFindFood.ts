@@ -1,6 +1,8 @@
 import { useSelector } from '../redux/hook';
+import { getLeftDays } from '../util';
 
 export const useFindFood = () => {
+  const { expiredSoonDay } = useSelector((state) => state.notification);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
@@ -31,6 +33,17 @@ export const useFindFood = () => {
     return checkedList.find((food) => food.id === id);
   };
 
+  const isExpiredSoonFood = (expiredDate: string) => {
+    return (
+      0 <= getLeftDays(expiredDate) &&
+      getLeftDays(expiredDate) <= expiredSoonDay
+    );
+  };
+
+  const isExpiredFood = (expiredDate: string) => {
+    return 0 > getLeftDays(expiredDate);
+  };
+
   const allFoods = [...fridgeFoods, ...pantryFoods];
 
   return {
@@ -40,6 +53,8 @@ export const useFindFood = () => {
     isFavoriteItem,
     isShoppingListItem,
     isCheckedItem,
+    isExpiredSoonFood,
+    isExpiredFood,
     allFoods,
   };
 };

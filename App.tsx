@@ -9,7 +9,7 @@ import { useFonts } from 'expo-font';
 import { fonts } from './constant/fonts';
 import { PATHNAME_ALLFOODS, PATHNAME_HOME, prefix } from './constant/link';
 import { Platform } from 'react-native';
-import { NOTIFICATION_CHANNEL_ID } from './hooks/useNotification';
+import { NOTIFICATION_CHANNEL_ID } from './constant/notification';
 
 import * as SplashScreen from 'expo-splash-screen';
 import * as Linking from 'expo-linking';

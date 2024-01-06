@@ -3,10 +3,13 @@ import { KeyboardAvoidingView } from '../components/common/native-component';
 import { useSelector } from '../redux/hook';
 import { FlatList, View } from 'react-native';
 import { closeKeyboard, scrollToIndex } from '../util';
-import { useHandleTableFooterBtns, useSubmitFoodsFromInput } from '../hooks';
+import {
+  useHandleTableFooterBtns,
+  useSubmitFoodsFromInput,
+  useNotification,
+} from '../hooks';
 import { NAME_MAX_LENGTH } from '../constant/foodInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNotification } from '../hooks/useNotification';
 
 import AddShoppingListFoodModal from '../screen-component/modal/AddShoppingListFoodModal';
 import Container from '../components/common/Container';
@@ -72,6 +75,12 @@ export default function HomeShoppingList() {
               onSubmitEditing={onSubmitEditing}
               disabled={inputValue === '' || existCaution}
             />
+
+            <MatchedFavoriteFoodNameList
+              name={inputValue}
+              onPress={onMatchedFoodPress}
+              compareWith='shoppingList'
+            />
           </View>
 
           <TableSelectedHandleBox foodList={shoppingList}>
@@ -86,12 +95,6 @@ export default function HomeShoppingList() {
               onPress={onDeleteBtnPress}
             />
           </TableSelectedHandleBox>
-
-          <MatchedFavoriteFoodNameList
-            name={inputValue}
-            onPress={onMatchedFoodPress}
-            compareWith='shoppingList'
-          />
 
           {!checkedList.length && (
             <>

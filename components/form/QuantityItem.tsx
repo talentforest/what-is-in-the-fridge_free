@@ -2,19 +2,14 @@ import { useDispatch, useSelector } from '../../redux/hook';
 import { Animated, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
-import { Text, TextInput, TouchableOpacity } from '../common/native-component';
+import { TextInput, TouchableOpacity } from '../common/native-component';
 import { useItemSlideAnimation } from '../../hooks';
-import { shadowStyle } from '../../constant/shadowStyle';
-import { comma } from '../../util/commaNotation';
-import { closeKeyboard } from '../../util';
+import { closeKeyboard, comma } from '../../util';
 
+import ChevronToggleBtn from '../buttons/ChevronToggleBtn';
 import FormLabel from './FormLabel';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
-import IconChevronUp from '../svg/arrow/IconChevronUp';
-import IconChevronDown from '../svg/arrow/IconChevronDown';
-import { MEDIUM_GRAY } from '../../constant/colors';
-import ChevronToggleBtn from '../buttons/ChevronToggleBtn';
 
 export default function QuantityItem() {
   const {
@@ -78,11 +73,12 @@ export default function QuantityItem() {
           height,
           overflow: 'hidden',
           marginHorizontal: -4,
+          marginTop: -4,
         }}
       >
-        <View style={tw`flex-row items-center gap-1 p-1 -mt-1`}>
+        <View style={tw`flex-row items-center gap-1 p-1`}>
           <TextInput
-            style={tw.style(`flex-1`, shadowStyle(3))}
+            style={tw.style(`flex-1`)}
             onChangeText={onChangeText}
             value={comma(quantity)}
             focusable={false}
@@ -97,8 +93,7 @@ export default function QuantityItem() {
               style={tw.style(
                 `h-10 w-11 flex-row border border-slate-400 
                 ${btn === 'plus' ? 'bg-stone-700' : 'bg-slate-500'}
-                rounded-xl justify-center items-center`,
-                shadowStyle(4)
+                rounded-xl justify-center items-center`
               )}
             >
               <Icon

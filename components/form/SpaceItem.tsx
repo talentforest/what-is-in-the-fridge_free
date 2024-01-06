@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { getCompartments } from '../../util';
+import { getCompartments, isFridgeFood, isPantryFood } from '../../util';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { Text, TouchableOpacity } from '../common/native-component';
 import {
@@ -9,16 +9,14 @@ import {
   SpaceSide,
   SpaceType,
 } from '../../constant/fridgeInfo';
-import { isFridgeFood, isPantryFood } from '../../util/checkFoodSpace';
 import { FormLabelType } from '../../constant/formInfo';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
-import { BLUE, LIGHT_GRAY } from '../../constant/colors';
+import { LIGHT_GRAY } from '../../constant/colors';
 
 import CheckBoxItem from '../common/CheckBoxItem';
 import FormLabel from './FormLabel';
-import tw from 'twrnc';
 import Icon from '../common/native-component/Icon';
-import { shadowStyle } from '../../constant/shadowStyle';
+import tw from 'twrnc';
 
 interface Props {
   label: FormLabelType;
@@ -74,19 +72,18 @@ export default function SpaceItem({ label }: Props) {
     <View>
       {label !== '식료품 위치 수정' && <FormLabel label={label} />}
 
-      <View style={tw`flex-row items-center pb-0.5 gap-1`}>
+      <View style={tw`flex-row items-center pb-0.5 gap-0.5`}>
         {['냉장고', '실온보관'].map((storage) => (
           <TouchableOpacity
             key={storage}
             onPress={() => onTabPress(storage as StorageType)}
             style={tw.style(
-              `mt-1 gap-1 py-2 px-3 rounded-xl border
+              `mt-1 gap-1 py-2 px-3 w-24 justify-center rounded-xl border
              ${
                storage.includes(space.slice(0, 1))
                  ? 'border-blue-200 bg-blue-600'
                  : 'border-gray-200 bg-gray-50'
-             } flex-row items-center`,
-              shadowStyle(3)
+             } flex-row items-center`
             )}
           >
             <Icon
@@ -109,7 +106,11 @@ export default function SpaceItem({ label }: Props) {
       </View>
 
       {space !== '실온보관' && (
-        <View style={tw`px-1`}>
+        <View
+          style={tw.style(
+            `px-3 py-0.5 border border-slate-200 bg-white mt-1 rounded-xl`
+          )}
+        >
           <View style={tw`flex-row gap-4`}>
             {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
               <View style={tw`h-9`} key={spaceType}>
@@ -153,7 +154,12 @@ export default function SpaceItem({ label }: Props) {
       )}
 
       {space === '실온보관' && (
-        <View key={spaceType} style={tw`py-1.5 h-9 px-1`}>
+        <View
+          key={spaceType}
+          style={tw.style(
+            `h-11 px-3 border border-slate-200 bg-white mt-1 rounded-xl`
+          )}
+        >
           <CheckBoxItem
             title='실온보관'
             checked={space === '실온보관'}

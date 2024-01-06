@@ -18,8 +18,9 @@ export default function Container({ children, bgColor, topPadding }: Props) {
 
   return (
     <View
-      style={tw`flex-1 bg-[${bgColor || BGCOLOR_DEFAULT}] px-${paddingValue} 
-       pb-${paddingValue - 1} ${topPadding ? `pt-${paddingValue - 1}` : ''}`}
+      style={tw`flex-1 bg-[${bgColor || BGCOLOR_DEFAULT}] 
+      px-${paddingValue} pb-${paddingValue - 1}
+      ${topPadding ? `pt-${paddingValue - 1}` : ''}`}
     >
       {children}
     </View>

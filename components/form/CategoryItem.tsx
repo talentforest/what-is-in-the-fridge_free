@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import {
   InputStyle,
   TextInput,
@@ -10,15 +10,13 @@ import { useDispatch, useSelector } from '../../redux/hook';
 import { showCategoryModal } from '../../redux/slice/modalVisibleSlice';
 import { closeKeyboard } from '../../util';
 import { changeCategory } from '../../redux/slice/food/categorySlice';
+import { LIGHT_BLUE, LIGHT_GRAY } from '../../constant/colors';
 
 import CategoryModal from '../../screen-component/modal/CategoryModal';
 import FormLabel from './FormLabel';
 import CategoryIcon from '../common/CategoryIcon';
-import tw from 'twrnc';
 import Icon from '../common/native-component/Icon';
-import { GRAY, LIGHT_BLUE, LIGHT_GRAY } from '../../constant/colors';
-import { foodCategories } from '../../constant/foodCategories';
-import FilterTag from '../common/FilterTag';
+import tw from 'twrnc';
 
 interface Props {
   isAddNewOne?: boolean;
@@ -50,7 +48,7 @@ export default function CategoryItem({ isAddNewOne }: Props) {
       <TouchableOpacity
         onPress={onModalOpenPress}
         disabled={disabled}
-        style={tw.style(`${InputStyle}`, shadowStyle(3))}
+        style={tw.style(`${InputStyle}`)}
       >
         <View style={tw`flex-row items-center h-full px-0.5`}>
           <View style={tw`pb-0.5`}>

@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import RNDateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import { BLUE } from '../../constant/colors';
+import { MEDIUM_GRAY } from '../../constant/colors';
 import { useState } from 'react';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { useDispatch, useSelector } from '../../redux/hook';
@@ -12,8 +12,8 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import tw from 'twrnc';
 
 export default function TimeBtn() {
-  const { time } = useSelector((state) => state.notification);
   const [timePickerVisible, setTimePickerVisible] = useState(false);
+  const { time } = useSelector((state) => state.notification);
 
   const dispatch = useDispatch();
 
@@ -27,10 +27,12 @@ export default function TimeBtn() {
   return (
     <View>
       <TouchableOpacity
-        onPress={() => setTimePickerVisible((prev) => !prev)}
+        onPress={() => {
+          setTimePickerVisible(true);
+        }}
         style={tw.style(
           `border border-slate-300 bg-white px-2.5 py-1 rounded-lg`,
-          shadowStyle(3)
+          shadowStyle(2)
         )}
       >
         <Text fontSize={16}>{time}</Text>
@@ -43,9 +45,9 @@ export default function TimeBtn() {
           display='spinner'
           mode='time'
           locale='ko_KO'
-          is24Hour
           themeVariant='light'
-          positiveButton={{ textColor: BLUE }}
+          positiveButton={{ textColor: '#0000e6', label: '확인' }}
+          negativeButton={{ textColor: MEDIUM_GRAY, label: '취소' }}
         />
       )}
     </View>

@@ -57,9 +57,9 @@ function LineDeco({ reverse }: { reverse?: boolean }) {
       )}
     >
       <View
-        style={tw`w-full h-0.6 bg-indigo-200 rounded-full rounded-bl-none`}
+        style={tw`w-full h-0.8 bg-indigo-100 rounded-full rounded-bl-none`}
       />
-      <View style={tw`w-0.6 h-full bg-indigo-200 rounded-b-full`} />
+      <View style={tw`w-0.8 h-full bg-indigo-100 rounded-b-full`} />
     </View>
   );
 }

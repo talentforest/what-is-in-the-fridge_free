@@ -1,7 +1,6 @@
 import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { View } from 'react-native';
 import { useSwiperAnimation } from '../../hooks';
-import { ViewingStep } from '../../constant/viewing';
 import { ReactNode, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { closeKeyboard } from '../../util';
@@ -13,7 +12,7 @@ import FormStepHeader from '../form/FormStepHeader';
 import tw from 'twrnc';
 
 interface Props {
-  steps: ViewingStep[] | FormStep[];
+  steps: FormStep[];
   children: ReactNode;
   headerIcon?: boolean;
   isForm?: boolean;

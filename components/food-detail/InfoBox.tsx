@@ -16,7 +16,7 @@ interface Props {
 export default function InfoBox({ label, iconName, children }: Props) {
   return (
     <View
-      style={tw`h-10.5 flex-row items-center border-slate-300 ${
+      style={tw`h-10.5 flex-row items-center border-slate-200 ${
         label === '카테고리' ? '' : 'border-t'
       }`}
     >

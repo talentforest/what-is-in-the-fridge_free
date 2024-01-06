@@ -23,7 +23,7 @@ export default function TableFooterContainer({ children, color }: Props) {
   const uncheckAllItems = () => dispatch(setCheckedList([]));
 
   return (
-    <View style={tw.style(`w-full bg-${color}-200 rounded-t-3xl -mt-3`)}>
+    <View style={tw.style(`w-full bg-${color}-100 rounded-t-3xl -mt-3`)}>
       {children}
 
       {active && (

@@ -60,6 +60,7 @@ export default function SettingBox({ setting }: Props) {
       }
     } catch (error) {
       console.log(error);
+      setAlert({ ...alertFailRestoreIAP, msg: '오류가 발생했습니다.' });
     }
   };
 
@@ -107,7 +108,7 @@ export default function SettingBox({ setting }: Props) {
             )}
           </View>
 
-          <Text style={tw`${disabled ? 'text-gray-500' : 'text-gray-800'}`}>
+          <Text style={tw`${disabled ? 'text-gray-400' : 'text-gray-800'}`}>
             {title}
           </Text>
         </View>

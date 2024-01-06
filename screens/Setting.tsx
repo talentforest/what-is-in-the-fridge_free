@@ -12,10 +12,17 @@ import PaymentBtn from '../screen-component/setting/PaymentBtn';
 import Icon from '../components/common/native-component/Icon';
 import AlertModal from '../screen-component/modal/AlertModal';
 import tw from 'twrnc';
+import { useEffect } from 'react';
 import { togglePurchaseState } from '../redux/slice/purchaseSlice';
 
 export default function Setting() {
   const { purchased } = useSelector((state) => state.purchaseState);
+
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(togglePurchaseState({ purchased: false, purchaseToken: null }));
+  // }, []);
 
   return (
     <Container topPadding>
@@ -24,7 +31,7 @@ export default function Setting() {
           <View
             style={tw.style(
               `border border-blue-100 bg-white rounded-xl py-4 px-3.5`,
-              shadowStyle(4)
+              shadowStyle(3)
             )}
           >
             <View style={tw`flex-row items-center gap-1 mb-1.5`}>

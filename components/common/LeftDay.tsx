@@ -1,5 +1,5 @@
-import { useSelector } from '../../redux/hook';
-import { getDiffDate, getFormattedDate, getTWColorByLeftDay } from '../../util';
+import { useGetColor } from '../../hooks';
+import { getDiffDate, getFormattedDate } from '../../util';
 import { Text } from './native-component';
 import { View } from 'react-native';
 import tw from 'twrnc';
@@ -11,7 +11,8 @@ interface Props {
 }
 
 function LeftDay({ expiredDate, dateMark, isSuffix }: Props) {
-  const { fontFamily } = useSelector((state) => state.fontFamily);
+  const { getTWColorByLeftDay } = useGetColor();
+
   const textColor = getTWColorByLeftDay(expiredDate);
   const diffDate = getDiffDate(expiredDate);
 
@@ -32,7 +33,7 @@ function LeftDay({ expiredDate, dateMark, isSuffix }: Props) {
           </Text>
 
           {dateMark && (
-            <Text fontSize={14} style={tw.style(`text-slate-500`)}>
+            <Text fontSize={13} style={tw.style(`text-slate-500`)}>
               {getFormattedDate(expiredDate, 'YY.MM.DD')}
             </Text>
           )}

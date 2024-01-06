@@ -30,10 +30,13 @@ export default function EntrancePantryBtn() {
   const appleLocalUri = assets[1]?.localUri;
 
   return (
-    <View style={tw`mr-3 -gap-3 flex-row self-end justify-end items-end`}>
+    <TouchableOpacity
+      onPress={onNavigatePress}
+      style={tw`mr-3 -gap-3 flex-row self-end justify-end items-end`}
+    >
       <PantryBox size={90} />
 
-      <TouchableOpacity onPress={onNavigatePress}>
+      <View>
         <PantryBox size={105} />
 
         <View
@@ -65,7 +68,7 @@ export default function EntrancePantryBtn() {
         ) : (
           <></>
         )}
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 }

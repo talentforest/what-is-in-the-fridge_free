@@ -1,14 +1,8 @@
 import { Animated, LayoutChangeEvent, ScrollView, View } from 'react-native';
 import { Text, TouchableOpacity } from './native-component';
-import {
-  colorByFilter,
-  cutLetter,
-  getColorByLeftDay,
-  getDiffDate,
-  scrollTo,
-} from '../../util';
+import { cutLetter, getDiffDate, scrollTo } from '../../util';
 import { Food } from '../../constant/foodInfo';
-import { useHandleFilter, usePulseAnimation } from '../../hooks';
+import { useGetColor, useHandleFilter, usePulseAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { MutableRefObject } from 'react';
 import { INDIGO } from '../../constant/colors';
@@ -28,13 +22,13 @@ interface Props {
 }
 
 export default function FoodBox({ food, scrollViewRef }: Props) {
-  const {
-    expandCompartmentModal: { modalVisible },
-  } = useSelector((state) => state.modalVisible);
   const { expiredDate } = food;
   const { searchedFoodName } = useSelector((state) => state.searchedFoodName);
+  const { expiredSoonDay } = useSelector((state) => state.notification);
 
   const { currentFilter } = useHandleFilter();
+
+  const { getHexColorByLeftDay, colorByFilter } = useGetColor();
 
   const active = searchedFoodName === food.name;
   const { opacity, translateY } = usePulseAnimation({ active });
@@ -66,20 +60,20 @@ export default function FoodBox({ food, scrollViewRef }: Props) {
           backgroundColor: active ? INDIGO : '#fff',
           transform: [{ translateY }],
           opacity,
+          ...shadowStyle(2),
         })}
       >
         <View
           style={tw.style(
             `border border-slate-300 gap-0.5 rounded-lg justify-center items-center flex-row px-2 py-1.5
             ${colorByFilter(currentFilter, expiredDate, 'bg')} 
-            ${active ? 'border-indigo-100' : ''}`,
-            shadowStyle(3)
+            ${active ? 'border-indigo-100' : ''}`
           )}
         >
-          {getDiffDate(expiredDate) <= 7 && (
+          {getDiffDate(expiredDate) <= expiredSoonDay && (
             <View
               style={tw`w-1.5 aspect-square rounded-full absolute top-0.5 right-0.5
-              bg-[${getColorByLeftDay(expiredDate)}]`}
+              bg-[${getHexColorByLeftDay(expiredDate)}]`}
             />
           )}
 

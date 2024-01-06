@@ -8,7 +8,6 @@ import {
 import { getDiffDate, getFormattedDate } from '../../util';
 import { BLUE, LIGHT_BLUE } from '../../constant/colors';
 import { controlDateBtns } from '../../constant/controlDateBtns';
-import { shadowStyle } from '../../constant/shadowStyle';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { showExpiredDateModal } from '../../redux/slice/modalVisibleSlice';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
@@ -38,7 +37,7 @@ export default function ExpiredDateItem() {
 
   const { height } = useItemSlideAnimation({
     initialValue: 0,
-    toValue: 82,
+    toValue: 84,
     active: !isExpiredItemClosed,
   });
 
@@ -70,16 +69,15 @@ export default function ExpiredDateItem() {
     <View>
       <FormLabel label='소비기한' />
 
-      <Animated.View style={{ height, overflow: 'hidden' }}>
+      <Animated.View
+        style={tw.style(`overflow-hidden -mx-1 px-1 -mt-1 pt-1`, { height })}
+      >
         <View style={tw`flex-row items-center gap-1`}>
           <RestoreDateBtn changeDate={changeDate} />
 
           <TouchableOpacity
             onPress={onInputBoxPress}
-            style={tw.style(
-              `flex-1 flex-row items-center ${InputStyle} p-0`,
-              shadowStyle(3)
-            )}
+            style={tw.style(`flex-1 flex-row items-center ${InputStyle} p-0`)}
           >
             <TextInput
               editable={false}
@@ -106,7 +104,7 @@ export default function ExpiredDateItem() {
           </TouchableOpacity>
         </View>
 
-        <View style={tw`mt-1.5 gap-1 flex-row flex-wrap items-start`}>
+        <View style={tw`gap-1 pt-1.5 pb-1 flex-row flex-wrap items-start`}>
           {controlDateBtns.map((btn) => (
             <ControlDateBtn
               key={btn.label}

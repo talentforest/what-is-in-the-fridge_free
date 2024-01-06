@@ -151,13 +151,13 @@ export const useHandleAlert = () => {
 
   const alertIAP: AlertObj = {
     title: '이용권 구매 오류',
-    msg: '이용권을 구매하는 과정에서 오류가 발생했습니다. 조금 있다가 다시 한번 시도해주세요.',
+    msg: '이용권을 구매하는 과정에서 오류가 발생했어요. 조금 있다가 다시 한번 시도해주세요.',
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 
   const alertFailRestoreIAP: AlertObj = {
     title: '이용권 복원 실패',
-    msg: '복원 가능한 이용권이 없습니다.',
+    msg: '복원 가능한 이용권이 없어요.',
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 
@@ -184,7 +184,7 @@ export const useHandleAlert = () => {
 
   const alertDoneInitializeData: AlertObj = {
     title: '데이터 초기화 완료',
-    msg: `모든 식료품 데이터가 초기화되었습니다.`,
+    msg: `모든 식료품 데이터가 초기화되었어요.`,
     btns: [{ name: '닫기', fn: closeAlertModal }],
   };
 
@@ -258,7 +258,7 @@ export const useHandleAlert = () => {
 
     const alertSuccessAddAllFoods: AlertObj = {
       title: '모든 식료품 추가 완료',
-      msg: `${foodPosition}에 성공적으로 추가되었습니다.`,
+      msg: `${foodPosition}에 성공적으로 추가되었어요.`,
       btns: [{ name: '확인', fn: closeAlertModal }],
     };
 
@@ -288,8 +288,8 @@ export const useHandleAlert = () => {
     };
 
     const alertDeleteExpiredFoods: AlertObj = {
-      title: '소비기한 주의 식료품 삭제',
-      msg: `총 ${listLength}개의 식료품(${foodNames})을 삭제하시겠어요? 냉장고나 실온보관 공간에서도 삭제돼요.`,
+      title: '식료품 삭제',
+      msg: `총 ${listLength}개의 식료품(${foodNames})을 삭제하시겠어요? 냉장고나 실온보관 공간에서 삭제돼요.`,
       btns: [
         { name: '취소', fn: closeAlertModal },
         { name: '삭제', fn: onDeleteBtnPress },
@@ -307,7 +307,7 @@ export const useHandleAlert = () => {
 
     const alertAddToShoppingList: AlertObj = {
       title: '장보기 목록 추가',
-      msg: `총 ${listLength}개의 식료품(${foodNames})을 장보기 목록에 추가합니다.`,
+      msg: `총 ${listLength}개의 식료품(${foodNames})을 장보기 목록에 추가할게요.`,
       btns: [
         { name: '취소', fn: closeAlertModal },
         { name: '확인', fn: onAddShoppingListBtnPress },

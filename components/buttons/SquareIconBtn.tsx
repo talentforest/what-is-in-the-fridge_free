@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 import { AMBER, BLUE } from '../../constant/colors';
-import { shadowStyle } from '../../constant/shadowStyle';
 import { Text, TouchableOpacity } from '../common/native-component';
 
 import Icon from '../common/native-component/Icon';
@@ -17,8 +16,7 @@ export default function SquareIconBtn({ onPress, icon, btnName }: Props) {
     <TouchableOpacity
       onPress={onPress}
       style={tw.style(
-        `bg-white border-2 border-indigo-200 items-center justify-center rounded-xl`,
-        shadowStyle(4)
+        `bg-white border-2 border-indigo-200 items-center justify-center rounded-xl`
       )}
     >
       <View style={tw`p-2.5 flex-row items-center gap-1`}>

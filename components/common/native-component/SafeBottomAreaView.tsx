@@ -1,7 +1,7 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TAB_BLUE_BG_COLOR } from '../../../constant/colors';
 import { BG_COLOR } from '../Container';
-import { useRouteName } from '../../../hooks/useRouteName';
+import { useRouteName } from '../../../hooks';
 import tw from 'twrnc';
 
 export function SafeBottomAreaView({ ...props }) {

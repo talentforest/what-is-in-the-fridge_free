@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Space, StorageType } from '../constant/fridgeInfo';
 import { Position } from '../screen-component/modal/AddAtOnceModal';
 import { useFindFood } from './useFindFood';
-import { validFoodObj } from '../util/validFoodObj';
+import { validFoodObj } from '../util';
 import { setFormFood } from '../redux/slice/food/formFoodSlice';
 import { useHandleAlert } from './useHandleAlert';
 import { setCheckedList } from '../redux/slice/food-list/checkListSlice';

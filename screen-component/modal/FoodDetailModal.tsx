@@ -77,11 +77,19 @@ export default function FoodDetailModal({ formSteps }: Props) {
           isVisible={openFoodDetailModal}
         >
           <View
-            style={tw.style(`pt-4 gap-1`, { paddingBottom: insets?.bottom })}
+            style={tw.style(`pt-3 gap-1`, {
+              paddingBottom: insets?.bottom,
+            })}
           >
             <FoodDetail />
 
-            <View style={tw`gap-1 mt-4`}>
+            <View style={tw`gap-1 mt-2`}>
+              <SubmitBtn
+                color='blue'
+                iconName='pencil'
+                btnName='식료품 정보 수정'
+                onPress={toggleEditing}
+              />
               <SubmitBtn
                 color='gray'
                 iconName='trash-can-outline'
@@ -89,12 +97,6 @@ export default function FoodDetailModal({ formSteps }: Props) {
                   space === '실온보관' ? '실온보관에서' : '냉장고에서'
                 } 식료품 삭제`}
                 onPress={onDeletePress}
-              />
-              <SubmitBtn
-                color='blue'
-                iconName='pencil'
-                btnName='식료품 정보 수정'
-                onPress={toggleEditing}
               />
             </View>
           </View>

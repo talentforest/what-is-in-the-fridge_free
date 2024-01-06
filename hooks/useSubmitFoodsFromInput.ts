@@ -6,8 +6,8 @@ import { useFindFood } from './useFindFood';
 import { useState } from 'react';
 import { closeKeyboard } from '../util';
 import { useHandleAlert } from './useHandleAlert';
-import UUIDGenerator from 'react-native-uuid';
 import { useRouteName } from './useRouteName';
+import UUIDGenerator from 'react-native-uuid';
 
 export const useSubmitFoodsFromInput = () => {
   const [inputValue, setInputValue] = useState('');

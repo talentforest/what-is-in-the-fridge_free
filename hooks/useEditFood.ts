@@ -20,8 +20,8 @@ import {
   checkSameStorage,
   isFridgeFood,
   isPantryFood,
-} from '../util/checkFoodSpace';
-import { beforePurchaseDate } from '../util';
+  beforePurchaseDate,
+} from '../util';
 import { useHandleAlert } from './useHandleAlert';
 import { showOpenFoodDetailModal } from '../redux/slice/modalVisibleSlice';
 import { Food } from '../constant/foodInfo';

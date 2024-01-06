@@ -27,6 +27,8 @@ const PaymentBtn = () => {
     connected,
     getProducts,
     currentPurchase,
+    availablePurchases,
+    getAvailablePurchases,
     finishTransaction, //
   } = useIAP();
 
@@ -50,31 +52,17 @@ const PaymentBtn = () => {
         }
       }
     };
-
     checkCurrentPurchase(currentPurchase);
   }, [currentPurchase, finishTransaction]);
 
   const switchPurchasedState = (purchaseToken: string) => {
-    return dispatch(
-      togglePurchaseState({
-        purchased: true,
-        purchaseToken,
-      })
-    );
+    return dispatch(togglePurchaseState({ purchased: true, purchaseToken }));
   };
 
   const handleBuyBtn = async () => {
-    const availablePurchases = await RNIap.getAvailablePurchases();
-
     try {
-      if (availablePurchases && availablePurchases.length > 0) {
-        // 이미 구매한 아이템이 있다면 복원 수행
-        switchPurchasedState(availablePurchases[0].purchaseToken);
-        return setAlert(alertSucessRestoreIAP);
-      } else {
-        await getProducts({ skus });
-        await requestPurchase({ skus });
-      }
+      await getProducts({ skus });
+      await requestPurchase({ skus });
     } catch (e) {
       console.log(e);
     }
@@ -91,7 +79,7 @@ const PaymentBtn = () => {
               ? 'bg-amber-200 border-amber-400'
               : 'bg-gray-50 border-gray-300'
           } py-3.5 px-4 rounded-2xl`,
-          shadowStyle(4)
+          shadowStyle(3)
         )}
       >
         <View style={tw`flex-row items-center justify-between`}>
@@ -142,7 +130,7 @@ const PaymentBtn = () => {
           </View>
 
           <Text fontSize={15} style={tw`text-slate-600 flex-1 leading-5`}>
-            연결 오류로 인해 구매 버튼이 활성화되지 않았습니다. 잠시 후 다시
+            연결 오류로 인해 구매 버튼이 활성화되지 않았어요. 잠시 후 다시
             시도해주세요.
           </Text>
         </View>

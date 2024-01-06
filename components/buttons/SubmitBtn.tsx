@@ -1,4 +1,3 @@
-import { shadowStyle } from '../../constant/shadowStyle';
 import { Text, TouchableOpacity } from '../common/native-component';
 import { LIGHT_GRAY } from '../../constant/colors';
 import Icon from '../common/native-component/Icon';
@@ -29,8 +28,7 @@ export default function SubmitBtn({
       style={tw.style(
         `${
           disabled ? 'bg-gray-300' : `bg-${color}-600`
-        } h-10.5 flex-row items-center justify-center gap-1.5 rounded-xl`,
-        shadowStyle(3)
+        } h-10.5 flex-row items-center justify-center gap-1.5 rounded-xl`
       )}
     >
       {iconName && (
