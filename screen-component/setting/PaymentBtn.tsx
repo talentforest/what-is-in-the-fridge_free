@@ -27,8 +27,6 @@ const PaymentBtn = () => {
     connected,
     getProducts,
     currentPurchase,
-    availablePurchases,
-    getAvailablePurchases,
     finishTransaction, //
   } = useIAP();
 

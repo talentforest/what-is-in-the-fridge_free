@@ -20,9 +20,9 @@ export default function Setting() {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(togglePurchaseState({ purchased: false, purchaseToken: null }));
-  // }, []);
+  useEffect(() => {
+    // dispatch(togglePurchaseState({ purchased: false, purchaseToken: null }));
+  }, []);
 
   return (
     <Container topPadding>

@@ -4,7 +4,7 @@ export const onboardingSteps: OnboardingStep[] = [
   {
     step: 1,
     desc: '우리집 냉장고에 맞게, 커스텀할 수 있어요',
-    image: 'android-fridge-setting.png',
+    image: 'android-setting-fridge.png',
   },
   {
     step: 2,
@@ -24,6 +24,6 @@ export const onboardingSteps: OnboardingStep[] = [
   {
     step: 5,
     desc: '우리집 냉장고에 뭐가 있는지 고민하지 마세요., 그럼 우리집 식료품 관리를 시작해볼까요?',
-    image: 'android-home.png',
+    image: 'android-all-foods.png',
   },
 ];
