@@ -5,10 +5,10 @@ import { useItemSlideAnimation } from '../../hooks';
 import { useDispatch, useSelector } from '../../redux/hook';
 import { setCheckedList } from '../../redux/slice/food-list/checkListSlice';
 import { ReactNode } from 'react';
+import { shadowStyle } from '../../constant/shadowStyle';
 
 import CheckBoxItem from '../common/CheckBoxItem';
 import tw from 'twrnc';
-import { shadowStyle } from '../../constant/shadowStyle';
 
 interface Props {
   foodList: Food[];

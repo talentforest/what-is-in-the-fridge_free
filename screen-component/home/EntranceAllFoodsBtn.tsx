@@ -6,7 +6,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NavigateProp } from '../../navigation/Navigation';
 import { shadowStyle } from '../../constant/shadowStyle';
-import { LIGHT_BLUE, MEDIUM_GRAY } from '../../constant/colors';
+import { LIGHT_BLUE, LIGHT_GRAY } from '../../constant/colors';
 
 import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
 import Icon from '../../components/common/native-component/Icon';
@@ -36,7 +36,7 @@ export default function EntranceAllFoodsBtn() {
 
       {/* 이름 */}
       <View style={tw`-mr-1 mb-0.2`}>
-        <IconChevronRight size={15} color={MEDIUM_GRAY} />
+        <IconChevronRight size={14} color={LIGHT_GRAY} />
       </View>
     </TouchableOpacity>
   );

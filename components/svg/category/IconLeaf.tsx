@@ -13,7 +13,7 @@ export default function IconLeaf({ size, inActive }: Props) {
       <G
         id='Icon'
         stroke='none'
-        stroke-width='1'
+        strokeWidth='1'
         fill='none'
         fill-rule='evenodd'
       >

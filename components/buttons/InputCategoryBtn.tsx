@@ -11,9 +11,7 @@ export default function InputCategoryBtn() {
 
   const dispatch = useDispatch();
 
-  const onOpenModalPress = () => {
-    dispatch(showCategoryModal(true));
-  };
+  const onOpenModalPress = () => dispatch(showCategoryModal(true));
 
   return (
     <TouchableOpacity

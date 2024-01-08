@@ -36,8 +36,8 @@ export default function PantryBox({ size }: Props) {
       />
       <Path
         d='M376.479 41.25L347.023 64.114L317.567 86.978'
-        stroke={'#a7d3a5'}
-        strokeWidth='5'
+        stroke={'#a5c4a4'}
+        strokeWidth='4'
         strokeLinecap='round'
       />
       <Path

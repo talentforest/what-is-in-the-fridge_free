@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
-import { notificationContents } from '../constant/notificationContents';
 import { useDispatch, useSelector } from '../redux/hook';
 import { toggleNotification } from '../redux/slice/notificationSlice';
 import { getNameListCanMarkEtc } from '../util';
 import { useGetFoodList } from './useGetFoodList';
 import { PATHNAME_ALLFOODS, prefix } from '../constant/link';
-import { NOTIFICATION_CHANNEL_ID } from '../constant/notification';
+import {
+  NOTIFICATION_CHANNEL_ID,
+  notificationContents,
+} from '../constant/notification';
 import * as Notifications from 'expo-notifications';
 import { useFindFood } from './useFindFood';
 

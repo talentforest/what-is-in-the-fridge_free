@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Text } from '../components/common/native-component';
 import { LIGHT_BLUE } from '../constant/colors';
 import { shadowStyle } from '../constant/shadowStyle';
-import { useDispatch, useSelector } from '../redux/hook';
+import { useSelector } from '../redux/hook';
 import { settingBtns } from '../constant/settingBtns';
 import { PlatformIOS } from '../constant/statusBarHeight';
 
@@ -12,17 +12,9 @@ import PaymentBtn from '../screen-component/setting/PaymentBtn';
 import Icon from '../components/common/native-component/Icon';
 import AlertModal from '../screen-component/modal/AlertModal';
 import tw from 'twrnc';
-import { useEffect } from 'react';
-import { togglePurchaseState } from '../redux/slice/purchaseSlice';
 
 export default function Setting() {
   const { purchased } = useSelector((state) => state.purchaseState);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // dispatch(togglePurchaseState({ purchased: false, purchaseToken: null }));
-  }, []);
 
   return (
     <Container topPadding>

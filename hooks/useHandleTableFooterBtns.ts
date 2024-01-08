@@ -8,7 +8,6 @@ import {
   showAddAtOnceModal,
   showFormModal,
 } from '../redux/slice/modalVisibleSlice';
-import { setCheckedList } from '../redux/slice/food-list/checkListSlice';
 
 export const useHandleTableFooterBtns = () => {
   const { checkedList } = useSelector((state) => state.checkedList);

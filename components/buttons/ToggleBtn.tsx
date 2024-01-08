@@ -1,12 +1,7 @@
 import { Animated, View } from 'react-native';
 import { InputStyle, Text, TouchableOpacity } from '../common/native-component';
 import { useToggleAnimation } from '../../hooks';
-import {
-  DARK_WHITE,
-  LIGHT_GRAY,
-  MEDIUM_GRAY,
-  YELLOW,
-} from '../../constant/colors';
+import { LIGHT_GRAY, MEDIUM_GRAY, YELLOW } from '../../constant/colors';
 import Icon from '../common/native-component/Icon';
 import tw from 'twrnc';
 

@@ -1,4 +1,4 @@
-import { formFourSteps, formThreeSteps } from '../../constant/formInfo';
+import { formFourSteps } from '../../constant/formInfo';
 import { useAddShoppingListFood } from '../../hooks';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

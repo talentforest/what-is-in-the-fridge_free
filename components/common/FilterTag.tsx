@@ -5,11 +5,11 @@ import { shadowStyle } from '../../constant/shadowStyle';
 import { Category } from '../../constant/foodCategories';
 import { View } from 'react-native';
 import { BLUE, GRAY } from '../../constant/colors';
+import { useSelector } from '../../redux/hook';
 
 import CategoryIcon from './CategoryIcon';
 import IconChevronDown from '../svg/arrow/IconChevronDown';
 import tw from 'twrnc';
-import { useSelector } from '../../redux/hook';
 
 interface Props {
   filter: Filter;

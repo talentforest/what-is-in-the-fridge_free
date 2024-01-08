@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 import tw from 'twrnc';
-import { BLUE } from '../../constant/colors';
 
 interface Props {
   stepLength: number;

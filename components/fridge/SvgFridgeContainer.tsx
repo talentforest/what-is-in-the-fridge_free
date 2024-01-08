@@ -60,9 +60,9 @@ export default function SvgFridgeContainer({ height }: Props) {
         y1='36.8482'
         x2='107.848'
         y2='111.053'
-        stroke='#666'
-        stroke-width='10'
-        stroke-linecap='round'
+        stroke='#c3c3c3'
+        strokeWidth='2'
+        strokeLinecap='round'
       />
     </Svg>
   );

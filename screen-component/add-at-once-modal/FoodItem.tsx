@@ -6,7 +6,7 @@ import {
 import { getFormattedDate } from '../../util';
 import { Food } from '../../constant/foodInfo';
 import { useItemSlideAnimation } from '../../hooks';
-import { LIGHT_GRAY, MEDIUM_GRAY } from '../../constant/colors';
+import { LIGHT_GRAY } from '../../constant/colors';
 
 import CategoryIcon from '../../components/common/CategoryIcon';
 import Icon from '../../components/common/native-component/Icon';

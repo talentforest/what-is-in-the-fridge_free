@@ -33,8 +33,8 @@ export default function IconCan({ size, inActive }: Props) {
       <Path
         d='M1.30005 5.5C4.5 7.5 7.5 7.5 10.8 5.5'
         stroke={inActive ? LIGHT_GRAY : '#2183fa'}
-        stroke-width='0.1'
-        stroke-linecap='round'
+        strokeWidth='1'
+        strokeLinecap='round'
       />
       <Path
         d='M2.31033 4.37434C1.84345 3.73612 2.06481 2.99267 2.80475 2.71378L4.64187 2.02136C5.38181 1.74247 6.36013 2.03376 6.82701 2.67197V2.67197C7.29389 3.31018 7.07253 4.05364 6.33259 4.33253L4.49547 5.02495C3.75553 5.30384 2.77721 5.01255 2.31033 4.37434V4.37434Z'

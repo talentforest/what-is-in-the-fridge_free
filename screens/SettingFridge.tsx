@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from '../redux/hook';
 import { Space, SpaceType } from '../constant/fridgeInfo';
 import { changeSetting } from '../redux/slice/fridgeInfoSlice';
 import { shadowStyle } from '../constant/shadowStyle';
+import { useState } from 'react';
+import { useNotification } from '../hooks';
 
 import SelectContainter from '../screen-component/fridge-setting/SelectContainter';
 import CompartmentsSettingBox from '../screen-component/fridge-setting/CompartmentsSettingBox';
@@ -14,8 +16,6 @@ import CheckBoxItem from '../components/common/CheckBoxItem';
 import Fridge from '../components/fridge/Fridge';
 import DayBtn from '../components/buttons/DayBtn';
 import tw from 'twrnc';
-import { useState } from 'react';
-import { useNotification } from '../hooks';
 
 export default function SettingFridge() {
   const [dayPickerVisible, setDayPickerVisible] = useState(false);

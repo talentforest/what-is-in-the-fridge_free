@@ -12,7 +12,7 @@ export default function IconGlassCupFill({ size, color }: Props) {
       <G
         id='页面-1'
         stroke='none'
-        stroke-width='1'
+        strokeWidth='1'
         fill='none'
         fill-rule='evenodd'
       >

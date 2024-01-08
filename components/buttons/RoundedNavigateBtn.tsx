@@ -1,5 +1,4 @@
 import { Text, TouchableOpacity } from '../common/native-component';
-import { shadowStyle } from '../../constant/shadowStyle';
 import { useDispatch } from '../../redux/hook';
 import { search } from '../../redux/slice/food/searchedFoodSlice';
 import { Space } from '../../constant/fridgeInfo';
@@ -38,7 +37,6 @@ export default function RoundedNavigateBtn({
       onPress={onNavigatePress}
       style={tw.style(
         `flex-row items-center justify-center bg-${color}-50 rounded-full py-1.5 pl-2 pr-1.5`
-        // shadowStyle(3)
       )}
     >
       <Text

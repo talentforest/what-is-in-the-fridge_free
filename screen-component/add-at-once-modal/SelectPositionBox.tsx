@@ -9,7 +9,6 @@ import { useItemSlideAnimation } from '../../hooks';
 import { getCompartments } from '../../util';
 import { useSelector } from '../../redux/hook';
 import { Position } from '../modal/AddAtOnceModal';
-import { shadowStyle } from '../../constant/shadowStyle';
 import CheckBoxItem from '../../components/common/CheckBoxItem';
 import tw from 'twrnc';
 

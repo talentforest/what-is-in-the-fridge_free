@@ -7,7 +7,7 @@ interface Props {
 export default function IconGear({ size }: Props) {
   return (
     <Svg width={`${size}px`} height={`${size}px`} viewBox='0 0 24 24'>
-      <G stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'>
+      <G stroke='none' strokeWidth='1' fill='none' fill-rule='evenodd'>
         <G id='System' transform='translate(-1248.000000, 0.000000)'>
           <G id='settings_3_line' transform='translate(1248.000000, 0.000000)'>
             <Path

@@ -6,7 +6,6 @@ import {
   ICE_BLUE,
   LIGHT_BLUE,
   LIGHT_GRAY,
-  MEDIUM_GRAY,
   RED,
 } from '../../constant/colors';
 import { useGetFoodList } from '../../hooks';
@@ -73,8 +72,9 @@ export default function FridgeSpaceInfo({ space }: Props) {
               {space}
             </Text>
           </View>
-
-          <IconChevronRight size={15} color={MEDIUM_GRAY} />
+          <View style={tw`pb-0.4`}>
+            <IconChevronRight size={14} color={LIGHT_GRAY} />
+          </View>
         </View>
 
         {space !== '실온보관' && (

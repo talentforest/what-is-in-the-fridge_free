@@ -6,7 +6,7 @@ import {
 import { NavigateProp } from '../../navigation/Navigation';
 import { Image, View } from 'react-native';
 import { useImageLoad } from '../../hooks';
-import { MEDIUM_GRAY } from '../../constant/colors';
+import { LIGHT_GRAY } from '../../constant/colors';
 
 import IconChevronRight from '../../components/svg/arrow/IconChevronRight';
 import PantryBox from './PantryBox';
@@ -47,7 +47,7 @@ export default function EntrancePantryBtn() {
               실온보관
             </Text>
 
-            <IconChevronRight size={14} color={MEDIUM_GRAY} />
+            <IconChevronRight size={14} color={LIGHT_GRAY} />
           </View>
         </View>
 

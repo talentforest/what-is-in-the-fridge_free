@@ -11,8 +11,8 @@ import { setCheckedList } from '../../redux/slice/food-list/checkListSlice';
 
 import CategoryItem from '../../components/form/CategoryItem';
 import ExpiredDateItem from '../../components/form/ExpiredDateItem';
-import tw from 'twrnc';
 import Icon from '../../components/common/native-component/Icon';
+import tw from 'twrnc';
 
 interface Props {
   isEditing: boolean;

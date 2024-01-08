@@ -14,7 +14,7 @@ export default function IconWineFill({ size = 16, color = DEEP_GRAY }: Props) {
       <G
         id='Icon'
         stroke='none'
-        stroke-width='1'
+        strokeWidth='1'
         fill='none'
         fill-rule='evenodd'
       >
