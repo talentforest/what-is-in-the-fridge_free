@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '../../redux/hook';
 import { changeCategory } from '../../redux/slice/food/categorySlice';
 import { editFormFood } from '../../redux/slice/food/formFoodSlice';
 import { editFavorite } from '../../redux/slice/food-list/favoriteFoodsSlice';
-import { useFindFood } from '../../hooks';
+import { useFindFood, useRouteName } from '../../hooks';
 import { showCategoryModal } from '../../redux/slice/modalVisibleSlice';
 import tw from 'twrnc';
 
@@ -16,7 +16,6 @@ interface Props {
 }
 
 export default function CategoryBox({ checked, category, localUri }: Props) {
-  const { categoryModalVisible } = useSelector((state) => state.modalVisible);
   const {
     formFood: { name },
   } = useSelector((state) => state.formFood);
@@ -26,6 +25,8 @@ export default function CategoryBox({ checked, category, localUri }: Props) {
     : 'bg-white border-slate-100';
 
   const { width, height } = useWindowDimensions();
+
+  const { routeCompartments } = useRouteName();
 
   const GAP = 20;
   const paddingHorizontal = 32;
@@ -43,7 +44,7 @@ export default function CategoryBox({ checked, category, localUri }: Props) {
   const { isFavoriteItem } = useFindFood();
 
   const onCategoryBoxPress = () => {
-    if (isFavoriteItem(name)) {
+    if (isFavoriteItem(name) && routeCompartments) {
       // 자주 먹는 식료품 목록에 포함되어 있을 경우 해당 아이템의 카테고리 정보도 변경
       dispatch(editFavorite({ ...isFavoriteItem(name), category }));
     }
