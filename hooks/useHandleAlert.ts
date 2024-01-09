@@ -54,6 +54,7 @@ export const useHandleAlert = () => {
   const { formFood } = useSelector((state) => state.formFood);
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
+  const { datePickerViewing } = useSelector((state) => state.datePickerViewing);
 
   const dispatch = useDispatch();
 
@@ -178,8 +179,14 @@ export const useHandleAlert = () => {
     ],
   };
 
+  const alertChangeDatePicker: AlertObj = {
+    title: '날짜 입력 방식 변경',
+    msg: `날짜 입력 방식이 변경되었어요!`,
+    btns: [{ name: '확인', fn: closeAlertModal }],
+  };
+
   const alertChangeFont: AlertObj = {
-    title: '폰트 변경 완료',
+    title: '폰트 변경',
     msg: `폰트가 변경되었어요!`,
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
@@ -415,6 +422,7 @@ export const useHandleAlert = () => {
       alertAlreadyHasFood,
       alertNoNameInForm,
       alertWrongDateInForm,
+      alertChangeDatePicker,
       alertChangeFont,
       alertSuccessIAP,
       alertFailIAP,
@@ -463,6 +471,7 @@ export const useHandleAlert = () => {
     alertAlreadyHasFood,
     alertNoNameInForm,
     alertWrongDateInForm,
+    alertChangeDatePicker,
     alertChangeFont,
     alertSuccessIAP,
     alertFailIAP,

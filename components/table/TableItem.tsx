@@ -80,15 +80,16 @@ export default function TableItem({
           opacity: interpolatedOpacity,
           overflow: 'hidden',
           marginHorizontal: -4,
+          paddingTop: 1,
         }}
       >
         <TouchableOpacity
           onPress={onItemPress}
           style={tw.style(
-            `bg-white border h-[${TABLE_ITEM_HEIGHT - 7}px] 
-            ${checkedItem ? 'border-slate-200 bg-blue-50' : 'border-slate-100'} 
+            `bg-white border flex-1 mb-1.5
+            ${checkedItem ? 'border-blue-100 bg-blue-50' : 'border-slate-100'} 
             flex-row items-center gap-1 pl-3 rounded-xl mx-1`,
-            shadowStyle(2)
+            afterAnimation === 'slideup-out' ? {} : shadowStyle(1)
           )}
         >
           {checkBox && <CheckBox checked={checkedItem} />}

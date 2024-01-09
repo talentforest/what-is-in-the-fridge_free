@@ -21,7 +21,7 @@ export default function EntranceAllFoodsBtn() {
     <TouchableOpacity
       onPress={onNavigatePress}
       style={tw.style(
-        `px-2.5 py-2 -mb-2 self-end border border-gray-200 flex-row gap-1 items-center justify-between rounded-full bg-white`,
+        `px-2.5 py-2 -mb-2 self-end border border-gray-100 flex-row gap-1 items-center justify-between rounded-full bg-white`,
         shadowStyle(3)
       )}
     >

@@ -24,12 +24,15 @@ import Container from '../components/common/Container';
 import Icon from '../components/common/native-component/Icon';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import tw from 'twrnc';
+import { useHandleAlert } from '../hooks';
 
 export default function SettingDatePicker() {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const { datePickerViewing } = useSelector((state) => state.datePickerViewing);
 
   const dispatch = useDispatch();
+
+  const { setAlert, alertChangeDatePicker } = useHandleAlert();
 
   const onItemPress = () => {
     if (datePickerViewing === '숫자로 날짜 입력') {
@@ -43,6 +46,11 @@ export default function SettingDatePicker() {
     '숫자로 날짜 입력',
     '달력으로 날짜 입력',
   ];
+
+  const onCheckBoxPress = (picker: DatePickerViewing) => {
+    dispatch(changeDatePickerViewing(picker));
+    setAlert(alertChangeDatePicker);
+  };
 
   return (
     <Container topPadding>
@@ -59,7 +67,7 @@ export default function SettingDatePicker() {
           {datePickers.map((picker) => (
             <TouchableOpacity
               key={picker}
-              onPress={() => dispatch(changeDatePickerViewing(picker))}
+              onPress={() => onCheckBoxPress(picker)}
               style={tw`py-1.5 flex-row items-center gap-1`}
             >
               <CheckBox checked={datePickerViewing === picker} size={14} />

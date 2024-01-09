@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { useSelector } from '../../redux/hook';
+import { useDispatch, useSelector } from '../../redux/hook';
 import {
   Text,
   TouchableOpacity,
