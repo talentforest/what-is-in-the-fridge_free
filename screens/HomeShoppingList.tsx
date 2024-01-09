@@ -3,11 +3,7 @@ import { KeyboardAvoidingView } from '../components/common/native-component';
 import { useSelector } from '../redux/hook';
 import { FlatList, View } from 'react-native';
 import { closeKeyboard, scrollToIndex } from '../util';
-import {
-  useHandleTableFooterBtns,
-  useSubmitFoodsFromInput,
-  useNotification,
-} from '../hooks';
+import { useHandleTableFooterBtns, useSubmitFoodsFromInput } from '../hooks';
 import { NAME_MAX_LENGTH } from '../constant/foodInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -30,8 +26,6 @@ export default function HomeShoppingList() {
   const { shoppingList } = useSelector((state) => state.shoppingList);
 
   const flatListRef = useRef<FlatList | null>(null);
-
-  useNotification();
 
   const { onDeleteBtnPress, onAddAtOnceBtnPress } = useHandleTableFooterBtns();
 

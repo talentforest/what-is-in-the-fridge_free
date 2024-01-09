@@ -28,6 +28,7 @@ import { showAddAtOnceModal } from '../redux/slice/modalVisibleSlice';
 import { search } from '../redux/slice/food/searchedFoodSlice';
 import { setFavoriteList } from '../redux/slice/food-list/favoriteFoodsSlice';
 import { getNameListCanMarkEtc } from '../util';
+import { TableTitle } from '../components/table/TableItemEnd';
 
 export type AlertBtns = {
   name: AlertBtnName;
@@ -48,7 +49,11 @@ export const MAX_NUM_ADD_AT_ONCE = 8;
 
 export const useHandleAlert = () => {
   const { checkedList } = useSelector((state) => state.checkedList);
+  const { favoriteFoods } = useSelector((state) => state.favoriteFoods);
+  const { shoppingList } = useSelector((state) => state.shoppingList);
   const { formFood } = useSelector((state) => state.formFood);
+  const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
+  const { pantryFoods } = useSelector((state) => state.pantryFoods);
 
   const dispatch = useDispatch();
 
@@ -62,10 +67,64 @@ export const useHandleAlert = () => {
     return navigation.navigate('Setting');
   };
 
-  const onDeleteBtnPress = () => {
+  const filterCheckList = (name: string) => {
+    return !checkedList.find((checkedFood) => checkedFood.name === name);
+  };
+
+  const deleteShoppingListItem = () => {
+    const filteredList = shoppingList.filter((food) =>
+      filterCheckList(food.name)
+    );
+    dispatch(setShoppingList(filteredList));
+  };
+
+  const deleteFavoriteFoodsItem = () => {
+    const filteredList = favoriteFoods.filter((food) =>
+      filterCheckList(food.name)
+    );
+    dispatch(setFavoriteList(filteredList));
+  };
+
+  const deleteHasFoodItem = () => {
+    const findFridgeFoodInCheckList = (fridgeFood: Food) => {
+      return checkedList
+        .filter((checkedFood) => checkedFood.space !== '실온보관')
+        .find((checkedfood) => checkedfood.name === fridgeFood.name);
+    };
+    const findPantryFoodInCheckList = (pantryFood: Food) => {
+      return checkedList
+        .filter((checkedFood) => checkedFood.space === '실온보관')
+        .find((checkedfood) => checkedfood.name === pantryFood.name);
+    };
+    const filteredFridge = fridgeFoods.filter(
+      (fridgeFood) => !findFridgeFoodInCheckList(fridgeFood)
+    );
+    const filteredPantry = pantryFoods.filter(
+      (pantryFood) => !findPantryFoodInCheckList(pantryFood)
+    );
+
+    dispatch(setAllPantryFoods(filteredPantry));
+    dispatch(setAllFridgeFoods(filteredFridge));
+  };
+
+  const onDeleteBtnPress = (title: TableTitle) => {
     dispatch(setAfterAnimation('slideup-out'));
+
     closeAlertModal();
-    return;
+
+    setTimeout(() => {
+      if (title === '장볼 식료품') {
+        deleteShoppingListItem();
+      }
+      if (title === '자주 먹는 식료품') {
+        deleteFavoriteFoodsItem();
+      }
+      if (title === '전체 식료품') {
+        deleteHasFoodItem();
+      }
+
+      dispatch(setCheckedList([]));
+    }, 400);
   };
 
   const onAddShoppingListBtnPress = () => {
@@ -289,7 +348,7 @@ export const useHandleAlert = () => {
       msg: `총 ${listLength}개의 식료품(${foodNames})을 자주 먹는 식료품에서 삭제하시겠어요?`,
       btns: [
         { name: '취소', fn: closeAlertModal },
-        { name: '삭제', fn: onDeleteBtnPress },
+        { name: '삭제', fn: () => onDeleteBtnPress('자주 먹는 식료품') },
       ],
     };
 
@@ -298,7 +357,7 @@ export const useHandleAlert = () => {
       msg: `총 ${listLength}개의 식료품(${foodNames})을 삭제하시겠어요? 냉장고나 실온보관 공간에서 삭제돼요.`,
       btns: [
         { name: '취소', fn: closeAlertModal },
-        { name: '삭제', fn: onDeleteBtnPress },
+        { name: '삭제', fn: () => onDeleteBtnPress('전체 식료품') },
       ],
     };
 
@@ -307,7 +366,7 @@ export const useHandleAlert = () => {
       msg: `총 ${listLength}개의 식료품(${foodNames})을 장보기 목록에서 삭제하시겠어요?`,
       btns: [
         { name: '취소', fn: closeAlertModal },
-        { name: '삭제', fn: onDeleteBtnPress },
+        { name: '삭제', fn: () => onDeleteBtnPress('장볼 식료품') },
       ],
     };
 

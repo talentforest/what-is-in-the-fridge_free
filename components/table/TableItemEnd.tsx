@@ -59,7 +59,7 @@ export default function TableItemEnd({ title, food }: Props) {
       ? 'cyan'
       : position.includes('냉장실')
       ? 'blue'
-      : 'green';
+      : 'emerald';
 
     return tagColor;
   };
@@ -71,6 +71,7 @@ export default function TableItemEnd({ title, food }: Props) {
           {routeHome && findFood(food.name) && (
             <RoundedNavigateBtn
               btnName='있음'
+              color='emerald'
               space={food.space}
               foodName={food.name}
             />
