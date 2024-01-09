@@ -7,7 +7,7 @@ import { showOpenFoodDetailModal } from '../redux/slice/modalVisibleSlice';
 export const useDeleteFood = (space: Space) => {
   const dispatch = useDispatch();
 
-  const deleteFood = (id: string) => {
+  const deleteDetailFood = (id: string) => {
     dispatch(
       space === '실온보관' ? removePantryFood(id) : removeFridgeFood(id)
     );
@@ -15,6 +15,6 @@ export const useDeleteFood = (space: Space) => {
   };
 
   return {
-    deleteFood,
+    deleteDetailFood,
   };
 };

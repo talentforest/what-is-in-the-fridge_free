@@ -36,9 +36,9 @@ export default function FoodDetailModal({ formSteps }: Props) {
 
   const { space, id, name } = formFood;
 
-  const { deleteFood } = useDeleteFood(space);
+  const { deleteDetailFood } = useDeleteFood(space);
 
-  const onDeletePress = () => deleteFood(id);
+  const onDeletePress = () => deleteDetailFood(id);
 
   const toggleEditing = () => setEditing(true);
 

@@ -35,22 +35,25 @@ export const useHandleTableFooterBtns = () => {
   } = useHandleAlert();
 
   const {
-    alertDeleteExpiredFoods,
+    alertDeleteAllFoods,
     alertAddToShoppingList,
     alertDeleteFromShoppingList,
     alertDeleteFavoriteFoods,
   } = alertWithCheckList();
 
-  const deleteAlert = routeHome
-    ? alertDeleteFromShoppingList
-    : routeFavoriteFoods
+  const deleteAlert = routeFavoriteFoods // 자주 먹는 식료품
     ? alertDeleteFavoriteFoods
-    : alertDeleteExpiredFoods;
+    : routeHome // 장보기 목록
+    ? alertDeleteFromShoppingList
+    : alertDeleteAllFoods;
 
+  // 삭제 버튼
   const onDeleteBtnPress = () => setAlert(deleteAlert);
 
+  // 장보기 추가 버튼
   const onAddShoppingListBtnPress = () => setAlert(alertAddToShoppingList);
 
+  // 한번에 추가 버튼
   const onAddAtOnceBtnPress = () => {
     if (!purchased && allFoods.length + checkedList.length > MAX_LIMIT) {
       const limitReached = MAX_LIMIT === allFoods.length;

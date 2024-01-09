@@ -28,28 +28,25 @@ export const useItemSlideAnimation = ({
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
 
-  const { routeFavoriteFoods, routeAllFoods } = useRouteName();
-
-  const table = routeFavoriteFoods
-    ? {
-        items: favoriteFoods,
-        fn: setFavoriteList,
-      }
-    : {
-        items: shoppingList,
-        fn: setShoppingList,
-      };
+  const { routeFavoriteFoods, routeAllFoods, routeHome } = useRouteName();
 
   const dispatch = useDispatch();
 
-  const deleteItem = () => {
-    const filteredList = table.items.filter((food) => {
+  const deleteShoppingListItem = () => {
+    const filteredList = shoppingList.filter((food) => {
       return !checkedList.find((checkedFood) => checkedFood.name === food.name);
     });
-    dispatch(table.fn(filteredList));
+    dispatch(setShoppingList(filteredList));
   };
 
-  const deleteExpiredFoodItem = () => {
+  const deleteFavoriteFoodsItem = () => {
+    const filteredList = favoriteFoods.filter((food) => {
+      return !checkedList.find((checkedFood) => checkedFood.name === food.name);
+    });
+    dispatch(setFavoriteList(filteredList));
+  };
+
+  const deleteHasFoodItem = () => {
     const findFridgeFoodInCheckList = (fridgeFood: Food) => {
       return checkedList
         .filter((checkedFood) => checkedFood.space !== '실온보관')
@@ -80,7 +77,18 @@ export const useItemSlideAnimation = ({
       duration: 300,
     }).start(() => {
       if (afterAnimation === 'slideup-out') {
-        routeAllFoods ? deleteExpiredFoodItem() : deleteItem();
+        if (routeAllFoods) {
+          deleteHasFoodItem();
+        }
+
+        if (routeFavoriteFoods) {
+          deleteFavoriteFoodsItem();
+        }
+
+        if (routeHome) {
+          deleteShoppingListItem();
+        }
+
         dispatch(setCheckedList([]));
         dispatch(setAfterAnimation('none'));
       }
