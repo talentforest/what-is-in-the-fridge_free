@@ -64,35 +64,37 @@ export default function TableItemEnd({ title, food }: Props) {
     return tagColor;
   };
 
+  const hasFood = findFood(food.name);
+
   return (
     <>
       {title === '장볼 식료품' ? (
         <>
-          {routeHome && findFood(food.name) && (
+          {routeHome && hasFood && (
             <RoundedNavigateBtn
               btnName='있음'
               color='emerald'
-              space={food.space}
+              space={hasFood.space}
               foodName={food.name}
             />
           )}
           <AddIconBtn
             onPress={onPress}
-            disabled={!!(checkedList.length || findFood(food.name))}
+            disabled={!!(checkedList.length || hasFood)}
           />
         </>
       ) : title === '자주 먹는 식료품' ? (
         <View style={tw`ml-2 mr-3 flex-row gap-5`}>
           {isShoppingListItem(food.name) && (
             <Icon
-              name={'basket-outline'}
+              name='basket-outline'
               type='MaterialCommunityIcons'
               size={15}
               color={MEDIUM_INDIGO}
             />
           )}
 
-          <IndicatorExist isExist={!!findFood(food.name)} />
+          <IndicatorExist isExist={!!hasFood} />
         </View>
       ) : (
         <>

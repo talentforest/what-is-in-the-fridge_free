@@ -12,7 +12,7 @@ interface Props {
   btnName: string;
   space: Space;
   foodName: string;
-  color?: 'cyan' | 'blue' | 'green' | 'emerald';
+  color?: 'cyan' | 'blue' | 'emerald';
 }
 
 export default function RoundedNavigateBtn({
@@ -53,7 +53,7 @@ export default function RoundedNavigateBtn({
         type='MaterialCommunityIcons'
         size={11}
         color={
-          color === 'cyan' ? MEDIUM_BLUE : color === 'green' ? GREEN : BLUE
+          color === 'cyan' ? MEDIUM_BLUE : color === 'emerald' ? GREEN : BLUE
         }
       />
     </TouchableOpacity>
