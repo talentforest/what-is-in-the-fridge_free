@@ -12,7 +12,7 @@ interface Props {
   btnName: string;
   space: Space;
   foodName: string;
-  color?: 'cyan' | 'blue' | 'green';
+  color?: 'cyan' | 'blue' | 'green' | 'emerald';
 }
 
 export default function RoundedNavigateBtn({
@@ -41,7 +41,9 @@ export default function RoundedNavigateBtn({
     >
       <Text
         fontSize={13}
-        style={tw.style(`text-${color}-600 leading-4`, { letterSpacing: -1 })}
+        style={tw.style(`text-${color}-600 leading-4`, {
+          letterSpacing: btnName === '있음' ? 0 : -1,
+        })}
       >
         {btnName}
       </Text>
