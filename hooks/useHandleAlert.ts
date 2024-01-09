@@ -111,8 +111,8 @@ export const useHandleAlert = () => {
 
   // Alert
   const alertReachedLimit: AlertObj = {
-    title: '식료품 개수 한도 도달',
-    msg: `식료품 저장 최대 한도인 ${MAX_LIMIT}개에 도달했어요. 한번만 결제하면 식료품을 한도 없이 저장할 수 있는 이용권을 구매하러 가볼까요?.`,
+    title: '식료품 저장 개수 한도 도달',
+    msg: `식료품 저장 최대 한도인 ${MAX_LIMIT}개에 도달했어요. 한번 결제하면 평생 식료품을 한도 없이 저장할 수 있는 무제한 이용권을 구매하러 가볼까요?.`,
     btns: [
       { name: '닫기', fn: closeAlertModal },
       { name: '이용권 구매하러 가기', fn: goSettingScreen },
@@ -126,7 +126,7 @@ export const useHandleAlert = () => {
   };
 
   const alertAddAtOnceLimit: AlertObj = {
-    title: '한번에 추가할 식료품 개수 초과',
+    title: '한번에 추가할 식료품 저장 개수 초과',
     msg: `최대 ${MAX_NUM_ADD_AT_ONCE}개까지 한 공간에 한번에 추가할 수 있어요.`,
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
@@ -149,20 +149,26 @@ export const useHandleAlert = () => {
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 
-  const alertIAP: AlertObj = {
+  const alertSuccessIAP: AlertObj = {
+    title: '이용권 구매 성공',
+    msg: '무제한 저장 이용권을 구매했어요. 이제 식료품을 개수 제한 없이 저장할 수 있어요.',
+    btns: [{ name: '확인', fn: closeAlertModal }],
+  };
+
+  const alertFailIAP: AlertObj = {
     title: '이용권 구매 오류',
-    msg: '이용권을 구매하는 과정에서 오류가 발생했어요. 조금 있다가 다시 한번 시도해주세요.',
+    msg: '이용권을 구매하는 과정에서 오류가 발생했어요. 잠시 후 다시 시도해주세요.',
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 
   const alertFailRestoreIAP: AlertObj = {
-    title: '이용권 복원 실패',
+    title: '이용권 구매 복원 실패',
     msg: '복원 가능한 이용권이 없어요.',
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
 
-  const alertSucessRestoreIAP: AlertObj = {
-    title: '이용권 복원 성공',
+  const alertSuccessRestoreIAP: AlertObj = {
+    title: '이용권 구매 복원 성공',
     msg: '이전에 구매하셨던 이용권을 성공적으로 복원했어요. 이제 무제한으로 식료품을 저장할 수 있어요.',
     btns: [{ name: '확인', fn: closeAlertModal }],
   };
@@ -183,7 +189,7 @@ export const useHandleAlert = () => {
   };
 
   const alertDoneInitializeData: AlertObj = {
-    title: '데이터 초기화 완료',
+    title: '식료품 데이터 초기화 완료',
     msg: `모든 식료품 데이터가 초기화되었어요.`,
     btns: [{ name: '닫기', fn: closeAlertModal }],
   };
@@ -233,7 +239,7 @@ export const useHandleAlert = () => {
 
     const alertMoveStorage: AlertObj = {
       title: '식료품 이동 알림',
-      msg: `${name}의 위치가 ${position}으로 이동되었어요.`,
+      msg: `${name}의 위치가 ${position}으로 바뀌었어요. 바로 이동해서 확인하시겠어요?`,
       btns: [
         { name: '닫기', fn: closeAlertModal },
         { name: '바로 이동하기', fn: goChangedPosition },
@@ -258,7 +264,7 @@ export const useHandleAlert = () => {
 
     const alertSuccessAddAllFoods: AlertObj = {
       title: '모든 식료품 추가 완료',
-      msg: `${foodPosition}에 성공적으로 추가되었어요.`,
+      msg: `${foodPosition}에 추가되었어요.`,
       btns: [{ name: '확인', fn: closeAlertModal }],
     };
 
@@ -287,7 +293,7 @@ export const useHandleAlert = () => {
       ],
     };
 
-    const alertDeleteExpiredFoods: AlertObj = {
+    const alertDeleteAllFoods: AlertObj = {
       title: '식료품 삭제',
       msg: `총 ${listLength}개의 식료품(${foodNames})을 삭제하시겠어요? 냉장고나 실온보관 공간에서 삭제돼요.`,
       btns: [
@@ -318,7 +324,7 @@ export const useHandleAlert = () => {
       alertSuccessAddAllFoods,
       alertConfirmAddAll,
       alertDeleteFavoriteFoods,
-      alertDeleteExpiredFoods,
+      alertDeleteAllFoods,
       alertDeleteFromShoppingList,
       alertAddToShoppingList,
     };
@@ -339,7 +345,7 @@ export const useHandleAlert = () => {
       alertSuccessAddAllFoods,
       alertConfirmAddAll,
       alertDeleteFavoriteFoods,
-      alertDeleteExpiredFoods,
+      alertDeleteAllFoods,
       alertDeleteFromShoppingList,
       alertAddToShoppingList,
     } = alertWithCheckList();
@@ -351,9 +357,10 @@ export const useHandleAlert = () => {
       alertNoNameInForm,
       alertWrongDateInForm,
       alertChangeFont,
-      alertIAP,
+      alertSuccessIAP,
+      alertFailIAP,
       alertFailRestoreIAP,
-      alertSucessRestoreIAP,
+      alertSuccessRestoreIAP,
       alertHasReceipt,
       alertInitializeData,
       alertDoneInitializeData,
@@ -369,7 +376,7 @@ export const useHandleAlert = () => {
       alertSuccessAddAllFoods,
       alertConfirmAddAll,
       alertDeleteFavoriteFoods,
-      alertDeleteExpiredFoods,
+      alertDeleteAllFoods,
       alertDeleteFromShoppingList,
       alertAddToShoppingList,
     ];
@@ -398,9 +405,10 @@ export const useHandleAlert = () => {
     alertNoNameInForm,
     alertWrongDateInForm,
     alertChangeFont,
-    alertIAP,
+    alertSuccessIAP,
+    alertFailIAP,
     alertFailRestoreIAP,
-    alertSucessRestoreIAP,
+    alertSuccessRestoreIAP,
     alertHasReceipt,
     alertInitializeData,
     alertDoneInitializeData,

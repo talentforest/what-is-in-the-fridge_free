@@ -21,7 +21,7 @@ const skus = ['com.ellie0501.whatisinmyfridge_test'];
 const PaymentBtn = () => {
   const dispatch = useDispatch();
 
-  const { setAlert, alertSucessRestoreIAP, alertIAP } = useHandleAlert();
+  const { setAlert, alertSuccessIAP, alertFailIAP } = useHandleAlert();
 
   const {
     connected,
@@ -44,9 +44,10 @@ const PaymentBtn = () => {
           const ackResult = await finishTransaction(receipt);
           if ((ackResult as RNIap.PurchaseResult)?.code === 'OK') {
             switchPurchasedState(purchase.purchaseToken); //구매 상태로 전환
+            setAlert(alertSuccessIAP);
           }
         } catch {
-          setAlert(alertIAP);
+          setAlert(alertFailIAP);
         }
       }
     };
