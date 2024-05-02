@@ -32,6 +32,7 @@ import purchaseReducer from './slice/purchaseSlice';
 import toggleFormItemOpenReducer from './slice/food/isMemoOpenSlice';
 import notificationReducer from './slice/notificationSlice';
 import datePickerViewingReducer from './slice/datePickerViewingSlice';
+import foodHistoryListReducer from './slice/food-list/foodHistoryListSlice';
 
 const reducers = {
   fridgeFoods: fridgeFoodsReducer,
@@ -54,6 +55,7 @@ const reducers = {
   purchaseState: purchaseReducer,
   notification: notificationReducer,
   datePickerViewing: datePickerViewingReducer,
+  foodHistoryList: foodHistoryListReducer,
 };
 
 const rootReducer = combineReducers({ ...reducers });

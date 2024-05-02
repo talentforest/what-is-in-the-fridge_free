@@ -29,7 +29,7 @@ export default function SettingBox({ setting }: Props) {
   const {
     setAlert,
     alertFailRestoreIAP,
-    alertSucessRestoreIAP,
+    alertSuccessRestoreIAP,
     alertHasReceipt,
     alertInitializeData, //
   } = useHandleAlert();
@@ -54,7 +54,7 @@ export default function SettingBox({ setting }: Props) {
             purchaseToken: receipt.purchaseToken,
           })
         );
-        setAlert(alertSucessRestoreIAP);
+        setAlert(alertSuccessRestoreIAP);
       } else {
         setAlert(alertFailRestoreIAP); // 토큰이 없는 경우
       }

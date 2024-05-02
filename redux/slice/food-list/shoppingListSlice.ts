@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deduplicate } from '../../../util';
+import { deduplicateByName } from '../../../util';
 import { Food } from '../../../constant/foodInfo';
 
 export const initialState: { shoppingList: Food[] } = {
@@ -11,16 +11,19 @@ const shoppingListSlice = createSlice({
   initialState,
   reducers: {
     setShoppingList: (state, action: { payload: Food[] }) => {
-      state.shoppingList = deduplicate([...action.payload]);
+      state.shoppingList = deduplicateByName([...action.payload]);
     },
     addItemsToShoppingList: (state, action: { payload: Food[] }) => {
-      state.shoppingList = deduplicate([
+      state.shoppingList = deduplicateByName([
         ...state.shoppingList,
         ...action.payload,
       ]);
     },
     addToShoppingList: (state, action: { payload: Food }) => {
-      state.shoppingList = deduplicate([...state.shoppingList, action.payload]);
+      state.shoppingList = deduplicateByName([
+        ...state.shoppingList,
+        action.payload,
+      ]);
     },
     removeFromShoppingList: (state, action: { payload: { name: string } }) => {
       state.shoppingList = state.shoppingList.filter(

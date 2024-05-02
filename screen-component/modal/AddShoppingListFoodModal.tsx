@@ -1,7 +1,6 @@
 import { formFourSteps } from '../../constant/formInfo';
 import { useAddShoppingListFood } from '../../hooks';
 import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from '../../redux/hook';
 
 import FadeInMiddleModal from '../../components/modal/FadeInMiddleModal';
@@ -14,15 +13,13 @@ export default function AddShoppingListFoodModal() {
 
   const { onShoppingListFoodSubmit, closeFormModal } = useAddShoppingListFood();
 
-  const insets = useSafeAreaInsets();
-
   return (
     <FadeInMiddleModal
       title='장보기 목록 식료품 추가'
       isVisible={formModal}
       closeModal={closeFormModal}
     >
-      <View style={tw`-mx-4`}>
+      <View style={tw`-mx-4 h-80`}>
         <Form title='장보기 목록 식료품 추가' formSteps={formFourSteps} />
       </View>
 

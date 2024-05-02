@@ -8,7 +8,7 @@ import { closeKeyboard } from '../../util';
 
 import FormLabel from './FormLabel';
 import FormMessage from './FormMessage';
-import MatchedFavoriteFoodNameList from './MatchedFavoriteFoodNameList';
+import RecommendationFoodList from './RecommendationFoodList';
 import tw from 'twrnc';
 
 interface Props {
@@ -20,20 +20,15 @@ export default function NameItem({ isEditing }: Props) {
     formFood: { name: newName },
     originFood: { name: originName },
   } = useSelector((state) => state.formFood);
+
   const { isFavorite } = useSelector((state) => state.isFavorite);
 
   const dispatch = useDispatch();
 
-  const { findFood } = useFindFood();
-
-  const onChangeText = (value: string) => {
-    dispatch(editFormFood({ name: value }));
-  };
-
   const { routeHome } = useRouteName();
-
   const editable = !routeHome;
 
+  const { findFood, isFavoriteItem } = useFindFood();
   const hasFood = findFood(newName);
 
   const editedName = newName !== originName;
@@ -46,6 +41,10 @@ export default function NameItem({ isEditing }: Props) {
   const onMatchedFoodPress = (name: string) => {
     dispatch(editFormFood({ name }));
     closeKeyboard();
+  };
+
+  const onChangeText = (value: string) => {
+    dispatch(editFormFood({ name: value }));
   };
 
   return (
@@ -88,11 +87,7 @@ export default function NameItem({ isEditing }: Props) {
       </View>
 
       {!isEditing && !isFavorite ? (
-        <MatchedFavoriteFoodNameList
-          name={newName}
-          onPress={onMatchedFoodPress}
-          compareWith='addNewFood'
-        />
+        <RecommendationFoodList name={newName} onPress={onMatchedFoodPress} />
       ) : null}
     </View>
   );

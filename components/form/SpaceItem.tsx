@@ -111,7 +111,7 @@ export default function SpaceItem({ label }: Props) {
             `px-3 py-0.5 border border-slate-200 bg-white mt-1 rounded-xl`
           )}
         >
-          <View style={tw`flex-row gap-4`}>
+          <View style={tw`flex-row gap-2`}>
             {(['냉장실', '냉동실'] as SpaceType[]).map((spaceType) => (
               <View style={tw`h-9`} key={spaceType}>
                 <CheckBoxItem
@@ -125,7 +125,7 @@ export default function SpaceItem({ label }: Props) {
             ))}
           </View>
 
-          <View style={tw`flex-row gap-4 border-b border-t border-slate-300`}>
+          <View style={tw`flex-row gap-2 border-b border-t border-slate-300`}>
             {(['안쪽', '문쪽'] as SpaceSide[]).map((spaceSide) => (
               <View key={spaceSide} style={tw`h-9`}>
                 <CheckBoxItem
@@ -139,9 +139,9 @@ export default function SpaceItem({ label }: Props) {
             ))}
           </View>
 
-          <View style={tw`flex-row flex-wrap gap-x-4`}>
+          <View style={tw`flex-row flex-wrap gap-x-2 py-1`}>
             {compartments.map(({ compartmentNum: currCompartmentNum }) => (
-              <View key={currCompartmentNum} style={tw`h-9`}>
+              <View key={currCompartmentNum} style={tw`h-8`}>
                 <CheckBoxItem
                   title={`${currCompartmentNum}칸`}
                   checked={compartmentNum === currCompartmentNum}

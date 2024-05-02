@@ -18,7 +18,7 @@ import AddAtOnceModal from '../screen-component/modal/AddAtOnceModal';
 import FormMessage from '../components/form/FormMessage';
 import HomeHeader from '../screen-component/home/HomeHeader';
 import HeaderIconBtn from '../components/buttons/HeaderIconBtn';
-import MatchedFavoriteFoodNameList from '../components/form/MatchedFavoriteFoodNameList';
+import RecommendationFoodList from '../components/form/RecommendationFoodList';
 import tw from 'twrnc';
 
 export default function HomeShoppingList() {
@@ -69,12 +69,14 @@ export default function HomeShoppingList() {
               onSubmitEditing={onSubmitEditing}
               disabled={inputValue === '' || existCaution}
             />
-
-            <MatchedFavoriteFoodNameList
-              name={inputValue}
-              onPress={onMatchedFoodPress}
-              compareWith='shoppingList'
-            />
+            {checkedList.length === 0 && (
+              <View style={tw`absolute bottom-14 mx-3 w-full`}>
+                <RecommendationFoodList
+                  name={inputValue}
+                  onPress={onMatchedFoodPress}
+                />
+              </View>
+            )}
           </View>
 
           <TableSelectedHandleBox foodList={shoppingList}>

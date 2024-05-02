@@ -26,7 +26,7 @@ export default function CheckBoxItem({
   return (
     <TouchableOpacity
       disabled={disabled}
-      style={tw`flex-row items-center gap-1 h-full pr-2`}
+      style={tw`flex-row items-center gap-1 h-full pr-1`}
       onPress={onPress}
     >
       <View>

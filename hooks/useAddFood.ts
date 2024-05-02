@@ -17,6 +17,7 @@ import { setFormFood } from '../redux/slice/food/formFoodSlice';
 import { useFindFood } from './useFindFood';
 import { useHandleAlert } from './useHandleAlert';
 import { showOpenAddFoodModal } from '../redux/slice/modalVisibleSlice';
+import { addInFoodHistoryList } from '../redux/slice/food-list/foodHistoryListSlice';
 import UUIDGenerator from 'react-native-uuid';
 
 export const useAddFood = (currPosition?: FoodPosition) => {
@@ -89,6 +90,8 @@ export const useAddFood = (currPosition?: FoodPosition) => {
     }
 
     dispatch(showOpenAddFoodModal(false));
+
+    dispatch(addInFoodHistoryList(foodToAdd.name));
 
     if (isMemoOpen) {
       dispatch(toggleMemoOpen(false));

@@ -2,8 +2,8 @@ node_modules/
 .expo/
 .idea/
 
-eas.json
 app.json
+eas.json
 
 dist/
 npm-debug.*

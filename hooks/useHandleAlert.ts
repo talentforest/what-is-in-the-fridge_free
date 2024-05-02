@@ -45,7 +45,7 @@ type AlertDoubleObjFunction = (food: Food) => {
   [key in string]: AlertObj;
 };
 
-export const MAX_NUM_ADD_AT_ONCE = 8;
+export const MAX_NUM_ADD_AT_ONCE = 6;
 
 export const useHandleAlert = () => {
   const { checkedList } = useSelector((state) => state.checkedList);
@@ -54,7 +54,6 @@ export const useHandleAlert = () => {
   const { formFood } = useSelector((state) => state.formFood);
   const { fridgeFoods } = useSelector((state) => state.fridgeFoods);
   const { pantryFoods } = useSelector((state) => state.pantryFoods);
-  const { datePickerViewing } = useSelector((state) => state.datePickerViewing);
 
   const dispatch = useDispatch();
 

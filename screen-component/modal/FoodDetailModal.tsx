@@ -57,7 +57,7 @@ export default function FoodDetailModal({ formSteps }: Props) {
           isVisible={openFoodDetailModal}
         >
           <View style={{ paddingBottom: insets?.bottom }}>
-            <View style={tw`-mx-4`}>
+            <View style={tw`-mx-4 h-90`}>
               <Form title='식료품 정보 수정' formSteps={formSteps} />
             </View>
 

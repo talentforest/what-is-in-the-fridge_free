@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deduplicate } from '../../../util';
+import { deduplicateByName } from '../../../util';
 import { Food, examplePantryFoods } from '../../../constant/foodInfo';
 
 export const initialState: { pantryFoods: Food[] } = {
@@ -11,10 +11,10 @@ const pantryFoodsSlice = createSlice({
   initialState,
   reducers: {
     setAllPantryFoods: (state, action: { payload: Food[] }) => {
-      state.pantryFoods = deduplicate([...action.payload]);
+      state.pantryFoods = deduplicateByName([...action.payload]);
     },
     addPantryFoods: (state, action: { payload: Food[] }) => {
-      state.pantryFoods = deduplicate([
+      state.pantryFoods = deduplicateByName([
         ...state.pantryFoods,
         ...action.payload,
       ]);
@@ -22,9 +22,12 @@ const pantryFoodsSlice = createSlice({
     addToPantry: (state, action: { payload: Food }) => {
       if ('compartmentNum' in action.payload) {
         const { compartmentNum, ...newFood } = action.payload;
-        state.pantryFoods = deduplicate([...state.pantryFoods, newFood]);
+        state.pantryFoods = deduplicateByName([...state.pantryFoods, newFood]);
       } else {
-        state.pantryFoods = deduplicate([...state.pantryFoods, action.payload]);
+        state.pantryFoods = deduplicateByName([
+          ...state.pantryFoods,
+          action.payload,
+        ]);
       }
     },
     removePantryFood: (state, action: { payload: string }) => {

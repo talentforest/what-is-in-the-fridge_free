@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Food } from '../../../constant/foodInfo';
-import { deduplicate } from '../../../util';
+import { deduplicateByName } from '../../../util';
 
 export const initialState: { favoriteFoods: Food[] } = {
   favoriteFoods: [],
@@ -11,10 +11,10 @@ const favoriteFoodsSlice = createSlice({
   initialState,
   reducers: {
     setFavoriteList: (state, action: { payload: Food[] }) => {
-      state.favoriteFoods = deduplicate(action.payload);
+      state.favoriteFoods = deduplicateByName(action.payload);
     },
     addFavorite: (state, action: { payload: Food }) => {
-      state.favoriteFoods = deduplicate([
+      state.favoriteFoods = deduplicateByName([
         ...state.favoriteFoods,
         action.payload,
       ]);

@@ -12,7 +12,7 @@ import tw from 'twrnc';
 
 interface Props {
   value: string;
-  setValue: (keyword: string) => void;
+  setValue: (text: string) => void;
   placeholder: string;
   onSubmitEditing: () => void;
   onBlur?: () => void;

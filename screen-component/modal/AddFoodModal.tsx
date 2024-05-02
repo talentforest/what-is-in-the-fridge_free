@@ -2,7 +2,6 @@ import { ScrollView, View } from 'react-native';
 import { FoodPosition } from '../../constant/fridgeInfo';
 import { formThreeSteps } from '../../constant/formInfo';
 import { useAddFood } from '../../hooks';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from '../../redux/hook';
 import { scrollToEnd } from '../../util';
 import { MutableRefObject } from 'react';
@@ -23,8 +22,6 @@ export default function AddFoodModal({ position, scrollViewRef }: Props) {
   } = useSelector((state) => state.modalVisible);
   const { onAddSubmit, closeAddFoodModal } = useAddFood(position);
 
-  const insets = useSafeAreaInsets();
-
   const scrollEnd = () => scrollToEnd(scrollViewRef);
 
   const onSubmitPress = () => {
@@ -40,7 +37,7 @@ export default function AddFoodModal({ position, scrollViewRef }: Props) {
       isVisible={modalVisible}
       closeModal={closeAddFoodModal}
     >
-      <View style={tw`-mx-4`}>
+      <View style={tw`-mx-4 h-90`}>
         <Form title='새로운 식료품 추가' formSteps={formThreeSteps} />
       </View>
 
